@@ -2,8 +2,8 @@
 
 namespace app\controller;
 
-use app\core\Response;
 use app\Repository\SearchRepository;
+use app\Services\Response;
 
 class SearchController extends AppController
 {

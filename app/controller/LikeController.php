@@ -4,9 +4,9 @@
 namespace app\controller;
 
 
-use app\core\Response;
 use app\model\Like;
 use app\Repository\LikeRepository;
+use app\Services\Response;
 use app\view\Like\LikeView;
 
 class LikeController extends AppController

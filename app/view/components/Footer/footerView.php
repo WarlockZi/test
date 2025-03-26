@@ -119,14 +119,14 @@
                 </div>
 
                 <div class="input-container">
-                    <input type="text" placeholder=" " required="" name="phone" id="phone" autocomplete="false">
+                    <input type="tel" placeholder=" " required="" name="phone" id="phone" autocomplete="false">
                     <div class="badge"></div>
                     <label for="phone">телефон</label>
                     <div id="phoneError"></div>
                 </div>
 
                 <div class="input-container textarea">
-                    <textarea name="message" placeholder=" " id="message" rows="6" class="textarea"></textarea>
+                    <textarea name="message" placeholder=" " required="" id="message" rows="6" class="textarea"></textarea>
                     <div class="badge"></div>
                     <label for="message">Сообщение</label>
                     <div id="messageError"></div>

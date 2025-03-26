@@ -4,8 +4,7 @@
 namespace app\view\Accordion\Admin;
 
 
-use app\core\Icon;
-use app\model\User;
+use app\Services\Icon;
 
 class SidebarBuilder
 {

@@ -1,4 +1,4 @@
-<? if (\app\core\Auth::getUser()->can()):// SU ?>
+<? if (\app\Services\AuthService\Auth::getUser()->can()):// SU ?>
     <input class="list" type="button" name="scr" id="scr" value="выгрузить ">
     <form method="post" action='/Adminsc/FileImport'>
         <input class="list" type="submit" name='scrImport' value="загрузить ">

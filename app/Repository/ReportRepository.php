@@ -5,7 +5,7 @@ namespace app\Repository;
 
 use app\controller\AppController;
 use app\model\Product;
-use app\Services\ProductImageService;
+use app\Services\Image\ProductImageService;
 use Illuminate\Database\Eloquent\Collection;
 
 class ReportRepository extends AppController

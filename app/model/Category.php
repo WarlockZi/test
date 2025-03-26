@@ -3,7 +3,7 @@
 namespace app\model;
 
 
-use app\Services\SlugService;
+use app\Services\Router\SlugService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;

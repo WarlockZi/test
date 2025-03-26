@@ -1,7 +1,7 @@
 <?php
 
-use app\core\Auth;
-use app\core\Icon;
+use app\Services\AuthService\Auth;
+use app\Services\Icon;
 
 ?>
 <? if ($forBreadcrumbs): ?>
@@ -17,7 +17,7 @@ use app\core\Icon;
              title='Скопировать короткую ссылку'
              data-shortLink= <?= $category->shortLink; ?>
         >
-            <?= \app\core\Icon::link(); ?>
+            <?= \app\Services\Icon::link(); ?>
         </div>
         <?php if (Auth::userIsAdmin()): ?>
             <a href="/adminsc/category/edit/<?= $category->id ?>" class="edit card-panel-item"><?= Icon::edit(); ?></a>

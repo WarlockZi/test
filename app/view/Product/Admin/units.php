@@ -1,7 +1,7 @@
 <?php
 
-use \app\view\Product\Admin\ProductFormView;
-use app\core\Icon;
+use app\Services\Icon;
+use app\view\Product\Admin\ProductFormView;
 
 ?>
 <div class="units">

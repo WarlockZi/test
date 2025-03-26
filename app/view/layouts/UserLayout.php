@@ -3,11 +3,11 @@
 namespace app\view\layouts;
 
 use app\controller\Controller;
-use app\core\FS;
-use app\core\Route;
 use app\Repository\CategoryRepository;
 use app\Services\AssetsService\Assets;
 use app\Services\AssetsService\UserAssets;
+use app\Services\FS;
+use app\Services\Router\Route;
 use app\view\components\Footer\UserFooter;
 use app\view\components\Header\UserHeader;
 
@@ -72,10 +72,7 @@ class UserLayout extends Layout
     }
 
 
-    public function render(): void
-    {
-        echo $this->layoutFs->getContent($this->layout, $this->content);
-    }
+
 
 
 }

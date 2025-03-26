@@ -2,10 +2,10 @@
 
 namespace app\controller\Admin;
 
-use app\core\Auth;
-use app\core\Response;
 use app\model\User;
+use app\Services\AuthService\Auth;
 use app\Services\Logger\FileLogger;
+use app\Services\Response;
 use app\Services\Sync\SyncService;
 use app\Services\Sync\TrancateService;
 use Illuminate\Support\Carbon;

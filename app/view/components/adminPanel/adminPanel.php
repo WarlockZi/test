@@ -1,4 +1,4 @@
-<?php use app\core\Auth; ?>
+<?php use app\Services\AuthService\Auth; ?>
 <?php if (Auth::getUser()?->isAdmin()): ?>
     <div class="admin-panel">
 

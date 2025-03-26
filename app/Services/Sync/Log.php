@@ -2,7 +2,7 @@
 
 namespace app\Services\Sync;
 
-use app\core\Response;
+use app\Services\Response;
 
 trait Log
 {

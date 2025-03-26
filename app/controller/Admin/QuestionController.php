@@ -2,14 +2,11 @@
 
 namespace app\controller\Admin;
 
-use app\controller\AppController;
-use app\core\Response;
-use app\core\Router;
 use app\Factory\AbstractTestFactory;
 use app\Factory\TestFactory;
 use app\model\Question;
-use app\model\Test;
-use app\Repository\TestRepository;
+use app\Services\Response;
+use app\Services\Router\Router;
 use app\Services\Test\TestDoService;
 use app\Services\Test\TestEditService;
 

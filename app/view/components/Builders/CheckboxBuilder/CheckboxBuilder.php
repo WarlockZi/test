@@ -4,7 +4,7 @@
 namespace app\view\components\Builders\CheckboxBuilder;
 
 
-use app\core\FS;
+use app\Services\FS;
 use app\view\components\Traits\CleanString;
 
 class CheckboxBuilder

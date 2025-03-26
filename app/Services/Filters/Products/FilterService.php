@@ -2,13 +2,10 @@
 
 namespace app\Services\Filters\Products;
 
-use app\core\Auth;
-use app\core\Cache;
-use app\core\FS;
-use app\model\Category;
 use app\model\FilterUser;
-use app\Repository\CategoryRepository;
 use app\Repository\ProductFilterRepository;
+use app\Services\AuthService\Auth;
+use app\Services\FS;
 use app\view\components\Traits\CleanString;
 use app\view\Filter\FilterView;
 

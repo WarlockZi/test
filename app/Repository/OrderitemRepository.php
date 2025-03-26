@@ -4,10 +4,10 @@
 namespace app\Repository;
 
 
-use app\core\Auth;
 use app\model\Order;
 use app\model\OrderItem;
 use app\model\OrderProduct;
+use app\Services\AuthService\Auth;
 
 class OrderitemRepository
 {

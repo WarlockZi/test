@@ -2,6 +2,7 @@ import "./feedback.scss";
 import { ael, qa, qs } from "@src/constants.js";
 import stripjs from "strip-js";
 import { debounce, emailValidator, getPhpSession, post } from "@src/common.js";
+// import PhoneValidator from "../components/validator/PhoneValidator.js";
 
 export default class Feedback {
   constructor(button) {
@@ -24,14 +25,17 @@ export default class Feedback {
 
   async handelKeyup({ target }) {
     if (target.tagName === "INPUT") {
-      const { emailValidator, phoneValidator } = await import("@src/common.js");
+      const { emailValidator } = await import("@src/common.js");
+      const { default: PhoneValidator } = await import(
+        "@src/components/validator/PhoneValidator.js"
+      );
       if (target.id === "name") {
         const nameErr = stripjs(target.value);
       } else if (target.id === "email") {
         this.emailError.innerText = emailValidator(target.value)[0] ?? "";
       } else if (target.id === "phone") {
-        const phoneErr = phoneValidator(target.value)[0] ?? "";
-        this.phoneError.innerText = phoneValidator(target.value)[0] ?? "";
+        const phoneErr = new PhoneValidator(target)[0] ?? "";
+        this.phoneError.innerText = new PhoneValidator(target)[0] ?? "";
       } else if (target.id === "message") {
         const messageErr = stripjs(target.value);
       }
@@ -41,10 +45,13 @@ export default class Feedback {
   async handleSubmit(e) {
     e.preventDefault();
 
-    const { emailValidator, phoneValidator } = await import("@src/common.js");
+    const { emailValidator } = await import("@src/common.js");
+    const { default: PhoneValidator } = await import(
+      "@src/components/validator/PhoneValidator.js"
+    );
     if (
       emailValidator(this.email.value).length ||
-      phoneValidator(this.phone.value).length
+      new PhoneValidator(this.phone).length
     )
       return;
     const res = await post("/feedback/updateOrCreate", this.dto());

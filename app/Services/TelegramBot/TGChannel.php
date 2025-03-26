@@ -6,5 +6,4 @@ enum TGChannel
 {
     case callme;
     case question;
-
 }

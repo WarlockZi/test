@@ -1,9 +1,9 @@
 <?php
 
-use app\core\Icon;
+use app\Services\Icon;
 
 ?>
-<? if (\app\core\Auth::getUser()->isAdmin()): ?>
+<? if (\app\Services\AuthService\Auth::getUser()->isAdmin()): ?>
 
     <a href="/adminsc/feedback" class="feedback" title="сообщения клиентов">
         <?= Icon::bell() ?>

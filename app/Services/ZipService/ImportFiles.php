@@ -2,7 +2,7 @@
 
 namespace app\Services\ZipService;
 
-use app\core\FS;
+use app\Services\FS;
 
 class ImportFiles
 {
@@ -13,8 +13,8 @@ class ImportFiles
         } else {
         }
         return [
-            'import' => FS::platformSlashes(ROOT . '/app/storage/import/import0_1.xml'),
-            'offer' => FS::platformSlashes(ROOT . '/app/storage/import/offers0_1.xml'),
+            'import' => FS::platformSlashes(ROOT . '/storage/app/import/import0_1.xml'),
+            'offer' => FS::platformSlashes(ROOT . '/storage/app/import/offers0_1.xml'),
         ];
     }
 }

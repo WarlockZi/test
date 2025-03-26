@@ -2,8 +2,7 @@
 
 namespace app\view\components\Builders\TableBuilder\TableHeader;
 
-use app\core\FS;
-use function Symfony\Component\Translation\t;
+use app\Services\FS;
 
 class TableHeader
 {

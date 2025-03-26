@@ -2,8 +2,8 @@
 
 namespace app\controller;
 
-use app\core\Response;
 use app\model\Chat;
+use app\Services\Response;
 
 class ChatController extends AppController
 {

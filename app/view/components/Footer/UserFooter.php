@@ -4,7 +4,7 @@
 namespace app\view\components\Footer;
 
 
-use app\core\FS;
+use app\Services\FS;
 use Illuminate\Support\Collection;
 
 class UserFooter extends Footer

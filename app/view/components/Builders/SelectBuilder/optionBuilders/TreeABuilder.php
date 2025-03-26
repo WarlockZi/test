@@ -3,7 +3,7 @@
 
 namespace app\view\components\Builders\SelectBuilder\optionBuilders;
 
-use app\core\Error;
+use app\Exceptions\Router\RouterError;
 use Illuminate\Database\Eloquent\Collection;
 
 class TreeABuilder extends TreeBuilder
@@ -29,7 +29,7 @@ class TreeABuilder extends TreeBuilder
 
     protected function options($items, $level, $string)
     {
-        if (!$this->href) Error::setError('добавить ссылку');
+        if (!$this->href) RouterError::setError('добавить ссылку');
         foreach ($items as $item) {
             $string .= $this->getOption($item, $level);
             if (isset($item[$this->relation])) {

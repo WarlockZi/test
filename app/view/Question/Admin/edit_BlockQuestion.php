@@ -1,6 +1,6 @@
 <?php
 
-use app\core\Icon;
+use app\Services\Icon;
 
 ?>
 <div class="question-edit" data-id="<?= $question['id'] ?>">

@@ -4,11 +4,11 @@
 namespace app\Repository;
 
 
-use app\core\Auth;
-use app\core\Response;
 use app\model\Order;
 use app\model\OrderItem;
 use app\model\Product;
+use app\Services\AuthService\Auth;
+use app\Services\Response;
 use Illuminate\Database\Eloquent\Collection;
 use Throwable;
 

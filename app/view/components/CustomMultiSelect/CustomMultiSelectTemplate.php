@@ -18,7 +18,7 @@ tabindex="0"
     </div>
 
     <div class="arrow">
-        <?= \app\core\Icon::ArrowDropDownIcon() ?>
+        <?= \app\Services\Icon::ArrowDropDownIcon() ?>
     </div>
 
     <ul>

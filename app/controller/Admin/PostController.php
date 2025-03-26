@@ -2,9 +2,8 @@
 
 namespace app\controller\Admin;
 
-use app\controller\AppController;
-use app\core\Response;
 use app\model\Post;
+use app\Services\Response;
 use app\view\Post\PostView;
 
 class PostController extends AdminscController

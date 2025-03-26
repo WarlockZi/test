@@ -5,10 +5,10 @@ namespace app\view\User;
 
 
 use app\core\ConfigNew;
-use app\core\IUser;
 use app\model\Right;
 use app\model\Role;
 use app\model\User;
+use app\Services\AuthService\IUser;
 use app\view\components\Builders\Date\DateBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;

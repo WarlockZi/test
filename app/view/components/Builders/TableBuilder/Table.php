@@ -4,8 +4,8 @@
 namespace app\view\components\Builders\TableBuilder;
 
 
-use app\core\FS;
-use app\core\Icon;
+use app\Services\FS;
+use app\Services\Icon;
 use app\view\components\Traits\CleanString;
 use Illuminate\Database\Eloquent\Collection;
 

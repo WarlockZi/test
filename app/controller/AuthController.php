@@ -2,12 +2,12 @@
 
 namespace app\controller;
 
-use app\core\Auth;
 use app\core\Mail\PHPMail;
-use app\core\Request;
-use app\core\Response;
 use app\model\User;
 use app\Repository\UserRepository;
+use app\Request\LoginRequest;
+use app\Services\AuthService\Auth;
+use app\Services\Response;
 use app\Services\YandexAuth\YaAuthService;
 use app\view\User\UserView;
 use Throwable;
@@ -93,7 +93,7 @@ class AuthController extends AppController
     public function actionLogin(): void
     {
         if ($data = $this->ajax) {
-            $req    = new Request();
+            $req    = new LoginRequest();
             $errors = $req->checkLoginCredentials($data);
             if ($errors) Response::json(['errors' => $errors, 'popup' => $errors]);
             $user = User::where('email', $data['email'])->with('role')->first();

@@ -3,11 +3,11 @@
 namespace app\view\layouts;
 
 use app\controller\Controller;
-use app\core\Auth;
-use app\core\FS;
-use app\core\Route;
 use app\Services\AssetsService\AdminAssets;
 use app\Services\AssetsService\Assets;
+use app\Services\AuthService\Auth;
+use app\Services\FS;
+use app\Services\Router\Route;
 use app\view\components\Header\Admin\AdminHeader;
 use Exception;
 
@@ -15,9 +15,9 @@ class AdminLayout extends Layout
 {
     protected string $view;
     protected FS $viewFs;
-    protected string $layout;
-    protected FS $layoutFs;
-    protected array $content;
+//    protected string $layout;
+//    protected FS $layoutFs;
+//    protected array $content;
 
     public function __construct(
         protected Route $route,
@@ -87,9 +87,9 @@ class AdminLayout extends Layout
         return (new AdminHeader(Auth::getUser()))->getHeader();
     }
 
-    public function render(): void
-    {
-        echo $this->layoutFs->getContent($this->layout, $this->content);
-    }
+//    public function render(): void
+//    {
+//        echo $this->layoutFs->getContent($this->layout, $this->content);
+//    }
 
 }

@@ -4,7 +4,7 @@
 namespace app\Repository;
 
 
-use app\core\Cache;
+use app\Services\Cache\Cache;
 use app\model\Category;
 use Illuminate\Database\Eloquent\Collection;
 

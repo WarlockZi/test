@@ -4,7 +4,7 @@
 namespace app\view\components\Builders\SelectBuilder\optionBuilders;
 
 
-use app\core\Error;
+use app\Exceptions\Router\RouterError;
 use Illuminate\Database\Eloquent\Collection;
 
 abstract class TreeBuilder
@@ -60,8 +60,8 @@ abstract class TreeBuilder
     {
         try {
             $first = @$this->arr[0];
-            if (!isset($first['id']) || !isset($first['name'])) Error::setError('no name or id');
-            if (!isset($first[$this->relation])) Error::setError('no relation');
+            if (!isset($first['id']) || !isset($first['name'])) RouterError::setError('no name or id');
+            if (!isset($first[$this->relation])) RouterError::setError('no relation');
         } catch (\Throwable $exception) {
             $exception->getMessage();
         }

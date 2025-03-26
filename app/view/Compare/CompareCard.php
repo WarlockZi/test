@@ -2,8 +2,8 @@
 
 namespace app\view\Compare;
 
-use app\core\FS;
 use app\model\Compare;
+use app\Services\FS;
 
 class CompareCard
 {

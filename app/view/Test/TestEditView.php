@@ -2,10 +2,10 @@
 
 namespace app\view\Test;
 
-use app\core\FS;
-use app\core\Icon;
 use app\model\Test;
 use app\Repository\TestRepository;
+use app\Services\FS;
+use app\Services\Icon;
 use app\view\Accordion\AccordionBuilder;
 use app\view\Accordion\AccordionView;
 use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;

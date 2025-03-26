@@ -2,7 +2,7 @@
 
 namespace app\Services\ZipService;
 
-use app\core\FS;
+use app\Services\FS;
 use app\Services\Logger\ErrorLogger;
 use Throwable;
 

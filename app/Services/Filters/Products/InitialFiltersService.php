@@ -2,7 +2,7 @@
 
 namespace app\Services\Filters\Products;
 
-use app\core\Cache;
+use app\Services\Cache\Cache;
 use app\model\Category;
 use app\Repository\CategoryRepository;
 

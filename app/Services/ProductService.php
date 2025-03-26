@@ -2,9 +2,9 @@
 
 namespace app\Services;
 
-use app\core\Response;
 use app\model\Product;
 use app\model\ProductUnit;
+use app\Services\Image\ProductImageService;
 use app\Services\ImageService\ImagickService;
 
 class ProductService

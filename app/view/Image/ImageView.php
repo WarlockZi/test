@@ -4,9 +4,9 @@
 namespace app\view\Image;
 
 
-use app\core\FS;
 use app\model\Image;
 use app\Repository\ImageRepository;
+use app\Services\FS;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\TableBuilder\Table;
 use Illuminate\Database\Eloquent\Model;

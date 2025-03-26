@@ -4,8 +4,8 @@
 namespace app\Domain\Product\Image;
 
 
-use app\core\FS;
 use app\model\Product;
+use app\Services\FS;
 
 abstract class AbstractProductImage
 {

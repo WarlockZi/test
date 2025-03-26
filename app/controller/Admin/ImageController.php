@@ -2,10 +2,9 @@
 
 namespace app\controller\Admin;
 
-use app\controller\AppController;
-use app\core\Response;
 use app\model\Image;
 use app\Repository\ImageRepository;
+use app\Services\Response;
 use app\view\Image\ImageView;
 
 class ImageController extends AdminscController

@@ -3,10 +3,10 @@
 namespace app\controller;
 
 
-use app\core\Auth;
-use app\core\Response;
-use app\core\Route;
 use app\Services\AssetsService\Assets;
+use app\Services\AuthService\Auth;
+use app\Services\Response;
+use app\Services\Router\Route;
 
 class Controller
 {
@@ -22,6 +22,11 @@ class Controller
         if (!$this->isAjax()) {
             $this->assets = new Assets();
         }
+    }
+
+    public function __destruct()
+    {
+        if (!empty($this->ajax)) exit;
     }
 
     public function actionIndex(): void

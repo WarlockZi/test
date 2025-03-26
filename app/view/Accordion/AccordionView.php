@@ -2,9 +2,9 @@
 
 namespace app\view\Accordion;
 
-use app\core\Icon;
 use app\model\Opentest;
 use app\Repository\TestRepository;
+use app\Services\Icon;
 
 class AccordionView
 {

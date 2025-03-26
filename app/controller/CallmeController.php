@@ -2,8 +2,8 @@
 
 namespace app\controller;
 
-use app\core\Response;
 use app\Repository\CallmeRepository;
+use app\Services\Response;
 use app\Services\TelegramBot\TelegramBot;
 
 class CallmeController extends AppController

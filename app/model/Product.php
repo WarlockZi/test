@@ -3,8 +3,8 @@
 namespace app\model;
 
 
-use app\core\Auth;
-use app\Services\ProductImageService;
+use app\Services\AuthService\Auth;
+use app\Services\Image\ProductImageService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

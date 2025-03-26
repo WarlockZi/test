@@ -2,9 +2,9 @@
 
 namespace app\Repository;
 
-use app\core\Cache;
-use app\core\Icon;
+use app\Services\Cache\Cache;
 use app\Services\CatalogMobileMenu\CatalogMobileMenuService;
+use app\Services\Icon;
 
 
 class BlueRibbonRepository

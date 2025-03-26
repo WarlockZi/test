@@ -2,9 +2,9 @@
 
 namespace app\Services;
 
-use app\core\Auth;
 use app\model\User;
 use app\model\UserYandex;
+use app\Services\AuthService\Auth;
 
 class MockUserService
 {

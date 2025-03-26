@@ -3,8 +3,8 @@
 
 namespace app\Repository;
 
-use app\core\Auth;
 use app\model\Compare;
+use app\Services\AuthService\Auth;
 use Throwable;
 
 class CompareRepository

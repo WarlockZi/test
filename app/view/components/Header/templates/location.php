@@ -5,7 +5,7 @@
         itemtype="https://schema.org/PostalAddress"
 >
 
-    <?= \app\core\Icon::mapPin('feather'); ?>
+    <?= \app\Services\Icon::mapPin('feather'); ?>
     <?= \app\controller\Address::getFactAddress(); ?>
 
 </div>

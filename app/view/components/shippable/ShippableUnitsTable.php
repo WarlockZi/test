@@ -2,8 +2,8 @@
 
 namespace app\view\components\shippable;
 
-use app\core\FS;
 use app\model\Product;
+use app\Services\FS;
 use Illuminate\Database\Eloquent\Collection;
 
 class ShippableUnitsTable

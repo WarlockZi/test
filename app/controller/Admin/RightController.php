@@ -2,11 +2,7 @@
 
 namespace app\controller\Admin;
 
-use app\controller\AppController;
-use app\core\Response;
-use app\core\Route;
 use app\model\Right;
-use app\model\User;
 use app\view\Right\RightView;
 
 

@@ -2,9 +2,8 @@
 
 namespace app\Services\AdminSidebar;
 
-use app\core\Icon;
-use app\core\IUser;
-use app\model\User;
+use app\Services\AuthService\IUser;
+use app\Services\Icon;
 
 class AdminSidebar
 {

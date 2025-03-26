@@ -3,24 +3,24 @@
 namespace app\controller\Admin;
 
 
-use app\core\Response;
+use app\Services\Response;
 
 class CacheController extends AdminscController
 {
 
-    public function __construct()
+    public function __construct(
+        private readonly string $path = ROOT.'/storage/framework/caches/*.txt',
+    )
     {
         parent::__construct();
+
     }
 
     public function actionClear(): void
     {
-        $path = ROOT . "/tmp/cache/*.txt";
-        array_map("unlink", glob($path));
+        array_map("unlink", glob($this->path));
         Response::json(['popup' => 'Успешно']);
     }
-
-
 }
 
 

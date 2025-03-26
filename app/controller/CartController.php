@@ -2,13 +2,12 @@
 
 namespace app\controller;
 
-use app\core\Auth;
-use app\core\Response;
 use app\model\Order;
 use app\model\OrderItem;
 use app\Repository\CartRepository;
 use app\Repository\OrderitemRepository;
 use app\Repository\OrderRepository;
+use app\Services\Response;
 use app\view\Cart\CartView;
 
 class CartController extends AppController

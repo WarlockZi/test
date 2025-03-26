@@ -4,7 +4,7 @@
 namespace app\view\components\CustomMultiSelect;
 
 
-use app\core\FS;
+use app\Services\FS;
 
 class CustomMultiSelect
 {

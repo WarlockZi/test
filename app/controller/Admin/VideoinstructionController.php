@@ -2,9 +2,6 @@
 
 namespace app\controller\Admin;
 
-use app\controller\AppController;
-use app\core\Auth;
-use app\core\Route;
 use app\model\Videoinstruction;
 use app\view\Videoinstruction\VideoinstructionView;
 

@@ -3,7 +3,7 @@
 namespace app\view;
 
 use app\controller\Controller;
-use app\core\Route;
+use app\Services\Router\Route;
 
 class UserView extends View
 {

@@ -3,9 +3,9 @@
 
 namespace app\Repository;
 
-use app\core\Response;
 use app\model\Product;
 use app\model\ProductUnit;
+use app\Services\Response;
 use Illuminate\Support\Collection;
 
 class ProductRepository

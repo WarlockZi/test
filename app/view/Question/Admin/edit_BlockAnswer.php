@@ -1,6 +1,6 @@
 <? $checked = (bool)$answer->correct_answer === false ? '' : 'checked';
 
-use app\core\Icon; ?>
+use app\Services\Icon; ?>
 <div class="answer" data-id=<?= $answer->id; ?>>
 
     <div class="sort"><?= ++$i; ?></div>

@@ -11,7 +11,7 @@ class StorageProd extends Storage
     public function __construct()
     {
         parent::__construct();
-        $this->path = $this->storagePath . 'prod' . DIRECTORY_SEPARATOR;
+        $this->path = $this->path . 'prod' . DIRECTORY_SEPARATOR;
         return $this;
     }
 

@@ -4,7 +4,7 @@
 namespace app\view\components\Builders\Dnd;
 
 
-use app\core\FS;
+use app\Services\FS;
 use app\view\components\Traits\CleanString;
 
 class DndBuilder

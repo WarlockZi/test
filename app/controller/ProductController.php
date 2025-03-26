@@ -2,10 +2,10 @@
 
 namespace app\controller;
 
-use app\core\NotFound;
 use app\Repository\OrderRepository;
 use app\Repository\ProductRepository;
 use app\Services\Breadcrumbs\BreadcrumbsService;
+use app\Services\Router\NotFound;
 use app\view\Product\Admin\ProductFormView;
 
 

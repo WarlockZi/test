@@ -2,10 +2,10 @@
 
 namespace app\controller\Admin;
 
-use app\core\Auth;
-use app\core\Response;
 use app\model\User;
 use app\Repository\UserRepository;
+use app\Services\AuthService\Auth;
+use app\Services\Response;
 use app\view\User\UserView;
 use Throwable;
 

@@ -2,10 +2,10 @@
 
 namespace app\controller\Admin;
 
-use app\core\Response;
 use app\model\Test;
 use app\Repository\AnswerRepository;
 use app\Repository\TestRepository;
+use app\Services\Response;
 use app\view\Test\TestView;
 use app\view\View;
 

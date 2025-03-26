@@ -5,7 +5,7 @@ namespace app\Repository;
 
 use app\model\FilterUser;
 use app\model\Product;
-use app\Services\ProductImageService;
+use app\Services\Image\ProductImageService;
 
 class ProductFilterRepository
 {

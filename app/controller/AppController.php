@@ -1,10 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace app\controller;
 
-use app\core\Cache;
-use app\core\Response;
 use app\Repository\MorphRepository;
+use app\Services\Response;
 use Throwable;
 
 class AppController extends Controller
@@ -91,11 +91,6 @@ class AppController extends Controller
             Response::json(['popup' => 'Обновлен', 'model' => $model->toArray()]);
         }
         Response::json(['error' => 'Ошибка']);
-    }
-
-    public function __destruct()
-    {
-        if (!empty($this->ajax)) exit;
     }
 
     public function actionDelete(): void

@@ -2,9 +2,9 @@
 
 namespace app\Services\YandexAuth;
 
-use app\core\Auth;
 use app\model\Mock\MockYandexUser;
 use app\model\UserYandex;
+use app\Services\AuthService\Auth;
 use Throwable;
 
 class YaAuthService

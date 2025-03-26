@@ -2,14 +2,14 @@
 
 namespace app\view\Product\Admin;
 
-use app\core\FS;
 use app\model\Category;
 use app\model\Manufacturer;
 use app\model\Product;
 use app\model\Promotion;
 use app\model\Unit;
 use app\Repository\ProductRepository;
-use app\Services\ProductImageService;
+use app\Services\FS;
+use app\Services\Image\ProductImageService;
 use app\view\Category\CategoryFormView;
 use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
 use app\view\components\Builders\Dnd\DndBuilder;

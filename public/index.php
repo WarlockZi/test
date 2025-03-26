@@ -1,6 +1,6 @@
 <?php
 
-use app\core\Router;
+use app\Services\Router\Router;
 
 session_unset();
 session_start();

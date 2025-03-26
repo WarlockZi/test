@@ -1,6 +1,6 @@
 <?php
 
-use app\core\Icon;
+use app\Services\Icon;
 
 ?>
 <button class="nav-top util-item">

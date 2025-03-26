@@ -2,7 +2,7 @@
 
 namespace app\view\Filter;
 
-use app\core\FS;
+use app\Services\FS;
 
 class FilterView
 {

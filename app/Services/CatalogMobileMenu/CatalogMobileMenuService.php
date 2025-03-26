@@ -2,9 +2,9 @@
 
 namespace app\Services\CatalogMobileMenu;
 
-use app\core\Cache;
-use app\core\FS;
 use app\Repository\CategoryRepository;
+use app\Services\Cache\Cache;
+use app\Services\FS;
 
 class CatalogMobileMenuService
 {

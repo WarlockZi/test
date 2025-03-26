@@ -2,8 +2,6 @@
 
 namespace app\Repository;
 
-use app\core\FS;
-
 class MailYandexRepository
 {
     public function __construct()

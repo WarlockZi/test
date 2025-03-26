@@ -3,11 +3,11 @@
 namespace app\view;
 
 use app\controller\Controller;
-use app\core\Auth;
-use app\core\FS;
-use app\core\Route;
 use app\model\User;
 use app\Services\AssetsService\Assets;
+use app\Services\AuthService\Auth;
+use app\Services\FS;
+use app\Services\Router\Route;
 
 abstract class View
 {
@@ -24,7 +24,7 @@ abstract class View
     {
         $this->fs   = new FS(__DIR__ . '/');
         $this->user = Auth::getUser();
-        $this->view = ($route->getView() ?? 'index');
+        $this->view = $route->getView() ?? 'index';
     }
 
     public function getContent(): string
@@ -36,5 +36,16 @@ abstract class View
     {
         $this->setContent($this->controller);
         echo $this->fs->getContent($this->layout, ['view' => $this]);
+    }
+    public function noPermition(): string
+    {
+        $data = $this->controller->vars;
+        return $this->show(view:'notFound',  data:$data);
+    }
+
+    private static function show(string $layout = 'vitex', string $view='index', array $data=[])
+    {
+        $fs = new FS(__DIR__ . '/');
+        echo $fs->getContent($layout, $data);
     }
 }

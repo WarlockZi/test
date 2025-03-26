@@ -1,4 +1,4 @@
-<?php use app\core\Icon; ?>
+<?php use app\Services\Icon; ?>
 <div class="page-name">Результаты тестов</div>
 
 <div class="test-results__table">

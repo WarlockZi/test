@@ -4,23 +4,18 @@
 namespace app\view\components\Header\BlueRibbon;
 
 
-use app\core\FS;
 use app\Repository\BlueRibbonRepository;
-use Illuminate\Support\Collection;
+use app\Repository\CategoryRepository;
+use app\Services\FS;
 
 class BlueRibbon
 {
-    private string $str;
 
-    public function __construct(Collection $rootCategories)
+    public static function get():string
     {
+        $rootCategories = CategoryRepository::rootCategories();
         $fs        = new FS(__DIR__ . '/templates');
         $data      = BlueRibbonRepository::data($rootCategories);
-        $this->str = $fs->getContent('template', $data);
-    }
-
-    public function toString()
-    {
-        return $this->str;
+        return $fs->getContent('template', $data);
     }
 }

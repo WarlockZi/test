@@ -2,8 +2,14 @@
 
 namespace app\view\layouts;
 
+use app\Services\FS;
+
 class Layout
 {
+    protected FS $layoutFs;
+    protected string $layout;
+    protected array $content;
+
     protected function setErrors(): void
     {
         if ($this->route->isNotFound()) {
@@ -17,4 +23,9 @@ class Layout
             $this->route->setError('Файл вида не найден -' . $view);
         }
     }
+    public function render(): void
+    {
+        echo $this->layoutFs->getContent($this->layout, $this->content);
+    }
+
 }

@@ -1,6 +1,6 @@
 <?php
 
-use app\core\Icon;
+use app\Services\Icon;
 
 ?>
 <!DOCTYPE html>
@@ -42,7 +42,7 @@ use app\core\Icon;
 
 <div class="user-content-wrap">
     <main class="user-content">
-        <? if (\app\core\Auth::userIsAdmin()): ?>
+        <? if (\app\Services\AuthService\Auth::userIsAdmin()): ?>
             <div class="admin-gap"></div>
         <? endif; ?>
 

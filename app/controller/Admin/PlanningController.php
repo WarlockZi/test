@@ -2,8 +2,8 @@
 
 namespace app\controller\Admin;
 
-use app\core\Auth;
 use app\model\Todo;
+use app\Services\AuthService\Auth;
 use app\view\Planning\PlanningView;
 
 class PlanningController extends AdminscController

@@ -2,8 +2,8 @@
 
 namespace app\Services\Breadcrumbs;
 
-use app\core\FS;
 use app\model\Category;
+use app\Services\FS;
 use app\view\components\cardPanel\CardPanel;
 
 class BaseBreadcrumbs

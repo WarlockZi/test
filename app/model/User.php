@@ -3,9 +3,9 @@
 namespace app\model;
 
 
-use app\core\Auth;
-use app\core\IUser;
 use app\Repository\ImageRepository;
+use app\Services\AuthService\Auth;
+use app\Services\AuthService\IUser;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;

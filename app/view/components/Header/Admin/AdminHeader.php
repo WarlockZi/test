@@ -4,9 +4,9 @@
 namespace app\view\components\Header\Admin;
 
 
-use app\core\FS;
-use app\core\IUser;
 use app\Repository\FeedbackRepository;
+use app\Services\AuthService\IUser;
+use app\Services\FS;
 
 class AdminHeader
 {

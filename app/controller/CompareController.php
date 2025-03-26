@@ -4,10 +4,10 @@
 namespace app\controller;
 
 
-use app\core\Auth;
-use app\core\Response;
 use app\model\Compare;
 use app\Repository\CompareRepository;
+use app\Services\AuthService\Auth;
+use app\Services\Response;
 use app\view\Compare\CompareView;
 
 

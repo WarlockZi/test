@@ -5,12 +5,12 @@
     <div class="a-header-main">
 
         <div class="burger">
-            <?= \app\core\Icon::gamburger() ?>
+            <?= \app\Services\Icon::gamburger() ?>
         </div>
 
         <a class="logo" href="/" title="На главную">
-            <?= \app\core\Icon::logo_square1() ?>
-            <?= \app\core\Icon::logo_vitex_full() ?>
+            <?= \app\Services\Icon::logo_square1() ?>
+            <?= \app\Services\Icon::logo_vitex_full() ?>
         </a>
 
         <?= $searchPanel; ?>
