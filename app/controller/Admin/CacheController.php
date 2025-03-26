@@ -19,7 +19,7 @@ class CacheController extends AdminscController
     public function actionClear(): void
     {
         array_map("unlink", glob($this->path));
-        Response::json(['popup' => 'Успешно']);
+        Response::exitWithPopup('Кэш очищен');
     }
 }
 

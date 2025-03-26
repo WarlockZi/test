@@ -4,7 +4,7 @@ import "../components/footer/footer.scss";
 import "../components/popup.scss";
 import "./admin.scss";
 
-import "./model/cache.js";
+import "./cache/Cache.js";
 import "../components/accordion/accordion.js";
 import "../components/date/date.js";
 
@@ -25,6 +25,7 @@ import Pages from "@src/Admin/Pages/pages.js";
 import Users from "@src/Admin/User/users.js";
 import User from "@src/Admin/User/user.js";
 import AdminSidebar from "@src/Admin/components/AdminSidebar/AdminSidebar.js";
+import Cache from "./cache/Cache.js";
 // import ProductFilter from "../Admin/ProductFilter/ProductFilter.js";
 // import Promotion from "@src/Promotions/Promotion.js";
 
@@ -39,6 +40,7 @@ $(document).ready(async function () {
     const { default: Tables } = await import("../components/table/Tables.js");
     new Tables();
   }
+  new Cache();
   new Search(true);
   new Navigation();
   new AdminHeader();
