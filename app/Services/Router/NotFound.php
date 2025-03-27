@@ -9,20 +9,21 @@ use app\Services\AssetsService\UserAssets;
 use app\Services\FS;
 use app\view\AdminView;
 use app\view\UserView;
+use JetBrains\PhpStorm\NoReturn;
 
 class NotFound extends Controller
 {
-    protected $file404;
+    protected string $file404;
 
     public function __construct()
     {
         parent::__construct();
         $this->assets = new UserAssets();
         $this->assets->setMeta('Страница не найдена', 'Страница не найдена');
-        $this->file404 = ROOT . '/app/view/404/del_index.php';
+        $this->file404 = ROOT . '/app/view/404/404.php';
     }
 
-    public static function url(string $url)
+    #[NoReturn] public static function url(string $url): void
     {
         $error = "Плохой запрос url - {$url}";
         RouterError::setError($error);
@@ -33,7 +34,7 @@ class NotFound extends Controller
         exit();
     }
 
-    protected static function setView(Route $route)
+    protected static function setView(Route $route): UserView|AdminView
     {
         if ($user->can(['role_employee']) && $route->isAdmin) {
             return new AdminView(new self);
@@ -42,7 +43,7 @@ class NotFound extends Controller
         }
     }
 
-    public static function action(Route $route)
+    #[NoReturn] public static function action(Route $route): void
     {
         $error = "Плохой action - {$route->action} у контроллера - {$route->controller::shortClassName($route->controller)}";
         http_response_code(404);
@@ -52,18 +53,12 @@ class NotFound extends Controller
         exit();
     }
 
-    public static function NotFound(string $slug)
+    public static function NotFound(string $slug): string
     {
         http_response_code(404);
-        $file = 'del_index.php';
         $path = ROOT . '/app/view/404';
         $fs   = (new FS($path));
-        $view = $fs->getContent('index');
-        return $view;
-//        Error::setError('Страница не найдена');
-//        $this->view = '404';
-        $product = null;
-
+        return $fs->getContent('index');
     }
 
 }
