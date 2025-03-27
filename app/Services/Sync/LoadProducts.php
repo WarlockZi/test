@@ -93,7 +93,7 @@ class LoadProducts
         $g['print_name']     = $good['ЗначенияРеквизитов']['ЗначениеРеквизита'][3]['Значение'];
         $g['1s_category_id'] = $good['Группы']['Ид'];
         $g['slug']           = $this->setSlug($g);
-        $g['1s_category_id']    = $this->setCategory($good, $g);
+        $g['category_id']    = $this->setCategory($good);
         $g['deleted_at']     = null;
         $g['updated_at']     = Carbon::now()->toDateTimeString();
         return $g;
@@ -114,7 +114,7 @@ class LoadProducts
 
     }
 
-    private function setCategory($good, $g): string
+    private function setCategory($good): string
     {
         $category_id = Category::where('1s_id', $good['Группы']['Ид'])
             ->first()->id;
