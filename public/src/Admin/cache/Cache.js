@@ -2,7 +2,6 @@ import { $, post } from "../../common.js";
 
 export default class Cache {
   constructor() {
-    debugger;
     this.linkCacheClear = $("#cache-clear").first();
     this.linkCacheClear.addEventListener("click", this.clear);
   }
