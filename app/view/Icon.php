@@ -1,6 +1,8 @@
 <?php
 
-namespace app\Services;
+namespace app\view;
+
+use app\Services\FS;
 
 class Icon
 {
