@@ -1,7 +1,7 @@
 <!--  BUTTONS  -->
 <div class="item_buttons">
 
-    <?php use app\Services\Icon;
+    <?php use app\view\Icon;
 
     if ($field->isDel()): ?>
         <div class="del"

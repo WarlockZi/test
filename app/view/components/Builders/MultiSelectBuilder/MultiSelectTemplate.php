@@ -19,7 +19,7 @@
         </div>
 
         <div class="arrow">
-            <?= \app\Services\Icon::ArrowDropDownIcon() ?>
+            <?= \app\view\Icon::ArrowDropDownIcon() ?>
         </div>
 
         <ul>

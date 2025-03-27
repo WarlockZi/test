@@ -112,8 +112,9 @@ class SyncService
                 $this->LoadProducts();
                 $this->LoadPrices();
                 $this->log('Load успех' . PHP_EOL);
+            } else {
+                throw new \Exception('import file not found');
             }
-            throw new \Exception('import file not found');
         } catch (\Throwable $e) {
             $this->logError("--- Ошибка load ", $e);
         }

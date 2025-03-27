@@ -5,7 +5,7 @@ namespace app\view\components\cardPanel;
 use app\model\Category;
 use app\model\Product;
 use app\Services\FS;
-use app\Services\Icon;
+use app\view\Icon;
 
 class CardPanel
 {

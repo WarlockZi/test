@@ -41,7 +41,8 @@ class Category extends Model
     {
         return $this->hasMany(Product::class,
             '1s_category_id',
-            '1s_id')
+            '1s_id',
+        )
             ->where('instore', 0)
             ->where('name', 'regexp', '\\s?\\*\\s?$')
             ->with('mainImages')

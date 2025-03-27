@@ -1,6 +1,6 @@
 <?php
 
-use app\Services\Icon;
+use app\view\Icon;
 
 ?>
 <div class="sync">

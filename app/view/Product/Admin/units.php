@@ -1,6 +1,6 @@
 <?php
 
-use app\Services\Icon;
+use app\view\Icon;
 use app\view\Product\Admin\ProductFormView;
 
 ?>

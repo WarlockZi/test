@@ -1,5 +1,5 @@
-<?php use app\Services\Icon;
-use app\view\share\shippable\ShippableUnitsTableFactory;
+<?php use app\view\components\shippable\ShippableUnitsTableFactory;
+use app\view\Icon;
 
 $authed = \app\Services\AuthService\Auth::getUser();
 ?>
@@ -7,13 +7,13 @@ $authed = \app\Services\AuthService\Auth::getUser();
 
     <h1>Корзина</h1>
 
-    <? if (empty($order) || !$order?->products?->count()): ?>
+    <?php if (empty($order) || !$order?->products?->count()): ?>
 
         <div class="empty-cart">
             Корзина пуста
         </div>
 
-    <? else: ?>
+    <?php else: ?>
 
     <div class="content">
 
@@ -66,7 +66,7 @@ $authed = \app\Services\AuthService\Auth::getUser();
     </div>
 
 </div>
-<? endif; ?>
+<?php endif; ?>
 
 
 

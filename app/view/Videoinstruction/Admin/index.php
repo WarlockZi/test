@@ -12,7 +12,7 @@
                 </h1>
             <? endif; ?>
             <a href="<?= $video['link']; ?>">
-                <?= \app\Services\Icon::youtube(); ?>
+                <?= \app\view\Icon::youtube(); ?>
                 <?= $video['name']; ?>
             </a>
         <? endforeach; ?>

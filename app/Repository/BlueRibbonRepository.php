@@ -4,7 +4,7 @@ namespace app\Repository;
 
 use app\Services\Cache\Cache;
 use app\Services\CatalogMobileMenu\CatalogMobileMenuService;
-use app\Services\Icon;
+use app\view\Icon;
 
 
 class BlueRibbonRepository

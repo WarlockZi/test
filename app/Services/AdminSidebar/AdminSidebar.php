@@ -3,7 +3,7 @@
 namespace app\Services\AdminSidebar;
 
 use app\Services\AuthService\IUser;
-use app\Services\Icon;
+use app\view\Icon;
 
 class AdminSidebar
 {

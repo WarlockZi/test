@@ -1,4 +1,4 @@
-<?php use app\Services\Icon; ?>
+<?php use app\view\Icon; ?>
 
 <nav class="menu">
     <div class="header-catalog-menu">
