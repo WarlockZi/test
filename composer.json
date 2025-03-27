@@ -19,7 +19,8 @@
     "spatie/laravel-sitemap": "^6.4",
     "eftec/bladeone": "^4.18",
     "ext-simplexml": "*",
-    "ext-pdo": "*"
+    "ext-pdo": "*",
+    "php-di/php-di": "^7.0"
   },
   "config": {
     "platform-check": false

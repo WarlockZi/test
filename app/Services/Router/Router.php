@@ -70,7 +70,7 @@ class Router
         $layout->render();
     }
 
-    private function handleError($exception): void
+    private function handleError(\Throwable $exception): void
     {
         if (DEV) {
             $this->route->setError($exception->getMessage());

@@ -3,6 +3,7 @@
 use app\Services\Cache\Cache;
 use app\Services\DotEnv;
 use app\Services\FS;
+use DI\ContainerBuilder;
 
 ini_set("short_open_tag", 1);
 ini_set('memory_limit', '256M');
@@ -28,6 +29,8 @@ define('PIC_SVG', env("PIC_SVG"));
 
 Cache::$enabled = env('CACHE');
 
+$containerBuilder = new ContainerBuilder();
+$containerBuilder->addDefinitions('../config.php');
 
 if (DEV) {
     ini_set('display_errors', 'On');
