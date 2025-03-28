@@ -1,9 +1,15 @@
-Controllers наследуются от APP, а он наследутся от базового Controller  
+Моя попытка сделать свой велосипедный фреймворк MVC
+
+Использовал PHP-DI container c autwiring
+
+Controllers наследуются от APP, а он наследутся от базового Controller
 
 В базовом Controller сохраняется вид и route
 
 В Router в методе disaptch подключается контроллер и action, 
 затем вид.
+
+
 
 В шаблонах путей можно определить alias для action 
 
