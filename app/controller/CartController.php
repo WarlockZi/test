@@ -1,11 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace app\controller;
 
 use app\model\Order;
 use app\model\OrderItem;
 use app\Repository\CartRepository;
-use app\Repository\OrderitemRepository;
 use app\Repository\OrderRepository;
 use app\Services\Response;
 use app\view\Cart\CartView;
@@ -15,14 +15,11 @@ class CartController extends AppController
     protected CartView $cartView;
     protected CartRepository $repo;
 
-    public function __construct(
-        protected OrderRepository     $orderRepo = new OrderRepository(),
-        protected OrderitemRepository $orderItemRepo = new OrderitemRepository(),
-    )
+    public function __construct(CartView $cartView, CartRepository $repo)
     {
         parent::__construct();
-        $this->cartView = new CartView();
-        $this->repo     = new CartRepository();
+        $this->cartView = $cartView;
+        $this->repo     = $repo;
     }
 
     public function actionIndex(): void
@@ -33,7 +30,6 @@ class CartController extends AppController
 
     public function actionDrop(): void
     {
-//        if (!isset($this->ajax['cartToken'])) exit('No cart sess');
         OrderItem::query()
             ->delete();
         if (isset($_COOKIE['cartDeadline'])) setcookie('cartDeadline', '', time() - 3600);

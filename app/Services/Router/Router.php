@@ -1,9 +1,10 @@
 <?php
-
+declare(strict_types=1);
 namespace app\Services\Router;
 
 use app\Services\AuthService\Auth;
 use app\Services\Logger\ErrorLogger;
+use DI\Container;
 
 class Router
 {
@@ -43,7 +44,7 @@ class Router
         $this->route->isNotFound() ? $this->route->setActionName('default') : $f = 1;
     }
 
-    public function dispatch(): void
+    public function dispatch(Container $container): void
     {
 
         try {
@@ -53,7 +54,7 @@ class Router
                 header("Location:/");
                 exit();
             }
-            $controller = new $controller();
+            $controller = $container->get($controller);
             $controller->setRoute($this->route);
             $action = $this->route->getAction();
             method_exists($controller, $action)

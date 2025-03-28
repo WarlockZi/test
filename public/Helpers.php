@@ -9,6 +9,18 @@ use app\Services\Response;
 
 class Helpers
 {
+
+    //    if (DEV) {
+//        \app\Services\MockUserService::mockUser();
+//    }
+//    \app\Services\UrlService::generateUrls();
+//    new \app\Services\XLService\XLService();
+//    \app\Services\SiteMapService::generateMap();
+
+//    $cli =  new \app\Services\Chat_3\Cli();
+//    $handler = new \app\Services\Chat_3\ServerHandler();
+//    $client = new \app\Services\Chat_3\Client();
+
     //copy from unitables to ProductUnit
     public static function copyUnits()
     {
