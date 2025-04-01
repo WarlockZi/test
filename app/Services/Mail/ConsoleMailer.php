@@ -1,6 +1,6 @@
 <?php
 
-namespace app\core\Mail;
+namespace app\Services\Mail;
 
 use app\Repository\MailConsoleRepository;
 use Throwable;

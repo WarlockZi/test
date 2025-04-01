@@ -1,6 +1,6 @@
 <?php
 
-namespace app\core\Mail;
+namespace app\Services\Mail;
 
 interface Mailer
 {
