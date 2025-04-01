@@ -9,7 +9,7 @@ $this->add("^\/(?P<controller>category)\/(?P<slug>[_a-zA-Z0-9-]+)?$", ['controll
 //$this->add("^\/(?P<controller>like)$", ['controller' => 'Like']);
 
 $this->add("^\/(?P<controller>promotion)\/?(?P<slug>[_a-zA-Z0-9-]+)?$", ['controller' => 'Promotion']);
-$this->add("^\/(?P<controller>main)\/(?P<action>[a-zA-Z0-9]+)$");
+$this->add("^\/(?P<controller>main.Blade.php)\/(?P<action>[a-zA-Z0-9]+)$");
 $this->add("^\/(?P<controller>logistic)\/(?P<action>[a-zA-Z0-9]+)$");
 $this->add("^\/(?P<controller>auth)\/(?<action>[a-z0-9]+)?\/?(?<id>[0-9a-zA-z]+)?");
 $this->add("^\/.?search.?", ['controller' => 'search', 'action' => 'index']);

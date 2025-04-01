@@ -39,16 +39,6 @@ class Mail
                 'app_key' => env('YANDEX_APP_KEY'), // пароль для стороннего приложения
             ],
 
-            'vitex' => [
-                'mail' => 'vitexopt@vitexopt.ru',
-                'host' => 'smtp.vitexopt.ru',
-                'port' => '465',
-                'user' => "vitexopt@vitexopt.ru",
-                'pass' => "KiteKite35",
-                'from' => 'vitexopt@vitexopt.ru',
-                'replyTo' => 'vvoronik@yandex.ru',
-                'to' => 'vitaliy04111979@gmail.com',
-            ],
         ];
 
         return $variants[$this->variant];
