@@ -5,17 +5,20 @@ namespace app\view\components\Header\BlueRibbon;
 
 
 use app\Repository\BlueRibbonRepository;
-use app\Repository\CategoryRepository;
-use app\Services\FS;
+use Throwable;
 
 class BlueRibbon
 {
 
-    public static function get():string
+    public function __invoke(BlueRibbonRepository $blueRibbonRepository): array
     {
-        $rootCategories = CategoryRepository::rootCategories();
-        $fs        = new FS(__DIR__ . '/templates');
-        $data      = BlueRibbonRepository::data($rootCategories);
-        return $fs->getContent('template', $data);
+        try {
+            $data = $blueRibbonRepository::data();
+        } catch (Throwable $exception) {
+            $exc = $exception;
+        }
+        return $data;
+
     }
+
 }

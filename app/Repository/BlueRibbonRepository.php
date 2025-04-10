@@ -2,36 +2,42 @@
 
 namespace app\Repository;
 
-use app\Services\Cache\Cache;
 use app\Services\CatalogMobileMenu\CatalogMobileMenuService;
 use app\view\Icon;
 
 
 class BlueRibbonRepository
 {
-    public static function data($rootCategories): array
+    public static function data(): array
     {
+        $mC = APP->get(CatalogMobileMenuService::class)->get();
         return [
-            'front_categories' => CategoryRepository::rootCategories(),
-            'child_categories' => self::getRootCategories($rootCategories),
+            'front_categories' => APP->get('rootCategories'),
+            'child_categories' => self::getChildCategoriesNew(),
             'oItemsCount' => OrderRepository::count(),
             'icon' => Icon::shoppingCart('feather'),
-            'mobile_categories' => (new CatalogMobileMenuService())->get(),
+            'mobile_categories' => $mC->get(),
         ];
     }
 
-    private static function getRootCategories($rootCategories): array
+    public static function getChildCategories(): array
     {
-        return Cache::get('blueRibbonCategories',
-            function () use ($rootCategories) {
-                $child_categories = [];
-                foreach ($rootCategories as $rootCat) {
-                    ob_start();
-                    self::buildMenu($rootCat->childrenRecursive->toArray());
-                    $child_categories[$rootCat->name] = ob_get_clean();
-                }
-                return $child_categories;
-            }, Cache::$timeLife1);
+        $child_categories = [];
+        foreach (APP->get('rootCategories') as $rootCat) {
+            ob_start();
+            self::buildMenu($rootCat['children_recursive']);
+            $child_categories[$rootCat['name']] = ob_get_clean();
+        }
+        return $child_categories;
+    }
+
+    public static function getChildCategoriesNew($child_categories = []): array
+    {
+        foreach (APP->get('rootCategories') as $rootCat) {
+            array_push($child_categories, $rootCat->childrenRecursive);
+        }
+        return $child_categories->toArray();
+
     }
 
     private static function buildMenu(array $categories, int $i = 1): void
@@ -45,16 +51,16 @@ class BlueRibbonRepository
         echo '</ul>';
     }
 
-    private static function renderLink(array $item, int $i): void
+    private static function renderLink(array $category, int $i): void
     {
-        if (count($item['children_recursive'])) {
+        if (count($category['children_recursive'])) {
             echo "<div class = 'wrap'>" .
-                "<a href='{$item['href']}'>{$item['name']}</a>" .
+                "<a href='{$category['href']}'>{$category['name']}</a>" .
                 "<span class='arrow'>></span>" .
                 "</div>";
-            self::buildMenu($item['children_recursive'], ++$i);
+            self::buildMenu($category['children_recursive'], ++$i);
         } else {
-            echo "<a href='{$item['href']}'>{$item['name']}</a>";
+            echo "<a href='{$category['href']}'>{$category['name']}</a>";
         }
     }
 

@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 
 namespace app\Repository;
 
@@ -10,14 +10,14 @@ use Illuminate\Database\Eloquent\Collection;
 
 class CategoryRepository
 {
-    public static function rootCategories()
+    public static function rootCategories():array
     {
         return Cache::get('rootCategories',
             function () {
                 return Category::withWhereHas('ownProperties',
                     fn($q) => $q->where('show_front', 1))
                     ->with('childrenRecursive')
-                    ->get();
+                    ->get()->toArray();
             },
             Cache::$timeLife1_000
         );

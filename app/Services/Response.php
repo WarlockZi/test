@@ -1,6 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace app\Services;
+
+use JetBrains\PhpStorm\NoReturn;
 
 class Response
 {
@@ -12,38 +15,35 @@ class Response
     {
     }
 
-//
-
-    public static function json(array $arr = []): void
+    #[NoReturn] public static function json(array $arr = []): void
     {
         if ($arr) {
             header('Content-Type: application/json');
             exit(json_encode(['arr' => $arr]));
         }
+        exit();
     }
 
-    public static function exitWithPopup(string $msg): void
+    #[NoReturn] public static function exitWithPopup(string $msg): void
     {
         if ($msg) {
             exit(json_encode(['arr' => ['popup' => $msg]]));
         }
         exit();
     }
-//    public function response(string|array $response, $status = 200)
-//    {
-//        http_response_code($status);
-//        if (is_array($response)) {
-//            self::json($response);
-//        }
-//        exit($response);
-//    }
-//
-//    public function view(string $file, array $data = [], int $status=200): string
-//    {
+
+    #[NoReturn] public static function view(string $file, array $data = [], int $status = 200): string
+    {
+        try {
+            $blade = APP->get('Blade');
+            exit($blade->run($file, $data));
+        } catch (\Throwable $exception) {
+            $exception = $exception->getMessage();
+        }
+        return '';
 //        $layout = Auth::userIsAdmin() ? $this->layout : 'app\view\layouts\UserLayout';
 //        $layout = new $layout($this->route, $this);
 //        $layout->render();
 //        exit();
-//    }
-
+    }
 }

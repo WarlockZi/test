@@ -11,7 +11,7 @@
                     <ul>
                         <?php foreach ($rootCategories as $category): ?>
                             <li>
-                                <a href="/catalog/<?= $category->ownProperties->path; ?>"><?= mb_strtolower($category->name); ?></a>
+                                <a href="/catalog/<?= $category['own_properties']['path']; ?>"><?= mb_strtolower($category['name']); ?></a>
                             </li>
 
                         <?php endforeach ?>

@@ -89,7 +89,7 @@ export default class Feedback {
   setInputs() {
     this.name = this.formWrapper[qs]("#name");
     this.email = this.formWrapper[qs]("#email");
-    this.phone = this.formWrapper[qs]("#phone");
+    this.phone = this.formWrapper[qs]("#phone.blade.php");
     this.message = this.formWrapper[qs]("#message");
   }
 

@@ -8,35 +8,34 @@ use app\Services\FS;
 
 class ErrorLogger implements ILogger
 {
-    protected string $logFile;
+    protected string $errorLog;
 
-    public function __construct($fileName = 'errors/errors.txt')
+    public function __construct(string $fileName)
     {
         $this->setFile($fileName);
     }
 
     public function read(): string
     {
-        return file_get_contents($this->logFile);
+        return file_get_contents($this->errorLog);
     }
 
     public function write(string $content): bool
     {
-        if (is_readable($this->logFile)) {
-//        file_put_contents(time(), $content.PHP_EOL.PHP_EOL, FILE_APPEND);
-        return file_put_contents($this->logFile, PHP_EOL . PHP_EOL . date('Y-m-d H:i:s') . PHP_EOL . $content . PHP_EOL, FILE_APPEND);
+        if (is_readable($this->errorLog)) {
+        return file_put_contents($this->errorLog, PHP_EOL . PHP_EOL . date('Y-m-d H:i:s') . PHP_EOL . $content . PHP_EOL, FILE_APPEND);
         }
         return false;
     }
 
     public function setFile(string $fileName): ILogger
     {
-        $this->logFile = FS::platformSlashes(ROOT . '/storage/logs/errors/' . $fileName);
+        $this->errorLog = FS::platformSlashes(ROOT . '/storage/logs/errors/' . $fileName);
         return $this;
     }
 
     public function clear(): void
     {
-        if ($this->logFile) file_put_contents($this->logFile, '');
+        if ($this->errorLog) file_put_contents($this->errorLog, '');
     }
 }

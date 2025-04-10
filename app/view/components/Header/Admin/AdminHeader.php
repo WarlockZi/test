@@ -7,8 +7,9 @@ namespace app\view\components\Header\Admin;
 use app\Repository\FeedbackRepository;
 use app\Services\AuthService\IUser;
 use app\Services\FS;
+use app\view\components\Header\IHeader;
 
-class AdminHeader
+class AdminHeader implements IHeader
 {
     protected string $header;
 

@@ -8,7 +8,7 @@ use app\controller\Controller;
 use app\Services\AuthService\Auth;
 use app\view\layouts\AdminLayout;
 use app\view\layouts\Layout;
-use app\view\layouts\UserLayout;
+use app\view\layouts\MainLayout;
 
 class Route
 {
@@ -32,6 +32,7 @@ class Route
 
     protected string $host = '';
     protected string $protocol = '';
+
     protected bool $notFound = true;
     protected array $errors = [];
 
@@ -40,14 +41,11 @@ class Route
         $this->uri = $_SERVER['REQUEST_URI'];
         $this->setUrl();
         $this->setIsAdmin();
-        $this->setLayout();
+//        $this->setLayout();
         $this->setNamespace();
     }
 
-    public function getRedirect(): array
-    {
-        return $this->redirect;
-    }
+
 
     public function setRedirect(array $redirect): void
     {
@@ -71,29 +69,27 @@ class Route
         $this->url = '/' . trim($url, '/');
     }
 
-    public function getUri(): string
-    {
-        return $this->uri;
-    }
-
     public function setUri(string $uri): void
     {
         $this->uri = $uri;
     }
 
-    public function getView(): string
-    {
-        return $this->view ?? $this->action ?? 'index';
-    }
 
     public function setView(string $view): void
     {
         $this->view = $view;
     }
-
+    public function setHost()
+    {
+        $this->host = $_SERVER['HTTP_HOST'];
+    }
     public function setActionName(string $action): void
     {
         $this->actionName = $action ? $action : 'action' . ucfirst($this->action);
+    }
+    public function setAction(Route $route): void
+    {
+        $this->actionName = 'action' . ucfirst($route->action);
     }
 
     public function setParams(string $params): void
@@ -108,6 +104,14 @@ class Route
         $this->params = $params;
     }
 
+    public function setIsAdmin(): void
+    {
+        $this->isAdmin = str_contains($this->uri, 'adminsc');
+    }
+    public function setNotFound(): void
+    {
+        $this->notFound = false;
+    }
     public function setError(string $error): void
     {
         $this->errors[] = $error;
@@ -118,50 +122,26 @@ class Route
         return 'action' . ucfirst($this->action);
     }
 
-    public function setAction(Route $route): void
+    public function getUri(): string
     {
-        $this->actionName = 'action' . ucfirst($route->action);
+        return $this->uri;
     }
-
+    public function getView(): string
+    {
+        return $this->view ?? $this->action ?? 'index';
+    }
     public function getActionName(): string
     {
         return $this->action;
     }
 
-    public function isHome(): bool
-    {
-        return $this->uri === '/';
-    }
-
-    public function isNotFound(): bool
-    {
-        return $this->notFound;
-    }
-
-    public function setNotFound(): void
-    {
-        $this->notFound = false;
-    }
 
     public function getBaseController(): string
     {
         return $this->baseController;
     }
 
-    public function getLayout(Route $route, Controller $controller): Layout
-    {
-        $layout = $this->isAdmin
-            ? $this->layout
-            : 'app\view\layouts\UserLayout';
-        return new $layout($route, $controller);
-    }
 
-    public function setLayout(): void
-    {
-        $this->layout = ($this->isAdmin && Auth::getUser())
-            ? AdminLayout::class
-            : UserLayout::class;
-    }
 
     public function getController(): string
     {
@@ -190,16 +170,20 @@ class Route
             $this->namespace = 'app\controller\\';
         }
     }
+    public function isHome(): bool
+    {
+        return $this->uri === '/';
+    }
 
+    public function isNotFound(): bool
+    {
+        return $this->notFound;
+    }
     public function isAdmin(): bool
     {
         return $this->isAdmin;
     }
 
-    public function setIsAdmin(): void
-    {
-        $this->isAdmin = str_contains($this->uri, 'adminsc');
-    }
 
     public function getControllerFullName(): string
     {
@@ -242,34 +226,16 @@ class Route
         return $_SERVER['HTTP_HOST'];
     }
 
-    public function setHost()
+
+    public function getLayout(Route $route, Controller $controller): Layout
     {
-        $this->host = $_SERVER['HTTP_HOST'];
+        $layout = $this->isAdmin
+            ? $this->layout
+            : 'app\view\layouts\MainLayout';
+        return new $layout($route, $controller);
     }
-//    public function setSlug(string $slug): void
-//    {
-//        $this->slug = $slug;
-//    }
-//
-//    public function setId(string $id): void
-//    {
-//        $this->id = $id;
-//    }
-
-//
-//    public function setProtocol()
-//    {
-//        $this->protocol = $_SERVER['REQUEST_SCHEME'];
-//    }
-//    public function setControllerName(string $controllerName): void
-//    {
-//        $this->controllerName = $controllerName;
-//    }
-//    public function setController(): void
-//    {
-//        $this->setNamespace();
-//        $this->controllerName = ucfirst($this->controller);
-//        $this->controller     = $this->namespace . $this->controllerName . 'Controller';
-//    }
-
+    public function getRedirect(): array
+    {
+        return $this->redirect;
+    }
 }

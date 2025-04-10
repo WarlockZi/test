@@ -247,7 +247,8 @@ export default class cartLogin {
     const form = e.target.closest(".box");
     const email = sanitizeInput(form[qs]("input#email")?.value) ?? null;
     const password = sanitizeInput(form[qs]("input#password")?.value) ?? null;
-    const phone = sanitizeInput(form[qs]("input#phone")?.value) ?? null;
+    const phone =
+      sanitizeInput(form[qs]("input#phone.blade.php")?.value) ?? null;
     const sess = getPhpSession() ?? null;
     return { email, password, phone, sess };
   }

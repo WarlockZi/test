@@ -13,16 +13,17 @@ class Router
     protected string $namespace;
     protected ErrorLogger $errorLogger;
 
-    public function __construct(string $uri = '')
+    public function __construct(string $uri, ErrorLogger $errorLogger)
     {
-        require_once ROOT . '/app/Services/Router/routes.php';
+
         $this->matchRoute();
-        $this->errorLogger = new ErrorLogger();
+        $this->errorLogger = $errorLogger;
     }
 
     protected function matchRoute(): void
     {
         $this->route = new Route();
+        require_once ROOT . '/app/Services/Router/routes.php';
         foreach ($this->routes as $pattern => $r) {
             if (preg_match("#$pattern#i", $this->route->getUrl(), $matches)) {
 
@@ -55,6 +56,7 @@ class Router
                 exit();
             }
             $controller = $container->get($controller);
+
             $controller->setRoute($this->route);
             $action = $this->route->getAction();
             method_exists($controller, $action)
@@ -67,8 +69,8 @@ class Router
         }
 
         $this->route->setView($this->route->getActionName());
-        $layout = $this->route->getLayout($this->route, $controller);
-        $layout->render();
+//        $layout = $this->route->getLayout($this->route, $controller);
+//        $layout->render();
     }
 
     private function handleError(\Throwable $exception): void
@@ -85,7 +87,6 @@ class Router
     {
         $this->routes[$regexp] = $route;
     }
-
 
 }
 

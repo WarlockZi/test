@@ -1,31 +1,25 @@
 <?php
-
+declare(strict_types=1);
 
 namespace app\view\components\Header;
 
 
-use app\Services\FS;
 use app\Services\Router\Route;
 use app\view\components\Header\BlueRibbon\BlueRibbon;
-use app\view\Icon;
-use Illuminate\Support\Collection;
 
 
-class UserHeader
+class UserHeader implements IHeader
 {
-    protected string $header;
-    protected FS $fs;
+    protected array $header;
 
-    public function __construct(Route $route, Collection $rootCategories)
+    public function __construct(Route $route, BlueRibbon $blueRibbon)
     {
-        $this->fs           = new FS(__DIR__ . '/templates');
-        $data['blueRibbon'] = BlueRibbon::get();
-        $data['index']      = $route->isHome();
-        $data['logo']       = Icon::logo_square1() . Icon::logo_vitex1();
-        $this->header       = $this->fs->getContent('vitex_header', $data);
+        $this->header['blueRibbon'] = $blueRibbon;
+        $this->header['isHome']     = $route->isHome();
+        $this->header['logo']       = APP->get('logo');
     }
 
-    public function getHeader():string
+    public function getHeader(): array
     {
         return $this->header;
     }

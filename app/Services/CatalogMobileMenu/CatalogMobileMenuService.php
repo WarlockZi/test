@@ -2,45 +2,37 @@
 
 namespace app\Services\CatalogMobileMenu;
 
-use app\Repository\CategoryRepository;
-use app\Services\Cache\Cache;
-use app\Services\FS;
+use app\view\blade\View;
 
 class CatalogMobileMenuService
 {
-    private array $categories = [];
+    private View $view;
     private string $string;
-    private FS $fs;
+    private array $categories = [];
 
-    public function __construct()
+
+    public function __construct(View $view, string $string, array $categories)
     {
-        $this->string     = '';
-        $this->fs         = new FS(__DIR__);
-        $this->categories = Cache::get('catalogMobileMenu', function () {
-            return CategoryRepository::treeAll()->toArray();
-        }, Cache::$timeLife10_000);
+        $this->view       = $view;
+        $this->string     = $string;
+        $this->categories = $categories;
+        $this->recurse();
 
-        Cache::get('categoryRecurse',
-            function () {
-                $this->recurse($this->categories);
-            },
-            Cache::$timeLife1_000);
     }
 
-    public function recurse($arr)
+    public function recurse(): void
     {
-        if (empty($arr)) return;
-        foreach ($arr as $i => $cat) {
+        if (empty($this->categories)) return;
+        foreach ($this->categories as $i => $cat) {
             if (count($cat['children_recursive'])) {
                 $self         = $this;
-                $this->string .= $this->fs->getContent('li-expand', compact('cat', 'self'));
+                $this->string .= $this->view->render('li-expand', compact('cat', 'self'));
                 $this->recurse($cat['children_recursive']);
                 $this->string .= '</ul></li>';
             } else {
-                $this->string .= $this->fs->getContent('li', compact('cat'));
+                $this->string .= $this->view->render('li', compact('cat'));
             }
         }
-
     }
 
     public function get(): string

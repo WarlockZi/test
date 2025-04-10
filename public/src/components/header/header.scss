@@ -217,7 +217,7 @@
 
     @media(min-width:800px){
       .mob-burger{
-        display: none;
+        //display: none;
       }
     }
 
@@ -409,7 +409,7 @@
         }
 
         a {
-          flex: 1 0 auto;
+          flex: 1 0 75%;
           text-align: start;
           font-weight: 600;
           line-height: 16px;

@@ -7,7 +7,7 @@ use app\model\Order;
 class CartRepository
 {
 
-    public static function edit($id)
+    public static function edit($id): \Illuminate\Database\Eloquent\Collection|array
     {
         $userId = Order::where('id', $id)->first()->user_id;
         $orders = Order::query()

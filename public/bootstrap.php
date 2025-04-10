@@ -23,12 +23,14 @@ require_once $path;
 DotEnv::load(ROOT . DIRECTORY_SEPARATOR . ".env");
 
 
-//require_once './blade/blade.php';
+//require_once './blade/Blade.php';
 
 define('DEV', env("VITE_DEV"));
 define('PIC_SERVICE', env("PIC_SERVICE"));
 define('PIC_PRODUCT', env("PIC_PRODUCT"));
 define('PIC_SVG', env("PIC_SVG"));
+define('FRAMEWORK_CACHE', env("FRAMEWORK_CACHE"));
+define('APP_CACHE', env("APP_CACHE"));
 
 Cache::$enabled = env('CACHE');
 

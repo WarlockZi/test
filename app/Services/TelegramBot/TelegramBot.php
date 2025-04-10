@@ -6,7 +6,7 @@ namespace app\Services\TelegramBot;
 
 class TelegramBot
 {
-    private string $TELEGRAM_VitexTestBot_TOKEN;
+    private string $TELEGRAM_VITEX_TEST_BOT_TOKEN;
     private string $chat_id;
     private string $text;
 
@@ -14,7 +14,7 @@ class TelegramBot
     {
         $this->setChanel($channel);
         $this->setText($channel);
-        $this->TELEGRAM_VitexTestBot_TOKEN = env('TELEGRAM_VitexTestBot_TOKEN');
+        $this->TELEGRAM_VITEX_TEST_BOT_TOKEN = env('TELEGRAM_VITEX_TEST_BOT_TOKEN');
     }
 
     private function setChanel($channel): void
@@ -38,7 +38,7 @@ class TelegramBot
 
     public function send($text): void
     {
-        $token = $this->TELEGRAM_VitexTestBot_TOKEN;
+        $token = $this->TELEGRAM_VITEX_TEST_BOT_TOKEN;
 
         $url    = "https://api.telegram.org/bot";
         $action = '/sendMessage?';

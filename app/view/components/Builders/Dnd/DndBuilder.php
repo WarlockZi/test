@@ -23,7 +23,7 @@ class DndBuilder
         $dnd->class   = "class ='{$class}'";
         $dnd->tooltip = $tooltip;
 
-        $result = FS::getFileContent(ROOT . '/app/view/components/Builders/Dnd/template.php', compact('dnd'));
+        $result = FS::getFileContent(ROOT . '/app/view/components/Builders/Dnd/index.php', compact('dnd'));
         return $dnd->clean($result);
     }
 

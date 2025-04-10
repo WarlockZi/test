@@ -8,7 +8,7 @@ class Layout
 {
     protected FS $layoutFs;
     protected string $layout;
-    protected array $content;
+    protected string $content;
 
     protected function setErrors(): void
     {

@@ -9,10 +9,10 @@ class FS
     protected string $absPath;
     protected ErrorLogger $errorLogger;
 
-    public function __construct(string $absPath = ROOT)
+    public function __construct(string $absPath, ErrorLogger $errorLogger)
     {
         $this->absPath     = $absPath . DIRECTORY_SEPARATOR;
-        $this->errorLogger = new ErrorLogger();
+        $this->errorLogger = $errorLogger;
     }
 
     public static function resolve(...$paths): string

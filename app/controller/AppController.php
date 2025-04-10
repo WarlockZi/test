@@ -4,7 +4,11 @@ declare(strict_types=1);
 namespace app\controller;
 
 use app\Repository\MorphRepository;
+use app\Services\AuthService\Auth;
 use app\Services\Response;
+use app\view\blade\View;
+use app\view\layouts\AdminLayout;
+use app\view\layouts\MainLayout;
 use Throwable;
 
 class AppController extends Controller
@@ -12,11 +16,24 @@ class AppController extends Controller
     protected string $model;
     public array $settings;
 
+
     public function __construct()
     {
         parent::__construct();
-    }
+//        $this->setLayout();
 
+    }
+    public function setLayout(): void
+    {
+        $this->layout = ($this->isAdmin && Auth::getUser())
+            ? AdminLayout::class
+            : MainLayout::class;
+    }
+private function render(string $view, array $vars): void
+{
+    $blade = APP->get(View::class);
+    $blade->render($view, $vars);
+}
     protected function updateOrCreateRelation(array $req): void
     {
         $action       = '';

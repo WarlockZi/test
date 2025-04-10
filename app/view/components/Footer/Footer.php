@@ -41,11 +41,6 @@ class Footer
         return '';
     }
 
-//	public static function setUserCookie(): void
-//	{
-//		self::$userCookie = FS::getFileContent(ROOT . '/app/view/components/footer/ya_metrica.php');
-//	}
-
     public static function getUserCookie()
     {
         return self::$userCookie;

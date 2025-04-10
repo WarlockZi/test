@@ -2,7 +2,8 @@
   "autoload": {
     "psr-4": {
       "Dotenv\\": "vendor/vlucas/phpdotenv/src",
-      "app\\": "app"
+      "app\\": "app",
+      "public\\blade\\": "app/view/blade"
     }
   },
   "classmap": [
@@ -20,7 +21,9 @@
     "eftec/bladeone": "^4.18",
     "ext-simplexml": "*",
     "ext-pdo": "*",
-    "php-di/php-di": "^7.0"
+    "ext-memcached": "*",
+    "php-di/php-di": "^7.0",
+    "ext-xdebug": "*"
   },
   "config": {
     "platform-check": false
