@@ -55,7 +55,7 @@ class Cache
         return $unserialized;
     }
 
-    private static function mkdir_r($dirName, $rights = 0755): string
+    private static function mkdir_r(string $dirName, int $rights = 0755): string
     {
         str_contains('/', $dirName) ?
             $dirs = explode('/', $dirName) :
@@ -71,14 +71,6 @@ class Cache
             }
         }
         return $dir;
-    }
-
-    public static function off(): void
-    {
-        self::$enabled        = false;
-        self::$timeLife100    = 1;
-        self::$timeLife1_000  = 1;
-        self::$timeLife10_000 = 1;
     }
 
     public static function delete($key): void

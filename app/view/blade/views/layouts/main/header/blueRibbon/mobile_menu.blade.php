@@ -36,7 +36,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/promotion">
+            <a class="nav-link" href="/main/promotions">
                 Акции
             </a>
         </li>

@@ -3,6 +3,8 @@
 namespace app\view;
 
 use app\controller\Controller;
+use app\Services\FS;
+use app\Services\Logger\ErrorLogger;
 use app\Services\Router\Route;
 
 class UserView extends View
@@ -12,7 +14,7 @@ class UserView extends View
 
     public function __construct(Route $route)
     {
-        parent::__construct($route);
+        parent::__construct($route,new FS(__DIR__ . '/', new ErrorLogger('error.txt')));
     }
 
     public function setContent(Controller $controller): void

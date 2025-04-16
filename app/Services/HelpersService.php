@@ -1,13 +1,12 @@
 <?php
 
-namespace public;
+namespace app\Services;
 
 use app\model\Product;
 use app\model\ProductUnit;
 use app\Services\Logger\FileLogger;
-use app\Services\Response;
 
-class Helpers
+class HelpersService
 {
 
     //    if (DEV) {

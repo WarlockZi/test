@@ -108,14 +108,13 @@ class Table
 
     protected function getDelButton(int $itemId): string
     {
-//        if ($this->headDelCol) {
+
         $hidden    = $itemId ? '' : 'hidden';
         $trashIcon = Icon::trashIcon();
         $str       = "<div {$hidden} class='del cell' $this->dataModel " .
             "data-id='{$itemId}'>$trashIcon</div>";
         return $str;
-//        }
-//        return '';
+
     }
 
     protected function emptyRow(): string
@@ -189,16 +188,11 @@ class Table
 
     public function get(): string
     {
-        try {
-            $this->emptyRow = $this->emptyRow();
-            $this->prepareGridHeader();
-            $this->items = $this->take ? $this->items->take($this->take) : $this->items;
-            $data        = get_object_vars($this);
-            $content     = $this->fs->getContent('tableTemplate', $data);
-            return $this->clean($content);
-
-        } catch (\Throwable $error) {
-            return $error->getMessage();
-        }
+        $this->emptyRow = $this->emptyRow();
+        $this->prepareGridHeader();
+        $this->items = $this->take ? $this->items->take($this->take) : $this->items;
+        $data        = get_object_vars($this);
+        $content     = $this->fs->getContent('tableTemplate', $data);
+        return $this->clean($content);
     }
 }

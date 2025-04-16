@@ -3,13 +3,14 @@
 namespace app\Services;
 
 use app\Services\Logger\ErrorLogger;
+use app\Services\Logger\ILogger;
 
 class FS
 {
     protected string $absPath;
-    protected ErrorLogger $errorLogger;
+    protected ILogger $errorLogger;
 
-    public function __construct(string $absPath, ErrorLogger $errorLogger)
+    public function __construct(string $absPath, ILogger $errorLogger)
     {
         $this->absPath     = $absPath . DIRECTORY_SEPARATOR;
         $this->errorLogger = $errorLogger;

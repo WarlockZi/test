@@ -52,6 +52,8 @@
         @endif
 
 
+        @yield('exceptions')
+
         @yield('content')
 
 

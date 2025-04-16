@@ -21,9 +21,10 @@
     "eftec/bladeone": "^4.18",
     "ext-simplexml": "*",
     "ext-pdo": "*",
-    "ext-memcached": "*",
     "php-di/php-di": "^7.0",
-    "ext-xdebug": "*"
+    "ext-xdebug": "*",
+    "vlucas/phpdotenv": "^5.6",
+    "ext-http": "*"
   },
   "config": {
     "platform-check": false

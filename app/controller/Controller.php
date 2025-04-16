@@ -5,8 +5,14 @@ namespace app\controller;
 
 use app\Services\AssetsService\Assets;
 use app\Services\AuthService\Auth;
+use app\Services\FS;
+use app\Services\Logger\ErrorLogger;
 use app\Services\Response;
 use app\Services\Router\Route;
+use app\view\blade\Blade;
+use app\view\blade\IView;
+use app\view\blade\View;
+use JetBrains\PhpStorm\NoReturn;
 
 class Controller
 {
@@ -15,18 +21,24 @@ class Controller
     protected Route $route;
     protected array $ajax = [];
     public Assets $assets;
+    public IView $viewService;
 
     function __construct()
     {
+        $this->viewService = APP->get('bladeView');
         $this->setAjaxRequest();
         if (!$this->isAjax()) {
             $this->assets = new Assets();
         }
     }
+    #[NoReturn] protected function render(string $view, array $params = []):void
+    {
+        exit($this->viewService->render($view, $params));
+    }
 
     public function __destruct()
     {
-        if (!empty($this->ajax)) exit;
+
     }
 
     public function actionIndex(): void

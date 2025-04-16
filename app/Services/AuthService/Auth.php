@@ -82,7 +82,7 @@ class Auth
         return self::$user && self::$user->isEmployee();
     }
 
-    public static function authorize(Route $route): void
+    public static function authorize(): void
     {
         $user = self::getUser();
 
@@ -91,7 +91,7 @@ class Auth
         if ($user instanceof User) {
             define('SU', $user->mail() === env('SU_EMAIL'));
             if ($user['confirm'] == 0) {
-                $route->setError('Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.');
+//                $route->setError('Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.');
             }
         }
     }

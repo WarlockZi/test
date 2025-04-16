@@ -4,9 +4,8 @@ namespace app\view\blade;
 
 use app\Services\AssetsService\UserAssets;
 use app\Services\Router\Route;
-use app\Services\Router\Router;
 use app\view\layouts\MainLayout;
-use Throwable;
+use JetBrains\PhpStorm\NoReturn;
 
 
 class View implements IView
@@ -21,20 +20,14 @@ class View implements IView
                 ->share('assets', APP->get(UserAssets::class))
                 ->share('logo', APP->get('logo'))
                 ->share('route', APP->get(Route::class))
-                ->share('mainLayout', APP->get(MainLayout::class))
-            ;
+                ->share('mainLayout', APP->get(MainLayout::class));
         } catch (\Exception $exception) {
             $e = $exception->getMessage();
         }
     }
 
-    public function render($template, $data = []): string
+    #[NoReturn] public function render(string $template, array $data = []): void
     {
-        try {
-            exit($this->blade->run($template, $data));
-        } catch (Throwable $exception) {
-
-            exit($exception);
-        }
+        exit($this->blade->run($template, $data));
     }
 }

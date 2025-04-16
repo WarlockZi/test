@@ -1,21 +1,19 @@
 <?php
 
+use app\Exceptions\AppErrorHandler;
+use app\Request\Request;
+use app\Services\AppService\App;
 use app\Services\Logger\ErrorLogger;
-use app\Services\Router\Router;
-
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
-
-$container = require __DIR__ . '/container.php';
-define('APP', $container);
 
 try {
-    $router = APP->get(Router::class);
-    $router->dispatch($container);
+    require_once __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
+    $app = new App();
+    $app->run();
+
+    $app->handleRequest(Request::capture());
+
     exit();
-} catch (Throwable $e) {
-    if (DEV) {
-        exit($e);
-    }
-    $logger = new ErrorLogger('errors/errors.txt');
-    $logger->write($e);
+} catch (Throwable $exception) {
+    $errorHandler = new AppErrorHandler(new ErrorLogger('errors/errors.txt'));
+    $errorHandler->handleException($exception);
 }

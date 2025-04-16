@@ -8,8 +8,9 @@ use app\Services\AssetsService\Assets;
 use app\Services\AuthService\Auth;
 use app\Services\FS;
 use app\Services\Router\Route;
+use app\view\blade\IView;
 
-abstract class View
+abstract class View implements IView
 {
     protected Controller $controller;
     protected FS $fs;
@@ -20,9 +21,9 @@ abstract class View
     protected string $view;
     public Assets $assets;
 
-    function __construct(Route $route)
+    function __construct(Route $route, FS $fs)
     {
-        $this->fs   = new FS(__DIR__ . '/');
+        $this->fs   = $fs;
         $this->user = Auth::getUser();
         $this->view = $route->getView() ?? 'index';
     }
@@ -32,20 +33,10 @@ abstract class View
         return $this->content;
     }
 
-    public function render(): void
+    public function render(string $template, array $data = []):void
     {
         $this->setContent($this->controller);
         echo $this->fs->getContent($this->layout, ['view' => $this]);
     }
-    public function noPermition(): string
-    {
-        $data = $this->controller->vars;
-        return $this->show(view:'notFound',  data:$data);
-    }
 
-    private static function show(string $layout = 'vitex', string $view='index', array $data=[])
-    {
-        $fs = new FS(__DIR__ . '/');
-        echo $fs->getContent($layout, $data);
-    }
 }

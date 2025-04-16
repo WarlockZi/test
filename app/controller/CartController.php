@@ -12,6 +12,7 @@ use app\Services\Response;
 use app\Services\Router\Route;
 use app\view\blade\View;
 use app\view\Cart\CartView;
+use app\view\UserView;
 use JetBrains\PhpStorm\NoReturn;
 
 class CartController extends AppController
@@ -22,19 +23,19 @@ class CartController extends AppController
                                 protected Route          $route)
     {
         parent::__construct();
-        $this->cartView = $cartView;
-        $this->repo     = $repo;
-        $this->assets   = $userAssets;
+//        $this->cartView = $cartView;
+//        $this->repo     = $repo;
+//        $this->assets   = $userAssets;
+//        $this->viewService    = new UserView($this->route);
     }
 
     #[NoReturn] public function actionIndex(): void
     {
         $order = OrderRepository::cart();
-        $view = APP->get(View::class);
+        $cartView = $this->cartView;
 
-        $view->render('cart.index', compact('order'));
+        $this->render('cart.index', compact('order', 'cartView'));
 
-//        Response::view('cart.index', compact('order', 'assets'));
     }
 
     public function actionDrop(): void

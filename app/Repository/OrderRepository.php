@@ -120,7 +120,7 @@ class OrderRepository
         $order = Order::where($field, $value)
             ->with('products')
             ->first();
-        $o     = $order->toArray();
+        $o     = $order?->toArray();
         return $order;
     }
 

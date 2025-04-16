@@ -1,10 +1,11 @@
 <?php
 declare(strict_types=1);
+
 namespace app\Services\Router;
 
-use app\Services\AuthService\Auth;
+use app\Exceptions\NoControllerException;
+use app\Exceptions\NoMethodException;
 use app\Services\Logger\ErrorLogger;
-use DI\Container;
 
 class Router
 {
@@ -15,16 +16,18 @@ class Router
 
     public function __construct(string $uri, ErrorLogger $errorLogger)
     {
-
-        $this->matchRoute();
+        $this->route       = new Route();
         $this->errorLogger = $errorLogger;
+        include ROOT . '/app/Services/Router/routes.php';
+
+        $this->matchRoute($this->routes ?? []);
     }
 
-    protected function matchRoute(): void
+    protected function matchRoute(array $routes): void
     {
-        $this->route = new Route();
-        require_once ROOT . '/app/Services/Router/routes.php';
-        foreach ($this->routes as $pattern => $r) {
+        if (empty($routes)) return;
+
+        foreach ($routes as $pattern => $r) {
             if (preg_match("#$pattern#i", $this->route->getUrl(), $matches)) {
 
                 foreach ($matches as $k => $v) {
@@ -45,46 +48,72 @@ class Router
         $this->route->isNotFound() ? $this->route->setActionName('default') : $f = 1;
     }
 
-    public function dispatch(Container $container): void
+//    public function dispatch(): void
+//    {
+//
+//        try {
+//            Auth::authorize($this->route);
+//            $controller = $this->route->getController();
+//            if (!Permitions::isEmployeeOrAdmin($this->route)) {
+//                header("Location:/");
+//                exit();
+//            }
+//            $controller = APP->get($controller);
+//
+//            $controller->setRoute($this->route);
+//            $action = $this->route->getAction();
+//            method_exists($controller, $action)
+//                ? $controller->$action()
+//                : $controller->actionNotFound();
+//        } catch (\Throwable $exception) {
+//            $controller = $this->route->getBaseController();
+//            $this->handleError($exception);
+//            $controller = new $controller;
+//        }
+//    }
+
+    /**
+     * @throws NoControllerException
+     */
+    public function dispatch($request): void
     {
 
-        try {
-            Auth::authorize($this->route);
-            $controller = $this->route->getController();
-            if (!Permitions::isEmployeeOrAdmin($this->route)) {
-                header("Location:/");
-                exit();
+        $controller = $this->route->getController();
+
+        if (!class_exists($controller)) throw new NoControllerException('Bad controller');
+        $controller = APP->get($controller);
+
+        $action = $this->route->getAction();
+
+        if (!method_exists($controller, $action)) throw new NoMethodException('Bad action');
+
+        $this->handleRoute($request, $controller, $action);
+
+    }
+
+    private function handleRoute($request, $controller, $action)
+    {
+        $handler = array_reduce(
+            array_reverse($this->route->getMiddlewares()),
+            function ($next, $middleware) {
+                return function ($request) use ($middleware, $next) {
+                    return (new $middleware())->handle($request, $next);
+                };
+            },
+            function ($request) use ($controller, $action) {
+                return $controller->{$action}($request);
             }
-            $controller = $container->get($controller);
+        );
 
-            $controller->setRoute($this->route);
-            $action = $this->route->getAction();
-            method_exists($controller, $action)
-                ? $controller->$action()
-                : $controller->actionNotFound();
-        } catch (\Throwable $exception) {
-            $controller = $this->route->getBaseController();
-            $this->handleError($exception);
-            $controller = new $controller;
-        }
-
-        $this->route->setView($this->route->getActionName());
-//        $layout = $this->route->getLayout($this->route, $controller);
-//        $layout->render();
+        return $handler($request);
     }
 
-    private function handleError(\Throwable $exception): void
-    {
-        if (DEV) {
-            $this->route->setError($exception->getMessage());
-            $this->route->setError($exception->getTraceAsString());
-        }
-        $this->errorLogger->write('router error -' . PHP_EOL
-            . $exception->getMessage() . PHP_EOL);
-    }
 
-    public function add($regexp, $route = []): void
+    public function addRoute(string $regexp, array $route = [], array $middlewares = []): void
     {
+        if (!empty($middlewares)) {
+            $this->route->setMiddlewares($middlewares);
+        }
         $this->routes[$regexp] = $route;
     }
 

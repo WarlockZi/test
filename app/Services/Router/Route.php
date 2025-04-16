@@ -32,6 +32,7 @@ class Route
 
     protected string $host = '';
     protected string $protocol = '';
+    protected array $middlewares =[];
 
     protected bool $notFound = true;
     protected array $errors = [];
@@ -46,7 +47,14 @@ class Route
     }
 
 
-
+    public function setMiddlewares(array $middlewares): void
+    {
+        $this->middlewares = $middlewares;
+    }
+    public function getMiddlewares(): array
+    {
+       return $this->middlewares;
+    }
     public function setRedirect(array $redirect): void
     {
         $this->redirect = $redirect;
@@ -230,7 +238,7 @@ class Route
     public function getLayout(Route $route, Controller $controller): Layout
     {
         $layout = $this->isAdmin
-            ? $this->layout
+            ? 'app\view\layouts\AdminLayout'
             : 'app\view\layouts\MainLayout';
         return new $layout($route, $controller);
     }
