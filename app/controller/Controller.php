@@ -3,22 +3,18 @@
 namespace app\controller;
 
 
-use app\Services\AssetsService\Assets;
-use app\Services\AuthService\Auth;
-use app\Services\FS;
-use app\Services\Logger\ErrorLogger;
-use app\Services\Response;
-use app\Services\Router\Route;
-use app\view\blade\Blade;
+use app\service\AssetsService\Assets;
+use app\service\AuthService\Auth;
+use app\service\Response;
+use app\service\Router\Request;
 use app\view\blade\IView;
-use app\view\blade\View;
 use JetBrains\PhpStorm\NoReturn;
 
 class Controller
 {
     public array $vars = [];
     public string $view = 'index';
-    protected Route $route;
+    protected Request $route;
     protected array $ajax = [];
     public Assets $assets;
     public IView $viewService;
@@ -41,30 +37,7 @@ class Controller
 
     }
 
-    public function actionIndex(): void
-    {
-        $this->view = '404';
-        $this->route->setError('Путь не найден');
-        $errors = $this->route->getErrors();
-        $this->setVars(compact('errors'));
-    }
-
-    public function actionNotFound(): void
-    {
-        $this->view = '404';
-        $this->route->setError('Путь не найден');
-        $errors = $this->route->getErrors();
-        $this->setVars(compact('errors'));
-        http_response_code(404);
-    }
-
-    public function setRoute(Route $route): void
-    {
-        $this->route = $route;
-        $this->view  = $route->getView();
-    }
-
-    public function getRoute(): Route
+    public function getRoute(): Request
     {
         return $this->route;
     }

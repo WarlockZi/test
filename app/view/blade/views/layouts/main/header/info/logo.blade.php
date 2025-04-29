@@ -1,17 +1,17 @@
 @php
-    use app\view\layouts\MainLayout;
-
- $route = APP->get(MainLayout::class)->getRoute();
+    use app\service\Router\IRequest;
+ $isHome = APP->get(IRequest::class)->isHome();
 
 @endphp
-@if ( $route->isHome())
+
+@if ( $isHome)
 
     <div class="logo">
-        @php echo $logo @endphp
+        {!! $mainLayout->getLogo()!!}
     </div>
 
 @else
     <a href='/' class="logo" aria-label='На главную'>
-        @php echo $logo @endphp
+        {!! $mainLayout->getLogo()!!}
     </a>
 @endif

@@ -1,6 +1,6 @@
 <?
 
-use \app\Repository\ImageRepository;
+use \app\repository\ImageRepository;
 
 ?>
 

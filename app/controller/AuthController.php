@@ -4,11 +4,11 @@ namespace app\controller;
 
 use app\core\Mail\PHPMail;
 use app\model\User;
-use app\Repository\UserRepository;
-use app\Request\LoginRequest;
-use app\Services\AuthService\Auth;
-use app\Services\Response;
-use app\Services\YandexAuth\YaAuthService;
+use app\repository\UserRepository;
+use app\request\LoginRequest;
+use app\service\AuthService\Auth;
+use app\service\Response;
+use app\service\YandexAuth\YaAuthService;
 use app\view\User\UserView;
 use Throwable;
 

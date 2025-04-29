@@ -16,18 +16,23 @@ class ShippableUnitsTableFactory
         $this->product = $product;
     }
 
-    public static function create(Product|array $product, string $module): string
+    public static function create(Product|array $product, string $module)
     {
         $self        = new self($product);
         $self->table = new ShippableUnitsTable($product);
         if ($module === 'product') {
-            return $self->table->blueButton()
+            return $self->table
+                ->blueButton()
                 ->fontSize(1)
                 ->greenButton()
                 ->desription()
                 ->totalRowSum()->get();
         } elseif ($module === 'category') {
-            return $self->table->blueButton()->greenButton()->desription()->get();
+            return $self->table->rows();
+//            return $self->table
+//                ->blueButton()
+//                ->greenButton()
+//                ->desription()->get();
 
         }
         return $self->table->desription()->get(); //cart

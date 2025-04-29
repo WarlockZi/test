@@ -5,7 +5,7 @@ namespace app\view;
 
 
 use app\controller\Controller;
-use app\Services\FS;
+use app\service\FS;
 
 
 class AdminView extends View
@@ -24,7 +24,7 @@ class AdminView extends View
     public function setContent(Controller $controller): void
     {
         $path          = __DIR__ . "/{$controller->getRoute()->controllerName}/Admin/";
-        $fs            = new FS($path);
+        $fs            = new FS();
         $this->content = $fs->getContent($this->view, $controller->vars);
     }
 

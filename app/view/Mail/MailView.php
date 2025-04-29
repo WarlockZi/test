@@ -5,7 +5,7 @@ namespace app\view\Mail;
 
 
 use app\model\User;
-use app\Services\FS;
+use app\service\FS;
 
 class MailView
 {

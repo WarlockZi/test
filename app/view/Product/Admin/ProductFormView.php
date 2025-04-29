@@ -7,9 +7,9 @@ use app\model\Manufacturer;
 use app\model\Product;
 use app\model\Promotion;
 use app\model\Unit;
-use app\Repository\ProductRepository;
-use app\Services\FS;
-use app\Services\Image\ProductImageService;
+use app\repository\ProductRepository;
+use app\service\FS;
+use app\service\Image\ProductImageService;
 use app\view\Category\CategoryFormView;
 use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
 use app\view\components\Builders\Dnd\DndBuilder;
@@ -32,7 +32,7 @@ class ProductFormView
 
     public function __construct()
     {
-        $this->fs = new FS(__DIR__);
+        $this->fs = new FS();
     }
 
     protected static function getUnit(int $selected): string
@@ -411,7 +411,7 @@ class ProductFormView
 
     public static function unitsRow(Unit $unit, string $name, bool $deletable): string
     {
-        $fs       = new FS(__DIR__);
+        $fs       = new FS();
         $selector = SelectBuilder::build(
             ArrayOptionsBuilder::build(
                 $unit->pivot->is_base

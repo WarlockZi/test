@@ -2,8 +2,8 @@
 
 namespace app\view\Test;
 
-use app\Repository\TestRepository;
-use app\Services\FS;
+use app\repository\TestRepository;
+use app\service\FS;
 use app\view\Accordion\AccordionView;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\Traits\CleanString;
@@ -20,7 +20,7 @@ class TestView
 
     public function __construct()
     {
-        $this->fs = new FS(__DIR__);
+        $this->fs = new FS();
     }
 
     public function getAccordion(): string

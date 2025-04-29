@@ -2,7 +2,7 @@
 
 namespace app\view\Filter;
 
-use app\Services\FS;
+use app\service\FS;
 
 class FilterView
 {
@@ -22,7 +22,7 @@ class FilterView
 
     public function __construct()
     {
-        $this->fs = new FS(__DIR__);
+        $this->fs = new FS();
     }
 
     public function title(string $title): self

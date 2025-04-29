@@ -3,7 +3,7 @@
 namespace app\model;
 
 
-use app\Services\Router\SlugService;
+use app\service\Router\SlugService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -91,7 +91,10 @@ class Category extends Model
     {
         return $this->ownProperties->seo_description ?? $this->name . ". Интернет-магазин медицинских перчаток, одноразового инструмента и расходников VITEX в Вологде. Оперативный ответ менеджера, быстрая доставка, доступные оптовые цены. Звоните и заказывайте прямо сейчас или на сайте онлайн";
     }
-
+    public function seo_keywords()
+    {
+        return $this->ownProperties->seo_keywords ?? $this->name;
+    }
     public function seo_article()
     {
         return $this->ownProperties->seo_article ?? $this->description ?? $this->name;

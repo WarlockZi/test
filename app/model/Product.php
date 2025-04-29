@@ -3,8 +3,8 @@
 namespace app\model;
 
 
-use app\Services\AuthService\Auth;
-use app\Services\Image\ProductImageService;
+use app\service\AuthService\Auth;
+use app\service\Image\ProductImageService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -56,14 +56,13 @@ class Product extends Model
         );
     }
 
-    public function orderProduct()
+    public function orderProduct(): hasOne
     {
-        $oI = $this->hasOne(
+        return $this->hasOne(
             OrderProduct::class,
             'product_id',
             '1s_id',
         );
-        return $oI;
     }
 
     public function order(): HasOne|null
@@ -303,12 +302,6 @@ class Product extends Model
         return $this->belongsTo(Manufacturer::class, 'manufacturer_id');
     }
 
-
-    public function categoryCategoryRecPropsVals()
-    {
-        return $this->belongsTo(Category::class)->with('parentRecursive.properties.vals');
-    }
-
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class,
@@ -328,14 +321,6 @@ class Product extends Model
     }
 
 
-    public function detailImages()
-    {
-        return $this->morphToMany(
-            Image::class,
-            'imageable',
-        )->where('slug', '=', 'detail');
-    }
-
     public function mainImages()
     {
         return $this->morphToMany(
@@ -343,23 +328,6 @@ class Product extends Model
             'imageable',
         )->where('slug', '=', 'main');
     }
-
-    public function smallpackImages()
-    {
-        return $this->morphToMany(
-            Image::class,
-            'imageable',
-        )->where('slug', 'smallpack');
-    }
-
-    public function bigPackImages()
-    {
-        return $this->morphToMany(
-            Image::class,
-            'imageable',
-        )->where('slug', 'bigpack');
-    }
-
 
 }
 

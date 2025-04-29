@@ -3,7 +3,7 @@
 namespace app\controller;
 
 use app\model\Feedback;
-use app\Services\TelegramBot\TelegramBot;
+use app\service\TelegramBot\TelegramBot;
 
 class FeedbackController extends AppController
 {

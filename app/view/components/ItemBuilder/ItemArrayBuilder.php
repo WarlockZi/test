@@ -3,7 +3,7 @@
 
 namespace app\view\components\ItemBuilder;
 
-use app\Services\FS;
+use app\service\FS;
 use app\view\components\Traits\CleanString;
 use Illuminate\Database\Eloquent\Model;
 
@@ -32,7 +32,7 @@ class ItemArrayBuilder
 
     public function __construct()
     {
-        $this->fs     = new FS(__DIR__);
+        $this->fs     = new FS();
         $this->dataId = '';
         $this->html   = '';
     }

@@ -3,9 +3,9 @@
 namespace app\controller\Admin;
 
 use app\model\User;
-use app\Repository\UserRepository;
-use app\Services\AuthService\Auth;
-use app\Services\Response;
+use app\repository\UserRepository;
+use app\service\AuthService\Auth;
+use app\service\Response;
 use app\view\User\UserView;
 use Throwable;
 

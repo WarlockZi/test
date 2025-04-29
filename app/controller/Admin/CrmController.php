@@ -2,7 +2,7 @@
 
 namespace app\controller\Admin;
 
-use app\Services\AuthService\Auth;
+use app\service\AuthService\Auth;
 
 
 class CrmController extends AdminscController

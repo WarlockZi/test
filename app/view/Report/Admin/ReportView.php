@@ -2,8 +2,8 @@
 
 namespace app\view\Report\Admin;
 
-use app\Repository\ProductFilterRepository;
-use app\Services\ProductService;
+use app\repository\ProductFilterRepository;
+use app\service\ProductService;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\TableBuilder\Table;
 use Illuminate\Database\Eloquent\Collection;

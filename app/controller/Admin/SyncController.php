@@ -3,11 +3,11 @@
 namespace app\controller\Admin;
 
 use app\model\User;
-use app\Services\AuthService\Auth;
-use app\Services\Logger\FileLogger;
-use app\Services\Response;
-use app\Services\Sync\SyncService;
-use app\Services\Sync\TrancateService;
+use app\service\AuthService\Auth;
+use app\service\Logger\FileLogger;
+use app\service\Response;
+use app\service\Sync\SyncService;
+use app\service\Sync\TrancateService;
 use Illuminate\Support\Carbon;
 use Throwable;
 

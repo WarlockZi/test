@@ -4,7 +4,7 @@
 namespace app\view\components\Builders\Morph;
 
 
-use app\Services\FS;
+use app\service\FS;
 use Illuminate\Database\Eloquent\Model;
 
 class MorphBuilder

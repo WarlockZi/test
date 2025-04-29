@@ -4,9 +4,9 @@ namespace app\controller\Admin;
 
 use app\model\User;
 use app\model\UserYandex;
-use app\Repository\UserYandexRepository;
-use app\Services\AuthService\Auth;
-use app\Services\Response;
+use app\repository\UserYandexRepository;
+use app\service\AuthService\Auth;
+use app\service\Response;
 use app\view\User\UserView;
 use app\view\UserYandex\UserYandexView;
 use Throwable;

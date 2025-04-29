@@ -4,8 +4,8 @@ namespace app\controller\Admin;
 
 use app\model\Order;
 use app\model\OrderItem;
-use app\Repository\OrderRepository;
-use app\Services\Response;
+use app\repository\OrderRepository;
+use app\service\Response;
 use app\view\Order\OrderView;
 use Carbon\Carbon;
 

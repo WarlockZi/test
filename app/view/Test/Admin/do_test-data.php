@@ -19,7 +19,7 @@
                         <input type="checkbox" id="answer-<?= $answer->id ?>">
                         <label for="answer-<?= $answer->id ?>"><?= $answer->answer ?></label>
 
-                        <?= \app\Repository\AnswerRepository::getImg($answer) ?>
+                        <?= \app\repository\AnswerRepository::getImg($answer) ?>
 
 
                     </div>

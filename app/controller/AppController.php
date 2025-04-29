@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace app\controller;
 
-use app\Repository\MorphRepository;
-use app\Services\AuthService\Auth;
-use app\Services\Response;
+use app\repository\MorphRepository;
+use app\service\AuthService\Auth;
+use app\service\Response;
 use app\view\blade\View;
 use app\view\layouts\AdminLayout;
 use app\view\layouts\MainLayout;

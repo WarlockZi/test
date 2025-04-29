@@ -3,12 +3,10 @@
 namespace app\view\components\shippable;
 
 use app\model\Product;
-use app\Services\FS;
 use Illuminate\Database\Eloquent\Collection;
 
 class ShippableUnitsTable
 {
-    private FS $fs;
     private Product $product;
     private Collection $units;
     private string $fontSize = '1';
@@ -21,7 +19,6 @@ class ShippableUnitsTable
 
     public function __construct(Product|array $product)
     {
-        $this->fs           = new FS(__DIR__);
         $this->product      = $product;
         $this->price        = (float)$product->price;
         $this->units        = $product->shippableUnits;
@@ -76,17 +73,19 @@ class ShippableUnitsTable
     private function getGreenButton(): string
     {
         if ($this->greenButton)
-            return "<div class='green-button-wrap'>{$this->greenButton}{$this->rows()}</div>";
-        return $this->rows();
+            return "<div class='green-button-wrap'>{$this->greenButton}{'array'}</div>";
+        return 'array';
+//        return $this->rows();
     }
 
-    private function rows($rows = ''): string
+    public function rows(): array
     {
+        $rows   = [];
         $subSum = 0;
         foreach ($this->units as $unit) {
             $count      = $this->getCount($unit);
             $multiplier = $unit->pivot->multiplier ?? 1;
-            $orderItem  = $this->product->order?->orderItems->filter(function ($item) use ($unit) {
+            $orderItem  = $this->product?->order?->orderItems->filter(function ($item) use ($unit) {
                 return $item->unit_id === $unit['id'];
             });
 
@@ -101,8 +100,9 @@ class ShippableUnitsTable
                 "description" => $this->getDesription($count, $multiplier),
                 "totalRowSum" => $this->getRowSum($count, $multiplier),
             ];
+            $rows[]=$arr;
 
-            $rows .= $this->fs->getContent('shippableUnitTable', $arr);
+//            $rows .= $this->fs->getContent('shippableUnitTable', $arr);
         }
         return $rows;
     }
@@ -132,6 +132,12 @@ class ShippableUnitsTable
         }
         return '';
     }
+    private function getDesctiptionPrice(int $multiplier): string
+    {
+        $cost  = $multiplier * $this->price;
+        $formattedCost = $this->format($cost);
+        return "<span class='cost' data-cost='{$cost}'>{$formattedCost}</span>";
+    }
 
     private function getDesctiptionCount(int $count, int $multiplier): string
     {
@@ -143,12 +149,6 @@ class ShippableUnitsTable
         return number_format($number, 0, '', ' ');
     }
 
-    private function getDesctiptionPrice(int $multiplier): string
-    {
-        $cost  = $multiplier * $this->price;
-        $price = $this->format($multiplier * $this->price);
-        return "<span class='cost' data-cost='{$cost}'>{$price}</span>";
-    }
 
     private function getRowSum(int $count, int $multiplier): string
     {
@@ -159,7 +159,7 @@ class ShippableUnitsTable
         return '';
     }
 
-    private function format(float $number)
+    private function format(float $number): string
     {
         return number_format($number, 2, '.', ' ') . ' ₽';
     }

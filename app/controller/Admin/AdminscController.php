@@ -3,8 +3,8 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
-use app\Services\AuthService\Auth;
-use app\Services\AuthService\IUser;
+use app\service\AuthService\Auth;
+use app\service\AuthService\IUser;
 
 
 class AdminscController extends AppController

@@ -6,8 +6,8 @@ namespace app\controller\Admin;
 use app\model\Lead;
 use app\model\Order;
 use app\model\OrderItem;
-use app\Repository\OrderitemRepository;
-use app\Services\Response;
+use app\repository\OrderitemRepository;
+use app\service\Response;
 use app\view\Order\OrderView;
 
 

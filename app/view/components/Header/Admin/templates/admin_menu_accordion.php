@@ -1,7 +1,7 @@
 <?php
 
-use app\Services\AdminSidebar\AdminSidebar;
-use app\Services\AuthService\Auth;
+use app\service\AdminSidebar\AdminSidebar;
+use app\service\AuthService\Auth;
 
 ?>
 

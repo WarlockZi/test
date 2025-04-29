@@ -3,8 +3,8 @@
 namespace app\controller\Admin;
 
 use app\model\Openanswer;
-use app\Services\FS;
-use app\Services\Response;
+use app\service\FS;
+use app\service\Response;
 
 
 class OpenanswerController extends AdminscController

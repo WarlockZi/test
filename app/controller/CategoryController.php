@@ -2,52 +2,46 @@
 
 namespace app\controller;
 
-use app\Repository\CategoryRepository;
-use app\Services\Breadcrumbs\BreadcrumbsService;
+use app\model\Order;
+use app\repository\CategoryRepository;
+use app\repository\OrderRepository;
+use app\service\AuthService\Auth;
+use app\service\Breadcrumbs\BreadcrumbsService;
+use app\service\Router\IRequest;
 use app\view\components\cardPanel\CardPanel;
 
 class CategoryController extends AppController
 {
 
     public function __construct(
-        protected CardPanel          $categoryView = new CardPanel(),
-        protected CategoryRepository $repo = new CategoryRepository(),
-        private BreadcrumbsService   $breadcrumbsService = new BreadcrumbsService(),
-
+        protected CardPanel                 $categoryView = new CardPanel(),
+        protected CategoryRepository        $repo = new CategoryRepository(),
+        private readonly BreadcrumbsService $breadcrumbsService = new BreadcrumbsService(),
     )
     {
         parent::__construct();
-
     }
 
-    public function actionIndex(): void
+    public function actionIndex(IRequest $request): void
     {
-        $slug = $this->route->slug;
-        if ($slug) {
-            $this->view = 'category';
-            $category   = $this->repo->indexInstore($slug);
+        if ($request->slug) {
+            $category = $this->repo->indexInstore($request->slug);
 
-            $rootCategories = CategoryRepository::rootCategories() ?? '';
             if ($category) {
                 $breadcrumbs = $this->breadcrumbsService->getCategoryBreadcrumbs($category, false, false);
-                $this->setVars(compact('breadcrumbs', 'category', 'rootCategories'));
-
-                $title    = $category->seo_title();
-                $desc     = $category->seo_description();
-                $keywords = $category->ownProperties->seo_keywords ?? $category->name;
-                $this->assets->setMeta($title, $desc, $keywords);
-            } else {
-                $this->setVars(compact('rootCategories'));
-                http_response_code(404);
+                $unsubmittedOrder = OrderRepository::unsubmittedUsersOrder();
+                $this->assets->seo->setCategoryMeta($category);
+                $this->render(
+                    'category.category',
+                    compact('category', 'breadcrumbs', 'unsubmittedOrder')
+                );
             }
 
         } else {
-            $this->view = 'categories';
+            $categories = APP->get('rootCategories');
+            $this->assets->seo->setCategoriesMeta();
 
-            $categories = CategoryRepository::rootCategories();
-
-            $this->setVars(compact('categories'));
-            $this->assets->setMeta('Категории', 'Категории:VITEX', 'Категории: перчатки медицинские, инструмент для стаматолога, одноразовая одежда, одноразовый инструмент');
+            $this->render('category.index', compact('categories'));
         }
     }
 }

@@ -8,11 +8,11 @@
         </div>
 
 
-    @include('layouts.main.header.info.logo')
-    @include('layouts.main.header.info.phone')
-    @include('layouts.main.header.info.location')
-    @include('layouts.main.header.info.call_me')
-    @include('layouts.main.header.info.user_menu')
+        @include('layouts.main.header.info.logo')
+        @include('layouts.main.header.info.phone')
+        @include('layouts.main.header.info.location')
+        @include('layouts.main.header.info.call_me')
+        @include('layouts.main.header.info.user_menu')
 
     </div>
 

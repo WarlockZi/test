@@ -4,7 +4,7 @@ namespace app\model\Mock;
 
 use app\model\User;
 use app\model\UserYandex;
-use app\Services\AuthService\Auth;
+use app\service\AuthService\Auth;
 
 class MockUserService
 {

@@ -38,7 +38,7 @@ function start(): void
     $config->setClientsPerFork(2500);
     $config->setStreamSelectTimeout(2 * 3600);
 
-    $webSocketServer = new WSSC\WebSocketServer(new \app\Services\Chat\Chat_3\ServerHandler(), $config);
+    $webSocketServer = new WSSC\WebSocketServer(new \app\service\Chat\Chat_3\ServerHandler(), $config);
     $webSocketServer->run();
 }
 
@@ -49,7 +49,7 @@ function start(): void
 
 //<?php
 //
-//namespace app\Services\Chat_3;
+//namespace app\service\Chat_3;
 //
 //use WSSC\WebSocketServer;
 //use WSSC\Components\ServerConfig;

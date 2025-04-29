@@ -2,7 +2,7 @@
 
 namespace app\view\components\Builders\TableBuilder\TableHeader;
 
-use app\Services\FS;
+use app\service\FS;
 
 class TableHeader
 {
@@ -13,7 +13,7 @@ class TableHeader
     public static function build(): self
     {
         $tableHeader     = new self;
-        $tableHeader->fs = new FS(__DIR__);
+        $tableHeader->fs = new FS();
         return $tableHeader;
     }
 

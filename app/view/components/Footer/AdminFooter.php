@@ -4,7 +4,7 @@
 namespace app\view\components\Footer;
 
 
-use app\Services\FS;
+use app\service\FS;
 
 class AdminFooter extends Footer
 {

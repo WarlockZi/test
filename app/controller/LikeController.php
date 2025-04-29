@@ -5,8 +5,8 @@ namespace app\controller;
 
 
 use app\model\Like;
-use app\Repository\LikeRepository;
-use app\Services\Response;
+use app\repository\LikeRepository;
+use app\service\Response;
 use app\view\Like\LikeView;
 
 class LikeController extends AppController
@@ -22,7 +22,7 @@ class LikeController extends AppController
     {
         $likes   = LikeRepository::all();
         $content = LikeView::all($likes);
-        $this->setVars(compact('content'));
+        Response::view('pages.likes', compact('content'));
     }
 
     public function actionDel(): void

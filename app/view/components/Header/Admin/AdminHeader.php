@@ -4,9 +4,9 @@
 namespace app\view\components\Header\Admin;
 
 
-use app\Repository\FeedbackRepository;
-use app\Services\AuthService\IUser;
-use app\Services\FS;
+use app\repository\FeedbackRepository;
+use app\service\AuthService\IUser;
+use app\service\FS;
 use app\view\components\Header\IHeader;
 
 class AdminHeader implements IHeader
@@ -15,7 +15,7 @@ class AdminHeader implements IHeader
 
     public function __construct(IUser $user)
     {
-        $fs = new FS(dirname(__DIR__));
+        $fs = new FS();
 
 //        $logo         = $fs->getContent('/Admin/templates/logo_VITEX_grey');
         $searchPanel   = $fs->getContent('/BlueRibbon/templates/search_panel');

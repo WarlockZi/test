@@ -4,11 +4,11 @@ namespace app\controller\Admin;
 
 
 use app\model\Product;
-use app\Repository\ProductFilterRepository;
-use app\Repository\ProductRepository;
-use app\Services\Breadcrumbs\AdminBreadcrumbsService;
-use app\Services\ProductService;
-use app\Services\Response;
+use app\repository\ProductFilterRepository;
+use app\repository\ProductRepository;
+use app\service\Breadcrumbs\AdminBreadcrumbsService;
+use app\service\ProductService;
+use app\service\Response;
 use app\view\Product\Admin\ProductFormView;
 
 

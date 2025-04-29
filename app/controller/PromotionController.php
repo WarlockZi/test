@@ -3,7 +3,7 @@
 namespace app\controller;
 
 use app\model\Promotion;
-use app\Repository\PromotionRepository;
+use app\repository\PromotionRepository;
 
 class PromotionController extends AppController
 {

@@ -1,16 +1,16 @@
 <?php
 
-use app\Exceptions\AppErrorHandler;
-use app\Request\Request;
-use app\Services\AppService\App;
-use app\Services\Logger\ErrorLogger;
+use app\exception\AppErrorHandler;
+use app\service\AppService\App;
+use app\service\Logger\ErrorLogger;
+use app\service\Router\IRequest;
 
 try {
     require_once __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
     $app = new App();
     $app->run();
 
-    $app->handleRequest(Request::capture());
+    $app->handleRequest(APP->get(IRequest::class)::capture());
 
     exit();
 } catch (Throwable $exception) {

@@ -3,7 +3,7 @@
 namespace app\controller\Admin;
 
 
-use app\Services\Response;
+use app\service\Response;
 
 class CacheController extends AdminscController
 {

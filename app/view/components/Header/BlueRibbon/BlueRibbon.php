@@ -4,7 +4,7 @@
 namespace app\view\components\Header\BlueRibbon;
 
 
-use app\Repository\BlueRibbonRepository;
+use app\repository\BlueRibbonRepository;
 use Throwable;
 
 class BlueRibbon
@@ -12,13 +12,8 @@ class BlueRibbon
 
     public function __invoke(BlueRibbonRepository $blueRibbonRepository): array
     {
-        try {
-            $data = $blueRibbonRepository::data();
-        } catch (Throwable $exception) {
-            $exc = $exception;
-        }
-        return $data;
-
+        return $blueRibbonRepository::data();
     }
+
 
 }

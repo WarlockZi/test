@@ -42,7 +42,7 @@ use app\view\Icon;
 
 <div class="user-content-wrap">
     <main class="user-content">
-        <? if (\app\Services\AuthService\Auth::userIsAdmin()): ?>
+        <? if (\app\service\AuthService\Auth::userIsAdmin()): ?>
             <div class="admin-gap"></div>
         <? endif; ?>
 

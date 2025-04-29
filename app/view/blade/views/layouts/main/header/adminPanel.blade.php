@@ -1,4 +1,4 @@
-@php use app\Services\AuthService\Auth; @endphp
+@php use app\service\AuthService\Auth; @endphp
 @if (Auth::getUser()?->isAdmin())
 
     <div class="admin-panel">

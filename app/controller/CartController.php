@@ -5,36 +5,31 @@ namespace app\controller;
 
 use app\model\Order;
 use app\model\OrderItem;
-use app\Repository\CartRepository;
-use app\Repository\OrderRepository;
-use app\Services\AssetsService\UserAssets;
-use app\Services\Response;
-use app\Services\Router\Route;
-use app\view\blade\View;
+use app\repository\CartRepository;
+use app\repository\OrderRepository;
+use app\service\AssetsService\UserAssets;
+use app\service\Response;
+use app\service\Router\Request;
 use app\view\Cart\CartView;
-use app\view\UserView;
 use JetBrains\PhpStorm\NoReturn;
 
 class CartController extends AppController
 {
-    public function __construct(protected CartView       $cartView,
-                                protected CartRepository $repo,
-                                protected UserAssets     $userAssets,
-                                protected Route          $route)
+    public function __construct(
+        protected CartView       $cartView,
+        protected CartRepository $repo,
+        protected UserAssets     $userAssets,
+        protected Request        $route)
     {
         parent::__construct();
-//        $this->cartView = $cartView;
-//        $this->repo     = $repo;
-//        $this->assets   = $userAssets;
-//        $this->viewService    = new UserView($this->route);
     }
 
     #[NoReturn] public function actionIndex(): void
     {
-        $order = OrderRepository::cart();
+        $order    = OrderRepository::cart();
         $cartView = $this->cartView;
 
-        $this->render('cart.index', compact('order', 'cartView'));
+        $this->render('cart.index', compact('order', 'cartView', ));
 
     }
 

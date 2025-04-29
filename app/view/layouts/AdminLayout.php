@@ -3,11 +3,11 @@
 namespace app\view\layouts;
 
 use app\controller\Controller;
-use app\Services\AssetsService\AdminAssets;
-use app\Services\AssetsService\Assets;
-use app\Services\AuthService\Auth;
-use app\Services\FS;
-use app\Services\Router\Route;
+use app\service\AssetsService\AdminAssets;
+use app\service\AssetsService\Assets;
+use app\service\AuthService\Auth;
+use app\service\FS;
+use app\service\Router\Request;
 use app\view\components\Header\Admin\AdminHeader;
 use Exception;
 
@@ -20,13 +20,13 @@ class AdminLayout extends Layout
 //    protected array $content;
 
     public function __construct(
-        protected Route $route,
-        Controller      $controller,
+        protected Request $route,
+        Controller        $controller,
     )
     {
         $this->setView($controller);
         $this->layout   = "layouts/admin";
-        $this->layoutFs = new FS(dirname(__DIR__));
+        $this->layoutFs = new FS();
         $this->setErrors();
         $this->setContent($controller);
     }
@@ -45,7 +45,7 @@ class AdminLayout extends Layout
                 $this->view = 'default';
             }
         }
-        $this->viewFs = new FS($path);
+        $this->viewFs = new FS();
     }
 
     public function setContent($controller): void
@@ -72,7 +72,7 @@ class AdminLayout extends Layout
 
     protected function setFooter($vars): string
     {
-        $fs = new FS(ROOT . '/app/view/Footer');
+        $fs = new FS();
         return $fs->getContent('footerView', compact('vars'));
     }
 

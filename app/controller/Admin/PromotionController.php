@@ -3,7 +3,7 @@
 namespace app\controller\Admin;
 
 use app\model\Promotion;
-use app\Services\Response;
+use app\service\Response;
 use app\view\Promotion\PromotionFormView;
 
 class PromotionController extends AdminscController

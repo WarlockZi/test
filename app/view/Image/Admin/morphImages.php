@@ -1,6 +1,6 @@
 <?
 
-use app\Repository\ImageRepository;
+use app\repository\ImageRepository;
 
 $path = "/{$item->imagePath}/{$item->path}/{$item->hash}.{$item->type}";
 $src  = ImageRepository::getImg($path);

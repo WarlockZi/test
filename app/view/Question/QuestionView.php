@@ -6,9 +6,9 @@ namespace app\view\Question;
 
 use app\model\Question;
 use app\model\Test;
-use app\Repository\ImageRepository;
-use app\Repository\QuestionRepository;
-use app\Services\FS;
+use app\repository\ImageRepository;
+use app\repository\QuestionRepository;
+use app\service\FS;
 use app\view\Test\TestView;
 
 class QuestionView

@@ -4,10 +4,10 @@ namespace app\view;
 
 use app\controller\Controller;
 use app\model\User;
-use app\Services\AssetsService\Assets;
-use app\Services\AuthService\Auth;
-use app\Services\FS;
-use app\Services\Router\Route;
+use app\service\AssetsService\Assets;
+use app\service\AuthService\Auth;
+use app\service\FS;
+use app\service\Router\Request;
 use app\view\blade\IView;
 
 abstract class View implements IView
@@ -21,7 +21,7 @@ abstract class View implements IView
     protected string $view;
     public Assets $assets;
 
-    function __construct(Route $route, FS $fs)
+    function __construct(Request $route, FS $fs)
     {
         $this->fs   = $fs;
         $this->user = Auth::getUser();

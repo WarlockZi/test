@@ -3,7 +3,7 @@
 
 namespace app\view\components\Builders\SelectBuilder\optionBuilders;
 
-use app\Exceptions\Router\RouterError;
+use app\exception\Router\RouterError;
 use Illuminate\Database\Eloquent\Collection;
 
 class TreeABuilder extends TreeBuilder

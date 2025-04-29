@@ -5,9 +5,9 @@ namespace app\controller;
 
 
 use app\model\Compare;
-use app\Repository\CompareRepository;
-use app\Services\AuthService\Auth;
-use app\Services\Response;
+use app\repository\CompareRepository;
+use app\service\AuthService\Auth;
+use app\service\Response;
 use app\view\Compare\CompareView;
 
 
@@ -24,8 +24,7 @@ class CompareController extends AppController
     {
         $compares = CompareRepository::all();
         $content  = CompareView::all($compares);
-        $this->setVars(compact('content'));
-
+        Response::view('pages.compares', compact('content'));
     }
 
     public function actionDel(): void

@@ -4,7 +4,7 @@ namespace app\controller\Admin;
 
 use app\controller\AppController;
 use app\model\Settings;
-use app\Repository\SettingsRepository;
+use app\repository\SettingsRepository;
 use app\view\Settings\Admin\SettingsFormView;
 
 

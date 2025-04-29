@@ -2,7 +2,7 @@
 
 namespace app\view\layouts;
 
-use app\Services\FS;
+use app\service\FS;
 
 class Layout
 {

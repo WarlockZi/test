@@ -3,8 +3,8 @@
 namespace app\controller\Admin;
 
 use app\model\Opentest;
-use app\Services\Response;
-use app\Services\Router\Router;
+use app\service\Response;
+use app\service\Router\Router;
 
 
 class OpenquestionController extends AdminscController

@@ -4,7 +4,8 @@
 namespace app\view\components\Builders\TableBuilder;
 
 
-use app\Services\FS;
+use app\service\FS;
+use app\service\Logger\ErrorLogger;
 use app\view\components\Traits\CleanString;
 use app\view\Icon;
 use Illuminate\Database\Eloquent\Collection;
@@ -36,7 +37,7 @@ class Table
     {
         $list        = new static();
         $list->items = $items;
-        $list->fs    = new FS(__DIR__);
+        $list->fs   = APP->make(FS::class, ['dir'=>__DIR__]);
 
         return $list;
     }

@@ -3,8 +3,8 @@
 namespace app\controller\Admin;
 
 use app\model\Image;
-use app\Repository\ImageRepository;
-use app\Services\Response;
+use app\repository\ImageRepository;
+use app\service\Response;
 use app\view\Image\ImageView;
 
 class ImageController extends AdminscController

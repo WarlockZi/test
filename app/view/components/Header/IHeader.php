@@ -4,5 +4,5 @@ namespace app\view\components\Header;
 
 interface IHeader
 {
-    public function getHeader(): array;
+//    public function getHeader(): array;
 }

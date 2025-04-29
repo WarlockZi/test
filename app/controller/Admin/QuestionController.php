@@ -5,10 +5,10 @@ namespace app\controller\Admin;
 use app\Factory\AbstractTestFactory;
 use app\Factory\TestFactory;
 use app\model\Question;
-use app\Services\Response;
-use app\Services\Router\Router;
-use app\Services\Test\TestDoService;
-use app\Services\Test\TestEditService;
+use app\service\Response;
+use app\service\Router\Router;
+use app\service\Test\TestDoService;
+use app\service\Test\TestEditService;
 
 
 class QuestionController extends AdminscController

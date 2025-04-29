@@ -1,7 +1,7 @@
 <?php use app\view\components\shippable\ShippableUnitsTableFactory;
 use app\view\Icon;
 
-$authed = \app\Services\AuthService\Auth::getUser();
+$authed = \app\service\AuthService\Auth::getUser();
 ?>
 <div class="cart">
 
@@ -51,7 +51,7 @@ $authed = \app\Services\AuthService\Auth::getUser();
             </div>
 
             <div class="buttons">
-                <?php if (!\app\Services\AuthService\Auth::getUser()): ?>
+                <?php if (!\app\service\AuthService\Auth::getUser()): ?>
                     <div class="button" id="cartLogin"
                          title="Чтобы оформить заказ Вам &#10;необходимо зарегистрироваться &#10;или войти под своей учеткой">
                         Войти

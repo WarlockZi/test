@@ -1,5 +1,5 @@
 @php
-    use app\Services\AuthService\Auth;
+    use app\service\AuthService\Auth;
     use app\view\Icon;
 @endphp
 
@@ -8,7 +8,7 @@
 <head>
     <!--	MainLaiout.blade.php-->
     <meta charset="utf-8">
-    <meta name="phpSession" content="@php $_SESSION['phpSession'] ?? ''; @endphp">
+    <meta name="phpSession" content="{!! $_SESSION['phpSession'] ?? ''; !!}">
     <meta http-equiv="cleartype" content="on"/>
     <meta name="MobileOptimized" content="320">
     <meta name="HandheldFriendly" content="True">
@@ -35,7 +35,8 @@
     <script src="https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-with-polyfills-latest.js"></script>
     <script src="https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-token-with-polyfills-latest.js"></script>
 
-    @include('layouts.main.header.assets')
+
+    {!! $mainLayout->getAssets() !!}
 
     <link rel='stylesheet' href='/public/custom.css'>
 </head>
@@ -81,8 +82,8 @@
             <div class="content"></div>
         </div>
     </div>
-
 </div>
+
 <button id="fixed-call-me" class="fixed call-me" title="Заказать обратный звонок">@php echo Icon::phone(); @endphp</button>
 <button id="hoist" class="fixed hoist" title="Наверх">@php echo Icon::scrollUp1(); @endphp</button>
 </body>

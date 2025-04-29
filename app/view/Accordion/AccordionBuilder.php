@@ -4,7 +4,7 @@
 namespace app\view\Accordion;
 
 
-use app\Services\FS;
+use app\service\FS;
 use Illuminate\Database\Eloquent\Collection;
 
 class AccordionBuilder

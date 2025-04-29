@@ -3,7 +3,7 @@
 namespace app\controller\Admin;
 
 use app\controller\Controller;
-use app\Services\SitemapService\SiteMapService;
+use app\service\SitemapService\SiteMapService;
 
 class SitemapController extends Controller
 {

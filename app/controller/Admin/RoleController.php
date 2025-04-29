@@ -3,7 +3,7 @@
 namespace app\controller\Admin;
 
 use app\model\Role;
-use app\Repository\RolesRepository;
+use app\repository\RolesRepository;
 use app\view\Role\RolesView;
 
 class RoleController extends AdminscController

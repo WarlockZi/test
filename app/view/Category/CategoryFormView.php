@@ -6,7 +6,7 @@ namespace app\view\Category;
 
 use app\model\Category;
 use app\model\CategoryProperty;
-use app\Repository\CategoryRepository;
+use app\repository\CategoryRepository;
 use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
 use app\view\components\Builders\Dnd\DndBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;

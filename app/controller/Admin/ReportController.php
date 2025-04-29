@@ -2,11 +2,11 @@
 
 namespace app\controller\Admin;
 
-use app\Repository\ProductFilterRepository;
-use app\Services\Filters\Products\FilterService;
-use app\Services\Filters\Products\PanelService;
-use app\Services\Filters\Products\StringService;
-use app\Services\Response;
+use app\repository\ProductFilterRepository;
+use app\service\Filters\Products\FilterService;
+use app\service\Filters\Products\PanelService;
+use app\service\Filters\Products\StringService;
+use app\service\Response;
 use app\view\Report\Admin\ReportView;
 
 

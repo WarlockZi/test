@@ -3,7 +3,7 @@
 namespace app\controller;
 
 use app\model\Chat;
-use app\Services\Response;
+use app\service\Response;
 
 class ChatController extends AppController
 {
