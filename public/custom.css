@@ -1,1 +1,10 @@
-
+.blog-list li a{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: #000;
+    margin-bottom: 20px;
+}
+.blog-list li a img{
+    width: 120px;
+}
