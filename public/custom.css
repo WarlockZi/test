@@ -8,3 +8,43 @@
 .blog-list li a img{
     width: 120px;
 }
+
+.review-item{
+    margin-bottom: 30px;
+}
+.review-name{
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.faq-name {
+  cursor: pointer;
+  font-weight: bold;
+  position: relative;
+  padding-right: 20px;
+}
+
+.faq-name::after {
+  content: "▼";
+  position: absolute;
+  right: 0;
+  transition: transform 0.3s ease;
+}
+
+.faq-item.active .faq-name::after {
+  transform: rotate(180deg); /* Повернуть стрелку вверх */
+}
+
+.faq-text {
+  display: none;
+  margin-top: 15px;
+  padding-left: 10px;
+}
+
+.faq-item.active .faq-text {
+  display: block;
+}
+
+.faq-item{
+    margin-bottom: 20px;
+}
