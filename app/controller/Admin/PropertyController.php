@@ -3,36 +3,36 @@
 namespace app\controller\Admin;
 
 
-use app\controller\AppController;
+use app\action\admin\PropertyAction;
 use app\model\Propertable;
 use app\model\Property;
+use app\service\Router\IRequest;
 use app\view\Property\PropertyView;
+use JetBrains\PhpStorm\NoReturn;
 
 
 class PropertyController extends AdminscController
 {
-    public string $model = Property::class;
 
-    public function __construct()
+    public function __construct(
+        protected PropertyAction $actions,
+        public string            $model = Property::class,
+    )
     {
         parent::__construct();
     }
 
-    public function actionIndex(): void
+    #[NoReturn] public function actionIndex(): void
     {
-        $list = PropertyView::index();
-        $this->setVars(compact('list'));
+        $this->showTable();
     }
 
-    public function actionEdit()
+    public function actionEdit(IRequest $request)
     {
-        $this->view = 'table';
-        if ($this->route->id) {
-            $table = PropertyView::edit($this->route->id);
-            $this->setVars(compact('table'));
-        } else {
-            header('Location: /adminsc/property');
-        }
+        if (!$request->id) header('Location: /adminsc/property');
+
+        $catItem = PropertyView::edit($request->id);
+        view('admin.property.edit', compact('catItem'));
     }
 
     public function actionDelete(): void
@@ -41,8 +41,4 @@ class PropertyController extends AdminscController
         parent::actionDelete();
     }
 
-//	public function getModel()
-//  {
-//    return $this->model;
-//  }
 }

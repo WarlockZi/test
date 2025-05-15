@@ -3,18 +3,22 @@
 namespace app\controller;
 
 
+use app\action\MetaAction;
 use app\service\Response;
 
 class MainController extends AppController
 {
     public function __construct(
+        private MetaAction $meta,
         private readonly string $titleTail = " купить в интернет-магазине VITEX в Вологде. Большой ассортимент медицинской одежды, оборудования и расходников по выгодной цене. Звоните и заказывайте прямо сейчас онлайн на сайте",
     )
-    {parent::__construct();}
+    {
+        parent::__construct();
+    }
 
     public function actionIndex(): void
     {
-        $this->assets->setMeta('Нитриловые перчатки оптом',
+        $this->meta->setMeta('Нитриловые перчатки оптом',
             'Доставим нитриловые перчатки, бахилы, маски по России. Оптом.',
             'нитриловые перчатки, бахилы, маски, расходные материалы, доставка, производство, по России');
          Response::view('main.index', [],200);
@@ -22,7 +26,7 @@ class MainController extends AppController
 
     public function actionContacts()
     {
-        $this->assets->setMeta(
+        $this->meta->setMeta(
             'Контакты - Витекс',
             'Контакты' . $this->titleTail,
             'Контакты');
@@ -32,28 +36,28 @@ class MainController extends AppController
     {
         $content = 'Следите за новостями)';
         $this->setVars(compact('content'));
-        $this->assets->setMeta('Новости',
+        $this->meta->setMeta('Новости',
             'Новости' . $this->titleTail,
             'Новости');
         Response::view('main.news', compact('content'));
     }
     public function actionAbout()
     {
-        $this->assets->setMeta('О нас',
+        $this->meta->setMeta('О нас',
             'О нас' . $this->titleTail,
             'О нас');
         Response::view('main.about');
     }
     public function actionPromotions()
     {
-        $this->assets->setMeta('Акции',
+        $this->meta->setMeta('Акции',
             'Акции' . $this->titleTail,
             'Акции');
         Response::view('main.promotions');
     }
     public function actionStatii()
     {
-        $this->assets->setMeta(
+        $this->meta->setMeta(
             'Статьи - Витекс',
             'Статьи ' . $this->titleTail,
             'Статьи');
@@ -62,7 +66,7 @@ class MainController extends AppController
 
     public function actionGarantii()
     {
-        $this->assets->setMeta(
+        $this->meta->setMeta(
             'Гарантии - Витекс',
             'Гарантии ' . $this->titleTail,
             'Гарантии');
@@ -71,14 +75,14 @@ class MainController extends AppController
 
     public function actionReturnChange()
     {
-        $this->assets->setMeta('Возврат и обмен',
+        $this->meta->setMeta('Возврат и обмен',
             'Возврат и обмен' . $this->titleTail,
             'Возврат и обмен');
         Response::view('main.returnchange');
     }
     public function actionPoliticaconf()
     {
-        $this->assets->setMeta(
+        $this->meta->setMeta(
             'Политика конфиденциальности - Витекс',
             'Политика конфиденциальности ' . $this->titleTail,
             'Политика конфиденциальности');
@@ -87,7 +91,7 @@ class MainController extends AppController
 
     public function actionOferta()
     {
-        $this->assets->setMeta('Оферта',
+        $this->meta->setMeta('Оферта',
             'Оферта' . $this->titleTail,
             'Оферта');
         Response::view('main.oferta');
@@ -97,7 +101,7 @@ class MainController extends AppController
         $categories = "<ul class='category-tree'>" . "</ul>";
         $content    = file_get_contents(ROOT . '/sitemap.html');
         $this->setVars(compact('content', 'categories'));
-        $this->assets->setMeta(
+        $this->meta->setMeta(
             'Карта сайта - Витекс',
             'Карта сайта ' . $this->titleTail,
             'Карта сайта');
@@ -106,7 +110,7 @@ class MainController extends AppController
 
     public function actionRequisites()
     {
-        $this->assets->setMeta(
+        $this->meta->setMeta(
             'Реквизиты - Витекс',
             'Реквизиты ' . $this->titleTail,
             'Реквизиты');

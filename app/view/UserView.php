@@ -9,9 +9,6 @@ use app\service\Router\Request;
 
 class UserView extends View
 {
-    protected string $layout = "/layouts/vitex";
-    protected static string $noViewError = ROOT . '/app/view/404/del_index.php';
-
     public function __construct(Request $route)
     {
         parent::__construct($route,new FS(new ErrorLogger('error.txt'), new ErrorLogger('error.txt')));

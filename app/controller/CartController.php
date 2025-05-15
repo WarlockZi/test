@@ -7,7 +7,6 @@ use app\model\Order;
 use app\model\OrderItem;
 use app\repository\CartRepository;
 use app\repository\OrderRepository;
-use app\service\AssetsService\UserAssets;
 use app\service\Response;
 use app\service\Router\Request;
 use app\view\Cart\CartView;
@@ -18,7 +17,6 @@ class CartController extends AppController
     public function __construct(
         protected CartView       $cartView,
         protected CartRepository $repo,
-        protected UserAssets     $userAssets,
         protected Request        $route)
     {
         parent::__construct();
@@ -29,7 +27,7 @@ class CartController extends AppController
         $order    = OrderRepository::cart();
         $cartView = $this->cartView;
 
-        $this->render('cart.index', compact('order', 'cartView', ));
+        Response::view('cart.index', compact('order', 'cartView', ));
 
     }
 
@@ -46,7 +44,6 @@ class CartController extends AppController
         $orderId = $this->ajax['orderId'];
         if (empty($orderId)) exit('No cart order id');
         Order::find($orderId)->update(['submitted' => 1]);
-//        if (isset($_COOKIE['cartDeadline'])) setcookie('cartDeadline', '', time() - 3600);
         Response::json(['ok' => true]);
     }
 

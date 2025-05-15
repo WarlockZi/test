@@ -2,6 +2,7 @@
 
 namespace app\controller\Admin;
 
+use app\action\admin\UserAction;
 use app\model\User;
 use app\repository\UserRepository;
 use app\service\AuthService\Auth;
@@ -13,7 +14,8 @@ use Throwable;
 class UserController extends AdminscController
 {
     public function __construct(
-        public UserRepository $repo = new UserRepository,
+        public UserAction $actions,
+        public UserRepository $repo,
         public string         $model = User::class,
     )
     {
@@ -22,8 +24,7 @@ class UserController extends AdminscController
 
     public function actionIndex(): void
     {
-        $content = UserView::listAll();
-        $this->setVars(compact('content'));
+        $this->showTable();
     }
 
 

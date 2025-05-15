@@ -26,7 +26,6 @@ class DateBuilder
     public static function build(string|null $date): DateBuilder
     {
         $self     = new self();
-        $self->fs = new FS();
 
         $value       = date('Y-m-d', strtotime($date ?? ''));
         $self->value = "value='{$value}'";

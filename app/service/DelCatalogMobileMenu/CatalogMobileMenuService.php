@@ -2,7 +2,7 @@
 
 namespace app\service\CatalogMobileMenu;
 
-use app\view\blade\View;
+use app\blade\View;
 
 class CatalogMobileMenuService
 {

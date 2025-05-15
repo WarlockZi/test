@@ -2,33 +2,23 @@
 
 namespace app\view\layouts;
 
-use app\service\AssetsService\UserAssets;
+use app\action\ViteAction;
 use app\view\components\Footer\UserFooter;
-use app\view\components\Header\UserHeader;
 
 class MainLayout extends Layout
 {
-   protected string $content;
-
     public function __construct(
-        protected UserHeader $userHeader,
-        protected UserFooter $userFooter,
-        protected UserAssets $assets,
+        protected UserFooter $footer,
+        protected ViteAction $action,
     )
     {
-    }
-    public function getAssets(): string
-    {
-        return $this->assets->getCss();
-    }
-    public function getLogo(): string
-    {
-        return APP->get('logo');
+        parent::__construct($this->action);
     }
 
-    public function getFooter(): string
+
+    public function footer(): string
     {
-        return  $this->userFooter->getFooter();
+        return $this->footer->getFooter();
     }
 
 }

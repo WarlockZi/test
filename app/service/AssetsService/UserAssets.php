@@ -4,18 +4,14 @@
 namespace app\service\AssetsService;
 
 
-class UserAssets extends Assets
+class UserAssets
 {
 
-    public function __construct()
+    public function __construct(
+    )
     {
         parent::__construct();
-        $this->setJs('main');
-//		$this->setJs('chatLocalStorage');
-
-        $this->setCss('main');
         $this->setCss('chatLocalStorage');
-
         return $this;
     }
 
@@ -26,9 +22,4 @@ class UserAssets extends Assets
         $this->setCDNCss("https://cdn.jsdelivr.net/npm/quill@2/dist/quill.snow.css");
     }
 
-    public function setAuth(): void
-    {
-        $this->setJs('auth');
-        $this->setCss('auth');
-    }
 }

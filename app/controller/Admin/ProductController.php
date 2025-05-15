@@ -7,7 +7,7 @@ use app\model\Product;
 use app\repository\ProductFilterRepository;
 use app\repository\ProductRepository;
 use app\service\Breadcrumbs\AdminBreadcrumbsService;
-use app\service\ProductService;
+use app\service\Product\ProductService;
 use app\service\Response;
 use app\view\Product\Admin\ProductFormView;
 

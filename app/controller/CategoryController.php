@@ -2,11 +2,10 @@
 
 namespace app\controller;
 
-use app\model\Order;
+use app\action\CategoryAction;
 use app\repository\CategoryRepository;
 use app\repository\OrderRepository;
-use app\service\AuthService\Auth;
-use app\service\Breadcrumbs\BreadcrumbsService;
+use app\service\Response;
 use app\service\Router\IRequest;
 use app\view\components\cardPanel\CardPanel;
 
@@ -14,9 +13,9 @@ class CategoryController extends AppController
 {
 
     public function __construct(
-        protected CardPanel                 $categoryView = new CardPanel(),
-        protected CategoryRepository        $repo = new CategoryRepository(),
-        private readonly BreadcrumbsService $breadcrumbsService = new BreadcrumbsService(),
+        protected CardPanel                 $categoryView,
+        protected CategoryRepository        $repo,
+        private readonly CategoryAction     $actions,
     )
     {
         parent::__construct();
@@ -26,22 +25,26 @@ class CategoryController extends AppController
     {
         if ($request->slug) {
             $category = $this->repo->indexInstore($request->slug);
-
-            if ($category) {
-                $breadcrumbs = $this->breadcrumbsService->getCategoryBreadcrumbs($category, false, false);
-                $unsubmittedOrder = OrderRepository::unsubmittedUsersOrder();
-                $this->assets->seo->setCategoryMeta($category);
-                $this->render(
-                    'category.category',
-                    compact('category', 'breadcrumbs', 'unsubmittedOrder')
-                );
+            if (!$category) {
+                $similarCategories = $this->actions->similarCategories($request->slug);
+                Response::view('category.notFound',
+                    compact('category', 'similarCategories'),
+                    404);
             }
+
+            $breadcrumbs      = $this->actions->getBreadcrumbs($category->toArray(), false);
+            $unsubmittedOrder = OrderRepository::unsubmittedUsersOrder();
+            $this->actions->setCategoryMeta($category);
+
+            view('category.category',
+                compact('category', 'breadcrumbs', 'unsubmittedOrder'));
+
 
         } else {
             $categories = APP->get('rootCategories');
-            $this->assets->seo->setCategoriesMeta();
+            $this->actions->setCategoriesMeta();
 
-            $this->render('category.index', compact('categories'));
+            Response::view('category.index', compact('categories'));
         }
     }
 }

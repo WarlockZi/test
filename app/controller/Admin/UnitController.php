@@ -4,18 +4,22 @@
 namespace app\controller\Admin;
 
 
-use app\controller\AppController;
+use app\action\admin\UnitAction;
+
 use app\model\Unit;
 use app\repository\UnitRepository;
 use app\view\Unit\UnitFormView;
+use JetBrains\PhpStorm\NoReturn;
 
 
 class UnitController extends AdminscController
 {
-    private UnitRepository $repo;
     protected string $model = Unit::class;
 
-    public function __construct()
+    public function __construct(
+        protected UnitAction $actions,
+        private UnitRepository  $repo
+    )
     {
         parent::__construct();
         $this->repo = new UnitRepository();
@@ -69,11 +73,9 @@ class UnitController extends AdminscController
         }
     }
 
-    public function actionIndex(): void
+    #[NoReturn] public function actionIndex(): void
     {
-        $this->view = 'table';
-        $table      = UnitFormView::index();
-        $this->setVars(compact('table'));
+        $this->showTable();
     }
 
 }

@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use app\action\CategoryAction;
 use app\controller\AppController;
 use app\controller\CartController;
 use app\controller\Controller;
@@ -8,9 +9,7 @@ use app\exception\AppErrorHandler;
 use app\repository\BlueRibbonRepository;
 use app\repository\CartRepository;
 use app\repository\CategoryRepository;
-use app\repository\OrderitemRepository;
 use app\repository\OrderRepository;
-use app\service\AssetsService\UserAssets;
 use app\service\CatalogMobileMenu\CatalogMobileMenuService;
 use app\service\FS;
 use app\service\Logger\ErrorLogger;
@@ -20,16 +19,15 @@ use app\service\Router\IRouteList;
 use app\service\Router\Request;
 use app\service\Router\RouteList;
 use app\service\Router\Router;
-use app\view\blade\Blade;
-use app\view\blade\IView;
-use app\view\blade\View as BladeView;
+use app\blade\Blade;
+use app\blade\IView;
+use app\blade\View as BladeView;
 use app\view\Cart\CartView;
 use app\view\components\Header\BlueRibbon\BlueRibbon;
-use app\view\components\Header\UserHeader;
-use app\view\Icon;
+use app\view\layouts\AdminLayout;
+use app\view\layouts\ILayout;
 use app\view\layouts\MainLayout;
 use Psr\Container\ContainerInterface;
-
 use function DI\autowire;
 use function DI\create;
 use function DI\factory;
@@ -37,9 +35,10 @@ use function DI\get;
 use function DI\value;
 
 return [
-    IRequest::class => function () {
-        return Request::capture();
-    },
+
+    CategoryAction::class=>autowire(),
+
+    IRequest::class => Request::capture(),
 
     IRouteList::class => function (ContainerInterface $container) {
         return new RouteList();
@@ -59,23 +58,25 @@ return [
     },
 
     IView::class => get(BladeView::class),
-    MainLayout::class => autowire(),
+    ILayout::class => function (ContainerInterface $c) {
+        if ($c->get(IRequest::class)->isAdmin()) {
+            return $c->get(AdminLayout::class);
+        }else{
+            return $c->get(MainLayout::class);
+        }
+    },
+
     BladeView::class => autowire(),
     Blade::class => autowire(),
-    'bladeView' => function (ContainerInterface $c) {
-        return new BladeView($c->get(Blade::class));
-    },
+
 
     'rootCategories' => function (ContainerInterface $c) {
         return CategoryRepository::rootCategories();
     },
 
     'oItemsCount' => OrderRepository::count(),
-    'logo' => function () {
-        return Icon::logo_square1() . Icon::logo_vitex1();
-    },
 
-    UserHeader::class=>autowire(),
+
     AppErrorHandler::class => function (ContainerInterface $c) {
         return new AppErrorHandler(
             $c->get(ErrorLogger::class)
@@ -87,8 +88,6 @@ return [
     })->parameter('dir', ROOT)
         ->parameter('logger', get(FileLogger::class)),
 
-    'uri' => $_SERVER['REQUEST_URI'],
-
     Router::class => factory(function (ContainerInterface $c) {
         return new Router(
             $c->get(ErrorLogger::class),
@@ -98,13 +97,6 @@ return [
     ErrorLogger::class => create()->constructor('errors/errors.txt'),
     FileLogger::class => create()->constructor(),
 
-    OrderRepository::class => create()->constructor(),
-    OrderitemRepository::class => create()->constructor(),
-
-    CartRepository::class => create()->constructor(),
-    CartView::class => create()->constructor(),
-    UserAssets::class => create(UserAssets::class),
-
     BlueRibbon::class => create(BlueRibbon::class)
         ->constructor(
             get(BladeView::class),
@@ -113,12 +105,6 @@ return [
     CartController::class => create()->constructor(
         get(CartView::class),
         get(CartRepository::class),
-        get(UserAssets::class),
         get(Request::class),
     ),
-    //    UserHeader::class => function (ContainerInterface $c) {
-//        return new UserHeader(
-//            $c->get(IRequest::class),
-//            $c->get(BlueRibbon::class),);
-//    },
 ];

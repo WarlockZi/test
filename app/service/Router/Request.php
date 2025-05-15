@@ -74,7 +74,10 @@ class Request implements IRequest
     {
         return $this->url;
     }
-
+    public function getPath(): string
+    {
+        return $this->path;
+    }
     public function getAction(): string
     {
         return 'action' . ucfirst($this->action);
@@ -100,7 +103,7 @@ class Request implements IRequest
 
     public function isHome(): bool
     {
-        return $this->url === '/';
+        return $this->path === '/';
     }
 
     public function isAdmin(): bool

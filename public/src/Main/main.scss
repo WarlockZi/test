@@ -69,9 +69,10 @@
     flex-direction: column;
     margin: 0 auto;
     width: clamp(100px, 100%, 900px);
-    padding: 100px 0 100px;
+    padding: 100px 10px;
     background-color: white;
     min-height: 250px;
+    box-sizing: border-box;
 
     .admin-gap {
       height: 30px;
@@ -87,11 +88,6 @@
         margin: 0 0 15px;
         list-style: disc;
       }
-    }
-
-    @include mixin_media.m800 {
-      padding-left: 5px;
-      padding-right: 5px;
     }
 
     .typing-animation {

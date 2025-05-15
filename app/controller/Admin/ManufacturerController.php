@@ -2,23 +2,23 @@
 
 namespace app\controller\Admin;
 
-use app\controller\AppController;
+use app\action\admin\ManufacturerAction;
 use app\model\manufacturer;
-use app\view\manufacturer\manufacturerView;
+use JetBrains\PhpStorm\NoReturn;
 
 class ManufacturerController extends AdminscController
 {
-    public string $model = manufacturer::class;
 
-    public function __construct()
+    public function __construct(
+        protected ManufacturerAction $actions,
+        public string                $model = manufacturer::class,
+    )
     {
         parent::__construct();
     }
 
-    public function actionIndex(): void
+    #[NoReturn] public function actionIndex(): void
     {
-        $manufacturers = ManufacturerView::list($this->model);
-        $this->setVars(compact('manufacturers'));
+        $this->showTable();
     }
-
 }

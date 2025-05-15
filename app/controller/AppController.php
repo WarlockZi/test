@@ -4,12 +4,7 @@ declare(strict_types=1);
 namespace app\controller;
 
 use app\repository\MorphRepository;
-use app\service\AuthService\Auth;
 use app\service\Response;
-use app\view\blade\View;
-use app\view\layouts\AdminLayout;
-use app\view\layouts\MainLayout;
-use Throwable;
 
 class AppController extends Controller
 {
@@ -20,67 +15,8 @@ class AppController extends Controller
     public function __construct()
     {
         parent::__construct();
+
     }
-    public function setLayout(): void
-    {
-        $this->layout = ($this->isAdmin && Auth::getUser())
-            ? AdminLayout::class
-            : MainLayout::class;
-    }
-//
-//    private function render(string $view, array $vars): void
-//{
-//    $blade = APP->get(View::class);
-//    $blade->render($view, $vars);
-//}
-//    protected function updateOrCreateRelation(array $req): void
-//    {
-//        $action       = '';
-//        $modalId      = $req['id'];
-//        $relationName = $req['relation']['name'] ?? null;
-//        $pivot        = $req['relation']['pivot'] ?? null;
-//        $attach       = $req['relation']['attach'] ?? null;
-//        $model        = $this->model::with($relationName)->find($modalId);
-//
-//        if ($relationName) {//for has many models
-//            if ($pivot) {
-//                $id                 = $req['relation']['id'];
-//                $pivotField         = array_keys($pivot)[0];
-//                $pivotValue         = $req['relation']['pivot'][$pivotField];
-//                $pivot              = $model->$relationName()->find($id)->pivot;
-//                $pivot->$pivotField = $pivotValue;
-//                try {
-//                    $pivot->save();
-//                    Response::json(['popup' => 'Изменен']);
-//                } catch (Throwable $exception) {
-//                    Response::json(['popup' => 'Ошибка']);
-//                }
-//            } elseif ($attach) {
-//                $detach = $req['relation']['detach'] ?? null;
-//                if ($detach) {
-//                    $model->$relationName()->attach($req['relation']['attach']);
-//                    $model->$relationName()->detach($req['relation']['detach']);
-//                    Response::json(['popup' => 'Заменен', 'attach' => $attach, 'detached' => $detach]);
-//                } else {
-//                    $model->$relationName()->syncWithoutDetaching($detach);
-//                    Response::json(['popup' => 'Заменен', 'attach' => $attach]);
-//                }
-//
-//            } elseif (!empty($req['relation']['fields'])) {
-//                $key                        = key($req['relation']['fields']) ?? null;
-//                $value                      = $req['relation']['fields'][$key] ?? null;
-//                $model->$relationName->$key = $value;
-//                $model->push();
-//            } elseif ($req['relation']['id']) {
-////                $id           = $req['relation']['id'];
-////                $withRelation = $model->$relationName()->syncWithoutDetaching([$id]);
-//            }
-//        }
-//
-////        if ($action === 'created') Response::exitJson(['popup' => 'Создан', 'id' => $rel->id]);
-//
-//        Response::json(['popup' => 'Обновлен']);
-//    }
 
     public function actionUpdateOrCreate(): void
     {
@@ -167,6 +103,60 @@ class AppController extends Controller
         $this->model->$relation()->syncWithoutDetaching($created);
         Response::json(['popup' => 'Создан', 'id' => $created->id]);
     }
+//
+//    private function render(string $view, array $vars): void
+//{
+//    $blade = APP->get(View::class);
+//    $blade->render($view, $vars);
+//}
+//    protected function updateOrCreateRelation(array $req): void
+//    {
+//        $action       = '';
+//        $modalId      = $req['id'];
+//        $relationName = $req['relation']['name'] ?? null;
+//        $pivot        = $req['relation']['pivot'] ?? null;
+//        $attach       = $req['relation']['attach'] ?? null;
+//        $model        = $this->model::with($relationName)->find($modalId);
+//
+//        if ($relationName) {//for has many models
+//            if ($pivot) {
+//                $id                 = $req['relation']['id'];
+//                $pivotField         = array_keys($pivot)[0];
+//                $pivotValue         = $req['relation']['pivot'][$pivotField];
+//                $pivot              = $model->$relationName()->find($id)->pivot;
+//                $pivot->$pivotField = $pivotValue;
+//                try {
+//                    $pivot->save();
+//                    Response::json(['popup' => 'Изменен']);
+//                } catch (Throwable $exception) {
+//                    Response::json(['popup' => 'Ошибка']);
+//                }
+//            } elseif ($attach) {
+//                $detach = $req['relation']['detach'] ?? null;
+//                if ($detach) {
+//                    $model->$relationName()->attach($req['relation']['attach']);
+//                    $model->$relationName()->detach($req['relation']['detach']);
+//                    Response::json(['popup' => 'Заменен', 'attach' => $attach, 'detached' => $detach]);
+//                } else {
+//                    $model->$relationName()->syncWithoutDetaching($detach);
+//                    Response::json(['popup' => 'Заменен', 'attach' => $attach]);
+//                }
+//
+//            } elseif (!empty($req['relation']['fields'])) {
+//                $key                        = key($req['relation']['fields']) ?? null;
+//                $value                      = $req['relation']['fields'][$key] ?? null;
+//                $model->$relationName->$key = $value;
+//                $model->push();
+//            } elseif ($req['relation']['id']) {
+////                $id           = $req['relation']['id'];
+////                $withRelation = $model->$relationName()->syncWithoutDetaching([$id]);
+//            }
+//        }
+//
+////        if ($action === 'created') Response::exitJson(['popup' => 'Создан', 'id' => $rel->id]);
+//
+//        Response::json(['popup' => 'Обновлен']);
+//    }
 
 
 }

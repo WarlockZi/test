@@ -27,10 +27,4 @@ class AdminBreadcrumbsService extends BaseBreadcrumbs
         $this->isLastLink = true;
         return $this->getBreadcrumbs();
     }
-
-    public function getWrapper(): string
-    {
-        $obj = get_object_vars($this);
-        return $this->fs->getContent('wrapper', compact('obj'));
     }
-}

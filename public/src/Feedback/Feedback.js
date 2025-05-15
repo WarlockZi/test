@@ -1,7 +1,7 @@
 import "./feedback.scss";
 import { ael, qa, qs } from "@src/constants.js";
-import stripjs from "strip-js";
-import { debounce, emailValidator, getPhpSession, post } from "@src/common.js";
+import filterXSS from "xss";
+import { debounce, getPhpSession, post } from "@src/common.js"; // import PhoneValidator from "../components/validator/PhoneValidator.js";
 // import PhoneValidator from "../components/validator/PhoneValidator.js";
 
 export default class Feedback {
@@ -30,14 +30,24 @@ export default class Feedback {
         "@src/components/validator/PhoneValidator.js"
       );
       if (target.id === "name") {
-        const nameErr = stripjs(target.value);
+        const nameErr = filterXSS(target.value, {
+          whiteList: {
+            a: ["href", "title"],
+          },
+        });
+        // const nameErr = stripjs(target.value);
       } else if (target.id === "email") {
         this.emailError.innerText = emailValidator(target.value)[0] ?? "";
       } else if (target.id === "phone") {
         const phoneErr = new PhoneValidator(target)[0] ?? "";
         this.phoneError.innerText = new PhoneValidator(target)[0] ?? "";
       } else if (target.id === "message") {
-        const messageErr = stripjs(target.value);
+        const messageErr = filterXSS(target.value, {
+          whiteList: {
+            a: ["href", "title"],
+          },
+        });
+        // const messageErr = stripjs(target.value);
       }
     }
   }
@@ -78,8 +88,18 @@ export default class Feedback {
       id: 0,
       fields: {
         name: name,
-        email: stripjs(this.email.value),
-        phone: stripjs(this.phone.value),
+        email: filterXSS(this.email.value, {
+          whiteList: {
+            a: ["href", "title"],
+          },
+        }),
+        // email: stripjs(this.email.value),
+        // phone: stripjs(this.phone.value),
+        phone: filterXSS(this.phone.value, {
+          whiteList: {
+            a: ["href", "title"],
+          },
+        }),
         message: message,
       },
       phpSession: getPhpSession(),

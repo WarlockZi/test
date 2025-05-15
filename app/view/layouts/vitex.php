@@ -32,7 +32,7 @@ use app\view\Icon;
 
 
     <?= $assets->getCss(); ?>
-    <link rel='stylesheet' href='/public/custom.css'>
+
 </head>
 
 <body class="preload">

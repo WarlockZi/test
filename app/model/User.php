@@ -132,8 +132,5 @@ class User extends Model implements IUser
     function isEmployee(): bool
     {
         return !!$this->role->firstWhere('name', 'role_employee');
-//        return $this->role->contains(function ($role) {
-//            return $role->name === 'role_employee';
-//        });
     }
 }

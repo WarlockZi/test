@@ -2,34 +2,34 @@
 
 namespace app\controller\Admin;
 
+use app\action\admin\ReportFilterProductsAction;
 use app\repository\ProductFilterRepository;
 use app\service\Filters\Products\FilterService;
-use app\service\Filters\Products\PanelService;
-use app\service\Filters\Products\StringService;
 use app\service\Response;
-use app\view\Report\Admin\ReportView;
+use JetBrains\PhpStorm\NoReturn;
 
 
 class ReportController extends AdminscController
 {
     public function __construct(
-        private ReportView              $formView = new ReportView(),
-        private FilterService           $service = new FilterService(),
-        private ProductFilterRepository $repository = new ProductFilterRepository(),
-        private StringService           $stringService = new StringService(),
+        protected ReportFilterProductsAction $actions,
+        private FilterService                $service,
     )
     {
         parent::__construct();
     }
 
-    public function actionFilter(): void
+    #[NoReturn] public function actionFilter(): void
     {
-        $selectFilters = $this->service->getSavedFilters();
-        $filterPanel   = (new PanelService)->getFilterPanel($selectFilters);
+        $selectFilters = $this->actions->getSavedFilters();
+        $filterPanel   = $this->actions->getFilterPanel($selectFilters);
         $filterString  = $this->service->getFilterString($selectFilters);
-        $productsTable = $this->formView->filter($selectFilters, 'Фильтр');
+        $productsTable = $this->actions->filter($selectFilters);
 
-        $this->setVars(compact('productsTable', 'filterString', 'filterPanel'));
+        view('admin.report.productFilter.filterIndex',
+            compact('filterPanel',
+                'productsTable',
+                'filterString'));
     }
 
     public function actionUpdateFilter()

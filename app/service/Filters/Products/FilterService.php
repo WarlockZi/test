@@ -2,37 +2,20 @@
 
 namespace app\service\Filters\Products;
 
+use app\blade\views\admin\report\productFilter\FilterView;
 use app\model\FilterUser;
 use app\repository\ProductFilterRepository;
 use app\service\AuthService\Auth;
-use app\service\FS;
-use app\view\components\Traits\CleanString;
-use app\view\Filter\FilterView;
 
 class FilterService
 {
-    use CleanString;
 
-    private FS $fs;
-    private array $userFilters;
-    private string $userFilterString;
     private array $initialFilters;
-    private string $filterPanel;
-    private FilterView $filterView;
-    private ProductFilterRepository $filterRepository;
-
     public function __construct()
     {
-        $this->fs               = new FS();
-        $this->initialFilters   = InitialFiltersService::get();
-        $this->filterView       = new FilterView();
-        $this->filterRepository = new ProductFilterRepository();
+        $this->initialFilters = InitialFiltersService::get();
     }
 
-    public function getSavedFilters(): array
-    {
-        return ProductFilterRepository::product(Auth::getUser()->id);
-    }
 
     public function getFilterString(array $req): string
     {
@@ -76,8 +59,6 @@ class FilterService
     }
 
 
-
-
     private function preg_array_key_exists($pattern, $array): int
     {
         $keys = array_keys($array);
@@ -97,10 +78,4 @@ class FilterService
             ]);
     }
 
-//    private function userFiltersDB(array $req): array
-//    {
-//        return array_map(function ($key) {
-//            return $key['id'];
-//        }, $req);
-//    }
 }

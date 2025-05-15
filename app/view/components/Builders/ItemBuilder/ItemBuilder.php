@@ -4,6 +4,7 @@
 namespace app\view\components\Builders\ItemBuilder;
 
 use app\model\Product;
+use app\view\components\Traits\catalogItemDecorator;
 use app\view\components\Traits\CleanString;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;

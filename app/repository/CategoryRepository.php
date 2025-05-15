@@ -22,7 +22,16 @@ class CategoryRepository
             Cache::$timeLife1_000
         );
     }
-
+    public static function getBySubslug(string $subslug):Collection
+    {
+        return Cache::get('similarCategories'.$subslug,
+            function ()use($subslug) {
+                return Category::where('slug','LIKE', "%{$subslug}%")
+                    ->get();
+            },
+            Cache::$timeLife1_000
+        );
+    }
     public function indexInstore(string $url)
     {
         return Cache::get('categoryWithProducts' . str_replace("/", "", $url),
@@ -36,7 +45,6 @@ class CategoryRepository
                     ->with('productsInStore')
                     ->with('productsNotInStoreInMatrix')
                     ->get()->first();
-                $c        = $category->toArray();
 
                 return $category;
             }, Cache::$timeLife1_000);

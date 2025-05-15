@@ -24,6 +24,12 @@
   background-image: url(#{var.$srvc_path}404_bg_pages.webp);
 
 
+  .similar-category {
+    display: flex;
+    gap: 10px;
+  }
+  @include mixin_media.category-card;
+
   .not-found_actions {
     font-size: 2rem;
   }
@@ -93,6 +99,7 @@
     margin: 0 auto;
     width: fit-content;
     padding: 20px 40px;
+    user-select: none;
     transition: background .3s, border .3s, border-radius .3s, box-shadow .3s;
 
     &:hover {

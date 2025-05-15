@@ -4,25 +4,16 @@ declare(strict_types=1);
 namespace app\view\components\Header;
 
 
-use app\service\AssetsService\UserAssets;
-use app\service\Router\IRequest;
-use app\view\components\Header\BlueRibbon\BlueRibbon;
+use app\view\Icon;
 
 
-class UserHeader implements IHeader
+class UserHeader
 {
-    protected array $header;
 
-    public function __construct(IRequest $request, BlueRibbon $blueRibbon, UserAssets $assets)
+
+    public function logo(): string
     {
-        $this->header['blueRibbon'] = $blueRibbon;
-//        $this->header['isHome']     = $request->isHome();
-//        $this->header['logo']       = APP->get('logo');
-//        $this->header['assets']       = APP->get(UserAssets::class);
+        return Icon::logo_square1() . Icon::logo_vitex1();
     }
 
-//    public function getHeader(): array
-//    {
-//        return $this->header;
-//    }
 }

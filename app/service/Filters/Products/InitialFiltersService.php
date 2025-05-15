@@ -4,16 +4,18 @@ namespace app\service\Filters\Products;
 
 use app\service\Cache\Cache;
 use app\model\Category;
-use app\repository\CategoryRepository;
 
 class InitialFiltersService
 {
     protected static function categoriesSelector(): array
     {
         $CategoryFlatNestedArray = [0 => ''];
+        $c = APP->get('rootCategories');
+        $r = array_reverse($c);
 
-        foreach (CategoryRepository::rootCategories()->reverse() as $rootCat) {
-            $categories      = Category::find($rootCat->id)
+
+        foreach ($r as $rootCat) {
+            $categories      = Category::find($rootCat['id'])
                 ->flatSelfAndChildren
                 ->map(function ($q) {
                     return $q;

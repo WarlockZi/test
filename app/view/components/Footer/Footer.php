@@ -9,9 +9,8 @@ use app\service\FS;
 
 class Footer
 {
-    private static $cookie;
-    private static $yaMetrica;
-    private static $VK;
+    private static string $yaMetrica;
+    private static string $VK;
 
     protected string $footer;
 

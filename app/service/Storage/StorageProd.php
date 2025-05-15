@@ -11,16 +11,17 @@ class StorageProd extends Storage
     public function __construct()
     {
         parent::__construct();
-        $this->path = $this->path . 'prod' . DIRECTORY_SEPARATOR;
+        $this->path = $this->path . 'userData' . DIRECTORY_SEPARATOR;
         return $this;
     }
 
-    public static function getFileContent($file): false|string
+    public static function getFileContent($file): string
     {
-        $self    = new static();
-        $file    = $self->path . $file . '.txt';
-        $content = file_get_contents($file);
-        return $content;
+        $self = new static();
+        $file = $self->path . $file . '.txt';
+        return is_readable($file)
+            ? file_get_contents($file)
+            : '';
     }
 
     public static function putFileContent(string $filename, string $content)

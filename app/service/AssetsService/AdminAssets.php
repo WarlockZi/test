@@ -4,7 +4,7 @@
 namespace app\service\AssetsService;
 
 
-class AdminAssets extends Assets
+class AdminAssets
 {
     public function __construct()
     {

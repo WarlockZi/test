@@ -148,7 +148,7 @@ class AuthController extends AppController
         } else {
             $item = UserView::guest($user);
         }
-        $this->setVars(compact('item'));
+        view('profile.index', compact('item'));
     }
 
     public function actionChangePassword(): void

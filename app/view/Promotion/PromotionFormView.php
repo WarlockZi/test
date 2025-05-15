@@ -71,9 +71,9 @@ class PromotionFormView
         return $s;
     }
 
-    public static function adminIndex(Collection $promotions): string
+    public static function adminIndex(Collection $promotions): array
     {
-        $promotion = Table::build($promotions)
+        return Table::build($promotions)
             ->pageTitle('Акции. Чтобы завести Акцию, найдите карточку товара. Нажмите + во вкладке Акции')
             ->model('promotion')
             ->column(
@@ -109,7 +109,6 @@ class PromotionFormView
             ->del()
             ->get();
 
-        return $promotion;
     }
 
 }

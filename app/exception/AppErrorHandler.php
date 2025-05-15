@@ -21,6 +21,7 @@ class AppErrorHandler extends \Error implements Throwable
     {
 //        if (false) {
         if (DEV) {
+            return false;
             exit($this->devMessage($exception));
         } else {
             $this->logger->write($exception);

@@ -416,6 +416,7 @@
           color: var.$color-gray-mid;
           padding: 5px;
           letter-spacing: 0;
+          box-sizing: border-box;
 
           &:hover {
             background: #ababab33;

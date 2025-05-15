@@ -92,4 +92,26 @@ class SlugService
         return $value;
     }
 
+    public static function getSubslugs(string $slug, int $count = 4): array
+    {
+        $percent    = [0.33, 0.25, 0.20, 0.20];
+        $charsCount = mb_strlen($slug);
+        $subslugs   = array();
+        for ($i = 1; $i < $count ; ++$i) {
+            $minus    = (int)ceil($charsCount * $percent[$i])*(-1);
+            $newSlug = substr($slug, 0, $minus);
+            $subslugs[] = $newSlug;
+            $slug = $newSlug;
+        }
+        return $subslugs;
+
+    }
+    public static function categoryLastSegment(string $slug): string
+    {
+        $segments = explode('/', $slug);
+        return $segments[count($segments)-1];
+    }
 }
+
+
+

@@ -5,6 +5,8 @@ namespace app\controller\Admin;
 use app\controller\AppController;
 use app\service\AuthService\Auth;
 use app\service\AuthService\IUser;
+use app\service\Response;
+use JetBrains\PhpStorm\NoReturn;
 
 
 class AdminscController extends AppController
@@ -18,7 +20,6 @@ class AdminscController extends AppController
         }else{
             header("Location:/");
         }
-//        return View::noPermition();
     }
 
     protected function checkPermition(IUser $user): void
@@ -40,6 +41,7 @@ class AdminscController extends AppController
 
     public function actionIndex(): void
     {
+        Response::view('admin.index');
     }
 
     public function createSiteMap()
@@ -53,7 +55,11 @@ class AdminscController extends AppController
     public function actionDumpWWW()
     {
     }
-
+    #[NoReturn] public function showTable(): void
+    {
+        $data      = $this->actions->table($this->model);
+        view('admin.share.table.table', compact('data'));
+    }
 }
 
 

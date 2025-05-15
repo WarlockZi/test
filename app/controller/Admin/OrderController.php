@@ -6,8 +6,10 @@ use app\model\Order;
 use app\model\OrderItem;
 use app\repository\OrderRepository;
 use app\service\Response;
+use app\service\Router\IRequest;
 use app\view\Order\OrderView;
 use Carbon\Carbon;
+use JetBrains\PhpStorm\NoReturn;
 
 class OrderController extends AdminscController
 {
@@ -18,7 +20,7 @@ class OrderController extends AdminscController
         parent::__construct();
     }
 
-    public function actionIndex(): void
+    #[NoReturn] public function actionIndex(): void
     {
         $submitted   = OrderRepository::submitted();
         $unsubmitted = OrderRepository::unsubmitted();
@@ -26,15 +28,18 @@ class OrderController extends AdminscController
         $submittedTable   = OrderView::table($submitted);
         $unsubmittedTable = OrderView::table($unsubmitted);
 
-        $this->setVars(compact('submittedTable', 'unsubmittedTable'));
+        view('admin.order.index',
+            compact('unsubmittedTable',
+                'submittedTable'));
+
     }
 
-    public function actionEdit(): void
+    public function actionEdit(IRequest $request): void
     {
-        $this->view = 'table';
-        $order      = OrderRepository::edit($this->route->id);
+        $order      = OrderRepository::edit($request);
         $table      = OrderView::editOrder($order);
-        $this->setVars(compact('table'));
+        view('admin.order.edit',
+            compact('table'));
     }
 
     public static function updateOrCreate(array $req): void

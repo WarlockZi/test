@@ -9,6 +9,7 @@ use app\model\OrderItem;
 use app\model\Product;
 use app\service\AuthService\Auth;
 use app\service\Response;
+use app\service\Router\IRequest;
 use Illuminate\Database\Eloquent\Collection;
 use Throwable;
 
@@ -25,7 +26,6 @@ class OrderRepository
     public static function unsubmittedUsersOrder()
     {
         list($field, $value) = Auth::getCartFieldValue();
-//        $order = Order::where($field, $value)->first();
         return Order::where($field, $value)
             ->whereNull('submitted')
             ->with('products.orderItems.unit')
@@ -132,14 +132,14 @@ class OrderRepository
         return $order;
     }
 
-    public static function edit($id)
+    public static function edit(IRequest $request)
     {
         $orders = Order::
         with('user',
             'products.orderItems.unit',
             'products.activePromotions',
             'products.inactivePromotions')
-            ->find($id);
+            ->find($request->id);
         return $orders;
     }
 

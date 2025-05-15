@@ -25,7 +25,7 @@ class Router
         $routes = APP->get(IRouteList::class)->getRoutes();
 
         foreach ($routes as $pattern => $r) {
-            if (preg_match("#$pattern#i", $request->getUrl(), $matches)) {
+            if (preg_match("#$pattern#i", $request->getPath(), $matches)) {
 
                 foreach ($matches as $k => $v) {
                     if (is_numeric($k)) {

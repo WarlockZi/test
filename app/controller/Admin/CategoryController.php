@@ -2,16 +2,17 @@
 
 namespace app\controller\Admin;
 
+use app\action\admin\CategoryAction;
 use app\model\Category;
 use app\repository\CategoryRepository;
-use app\service\Breadcrumbs\AdminBreadcrumbsService;
+use app\service\Router\IRequest;
 use app\view\Category\CategoryFormView;
 
 class CategoryController extends AdminscController
 {
     public function __construct(
+        private readonly CategoryAction $actions,
         public string                   $model = Category::class,
-        private AdminBreadcrumbsService $breadcrumbsService = new AdminBreadcrumbsService(),
     )
     {
         parent::__construct();
@@ -23,13 +24,17 @@ class CategoryController extends AdminscController
         $this->setVars(compact('categoryTree'));
     }
 
-    public function actionEdit(): void
+    public function actionEdit(IRequest $route): void
     {
-        $id          = $this->route->id;
-        $category    = CategoryRepository::edit($id);
-        $breadcrumbs = $this->breadcrumbsService->getCategoryBreadcrumbs($category);
-        $category    = CategoryFormView::edit($category);
-        $this->setVars(compact('category', 'breadcrumbs'));
+        $category     = CategoryRepository::edit($route->id);
+        $breadcrumbs  = $this->actions->getBreadcrumbs($category->toArray(), false);
+//        $categoryView = $this->actions->edit($category);
+        $catItem = CategoryFormView::edit($category);
+        view('admin.category.edit',
+            compact('category',
+                'breadcrumbs',
+                'catItem'
+            ));
     }
 
     public function actionChangeproperty()

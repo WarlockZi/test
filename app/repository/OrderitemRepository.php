@@ -15,9 +15,12 @@ class OrderitemRepository
     public static function updateOrCreate(OrderProduct $orderProduct, array $req)
     {
         return OrderItem::updateOrCreate(
-            ['order_product_id' => $orderProduct->id,
-                'unit_id' => $req['unit_id']],
-            ['order_product_id' => $orderProduct->id,
+            [
+                'order_product_id' => $orderProduct->id,
+                'unit_id' => $req['unit_id']
+            ],
+            [
+                'order_product_id' => $orderProduct->id,
                 'count' => $req['count'],
                 'product_id' => $req['product_id'],
                 'unit' => $req['unit_id'],

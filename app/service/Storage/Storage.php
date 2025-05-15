@@ -11,12 +11,12 @@ class Storage
 {
     protected string $path;
     protected string $relativePath;
-    protected $files;
+    protected array|false $files;
     protected $dirs;
 
     public function __construct()
     {
-        $this->path = FS::platformSlashes(ROOT . '/storage/');
+        $this->path = FS::platformSlashes(ROOT . '/storage/app/');
     }
 
     public static function getFile(string $file): string

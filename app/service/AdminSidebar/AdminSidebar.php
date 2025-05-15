@@ -2,6 +2,7 @@
 
 namespace app\service\AdminSidebar;
 
+use app\service\AuthService\Auth;
 use app\service\AuthService\IUser;
 use app\view\Icon;
 
@@ -14,7 +15,7 @@ class AdminSidebar
     {
         $self          = new self();
         $self->user    = $user;
-        $self->sidebar = $self->sidebar();
+        $self->sidebar = $self->data();
         ob_start();
         foreach ($self->sidebar as $item) {
             if ($item['children']) {
@@ -38,9 +39,9 @@ class AdminSidebar
         return ob_get_clean();
     }
 
-    private function hasPermitions(array $permitions): bool
+    public function hasPermitions(IUser $user, array $permitions): bool
     {
-        return $this->user->can($permitions);
+        return $user->can($permitions);
 
     }
 
@@ -56,11 +57,12 @@ class AdminSidebar
         include $f;
     }
 
-    private function child(array $item): void
+    public function child(array $item): void
     {
+        $user = Auth::getUser();
         $f = ROOT . "/app/Services/AdminSidebar/child.php";
         if ($item['permissions']) {
-            if ($this->user->can($item['permissions'])) {
+            if ($user->can($item['permissions'])) {
                 include $f;
             }
         } else {
@@ -68,7 +70,7 @@ class AdminSidebar
         }
     }
 
-    private function sidebar(): array
+    public function data(): array
     {
         return [
             [
@@ -192,7 +194,7 @@ class AdminSidebar
                     ],
                     [
                         "name" => "Задачи",
-                        "href" => "//adminsc/planning",
+                        "href" => "/adminsc/planning",
                         "class" => "neon",
                         "permissions" => [],
                     ],

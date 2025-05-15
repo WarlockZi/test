@@ -6,6 +6,7 @@ use app\model\Product;
 use app\model\Property;
 use app\model\Val;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
+use app\view\components\Builders\ItemBuilder\ItemBuilderNew;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
@@ -20,40 +21,12 @@ class PropertyView
     public $modelName = Property::class;
     public $model = 'property';
 
-    public static function index(): string
-    {
-        return Table::build(Property::all())
-            ->model('property')
-            ->column(
-                ColumnBuilder::build('id')
-                    ->width('50px')
-                    ->name('Id')
-                    ->get())
-            ->column(
-                ColumnBuilder::build('name')
-                    ->name('Название')
-                    ->search()
-                    ->sort()
-                    ->contenteditable()
-                    ->get()
-            )->column(
-                ColumnBuilder::build('show_as')
-                    ->contenteditable()
-                    ->name('Показывать как')
-                    ->get()
-            )
-            ->edit()
-            ->del()
-            ->addButton()
-            ->get();
-    }
-
 
     public static function edit($id)
     {
         $view = new self();
         $prop = $view->modelName::with('categories', 'products', 'vals')->find($id);
-        return ItemBuilder::build($prop, 'property')
+        return ItemBuilderNew::build($prop, 'property')
             ->pageTitle('Свойство : ' . $prop->name)
             ->field(
                 ItemFieldBuilder::build('id', $prop)
@@ -68,7 +41,7 @@ class PropertyView
             )
             ->tab(
                 ItemTabBuilder::build('Значения')
-                    ->html(
+                    ->table(
                         Table::build($prop->vals,)
                             ->relation('vals', 'value')
                             ->column(

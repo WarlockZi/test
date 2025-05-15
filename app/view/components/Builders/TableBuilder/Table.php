@@ -5,7 +5,6 @@ namespace app\view\components\Builders\TableBuilder;
 
 
 use app\service\FS;
-use app\service\Logger\ErrorLogger;
 use app\view\components\Traits\CleanString;
 use app\view\Icon;
 use Illuminate\Database\Eloquent\Collection;
@@ -15,7 +14,7 @@ class Table
     use CleanString;
 
     private string $pageTitle = '';
-    private string $header = '';
+    private array $header = [];
     private string $grid = '';
     private array $columns = [];
     private string $class = '';
@@ -85,7 +84,7 @@ class Table
         return $this;
     }
 
-    public function header(string $header): static
+    public function header(array $header): static
     {
         $this->header = $header;
         return $this;
@@ -187,13 +186,11 @@ class Table
         return '';
     }
 
-    public function get(): string
+    public function get(): array
     {
         $this->emptyRow = $this->emptyRow();
         $this->prepareGridHeader();
         $this->items = $this->take ? $this->items->take($this->take) : $this->items;
-        $data        = get_object_vars($this);
-        $content     = $this->fs->getContent('tableTemplate', $data);
-        return $this->clean($content);
+        return get_object_vars($this);
     }
 }

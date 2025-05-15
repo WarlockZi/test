@@ -97,7 +97,7 @@ class OrderView
     }
 
 
-    public static function editOrder(Order $order): string
+    public static function editOrder(Order $order): array
     {
         return Table::build($order->products)
             ->model('order')

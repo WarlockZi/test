@@ -2,27 +2,27 @@
 
 namespace app\controller\Admin;
 
+use app\action\admin\VideoAction;
 use app\model\Videoinstruction;
 use app\view\Videoinstruction\VideoinstructionView;
 
 class VideoinstructionController extends AdminscController
 {
 
-    protected string $model = Videoinstruction::class;
 
-    public function __construct()
+    public function __construct(
+        protected VideoAction $actions,
+        protected string      $model = Videoinstruction::class,
+    )
     {
         parent::__construct();
     }
 
     public function actionIndex(): void
     {
-        $videos = Videoinstruction::where('id', '>', 0)
-//			->orderBy(['tag', 'sort'])
-            ->orderBy('tag')
-            ->orderBy('sort')
-            ->get();
-        $this->setVars(compact('videos'));
+
+        $this->showTable();
+//        $this->setVars(compact('videos'));
     }
 
     public function actionEdit()

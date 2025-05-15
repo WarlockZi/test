@@ -3,7 +3,6 @@
 namespace app\service\Breadcrumbs;
 
 use app\model\Category;
-use app\service\FS;
 use app\view\components\cardPanel\CardPanel;
 
 class BaseBreadcrumbs

@@ -2,25 +2,26 @@
 
 namespace app\controller\Admin;
 
+use app\action\admin\WishAction;
 use app\service\Storage\StorageProd;
-use Workerman\Protocols\Http;
+use JetBrains\PhpStorm\NoReturn;
 
 class WishController extends AdminscController
 {
-    public string $model = Http::class;
-
-    public function __construct()
+    public function __construct(
+        protected WishAction $actions,
+    )
     {
         parent::__construct();
     }
 
-    public function actionIndex(): void
+    #[NoReturn] public function actionIndex(): void
     {
-        $content = StorageProd::getFileContent('wish');
-        $this->setVars(compact('content'));
+        $content = $this->actions->wishes();
+        view('admin.wish.wish', ['content' => $content]);
     }
 
-    public function actionSave()
+    public function actionSave(): void
     {
         if (isset($_POST['content'])) {
             $content = $_POST['content'];

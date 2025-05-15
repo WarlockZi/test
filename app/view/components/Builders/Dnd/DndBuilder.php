@@ -11,12 +11,11 @@ class DndBuilder
 {
     use CleanString;
 
-    public $path;
-    public $class;
-    public $tooltip;
-    public $wrapClass;
+    public string$path;
+    public string $class;
+    public string $tooltip;
 
-    public static function make(string $path, string $class = '', string $tooltip = '', string $wrapClass = '')
+    public static function make(string $path, string $class = '', string $tooltip = '')
     {
         $dnd          = new static();
         $dnd->path    = "data-path='{$path}'";
@@ -26,7 +25,4 @@ class DndBuilder
         $result = FS::getFileContent(ROOT . '/app/view/components/Builders/Dnd/index.php', compact('dnd'));
         return $dnd->clean($result);
     }
-
-
 }
-
