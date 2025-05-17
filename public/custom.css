@@ -121,3 +121,32 @@
         display: none;
     }
 }
+    .block_work {
+        display: flex;
+    }
+
+    .block1 {
+        margin-right: 10px;
+        width: 20%;
+    }
+
+    .img_main {
+        width: 150px;
+        text-align: center;
+    }
+
+    .strelka {
+        width: 50px;
+        height: 50px;
+    }
+@media(max-width: 768px) {
+    .strelka {
+        display: none;
+    }
+    .block_work {
+        flex-wrap: wrap;
+    }
+    .block1 {
+        width: 100%;
+    }
+}
