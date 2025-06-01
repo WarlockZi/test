@@ -161,12 +161,14 @@ class Product extends Model
 
     protected function getMainImagePathAttribute(): string
     {
-        return APP->get(ProductImageService::class)->getImageRelativePath($this);
+        $pis = APP->get(ProductImageService::class);
+        return $pis->getImageRelativePath($this);
     }
 
     public function getMainImageAttribute(): string
     {
-        return APP->get(ProductImageService::class)->getImageRelativePath($this);
+        $pis = APP->get(ProductImageService::class);
+        return $pis->getImageRelativePath($this);
 
     }
 

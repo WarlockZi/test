@@ -2,7 +2,8 @@
 
 namespace app\repository;
 
-use app\service\CatalogMobileMenu\CatalogMobileMenuService;
+
+use app\service\DelCatalogMobileMenu\CatalogMobileMenuService;
 use app\view\Icon;
 
 
@@ -10,7 +11,8 @@ class BlueRibbonRepository
 {
     public static function data(): array
     {
-        $mC = APP->get(CatalogMobileMenuService::class)->get();
+        $mC = APP->get(CatalogMobileMenuService::class);
+        $mc = $mC->get();
         return [
             'front_categories' => APP->get('rootCategories'),
             'child_categories' => self::getChildCategoriesNew(),

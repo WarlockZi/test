@@ -20,7 +20,8 @@ class Router
 
     protected function matchRoute(IRequest $request): void
     {
-        $routes = APP->get(IRouteList::class)->getRoutes();
+        $rl = APP->get(IRouteList::class);
+        $routes = $rl->getRoutes();
 
         foreach ($routes as $pattern => $r) {
             if (preg_match("#$pattern#i", $request->getPath(), $matches)) {
