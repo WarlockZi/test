@@ -2,7 +2,7 @@
 
 namespace app\service\AdminSidebar;
 
-use app\service\Auth\Auth;
+use app\service\AuthService\Auth;
 use app\service\Auth\IUser;
 use app\view\Icon;
 

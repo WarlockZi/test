@@ -2,7 +2,7 @@
 
 namespace app\service\Router;
 
-use app\service\Auth\Auth;
+use app\service\AuthService\Auth;
 
 class Permitions
 {

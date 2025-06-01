@@ -1,6 +1,6 @@
 <?php
 
-use app\service\Auth\Auth;
+use app\service\AuthService\Auth;
 use app\view\Icon;
 
 ?>

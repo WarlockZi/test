@@ -5,7 +5,7 @@ namespace app\repository;
 
 
 use app\model\Like;
-use app\service\Auth\Auth;
+use app\service\AuthService\Auth;
 use Throwable;
 
 class LikeRepository

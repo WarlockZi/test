@@ -6,7 +6,7 @@ namespace app\controller;
 
 use app\model\Compare;
 use app\repository\CompareRepository;
-use app\service\Auth\Auth;
+use app\service\AuthService\Auth;
 use app\service\Response;
 use app\view\Compare\CompareView;
 
