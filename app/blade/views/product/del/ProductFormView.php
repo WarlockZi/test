@@ -318,7 +318,7 @@ class ProductFormView
 
     public static function mainImage(Product $product): DndBuilder
     {
-        $img['src']   = APP->get(ProductImageService::class)->getRelativeImage($product);
+        $img['src']   = (APP->get(ProductImageService::class))->getRelativeImage($product);
         $img['alt']   = $product->name;
         $img['title'] = $product->name;
         $img['class'] = 'main-image';
