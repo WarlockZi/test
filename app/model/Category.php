@@ -33,7 +33,7 @@ class Category extends Model
             '1s_category_id',
             '1s_id')
             ->where('instore', 0)
-            ->with('mainImages')
+//            ->with('mainImages')
             ->orderBy('name');
     }
 
@@ -45,7 +45,7 @@ class Category extends Model
         )
             ->where('instore', 0)
             ->where('name', 'regexp', '\\s?\\*\\s?$')
-            ->with('mainImages')
+//            ->with('mainImages')
             ->with('ownProperties')
             ->with('shippableUnits')
             ->with('inactivepromotions')
@@ -61,7 +61,7 @@ class Category extends Model
             '1s_category_id',
             '1s_id')
             ->where('instore', '<>', 0)
-            ->with('mainImages')
+//            ->with('mainImages')
             ->with('order.orderitems')
             ->with('shippableUnits')
             ->with('inactivepromotions')

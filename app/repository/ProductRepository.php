@@ -41,7 +41,7 @@ class ProductRepository
 //            ->with('category.parents')
             ->with('values.property')
             ->with('manufacturer.country')
-            ->with('mainImages')
+//            ->with('mainImages')
 //            ->with('detailImages')
 //            ->with('smallpackImages')
 //            ->with('bigpackImages')
@@ -81,7 +81,7 @@ class ProductRepository
         return Product::query()
             ->with('price')
             ->onlyTrashed()
-            ->with('mainImages')
+//            ->with('mainImages')
             ->take(20)
             ->orderBy('id', "DESC")
             ->get();

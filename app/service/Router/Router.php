@@ -12,11 +12,9 @@ class Router
     protected Request $route;
     protected array $routes;
     protected string $namespace;
-    protected ErrorLogger $errorLogger;
 
-    public function __construct(ErrorLogger $errorLogger)
+    public function __construct(protected ErrorLogger $errorLogger)
     {
-        $this->errorLogger = $errorLogger;
 
     }
 
@@ -49,6 +47,7 @@ class Router
     {
         $this->matchRoute($request);
         $controller = $request->getController();
+        var_dump($request);
         if (!class_exists($controller)) throw new NoControllerException('Bad controller');
 
         $controller = APP->get($controller);

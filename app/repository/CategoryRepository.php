@@ -62,7 +62,8 @@ class CategoryRepository
             'parentRecursive.properties',
             'properties',
             'ownProperties',
-            'mainImages')
+//            'mainImages'
+        )
             ->findOrNew($id);
     }
 

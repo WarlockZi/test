@@ -42,7 +42,7 @@ class ReportRepository extends AppController
         return Product::query()
             ->with('price')
             ->onlyTrashed()
-            ->with('mainImages')
+//            ->with('mainImages')
             ->take(20)
             ->orderBy('id', "DESC")
             ->get();
