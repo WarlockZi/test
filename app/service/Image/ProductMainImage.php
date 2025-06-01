@@ -98,7 +98,7 @@ class ProductMainImage
             $targetPath = $absolutePath . DIRECTORY_SEPARATOR . $fileName;
 
             // Проверяем, что файл перемещается в разрешенную директорию
-            if (strpos(realpath(dirname($targetPath)), $absolutePath) === 0) {
+            if (str_starts_with(realpath(dirname($targetPath)), $absolutePath)) {
                 move_uploaded_file($tmpName, $targetPath);
                 return $targetPath;
 
