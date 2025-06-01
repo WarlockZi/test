@@ -47,7 +47,7 @@ class Router
     {
         $this->matchRoute($request);
         $controller = $request->getController();
-        var_dump($controller);
+        var_dump('class exists --'. class_exists($controller));
         if (!class_exists($controller)) throw new NoControllerException('Bad controller');
 
         $controller = APP->get($controller);
