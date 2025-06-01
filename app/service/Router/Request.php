@@ -136,8 +136,6 @@ class Request implements IRequest
 
     public function getController(): string
     {
-        var_dump('namespace ******* '.$this->getNamespace());
-        var_dump('controller ******* '. $this->getControllerFullName());
         return $this->getNamespace() . $this->getControllerFullName();
 
     }

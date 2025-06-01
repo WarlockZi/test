@@ -8,7 +8,7 @@ use ImagickException;
 class ImageService
 {
     public function __construct(
-        protected Imagick $image,
+//        protected Imagick $image,
         private string    $absPath = '',
     )
     {
