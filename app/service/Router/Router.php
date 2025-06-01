@@ -47,9 +47,9 @@ class Router
     {
         $this->matchRoute($request);
         $controller = $request->getController();
-        var_dump('class exists --  ' . class_exists($controller) . PHP_EOL);
-        var_dump("class exists --  {$controller}" . PHP_EOL);
-        exit();
+//        var_dump('class exists --  ' . class_exists($controller) . PHP_EOL);
+//        var_dump("class name --  {$controller}" . PHP_EOL);
+//        exit();
 //        $exists = class_exists($controller);
 //        error_log($controller);
 
