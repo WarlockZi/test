@@ -22,8 +22,8 @@ function productionErrorHandler($errno, $errstr, $errfile, $errline) {
 
     if (!headers_sent()) {
         header('HTTP/1.1 500 Internal Server Error');
-        view('category.notFound');
-//        include ROOT.'views/errors/500.html';
+//        view('category.notFound');
+        include ROOT.'/app/view/404/404.php';
     }
 
     // Don't execute PHP internal error handler
@@ -36,7 +36,8 @@ function productionExceptionHandler($exception): void
 
     if (!headers_sent()) {
         header('HTTP/1.1 500 Internal Server Error');
-        view('category.notFound');
+        include ROOT.'/app/view/404/404.php';
+//        view('category.notFound');
 //        include 'views/errors/500.html';
     }
 }
