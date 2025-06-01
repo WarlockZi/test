@@ -7,7 +7,6 @@ namespace app\view\Category;
 use app\model\Category;
 use app\model\CategoryProperty;
 use app\repository\CategoryRepository;
-use app\blade\views\components\dnd\DndBuilder;
 use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilderNew;
@@ -41,7 +40,7 @@ class CategoryFormView
     public static function edit(Category $category): array
     {
         return ItemBuilderNew::build($category, 'category')
-            ->pageTitle('Категория :  ' . $category->name)
+            ->pageTitle('Категория :  ' . $category->ownProperties->seo_h1 ?? $category->name)
             ->field(
                 ItemFieldBuilder::build('slug', $category)
                     ->name('Адрес')
@@ -79,24 +78,24 @@ class CategoryFormView
                     ->name('ID')
                     ->get()
             )
-            ->tab(
-                ItemTabBuilder::build('Основная картинка')
-                    ->html(
-                        MorphBuilder::build($category, 'mainImages', 'main')
-                            ->html(DndBuilder::make('category'))
-                            ->html(ImageView::morphImages($category, 'mainImages'))
-                            ->get()
-                    )
-            )
+//            ->tab(
+//                ItemTabBuilder::build('Основная картинка')
+//                    ->html(
+//                        MorphBuilder::build($category, 'mainImages', 'main')
+//                            ->html(self::dnd())
+////                            ->html(ImageView::morphImages($category, 'mainImages'))
+//                            ->get()
+//                    )
+//            )
             ->tab(
                 ItemTabBuilder::build('Товары категории')
-                    ->html(
+                    ->table(
                         self::getProducts($category)
                     )
             )
             ->tab(
                 ItemTabBuilder::build('Св-ва категории')
-                    ->html(
+                    ->table(
                         self::properties($category->properties)
                     )
             )
@@ -105,105 +104,7 @@ class CategoryFormView
             )
             ->tab(
                 ItemTabBuilder::build('Удаленные Подкатегории')
-                    ->html(
-                        Table::build($category['childrenDeleted'])
-                            ->pageTitle('Удаленные подкатегории')
-                            ->column(
-                                ColumnBuilder::build('id')
-                                    ->width('40px')
-                                    ->get()
-                            )
-                            ->column(
-                                ColumnBuilder::build('name')
-                                    ->name("Назввание")
-                                    ->contenteditable()
-                                    ->get()
-                            )
-                            ->relation('childrenDeleted', 'category')
-                            ->edit()
-                            ->del()
-                            ->addButton()
-                            ->get()
-                    )
-            )
-            ->tab(
-                ItemTabBuilder::build('seo')
-                    ->html(
-                        self::getSeo($category->ownProperties)
-                    )
-            )
-            ->toList('adminsc/category', 'К списку категорий')
-            ->get();
-    }
-
-    public static function editOld(Category $category): string
-    {
-        return ItemBuilder::build($category, 'category')
-            ->pageTitle('Категория :  ' . $category->name)
-            ->field(
-                ItemFieldBuilder::build('slug', $category)
-                    ->name('Адрес')
-                    ->html(
-                        "<a href='$category->href'>{$category->href}</a>"
-                    )
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('name', $category)
-                    ->name('Наименование в 1c')
-                    ->required()
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('show_front', $category)
-                    ->name('Показывать на главоной')
-                    ->html(
-                        CheckboxBuilder::build()
-                            ->field('show_front', $category->show_front)
-                            ->get()
-                    )
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('category_id', $category)
-                    ->name('Принадлежит')
-                    ->html(
-                        self::selectorByField(['1s_category_id' => $category['1s_category_id']])
-                    )
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('id', $category)
-                    ->name('ID')
-                    ->get()
-            )
-            ->tab(
-                ItemTabBuilder::build('Основная картинка')
-                    ->html(
-                        MorphBuilder::build($category, 'mainImages', 'main')
-                            ->html(DndBuilder::make('category'))
-                            ->html(ImageView::morphImages($category, 'mainImages'))
-                            ->get()
-                    )
-            )
-            ->tab(
-                ItemTabBuilder::build('Товары категории')
-                    ->html(
-                        self::getProducts($category)
-                    )
-            )
-            ->tab(
-                ItemTabBuilder::build('Св-ва категории')
-                    ->html(
-                        self::properties($category->properties)
-                    )
-            )
-            ->tab(
-                self::getChildCategories($category)
-            )
-            ->tab(
-                ItemTabBuilder::build('Удаленные Подкатегории')
-                    ->html(
+                    ->table(
                         Table::build($category['childrenDeleted'])
                             ->pageTitle('Удаленные подкатегории')
                             ->column(
@@ -298,7 +199,7 @@ class CategoryFormView
     public static function getChildCategories(Category $category): ItemTabBuilder
     {
         return ItemTabBuilder::build('Подкатегории')
-            ->html(
+            ->table(
                 Table::build($category['childrenNotDeleted'])
                     ->pageTitle('Подкатегории')
                     ->column(
@@ -344,8 +245,13 @@ class CategoryFormView
                 ->contenteditable()
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .
-//            ItemFieldBuilder::build('seo_h2', $categoryProperty)
-//                ->name('H 2')
+            ItemFieldBuilder::build('seo_h2', $categoryProperty)
+                ->name('H 2')
+                ->contenteditable()
+                ->relation('ownProperties')
+                ->get()->toHtml('product') .
+//            ItemFieldBuilder::build('seo_full_name', $categoryProperty)
+//                ->name('Полное наименование категории')
 //                ->contenteditable()
 //                ->relation('ownProperties')
 //                ->get()->toHtml('product') .
@@ -367,7 +273,7 @@ class CategoryFormView
     public static function getSeoArticle($categoryProperty): string
     {
         ob_start();
-        include __DIR__ . '/Admin/seoArticle.php';
+        include ROOT.'/app/blade/views/admin/category/seoArticle.php';
         return ob_get_clean();
     }
 
@@ -400,9 +306,9 @@ class CategoryFormView
     }
 
 
-    public static function properties(Collection $properties): string
+    public static function properties(Collection $properties): array
     {
-        $content = Table::build($properties)
+        return Table::build($properties)
             ->pageTitle('Св-ва категории')
             ->relation('properties', 'property')
             ->column(
@@ -414,16 +320,21 @@ class CategoryFormView
             ->edit()
             ->addButton()
             ->get();
-
-        return $content;
     }
 
-    public static function list(): string
-    {
-        $tree = TreeABuilder::build(
-            CategoryRepository::treeAll(), 'children_recursive', 2)
-            ->href('/adminsc/category/edit/')
-            ->get();
-        return "<ul class='category-tree'>" . $tree . "</ul>";
-    }
+//    private static function dnd()
+//    {
+//        public static function mainImage(Product $product): DndBuilder
+//    {
+//        $img['src']   = (new ProductImageService)->getRelativeImage($product);
+//        $img['alt']   = $product->name;
+//        $img['title'] = $product->name;
+//        $img['class'] = 'main-image';
+//
+//        $dnd      = self::dnd();
+//        $dnd->img = $img;
+//
+//        return $dnd;
+//    }
+//    }
 }

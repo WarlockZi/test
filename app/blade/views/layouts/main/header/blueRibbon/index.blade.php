@@ -14,13 +14,13 @@
 
                 <li>
                     <a href="/catalog" class="util-item catalog" title="Каталог">
-                        @php echo  Icon::catalog() @endphp
+                        {!! Icon::catalog() !!}
                     </a>
                 </li>
 
                 <li>
                     <button class="util-item search" title="Поиск">
-                        @php echo  Icon::search('feather'); @endphp
+                        {!! Icon::search('feather') !!}
                     </button>
                 </li>
 
@@ -28,23 +28,23 @@
                 <li>
                     <a href="/cart" class="util-item cart-link" title="Корзина">
 
-                        {{--                        @if ($oItemsCount) --}}
-                        {{--                            <div class="count show">@php echo  $oItemsCount; @endphp </div>--}}
-                        {{--                        @endif --}}
+                        @if (APP->get('orderItemsCount'))
+                            <div class="count show">{!! APP->get('orderItemsCount') !!}</div>
+                        @endif
 
-                        @php echo  Icon::shoppingCart('feather') @endphp
+                        {!! Icon::shoppingCart('feather') !!}
                     </a>
                 </li>
 
 
                 <li>
                     <a href="/compare/page" class="util-item compare" title="Сравнить товары">
-                        @php echo  Icon::chart() @endphp
+                        {!! Icon::chart() !!}
                     </a>
                 </li>
                 <li>
                     <a href="/like/page" class="util-item like" title="Избранное">
-                        @php echo  Icon::heart() @endphp
+                        {!! Icon::heart() !!}
                     </a>
                 </li>
 

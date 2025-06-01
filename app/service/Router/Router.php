@@ -59,7 +59,7 @@ class Router
         $this->middlwares($request, $controller, $action);
     }
 
-    private function middlwares(IRequest $request, $controller, $action): void
+    private function middlwares($request, $controller, $action): void
     {
         $handler = array_reduce(
             array_reverse($request->getMiddlewares()),
@@ -68,14 +68,11 @@ class Router
                     return (new $middleware())->handle($request, $next);
                 };
             },
-            function ($request) use ($controller, $action) {
-                return $controller->{$action}($request);
+            function () use ($controller, $action) {
+                return APP->call([APP->make($controller::class), $action]);
             }
         );
 
         $handler($request);
     }
-
-
 }
-

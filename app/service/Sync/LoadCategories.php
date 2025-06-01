@@ -8,18 +8,18 @@ use app\model\CategoryProperty;
 use app\service\Logger\ErrorLogger;
 use app\service\Router\SlugService;
 use app\service\Router\UrlService;
-use app\service\ShortlinkService;
+use app\service\ShortLink\ShortlinkService;
 use Throwable;
 
 class LoadCategories
 {
     public function __construct(
-        readonly private string $file,
-        private array           $data = [],
-        public array            $deleted = [],
-        public array            $created = [],
-        private array           $existed = [],
-        private ErrorLogger     $logger = new ErrorLogger,
+        readonly private string      $file,
+        private readonly ErrorLogger $logger = new ErrorLogger('error.txt'),
+        private array                $data = [],
+        public array                 $deleted = [],
+        public array                 $created = [],
+        private array                $existed = [],
     )
     {
         $xml        = simplexml_load_file($this->file);

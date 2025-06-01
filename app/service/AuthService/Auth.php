@@ -4,7 +4,6 @@ namespace app\service\AuthService;
 
 use app\model\User;
 use app\model\UserYandex;
-use app\service\Router\Request;
 
 class Auth
 {

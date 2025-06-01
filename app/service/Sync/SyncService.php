@@ -2,25 +2,23 @@
 
 namespace app\service\Sync;
 
-use app\service\Logger\FileLogger;
+use app\service\Logger\SyncLogger;
 use app\service\Response;
 use app\service\Router\Request;
-use app\service\Storage\StorageImport;
+use app\service\Storage\app\SyncStorage;
 use JetBrains\PhpStorm\NoReturn;
 
 class SyncService
 {
-    protected string $importPath = '';
     protected string $importFile = '';
     protected string $offerFile = '';
 
     public function __construct(
-        protected FileLogger      $logger = new FileLogger('import.txt'),
-        protected StorageImport   $storage = new StorageImport,
-        protected TrancateService $trancateService = new TrancateService,
+        protected SyncLogger      $logger,
+        protected SyncStorage     $storage,
+        protected TrancateService $trancateService,
     )
     {
-        $this->importPath = $this->storage->getStoragePath();
         $this->importFile = $this->storage::getFile('import0_1.xml');
         $this->offerFile  = $this->storage::getFile('offers0_1.xml');
 //        $this->loadProducts = new LoadProducts($this->importFile);

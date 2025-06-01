@@ -29,18 +29,18 @@ class LikeController extends AppController
     {
         $req = $this->ajax;
         if (LikeRepository::del($req)) {
-            Response::json(['id' => $req['id']]);
+            response()->json(['id' => $req['id']]);
         }
-        Response::json(['disliked' => false]);
+        response()->json(['disliked' => false]);
     }
 
     public function actionUpdateOrCreate(): void
     {
         $req = $this->ajax;
         if (LikeRepository::updateOrCreate($req)) {
-            Response::json(['liked' => true]);
+            response()->json(['liked' => true]);
         }
-        Response::json(['liked' => false]);
+        response()->json(['liked' => false]);
     }
 
 }

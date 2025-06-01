@@ -3,10 +3,8 @@
 namespace app\service\Product;
 
 use app\model\Product;
-use app\model\ProductUnit;
 use app\service\Image\ProductImageService;
-use app\service\ImageService\ImagickService;
-use app\service\Response;
+use app\service\Image\TODO\ImagickService;
 
 class ProductService
 {
@@ -18,50 +16,6 @@ class ProductService
         $this->imageService = new ProductImageService();
     }
 
-    public static function changeBaseIsShippable(array $req): void
-    {
-        $pu                    = ProductUnit::query()
-            ->where('product_1s_id', $req['product_1s_id'])
-            ->where('is_base', 1)
-            ->where('multiplier', 1)
-            ->first();
-        $pu->base_is_shippable = (int)$req['base_is_shippable'];
-        $pu->is_shippable      = (int)$req['base_is_shippable'];
-        $pu->save();
-        Response::json(['popup' => 'ok']);
-    }
-
-    public function saveMainImage(array $file, Product $product): string
-    {
-        $this->deletePreviousFile($product);
-        $absPath = $this->imageService->getAbsolutePath();
-
-        $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
-        $art       = $this->imageService->getArt($product);
-        $name      = $art . ".{$extension}";
-
-        $uploaded_file    = $file['tmp_name'];
-        $destination_path = $absPath . $name;
-
-        if (move_uploaded_file($uploaded_file, $destination_path)) {
-            return $this->imageService->getRelativeImage($product);
-        }
-        return '';
-//		$mainImage->thumbnail();
-    }
-
-    public static function baseIsShippable($col, $product): string
-    {
-        if (!isset($product->baseUnit->pivot)) return '';
-        $baseIsShippable = $product->baseUnit->pivot->base_is_shippable;
-        $checked         = $baseIsShippable ? "checked" : '';
-        return "<input type='checkbox' {$checked} data-func='changeBaseIsShippable' data-1sid='{$product['1s_id']}'>";
-    }
-
-//    public static function changeBaseIsShippable(array $req): void
-//    {
-//
-//    }
 
     private function deletePreviousFile(Product $product): void
     {
@@ -121,4 +75,17 @@ class ProductService
             $imageService->img->destroy();
         }
     }
+
+    //    public static function baseIsShippable($col, $product): string
+//    {
+//        if (!isset($product->baseUnit->pivot)) return '';
+//        $baseIsShippable = $product->baseUnit->pivot->is_shippable;
+//        $checked         = $baseIsShippable ? "checked" : '';
+//        return "<input type='checkbox' {$checked} data-func='changeBaseIsShippable' data-1sid='{$product['1s_id']}'>";
+//    }
+
+//    public static function changeBaseIsShippable(array $req): void
+//    {
+//
+//    }
 }

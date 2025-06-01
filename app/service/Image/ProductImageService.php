@@ -4,7 +4,7 @@ namespace app\service\Image;
 
 use app\model\Product;
 use app\service\FS;
-use app\service\ImageService\ImagickService;
+use app\service\Image\TODO\ImagickService;
 
 class ProductImageService
 {
@@ -13,9 +13,11 @@ class ProductImageService
     private string $absolutePath;
     private string $absNoImage;
     private string $art;
-    private array $extensions = ['jpg', 'jpeg', 'png'];
+    private array $extensions = ['jpg', 'jpeg', 'png', 'webp'];
 
-    public function __construct()
+    public function __construct(
+        protected ImageService   $imageService,
+    )
     {
         $this->absNoImage   = FS::platformSlashes(ROOT . $this->relNoImage);
         $this->absolutePath = FS::platformSlashes(ROOT . $this->relativePath);
@@ -23,7 +25,7 @@ class ProductImageService
 
     public function getArt(Product $product): string
     {
-        $art       = str_replace(['/', '//', '\\'], '_', $product->art);
+        $art       = str_replace(['/', '//', '\\', '\\\\'], '_', $product->art);
         $this->art = trim(strip_tags($art));
         return $this->art;
     }
@@ -74,7 +76,7 @@ class ProductImageService
         if ($this->getImageAbsolutePath($product)) {
             return $this->getAbsoluteImage($product);
         }
-        return FS::platformSlashes(ROOT . $this->relNoImage);
+        return $this->relNoImage;
     }
 
     protected function getPathWithExt($relOrAbs, $type = null): string
@@ -99,7 +101,7 @@ class ProductImageService
         return $this->getFromAcceptedTypes();
     }
 
-    public function thumbnail()
+    public function thumbnail(): void
     {
         $absPath = $this->getImageAbsolutePath();
 
@@ -119,7 +121,7 @@ class ProductImageService
         $ima->img->destroy();
     }
 
-    protected function getFromAcceptedTypes()
+    protected function getFromAcceptedTypes(): string
     {
         foreach ($this->acceptedTypes as $type) {
             $fileName = $this->getPathWithExt('absolutePath', $type);

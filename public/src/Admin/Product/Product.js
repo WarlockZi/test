@@ -36,7 +36,7 @@ export default class Product {
     const dragNdrop = document[qs]("[dnd]");
     if (dragNdrop) {
       const { default: Dnd } = await import("../../components/dnd/dnd");
-      const dnd = await new Dnd(dragNdrop, this.addMainImage);
+      await new Dnd(dragNdrop, this.addMainImage);
     }
   }
 
@@ -65,7 +65,8 @@ export default class Product {
     const data = objAndFiles2FormData(obj, files[0]);
 
     const res = await post("/adminsc/product/saveMainImage", data);
-    const src = res?.arr[0];
+    debugger;
+    const src = res?.mainImage;
     if (src) {
       const mainImage = target.closest(".dnd-container").querySelector("img");
       mainImage.removeAttribute("src");

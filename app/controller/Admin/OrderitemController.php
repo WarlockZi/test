@@ -35,7 +35,7 @@ class OrderitemController extends AdminscController
                 $orderItem->order()->associate($order);
                 $orderItem->save();
             }
-            Response::json(['ok']);
+            response()->json(['ok']);
         }
     }
 
@@ -44,11 +44,11 @@ class OrderitemController extends AdminscController
         $product_id = $this->ajax['product_id'];
         $sess       = $this->ajax['sess'];
 
-        if (!$product_id) Response::json(['msg' => 'No id']);
+        if (!$product_id) response()->json(['msg' => 'No id']);
         $trashed = $this->repo->deleteItem($sess, $product_id, $unit_ids);
 
         if ($trashed) {
-            Response::json(['ok' => true, 'popup' => 'Удален']);
+            response()->json(['ok' => true, 'popup' => 'Удален']);
         }
         Response::exitWithPopup('Не удален');
 

@@ -5,7 +5,7 @@ namespace app\action\admin;
 
 use app\blade\views\admin\report\productFilter\FilterView;
 use app\repository\ProductFilterRepository;
-use app\service\AuthService\Auth;
+use app\service\Auth\Auth;
 use app\service\Filters\Products\InitialFiltersService;
 use app\service\Product\ProductService;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
@@ -95,7 +95,7 @@ class ReportFilterProductsAction
                     ->get()
             )
             ->column(
-                ColumnBuilder::build('base_is_shippable')
+                ColumnBuilder::build('is_base')
                     ->name('баз=отгруж')
                     ->class('cell')
                     ->function(ProductService::class, 'baseIsShippable')

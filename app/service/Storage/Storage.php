@@ -10,13 +10,14 @@ use DirectoryIterator;
 class Storage
 {
     protected string $path;
+    protected string $file;
     protected string $relativePath;
     protected array|false $files;
     protected $dirs;
 
     public function __construct()
     {
-        $this->path = FS::platformSlashes(ROOT . '/storage/app/');
+        $this->path = FS::platformSlashes(ROOT . '/storage/');
     }
 
     public static function getFile(string $file): string

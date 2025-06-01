@@ -115,14 +115,7 @@ class HelpersService
         Response::exitWithPopup('конец');
     }
 
-    public static function makeUnitsShippable()
-    {
-        $unitables = ProductUnit::all();
-        foreach ($unitables as $unitable) {
-            $unitable->is_shippable = 1;
-            $unitable->save();
-        }
-    }
+
 
     public static function profile()
     {
@@ -194,4 +187,12 @@ class HelpersService
         }
         return true;
     }
+    //    public static function makeUnitsShippable()
+//    {
+//        $unitables = ProductUnit::all();
+//        foreach ($unitables as $unitable) {
+//            $unitable->is_shippable = 1;
+//            $unitable->save();
+//        }
+//    }
 }

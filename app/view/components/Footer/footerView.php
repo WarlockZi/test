@@ -65,11 +65,16 @@
                 <li>
                     <a href="/main/garantii">Гарантии</a>
                 </li>
+                <li>
+                    <a href="/main/delivery">Доставка</a>
+                </li>
+                <li>
+                    <a href="/main/discount">Скидки</a>
+                </li>
             </ul>
         </div>
-        <div class="column flex-2">
 
-            </ul>
+
         </div>
         <div class="column flex-2">
             <h4>Для клиентов</h4>

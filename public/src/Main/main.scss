@@ -6,6 +6,8 @@
 
 @forward "../404/404.scss";
 @use 'oferta.scss';
+@use 'delivery.scss';
+@use 'discount.scss';
 @use '../Auth/auth.scss';
 @use '../components/footer/footer.scss';
 @use '../components/header/header.scss';

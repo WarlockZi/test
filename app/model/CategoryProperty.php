@@ -17,6 +17,8 @@ class CategoryProperty extends Model
         'seo_description',
         'seo_keywords',
         'seo_h1',
+        'seo_h2',
+        'seo_full_name',
         'seo_article',
         'seo_path',
         'new',

@@ -1,7 +1,3 @@
-@php
-    use \app\view\components\shippable\ShippUnits;
-@endphp
-
 <div
         class="column"
         data-instore="<?= $product->instore ?? 0; ?>"
@@ -30,10 +26,11 @@
     </a>
 
 
-    @include('category.del.maybeDel.shippableUnits', ['product'=>$product])
+    {{--    @php xdebug_break(); @endphp--}}
 
+    @include('components.shippableUnits.shippableUnits', ['row'=>$shippableTable->rows[$product['1s_id']]])
 
-    @include('components.product_card_panel', compact('product'))
+    @include('components.card_panel.product_card_panel', compact('product'))
 
     @if (isset($txt))
         <div class="txt"><?= $txt ?? '' ?></div>

@@ -3,7 +3,6 @@
 namespace app\controller\Admin;
 
 use app\action\admin\ReportFilterProductsAction;
-use app\repository\ProductFilterRepository;
 use app\service\Filters\Products\FilterService;
 use app\service\Response;
 use JetBrains\PhpStorm\NoReturn;
@@ -13,7 +12,7 @@ class ReportController extends AdminscController
 {
     public function __construct(
         protected ReportFilterProductsAction $actions,
-        private FilterService                $service,
+        private readonly FilterService       $service,
     )
     {
         parent::__construct();
@@ -32,15 +31,16 @@ class ReportController extends AdminscController
                 'filterString'));
     }
 
-    public function actionUpdateFilter()
+    public function actionUpdateFilter(): void
     {
         $req = $this->ajax;
         list($selectFilters, $toSaveFilters) = $this->service->filtersFromReq($req);
         $this->service->saveFilters($toSaveFilters);
-        Response::json([
-            'productsTable' => $this->formView->filter($selectFilters, 'Фильтр'),
+        response()->json([
+            'productsTable' => $this->actions->filter($selectFilters),
             'filterString' => $this->service->getFilterString($selectFilters),
-            'filterPanel' => (new PanelService)->getFilterPanel($selectFilters, $toSaveFilters)]);
+            'filterPanel' => $this->actions->getFilterPanel($selectFilters)
+            ]);
     }
 
 }

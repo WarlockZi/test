@@ -6,13 +6,11 @@ use app\service\Logger\ILogger;
 
 class FS
 {
-    protected string $absPath;
-    protected ILogger $errorLogger;
-
-    public function __construct(string $absPath, ILogger $errorLogger)
+    public function __construct(
+        protected string  $absPath,
+        protected ILogger $errorLogger,
+    )
     {
-        $this->absPath     = $absPath.DIRECTORY_SEPARATOR;
-        $this->errorLogger = $errorLogger;
     }
 
     public static function resolve(...$paths): string
@@ -97,12 +95,11 @@ class FS
             $this->errorLogger->write($exception);
             return 'ошибка в файле';
         }
-
     }
 
     public static function platformSlashes($path): string
     {
-        return str_replace('/', DIRECTORY_SEPARATOR, $path);
+        return str_replace(['/', '//', '\\', '\\\\'], DIRECTORY_SEPARATOR, $path);
     }
 
 }

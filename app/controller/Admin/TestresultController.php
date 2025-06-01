@@ -3,7 +3,7 @@
 namespace app\controller\Admin;
 
 use app\model\TestResult;
-use app\service\AuthService\Auth;
+use app\service\Auth\Auth;
 use app\service\Response;
 use PHPMailer\PHPMailer\PHPMailer;
 

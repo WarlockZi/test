@@ -15,6 +15,7 @@ class View implements IView
         $this->blade
             ->share('request', APP->get(IRequest::class))
             ->share('layout', APP->get(ILayout::class))
+            ->share('orderItemsCount', APP->get('orderItemsCount'))
         ;
     }
 

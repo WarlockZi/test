@@ -6,7 +6,9 @@ namespace app\repository;
 
 use app\service\Cache\Cache;
 use app\model\Category;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 class CategoryRepository
 {
@@ -50,29 +52,8 @@ class CategoryRepository
             }, Cache::$timeLife1_000);
     }
 
-    public static function changeProperty(array $req): void
-    {
-        $category = Category::find($req['category_id']);
-        $newVal   = $req['morphed']['new_id'];
-        $oldVal   = $req['morphed']['old_id'];
 
-        if (!$oldVal) {
-            $category->properties()->attach($newVal);
-            exit(json_encode(['popup' => 'Добавлен']));
-
-        } else if (!$newVal) {
-            $category->properties()->detach($oldVal);
-            exit(json_encode(['ok' => 'ok', 'popup' => 'Удален']));
-
-        } else {
-            if ($newVal === $oldVal) exit(json_encode(['popup' => 'Одинаковые значения']));
-            $category->properties()->detach($oldVal);
-            $category->properties()->attach($newVal);
-            exit(json_encode(['popup' => 'Поменян']));
-        }
-    }
-
-    public static function edit(?int $id): \Illuminate\Database\Eloquent\Model|Collection|\Illuminate\Database\Eloquent\Builder|null
+    public static function edit(int $id): Model|Collection|Builder|null
     {
         return Category::with(
             'products',

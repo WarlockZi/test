@@ -12,9 +12,10 @@
             $lastItemIsLink = $breadcrumbs->lastItemIsLink;
         @endphp
 
+{{--        @php xdebug_break() @endphp--}}
         @foreach($breadcrumbs->parentsArray as $item)
-            @php ++$position; @endphp
             @include('components.breadcrumbs.li',compact('item', 'position','lastItemIsLink'))
+            @php $position++; @endphp
         @endforeach
 
     </ul>

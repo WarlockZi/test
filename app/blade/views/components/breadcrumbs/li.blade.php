@@ -1,21 +1,19 @@
 @php
     use app\service\AuthService\Auth;
     use app\view\Icon;
-
 @endphp
 
 
 <li itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
-
-    @if($lastItemIsLink && $itemsCount=$position+1)
-        <a itemprop="item" href="{!! $item['own_properties']['path'] !!}">
-            <span itemprop="name">{!! $item['name']!!}</span>
-        </a>
-    @else
+    @if(!$breadcrumbs->lastItemIsLink
+        && $breadcrumbs->itemsCount===$position)
         <div itemprop="item">
             <span itemprop="name">{!! $item['name']!!}</span>
         </div>
-
+    @else
+        <a itemprop="item" href="/category/{!! $item['own_properties']['path'] !!}">
+            <span itemprop="name">{!! $item['name']!!}</span>
+        </a>
     @endif
 
     <meta itemprop="position" content="{!! $position !!}">
@@ -25,7 +23,7 @@
         @if (Auth::userIsAdmin())
 
             <a
-                    href="/adminsc/category/edit/<?= $category['id'] ?>"
+                    href="/adminsc/category/edit/<?= $item['id'] ?>"
                     class="edit card-panel-item"
             >
                     <?= Icon::edit(); ?>

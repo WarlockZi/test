@@ -2,41 +2,26 @@
 
 namespace app\service\Filters\Products;
 
-use app\blade\views\admin\report\productFilter\FilterView;
 use app\model\FilterUser;
-use app\repository\ProductFilterRepository;
 use app\service\AuthService\Auth;
 
 class FilterService
 {
 
-    private array $initialFilters;
+    public array $initialFilters;
+    public array $notNull;
     public function __construct()
     {
         $this->initialFilters = InitialFiltersService::get();
     }
 
 
-    public function getFilterString(array $req): string
+    public function getFilterString(array $req): self
     {
-        $notNull = array_filter($req, function ($filter) {
+        $this->notNull = array_filter($req, function ($filter) {
             return $filter <> '0' && $filter <> 'on';
         });
-        $str     = '';
-        foreach ($this->initialFilters as $name => $data) {
-            $filterRuName = $data['title'];
-            if (array_key_exists($name, $notNull)) {
-                $selected     = $data['options'][$notNull[$name]];
-                $selectedSpan = "<span class='selected-value'>{$selected}</span>";
-                $filterSpan   = "<span class='selected-filter'>{$filterRuName}{$selectedSpan}</span>";
-            } else {
-                $selected     = "*";
-                $selectedSpan = "<span>{$selected}</span>";
-                $filterSpan   = "<span>{$filterRuName}{$selectedSpan}</span>";
-            }
-            $str .= $filterSpan;
-        }
-        return "<div class='used-filters'>{$str}</div>";
+        return $this;
     }
 
 
@@ -56,13 +41,6 @@ class FilterService
         }
         $arr = [0 => $selectFilters, 1 => $toSaveFilters];
         return $arr;
-    }
-
-
-    private function preg_array_key_exists($pattern, $array): int
-    {
-        $keys = array_keys($array);
-        return (int)preg_grep($pattern, $keys);
     }
 
     public function saveFilters(array $toSave): void

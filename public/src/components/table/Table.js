@@ -98,7 +98,8 @@ export default class Table {
 
   edit(target) {
     if (target.classList.contains("head")) return false;
-    const model = this.relation ? this.relationModel : this.model;
+
+    const model = this.relationType ?? this.model;
     const id = this.relation
       ? target.dataset.id
       : (this.modelId ?? target.dataset.id);

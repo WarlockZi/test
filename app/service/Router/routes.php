@@ -2,6 +2,7 @@
 
 use app\middleware\AuthMiddleware;
 use app\middleware\CartMiddleware;
+use app\middleware\ProductMainImageMiddleware;
 
 $this->addRoute("^\/(?P<controller>product)\/?(?P<slug>[_a-z0-9-]+)$", ['controller' => 'Product']);
 $this->addRoute("^\/short\/(?P<slug>.+)?\/?$", ['controller' => 'Short']);
@@ -17,7 +18,10 @@ $this->addRoute("^\/(?P<controller>logistic)\/(?P<action>[a-zA-Z0-9]+)$");
 $this->addRoute("^\/(?P<controller>auth)\/(?<action>[a-z0-9]+)?\/?(?<id>[0-9a-zA-z]+)?");
 $this->addRoute("^\/.?search.?", ['controller' => 'search', 'action' => 'index']);
 $this->addRoute("^\/cart\/?(?P<action>[a-zA-Z]+)?$", ['controller' => 'Cart'], [CartMiddleware::class, AuthMiddleware::class]);
+
+//$this->addRoute("^\/adminsc\/product\/saveMainImage$", ['controller' => 'Adminsc'], [ProductMainImageMiddleware::class]);
 $this->addRoute("^\/adminsc\/?$", ['controller' => 'Adminsc', 'action' => 'index']);
+
 $this->addRoute("^\/adminsc\/?(?P<controller>[a-z-]+)?\/?(?P<action>[a-z-]+)?\/?(?P<id>[0-9]+)?$");
 $this->addRoute("^\/$", ['controller' => 'Main', 'action' => 'index']);
 $this->addRoute("^\/(?P<controller>[a-zA-Z]+)\/?(?<action>[a-zA-Z0-9]+)?\/?(?<id>[0-9a-zA-z]+)?");

@@ -8,6 +8,8 @@ use app\service\AuthService\Auth;
 use app\service\AuthService\IUser;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Model implements IUser
@@ -45,6 +47,10 @@ class User extends Model implements IUser
             ->using(RoleUser::class);
     }
 
+    public function orderByUserId(): BelongsTo
+    {
+        return $this->belongsTo(Order::class);
+    }
 
     public function can($rights = []): bool
     {

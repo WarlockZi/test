@@ -3,8 +3,8 @@
 namespace app\controller;
 
 use app\service\Logger\ErrorLogger;
-use app\service\ZipService\ImportFiles;
-use app\service\ZipService\ZipService;
+use app\service\Zip\ImportFiles;
+use app\service\Zip\ZipService;
 
 class ZipController extends AppController
 {

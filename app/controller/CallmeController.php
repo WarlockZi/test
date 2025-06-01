@@ -15,9 +15,9 @@ class CallmeController extends AppController
         if (CallmeRepository::firstOrCreate($req)) {
             $TG = new TelegramBot('callme');
             $TG->send($req['phone']);
-            Response::json(['success' => true]);
+            response()->json(['success' => true]);
         }
-        Response::json(['error' => true]);
+        response()->json(['error' => true]);
     }
 
 }

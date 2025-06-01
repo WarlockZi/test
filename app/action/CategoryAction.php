@@ -6,8 +6,9 @@ use app\model\Category;
 use app\service\Breadcrumbs\NewBread;
 use app\service\Cache\Cache;
 use app\service\Category\CategoryService;
-use app\service\MetaService\MetaService;
+use app\service\Meta\MetaService;
 use app\service\Router\SlugService;
+use app\service\ShippableUnits\ShippableUnitsService;
 use Exception;
 
 
@@ -25,10 +26,11 @@ class CategoryAction
     public function getBreadcrumbs(array $category, bool $lastItemIsLink): NewBread
     {
         if (!$category) throw new Exception('Breadcrumbs service has no category');
-        $bs = new NewBread($category, $lastItemIsLink);
-        return $bs->getParents();
+        $breadcrumbs = new NewBread($lastItemIsLink);
+        return $breadcrumbs->getParents($category);
 
     }
+
     public function similarCategories(string $slug): array
     {
         $slugLastSegment = SlugService::categoryLastSegment($slug);
@@ -42,13 +44,26 @@ class CategoryAction
         );
     }
 
-    public function setCategoryMeta($category): void
+    public function setCategoryMeta($category): MetaService
     {
-        $this->meta->setCategoryMeta($category);
-    }
-    public function setCategoriesMeta(): void
-    {
-        $this->meta->setCategoriesMeta();
+        return $this->meta->setMeta(
+            $category->seo_title(),
+            $category->seo_description(),
+            $category->seo_keywords(),
+        );
     }
 
+    public function setCategoriesMeta(): void
+    {
+        $this->meta->setMeta(
+            'Категории',
+            'Категории:VITEX',
+            'Категории: перчатки медицинские, инструмент для стаматолога, одноразовая одежда, одноразовый инструмент',
+        );
+    }
+
+    public function shippableTable(Category $category): ShippableUnitsService
+    {
+        return new ShippableUnitsService('category', $category);
+    }
 }

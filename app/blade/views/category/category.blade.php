@@ -41,34 +41,35 @@
             @endif
 
 
-            @if ($category->productsInStore->count())
+            <div class="products-header">
+                <h2>Товары в наличии</h2>
+            </div>
 
-                <div class="products-header">
-                    <h2>Товары в наличии</h2>
-                </div>
-
-                <div class="product-wrap">
+            <div class="product-wrap">
+                @if ($category->productsInStore->count())
                     @foreach($category->productsInStore as $product)
                         @include('category.product_card', compact('product'))
                     @endforeach
-                </div>
+                @else
+                    Товары не найдены
+                @endif
+            </div>
 
-            @endif
 
-            @if ($category->productsNotInStoreInMatrix->count())
-
-                <div class="products-header">
-                    <h2>Товары под заказ</h2>
-                </div>
-
-                <div class="product-wrap">
+            <div class="products-header">
+                <h2>Товары под заказ</h2>
+            </div>
+            <div class="product-wrap">
+                @if ($category->productsNotInStoreInMatrix->count())
                     @foreach ($category->productsNotInStoreInMatrix as $product)
                         @if (str_ends_with($product->name, '*'))
                             @include('category.product_card', compact('product'))
                         @endif
                     @endforeach
-                </div>
-            @endif
+                @else
+                    Товары не найдены
+                @endif
+            </div>
 
             <div id="seo_article">
                     <?= $category->seo_article() ?>

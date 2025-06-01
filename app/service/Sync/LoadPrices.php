@@ -60,7 +60,8 @@ class LoadPrices
         return Unit::firstOrCreate(
             ['code' => $Price->unit_code],
             [
-                'name' => $price['Цены']['Цена']['Единица'] ?? null,
+                'name' => lcfirst(substr($Price->unit, 0, 2)) ?? null,
+                'international' => $price['Цены']['Цена']['Единица'] ?? null,
                 'code' => $Price->unit_code,
                 'full_name' => $Price->unit,
             ]);
@@ -80,7 +81,6 @@ class LoadPrices
             'multiplier' => '1',
             'is_base' => '1',
             'is_shippable' => '1',
-            'base_is_shippable' => '1',
         ];
 
         ProductUnit::firstOrCreate($find, $new);

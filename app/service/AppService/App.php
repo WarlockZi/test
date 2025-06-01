@@ -18,7 +18,6 @@ use Psr\Container\NotFoundExceptionInterface;
 
 class App
 {
-
     private ContainerInterface $container;
 
     /**
@@ -28,13 +27,14 @@ class App
      */
     public function __construct()
     {
-        $this->container = (new AppService())();
         new Eloquent(new Capsule);
+        $this->container = (new AppService())();
         Cache::$enabled = env('CACHE');
     }
 
-    public function handleRequest(IRequest $request): void
+    public function handleRequest(): void
     {
+        $request = APP->get(IRequest::class);
         $router = APP->get(Router::class);
         $router->dispatch($request);
     }
@@ -65,6 +65,10 @@ class App
     public function make(string $name, array $params = [])
     {
         return $this->container->make($name, $params);
+    }
+    public function call(array $name, array $params = [])
+    {
+        return $this->container->call($name, $params);
     }
 
 }

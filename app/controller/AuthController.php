@@ -5,7 +5,7 @@ namespace app\controller;
 use app\core\Mail\PHPMail;
 use app\model\User;
 use app\repository\UserRepository;
-use app\request\LoginRequest;
+use app\formRequest\LoginRequest;
 use app\service\AuthService\Auth;
 use app\service\Response;
 use app\service\YandexAuth\YaAuthService;
@@ -40,13 +40,13 @@ class AuthController extends AppController
 
                 try {
                     $sent = $this->mailer->sendNewPasswordMail($user, $newPassword);
-                    Response::json(['success' => true,
+                    response()->json(['success' => true,
                         'popup' => 'Новый пароль проверьте на почте']);
                 } catch (\Throwable $exception) {
-                    Response::json(['error' => 'not sent', 'popup' => 'Ошибка отправки письма']);
+                    response()->json(['error' => 'not sent', 'popup' => 'Ошибка отправки письма']);
                 }
             } else {
-                Response::json(['error' => "Пользователя с таким e-mail нет"]);
+                response()->json(['error' => "Пользователя с таким e-mail нет"]);
             }
         }
     }
@@ -56,12 +56,12 @@ class AuthController extends AppController
         $this->mailer = new PHPMail();
         $req          = $this->ajax;
         if ($req) {
-            if (!$req) Response::json(['error' => 'empty fields', 'popup' => 'Заполните поля' . "\n"]);
-            if (!$req['email']) Response::json(['error' => 'empty email', 'popup' => 'Заполните email' . "\n"]);
-            if (!$req['password']) Response::json(['error' => 'empty password', 'popup' => 'Заполните пароль' . "\n"]);
+            if (!$req) response()->json(['error' => 'empty fields', 'popup' => 'Заполните поля' . "\n"]);
+            if (!$req['email']) response()->json(['error' => 'empty email', 'popup' => 'Заполните email' . "\n"]);
+            if (!$req['password']) response()->json(['error' => 'empty password', 'popup' => 'Заполните пароль' . "\n"]);
 
             if (!empty($this->userRepository->getByEmail($req['email']))) {
-                Response::json(['error' => 'mail exists',
+                response()->json(['error' => 'mail exists',
                     'message' => 'Такая почта уже существует',
                     'popup' => 'Такая почта уже зарегистрирована. Либо войдите под своим паролем. Либо восстановите его.' . "\n"
                 ]);
@@ -71,13 +71,13 @@ class AuthController extends AppController
             if ($user) {
                 try {
                     $this->mailer->sendRegistrationMail($user);
-                    Response::json(['success' => true, 'popup' => 'Письмо с регистрацией отпрвлено на указанный Вами email']);
+                    response()->json(['success' => true, 'popup' => 'Письмо с регистрацией отпрвлено на указанный Вами email']);
                 } catch (Throwable $exception) {
-                    Response::json(['error' => true, 'popup' => 'Письмо не отправлено']);
+                    response()->json(['error' => true, 'popup' => 'Письмо не отправлено']);
                 }
 
             } else {
-                Response::json(['error' => 'no user', 'popup' => "Пользователь не создан"]);
+                response()->json(['error' => 'no user', 'popup' => "Пользователь не создан"]);
             }
         }
     }
@@ -95,27 +95,27 @@ class AuthController extends AppController
         if ($data = $this->ajax) {
             $req    = new LoginRequest();
             $errors = $req->checkLoginCredentials($data);
-            if ($errors) Response::json(['errors' => $errors, 'popup' => $errors]);
+            if ($errors) response()->json(['errors' => $errors, 'popup' => $errors]);
             $user = User::where('email', $data['email'])->with('role')->first();
 
-            if (!$user) Response::json(['errors' => 'not registered', 'popup' => 'Пройдите регистрацию']);
+            if (!$user) response()->json(['errors' => 'not registered', 'popup' => 'Пройдите регистрацию']);
 
-            if (!$user->confirm) Response::json(['popup' => 'Зайдите на почту чтобы подтвердить регистрацию', 'error' => 'Зайдите на почту чтобы подтвердить регистрацию']);
+            if (!$user->confirm) response()->json(['popup' => 'Зайдите на почту чтобы подтвердить регистрацию', 'error' => 'Зайдите на почту чтобы подтвердить регистрацию']);
             if ($user->password !== $this->userRepository->preparePassword($data['password'])) {
                 Auth::setUser($user);// Если данные правильные, запоминаем пользователя (в сессию)
                 if (!$user->isSU()) {
-                    Response::json(['error' => 'Не верный email или пароль']);
+                    response()->json(['error' => 'Не верный email или пароль']);
                 }
             }
             Auth::setAuth($user);
             Auth::setUser($user);
 
             if ($user->isEmployee()) {
-                Response::json(['role' => 'employee', 'id' => $user['id']]);
+                response()->json(['role' => 'employee', 'id' => $user['id']]);
             } else if ($user->isAdmin()) {
-                Response::json(['role' => 'guest', 'id' => $user['id']]);
+                response()->json(['role' => 'guest', 'id' => $user['id']]);
             } else {
-                Response::json(['role' => 'guest', 'id' => $user['id']]);
+                response()->json(['role' => 'guest', 'id' => $user['id']]);
             }
             $url = $this->getUrl();
             $this->setVars(compact('url'));
@@ -155,7 +155,7 @@ class AuthController extends AppController
     {
         if ($req = $this->ajax) {
             if (!$req['old_password'] || !$req['new_password'])
-                Response::json(['error' => 'Заполните старый и новый пароль']);
+                response()->json(['error' => 'Заполните старый и новый пароль']);
 
             $old_password = $this->userRepository->preparePassword($req['old_password']);
             $user         = $this->userRepository->getByPass($old_password);
@@ -166,12 +166,12 @@ class AuthController extends AppController
                 $res         = User::where('id', $user['id'])
                     ->update(['password' => $newPassword]);
                 if ($res) {
-                    Response::json(['success' => 'Пароль поменeн']);
+                    response()->json(['success' => 'Пароль поменeн']);
                 } else {
-                    Response::json(['msg' => 'Что-то пошло не так (']);
+                    response()->json(['msg' => 'Что-то пошло не так (']);
                 }
             } else {
-                Response::json(['error' => 'Не правильный старый пароль (']);
+                response()->json(['error' => 'Не правильный старый пароль (']);
             }
         }
     }
@@ -184,7 +184,7 @@ class AuthController extends AppController
         }
         unset($_SESSION);
         header("Location: /");
-        Response::json(["response" => 'logout']);
+        response()->json(["response" => 'logout']);
     }
 
 
@@ -205,7 +205,7 @@ class AuthController extends AppController
             header('Location:/');
 //            Response::exitJson(['success' => 'Вы успешно подтвердили почту', 'popup=' => 'Вы успешно подтвердили почту']);
         }
-        Response::json(['error' => 'Произошла ошибка', 'popup=' => 'Произошла ошибка']);
+        response()->json(['error' => 'Произошла ошибка', 'popup=' => 'Произошла ошибка']);
     }
 
     public function actionUnautherized(): void

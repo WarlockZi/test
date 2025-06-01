@@ -6,7 +6,7 @@ namespace app\repository;
 
 use app\model\RoleUser;
 use app\model\User;
-use app\service\ShortlinkService;
+use app\service\ShortLink\ShortlinkService;
 use Illuminate\Database\Eloquent\Model;
 
 class UserRepository

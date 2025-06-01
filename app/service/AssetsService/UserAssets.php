@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\service\AssetsService;
+namespace app\service\Assets;
 
 
 class UserAssets

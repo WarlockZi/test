@@ -5,10 +5,9 @@ namespace app\controller;
 
 use app\model\Order;
 use app\model\OrderItem;
-use app\repository\CartRepository;
 use app\repository\OrderRepository;
 use app\service\Response;
-use app\service\Router\Request;
+use app\service\ShippableUnits\ShippableUnitsService;
 use app\view\Cart\CartView;
 use JetBrains\PhpStorm\NoReturn;
 
@@ -16,19 +15,18 @@ class CartController extends AppController
 {
     public function __construct(
         protected CartView       $cartView,
-        protected CartRepository $repo,
-        protected Request        $route)
+    )
     {
         parent::__construct();
     }
 
     #[NoReturn] public function actionIndex(): void
     {
-        $order    = OrderRepository::cart();
-        $cartView = $this->cartView;
+        $order    = OrderRepository::usersOrder();
+        $shippableTable = new ShippableUnitsService('cart', null);
 
-        Response::view('cart.index', compact('order', 'cartView', ));
-
+        view('cart.cart',
+            compact('order','shippableTable'));
     }
 
     public function actionDrop(): void
@@ -36,7 +34,7 @@ class CartController extends AppController
         OrderItem::query()
             ->delete();
         if (isset($_COOKIE['cartDeadline'])) setcookie('cartDeadline', '', time() - 3600);
-        Response::json(['ok' => true]);
+        response()->json(['ok' => true]);
     }
 
     public function actionSubmit(): void
@@ -44,7 +42,7 @@ class CartController extends AppController
         $orderId = $this->ajax['orderId'];
         if (empty($orderId)) exit('No cart order id');
         Order::find($orderId)->update(['submitted' => 1]);
-        Response::json(['ok' => true]);
+        response()->json(['ok' => true]);
     }
 
 
@@ -54,11 +52,11 @@ class CartController extends AppController
         $product_id = $req['product_id'];
         $unit_ids   = $req['units'];
 
-        if (!$product_id) Response::json(['msg' => 'No id']);
+        if (!$product_id) response()->json(['msg' => 'No id']);
         $trashed = $this->orderRepo::detachItems($product_id, $unit_ids);
 
         if ($trashed) {
-            Response::json(['ok' => true, 'popup' => 'Удален']);
+            response()->json(['ok' => true, 'popup' => 'Удален']);
         }
         Response::exitWithPopup('Не удален');
 

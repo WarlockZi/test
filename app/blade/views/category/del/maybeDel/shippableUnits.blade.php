@@ -1,6 +1,6 @@
 @php
-use    \app\view\components\shippable\ShippUnits;
-//    xdebug_break()
+    use    \app\view\components\Sshippable\ShippUnits;
+    //    xdebug_break()
 @endphp
 
 <div class="shippable-table"

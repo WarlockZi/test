@@ -1,6 +1,6 @@
 <?php
 
-namespace app\service\CatalogMobileMenu;
+namespace app\service\DelCatalogMobileMenu;
 
 use app\blade\View;
 

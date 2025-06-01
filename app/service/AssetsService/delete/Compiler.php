@@ -1,6 +1,6 @@
 <?php
 
-namespace app\service\AssetsService\delete;
+namespace app\service\Assets\delete;
 
 interface Compiler
 {

@@ -60,10 +60,6 @@ class ItemBuilderNew
     public function get(): array
     {
         return $this->toArray();
-//        ob_start();
-//        include ROOT . '/app/view/components/Builders/ItemBuilder/ItemTemplate.php';
-//        $result = ob_get_clean();
-//        return $this->clean($result);
     }
     public function toArray(): array
     {

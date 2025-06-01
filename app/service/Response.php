@@ -85,7 +85,7 @@ class Response
         ], $headers);
     }
 
-    public function json(array $data = [], int $status = 200, array $headers = []): self
+    #[NoReturn] public function json(array $data = [], int $status = 200, array $headers = []): void
     {
         $this->content = json_encode($data, JSON_UNESCAPED_UNICODE);
         $this->status = $status;
@@ -93,8 +93,10 @@ class Response
             'Content-Type' => 'application/json; charset=UTF-8'
         ], $headers);
 
-        return $this;
+        $this->sendAjax();
     }
+
+
 
     public function file(string $path, string $name = null, array $headers = []): self
     {
@@ -140,7 +142,7 @@ class Response
     #[NoReturn] public static function exitWithPopup(string $msg): void
     {
         if ($msg) {
-            exit(json_encode(['arr' => ['popup' => $msg]]));
+            exit(json_encode(['popup' => $msg]));
         }
         exit();
     }
@@ -151,7 +153,28 @@ class Response
         http_response_code($status);
         exit($view->render($file, $data));
     }
+    #[NoReturn] public function sendAjax(): void
+    {
+        http_response_code($this->status);
 
+        foreach ($this->headers as $name => $value) {
+            header("{$name}: {$value}");
+        }
+
+        foreach ($this->cookies as $cookie) {
+            setcookie(
+                $cookie['name'],
+                $cookie['value'],
+                $cookie['minutes'] ? time() + ($cookie['minutes'] * 60) : 0,
+                $cookie['path'],
+                $cookie['domain'],
+                $cookie['secure'],
+                $cookie['httpOnly']
+            );
+        }
+
+        exit($this->content);
+    }
     #[NoReturn] public function send(): void
     {
         http_response_code($this->status);

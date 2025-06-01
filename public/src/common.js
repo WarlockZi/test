@@ -420,8 +420,8 @@ function showMessage(res) {
 
 function handleResponse(res) {
   try {
-    if (res?.arr?.popup) {
-      popup.show(res?.arr?.popup);
+    if (res?.popup) {
+      popup.show(res?.popup);
     } else {
       showMessage(res);
     }
@@ -438,31 +438,6 @@ function handleResponse(res) {
     return false;
   }
 }
-
-// function oldPost(url, data) {
-//    return new Promise(async function (resolve, reject) {
-//          data.phpSession = getPhpSession();
-//
-//          let req = new XMLHttpRequest();
-//          req.open('POST', url, true);
-//          req.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-//
-//          if (data instanceof FormData) {
-//             req.send(data);
-//          } else {
-//             req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-//             req.send('param=' + JSON.stringify(data));
-//          }
-//
-//          req.onerror = function (e) {
-//             reject(Error("Network Error" + e.message));
-//          };
-//          req.onload = function () {
-//             resolve(handleResponse(req.response))
-//          }
-//       }
-//    )
-// }
 
 class ElementCollection extends Array {
   on(event, cbOrSelector, cb) {

@@ -10,11 +10,10 @@ class InitialFiltersService
     protected static function categoriesSelector(): array
     {
         $CategoryFlatNestedArray = [0 => ''];
-        $c = APP->get('rootCategories');
-        $r = array_reverse($c);
+        $rootCats = APP->get('rootCategories');
+        $reversed = array_reverse($rootCats);
 
-
-        foreach ($r as $rootCat) {
+        foreach ($reversed as $rootCat) {
             $categories      = Category::find($rootCat['id'])
                 ->flatSelfAndChildren
                 ->map(function ($q) {
@@ -92,14 +91,6 @@ class InitialFiltersService
                         2 => '40',
                     ],
                 ],
-//    "categoryHasCustomSeoPath" => [
-//        "title" => "категория перенаправлена",
-//        "options" => [
-//            0 => '',
-//            1 => '1',
-//            2 => '0',
-//        ],
-//    ],
                 "category" => [
                     "title" => "категория",
                     "options" => self::categoriesSelector(),

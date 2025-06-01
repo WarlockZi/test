@@ -23,7 +23,7 @@ class OrderController extends AdminscController
     #[NoReturn] public function actionIndex(): void
     {
         $submitted   = OrderRepository::submitted();
-        $unsubmitted = OrderRepository::unsubmitted();
+        $unsubmitted = OrderRepository::usersOrder();
 
         $submittedTable   = OrderView::table($submitted);
         $unsubmittedTable = OrderView::table($unsubmitted);
@@ -61,12 +61,12 @@ class OrderController extends AdminscController
             ]
         );
         if ($order->wasRecentlyCreated) {
-            Response::json(['popup' => "Добавлено в корзину"]);
+            response()->json(['popup' => "Добавлено в корзину"]);
         }
         if ($order->wasChanged()) {
-            Response::json(['popup' => "Заказ изменен"]);
+            response()->json(['popup' => "Заказ изменен"]);
         }
-        Response::json(['popup' => 'не записано', 'error' => "не записано"]);
+        response()->json(['popup' => 'не записано', 'error' => "не записано"]);
     }
 
     public function actionDelete(): void
@@ -80,9 +80,9 @@ class OrderController extends AdminscController
                     ->whereNull('deleted_at')
                     ->update(['deleted_at' => Carbon::today()]);
             }
-            Response::json(['ok' => 'ok', 'popup' => 'удален']);
+            response()->json(['ok' => 'ok', 'popup' => 'удален']);
         } catch (\Throwable $exception) {
-            Response::json(['error' => 'не удален', 'popup' => 'не удален']);
+            response()->json(['error' => 'не удален', 'popup' => 'не удален']);
         }
     }
 }

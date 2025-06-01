@@ -420,6 +420,7 @@
         justify-content: end;
         width: 68px;
         font-size: .8em;
+
       }
     }
 
@@ -504,9 +505,10 @@
     }
 
     img {
-      width: 100px;
+      max-height: 100%;
       object-fit: contain;
       grid-area: img;
+      justify-self: center;
     }
 
     .cell {
@@ -547,9 +549,13 @@
 
     .sum {
       @include cartRowGrey;
-      align-items: center;
-      justify-content: end;
+      flex-direction: column;
+      align-items: end;
       grid-area: sum;
+
+      .row-sum{
+        min-height: 18px;
+      }
     }
 
     .del {

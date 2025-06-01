@@ -18,23 +18,7 @@ class OrderRepository
 {
     public static function submitted(): Collection
     {
-        return Order::
-        whereNotNull('submitted')
-            ->with('products.orderItems.unit')
-            ->get();
-    }
-    public static function unsubmittedUsersOrder()
-    {
-        list($field, $value) = Auth::getCartFieldValue();
-        return Order::where($field, $value)
-            ->whereNull('submitted')
-            ->with('products.orderItems.unit')
-            ->first();
-    }
-    public static function unsubmitted(): Collection
-    {
-        return Order::
-        whereNull('submitted')
+        return Order::whereNotNull('submitted')
             ->with('products.orderItems.unit')
             ->get();
     }
@@ -89,9 +73,9 @@ class OrderRepository
             $orderProduct = OrderProductRepository::firstOrCreate($order->id, $req['product_id']);
             $orderItem    = OrderItemRepository::updateOrCreate($orderProduct, $req);
             $order->load('products.orderItems.unit');
-            Response::json(['popup' => 'заказ изменен', 'success' => "записано"]);
+            response()->json(['popup' => 'заказ изменен', 'success' => "записано"]);
         } catch (Throwable $exception) {
-            Response::json(['popup' => 'не записано', 'error' => "не записано"]);
+            response()->json(['popup' => 'не записано', 'error' => "не записано"]);
         }
 
 
@@ -99,7 +83,7 @@ class OrderRepository
 
     public static function detachItems(string $product_id, array $unitIds): bool
     {
-        $order = OrderRepository::cart();
+        $order = OrderRepository::usersOrder();
         try {
             foreach ($unitIds as $unitId => $count) {
                 $product = $order->products->where('1s_id', $product_id)->first();
@@ -122,16 +106,17 @@ class OrderRepository
         return $orderItems;
     }
 
-    public static function cart()
+    public static function usersOrder()
     {
         list($field, $value) = Auth::getCartFieldValue();
         $order = Order::where($field, $value)
-            ->with('products')
+            ->whereNull('submitted')
+            ->with('products.orderItems.unit')
             ->first();
-        $o     = $order?->toArray();
+//        $o     = $order?->toArray();
         return $order;
     }
-
+//
     public static function edit(IRequest $request)
     {
         $orders = Order::
@@ -157,4 +142,19 @@ class OrderRepository
 
         return $order?->products->count() ?? 0;
     }
+    //    public static function unsubmittedUsersOrder()
+//    {
+//        list($field, $value) = Auth::getCartFieldValue();
+//        return Order::where($field, $value)
+//            ->whereNull('submitted')
+//            ->with('products.orderItems.unit')
+//            ->first();
+//    }
+
+//    public static function unsubmitted(): Collection
+//    {
+//        return Order::whereNull('submitted')
+//            ->with('products.orderItems.unit')
+//            ->get();
+//    }
 }

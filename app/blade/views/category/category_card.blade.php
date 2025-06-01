@@ -4,7 +4,7 @@
         {{$child['name']}}
     </a>
     @php $forBreadcrumbs = false; @endphp
-    @include('components.category_card_panel', compact('forBreadcrumbs'))
+    @include('components.card_panel.category_card_panel', compact('forBreadcrumbs'))
 
 </div>
 

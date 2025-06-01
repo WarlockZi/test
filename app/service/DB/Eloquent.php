@@ -8,7 +8,7 @@ use Illuminate\Events\Dispatcher;
 
 class Eloquent
 {
-    private Capsule $eloquent;
+//    private Capsule $eloquent;
 
     public function __construct(Capsule $capsule)
     {
@@ -31,14 +31,8 @@ class Eloquent
 
 // Setup the Eloquent ORM... (optional; unless you've used setEventDispatcher())
         $capsule->bootEloquent();
-        $this->eloquent = $capsule;
     }
 
-    public static function getEloquent()
-    {
-        $self = new self();
-        return $self->eloquent;
-    }
 }
 
 

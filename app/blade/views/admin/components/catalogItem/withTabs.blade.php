@@ -18,6 +18,7 @@
                 {!! $tab->field !!}
                 data-tab={!! $n!!}
         >
+{{--                @php xdebug_break() @endphp--}}
             @if($tab->html)
                 {!! $tab->html !!}
             @elseif($tab->tableData)

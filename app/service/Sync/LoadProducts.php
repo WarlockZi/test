@@ -7,7 +7,7 @@ use app\model\Category;
 use app\model\Product;
 use app\model\ProductProperty;
 use app\service\Router\SlugService;
-use app\service\ShortlinkService;
+use app\service\ShortLink\ShortlinkService;
 use Carbon\Carbon;
 use Throwable;
 

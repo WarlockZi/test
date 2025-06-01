@@ -7,8 +7,7 @@ namespace app\service\Sync\Part;
 use AllowDynamicProperties;
 use app\controller\AppController;
 use app\model\Category;
-use app\service\Response;
-use app\service\Storage\{StorageDev, StorageImport, StorageLog};
+use app\service\Storage\{app\SyncStorage, StorageDev, StorageLog};
 use app\service\Sync\LoadCategories;
 use app\service\Sync\LoadPrices;
 use app\service\Sync\LoadProducts;
@@ -36,11 +35,11 @@ use app\service\Sync\LoadProducts;
     public function setStorage()
     {
 //		$this->log = StorageLog::getFile('log.txt');
-        $this->importPath = StorageImport::getPath();
+        $this->importPath = SyncStorage::getPath();
         if (DEV) {
             $this->storage = StorageDev::class;
         } else {
-            $this->storage = StorageImport::class;
+            $this->storage = SyncStorage::class;
         }
     }
 
@@ -162,7 +161,7 @@ use app\service\Sync\LoadProducts;
     {
         $content = 'LOG<br>' . file_get_contents($this->log);
         if (isset($_POST['param'])) {
-            Response::json(['success' => true, 'content' => $content]);
+            response()->json(['success' => true, 'content' => $content]);
         }
     }
 
@@ -171,7 +170,7 @@ use app\service\Sync\LoadProducts;
         file_put_contents($this->log, '');
 
         $content = StorageLog::getFileContent('log.txt');
-        Response::json(['success' => 'success', 'content' => $content]);
+        response()->json(['success' => 'success', 'content' => $content]);
     }
 
     public function part()

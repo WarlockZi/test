@@ -23,7 +23,7 @@ class ProductFilterRepository
         return !in_array(false, array_map($callback, $array));
     }
 
-    public static function filterProducts($req)
+    public function filterProducts($req):array
     {
         extract($req);
         $query = Product::query()->take(10);
@@ -38,11 +38,13 @@ class ProductFilterRepository
         if (!empty($baseIsShippable)) {
             if ($baseIsShippable === "1") {
                 $query->whereHas('units', function ($q) {
-                    $q->where('base_is_shippable', 1);
+                    $q->where('is_base', 1)
+                        ->where('is_shippable', 1);
                 });
             } elseif ($baseIsShippable === "2") {
                 $query->whereHas('units', function ($q) {
-                    $q->where('base_is_shippable', 0);
+                    $q->where('is_base', 1)
+                        ->where('is_shippable', 0);
                 });
             } elseif ($baseIsShippable === "3") {
                 $query->withCount('units')

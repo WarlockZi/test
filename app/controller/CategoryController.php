@@ -5,8 +5,8 @@ namespace app\controller;
 use app\action\CategoryAction;
 use app\repository\CategoryRepository;
 use app\repository\OrderRepository;
-use app\service\Response;
 use app\service\Router\IRequest;
+use app\service\ShippableUnits\ShippableUnitsService;
 use app\view\components\cardPanel\CardPanel;
 
 class CategoryController extends AppController
@@ -27,24 +27,25 @@ class CategoryController extends AppController
             $category = $this->repo->indexInstore($request->slug);
             if (!$category) {
                 $similarCategories = $this->actions->similarCategories($request->slug);
-                Response::view('category.notFound',
+                view('category.notFound',
                     compact('category', 'similarCategories'),
                     404);
             }
 
-            $breadcrumbs      = $this->actions->getBreadcrumbs($category->toArray(), false);
-            $unsubmittedOrder = OrderRepository::unsubmittedUsersOrder();
             $this->actions->setCategoryMeta($category);
+            $breadcrumbs      = $this->actions->getBreadcrumbs($category->toArray(), false);
 
+            $order = OrderRepository::usersOrder();
+            $shippableTable      = $this->actions->shippableTable($category);
             view('category.category',
-                compact('category', 'breadcrumbs', 'unsubmittedOrder'));
+                compact('category', 'breadcrumbs', 'order', 'shippableTable'),);
 
 
         } else {
             $categories = APP->get('rootCategories');
             $this->actions->setCategoriesMeta();
 
-            Response::view('category.index', compact('categories'));
+            view('category.categories', compact('categories'));
         }
     }
 }

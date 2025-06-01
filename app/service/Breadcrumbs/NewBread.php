@@ -2,18 +2,15 @@
 
 namespace app\service\Breadcrumbs;
 
-use app\model\Category;
 
 class NewBread
 {
     public function __construct(
-        public bool  $lastItemIsLink,
-
+        public bool  $lastItemIsLink= false,
         public int   $itemsCount = 0,
         public array $parentsArray = [],
     )
     {
-        $this->itemsCount = count($this->parentsArray);
     }
 
     protected function flatParents(array $category): void
@@ -26,6 +23,7 @@ class NewBread
                 $currentCategory      = $currentCategory['parent_recursive'];
             }
         }
+        $this->itemsCount = count($this->parentsArray);
     }
 
     public function getParents($category): self

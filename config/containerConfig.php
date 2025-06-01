@@ -2,6 +2,9 @@
 declare(strict_types=1);
 
 use app\action\CategoryAction;
+use app\blade\Blade;
+use app\blade\IView;
+use app\blade\View as BladeView;
 use app\controller\AppController;
 use app\controller\CartController;
 use app\controller\Controller;
@@ -10,8 +13,11 @@ use app\repository\BlueRibbonRepository;
 use app\repository\CartRepository;
 use app\repository\CategoryRepository;
 use app\repository\OrderRepository;
-use app\service\CatalogMobileMenu\CatalogMobileMenuService;
+use app\service\DB\Eloquent;
+use app\service\DelCatalogMobileMenu\CatalogMobileMenuService;
 use app\service\FS;
+use app\service\Image\ImageService;
+use app\service\Image\ProductImageService;
 use app\service\Logger\ErrorLogger;
 use app\service\Logger\FileLogger;
 use app\service\Router\IRequest;
@@ -19,14 +25,13 @@ use app\service\Router\IRouteList;
 use app\service\Router\Request;
 use app\service\Router\RouteList;
 use app\service\Router\Router;
-use app\blade\Blade;
-use app\blade\IView;
-use app\blade\View as BladeView;
+use app\service\ShippableUnits\ShippableUnitsService;
 use app\view\Cart\CartView;
 use app\view\components\Header\BlueRibbon\BlueRibbon;
 use app\view\layouts\AdminLayout;
 use app\view\layouts\ILayout;
 use app\view\layouts\MainLayout;
+use Illuminate\Database\Capsule\Manager as Capsule;
 use Psr\Container\ContainerInterface;
 use function DI\autowire;
 use function DI\create;
@@ -36,11 +41,21 @@ use function DI\value;
 
 return [
 
-    CategoryAction::class=>autowire(),
+    ShippableUnitsService::class => function ($c, $module, $model) {
+        return new ShippableUnitsService($module, $model);
+    },
 
-    IRequest::class => Request::capture(),
+    Eloquent::class => function () {
+        return new Eloquent(new Capsule);
+    },
 
-    IRouteList::class => function (ContainerInterface $container) {
+    CategoryAction::class => autowire(),
+
+    IRequest::class => function () {
+        return Request::capture();
+    },
+
+    IRouteList::class => function () {
         return new RouteList();
     },
 
@@ -53,7 +68,7 @@ return [
     Controller::class => create()->constructor(),
     'mobileCategories' => CategoryRepository::treeAll()->toArray(),
 
-    AppController::class => function (ContainerInterface $c) {
+    AppController::class => function () {
         return new AppController();
     },
 
@@ -61,7 +76,7 @@ return [
     ILayout::class => function (ContainerInterface $c) {
         if ($c->get(IRequest::class)->isAdmin()) {
             return $c->get(AdminLayout::class);
-        }else{
+        } else {
             return $c->get(MainLayout::class);
         }
     },
@@ -74,7 +89,7 @@ return [
         return CategoryRepository::rootCategories();
     },
 
-    'oItemsCount' => OrderRepository::count(),
+    'orderItemsCount' => OrderRepository::count(),
 
 
     AppErrorHandler::class => function (ContainerInterface $c) {
@@ -83,10 +98,11 @@ return [
         );
     },
 
-    FS::class => factory(function ($dir, $logger) {
-        return new FS($dir, $logger);
-    })->parameter('dir', ROOT)
-        ->parameter('logger', get(FileLogger::class)),
+    FS::class => function (ContainerInterface $c, $dir) {
+        return new FS($dir . DIRECTORY_SEPARATOR,
+            $c->get(FileLogger::class),);
+    },
+
 
     Router::class => factory(function (ContainerInterface $c) {
         return new Router(
@@ -94,7 +110,7 @@ return [
         );
     }),
 
-    ErrorLogger::class => create()->constructor('errors/errors.txt'),
+    ErrorLogger::class => create()->constructor('errors.txt'),
     FileLogger::class => create()->constructor(),
 
     BlueRibbon::class => create(BlueRibbon::class)

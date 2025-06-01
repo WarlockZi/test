@@ -3,13 +3,13 @@
 namespace app\controller;
 
 
-use app\action\MetaAction;
+use app\service\Meta\MetaService;
 use app\service\Response;
 
 class MainController extends AppController
 {
     public function __construct(
-        private MetaAction $meta,
+        private MetaService $meta,
         private readonly string $titleTail = " купить в интернет-магазине VITEX в Вологде. Большой ассортимент медицинской одежды, оборудования и расходников по выгодной цене. Звоните и заказывайте прямо сейчас онлайн на сайте",
     )
     {
@@ -117,24 +117,31 @@ class MainController extends AppController
         Response::view('main.requisites');
     }
 
-
-
-
-    public function actionYandexauth(): void
-    {
-        $f = 1;
-    }
-
     public function actionDiscount()
     {
+        $this->meta->setMeta(
+            'Скидки - Витекс',
+            'Скидки ' . $this->titleTail,
+            'Скидки от обьема.');
+        view('main.discount');
     }
 
     public function actionDelivery()
     {
+        $this->meta->setMeta(
+            'Доставка - Витекс',
+            'Доставка ' . $this->titleTail,
+            'Доставка по Росссии.');
+        view('main.delivery');
     }
 
     public function actionPayment()
     {
+        $this->meta->setMeta(
+            'Оплата - Витекс',
+            'Оплата ' . $this->titleTail,
+            'Оплата.');
+        view('main.payment');
     }
 
 }

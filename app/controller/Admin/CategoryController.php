@@ -7,6 +7,7 @@ use app\model\Category;
 use app\repository\CategoryRepository;
 use app\service\Router\IRequest;
 use app\view\Category\CategoryFormView;
+use JetBrains\PhpStorm\NoReturn;
 
 class CategoryController extends AdminscController
 {
@@ -18,17 +19,16 @@ class CategoryController extends AdminscController
         parent::__construct();
     }
 
-    public function actionIndex(): void
+    #[NoReturn] public function actionIndex(): void
     {
         $categoryTree = CategoryFormView::list();
-        $this->setVars(compact('categoryTree'));
+        view('admin.category.index', ['categoryTree' => $categoryTree]);
     }
 
-    public function actionEdit(IRequest $route): void
+    #[NoReturn] public function actionEdit(IRequest $route): void
     {
         $category     = CategoryRepository::edit($route->id);
         $breadcrumbs  = $this->actions->getBreadcrumbs($category->toArray(), false);
-//        $categoryView = $this->actions->edit($category);
         $catItem = CategoryFormView::edit($category);
         view('admin.category.edit',
             compact('category',
@@ -37,14 +37,8 @@ class CategoryController extends AdminscController
             ));
     }
 
-    public function actionChangeproperty()
+    public function actionChangeproperty(IRequest $request): void
     {
-        $this->repo->changeProperty($this->ajax);
-    }
-
-    public function actionList()
-    {
-        $table = CategoryFormView::list();
-        $this->setVars(compact('table'));
+        $this->actions->changeProperty($request);
     }
 }
