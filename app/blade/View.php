@@ -24,12 +24,6 @@ class View implements IView
      */
     public function render(string $template, array $data = []): string
     {
-        $s = DIRECTORY_SEPARATOR;
-        if (str_starts_with($template, 'admin.')) {
-            $this->blade->setLayout("layouts{$s}admin{$s}admin");
-        } else {
-            $this->blade->setLayout("layouts{$s}main{$s}main");
-        }
         return $this->blade->run($template, $data);
     }
 }

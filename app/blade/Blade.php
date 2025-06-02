@@ -7,10 +7,10 @@ use eftec\bladeone\BladeOne;
 
 class Blade extends BladeOne
 {
-    public function __construct(FS $fs)
+    public function __construct()
     {
-        $frameworkCaches = $fs::platformSlashes(env('FRAMEWORK_CACHE'));
-        $bladeViews      = $fs::platformSlashes(env('BLADE_VIEWS'));
+        $frameworkCaches = FS::platformSlashes(env('FRAMEWORK_CACHE'));
+        $bladeViews      = FS::platformSlashes(env('BLADE_VIEWS'));
 
         parent::__construct(
             ROOT . $bladeViews . 'views',

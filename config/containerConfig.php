@@ -1,23 +1,14 @@
 <?php
 declare(strict_types=1);
 
-use app\action\CategoryAction;
 use app\blade\Blade;
 use app\blade\IView;
-use app\blade\View as BladeView;
-use app\controller\AppController;
-use app\controller\CartController;
-use app\controller\Controller;
-use app\exception\AppErrorHandler;
-use app\repository\BlueRibbonRepository;
-use app\repository\CartRepository;
+use app\blade\View;
 use app\repository\CategoryRepository;
 use app\repository\OrderRepository;
 use app\service\DB\Eloquent;
 use app\service\DelCatalogMobileMenu\CatalogMobileMenuService;
 use app\service\FS;
-use app\service\Image\ImageService;
-use app\service\Image\ProductImageService;
 use app\service\Logger\ErrorLogger;
 use app\service\Logger\FileLogger;
 use app\service\Router\IRequest;
@@ -25,9 +16,6 @@ use app\service\Router\IRouteList;
 use app\service\Router\Request;
 use app\service\Router\RouteList;
 use app\service\Router\Router;
-use app\service\ShippableUnits\ShippableUnitsService;
-use app\view\Cart\CartView;
-use app\view\components\Header\BlueRibbon\BlueRibbon;
 use app\view\layouts\AdminLayout;
 use app\view\layouts\ILayout;
 use app\view\layouts\MainLayout;
@@ -41,15 +29,26 @@ use function DI\value;
 
 return [
 
-    ShippableUnitsService::class => function ($c, $module, $model) {
-        return new ShippableUnitsService($module, $model);
+//    IView::class => function () {
+//        return new View(new Blade());
+//    },
+//    IView::class => create(View::class),
+//    IView::class => function (ContainerInterface $container) {
+//        return $container->get(View::class);
+//    },
+
+    View::class => function(ContainerInterface $c) {
+            return new View(new Blade());
     },
+//    ShippableUnitsService::class => function ($c, $module, $model) {
+//        return new ShippableUnitsService($module, $model);
+//    },
 
     Eloquent::class => function () {
         return new Eloquent(new Capsule);
     },
 
-    CategoryAction::class => autowire(),
+//    CategoryAction::class => autowire(),
 
     IRequest::class => function () {
         return Request::capture();
@@ -64,15 +63,20 @@ return [
         value(''),
         value(CategoryRepository::treeAll()->toArray()),
     ),
-
-    Controller::class => create()->constructor(),
     'mobileCategories' => CategoryRepository::treeAll()->toArray(),
-
-    AppController::class => function () {
-        return new AppController();
+    'rootCategories' => function (ContainerInterface $c) {
+        return CategoryRepository::rootCategories();
     },
 
-    IView::class => get(BladeView::class),
+    'orderItemsCount' => OrderRepository::count(),
+
+//    Controller::class => create()->constructor(),
+
+//    AppController::class => function () {
+//        return new AppController();
+//    },
+
+
     ILayout::class => function (ContainerInterface $c) {
         if ($c->get(IRequest::class)->isAdmin()) {
             return $c->get(AdminLayout::class);
@@ -81,22 +85,15 @@ return [
         }
     },
 
-    BladeView::class => autowire(),
-    Blade::class => autowire(),
+//    BladeView::class => autowire(),
+    Blade::class => create(Blade::class),
 
 
-    'rootCategories' => function (ContainerInterface $c) {
-        return CategoryRepository::rootCategories();
-    },
-
-    'orderItemsCount' => OrderRepository::count(),
-
-
-    AppErrorHandler::class => function (ContainerInterface $c) {
-        return new AppErrorHandler(
-            $c->get(ErrorLogger::class)
-        );
-    },
+//    AppErrorHandler::class => function (ContainerInterface $c) {
+//        return new AppErrorHandler(
+//            $c->get(ErrorLogger::class)
+//        );
+//    },
 
     FS::class => function (ContainerInterface $c, $dir) {
         return new FS($dir . DIRECTORY_SEPARATOR,
@@ -111,16 +108,18 @@ return [
     }),
 
     ErrorLogger::class => create()->constructor('errors.txt'),
-    FileLogger::class => create()->constructor(),
+//    FileLogger::class => create()->constructor(),
 
-    BlueRibbon::class => create(BlueRibbon::class)
-        ->constructor(
-            get(BladeView::class),
-            get(BlueRibbonRepository::class)
-        ),
-    CartController::class => create()->constructor(
-        get(CartView::class),
-        get(CartRepository::class),
-        get(Request::class),
-    ),
+//    BlueRibbon::class => create(BlueRibbon::class)
+//        ->constructor(
+//            get(BladeView::class),
+//            get(BlueRibbonRepository::class)
+//        ),
+
+//    CartController::class => create()->constructor(
+//        get(CartView::class),
+//        get(CartRepository::class),
+//        get(Request::class),
+//    ),
+
 ];

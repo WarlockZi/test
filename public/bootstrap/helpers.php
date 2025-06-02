@@ -1,5 +1,7 @@
 <?php
 
+use app\blade\Blade;
+use app\blade\IView;
 use app\blade\View;
 use app\service\Response;
 use JetBrains\PhpStorm\NoReturn;

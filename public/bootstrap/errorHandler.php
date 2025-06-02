@@ -9,8 +9,8 @@ if (DEV) {
         xdebug_enable();
     }
 } else {
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
+    error_reporting(0);
+    ini_set('display_errors', 0);
 
     set_error_handler('productionErrorHandler');
     set_exception_handler('productionExceptionHandler');

@@ -6,18 +6,12 @@ use app\blade\View;
 
 class CatalogMobileMenuService
 {
-    private View $view;
-    private string $string;
-    private array $categories = [];
-
-
-    public function __construct(View $view, string $string, array $categories)
+    public function __construct(
+        private readonly View  $view,
+        private string         $string,
+        private readonly array $categories=[])
     {
-        $this->view       = $view;
-        $this->string     = $string;
-        $this->categories = $categories;
         $this->recurse();
-
     }
 
     public function recurse(): void
