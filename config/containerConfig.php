@@ -29,14 +29,6 @@ use function DI\value;
 
 return [
 
-//    IView::class => function () {
-//        return new View(new Blade());
-//    },
-//    IView::class => create(View::class),
-//    IView::class => function (ContainerInterface $container) {
-//        return $container->get(View::class);
-//    },
-
     View::class => function(ContainerInterface $c) {
             return new View(new Blade());
     },
@@ -59,7 +51,7 @@ return [
     },
 
     CatalogMobileMenuService::class => create()->constructor(
-        get(BladeView::class),
+        get(View::class),
         value(''),
         value(CategoryRepository::treeAll()->toArray()),
     ),

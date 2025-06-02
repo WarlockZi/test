@@ -32,8 +32,10 @@
     <meta name="description" content="@yield('description', 'VITEX - медицинские перчатки оптом с доставкой')">
     <meta name="keywords" content="@yield('keywords', 'VITEX - медицинские перчатки оптом с доставкой')">
 
-    <script src="https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-with-polyfills-latest.js"></script>
-    <script src="https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-token-with-polyfills-latest.js"></script>
+    @if(!DEV)
+        <script src="https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-with-polyfills-latest.js"></script>
+        <script src="https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-token-with-polyfills-latest.js"></script>
+    @endif
 
     {!! $layout->vite(['Auth/auth.js','Main/main.js']) !!}
 

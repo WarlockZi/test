@@ -1,6 +1,6 @@
 @extends('layouts.main.main')
 
-@php xdebug_break()@endphp
+{{--@php xdebug_break()@endphp--}}
 @section('title', 'Dynamic Page Title')
 @section('description', 'This is a dynamic description.')
 @section('keywords', 'Laravel, SEO, Dynamic Meta')

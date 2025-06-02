@@ -2,9 +2,7 @@
 
 namespace app\formRequest;
 
-use Symfony\Component\Validator\Validation;
-
-class LoginRequest
+class LoginRequest extends FormRequest
 {
     public function checkLoginCredentials(array $ajax): array
     {
@@ -54,4 +52,8 @@ class LoginRequest
     }
 
 
+    public function rules()
+    {
+        // TODO: Implement rules() method.
+    }
 }

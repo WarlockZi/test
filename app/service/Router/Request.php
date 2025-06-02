@@ -41,10 +41,10 @@ class Request implements IRequest
         $self->url    = $_SERVER['REQUEST_URI'] ?? '';
         $self->method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
         $self->host   = $_SERVER['HTTP_HOST'];
-        $self->body   = $_POST ?? '';
+//        $self->body   = $_POST ?? '';
         $self->cookie = $_COOKIE ?? [];
         $self->parseUrl();
-        $self->setAjaxRequest();
+        $self->setBody();
         $self->setFiles();
 
         return $self;
@@ -73,20 +73,24 @@ class Request implements IRequest
     {
         return $this->body;
     }
-    public function setAjaxRequest(): void
+    public function setBody(): void
     {
         if (empty($_POST['params'])) return;
+
         $req = json_decode($_POST['params'], true) ?? [];
         if (!Auth::validatePphSession($req)) throw new \Exception('плохой ключ сессии');
         if ($this->isAjax()) {
-            unset($req['phpSession']);
+            unset($req['sess']);
             $this->body = $req;
         }
     }
 
     public function isAjax(): bool
     {
-        return (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest');
+        return (
+            isset($_SERVER['HTTP_X_REQUESTED_WITH'])
+            && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest'
+        );
     }
 
     public function __set(string $name, array|string $value)

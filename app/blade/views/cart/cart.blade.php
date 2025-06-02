@@ -11,7 +11,7 @@
         use app\service\AuthService\Auth;
         use app\view\Icon;
         $authed = Auth::getUser();
-        xdebug_break();
+//        xdebug_break();
     @endphp
     <div class="cart">
 

@@ -2,12 +2,12 @@
 
 namespace app\controller;
 
-use app\core\Mail\PHPMail;
+use app\service\Mail\PHPMail;
+use app\formRequest\LoginRequest;
 use app\model\User;
 use app\repository\UserRepository;
-use app\formRequest\LoginRequest;
 use app\service\AuthService\Auth;
-use app\service\Response;
+use app\service\Router\IRequest;
 use app\service\YandexAuth\YaAuthService;
 use app\view\User\UserView;
 use Throwable;
@@ -15,14 +15,45 @@ use Throwable;
 class AuthController extends AppController
 {
     protected $mailer;
-    protected UserRepository $userRepository;
 
-    public function __construct()
+    public function __construct(
+        protected UserRepository $userRepository,
+    )
     {
         parent::__construct();
-//		$bot = new TelegramBot();
-//		$bot->send('Что так');
-        $this->userRepository = new UserRepository();
+    }
+
+    public function actionLogin(LoginRequest $request): void
+    {
+        if ($request->validated()) {
+            $req    = new LoginRequest();
+            $errors = $req->checkLoginCredentials($data);
+            if ($errors) response()->json(['errors' => $errors, 'popup' => $errors]);
+            $user = User::where('email', $data['email'])->with('role')->first();
+
+            if (!$user) response()->json(['errors' => 'not registered', 'popup' => 'Пройдите регистрацию']);
+
+            if (!$user->confirm) response()->json(['popup' => 'Зайдите на почту чтобы подтвердить регистрацию', 'error' => 'Зайдите на почту чтобы подтвердить регистрацию']);
+            if ($user->password !== $this->userRepository->preparePassword($data['password'])) {
+                Auth::setUser($user);// Если данные правильные, запоминаем пользователя (в сессию)
+                if (!$user->isSU()) {
+                    response()->json(['error' => 'Не верный email или пароль']);
+                }
+            }
+            Auth::setAuth($user);
+            Auth::setUser($user);
+
+            if ($user->isEmployee()) {
+                response()->json(['role' => 'employee', 'id' => $user['id']]);
+            } else if ($user->isAdmin()) {
+                response()->json(['role' => 'guest', 'id' => $user['id']]);
+            } else {
+                response()->json(['role' => 'guest', 'id' => $user['id']]);
+            }
+            $url = $this->getUrl();
+            $this->setVars(compact('url'));
+
+        }
     }
 
     public function actionReturnpass(): void
@@ -90,38 +121,6 @@ class AuthController extends AppController
         exit;
     }
 
-    public function actionLogin(): void
-    {
-        if ($data = $this->ajax) {
-            $req    = new LoginRequest();
-            $errors = $req->checkLoginCredentials($data);
-            if ($errors) response()->json(['errors' => $errors, 'popup' => $errors]);
-            $user = User::where('email', $data['email'])->with('role')->first();
-
-            if (!$user) response()->json(['errors' => 'not registered', 'popup' => 'Пройдите регистрацию']);
-
-            if (!$user->confirm) response()->json(['popup' => 'Зайдите на почту чтобы подтвердить регистрацию', 'error' => 'Зайдите на почту чтобы подтвердить регистрацию']);
-            if ($user->password !== $this->userRepository->preparePassword($data['password'])) {
-                Auth::setUser($user);// Если данные правильные, запоминаем пользователя (в сессию)
-                if (!$user->isSU()) {
-                    response()->json(['error' => 'Не верный email или пароль']);
-                }
-            }
-            Auth::setAuth($user);
-            Auth::setUser($user);
-
-            if ($user->isEmployee()) {
-                response()->json(['role' => 'employee', 'id' => $user['id']]);
-            } else if ($user->isAdmin()) {
-                response()->json(['role' => 'guest', 'id' => $user['id']]);
-            } else {
-                response()->json(['role' => 'guest', 'id' => $user['id']]);
-            }
-            $url = $this->getUrl();
-            $this->setVars(compact('url'));
-
-        }
-    }
 
     private function getUrl(): string
     {
@@ -217,11 +216,5 @@ class AuthController extends AppController
     {
         $view = 'unautherized'; // для почтовой отписки
     }
-//    public static function user(): array|bool
-//    {
-//        if (isset($_SESSION['id']) && $_SESSION['id']) return false;
-//        $user = User::where('id', $_SESSION['id'])->first();
-//        if (!$user) return false;
-//        return $user->toArray();
-//    }
+
 }

@@ -11,9 +11,9 @@ use Throwable;
 
 class PHPMail
 {
-    protected PHPMailer $mailer;
-
-    public function __construct()
+    public function __construct(
+        protected PHPMailer $mailer,
+    )
     {
         $this->setMailer();
     }

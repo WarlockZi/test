@@ -1,4 +1,4 @@
-@php xdebug_break() @endphp
+{{--@php xdebug_break() @endphp--}}
 
 <div class="price">
 
