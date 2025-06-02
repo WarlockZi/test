@@ -21,7 +21,7 @@ class MainController extends AppController
         $this->meta->setMeta('Нитриловые перчатки оптом',
             'Доставим нитриловые перчатки, бахилы, маски по России. Оптом.',
             'нитриловые перчатки, бахилы, маски, расходные материалы, доставка, производство, по России');
-         Response::view('main.index', [],200);
+         view('main.index', [],200);
     }
 
     public function actionContacts()
@@ -30,7 +30,7 @@ class MainController extends AppController
             'Контакты - Витекс',
             'Контакты' . $this->titleTail,
             'Контакты');
-        Response::view('main.contacts');
+        view('main.contacts');
     }
     public function actionNews()
     {
@@ -39,14 +39,14 @@ class MainController extends AppController
         $this->meta->setMeta('Новости',
             'Новости' . $this->titleTail,
             'Новости');
-        Response::view('main.news', compact('content'));
+        view('main.news', compact('content'));
     }
     public function actionAbout()
     {
         $this->meta->setMeta('О нас',
             'О нас' . $this->titleTail,
             'О нас');
-        Response::view('main.about');
+        view('main.about');
     }
     public function actionPromotions()
     {

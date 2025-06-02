@@ -1,7 +1,5 @@
 <?php
 
-use app\blade\Blade;
-use app\blade\IView;
 use app\blade\View;
 use app\service\Response;
 use JetBrains\PhpStorm\NoReturn;
@@ -15,7 +13,7 @@ if (!function_exists('response')) {
 
 if (!function_exists('view')) {
 
-    #[NoReturn] function view(string $view = null, array $data = [], int $status = 200, array $headers=[]): \Illuminate\Contracts\View\Factory|View
+    #[NoReturn] function view(string $view = null, array $data = [], int $status = 200, array $headers = []): \Illuminate\Contracts\View\Factory|View
     {
         $factory = APP->get(View::class);
         exit($factory->render($view, $data, $status, $headers));

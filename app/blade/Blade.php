@@ -9,12 +9,12 @@ class Blade extends BladeOne
 {
     public function __construct()
     {
-        $frameworkCaches = FS::platformSlashes(env('FRAMEWORK_CACHE'));
-        $bladeViews      = FS::platformSlashes(env('BLADE_VIEWS'));
+        $bladeViews      = FS::platformSlashes(ROOT . env('BLADE_VIEWS') . '/views');
+        $frameworkCaches = FS::platformSlashes(ROOT . env('FRAMEWORK_CACHE') . '/blade');
 
         parent::__construct(
-            ROOT . $bladeViews . 'views',
-            ROOT . $frameworkCaches . 'blade',
+            $bladeViews,
+            $frameworkCaches,
             BladeOne::MODE_DEBUG,
             0
         );
