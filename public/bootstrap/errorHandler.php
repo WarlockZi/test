@@ -41,6 +41,7 @@ function productionExceptionHandler($exception): void
     $logger->write($exception);
 
     error_log("Uncaught exception: " . $exception->getMessage());
+    error_log("Uncaught exception: " . $exception->getTraceAsString());
 
     if (!headers_sent()) {
         header('HTTP/1.1 500 Internal Server Error');
