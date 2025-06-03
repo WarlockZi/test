@@ -100,10 +100,8 @@ return [
 //        );
 //    },
 
-    ErrorLogger::class =>
-        create()
-        ->constructor('errors.txt')
-        ->lazy(),
+    ErrorLogger::class =>create()
+        ->constructor('errors.txt'),
 //    FileLogger::class => create()->constructor(),
 
 //    BlueRibbon::class => create(BlueRibbon::class)
