@@ -20,5 +20,20 @@ class PromotionRepository
             ->with('product.price')
             ->get();
     }
-
+    public static function active(): Collection
+    {
+        return Promotion::query()
+            ->where('active_till', '>', Carbon::today()->toDateString())
+            ->with('product.baseUnit')
+            ->with('product.price')
+            ->get();
+    }
+    public static function inactive(): Collection
+    {
+        return Promotion::query()
+            ->where('active_till', '<', Carbon::today()->toDateString())
+            ->with('product.baseUnit')
+            ->with('product.price')
+            ->get();
+    }
 }

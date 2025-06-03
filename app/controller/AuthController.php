@@ -25,7 +25,8 @@ class AuthController extends AppController
 
     public function actionLogin(LoginRequest $request): void
     {
-        if ($request->validated()) {
+        $valid =$request->validated();
+        if ($valid) {
             $req    = new LoginRequest();
             $errors = $req->checkLoginCredentials($data);
             if ($errors) response()->json(['errors' => $errors, 'popup' => $errors]);

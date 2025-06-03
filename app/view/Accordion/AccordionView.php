@@ -4,7 +4,7 @@ namespace app\view\Accordion;
 
 use app\model\Opentest;
 use app\repository\TestRepository;
-use app\view\Icon;
+use app\view\components\Icon\Icon;
 
 class AccordionView
 {

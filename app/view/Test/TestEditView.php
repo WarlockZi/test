@@ -12,7 +12,7 @@ use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
-use app\view\Icon;
+use app\view\components\Icon\Icon;
 use Illuminate\Database\Eloquent\Collection;
 
 

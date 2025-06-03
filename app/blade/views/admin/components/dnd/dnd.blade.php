@@ -1,5 +1,5 @@
 @php
-    use app\view\Icon;
+    use app\view\components\Icon\Icon;
 @endphp
 
 <div class='dnd-container'>

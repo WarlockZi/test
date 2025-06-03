@@ -3,7 +3,7 @@
 @section('content')
     <?php
 
-    use app\view\Icon;
+    use app\view\components\Icon\Icon;
 
     ?>
     <div class="sync">

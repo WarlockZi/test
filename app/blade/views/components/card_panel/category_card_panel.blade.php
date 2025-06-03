@@ -1,6 +1,6 @@
 @php
     use app\service\AuthService\Auth;
-    use app\view\Icon;
+    use app\view\components\Icon\Icon;
     $isAdmin = Auth::userIsAdmin();
 @endphp
 

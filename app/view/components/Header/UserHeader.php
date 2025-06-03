@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace app\view\components\Header;
 
 
-use app\view\Icon;
+use app\view\components\Icon\Icon;
 
 
 class UserHeader

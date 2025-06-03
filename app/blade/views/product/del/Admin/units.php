@@ -1,7 +1,7 @@
 <?php
 
 use app\blade\views\product\del\ProductFormView;
-use app\view\Icon;
+use app\view\components\Icon\Icon;
 
 ?>
 <div class="units">

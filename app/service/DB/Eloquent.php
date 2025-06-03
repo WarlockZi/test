@@ -8,10 +8,9 @@ use Illuminate\Events\Dispatcher;
 
 class Eloquent
 {
-//    private Capsule $eloquent;
-
-    public function __construct(Capsule $capsule)
+    public function __construct()
     {
+        $capsule = new Capsule;
         $capsule->addConnection([
             'driver' => 'mysql',
             'host' => 'localhost',

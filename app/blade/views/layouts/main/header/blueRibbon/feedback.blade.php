@@ -1,6 +1,6 @@
 <?php
 
-use app\view\Icon;
+use app\view\components\Icon\Icon;
 
 ?>
 <? if (\app\service\AuthService\Auth::getUser()->isAdmin()): ?>

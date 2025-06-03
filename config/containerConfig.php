@@ -2,7 +2,6 @@
 declare(strict_types=1);
 
 use app\blade\Blade;
-use app\blade\IView;
 use app\blade\View;
 use app\repository\CategoryRepository;
 use app\repository\OrderRepository;
@@ -16,31 +15,24 @@ use app\service\Router\IRouteList;
 use app\service\Router\Request;
 use app\service\Router\RouteList;
 use app\service\Router\Router;
+use app\service\ShippableUnits\ShippableUnitsService;
 use app\view\layouts\AdminLayout;
 use app\view\layouts\ILayout;
 use app\view\layouts\MainLayout;
-use Illuminate\Database\Capsule\Manager as Capsule;
 use Psr\Container\ContainerInterface;
-use function DI\autowire;
 use function DI\create;
-use function DI\factory;
 use function DI\get;
 use function DI\value;
 
 return [
 
-    View::class => function(ContainerInterface $c) {
-            return new View(new Blade());
+
+    View::class => function (ContainerInterface $c) {
+        return new View(new Blade());
     },
 //    ShippableUnitsService::class => function ($c, $module, $model) {
 //        return new ShippableUnitsService($module, $model);
 //    },
-
-    Eloquent::class => function () {
-        return new Eloquent(new Capsule);
-    },
-
-//    CategoryAction::class => autowire(),
 
     IRequest::class => function () {
         return Request::capture();
@@ -54,7 +46,7 @@ return [
         get(View::class),
         value(''),
         value(CategoryRepository::treeAll()->toArray()),
-    ),
+    )->lazy(),
     'mobileCategories' => CategoryRepository::treeAll()->toArray(),
     'rootCategories' => function (ContainerInterface $c) {
         return CategoryRepository::rootCategories();
@@ -78,7 +70,7 @@ return [
     },
 
 //    BladeView::class => autowire(),
-    Blade::class => create(Blade::class),
+    Blade::class => create(Blade::class)->lazy(),
 
 
 //    AppErrorHandler::class => function (ContainerInterface $c) {
@@ -92,14 +84,26 @@ return [
             $c->get(FileLogger::class),);
     },
 
-
-    Router::class => factory(function (ContainerInterface $c) {
+    Router::class => function (ContainerInterface $c) {
         return new Router(
             $c->get(ErrorLogger::class),
+            $c->get(IRequest::class),
         );
-    }),
+    },
 
-    ErrorLogger::class => create()->constructor('errors.txt'),
+//    Router::class => create(Router::class),
+
+//    Router::class => function (ContainerInterface $c) {
+//        return new Router(
+//            $c->get(ErrorLogger::class),
+//            $c->get(IRequest::class)
+//        );
+//    },
+
+    ErrorLogger::class =>
+        create()
+        ->constructor('errors.txt')
+        ->lazy(),
 //    FileLogger::class => create()->constructor(),
 
 //    BlueRibbon::class => create(BlueRibbon::class)

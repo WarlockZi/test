@@ -8,6 +8,7 @@ use app\action\admin\UnitAction;
 
 use app\model\Unit;
 use app\repository\UnitRepository;
+use app\service\Router\IRequest;
 use app\view\Unit\UnitFormView;
 use JetBrains\PhpStorm\NoReturn;
 
@@ -63,9 +64,9 @@ class UnitController extends AdminscController
         $this->repo->detachUnit($this->ajax);
     }
 
-    public function actionEdit()
+    public function actionEdit(IRequest $request)
     {
-        $id = $this->getRoute()->id;
+        $id = $request->id;
         if ($id) {
             $unit     = UnitRepository::edit($id);
             $unitItem = UnitFormView::editItem($unit);

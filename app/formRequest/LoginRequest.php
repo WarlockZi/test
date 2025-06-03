@@ -2,8 +2,24 @@
 
 namespace app\formRequest;
 
-class LoginRequest extends FormRequest
+use app\service\Router\IRequest;
+
+class LoginRequest extends Req
 {
+    public function __construct(IRequest $request)
+    {
+        parent::__construct($request);
+        $this->validationData();
+    }
+    public function validationData(): array
+    {
+        $request = parent::validationData();
+
+        $data['email'] = $request['body']['email'];
+        $data['password'] = $request['body']['password'];
+
+        return $data;
+    }
     public function checkLoginCredentials(array $ajax): array
     {
         $errors = [];
@@ -52,8 +68,12 @@ class LoginRequest extends FormRequest
     }
 
 
-    public function rules()
+    public function rules(): array
     {
-        // TODO: Implement rules() method.
+        return [
+            'post.email' => 'required',
+//            'post.email' => 'required|email',
+//            'post.password' => 'required|string|min:6',
+        ];
     }
 }

@@ -18,7 +18,7 @@
             <a href="/auth/register">Регистрация</a>
             <a href="/auth/returnpass">Забыли пароль</a>
             <!--            <a href="--><?php //= $url ?><!--" class="yandex" title="Авторизация Яндекс">-->
-            <?= \app\view\Icon::yandex() ?>
+            <?= \app\view\components\Icon\Icon::yandex() ?>
             </a>
 
         </div>

@@ -1,3 +1,3 @@
 <button class="search">
-    <?= \app\view\Icon::search1(); ?>
+    <?= \app\view\components\Icon\Icon::search1(); ?>
 </button>

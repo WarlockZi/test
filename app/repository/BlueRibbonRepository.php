@@ -4,7 +4,7 @@ namespace app\repository;
 
 
 use app\service\DelCatalogMobileMenu\CatalogMobileMenuService;
-use app\view\Icon;
+use app\view\components\Icon\Icon;
 
 
 class BlueRibbonRepository

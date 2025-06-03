@@ -14,13 +14,14 @@ class AppService
     public function __invoke()
     {
         $containerCompiled =
-            FS::platformSlashes(ROOT . '/storage/framework/container/CompiledContainer.php');
+            FS::platformSlashes(
+                ROOT . '/storage/framework/container/CompiledContainer.php'
+            );
 //        if (is_readable($containerCompiled)) {
 //            unlink($containerCompiled);
 //        }
 
         return (new ContainerBuilder())
-
             ->addDefinitions('../config/containerConfig.php')
             ->useAutowiring(true)
             ->enableCompilation(ROOT . '/storage/framework/container')

@@ -1075,12 +1075,7 @@ $border-color:var.$color-main
 
 }
 
-@mixin h1 {
-  font-size: clamp(1rem, 5vw, 2rem);
-  font-weight: 600;
-  color: var.$color-grey-logo;
-  margin: 0 0 clamp(15px, 5vw, 25px);
-}
+
 
 @mixin modal-close {
   position: absolute;
@@ -1108,6 +1103,13 @@ $border-color:var.$color-main
   &:hover {
     transform: rotate(180deg);
   }
+}
+
+@mixin h1 {
+  font-size: clamp(1rem, 5vw, 2rem);
+  font-weight: 600;
+  color: var.$color-grey-logo;
+  margin: 0 0 clamp(15px, 5vw, 25px);
 }
 
 @mixin h2 {

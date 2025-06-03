@@ -2,13 +2,18 @@
 
 namespace app\formRequest;
 
-use app\service\Validator\Validator;
+use Illuminate\Http\Request;
 use Illuminate\Translation\ArrayLoader;
 use Illuminate\Translation\Translator;
 use Illuminate\Validation\Factory;
 
-abstract class FormRequest
+abstract class FormRequest extends Request
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function authorize()
     {
         return true;
@@ -51,26 +56,35 @@ abstract class FormRequest
 
         return $factory->make(
             $this->all(),
-//            $this->getInputData(),
             $this->rules(),
             $this->messages(),
             $this->attributes()
         );
     }
+
+    /**
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function validated(): array
     {
         return $this->createValidator()->validated();
     }
+
     protected function throwValidationException($validator)
     {
         throw new ValidationException($validator);
     }
 
-    public function all():array
+    public function all(): array
     {
         // You'll need to implement this based on your request handling
         // For example, if using $_POST:
-        return ['post'=>$_POST, 'files'=>$_FILES];
+        return ['post' => $_POST, 'files' => $_FILES];
+    }
+
+    public function prepareForValidation(): array
+    {
+        return $this->request->toArray();
     }
 
 }

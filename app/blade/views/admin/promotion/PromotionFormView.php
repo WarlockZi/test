@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\view\Promotion;
+namespace app\blade\views\admin\promotion;
 
 
 use app\model\Promotion;

@@ -29,7 +29,8 @@
     "ext-mbstring": "*",
     "illuminate/validation": "^8.83",
     "illuminate/translation": "^8.83",
-    "ext-imagick": "*"
+    "ext-imagick": "*",
+    "illuminate/http": "^8.83"
   },
   "config": {
     "platform-check": false

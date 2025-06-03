@@ -9,7 +9,7 @@
 
     @php
         use app\service\AuthService\Auth;
-        use app\view\Icon;
+        use app\view\components\Icon\Icon;
         $authed = Auth::getUser();
 //        xdebug_break();
     @endphp

@@ -2,7 +2,7 @@
 
 use app\repository\FeedbackRepository;
 use \app\service\AuthService\Auth;
-use app\view\Icon;
+use app\view\components\Icon\Icon;
 
 ?>
 <? if (Auth::getUser()->isAdmin()): ?>

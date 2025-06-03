@@ -28,4 +28,5 @@ interface IRequest
     public function getControllerName(): string;
 
     public function getHost(): string;
+    public function toArray(): array;
     }

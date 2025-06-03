@@ -1,3 +1,7 @@
+@php
+    use app\controller\Address;
+    use app\view\components\Icon\Icon;
+@endphp
 <div
         class='location'
         itemprop="address"
@@ -5,7 +9,7 @@
         itemtype="https://schema.org/PostalAddress"
 >
 
-    <?= \app\view\Icon::mapPin('feather'); ?>
-    <?= \app\controller\Address::getFactAddress(); ?>
+    <?= Icon::mapPin('feather'); ?>
+    <?= Address::getFactAddress(); ?>
 
 </div>

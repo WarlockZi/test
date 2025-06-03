@@ -1,5 +1,7 @@
 <?php
 
+use app\service\Logger\ErrorLogger;
+
 
 if (DEV) {
     error_reporting(E_ALL);
@@ -17,9 +19,10 @@ if (DEV) {
     register_shutdown_function('productionShutdownHandler');
 }
 
-function productionErrorHandler($errno, $errstr, $errfile, $errline) {
+function productionErrorHandler($errno, $errstr, $errfile, $errline)
+{
+    $logger = APP->get(ErrorLogger::class);
     error_log("Error [$errno]: $errstr in $errfile on line $errline");
-
     if (!headers_sent()) {
         header('HTTP/1.1 500 Internal Server Error');
         view('category.notFound');
@@ -32,11 +35,14 @@ function productionErrorHandler($errno, $errstr, $errfile, $errline) {
 
 function productionExceptionHandler($exception): void
 {
+    $logger = APP->get(ErrorLogger::class);
+    $logger->logError($exception);
+
     error_log("Uncaught exception: " . $exception->getMessage());
 
     if (!headers_sent()) {
         header('HTTP/1.1 500 Internal Server Error');
-        include ROOT.'/app/view/404/404.php';
+        include ROOT . '/app/view/404/404.php';
 //        view('category.notFound');
 //        include 'views/errors/500.html';
     }
@@ -47,6 +53,8 @@ function productionShutdownHandler(): void
     $error = error_get_last();
     if ($error && in_array($error['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR])) {
         productionErrorHandler($error['type'], $error['message'], $error['file'], $error['line']);
+        $logger = APP->get(ErrorLogger::class);
+        $logger->logError($error);
     }
 }
 

@@ -1,4 +1,4 @@
-@php use app\view\Icon; @endphp
+@php use app\view\components\Icon\Icon; @endphp
 <aside class="search-panel">
     <div class="input-group">
         <input type="text" class="text" placeholder="поиск">

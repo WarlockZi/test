@@ -7,22 +7,21 @@ use app\model\Order;
 use app\model\Product;
 use app\repository\OrderRepository;
 
-
 class ShippableUnitsService
 {
-    public int $fontSize = 1;
-    public bool $blueButton = true;
-    public bool $greenButton = true;
-    public bool $description = false;
-    public int $orderId = 0;
-    public array $rows = [];
-
-    public function __construct(string $module, Category|Product|Order $model)
+    public function __construct(
+        private readonly string                $module,
+        private readonly Category|Product|Order $model,
+        public int                             $fontSize = 1,
+        public bool                            $blueButton = true,
+        public bool                            $greenButton = true,
+        public bool                            $description = false,
+        public int                             $orderId = 0,
+        public array                           $rows = [],
+    )
     {
         $this->factory($module);
 
-        $order         = OrderRepository::usersOrder();
-        $this->orderId = $order->id;
         if ($model instanceof Product) {
             $this->setRows($model);
         } else if ($model instanceof Category) {
@@ -32,8 +31,9 @@ class ShippableUnitsService
             foreach ($model?->products as $product) {
                 $this->setRows($product);
             }
-        } else if  ($model instanceof Order) {
-            foreach ($order?->products as $product) {
+        } else {
+            $this->orderId = $model->id;
+            foreach ($model?->products as $product) {
                 $this->setRows($product);
             }
         }

@@ -1,7 +1,7 @@
 <!--  BUTTONS  -->
 <div class="item_buttons">
 
-    <?php use app\view\Icon;
+    <?php use app\view\components\Icon\Icon;
 
     if ($this->del): ?>
         <div class="del"

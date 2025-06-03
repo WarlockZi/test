@@ -9,18 +9,18 @@ use app\service\Logger\ErrorLogger;
 
 class Router
 {
-    protected Request $route;
-    protected array $routes;
-    protected string $namespace;
-
-    public function __construct(protected ErrorLogger $errorLogger)
+    public function __construct(
+        protected ErrorLogger $errorLogger,
+        protected IRequest    $request,
+        protected array       $routes = [],
+        protected string      $namespace = '',
+    )
     {
-
     }
 
     protected function matchRoute(IRequest $request): void
     {
-        $rl = APP->get(IRouteList::class);
+        $rl     = APP->get(IRouteList::class);
         $routes = $rl->getRoutes();
 
         foreach ($routes as $pattern => $r) {
@@ -44,16 +44,11 @@ class Router
      * @throws NoControllerException
      * @throws NoMethodException
      */
-    public function dispatch(IRequest $request): void
+    public function dispatch(): void
     {
+        $request = $this->request;
         $this->matchRoute($request);
         $controller = $request->getController();
-//        var_dump('class exists --  ' . class_exists($controller) . PHP_EOL);
-//        var_dump("class name --  {$controller}" . PHP_EOL);
-//        exit();
-//        $exists = class_exists($controller);
-//        error_log($controller);
-
         if (!class_exists($controller)) throw new NoControllerException('Bad controller');
 
         $controller = APP->get($controller);

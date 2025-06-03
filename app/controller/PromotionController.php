@@ -4,22 +4,25 @@ namespace app\controller;
 
 use app\model\Promotion;
 use app\repository\PromotionRepository;
+use app\service\Meta\MetaService;
+use JetBrains\PhpStorm\NoReturn;
 
 class PromotionController extends AppController
 {
-    public string $model = Promotion::class;
 
-    public function __construct()
+    public function __construct(
+        private readonly MetaService $meta,
+        public string                $model = Promotion::class,
+    )
     {
         parent::__construct();
     }
 
-    public function actionIndex(): void
+    #[NoReturn] public function actionIndex(): void
     {
+        $this->meta->setMeta("Акции", "Акции", "Акции");
+
         $promotions = PromotionRepository::product();
-
-        $this->setVars(compact('promotions'));
-        $this->assets->setMeta("Акции", "Акции", "Акции");
+        view('promotion.promotions', ['data' => $promotions]);
     }
-
 }

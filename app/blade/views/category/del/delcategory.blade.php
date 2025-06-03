@@ -7,7 +7,7 @@
 
 @section('content')
     <?php use app\view\components\shippable\ShippableUnitsTableFactory;
-    use app\view\Icon;
+    use app\view\components\Icon\Icon;
 
     $authed = \app\service\AuthService\Auth::getUser();
     ?>

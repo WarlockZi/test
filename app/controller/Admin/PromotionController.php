@@ -2,9 +2,8 @@
 
 namespace app\controller\Admin;
 
+use app\blade\views\admin\promotion\PromotionFormView;
 use app\model\Promotion;
-use app\service\Response;
-use app\view\Promotion\PromotionFormView;
 
 class PromotionController extends AdminscController
 {

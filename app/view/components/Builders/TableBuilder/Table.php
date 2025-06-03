@@ -6,7 +6,7 @@ namespace app\view\components\Builders\TableBuilder;
 
 use app\service\FS;
 use app\view\components\Traits\CleanString;
-use app\view\Icon;
+use app\view\components\Icon\Icon;
 use Illuminate\Database\Eloquent\Collection;
 
 class Table

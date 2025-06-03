@@ -23,7 +23,7 @@ class CartController extends AppController
     #[NoReturn] public function actionIndex(): void
     {
         $order    = OrderRepository::usersOrder();
-        $shippableTable = new ShippableUnitsService('cart', null);
+        $shippableTable = new ShippableUnitsService('cart', $order);
 
         view('cart.cart',
             compact('order','shippableTable'));
