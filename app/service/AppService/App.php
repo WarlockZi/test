@@ -33,7 +33,7 @@ class App
 
     public function handleRequest(): void
     {
-        APP->get(Router::class)->dispatch();
+        APP->container->get(Router::class)->dispatch();
     }
 
     public function run(): void

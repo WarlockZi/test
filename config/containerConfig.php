@@ -84,6 +84,9 @@ return [
             $c->get(FileLogger::class),);
     },
 
+    ErrorLogger::class =>create()
+        ->constructor('errors.txt'),
+
     Router::class => function (ContainerInterface $c) {
         return new Router(
             $c->get(ErrorLogger::class),
@@ -100,8 +103,6 @@ return [
 //        );
 //    },
 
-    ErrorLogger::class =>create()
-        ->constructor('errors.txt'),
 //    FileLogger::class => create()->constructor(),
 
 //    BlueRibbon::class => create(BlueRibbon::class)
