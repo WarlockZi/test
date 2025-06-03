@@ -21,7 +21,7 @@ if (DEV) {
 
 function productionErrorHandler($errno, $errstr, $errfile, $errline)
 {
-    $logger = APP->get(ErrorLogger::class);
+    $logger = new ErrorLogger('errors.txt');
     $logger->write($errstr);
 
     error_log("Error [$errno]: $errstr in $errfile on line $errline");
@@ -37,7 +37,7 @@ function productionErrorHandler($errno, $errstr, $errfile, $errline)
 
 function productionExceptionHandler($exception): void
 {
-    $logger = APP->get(ErrorLogger::class);
+    $logger = new ErrorLogger('errors.txt');
     $logger->write($exception);
 
     error_log("Uncaught exception: " . $exception->getMessage());
@@ -57,8 +57,9 @@ function productionShutdownHandler(): void
     if ($error && in_array($error['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR])) {
         productionErrorHandler($error['type'], $error['message'], $error['file'], $error['line']);
 
-        $logger = APP->get(ErrorLogger::class);
-        $logger->write($error);
+
+        $logger = new ErrorLogger('errors.txt');
+        $logger->write($error['message']);
     }
 }
 
