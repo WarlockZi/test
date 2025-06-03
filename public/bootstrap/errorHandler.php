@@ -47,7 +47,8 @@ function productionExceptionHandler($exception): void
 
     if (!headers_sent()) {
         header('HTTP/1.1 500 Internal Server Error');
-        include ROOT . '/app/view/404/404.php';
+        view('category.notFound');
+//        include ROOT . '/app/view/404/404.php';
 //        view('category.notFound');
 //        include 'views/errors/500.html';
     }
@@ -58,6 +59,7 @@ function productionShutdownHandler(): void
     $error = error_get_last();
     if ($error && in_array($error['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR])) {
         productionErrorHandler($error['type'], $error['message'], $error['file'], $error['line']);
+        view('category.notFound');
 
 
 //        $logger = new ErrorLogger('errors.txt');
