@@ -67,19 +67,15 @@ class Product extends Model
         );
     }
 
-    public function order(): HasOne|null
+    public function order(): HasOne
     {
         list($field, $value) = Auth::getCartFieldValue();
         $order = Order::where($field, $value)->first();
 
-        return !empty($order)
-
-            ? $this->hasOne(OrderProduct::class,
-                'product_id',
-                '1s_id',
-            )->where('order_id', $order->id)
-
-            : null;
+        return $this->hasOne(OrderProduct::class,
+            'product_id',
+            '1s_id',
+        )->where('order_id', $order->id);
     }
 
     public function orders()

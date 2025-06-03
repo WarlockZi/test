@@ -6,14 +6,13 @@ use app\action\CategoryAction;
 use app\repository\CategoryRepository;
 use app\repository\OrderRepository;
 use app\service\Router\IRequest;
-use app\service\ShippableUnits\ShippableUnitsService;
-use app\view\components\cardPanel\CardPanel;
+use JetBrains\PhpStorm\NoReturn;
 
 class CategoryController extends AppController
 {
 
     public function __construct(
-        protected CardPanel                 $categoryView,
+
         protected CategoryRepository        $repo,
         private readonly CategoryAction     $actions,
     )
@@ -21,7 +20,7 @@ class CategoryController extends AppController
         parent::__construct();
     }
 
-    public function actionIndex(IRequest $request): void
+    #[NoReturn] public function actionIndex(IRequest $request): void
     {
         if ($request->slug) {
             $category = $this->repo->indexInstore($request->slug);
