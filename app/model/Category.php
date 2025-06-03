@@ -61,8 +61,7 @@ class Category extends Model
             '1s_category_id',
             '1s_id')
             ->where('instore', '<>', 0)
-//            ->with('mainImages')
-            ->with('order.orderitems')
+//            ->with('order.orderitems')
             ->with('shippableUnits')
             ->with('inactivepromotions')
             ->with(['activepromotions' => function ($q) {
@@ -72,11 +71,6 @@ class Category extends Model
             ->with('like')
             ->with('units')
             ->with('ownProperties')
-
-//            ->with('prices')
-//            ->select(['products.*', 'prices.price as product_price'])
-//            ->join('prices', 'prices.1s_id', '=', 'products.1s_id')
-//            ->orderBy('product_price')
         ;
 
         return $pInStore;
