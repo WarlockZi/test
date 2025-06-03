@@ -5,6 +5,7 @@ namespace app\controller;
 use app\action\CategoryAction;
 use app\repository\CategoryRepository;
 use app\repository\OrderRepository;
+use app\service\Meta\MetaService;
 use app\service\Router\IRequest;
 use JetBrains\PhpStorm\NoReturn;
 
@@ -12,9 +13,8 @@ class CategoryController extends AppController
 {
 
     public function __construct(
-
-        protected CategoryRepository        $repo,
-        private readonly CategoryAction     $actions,
+        protected CategoryRepository        $repo= new CategoryRepository,
+        private readonly CategoryAction     $actions = new CategoryAction(new MetaService()),
     )
     {
         parent::__construct();

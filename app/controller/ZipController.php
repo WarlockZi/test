@@ -8,13 +8,14 @@ use app\service\Zip\ZipService;
 
 class ZipController extends AppController
 {
-    private ZipService $service;
-    private ErrorLogger $logger;
 
-    public function __construct()
+    public function __construct(
+        private ZipService  $service,
+        private ErrorLogger $logger,
+
+    )
     {
-        $this->service = new ZipService();
-        $this->logger  = new ErrorLogger();
+        parent::__construct();
     }
 
     public function actionDownload()

@@ -51,8 +51,6 @@ class Router
         $controller = $request->getController();
         if (!class_exists($controller)) throw new NoControllerException('Bad controller');
 
-        $controller = APP->get($controller);
-
         $action = $request->getAction();
         if (!method_exists($controller, $action)) throw new NoMethodException('Bad action');
 
@@ -69,7 +67,7 @@ class Router
                 };
             },
             function () use ($controller, $action) {
-                return APP->call([APP->make($controller::class), $action]);
+                return APP->call([APP->get($controller), $action]);
             }
         );
 

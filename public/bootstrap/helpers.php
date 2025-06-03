@@ -12,7 +12,6 @@ if (!function_exists('response')) {
 }
 
 if (!function_exists('view')) {
-
     #[NoReturn] function view(string $view = null, array $data = [], int $status = 200, array $headers = []): \Illuminate\Contracts\View\Factory|View
     {
         $factory = APP->get(View::class);

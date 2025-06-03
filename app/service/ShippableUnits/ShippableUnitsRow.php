@@ -12,7 +12,7 @@ class ShippableUnitsRow
         $multiplier = $unit->pivot->multiplier ?? 1;
         $count      = $order ? self::getCount($unit, $product) : 0;
         $unit_price = $multiplier * $price;
-        $rowSum  =  round($unit_price * $count);
+        $rowSum     = round($unit_price * $count);
 
         return [
             "unit_name" => $unit->name,
@@ -20,8 +20,8 @@ class ShippableUnitsRow
             "base_unit_name" => $product->baseUnit->name,
             "unit_price" => $unit_price,
             "formatted_unit_price" => self::format($unit_price),
-            "order_item_id" => $orderItem->id??0,
-            "count" => $orderItem->count??0,
+            "order_item_id" => $orderItem->id ?? 0,
+            "count" => $orderItem->count ?? 0,
             "multiplier" => number_format($multiplier, 0, '', ' '),
             "row_sum" => $rowSum,
             "formatted_row_sum" => self::format($rowSum),
