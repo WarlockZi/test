@@ -27,6 +27,8 @@ class App
         define('APP', (new Container())());
         Cache::$enabled = env('CACHE');
 
+        echo phpinfo();
+
         $client = new \Predis\Client(
             [
                 'scheme' => 'tcp',
