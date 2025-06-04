@@ -26,16 +26,23 @@ class App
         new Eloquent();
         define('APP', (new Container())());
         Cache::$enabled = env('CACHE');
-        $redis          = new Redis();
-        $con            = $redis->connect('127.0.0.1', 6379);
-        if ($con) {
-            echo 'Redis connection established';
-            echo 'Redis connection established';
-            echo 'Redis connection established';
-            echo 'Redis connection established';
+
+        $client = new \Predis\Client(
+            [
+                'scheme' => 'tcp',
+                'host'   => '127.0.0.1',
+                'port'   => 6379,
+            ]
+        );
+        $client->set('foo', 'bar');
+        $value = $client->get('foo');
+        echo $value; // выведет "bar"
+//        $redis          = new Redis();
+//        $con            = $redis->connect('127.0.0.1', 6379);
+        if ($client) {
+
         }
-        $redis->set('key', 'value');
-        $k = $redis->get('key');
+
     }
 
     public function handleRequest(): void
