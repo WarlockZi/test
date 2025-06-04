@@ -10,7 +10,6 @@ use app\service\Router\Router;
 use DI\DependencyException;
 use DI\NotFoundException;
 use Exception;
-use Redis;
 
 
 class App
