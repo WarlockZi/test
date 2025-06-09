@@ -1,6 +1,7 @@
 <?php
 
 $this->add("^\/main/statii/kak-vybrat-kachestvennyye-meditsinskiye-perchatki-dlya-razlichnykh-sfer-deyatelnosti?$", ['controller' => 'Blog', 'action' => 'blog1']);
+$this->add("^\/main/statii/meditsinskiye-prinadlezhnosti-kotoryye-dolzhny-byt-v-kazhdom-kabinete-vracha?$", ['controller' => 'Blog', 'action' => 'blog2']);
 
 $this->add("^\/(?P<controller>product)\/?(?P<slug>[_a-z0-9-]+)$", ['controller' => 'Product']);
 $this->add("^\/short\/(?P<slug>.+)?\/?$", ['controller' => 'Short']);
