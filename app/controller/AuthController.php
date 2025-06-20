@@ -2,14 +2,14 @@
 
 namespace app\controller;
 
-use app\service\Mail\PHPMail;
 use app\formRequest\LoginRequest;
 use app\model\User;
 use app\repository\UserRepository;
 use app\service\AuthService\Auth;
-use app\service\Router\IRequest;
+use app\service\Mail\PHPMail;
 use app\service\YandexAuth\YaAuthService;
 use app\view\User\UserView;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 
 class AuthController extends AppController
@@ -23,38 +23,43 @@ class AuthController extends AppController
         parent::__construct();
     }
 
+    /**
+     * @throws ValidationException
+     */
     public function actionLogin(LoginRequest $request): void
     {
-        $valid =$request->validated();
-        if ($valid) {
-            $req    = new LoginRequest();
-            $errors = $req->checkLoginCredentials($data);
-            if ($errors) response()->json(['errors' => $errors, 'popup' => $errors]);
-            $user = User::where('email', $data['email'])->with('role')->first();
-
-            if (!$user) response()->json(['errors' => 'not registered', 'popup' => 'Пройдите регистрацию']);
-
-            if (!$user->confirm) response()->json(['popup' => 'Зайдите на почту чтобы подтвердить регистрацию', 'error' => 'Зайдите на почту чтобы подтвердить регистрацию']);
-            if ($user->password !== $this->userRepository->preparePassword($data['password'])) {
-                Auth::setUser($user);// Если данные правильные, запоминаем пользователя (в сессию)
-                if (!$user->isSU()) {
-                    response()->json(['error' => 'Не верный email или пароль']);
-                }
-            }
-            Auth::setAuth($user);
-            Auth::setUser($user);
-
-            if ($user->isEmployee()) {
-                response()->json(['role' => 'employee', 'id' => $user['id']]);
-            } else if ($user->isAdmin()) {
-                response()->json(['role' => 'guest', 'id' => $user['id']]);
-            } else {
-                response()->json(['role' => 'guest', 'id' => $user['id']]);
-            }
-            $url = $this->getUrl();
-            $this->setVars(compact('url'));
-
+        try {
+            $validated = $request->validated();
+        } catch (ValidationException $e) {
+            $errors = $e->errors();
+            response()->json(['errors' => $errors, 'popup' => $errors], 422);
         }
+
+        $user = User::where('email', $validated['email'])->with('role')->first();
+
+        if (!$user) response()->json(['errors' => 'not registered', 'popup' => 'Пройдите регистрацию']);
+
+        if (!$user->confirm) response()->json(['popup' => 'Зайдите на почту чтобы подтвердить регистрацию', 'error' => 'Зайдите на почту чтобы подтвердить регистрацию']);
+        if ($user->password !== $this->userRepository->preparePassword($validated['password'])) {
+            Auth::setUser($user);// Если данные правильные, запоминаем пользователя (в сессию)
+            if (!$user->isSU()) {
+                response()->json(['error' => 'Не верный email или пароль']);
+            }
+        }
+        Auth::setAuth($user);
+        Auth::setUser($user);
+
+        if ($user->isEmployee()) {
+            response()->json(['role' => 'employee', 'id' => $user['id']]);
+        } else if ($user->isAdmin()) {
+            response()->json(['role' => 'guest', 'id' => $user['id']]);
+        } else {
+            response()->json(['role' => 'guest', 'id' => $user['id']]);
+        }
+        $url = $this->getUrl();
+        $this->setVars(compact('url'));
+
+
     }
 
     public function actionReturnpass(): void

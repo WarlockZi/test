@@ -2,15 +2,15 @@
 
 namespace app\service\Filters\Products;
 
-use app\service\Cache\Cache;
 use app\model\Category;
+use app\service\Cache\Redis\Cache;
 
 class InitialFiltersService
 {
     protected static function categoriesSelector(): array
     {
         $CategoryFlatNestedArray = [0 => ''];
-        $rootCats = APP->get('rootCategories');
+        $rootCats = Cache::get('rootCategories');
         $reversed = array_reverse($rootCats);
 
         foreach ($reversed as $rootCat) {

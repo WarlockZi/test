@@ -4,39 +4,42 @@ declare(strict_types=1);
 namespace app\repository;
 
 
-use app\service\Cache\Cache;
 use app\model\Category;
+use app\service\Cache\Redis\Cache;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class CategoryRepository
 {
-    public static function rootCategories():array
+    public static function rootCategories()
     {
-        return Cache::get('rootCategories',
-            function () {
-                return Category::withWhereHas('ownProperties',
-                    fn($q) => $q->where('show_front', 1))
-                    ->with('childrenRecursive')
-                    ->get()->toArray();
-            },
-            Cache::$timeLife1_000
-        );
+        return Cache::remember('rootCategories', function () {
+
+            $cat = Category::withWhereHas('ownProperties',
+                fn($q) => $q->where('show_front', 1))
+                ->with('childrenRecursive')
+                ->get()->toArray();
+            return $cat;
+        }, 60);
     }
-    public static function getBySubslug(string $subslug):Collection
+
+    public static function getBySubslug(string $subslug)
     {
-        return Cache::get('similarCategories'.$subslug,
-            function ()use($subslug) {
-                return Category::where('slug','LIKE', "%{$subslug}%")
+        return Cache::get('similarCategories' . $subslug,
+            function () use ($subslug) {
+                return Category::where('slug', 'LIKE', "%{$subslug}%")
                     ->get();
             },
             Cache::$timeLife1_000
         );
     }
-    public function indexInstore(string $url)
+
+    public function indexInstore(string $url):object
     {
-        return Cache::get('categoryWithProducts' . str_replace("/", "", $url),
+        $cacheKey = 'categoryWithProducts' . str_replace("/", "", $url);
+
+        return Cache::remember($cacheKey,
             function () use ($url) {
                 $category = Category::query()
                     ->with('childrenRecursive')
@@ -47,7 +50,6 @@ class CategoryRepository
                     ->with('productsInStore')
                     ->with('productsNotInStoreInMatrix')
                     ->get()->first();
-
                 return $category;
             }, Cache::$timeLife1_000);
     }
@@ -67,9 +69,9 @@ class CategoryRepository
             ->findOrNew($id);
     }
 
-    public static function treeAll(): Collection
+    public static function treeAll(): array
     {
-        $cat = Cache::get('categoryTree',
+        $cat = Cache::remember('categoryTree',
             function () {
                 $cats = Category::whereNull('1s_category_id')
                     ->with('childrenRecursive')
@@ -78,7 +80,7 @@ class CategoryRepository
             },
             Cache::$timeLife1_000
         );
-        return $cat;
+        return $cat->toArray();
     }
 
 }

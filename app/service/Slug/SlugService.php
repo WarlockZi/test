@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\service\Router;
+namespace app\service\Slug;
 
 
 use app\model\Category;

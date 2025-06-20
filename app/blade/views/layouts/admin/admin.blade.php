@@ -1,21 +1,19 @@
 @php
-    use app\service\AuthService\Auth;
-        $link = DEV ? PIC_SERVICE."logo-square-dev.svg" : PIC_SERVICE."logo-square.svg";
-        $user = Auth::getUser();
+    use app\service\Vite\Vite;
+//        xdebug_break();
 @endphp
         <!DOCTYPE html>
 <html lang="ru">
+
 <!--ADMIN-LAYOUT-->
 <head>
     <meta name="phpSession" content="<?= $_SESSION['phpSession'] ?? ''; ?>">
     <meta name="robots" content="noindex,nofollow"/>
     <meta charset="utf-8">
-
+    <link rel='icon' href='{{DEV ? PIC_SERVICE."logo-square-dev.svg" : PIC_SERVICE."logo-square.svg"}}'
+          type='image/svg+xml'>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-    {!! $layout->vite(['Admin/admin.js']) !!}
-
+    {!! (APP->get(Vite::class))->vite(['Admin/admin.js']) !!}
 </head>
 
 <body class="preload">

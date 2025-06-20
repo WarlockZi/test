@@ -3,22 +3,57 @@
 namespace app\formRequest;
 
 use app\service\Router\IRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
-class LoginRequest extends Req
+
+class LoginRequest extends FormRequest
 {
-    public function __construct(IRequest $request)
+    public function __construct(
+        protected $allowedFields = ['email', 'password']
+    )
     {
-        parent::__construct($request);
-        $this->validationData();
+        parent::__construct();
     }
-    public function validationData(): array
+
+    public function rules(): array
     {
-        $request = parent::validationData();
+        return [
+            'email' => 'required|email',
+            'password' => 'required|string|min:6',
+        ];
+    }
 
-        $data['email'] = $request['body']['email'];
-        $data['password'] = $request['body']['password'];
+    public function all($keys = null): array
+    {
+        $data = $this->json()->all();
 
-        return $data;
+        return [
+            'email' => $data['email'] ?? null,
+            'password' => $data['password'] ?? null,
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'email.required' => 'The email field is required.',
+            'email.email' => 'The email must be a valid email address.',
+
+            'password.required' => 'The password field is required.',
+            'password.string' => 'The password must be a string.',
+            'password.min' => 'The password must be at least 6 characters.',
+        ];
+    }
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            response()->json([
+                'success' => false,
+                'message' => 'Validation errors',
+                'errors' => $validator->errors()
+            ], 422)
+        );
     }
     public function checkLoginCredentials(array $ajax): array
     {
@@ -68,12 +103,4 @@ class LoginRequest extends Req
     }
 
 
-    public function rules(): array
-    {
-        return [
-            'post.email' => 'required',
-//            'post.email' => 'required|email',
-//            'post.password' => 'required|string|min:6',
-        ];
-    }
 }

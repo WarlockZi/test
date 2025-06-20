@@ -1,9 +1,12 @@
+@php
+    use app\service\AuthService\Auth;
+    $user = Auth::getUser()
+@endphp
 <div class="sidebar">
     <div class="wrap">
 
         <ul class="accordion">
-
-            @foreach ($layout->sidebar->data() as $item)
+            @foreach ($layout->sidebar->sidebar as $item)
 
                 @if ($item['children'])
 

@@ -7,26 +7,26 @@ interface IRequest
     public static function capture(): self;
     public function setMiddlewares(array $middlewares): void;
 
-    public function getMiddlewares(): array;
+    public function middlewares(): array;
 
-    public function getUrL(): string;
+    public function urL(): string;
 
-    public function getAction(): string;
+    public function action(): string;
 
-    public function getActionName(): string;
+    public function actionName(): string;
 
-    public function getController(): string;
+    public function controller(): string;
 
-    public function getNamespace(): string;
+    public function namespace(): string;
 
     public function isHome(): bool;
 
     public function isAdmin(): bool;
 
-    public function getControllerFullName(): string;
+    public function controllerFullName(): string;
 
-    public function getControllerName(): string;
+    public function controllerName(): string;
 
-    public function getHost(): string;
+    public function host(): string;
     public function toArray(): array;
     }

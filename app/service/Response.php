@@ -79,23 +79,22 @@ class Response
     public function __construct($content = '', int $status = 200, array $headers = [])
     {
         $this->content = $content;
-        $this->status = $status;
+        $this->status  = $status;
         $this->headers = array_merge([
             'Content-Type' => 'text/html; charset=UTF-8'
         ], $headers);
     }
 
-    #[NoReturn] public function json(array $data = [], int $status = 200, array $headers = []): void
+    #[NoReturn] public function json(array $data = [], int $status = 200, array $headers = []): \Symfony\Component\HttpFoundation\Response
     {
         $this->content = json_encode($data, JSON_UNESCAPED_UNICODE);
-        $this->status = $status;
+        $this->status  = $status;
         $this->headers = array_merge($this->headers, [
             'Content-Type' => 'application/json; charset=UTF-8'
         ], $headers);
 
         $this->sendAjax();
     }
-
 
 
     public function file(string $path, string $name = null, array $headers = []): self
@@ -116,7 +115,7 @@ class Response
 
     public function redirect(string $url, int $status = 302): self
     {
-        $this->status = $status;
+        $this->status              = $status;
         $this->headers['Location'] = $url;
         return $this;
     }
@@ -153,6 +152,7 @@ class Response
         http_response_code($status);
         exit($view->render($file, $data));
     }
+
     #[NoReturn] public function sendAjax(): void
     {
         http_response_code($this->status);
@@ -175,6 +175,7 @@ class Response
 
         exit($this->content);
     }
+
     #[NoReturn] public function send(): void
     {
         http_response_code($this->status);
@@ -200,14 +201,3 @@ class Response
     }
 }
 
-//class Response
-//{
-//    #[NoReturn] public static function json(array $arr = []): void
-//    {
-//        if ($arr) {
-//            header('Content-Type: application/json');
-//            exit(json_encode(['arr' => $arr]));
-//        }
-//        exit();
-//    }
-//}

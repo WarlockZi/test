@@ -3,6 +3,8 @@
 namespace app\service\Breadcrumbs;
 
 
+use app\model\Category;
+
 class NewBread
 {
     public function __construct(

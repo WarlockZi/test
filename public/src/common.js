@@ -367,10 +367,14 @@ function isEmptyObj(obj) {
 function setPostBodyHeaders(url, body, headers) {
   body.phpSession = getPhpSession();
   headers = isEmptyObj(headers)
-    ? { "X-Requested-With": "XMLHttpRequest" }
+    ? {
+        "X-Requested-With": "XMLHttpRequest",
+        "Content-Type": "application/json",
+      }
     : headers;
   if (!(body instanceof FormData)) {
-    headers["Content-Type"] = "application/x-www-form-urlencoded";
+    // headers["Content-Type"] = "application/x-www-form-urlencoded";
+    headers["Content-Type"] = "application/json";
   } else {
     return {
       method: "POST",
@@ -380,7 +384,8 @@ function setPostBodyHeaders(url, body, headers) {
   return {
     method: "POST",
     headers,
-    body: "params=" + JSON.stringify(body, null, 2),
+    body: JSON.stringify(body, null, 2),
+    // body: "params=" + JSON.stringify(body, null, 2),
   };
 }
 

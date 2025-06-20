@@ -2,7 +2,7 @@
 
 use app\middleware\AuthMiddleware;
 use app\middleware\CartMiddleware;
-use app\middleware\ProductMainImageMiddleware;
+
 
 $this->addRoute("^\/(?P<controller>product)\/?(?P<slug>[_a-z0-9-]+)$", ['controller' => 'Product']);
 $this->addRoute("^\/short\/(?P<slug>.+)?\/?$", ['controller' => 'Short']);

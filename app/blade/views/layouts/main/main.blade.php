@@ -1,5 +1,6 @@
 @php
     use app\service\AuthService\Auth;
+    use app\service\Vite\Vite;
     use app\view\components\Icon\Icon;
 @endphp
 
@@ -28,16 +29,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
           rel="stylesheet">
 
-    <title>@yield('title', 'VITEX - медицинские перчатки оптом с доставкой')</title>
-    <meta name="description" content="@yield('description', 'VITEX - медицинские перчатки оптом с доставкой')">
-    <meta name="keywords" content="@yield('keywords', 'VITEX - медицинские перчатки оптом с доставкой')">
+    <title>@yield('title')</title>
+    <meta name="description" content="@yield('description')">
+    <meta name="keywords" content="@yield('keywords')">
 
     @if(!DEV)
         <script src="https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-with-polyfills-latest.js"></script>
         <script src="https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-token-with-polyfills-latest.js"></script>
     @endif
 
-    {!! $layout->vite(['Auth/auth.js','Main/main.js']) !!}
+
+    {!! (APP->get(Vite::class))->vite(['Auth/auth.js','Main/main.js']) !!}
 
 </head>
 
@@ -68,8 +70,7 @@
 
 
 </div>
-
-
+{{--@php xdebug_break(); @endphp--}}
 @include('layouts.main.footer.footer')
 
 
