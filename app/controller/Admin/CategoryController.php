@@ -16,7 +16,7 @@ class CategoryController extends AdminscController
         public string                   $model = Category::class,
     )
     {
-        parent::__construct();
+       parent::__construct();
     }
 
     #[NoReturn] public function actionIndex(): void
@@ -28,7 +28,7 @@ class CategoryController extends AdminscController
     #[NoReturn] public function actionEdit(IRequest $route): void
     {
         $category     = CategoryRepository::edit($route->id);
-        $breadcrumbs  = $this->actions->getBreadcrumbs($category->toArray(), false);
+        $breadcrumbs  = $this->actions->getBreadcrumbs($category, false);
         $catItem = CategoryFormView::edit($category);
         view('admin.category.edit',
             compact('category',

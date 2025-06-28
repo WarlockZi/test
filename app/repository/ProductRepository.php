@@ -20,38 +20,30 @@ class ProductRepository
             ->with('ownProperties')
             ->with('category.parentRecursive')
             ->with('manufacturer.country')
-//            ->with('mainImages')
-//            ->with('detailImages')
-//            ->with('smallpackImages')
-//            ->with('bigpackImages')
             ->with('promotions')
             ->with('activePromotions')
             ->with('inactivePromotions')
             ->first();
     }
 
-    public function main(string $slug): Product|null
+    public function main(string $slug): Product
     {
         return Product::query()
             ->withTrashed()
 //            ->orderBy('sort')
             ->with('category.properties.vals')
-            ->with('ownProperties')
             ->with('category.parentRecursive')
-//            ->with('category.parents')
+            ->with('category.ownProperties')
+            ->with('ownProperties')
             ->with('values.property')
             ->with('manufacturer.country')
-//            ->with('mainImages')
-//            ->with('detailImages')
-//            ->with('smallpackImages')
-//            ->with('bigpackImages')
             ->with('activepromotions.unit')
             ->with('shippableUnits')
             ->with('orders')
             ->with('like')
             ->with('compare')
             ->where('slug', $slug)
-            ->first() ?? null;
+            ->first();
     }
 
 
@@ -63,7 +55,7 @@ class ProductRepository
         if ($subslug2) {
             $q->orWhere('slug', 'LIKE', "%{$subslug2}%");
         }
-        return $q->get() ?? new \Illuminate\Database\Eloquent\Collection;
+        return $q->get();
     }
 
     private static function defaultFilter()

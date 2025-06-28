@@ -17,7 +17,6 @@ class AdminSidebar
         $this->sidebar = $this->data();
     }
 
-
     public function data(): array
     {
         return [
@@ -430,59 +429,4 @@ class AdminSidebar
         ];
     }
 
-    /*    public function build(IUser $user): string
-        {
-
-            foreach ($self->sidebar as $item) {
-                if ($item['children']) {
-                    if ($item['permissions']) {
-                        if ($self->hasPermitions($item['permissions'])) {
-                            echo $self->ul($item);
-                        }
-                    } else {
-                        echo $self->ul($item);
-                    }
-                } else {
-                    if ($item['permissions']) {
-                        if ($self->user->can($item['permissions'])) {
-                            echo $self->a($item);
-                        }
-                    } else {
-                        echo $self->a($item);
-                    }
-                }
-            }
-
-        }*/
-
-    public function hasPermitions(IUser $user, array $permitions): bool
-    {
-        return $user->can($permitions);
-
-    }
-
-    private function a(array $item): void
-    {
-        $f = ROOT . "/app/Services/AdminSidebar/a.php";
-        include($f);
-    }
-
-    private function ul(array $item): void
-    {
-        $f = ROOT . "/app/Services/AdminSidebar/ul.php";
-        include $f;
-    }
-
-    public function child(array $item): void
-    {
-        $user = Auth::getUser();
-        $f    = ROOT . "/app/Services/AdminSidebar/child.php";
-        if ($item['permissions']) {
-            if ($user->can($item['permissions'])) {
-                include $f;
-            }
-        } else {
-            include $f;
-        }
-    }
 }

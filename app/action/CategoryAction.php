@@ -7,7 +7,6 @@ use app\service\Breadcrumbs\NewBread;
 use app\service\Cache\Redis\Cache;
 use app\service\Category\CategoryService;
 use app\service\Meta\CategoryMetaService;
-use app\service\Meta\MetaService;
 use app\service\ShippableUnits\ShippableUnitsService;
 use app\service\Slug\SlugService;
 use Exception;
@@ -16,9 +15,10 @@ use Exception;
 class CategoryAction
 {
     public function __construct(
-        private CategoryMetaService $meta,
-        private SlugService $slug,
-        private CategoryService $category,
+        private readonly CategoryMetaService $meta,
+        private readonly SlugService         $slug,
+        private readonly CategoryService     $category,
+        private readonly NewBread            $breadcrumbs,
     )
     {
     }
@@ -29,9 +29,7 @@ class CategoryAction
     public function getBreadcrumbs(Category $category, bool $lastItemIsLink): NewBread
     {
         if (!$category) throw new Exception('Breadcrumbs service has no category');
-        $breadcrumbs = new NewBread($lastItemIsLink);
-        return $breadcrumbs->getParents($category);
-
+        return $this->breadcrumbs->getParents($category, $lastItemIsLink);
     }
 
     public function similarCategories(string $slug): array
@@ -41,7 +39,7 @@ class CategoryAction
             function () use ($slugLastSegment) {
                 $subslugs = $this->slug::getSubslugs($slugLastSegment, 4);
 
-                return CategoryService::similarCategories($subslugs)->toArray();
+                return $this->category::similarCategories($subslugs)->toArray();
             },
             Cache::$timeLife1_000
         );

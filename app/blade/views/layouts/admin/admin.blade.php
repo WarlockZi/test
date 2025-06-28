@@ -19,8 +19,9 @@
 <body class="preload">
 
 <div class="admin-layout">
-
-    @include('layouts.admin.sidebar.index', compact('user'))
+    @include('layouts.admin.header.sidebar.index')
+{{--    @include('layouts.admin.header.sidebar.admin_menu_accordion')--}}
+{{--    @include('layouts.admin.sidebar.index')--}}
     @include('layouts.admin.header.header')
 
     <div class="admin-layout_content content">

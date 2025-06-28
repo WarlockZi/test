@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-use app\action\CategoryAction;
 use app\blade\Blade;
 use app\blade\IView;
 use app\blade\View;
@@ -10,17 +9,14 @@ use app\service\AdminSidebar\AdminSidebar;
 use app\service\AuthService\Auth;
 use app\service\Cache\ICache;
 use app\service\Cache\Redis\Cache;
-use app\service\Category\CategoryService;
 use app\service\FS;
 use app\service\Logger\ErrorLogger;
 use app\service\Logger\FileLogger;
-use app\service\Meta\CategoryMetaService;
 use app\service\Router\IRequest;
 use app\service\Router\IRouteList;
 use app\service\Router\Request;
 use app\service\Router\RouteList;
 use app\service\Router\Router;
-use app\service\Slug\SlugService;
 use app\service\Vite\Vite;
 use app\service\Vite\ViteCompiler;
 use app\view\components\Footer\AdminFooter;
@@ -36,6 +32,7 @@ use function DI\create;
 use function DI\get;
 
 return [
+
 
     Redis::class => function () {
         return new Client(
@@ -109,18 +106,8 @@ return [
         return new RouteList();
     },
 
-
     'orderItemsCount' => function () {
         return OrderRepository::count();
-    },
-
-
-    CategoryAction::class => function (ContainerInterface $c) {
-        return new CategoryAction(
-            $c->get(CategoryMetaService::class),
-            $c->get(SlugService::class),
-            $c->get(CategoryService::class),
-        );
     },
 
     Blade::class => create(Blade::class)->lazy(),
@@ -139,29 +126,4 @@ return [
             $c->get(IRequest::class),
         );
     },
-
-//    CatalogMobileMenuService::class => create()->constructor(
-//        get(View::class),
-//        value(''),
-//        value(CategoryRepository::treeAll()->toArray()),
-//    ),
-
-
-//    ShippableUnitsService::class => function ($c, $module, $model) {
-//        return new ShippableUnitsService($module, $model);
-//    },
-
-
-//    BlueRibbon::class => create(BlueRibbon::class)
-//        ->constructor(
-//            get(BladeView::class),
-//            get(BlueRibbonRepository::class)
-//        ),
-
-//    CartController::class => create()->constructor(
-//        get(CartView::class),
-//        get(CartRepository::class),
-//        get(Request::class),
-//    ),
-
 ];

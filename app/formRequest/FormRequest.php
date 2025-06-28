@@ -70,6 +70,9 @@ abstract class FormRequest extends Request
         return $this->createValidator()->validated();
     }
 
+    /**
+     * @throws ValidationException
+     */
     protected function throwValidationException($validator)
     {
         throw new ValidationException($validator);

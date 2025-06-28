@@ -67,12 +67,13 @@ class Request implements IRequest
 
     public function setBody(): void
     {
-        if (empty($_POST['params'])) return;
+        $json = file_get_contents('php://input') ?? $_POST;
+        if (empty($json)) return;
 
-        $req = json_decode($_POST['params'], true) ?? [];
+        $req = json_decode($json, true) ?? [];
         if (!Auth::validatePphSession($req)) throw new \Exception('плохой ключ сессии');
         if ($this->isAjax()) {
-            unset($req['sess']);
+            unset($req['phpSession']);
             $this->body = $req;
         }
     }
@@ -81,6 +82,7 @@ class Request implements IRequest
     {
         $this->middlewares = $middlewares;
     }
+
     public function __set(string $name, array|string $value)
     {
         if (property_exists($this, $name)) {
@@ -100,10 +102,12 @@ class Request implements IRequest
     {
         return $this->files;
     }
+
     public function body(): array
     {
         return $this->body;
     }
+
     public function middlewares(): array
     {
         return $this->middlewares;
@@ -140,6 +144,7 @@ class Request implements IRequest
             ? "app\controller\Admin\\"
             : 'app\controller\\';
     }
+
     public function isAjax(): bool
     {
         return (
@@ -147,6 +152,7 @@ class Request implements IRequest
             && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest'
         );
     }
+
     public function isHome(): bool
     {
         return $this->path === '/';

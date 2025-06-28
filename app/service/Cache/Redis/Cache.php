@@ -36,7 +36,10 @@ class Cache extends BaseCache implements ICache
         return $data;
     }
 
-    public static function remember(string $key, callable $callable, int $seconds = 5): string|object|array|null
+    public static function remember(
+        string $key,
+        callable $callable,
+        int $seconds = 5): string|object|array|null
     {
         if (Cache::isEnabled()) {
             if (Cache::has($key)) {

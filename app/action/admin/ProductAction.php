@@ -2,6 +2,7 @@
 
 namespace app\action\admin;
 
+use app\model\Category;
 use app\model\Product;
 use app\model\ProductUnit;
 use app\service\Breadcrumbs\NewBread;
@@ -14,20 +15,19 @@ use Exception;
 class ProductAction
 {
     public function __construct(
-        protected ProductMainImage $productMainImage
+        protected ProductMainImage $productMainImage,
+        private NewBread $breadcrumbs,
     )
     {
-
     }
 
     /**
      * @throws Exception
      */
-    public function getBreadcrumbs(array $category, bool $lastItemIsLink): NewBread
+    public function getBreadcrumbs(Category $category, bool $lastItemIsLink): NewBread
     {
         if (!$category) throw new Exception('Breadcrumbs service has no category');
-        $bs = new NewBread($lastItemIsLink);
-        return $bs->getParents($category);
+        return $this->breadcrumbs->getParents($category, $lastItemIsLink);
     }
 
     public function saveMainImage(array $file, Product $product): string

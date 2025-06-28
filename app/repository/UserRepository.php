@@ -38,12 +38,14 @@ class UserRepository
         return ShortlinkService::create(8);
     }
 
-    public function getByEmail(string $email): User|null
+    public function getByEmail(string $email): ?User
     {
-        return User::where('email', $email)->select('id', 'password', 'email')->first();
+        return User::where('email', $email)
+            ->select('id', 'password', 'email')
+            ->first();
     }
 
-    public function findByMail(string $mail): User|null
+    public function findByMail(string $mail): User
     {
         return User::where('email', $mail)->first();
     }

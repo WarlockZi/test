@@ -34,7 +34,7 @@ class Auth
         return [$field, $value];
     }
 
-    public static function getUser(): IUser|null
+    public static function getUser(): User|IUser|null
     {
         return self::$user ?? self::auth();
     }

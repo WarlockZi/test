@@ -33,10 +33,8 @@ class ProductController extends AppController
         }
         $this->actions->setMeta($product);
         $meta        = $this->meta;
-        $breadcrumbs = $this->actions->getBreadcrumbs($product->category->toArray(), true);
-//        $order = OrderRepository::usersOrder();
+        $breadcrumbs = $this->actions->getBreadcrumbs($product->category, true);
         $shippableTable = $this->actions->shippableUnits('product', $product);
-//        $shippableTable = $this->actions->shippableUnits('product', $product);
 
         view('product.product', compact(
             'meta',

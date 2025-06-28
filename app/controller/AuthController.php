@@ -3,13 +3,16 @@
 namespace app\controller;
 
 use app\formRequest\LoginRequest;
+use app\formRequest\RegisterRequest;
 use app\model\User;
 use app\repository\UserRepository;
 use app\service\AuthService\Auth;
 use app\service\Mail\PHPMail;
+use app\service\Router\IRequest;
 use app\service\YandexAuth\YaAuthService;
 use app\view\User\UserView;
 use Illuminate\Validation\ValidationException;
+use JetBrains\PhpStorm\NoReturn;
 use Throwable;
 
 class AuthController extends AppController
@@ -26,14 +29,9 @@ class AuthController extends AppController
     /**
      * @throws ValidationException
      */
-    public function actionLogin(LoginRequest $request): void
+    #[NoReturn] public function actionLogin(LoginRequest $request): void
     {
-        try {
-            $validated = $request->validated();
-        } catch (ValidationException $e) {
-            $errors = $e->errors();
-            response()->json(['errors' => $errors, 'popup' => $errors], 422);
-        }
+        $validated = $request->validated();
 
         $user = User::where('email', $validated['email'])->with('role')->first();
 
@@ -50,16 +48,19 @@ class AuthController extends AppController
         Auth::setUser($user);
 
         if ($user->isEmployee()) {
-            response()->json(['role' => 'employee', 'id' => $user['id']]);
+            response()->redirect('adminsc');
+//            response()->json(['role' => 'employee', 'id' => $user['id']]);
         } else if ($user->isAdmin()) {
-            response()->json(['role' => 'guest', 'id' => $user['id']]);
+            response()->json(['role' => 'admin', 'id' => $user['id']]);
+//            response()->redirect('adminsc');
+//            response()->json(['role' => 'admin', 'id' => $user['id']]);
         } else {
+//            response()->redirect('auth/profile');
             response()->json(['role' => 'guest', 'id' => $user['id']]);
         }
-        $url = $this->getUrl();
-        $this->setVars(compact('url'));
-
-
+//        view('auth.login');
+//        $url = $this->getUrl();
+//        $this->setVars(compact('url'));
     }
 
     public function actionReturnpass(): void
@@ -88,34 +89,25 @@ class AuthController extends AppController
         }
     }
 
-    public function actionRegister(): void
+    public function actionRegister(RegisterRequest $request): void
     {
         $this->mailer = new PHPMail();
-        $req          = $this->ajax;
-        if ($req) {
-            if (!$req) response()->json(['error' => 'empty fields', 'popup' => 'Заполните поля' . "\n"]);
-            if (!$req['email']) response()->json(['error' => 'empty email', 'popup' => 'Заполните email' . "\n"]);
-            if (!$req['password']) response()->json(['error' => 'empty password', 'popup' => 'Заполните пароль' . "\n"]);
 
-            if (!empty($this->userRepository->getByEmail($req['email']))) {
-                response()->json(['error' => 'mail exists',
-                    'message' => 'Такая почта уже существует',
-                    'popup' => 'Такая почта уже зарегистрирована. Либо войдите под своим паролем. Либо восстановите его.' . "\n"
-                ]);
-            }
+        $request = $request->validated();
+        if (!empty($this->userRepository->getByEmail($request['email']))) {
+            response()->json(['error' => 'mail exists',
+                'message' => 'Такая почта уже существует',
+                'popup' => 'Такая почта уже зарегистрирована. Либо войдите под своим паролем. Либо восстановите его.' . "\n"
+            ]);
+        }
 
-            $user = $this->userRepository->createUser($req);
-            if ($user) {
-                try {
-                    $this->mailer->sendRegistrationMail($user);
-                    response()->json(['success' => true, 'popup' => 'Письмо с регистрацией отпрвлено на указанный Вами email']);
-                } catch (Throwable $exception) {
-                    response()->json(['error' => true, 'popup' => 'Письмо не отправлено']);
-                }
-
-            } else {
-                response()->json(['error' => 'no user', 'popup' => "Пользователь не создан"]);
-            }
+        $user = $this->userRepository->createUser($request);
+        if (!$user) response()->json(['error' => 'no user', 'popup' => "Пользователь не создан"]);
+        try {
+            $this->mailer->sendRegistrationMail($user);
+            response()->json(['success' => true, 'popup' => 'Письмо с регистрацией отпрвлено на указанный Вами email']);
+        } catch (Throwable $exception) {
+            response()->json(['error' => true, 'popup' => 'Письмо не отправлено'], 201);
         }
     }
 
@@ -143,17 +135,20 @@ class AuthController extends AppController
     }
 
 
-    public function actionProfile(): void
+    #[NoReturn] public function actionProfile(): void
     {
         $user = Auth::getUser();
-        if (Auth::userIsAdmin()) {
-            $item = Auth::userIsEmployee()
-                ? UserView::admin($user)
-                : UserView::employee($user);
+
+        if ($user->isAdmin() || $user->isEmployee()) {
+            $catItem = UserView::employee($user);
+            view('admin.profile.profile', compact('catItem'));
         } else {
-            $item = UserView::guest($user);
+            $catItem = UserView::guest($user);
+            view('profile.profile', compact('catItem'));
         }
-        view('profile.index', compact('item'));
+//        UserView::admin($user)
+//                : UserView::employee($user  );
+//        $item = UserView::guest($user);
     }
 
     public function actionChangePassword(): void
@@ -168,8 +163,7 @@ class AuthController extends AppController
             if ($user) {
                 $user        = $user[0];
                 $newPassword = $this->userRepository->preparePassword($req['new_password']);
-                $res         = User::where('id', $user['id'])
-                    ->update(['password' => $newPassword]);
+                $res         = User::where('id', $user['id'])->update(['password' => $newPassword]);
                 if ($res) {
                     response()->json(['success' => 'Пароль поменeн']);
                 } else {
@@ -181,25 +175,21 @@ class AuthController extends AppController
         }
     }
 
-
     public function actionLogout(): void
     {
         if (isset($_COOKIE[session_name()])) {
             setcookie(session_name(), '', time() - 86400, '/');
         }
         unset($_SESSION);
-        header("Location: /");
-        response()->json(["response" => 'logout']);
+        response()->back();
     }
 
 
-    public function actionConfirm(): void
+    public function actionConfirm(IRequest $request): void
     {
-        $hash = $this->route->id;
+        if (!$request->id) header('Location:/');
 
-        if (!$hash) header('Location:/');
-        $user = User::where('hash', $hash)->first();
-
+        $user = User::where('hash', $request->id)->first();
         if (!$user) {
             header('Location:/');
             exit();
@@ -208,9 +198,7 @@ class AuthController extends AppController
         Auth::setAuth($user);
         if ($user->update(['confirm' => 1])) {
             header('Location:/');
-//            Response::exitJson(['success' => 'Вы успешно подтвердили почту', 'popup=' => 'Вы успешно подтвердили почту']);
         }
-        response()->json(['error' => 'Произошла ошибка', 'popup=' => 'Произошла ошибка']);
     }
 
     public function actionUnautherized(): void

@@ -1,9 +1,7 @@
 @php
-
     use app\service\AuthService\Auth;
     use app\view\components\Icon\Icon;
     $user = Auth::getUser();
-
 @endphp
 
 @if (!$user)
@@ -15,6 +13,7 @@
 
 @else
 
+{{--    @php xdebug_break() @endphp--}}
     <div class="user-menu">
         <img src="@php echo $user->avatar() ?? ''; @endphp" alt="">
 

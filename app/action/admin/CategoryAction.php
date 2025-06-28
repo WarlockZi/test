@@ -10,17 +10,19 @@ use Exception;
 
 class CategoryAction
 {
-    public function __construct() { }
+    public function __construct(
+        private NewBread $breadcrumbs,
+    ) { }
 
     /**
      * @throws Exception
      */
-    public function getBreadcrumbs(array $category, bool $lastItemIsLink): NewBread
+    public function getBreadcrumbs(Category $category, bool $lastItemIsLink): NewBread
     {
         if (!$category) throw new Exception('Breadcrumbs service has no category');
-        $bs = new NewBread($lastItemIsLink);
-        return $bs->getParents($category);
+        return $this->breadcrumbs->getParents($category, $lastItemIsLink);
     }
+
     public function changeProperty(IRequest $req): void
     {
         $category = Category::find($req['category_id']);

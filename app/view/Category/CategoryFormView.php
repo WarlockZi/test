@@ -169,8 +169,10 @@ class CategoryFormView
 
     public static function selectorByField(array $selected, int $excluded = -1): string
     {
+        $t = CategoryRepository::treeAll();
+
         return SelectBuilder::build(
-            TreeOptionsBuilder::build(CategoryRepository::treeAll(), 'children_recursive', 2)
+            TreeOptionsBuilder::build($t, 'children_recursive', 2)
                 ->initialOption()
                 ->selectedByField($selected)
                 ->excluded($excluded)
@@ -250,11 +252,6 @@ class CategoryFormView
                 ->contenteditable()
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .
-//            ItemFieldBuilder::build('seo_full_name', $categoryProperty)
-//                ->name('Полное наименование категории')
-//                ->contenteditable()
-//                ->relation('ownProperties')
-//                ->get()->toHtml('product') .
             ItemFieldBuilder::build('seo_path', $categoryProperty)
                 ->name('Seo путь')
                 ->contenteditable()
@@ -321,20 +318,12 @@ class CategoryFormView
             ->addButton()
             ->get();
     }
-
-//    private static function dnd()
-//    {
-//        public static function mainImage(Product $product): DndBuilder
-//    {
-//        $img['src']   = (new ProductImageService)->getRelativeImage($product);
-//        $img['alt']   = $product->name;
-//        $img['title'] = $product->name;
-//        $img['class'] = 'main-image';
-//
-//        $dnd      = self::dnd();
-//        $dnd->img = $img;
-//
-//        return $dnd;
-//    }
-//    }
+    public static function list(): string
+    {
+        $tree = TreeABuilder::build(
+            CategoryRepository::treeAll(), 'children_recursive', 2)
+            ->href('/adminsc/category/edit/')
+            ->get();
+        return "<ul class='category-tree'>" . $tree . "</ul>";
+    }
 }

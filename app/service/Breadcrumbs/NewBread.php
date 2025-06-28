@@ -15,21 +15,23 @@ class NewBread
     {
     }
 
-    protected function flatParents(array $category): void
+    protected function flatParents(Category $category): void
     {
         $currentCategory      = $category;
         $this->parentsArray[] = $currentCategory;
-        if ($currentCategory['parent_recursive']) {
-            while ($currentCategory['parent_recursive']) {
-                $this->parentsArray[] = $currentCategory['parent_recursive'];
-                $currentCategory      = $currentCategory['parent_recursive'];
+        if ($currentCategory['parentRecursive']) {
+            while ($currentCategory['parentRecursive']) {
+                $this->parentsArray[] = $currentCategory['parentRecursive'];
+                $currentCategory      = $currentCategory['parentRecursive'];
             }
         }
         $this->itemsCount = count($this->parentsArray);
     }
 
-    public function getParents($category): self
+    public function getParents(Category $category, bool $lastItemIsLink = false): self
     {
+        $this->lastItemIsLink = $lastItemIsLink;
+
         $this->flatParents($category);
         $this->parentsArray = array_reverse($this->parentsArray);
         return $this;

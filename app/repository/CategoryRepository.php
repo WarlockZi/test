@@ -6,25 +6,24 @@ namespace app\repository;
 
 use app\model\Category;
 use app\service\Cache\Redis\Cache;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 
 class CategoryRepository
 {
-    public static function rootCategories()
+    public static function rootCategories():array
     {
-        return Cache::remember('rootCategories', function () {
-
-            $cat = Category::withWhereHas('ownProperties',
-                fn($q) => $q->where('show_front', 1))
-                ->with('childrenRecursive')
-                ->get()->toArray();
-            return $cat;
-        }, 60);
+        return Cache::remember(
+            'rootCategories',
+            function () {
+                return Category::withWhereHas(
+                    'ownProperties',
+                    fn($q) => $q->where('show_front', 1))
+                    ->with('childrenRecursive')
+                    ->get()->toArray();
+            },
+            60);
     }
 
-    public static function getBySubslug(string $subslug)
+    public static function getBySubslug(string $subslug): object
     {
         return Cache::get('similarCategories' . $subslug,
             function () use ($subslug) {
@@ -35,7 +34,7 @@ class CategoryRepository
         );
     }
 
-    public function indexInstore(string $url):object
+    public function indexInstore(string $url): object
     {
         $cacheKey = 'categoryWithProducts' . str_replace("/", "", $url);
 
@@ -55,7 +54,7 @@ class CategoryRepository
     }
 
 
-    public static function edit(int $id): Model|Collection|Builder|null
+    public static function edit(int $id): object
     {
         return Category::with(
             'products',
@@ -69,18 +68,16 @@ class CategoryRepository
             ->findOrNew($id);
     }
 
-    public static function treeAll(): array
+    public static function treeAll(): object
     {
-        $cat = Cache::remember('categoryTree',
+        return Cache::remember('categoryTree',
             function () {
-                $cats = Category::whereNull('1s_category_id')
+                return Category::whereNull('1s_category_id')
                     ->with('childrenRecursive')
                     ->get(['id', '1s_id', '1s_category_id', 'name']);
-                return $cats;
             },
-            Cache::$timeLife1_000
+            Cache::$timeLife10_000
         );
-        return $cat->toArray();
     }
 
 }

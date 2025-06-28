@@ -20,7 +20,7 @@ class OrderView
     public $model = Order::class;
     public $html;
 
-    public static function orderItemEdit(Collection $items): string
+    public static function orderItemEdit(Collection $items): array
     {
         $users = User::all();
         return Table::build($items)
@@ -68,7 +68,7 @@ class OrderView
     }
 
 
-    public static function table($items): string
+    public static function table($items): array
     {
         $table = Table::build($items)
             ->model('order')

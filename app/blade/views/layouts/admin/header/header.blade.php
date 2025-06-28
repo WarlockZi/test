@@ -3,14 +3,11 @@
 //    xdebug_break();
 @endphp
 
-@include('layouts.admin.header.admin_menu_accordion')
-
 <div class="admin-layout_header a-header">
 
     @include('layouts.admin.header.adminPanel')
 
     <div class="a-header-main">
-
         <div class="burger">
             <?= Icon::gamburger() ?>
         </div>

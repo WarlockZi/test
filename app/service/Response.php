@@ -95,7 +95,15 @@ class Response
 
         $this->sendAjax();
     }
-
+    #[NoReturn] public function back(array $data = [], int $status = 200, array $headers = []): self
+    {
+        $HTTP_REFERER = $_SERVER['HTTP_REFERER'] ?? '';
+        $this->status  = $status;
+        $this->headers = array_merge([
+            'Location' => $HTTP_REFERER
+        ], $headers);
+        $this->send();
+    }
 
     public function file(string $path, string $name = null, array $headers = []): self
     {

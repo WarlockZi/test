@@ -9,7 +9,9 @@ class CacheController extends AdminscController
 {
 
     public function __construct(
-        private readonly string $path = ROOT.'/storage/framework/caches/*.txt',
+        private readonly string $cachePath = ROOT.'/storage/framework/caches/*.txt',
+        private readonly string $bladePath = ROOT.'/storage/framework/caches/blade*.txt',
+        private readonly string $containerFile = ROOT.'/storage/framework/caches/blade*.txt',
     )
     {
         parent::__construct();
@@ -18,9 +20,27 @@ class CacheController extends AdminscController
 
     public function actionClear(): void
     {
-        array_map("unlink", glob($this->path));
-        Response::exitWithPopup('Кэш очищен');
+        $this->clearAppCache();
+        $this->clearBladeCache();
+        $this->clearContanerCache();
     }
+
+    private function clearAppCache(): void
+    {
+        array_map("unlink", glob($this->cachePath));
+        response()->exitWithPopup('Кэш очищен');
+    }
+    private function clearContanerCache(): void
+    {
+        array_map("unlink", glob($this->cachePath));
+        response()->exitWithPopup('Кэш очищен');
+    }
+    private function clearBladeCache(): void
+    {
+        array_map("unlink", glob($this->cachePath));
+        response()->exitWithPopup('Кэш очищен');
+    }
+
 }
 
 

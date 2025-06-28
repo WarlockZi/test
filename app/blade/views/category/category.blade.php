@@ -41,7 +41,10 @@
 
         @else
             @include('components.breadcrumbs.index')
-            <h1>{{$category->ownProperties->seo_h1 ?? $category->name}}</h1>
+
+{{--            @dd($category['ownProperties']->toArray())--}}
+
+            <h1>{{$category['ownProperties']['seo_h1'] ?? $category->name}}</h1>
 
             @if ($category['childrenRecursive']->count())
 
