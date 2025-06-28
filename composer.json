@@ -33,8 +33,7 @@
     "illuminate/http": "^8.83",
     "ext-redis": "*",
     "predis/predis": "^3.0",
-    "illuminate/routing": "^8.83",
-    "": ""
+    "illuminate/routing": "^8.83"
   },
   "config": {
     "platform-check": false
