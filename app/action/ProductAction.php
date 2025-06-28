@@ -2,6 +2,7 @@
 
 namespace app\action;
 
+use app\model\Category;
 use app\model\Product;
 use app\service\Breadcrumbs\NewBread;
 use app\service\Meta\MetaService;
@@ -12,18 +13,18 @@ use Exception;
 class ProductAction
 {
     public function __construct(
-        private readonly MetaService $meta,
+        private MetaService       $meta,
+        private readonly NewBread $breadcrumbs,
     )
     {}
 
     /**
      * @throws Exception
      */
-    public function getBreadcrumbs(array $category, bool $lastItemIsLink = false): NewBread
+    public function getBreadcrumbs(Category $category, bool $lastItemIsLink = false): NewBread
     {
         if (!$category) throw new Exception('Breadcrumbs service has no category');
-        $breadcrumbs = new NewBread($lastItemIsLink);
-        return $breadcrumbs->getParents($category);
+        return $this->breadcrumbs->getParents($category, $lastItemIsLink);
     }
 
     public function shippableUnits(string $module, Product $product): ShippableUnitsService
@@ -41,35 +42,6 @@ class ProductAction
     public function similarProducts(string $slug): array
     {
         return [];
-//        $slugLastSegment = SlugService::categoryLastSegment($slug);
-//        return Cache::get('similarCategories_' . $slugLastSegment,
-//            function () use ($slugLastSegment) {
-//                $subslugs = SlugService::getSubslugs($slugLastSegment, 4);
-//
-//                return CategoryService::similarCategories($subslugs)->toArray();
-//            },
-//            Cache::$timeLife1_000
-//        );
     }
-//    public function setProductMeta($category): void
-//    {
-//        $this->meta->setProductMeta($category);
-//    }
-//    public function getProductShippableUnits(Product $product): array
-//    {
-//        $sid = $product['1s_id'];
-//        $productArr[$sid]['base_unit_price'] = $product->price;
-//        foreach ($product->shippableUnits as $unit) {
-//            $unitArr                    = $unit->toArray();
-//            $unitArr['base_unit_price'] = $product->price;
-//            foreach ($product->orderItems as $orderItem) {
-//                if ($orderItem->unit->id === $unit->id) {
-//                    $unitArr['count'] = $orderItem->count;
-//                }
-//            }
-//            $productArr[$sid][] = $unitArr;
-//        }
-//        $orderArr[] = $productArr;
-//        return  $orderArr;
-//    }
+
 }

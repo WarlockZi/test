@@ -2,12 +2,12 @@
 
 namespace app\action;
 
-use app\repository\BlueRibbonRepository;
+use app\repository\delBlueRibbonRepository;
 
 class BlueRibbonAction
 {
     public function __construct(
-        private BlueRibbonRepository $repo,
+        private delBlueRibbonRepository $repo,
     )
     {
     }

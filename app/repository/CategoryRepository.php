@@ -4,39 +4,41 @@ declare(strict_types=1);
 namespace app\repository;
 
 
-use app\service\Cache\Cache;
 use app\model\Category;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
+use app\service\Cache\Redis\Cache;
 
 class CategoryRepository
 {
     public static function rootCategories():array
     {
-        return Cache::get('rootCategories',
+        return Cache::remember(
+            'rootCategories',
             function () {
-                return Category::withWhereHas('ownProperties',
+                return Category::withWhereHas(
+                    'ownProperties',
                     fn($q) => $q->where('show_front', 1))
                     ->with('childrenRecursive')
                     ->get()->toArray();
             },
-            Cache::$timeLife1_000
-        );
+            60);
     }
-    public static function getBySubslug(string $subslug):Collection
+
+    public static function getBySubslug(string $subslug): object
     {
-        return Cache::get('similarCategories'.$subslug,
-            function ()use($subslug) {
-                return Category::where('slug','LIKE', "%{$subslug}%")
+        return Cache::get('similarCategories' . $subslug,
+            function () use ($subslug) {
+                return Category::where('slug', 'LIKE', "%{$subslug}%")
                     ->get();
             },
             Cache::$timeLife1_000
         );
     }
-    public function indexInstore(string $url)
+
+    public function indexInstore(string $url): object
     {
-        return Cache::get('categoryWithProducts' . str_replace("/", "", $url),
+        $cacheKey = 'categoryWithProducts' . str_replace("/", "", $url);
+
+        return Cache::remember($cacheKey,
             function () use ($url) {
                 $category = Category::query()
                     ->with('childrenRecursive')
@@ -47,13 +49,12 @@ class CategoryRepository
                     ->with('productsInStore')
                     ->with('productsNotInStoreInMatrix')
                     ->get()->first();
-
                 return $category;
             }, Cache::$timeLife1_000);
     }
 
 
-    public static function edit(int $id): Model|Collection|Builder|null
+    public static function edit(int $id): object
     {
         return Category::with(
             'products',
@@ -67,18 +68,16 @@ class CategoryRepository
             ->findOrNew($id);
     }
 
-    public static function treeAll(): Collection
+    public static function treeAll(): object
     {
-        $cat = Cache::get('categoryTree',
+        return Cache::remember('categoryTree',
             function () {
-                $cats = Category::whereNull('1s_category_id')
+                return Category::whereNull('1s_category_id')
                     ->with('childrenRecursive')
                     ->get(['id', '1s_id', '1s_category_id', 'name']);
-                return $cats;
             },
-            Cache::$timeLife1_000
+            Cache::$timeLife10_000
         );
-        return $cat;
     }
 
 }

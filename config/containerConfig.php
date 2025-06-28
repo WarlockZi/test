@@ -2,11 +2,13 @@
 declare(strict_types=1);
 
 use app\blade\Blade;
+use app\blade\IView;
 use app\blade\View;
-use app\repository\CategoryRepository;
 use app\repository\OrderRepository;
-use app\service\DB\Eloquent;
-use app\service\DelCatalogMobileMenu\CatalogMobileMenuService;
+use app\service\AdminSidebar\AdminSidebar;
+use app\service\AuthService\Auth;
+use app\service\Cache\ICache;
+use app\service\Cache\Redis\Cache;
 use app\service\FS;
 use app\service\Logger\ErrorLogger;
 use app\service\Logger\FileLogger;
@@ -15,24 +17,86 @@ use app\service\Router\IRouteList;
 use app\service\Router\Request;
 use app\service\Router\RouteList;
 use app\service\Router\Router;
-use app\service\ShippableUnits\ShippableUnitsService;
-use app\view\layouts\AdminLayout;
-use app\view\layouts\ILayout;
-use app\view\layouts\MainLayout;
+use app\service\Vite\Vite;
+use app\service\Vite\ViteCompiler;
+use app\view\components\Footer\AdminFooter;
+use app\view\layouts\Admin\AdminLayout;
+use app\view\layouts\Main\Header\MainHeader;
+use app\view\layouts\Main\MainLayout;
+use app\views\layouts\Main\Footer\MainFooter;
+use Illuminate\Database\Capsule\Manager as Capsule;
+use Predis\Client;
 use Psr\Container\ContainerInterface;
+use function DI\autowire;
 use function DI\create;
 use function DI\get;
-use function DI\value;
 
 return [
 
 
-    View::class => function (ContainerInterface $c) {
-        return new View(new Blade());
+    Redis::class => function () {
+        return new Client(
+            [
+                'scheme' => 'tcp',
+                'host' => '127.0.0.1',
+                'port' => 6379,
+            ]
+        );
     },
-//    ShippableUnitsService::class => function ($c, $module, $model) {
-//        return new ShippableUnitsService($module, $model);
-//    },
+
+    ICache::class => function () {
+        return Cache::getInstance();
+    },
+
+    Vite::class => create(Vite::class)
+        ->constructor(get(ViteCompiler::class)),
+
+    MainLayout::class => function (ContainerInterface $c) {
+        return new MainLayout(
+            new MainHeader,
+            new MainFooter,
+        );
+    },
+
+
+    AdminLayout::class => function () {
+        return new AdminLayout(
+            new AdminSidebar(
+                Auth::getUser(),
+                []
+            )
+        );
+    },
+
+    AdminFooter::class => autowire(),
+
+    'db.config' => [
+        'driver' => 'mysql',
+        'host' => 'localhost',
+        'database' => env('DB_DB'),
+        'username' => env('DB_USER'),
+        'password' => env('DB_PASSWORD'),
+        'charset' => 'utf8',
+        'collation' => 'utf8_unicode_ci',
+        'prefix' => '',
+    ],
+
+
+    Capsule::class => function (ContainerInterface $c) {
+        $capsule = new Capsule;
+        $capsule->addConnection($c->get('db.config'));
+        $capsule->setAsGlobal();
+        $capsule->bootEloquent();
+        return $capsule;
+    },
+
+
+    IView::class => function (ContainerInterface $c) {
+        return new View(
+            new Blade(),
+            $c->get(IRequest::class)
+        );
+    },
 
     IRequest::class => function () {
         return Request::capture();
@@ -42,49 +106,18 @@ return [
         return new RouteList();
     },
 
-    CatalogMobileMenuService::class => create()->constructor(
-        get(View::class),
-        value(''),
-        value(CategoryRepository::treeAll()->toArray()),
-    )->lazy(),
-    'mobileCategories' => CategoryRepository::treeAll()->toArray(),
-    'rootCategories' => function (ContainerInterface $c) {
-        return CategoryRepository::rootCategories();
+    'orderItemsCount' => function () {
+        return OrderRepository::count();
     },
 
-    'orderItemsCount' => OrderRepository::count(),
-
-//    Controller::class => create()->constructor(),
-
-//    AppController::class => function () {
-//        return new AppController();
-//    },
-
-
-    ILayout::class => function (ContainerInterface $c) {
-        if ($c->get(IRequest::class)->isAdmin()) {
-            return $c->get(AdminLayout::class);
-        } else {
-            return $c->get(MainLayout::class);
-        }
-    },
-
-//    BladeView::class => autowire(),
     Blade::class => create(Blade::class)->lazy(),
-
-
-//    AppErrorHandler::class => function (ContainerInterface $c) {
-//        return new AppErrorHandler(
-//            $c->get(ErrorLogger::class)
-//        );
-//    },
 
     FS::class => function (ContainerInterface $c, $dir) {
         return new FS($dir . DIRECTORY_SEPARATOR,
             $c->get(FileLogger::class),);
     },
 
-    ErrorLogger::class =>create()
+    ErrorLogger::class => create()
         ->constructor('errors.txt'),
 
     Router::class => function (ContainerInterface $c) {
@@ -93,28 +126,4 @@ return [
             $c->get(IRequest::class),
         );
     },
-
-//    Router::class => create(Router::class),
-
-//    Router::class => function (ContainerInterface $c) {
-//        return new Router(
-//            $c->get(ErrorLogger::class),
-//            $c->get(IRequest::class)
-//        );
-//    },
-
-//    FileLogger::class => create()->constructor(),
-
-//    BlueRibbon::class => create(BlueRibbon::class)
-//        ->constructor(
-//            get(BladeView::class),
-//            get(BlueRibbonRepository::class)
-//        ),
-
-//    CartController::class => create()->constructor(
-//        get(CartView::class),
-//        get(CartRepository::class),
-//        get(Request::class),
-//    ),
-
 ];

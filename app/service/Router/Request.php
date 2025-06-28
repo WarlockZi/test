@@ -41,7 +41,6 @@ class Request implements IRequest
         $self->url    = $_SERVER['REQUEST_URI'] ?? '';
         $self->method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
         $self->host   = $_SERVER['HTTP_HOST'];
-//        $self->body   = $_POST ?? '';
         $self->cookie = $_COOKIE ?? [];
         $self->parseUrl();
         $self->setBody();
@@ -65,32 +64,23 @@ class Request implements IRequest
         if (empty($_FILES['file'])) return;
         $this->files = $_FILES['file'];
     }
-    public function files(): array
-    {
-        return $this->files;
-    }
-    public function body(): array
-    {
-        return $this->body;
-    }
+
     public function setBody(): void
     {
-        if (empty($_POST['params'])) return;
+        $json = file_get_contents('php://input') ?? $_POST;
+        if (empty($json)) return;
 
-        $req = json_decode($_POST['params'], true) ?? [];
+        $req = json_decode($json, true) ?? [];
         if (!Auth::validatePphSession($req)) throw new \Exception('плохой ключ сессии');
         if ($this->isAjax()) {
-            unset($req['sess']);
+            unset($req['phpSession']);
             $this->body = $req;
         }
     }
 
-    public function isAjax(): bool
+    public function setMiddlewares(array $middlewares): void
     {
-        return (
-            isset($_SERVER['HTTP_X_REQUESTED_WITH'])
-            && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest'
-        );
+        $this->middlewares = $middlewares;
     }
 
     public function __set(string $name, array|string $value)
@@ -108,47 +98,59 @@ class Request implements IRequest
         return null;
     }
 
-    public function setMiddlewares(array $middlewares): void
+    public function files(): array
     {
-        $this->middlewares = $middlewares;
+        return $this->files;
     }
 
-    public function getMiddlewares(): array
+    public function body(): array
+    {
+        return $this->body;
+    }
+
+    public function middlewares(): array
     {
         return $this->middlewares;
     }
 
-    public function getUrL(): string
+    public function urL(): string
     {
         return $this->url;
     }
 
-    public function getPath(): string
+    public function path(): string
     {
         return $this->path;
     }
 
-    public function getAction(): string
+    public function action(): string
     {
         return 'action' . ucfirst($this->action);
     }
 
-    public function getActionName(): string
+    public function actionName(): string
     {
         return $this->action;
     }
 
-    public function getController(): string
+    public function controller(): string
     {
-        return $this->getNamespace() . $this->getControllerFullName();
-
+        return $this->namespace() . $this->controllerFullName();
     }
 
-    public function getNamespace(): string
+    public function namespace(): string
     {
         return $this->isAdmin()
             ? "app\controller\Admin\\"
             : 'app\controller\\';
+    }
+
+    public function isAjax(): bool
+    {
+        return (
+            isset($_SERVER['HTTP_X_REQUESTED_WITH'])
+            && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest'
+        );
     }
 
     public function isHome(): bool
@@ -161,22 +163,20 @@ class Request implements IRequest
         return Str::contains($this->url, 'adminsc');
     }
 
-
-    public function getControllerFullName(): string
+    public function controllerFullName(): string
     {
         return ucfirst($this->controller) . 'Controller';
     }
 
-    public function getControllerName(): string
+    public function controllerName(): string
     {
         return $this->controller;
     }
 
-    public function getHost(): string
+    public function host(): string
     {
         return $_SERVER['HTTP_HOST'];
     }
-
 
     public function toArray(): array
     {

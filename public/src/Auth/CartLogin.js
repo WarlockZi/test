@@ -3,9 +3,7 @@ import FieldBuilder from "../components/Modal/builders/FieldBuilder.js";
 import {
   createElement,
   emailValidator,
-  getPhpSession,
   passwordValidator,
-  popup,
   post,
   sanitizeInput,
 } from "../common.js";
@@ -196,40 +194,47 @@ export default class cartLogin {
   async login(e) {
     YM("click_on_login");
     const dto = this.authDTO(e);
+    const content = e.target.closest(".content");
     const res = await post("/auth/login", dto);
-    if (res?.arr) {
-      const content = e.target.closest(".content");
-      content.innerHTML = "Вход выполнен";
 
-      const id = res?.arr?.id;
-      localStorage.setItem("id", id);
-      if (res?.arr?.role === "employee") {
-        window.location = "/adminsc";
-      } else if (res?.arr?.role === "guest") {
-        window.location = "/auth/profile";
-      } else if (res?.arr?.role === "admin") {
-        window.location = "/adminsc";
-      }
-    } else if (res?.error) {
-      popup.show(res?.error);
+    if (res?.error) {
+      // popup.show(res?.error);
+      content.innerHTML = res?.error;
+      return;
     }
+
+    content.innerHTML = "Вход выполнен";
+
+    const id = res.id;
+    localStorage.setItem("id", id);
+    // if (res?.role === "employee") {
+    //   window.location = "/adminsc";
+    // } else if (res?.role === "guest") {
+    if (window.location.pathname !== "/") {
+      window.location = window.location.pathname;
+    } else {
+      window.location = "/auth/profile";
+    }
+    // } else if (res?.role === "admin") {
+    //   window.location = "/adminsc";
+    // }
   }
 
   async register(e) {
     YM("click_on_register");
     const res = await post("/auth/register", this.authDTO(e));
     const content = e.target.closest(".content");
-    if (res?.arr?.success) {
+    if (res?.success) {
       content.innerHTML =
         "<p>-Пользователь зарегистрирован.</p>" +
         "<p>-Для подтверждения регистрации зайдите на почту, </p>" +
         "<p><bold>email.</bold></p>" +
         "<p>-Перейдите по ссылке в письме.</p>";
-    } else if (res?.arr?.error === "mail exists") {
+    } else if (res?.error === "mail exists") {
       content.innerHTML =
         "Эта почта уже зарегистрирована. Войдите в систему по кнопке внизу Войти или, если не помните пароль, восстановите пароль по кнопке Забыл пароль";
     } else {
-      content.innerHTML = res?.arr?.error ?? "Неизвестная ошибка";
+      content.innerHTML = res?.error ?? "Неизвестная ошибка";
     }
   }
 
@@ -247,10 +252,8 @@ export default class cartLogin {
     const form = e.target.closest(".box");
     const email = sanitizeInput(form[qs]("input#email")?.value) ?? null;
     const password = sanitizeInput(form[qs]("input#password")?.value) ?? null;
-    const phone =
-      sanitizeInput(form[qs]("input#phone.blade.php")?.value) ?? null;
-    const sess = getPhpSession() ?? null;
-    return { email, password, phone, sess };
+    // const phone = sanitizeInput(form[qs]("input#phone")?.value) ?? null;
+    return { email, password };
   }
 
   onInputEmail({ target }) {

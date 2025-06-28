@@ -2,7 +2,7 @@
 
 namespace app\service\Router;
 
-use app\service\Cache\Cache;
+use app\service\Cache\Redis\Cache;
 
 class RouteList implements IRouteList
 {
@@ -12,7 +12,7 @@ class RouteList implements IRouteList
 
     public function __construct()
     {
-        Cache::get('routes', function () {
+        Cache::remember('routes', function () {
             include ROOT . '/app/service/Router/routes.php';
         }, 1);
     }

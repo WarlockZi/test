@@ -8,7 +8,6 @@ use app\model\Order;
 use app\model\OrderItem;
 use app\model\Product;
 use app\service\AuthService\Auth;
-use app\service\Response;
 use app\service\Router\IRequest;
 use Illuminate\Database\Eloquent\Collection;
 use Throwable;
@@ -21,6 +20,27 @@ class OrderRepository
         return Order::whereNotNull('submitted')
             ->with('products.orderItems.unit')
             ->get();
+    }
+
+    public static function unsubmitted(): Collection
+    {
+        list($field, $value) = Auth::getCartFieldValue();
+        $order = Order::where($field, $value)
+            ->whereNull('submitted')
+            ->with('products.orderItems.unit')
+            ->get()
+        ;
+        return $order;
+    }
+
+    public static function usersOrder()
+    {
+        list($field, $value) = Auth::getCartFieldValue();
+        $order = Order::where($field, $value)
+            ->whereNull('submitted')
+            ->with('products.orderItems.unit')
+            ->first();
+        return $order;
     }
 
     public static function deleteOrderItem(Order $order, Product $product, string $unit_id,)
@@ -106,16 +126,7 @@ class OrderRepository
         return $orderItems;
     }
 
-    public static function usersOrder()
-    {
-        list($field, $value) = Auth::getCartFieldValue();
-        $order = Order::where($field, $value)
-            ->whereNull('submitted')
-            ->with('products.orderItems.unit')
-            ->first();
-//        $o     = $order?->toArray();
-        return $order;
-    }
+
 //
     public static function edit(IRequest $request)
     {

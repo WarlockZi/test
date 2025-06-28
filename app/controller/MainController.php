@@ -22,7 +22,7 @@ class MainController extends AppController
         $this->meta->setMeta('Нитриловые перчатки оптом',
             'Доставим нитриловые перчатки, бахилы, маски по России. Оптом.',
             'нитриловые перчатки, бахилы, маски, расходные материалы, доставка, производство, по России');
-         view('main.index', [],200);
+         view('main.index');
     }
 
     #[NoReturn] public function actionContacts(): void

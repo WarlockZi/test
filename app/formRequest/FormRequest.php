@@ -14,25 +14,25 @@ abstract class FormRequest extends Request
         parent::__construct();
     }
 
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
 
     abstract public function rules();
 
-    public function messages()
+    public function messages(): array
     {
         return [];
     }
 
-    public function attributes()
+    public function attributes(): array
     {
         return [];
     }
 
 
-    public function validate()
+    public function validate(): void
     {
         if (!$this->authorize()) {
             throw new \Exception('Unauthorized', 403);
@@ -70,12 +70,15 @@ abstract class FormRequest extends Request
         return $this->createValidator()->validated();
     }
 
+    /**
+     * @throws ValidationException
+     */
     protected function throwValidationException($validator)
     {
         throw new ValidationException($validator);
     }
 
-    public function all(): array
+    public function all($keys=null): array
     {
         // You'll need to implement this based on your request handling
         // For example, if using $_POST:

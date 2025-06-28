@@ -1,5 +1,17 @@
 @extends('layouts.main.main')
 
+@section('title')
+    {!! $meta->title !!}
+@endsection
+
+@section('description')
+    {!! $meta->description !!}
+@endsection
+
+@section('keywords')
+    {!! $meta->keywords !!}
+@endsection
+
 @section('content')
 
     <div class="category">
@@ -29,7 +41,10 @@
 
         @else
             @include('components.breadcrumbs.index')
-            <h1>{{$category->ownProperties->seo_h1 ?? $category->name}}</h1>
+
+{{--            @dd($category['ownProperties']->toArray())--}}
+
+            <h1>{{$category['ownProperties']['seo_h1'] ?? $category->name}}</h1>
 
             @if ($category['childrenRecursive']->count())
 

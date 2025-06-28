@@ -38,7 +38,7 @@ class ProductController extends AdminscController
         $prod = $this->repo->edit($request->id);
 
         if ($prod) {
-            $breadcrumbs = $this->actions->getBreadcrumbs($prod->category->toArray(), false);
+            $breadcrumbs = $this->actions->getBreadcrumbs($prod->category, false);
             $catItem     = ProductFormView::edit($prod);
             view('admin.product.edit', compact('catItem', 'breadcrumbs'));
         } else {

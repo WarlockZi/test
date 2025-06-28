@@ -4,17 +4,17 @@ declare(strict_types=1);
 namespace app\service\AppService;
 
 
-use app\service\Cache\Cache;
-use app\service\DB\Eloquent;
+use app\service\Cache\ICache;
+
 use app\service\Router\Router;
 use DI\DependencyException;
 use DI\NotFoundException;
 use Exception;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
 
 class App
 {
-
     /**
      * @throws NotFoundException
      * @throws DependencyException
@@ -22,27 +22,13 @@ class App
      */
     public function __construct()
     {
-        new Eloquent();
-        define('APP', (new Container())());
-        Cache::$enabled = env('CACHE');
+        $container = new Container();
 
-//        echo phpinfo();
+        define('APP', $container());
+        APP->get(Capsule::class);
 
-        $client = new \Predis\Client(
-            [
-                'scheme' => 'tcp',
-                'host'   => '127.0.0.1',
-                'port'   => 6379,
-            ]
-        );
-        $client->set('foo', 'bar');
-        $value = $client->get('foo');
-        echo $value; // выведет "bar"
-//        $redis          = new Redis();
-//        $con            = $redis->connect('127.0.0.1', 6379);
-        if ($client) {
-
-        }
+        $cache = APP->get(ICache::class);
+        $cache::enabled(env('CACHE'));
 
     }
 

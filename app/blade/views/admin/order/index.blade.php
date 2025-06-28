@@ -1,7 +1,9 @@
 @extends('layouts.admin.admin')
 
 @section('content')
-    {!! $unsubmittedTable !!}
-    {!! $submittedTable !!}
+    @include('admin.components.table.tableStandAlone', ['data'=>$unsubmittedTable])
+    @include('admin.components.table.tableStandAlone', ['data'=>$submittedTable])
+{{--    {!! $unsubmittedTable !!}--}}
+{{--    {!! $submittedTable !!}--}}
 
 @endsection

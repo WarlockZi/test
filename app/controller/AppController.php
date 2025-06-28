@@ -5,6 +5,7 @@ namespace app\controller;
 
 use app\repository\MorphRepository;
 use app\service\Response;
+use app\service\Router\IRequest;
 
 class AppController extends Controller
 {
@@ -15,12 +16,12 @@ class AppController extends Controller
     public function __construct()
     {
         parent::__construct();
-
     }
 
-    public function actionUpdateOrCreate(): void
+    public function actionUpdateOrCreate(IRequest $request): void
     {
-        $req = $this->ajax;
+        $req = $request->body();
+
         if (!empty($req['relation']['name'])) {
             $this->updateOrCreateRelation($req);
         }

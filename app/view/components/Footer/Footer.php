@@ -12,7 +12,7 @@ class Footer
     private static string $yaMetrica;
     private static string $VK;
 
-    protected string $footer;
+    protected $footer;
 
 
     public static function setVK(): void
@@ -45,7 +45,7 @@ class Footer
         return self::$userCookie;
     }
 
-    public function getFooter(): string
+    public function footer(): string
     {
         return $this->footer;
     }

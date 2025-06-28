@@ -360,27 +360,33 @@ async function post(url, data = {}, headers = {}) {
   return res;
 }
 
-function isEmptyObj(obj) {
-  return !Object.keys(obj).length;
+function isPlainObject(obj) {
+  return (
+    typeof obj === "object" &&
+    obj !== null &&
+    Object.prototype.toString.call(obj) === "[object Object]"
+  );
+}
+
+function setHeaders(body, headers) {
+  if (body instanceof FormData) {
+    headers["Content-Type"] = "application/x-www-form-urlencoded";
+    return headers;
+  } else if (isPlainObject(body)) {
+    headers["Content-Type"] = "application/json";
+    headers["X-Requested-With"] = "XMLHttpRequest";
+    return headers;
+  }
 }
 
 function setPostBodyHeaders(url, body, headers) {
   body.phpSession = getPhpSession();
-  headers = isEmptyObj(headers)
-    ? { "X-Requested-With": "XMLHttpRequest" }
-    : headers;
-  if (!(body instanceof FormData)) {
-    headers["Content-Type"] = "application/x-www-form-urlencoded";
-  } else {
-    return {
-      method: "POST",
-      body: body,
-    };
-  }
+  headers = setHeaders(body, headers);
+
   return {
     method: "POST",
     headers,
-    body: "params=" + JSON.stringify(body, null, 2),
+    body: JSON.stringify(body, null, 2),
   };
 }
 

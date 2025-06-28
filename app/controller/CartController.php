@@ -7,6 +7,7 @@ use app\model\Order;
 use app\model\OrderItem;
 use app\repository\OrderRepository;
 use app\service\Response;
+use app\service\Router\IRequest;
 use app\service\ShippableUnits\ShippableUnitsService;
 use app\view\Cart\CartView;
 use JetBrains\PhpStorm\NoReturn;
@@ -62,7 +63,7 @@ class CartController extends AppController
 
     }
 
-    public function actionUpdateOrCreate(): void
+    public function actionUpdateOrCreate(IRequest $request): void
     {
         OrderRepository::updateOrCreate($this->ajax);
     }

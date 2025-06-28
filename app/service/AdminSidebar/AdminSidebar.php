@@ -3,71 +3,18 @@
 namespace app\service\AdminSidebar;
 
 use app\service\AuthService\Auth;
-use app\service\Auth\IUser;
+use app\service\AuthService\IUser;
 use app\view\components\Icon\Icon;
 
 class AdminSidebar
 {
-    private IUser $user;
-    private array $sidebar;
-
-    public static function build(IUser $user): string
+    public function __construct(
+        public IUser $user,
+        public array $sidebar,
+    )
     {
-        $self          = new self();
-        $self->user    = $user;
-        $self->sidebar = $self->data();
-        ob_start();
-        foreach ($self->sidebar as $item) {
-            if ($item['children']) {
-                if ($item['permissions']) {
-                    if ($self->hasPermitions($item['permissions'])) {
-                        echo $self->ul($item);
-                    }
-                } else {
-                    echo $self->ul($item);
-                }
-            } else {
-                if ($item['permissions']) {
-                    if ($self->user->can($item['permissions'])) {
-                        echo $self->a($item);
-                    }
-                } else {
-                    echo $self->a($item);
-                }
-            }
-        }
-        return ob_get_clean();
-    }
-
-    public function hasPermitions(IUser $user, array $permitions): bool
-    {
-        return $user->can($permitions);
-
-    }
-
-    private function a(array $item): void
-    {
-        $f = ROOT . "/app/Services/AdminSidebar/a.php";
-        include($f);
-    }
-
-    private function ul(array $item): void
-    {
-        $f = ROOT . "/app/Services/AdminSidebar/ul.php";
-        include $f;
-    }
-
-    public function child(array $item): void
-    {
-        $user = Auth::getUser();
-        $f = ROOT . "/app/Services/AdminSidebar/child.php";
-        if ($item['permissions']) {
-            if ($user->can($item['permissions'])) {
-                include $f;
-            }
-        } else {
-            include $f;
-        }
+        $this->user    = Auth::getUser();
+        $this->sidebar = $this->data();
     }
 
     public function data(): array
@@ -481,4 +428,5 @@ class AdminSidebar
             ],
         ];
     }
+
 }

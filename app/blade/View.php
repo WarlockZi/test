@@ -2,20 +2,27 @@
 
 namespace app\blade;
 
+
 use app\service\Router\IRequest;
-use app\view\layouts\ILayout;
+use app\view\layouts\Admin\AdminLayout;
+use app\view\layouts\Main\MainLayout;
 use Exception;
 
 class View implements IView
 {
     public function __construct(
-        private Blade $blade
+        private readonly Blade    $blade,
+        private readonly IRequest $request,
     )
     {
+        if ($this->request->isAdmin()) {
+            $layout = APP->get(AdminLayout::class);
+        } else {
+            $layout = APP->get(MainLayout::class);
+        }
         $this->blade
-            ->share('request', APP->get(IRequest::class))
-            ->share('layout', APP->get(ILayout::class))
-            ->share('orderItemsCount', APP->get('orderItemsCount'))
+            ->share('request', $request)
+            ->share('layout', $layout)
         ;
     }
 

@@ -12,7 +12,7 @@ use Throwable;
 class PHPMail
 {
     public function __construct(
-        protected PHPMailer $mailer,
+//        protected PHPMailer $mailer,
     )
     {
         $this->setMailer();

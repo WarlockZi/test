@@ -1,5 +1,9 @@
-@php     $level = 1; @endphp
-@foreach (APP->get('rootCategories') as $rootCategory)
+@php
+use app\repository\CategoryRepository;
+    $level = 1;
+@endphp
+
+@foreach (CategoryRepository::rootCategories() as $rootCategory)
 
     <div class='h-cat'>
         {{$rootCategory['name']}}

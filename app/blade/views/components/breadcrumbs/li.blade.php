@@ -11,7 +11,8 @@
             <span itemprop="name">{!! $item['name']!!}</span>
         </div>
     @else
-        <a itemprop="item" href="/category/{!! $item['own_properties']['path'] !!}">
+
+        <a itemprop="item" href="/category/{!! $item['ownProperties']['path'] !!}">
             <span itemprop="name">{!! $item['name']!!}</span>
         </a>
     @endif
@@ -21,13 +22,11 @@
 
     <div class="card-panel">
         @if (Auth::userIsAdmin())
-
             <a
                     href="/adminsc/category/edit/<?= $item['id'] ?>"
                     class="edit card-panel-item"
             >
-                    <?= Icon::edit(); ?>
-
+                {!! Icon::edit() !!}
             </a>
         @endif
     </div>

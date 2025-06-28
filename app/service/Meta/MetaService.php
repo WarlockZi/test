@@ -2,8 +2,6 @@
 
 namespace app\service\Meta;
 
-use app\model\Product;
-
 class MetaService
 {
 
@@ -15,12 +13,17 @@ class MetaService
     {
     }
 
-    public function setMeta(string $title,string $description,string $keywords): self
+    public function setMeta(
+        string|null $title,
+        string|null $description,
+        string|null $keywords,
+    ): self
     {
         $this->title       = $title;
         $this->description = $description;
         $this->keywords    = $keywords;
         return $this;
+
     }
 
 }

@@ -5,7 +5,7 @@ namespace app\controller;
 use app\action\CategoryAction;
 use app\repository\CategoryRepository;
 use app\repository\OrderRepository;
-use app\service\Meta\MetaService;
+use app\service\Cache\Redis\Cache;
 use app\service\Router\IRequest;
 use JetBrains\PhpStorm\NoReturn;
 
@@ -13,8 +13,8 @@ class CategoryController extends AppController
 {
 
     public function __construct(
-        protected CategoryRepository        $repo= new CategoryRepository,
-        private readonly CategoryAction     $actions = new CategoryAction(new MetaService()),
+        protected CategoryRepository    $repo,
+        private readonly CategoryAction $actions,
     )
     {
         parent::__construct();
@@ -24,6 +24,7 @@ class CategoryController extends AppController
     {
         if ($request->slug) {
             $category = $this->repo->indexInstore($request->slug);
+
             if (!$category) {
                 $similarCategories = $this->actions->similarCategories($request->slug);
                 view('category.notFound',
@@ -31,20 +32,25 @@ class CategoryController extends AppController
                     404);
             }
 
-            $this->actions->setCategoryMeta($category);
-            $breadcrumbs      = $this->actions->getBreadcrumbs($category->toArray(), false);
+            $meta        = $this->actions->setCategoryMeta($category);
+            $breadcrumbs = $this->actions->getBreadcrumbs($category, false);
 
-            $order = OrderRepository::usersOrder();
-            $shippableTable      = $this->actions->shippableTable($category);
+            $order          = OrderRepository::usersOrder();
+            $shippableTable = $this->actions->shippableTable($category);
             view('category.category',
-                compact('category', 'breadcrumbs', 'order', 'shippableTable'),);
+                compact(
+                    'category',
+                    'meta',
+                    'breadcrumbs',
+                    'order',
+                    'shippableTable',
+                )
+            );
 
 
         } else {
-            $categories = APP->get('rootCategories');
-            $this->actions->setCategoriesMeta();
-
-            view('category.categories', compact('categories'));
+            $meta = $this->actions->setCategoriesMeta();
+            view('category.categories', compact('meta'));
         }
     }
 }

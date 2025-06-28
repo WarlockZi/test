@@ -23,7 +23,7 @@ class OrderController extends AdminscController
     #[NoReturn] public function actionIndex(): void
     {
         $submitted   = OrderRepository::submitted();
-        $unsubmitted = OrderRepository::usersOrder();
+        $unsubmitted = OrderRepository::unsubmitted();
 
         $submittedTable   = OrderView::table($submitted);
         $unsubmittedTable = OrderView::table($unsubmitted);

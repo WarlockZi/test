@@ -1,4 +1,7 @@
-@php use app\view\components\Icon\Icon; @endphp
+@php
+    use app\view\components\Icon\Icon;
+//    xdebug_break();
+@endphp
 
 <nav class="menu">
     <div class="header-catalog-menu">

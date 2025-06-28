@@ -1,6 +1,7 @@
 import "./adminSidebar.scss";
 import { $ } from "@src/common.js";
-import { ael, qs } from "@src/constants.js";
+import { ael, qs } from "../../../constants.js";
+import { document } from "postcss";
 
 export default class AdminSidebar {
   constructor(sidebar) {
@@ -9,7 +10,7 @@ export default class AdminSidebar {
     this.sidebar = sidebar;
     this.sidebar[ael]("click", this.handleClick.bind(this));
 
-    this.burger = document[qs](".burger");
+    this.burger = $(".burger").first();
     this.burger[ael]("click", this.handleClick.bind(this));
   }
 
