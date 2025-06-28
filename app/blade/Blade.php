@@ -13,6 +13,7 @@ class Blade extends BladeOne
         $frameworkCaches = FS::platformSlashes(ROOT . env('CACHE_FRAMEWORK') . '/blade');
 //        $mode            = DEV ? BladeOne::MODE_DEBUG : BladeOne::MODE_FAST;
         $mode = BladeOne::MODE_DEBUG;
+//        $mode = BladeOne::MODE_FAST;
 
         parent::__construct(
             $bladeViews,

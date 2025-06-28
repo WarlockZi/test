@@ -3,7 +3,8 @@
 namespace app\controller\Admin;
 
 
-use app\service\Response;
+
+use app\blade\Blade;
 
 class CacheController extends AdminscController
 {
@@ -23,24 +24,23 @@ class CacheController extends AdminscController
         $this->clearAppCache();
         $this->clearBladeCache();
         $this->clearContanerCache();
+        response()->exitWithPopup('Кэш очищен');
     }
 
     private function clearAppCache(): void
     {
         array_map("unlink", glob($this->cachePath));
-        response()->exitWithPopup('Кэш очищен');
     }
     private function clearContanerCache(): void
     {
         array_map("unlink", glob($this->cachePath));
-        response()->exitWithPopup('Кэш очищен');
+
     }
     private function clearBladeCache(): void
     {
-        array_map("unlink", glob($this->cachePath));
-        response()->exitWithPopup('Кэш очищен');
+        $blade = APP->get(Blade::class);
+        $blade->clearCache();
     }
-
 }
 
 

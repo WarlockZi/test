@@ -36,5 +36,4 @@ class App
     {
         APP->get(Router::class)->dispatch();
     }
-
 }

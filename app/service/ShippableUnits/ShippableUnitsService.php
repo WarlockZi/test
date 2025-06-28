@@ -28,9 +28,9 @@ class ShippableUnitsService
             foreach ($model?->products as $product) {
                 $this->setRows($product);
             }
-            foreach ($model?->products as $product) {
-                $this->setRows($product);
-            }
+//            foreach ($model?->products as $product) {
+//                $this->setRows($product);
+//            }
         } else {
             $this->orderId = $model->id;
             foreach ($model?->products as $product) {
