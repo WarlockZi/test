@@ -11,7 +11,8 @@ class Blade extends BladeOne
     {
         $bladeViews      = FS::platformSlashes(ROOT . env('BLADE_VIEWS') . '/views');
         $frameworkCaches = FS::platformSlashes(ROOT . env('CACHE_FRAMEWORK') . '/blade');
-        $mode            = DEV ? BladeOne::MODE_DEBUG : BladeOne::MODE_FAST;
+//        $mode            = DEV ? BladeOne::MODE_DEBUG : BladeOne::MODE_FAST;
+        $mode = BladeOne::MODE_DEBUG;
 
         parent::__construct(
             $bladeViews,
@@ -19,12 +20,6 @@ class Blade extends BladeOne
             $mode,
             0
         );
-    }
-
-    public function setLayout($layout): static
-    {
-        $this->layout = $layout;
-        return $this;
     }
 }
 
