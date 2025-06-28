@@ -49,11 +49,8 @@ class AuthController extends AppController
 
         if ($user->isEmployee()) {
             response()->redirect('adminsc');
-//            response()->json(['role' => 'employee', 'id' => $user['id']]);
         } else if ($user->isAdmin()) {
             response()->json(['role' => 'admin', 'id' => $user['id']]);
-//            response()->redirect('adminsc');
-//            response()->json(['role' => 'admin', 'id' => $user['id']]);
         } else {
 //            response()->redirect('auth/profile');
             response()->json(['role' => 'guest', 'id' => $user['id']]);

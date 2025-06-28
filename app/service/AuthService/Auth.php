@@ -17,8 +17,6 @@ class Auth
 
     public static function validatePphSession(array $req): bool
     {
-        echo 'req ==='.$req['phpSession'].'-----$_SESSION'.$_SESSION['phpSession'];
-        exit('req ==='.$req['phpSession'].'-----$_SESSION'.$_SESSION['phpSession']);
         return !empty($req['phpSession']
             && $_SESSION['phpSession'] === $req['phpSession']);
     }
