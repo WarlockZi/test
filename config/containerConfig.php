@@ -69,7 +69,6 @@ return [
     },
 
     AdminFooter::class => autowire(),
-
     'db.config' => [
         'driver' => 'mysql',
         'host' => 'localhost',
@@ -110,7 +109,7 @@ return [
         return OrderRepository::count();
     },
 
-    Blade::class => create(Blade::class)->lazy(),
+    Blade::class => create(Blade::class),
 
     FS::class => function (ContainerInterface $c, $dir) {
         return new FS($dir . DIRECTORY_SEPARATOR,

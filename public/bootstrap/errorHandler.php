@@ -20,7 +20,7 @@ if (DEV) {
 function productionErrorHandler($errno, $errstr, $errfile, $errline)
 {
 
-    error_log("Error [$errno]: $errstr in $errfile on line $errline");
+    error_log("Production Error [$errno]: $errstr in $errfile on line $errline");
     if (!headers_sent()) {
         header('HTTP/1.1 500 Internal Server Error');
         view('category.notFound');
@@ -33,12 +33,11 @@ function productionErrorHandler($errno, $errstr, $errfile, $errline)
 
 function productionExceptionHandler($exception): void
 {
-
     error_log(
-        "Uncaught exception: " . $exception->getMessage().
-        "in file: " . $exception->getFile().
-        "on line: " . $exception->getLine().
-        "trace ---: " . $exception->getTraceAsString()
+        "Production exception: " . $exception->getMessage().PHP_EOL.
+        " in file: " . $exception->getFile().PHP_EOL.
+        " on line: " . $exception->getLine().PHP_EOL.
+        " TRACE: " . $exception->getTraceAsString()
     );
 
     if (!headers_sent()) {
