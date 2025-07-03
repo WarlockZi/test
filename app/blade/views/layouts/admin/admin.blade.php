@@ -14,6 +14,8 @@
           type='image/svg+xml'>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {!! (APP->get(Vite::class))->vite(['Admin/admin.js']) !!}
+
+
 </head>
 
 <body class="preload">
