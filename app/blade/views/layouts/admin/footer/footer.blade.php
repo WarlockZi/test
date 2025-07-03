@@ -150,8 +150,5 @@
         <!--            <img src="PIC_SERVICEcreator.jpg" class="creator-img">-->
         <!--        </div>-->
     </div>
-    <?php
-    $metrica = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'ya_metrica.php';
-    if (!DEV) include $metrica;
-    ?>
+
 </footer>
