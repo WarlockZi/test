@@ -36,7 +36,7 @@
     @if(!DEV)
         <script src="https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-with-polyfills-latest.js"></script>
         <script src="https://yastatic.net/s3/passport-sdk/autofill/v1/sdk-suggest-token-with-polyfills-latest.js"></script>
-        @php xdebug_break(); @endphp
+
         @include('components.yaMetrica.ya_metrica')
     @endif
 
