@@ -4,7 +4,6 @@ namespace app\controller\Admin;
 
 use app\controller\AppController;
 use app\service\AuthService\Auth;
-use app\service\Response;
 use JetBrains\PhpStorm\NoReturn;
 
 
@@ -14,10 +13,11 @@ class AdminscController extends AppController
     {
         $user = Auth::getUser();
         if (!$user || (!$user->isAdmin() && !$user->isEmployee()))
-            header("Location:/");
+            response()->redirect("/");
 
         parent::__construct();
     }
+
     #[NoReturn] public function actionIndex(): void
     {
         view('admin.index');
@@ -31,7 +31,6 @@ class AdminscController extends AppController
     public function actionPics(): void
     {
     }
-
 
 
     public function createSiteMap()

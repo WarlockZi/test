@@ -5,7 +5,6 @@ namespace app\service\AppService;
 
 
 use app\service\Cache\ICache;
-
 use app\service\Router\Router;
 use DI\DependencyException;
 use DI\NotFoundException;
@@ -20,7 +19,8 @@ class App
      * @throws DependencyException
      * @throws Exception
      */
-    public function __construct()
+    public function __construct(
+    )
     {
         $container = new Container();
 

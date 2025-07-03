@@ -95,6 +95,7 @@ export default defineConfig(async ({command, mode}) => {
          resolve: {
             alias:
                {
+                  path: 'path-browserify', // for path externalized error fix
                   '@src': `${path.resolve(__dirname, 'public', 'src')}`,
                   '@components': path.resolve(__dirname, 'public', 'src', 'components'),
                   '@srvc': path.resolve(__dirname, 'storage', 'app', 'srvc'),

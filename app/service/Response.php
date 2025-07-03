@@ -93,7 +93,7 @@ class Response
             'Content-Type' => 'application/json; charset=UTF-8'
         ], $headers);
 
-        $this->sendAjax();
+        $this->send();
     }
     #[NoReturn] public function back(array $data = [], int $status = 200, array $headers = []): self
     {
@@ -121,11 +121,11 @@ class Response
         return $this;
     }
 
-    public function redirect(string $url, int $status = 302): self
+    #[NoReturn] public function redirect(string $url, int $status = 302): self
     {
         $this->status              = $status;
         $this->headers['Location'] = $url;
-        return $this;
+        $this->send();
     }
 
     public function cookie(string $name, string $value, int $minutes = 0, string $path = '/', string $domain = null, bool $secure = false, bool $httpOnly = true): self
@@ -159,29 +159,6 @@ class Response
         $view = APP->get(View::class);
         http_response_code($status);
         exit($view->render($file, $data));
-    }
-
-    #[NoReturn] public function sendAjax(): void
-    {
-        http_response_code($this->status);
-
-        foreach ($this->headers as $name => $value) {
-            header("{$name}: {$value}");
-        }
-
-        foreach ($this->cookies as $cookie) {
-            setcookie(
-                $cookie['name'],
-                $cookie['value'],
-                $cookie['minutes'] ? time() + ($cookie['minutes'] * 60) : 0,
-                $cookie['path'],
-                $cookie['domain'],
-                $cookie['secure'],
-                $cookie['httpOnly']
-            );
-        }
-
-        exit($this->content);
     }
 
     #[NoReturn] public function send(): void

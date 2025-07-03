@@ -207,16 +207,18 @@ export default class cartLogin {
 
     const id = res.id;
     localStorage.setItem("id", id);
-    // if (res?.role === "employee") {
-    //   window.location = "/adminsc";
-    // } else if (res?.role === "guest") {
-    if (window.location.pathname !== "/") {
+    if (["employee", "admin"].includes(res?.role)) {
+      // window.location = "/adminsc";
       window.location = window.location.pathname;
-    } else {
-      window.location = "/auth/profile";
+      // } else if (res?.role === "guest") {
+    } else if (res?.role === "guest") {
+      window.location = window.location.pathname;
+      // window.location = "/adminsc";
     }
-    // } else if (res?.role === "admin") {
-    //   window.location = "/adminsc";
+    // if (window.location.pathname !== "/") {
+    //   window.location = window.location.pathname;
+    // } else {
+    //   window.location = "/auth/profile";
     // }
   }
 

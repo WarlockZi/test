@@ -9,7 +9,7 @@ use app\service\Cache\Redis\Cache;
 
 class CategoryRepository
 {
-    public static function rootCategories():array
+    public static function rootCategories(): array
     {
         return Cache::remember(
             'rootCategories',
@@ -48,9 +48,11 @@ class CategoryRepository
                     )
                     ->with('productsInStore')
                     ->with('productsNotInStoreInMatrix')
-                    ->get()->first();
+                    ->get()
+                    ->first();
                 return $category;
-            }, Cache::$timeLife1_000);
+            },
+            Cache::$timeLife1_000);
     }
 
 

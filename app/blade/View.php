@@ -5,7 +5,6 @@ namespace app\blade;
 
 use app\service\Router\IRequest;
 use app\view\layouts\Admin\AdminLayout;
-use app\view\layouts\Main\MainLayout;
 use Exception;
 
 class View implements IView
@@ -15,15 +14,8 @@ class View implements IView
         private readonly IRequest $request,
     )
     {
-        if ($this->request->isAdmin()) {
-            $layout = APP->get(AdminLayout::class);
-        } else {
-            $layout = APP->get(MainLayout::class);
-        }
         $this->blade
-            ->share('request', $request)
-            ->share('layout', $layout)
-        ;
+            ->share('request', $request);
     }
 
     /**

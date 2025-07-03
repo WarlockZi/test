@@ -42,8 +42,6 @@
         @else
             @include('components.breadcrumbs.index')
 
-{{--            @dd($category['ownProperties']->toArray())--}}
-
             <h1>{{$category['ownProperties']['seo_h1'] ?? $category->name}}</h1>
 
             @if ($category['childrenRecursive']->count())
@@ -56,35 +54,32 @@
             @endif
 
 
-            <div class="products-header">
-                <h2>Товары в наличии</h2>
-            </div>
+            @if ($category->productsInStore->count())
+                <div class="products-header">
+                    <h2>Товары в наличии</h2>
+                </div>
 
-            <div class="product-wrap">
-                @if ($category->productsInStore->count())
+                <div class="product-wrap">
                     @foreach($category->productsInStore as $product)
                         @include('category.product_card', compact('product'))
                     @endforeach
-                @else
-                    Товары не найдены
-                @endif
-            </div>
+                </div>
+
+            @endif
 
 
-            <div class="products-header">
-                <h2>Товары под заказ</h2>
-            </div>
-            <div class="product-wrap">
-                @if ($category->productsNotInStoreInMatrix->count())
+            @if ($category->productsNotInStoreInMatrix->count())
+                <div class="products-header">
+                    <h2>Товары под заказ</h2>
+                </div>
+                <div class="product-wrap">
                     @foreach ($category->productsNotInStoreInMatrix as $product)
                         @if (str_ends_with($product->name, '*'))
                             @include('category.product_card', compact('product'))
                         @endif
                     @endforeach
-                @else
-                    Товары не найдены
-                @endif
-            </div>
+                </div>
+            @endif
 
             <div id="seo_article">
                     <?= $category->seo_article() ?>

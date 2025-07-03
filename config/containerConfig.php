@@ -5,8 +5,6 @@ use app\blade\Blade;
 use app\blade\IView;
 use app\blade\View;
 use app\repository\OrderRepository;
-use app\service\AdminSidebar\AdminSidebar;
-use app\service\AuthService\Auth;
 use app\service\Cache\ICache;
 use app\service\Cache\Redis\Cache;
 use app\service\FS;
@@ -19,21 +17,13 @@ use app\service\Router\RouteList;
 use app\service\Router\Router;
 use app\service\Vite\Vite;
 use app\service\Vite\ViteCompiler;
-use app\view\components\Footer\AdminFooter;
-use app\view\layouts\Admin\AdminLayout;
-use app\view\layouts\Main\Header\MainHeader;
-use app\view\layouts\Main\MainLayout;
-use app\views\layouts\Main\Footer\MainFooter;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Predis\Client;
 use Psr\Container\ContainerInterface;
-use function DI\autowire;
 use function DI\create;
 use function DI\get;
 
 return [
-
-
     Redis::class => function () {
         return new Client(
             [
@@ -51,24 +41,7 @@ return [
     Vite::class => create(Vite::class)
         ->constructor(get(ViteCompiler::class)),
 
-    MainLayout::class => function (ContainerInterface $c) {
-        return new MainLayout(
-            new MainHeader,
-            new MainFooter,
-        );
-    },
 
-
-    AdminLayout::class => function () {
-        return new AdminLayout(
-            new AdminSidebar(
-                Auth::getUser(),
-                []
-            )
-        );
-    },
-
-    AdminFooter::class => autowire(),
     'db.config' => [
         'driver' => 'mysql',
         'host' => 'localhost',
