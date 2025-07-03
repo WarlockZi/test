@@ -2,10 +2,14 @@
 
 namespace app\formRequest;
 
+
+use app\service\AuthService\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Translation\ArrayLoader;
 use Illuminate\Translation\Translator;
 use Illuminate\Validation\Factory;
+use Illuminate\Validation\Validator;
+use JetBrains\PhpStorm\NoReturn;
 
 abstract class FormRequest extends Request
 {
@@ -14,12 +18,7 @@ abstract class FormRequest extends Request
         parent::__construct();
     }
 
-    public function authorize(): bool
-    {
-        return true;
-    }
-
-    abstract public function rules();
+    abstract public function rules(): array;
 
     public function messages(): array
     {
@@ -31,8 +30,14 @@ abstract class FormRequest extends Request
         return [];
     }
 
+    public function authorize(): bool
+    {
+        $session = $this->all('phpSession');
+        !Auth::validatePphSession($session);
+        return true;
+    }
 
-    public function validate(): void
+    public function validate(): array
     {
         if (!$this->authorize()) {
             throw new \Exception('Unauthorized', 403);
@@ -41,13 +46,24 @@ abstract class FormRequest extends Request
         $validator = $this->createValidator();
 
         if ($validator->fails()) {
+            $errors = $validator->errors();
             $this->throwValidationException($validator);
         }
+        return $validator->getData();
+
     }
 
-    protected function createValidator(): \Illuminate\Validation\Validator
+    #[NoReturn] protected function throwValidationException($validator): void
     {
+        response()->json([
+            'success' => false,
+            'message' => 'Validation errors',
+            'errors' => $validator->errors()
+        ], 422);
+    }
 
+    protected function createValidator(): Validator
+    {
         $factory = new Factory(
             new Translator(
                 new ArrayLoader(), 'ru'
@@ -62,48 +78,16 @@ abstract class FormRequest extends Request
         );
     }
 
-    /**
-     * @throws \Illuminate\Validation\ValidationException
-     */
+
     public function validated(): array
     {
-        return $this->createValidator()->validated();
+        return $this->createValidator()->validate();
     }
 
-    /**
-     * @throws ValidationException
-     */
-    protected function throwValidationException($validator)
-    {
-        throw new ValidationException($validator);
-    }
-
-    public function all($keys=null): array
-    {
-        // You'll need to implement this based on your request handling
-        // For example, if using $_POST:
-        return ['post' => $_POST, 'files' => $_FILES];
-    }
-
-    public function prepareForValidation(): array
-    {
-        return $this->request->toArray();
-    }
-
-}
-
-class ValidationException extends \Exception
-{
-    protected $validator;
-
-    public function __construct($validator)
-    {
-        $this->validator = $validator;
-        parent::__construct('The given data was invalid.');
-    }
-
-    public function errors()
-    {
-        return $this->validator->errors();
-    }
+//    public function all($keys = null): array
+//    {
+//        // Здесь должна быть реализация получения данных запроса
+//        // Например, можно использовать $_POST, $_GET или php://input
+//        return array_merge($_GET, $_POST, $_FILES);
+//    }
 }

@@ -2,19 +2,13 @@
 
 namespace app\service\AdminSidebar;
 
-use app\service\AuthService\Auth;
-use app\service\AuthService\IUser;
 use app\view\components\Icon\Icon;
 
 class AdminSidebar
 {
-    public function __construct(
-        public IUser $user,
-        public array $sidebar,
-    )
+    public function __invoke(): array
     {
-        $this->user    = Auth::getUser();
-        $this->sidebar = $this->data();
+        return  $this->data();
     }
 
     public function data(): array

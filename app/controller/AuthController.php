@@ -135,6 +135,10 @@ class AuthController extends AppController
     #[NoReturn] public function actionProfile(): void
     {
         $user = Auth::getUser();
+        if (!$user) {
+            response()->redirect('/');
+            exit();
+        }
 
         if ($user->isAdmin() || $user->isEmployee()) {
             $catItem = UserView::employee($user);

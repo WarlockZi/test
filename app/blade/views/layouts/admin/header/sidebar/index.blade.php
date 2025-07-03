@@ -1,12 +1,15 @@
 @php
+    use app\service\AdminSidebar\AdminSidebar;
     use app\service\AuthService\Auth;
-    $user = Auth::getUser()
+    $user = Auth::getUser();
+    $adminSidebar = (new AdminSidebar)();
 @endphp
 <div class="sidebar">
     <div class="wrap">
 
         <ul class="accordion">
-            @foreach ($layout->sidebar->sidebar as $item)
+
+            @foreach ($adminSidebar as $item)
 
                 @if ($item['children'])
 

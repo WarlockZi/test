@@ -3,47 +3,54 @@
 namespace app\formRequest;
 
 use AllowDynamicProperties;
-use HttpResponseException;
-use Illuminate\Validation\Validator;
-use JetBrains\PhpStorm\NoReturn;
 
 
 #[AllowDynamicProperties] class StoreProductMainImageRequest extends FormRequest
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     public function rules(): array
     {
         return [
-            'post.productId' => 'required|string',
-            'files.file' => [
-                'required',
-//                'image',
-                'mimes:jpeg,png,jpg,gif',
-                'max:3000024',
-            ],
+            'post.productId' => 'string',
+            'files.file' => 'max:13|image|mimes:jpeg,png,jpg,gif',
         ];
     }
 
-    public function attributes(): array
+    public function all($keys = null): array
     {
-        return [
-//            'size' => 'user size',
-//            'productId' => 'product_id',
-        ];
+        if (!$keys) {
+            return array_merge($_POST, $_FILES);
+        }
+        $all  = parent::all();
+        $only = [];
+
+        foreach ($keys as $key) {
+            if (in_array($key, $all)) {
+                $only[$key] = $all[$key];
+            }
+        }
+
+//        return[
+//                'post.productId' => $_POST['productId'],
+//                'file' => $_FILES['file'],
+//            ];
     }
+
     public function messages(): array
     {
         return [
-            'file.max' => 'размер файла больше 10',
-            'file.mimes' => 'тип файла не тот',
+            'post.productId.required' => 'отсутствует поле productId',
+            'post.productId.string' => 'поле productId должно быть строкой',
+
+            'files.file.max' => 'размер файла больше 13',
+            'files.file.mimes' => 'тип файла не тот',
+            'files.file.image' => 'кто сказал, что это картинка!...',
         ];
     }
-    #[NoReturn] protected function failedValidation(Validator $validator): void
-    {
-        response()->json([
-            'success' => false,
-            'message' => 'Validation errors',
-            'errors' => $validator->errors()
-        ], 422);
-    }
+
+
 }

@@ -28,6 +28,8 @@ class ProductController extends AdminscController
     #[NoReturn] public function actionSaveMainImage(StoreProductMainImageRequest $request): void
     {
         $validated = $request->validated();
+
+        $e = $request->errors;
         $product = Product::find($validated['post']['productId']);
         $mainImage = $this->actions->saveMainImage($validated['files']['file'], $product);
         response()->json(compact('mainImage'));

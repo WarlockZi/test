@@ -14,6 +14,7 @@ export const formatter = new Intl.NumberFormat("ru", {
 });
 
 export function objAndFiles2FormData(obj, files, formData = new FormData()) {
+  debugger;
   self.formData = formData;
   if (typeof files === "FileList") {
     for (let i = 0; i < files.length; i++) {
@@ -36,6 +37,39 @@ export function objAndFiles2FormData(obj, files, formData = new FormData()) {
   };
   self.createFormData(obj);
   return self.formData;
+}
+
+function addFiles(formData, files) {
+  // eslint-disable-next-line valid-typeof
+  if (typeof files === "FileList") {
+    for (let i = 0; i < files.length; i++) {
+      formData.formData.append(i, files[i]);
+    }
+  } else {
+    formData.append("file", files);
+  }
+  return formData;
+}
+
+function addData(formData, obj, subKeyStr = "") {
+  for (let i in obj) {
+    let value = obj[i];
+    let subKeyStrTrans = subKeyStr ? subKeyStr + "[" + i + "]" : i;
+
+    if (typeof value === "string" || typeof value === "number") {
+      formData.append(subKeyStrTrans, value);
+    } else if (typeof value === "object") {
+      createFormData(value, subKeyStrTrans);
+    }
+  }
+  return formData;
+}
+
+export function newObjAndFiles2FormData(obj, files) {
+  let formData = new FormData();
+  formData = addFiles(formData, files);
+  formData = addData(formData, obj);
+  return formData;
 }
 
 const debounce = (fn, time = 700) => {
@@ -344,20 +378,43 @@ const time = {
   dMs: 60 * 60 * 24 * 1000,
 };
 
-async function del(url, data = {}, headers = {}) {
-  let p = window.location.search;
-  p = p.match(new RegExp(key + "=([^&=]+)"));
-  return p ? p[1] : false;
-}
-
 async function post(url, data = {}, headers = {}) {
-  const init = setPostBodyHeaders(url, data, headers);
+  const body = setBody(data);
+  const header = setHeaders(data, headers);
+  const init = { method: "POST", header, body };
+
   const res = await sendPost(url, init).catch((err) => {
     console.log(err);
   });
   handleResponse(res);
   showMessage(res);
   return res;
+}
+
+function setHeaders(body, headers) {
+  if (body instanceof FormData) {
+    // Заголовок Content-Type НЕ нужно указывать вручную!
+    // Браузер сам установит его с правильным boundary
+    // headers["Content-Type"] = "application/x-www-form-urlencoded";
+    return headers;
+  } else if (isPlainObject(body)) {
+    headers["Content-Type"] = "application/json";
+    headers["X-Requested-With"] = "XMLHttpRequest";
+    return headers;
+  }
+}
+
+function setBody(body) {
+  if (body instanceof FormData) {
+    body.append("phpSession", getPhpSession());
+    return body;
+  }
+  body.phpSession = getPhpSession();
+  return JSON.stringify(body, null, 2);
+}
+
+function damn_ampersand(str) {
+  return str.replaceAll("&", "%26");
 }
 
 function isPlainObject(obj) {
@@ -368,33 +425,8 @@ function isPlainObject(obj) {
   );
 }
 
-function setHeaders(body, headers) {
-  if (body instanceof FormData) {
-    headers["Content-Type"] = "application/x-www-form-urlencoded";
-    return headers;
-  } else if (isPlainObject(body)) {
-    headers["Content-Type"] = "application/json";
-    headers["X-Requested-With"] = "XMLHttpRequest";
-    return headers;
-  }
-}
-
-function setPostBodyHeaders(url, body, headers) {
-  body.phpSession = getPhpSession();
-  headers = setHeaders(body, headers);
-
-  return {
-    method: "POST",
-    headers,
-    body: JSON.stringify(body, null, 2),
-  };
-}
-
-function damn_ampersand(str) {
-  return str.replaceAll("&", "%26");
-}
-
 function sendPost(url, init) {
+  // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
     const res = await fetch(url, init)
       .then(async (res) => {
