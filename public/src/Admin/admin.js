@@ -12,7 +12,6 @@ import "./sync1c/sync1c.js";
 import "./Planning/planning.js";
 import "./Settings/settings.js";
 import "./Videoinstructions/videoinstructions.js";
-import "./ProductFilter/ProductFilter";
 import "./Category/Category.js";
 
 import AdminHeader from "../components/header/header-adm.js";
@@ -26,7 +25,6 @@ import Users from "@src/Admin/User/users.js";
 import User from "@src/Admin/User/user.js";
 import AdminSidebar from "@src/Admin/components/AdminSidebar/AdminSidebar.js";
 import Cache from "./cache/Cache.js";
-// import ProductFilter from "../Admin/ProductFilter/ProductFilter.js";
 // import Promotion from "@src/Promotions/Promotion.js";
 
 $(document).ready(async function () {
@@ -60,7 +58,7 @@ $(document).ready(async function () {
     const { default: MyChart } = await import("./chartjs/chartjs.js");
   } else if (window.location.pathname === "/adminsc/report/filter") {
     const { default: ProductFilter } = await import(
-      "./ProductFilter/productFilter.js"
+      "./ProductFilter/ProductFilter.js"
     );
     new ProductFilter($(".products-filter").first());
   }
