@@ -10,7 +10,7 @@ export default defineConfig(async ({command, mode}) => {
 
       const base = env.VITE_DEV
          ? './'
-         : './public/build/';
+         : '/public/build/';// nb no dot before slash for production
 
       return {
          root: 'public/src',
