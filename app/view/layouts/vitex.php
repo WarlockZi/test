@@ -77,5 +77,8 @@ use app\core\Icon;
 </div>
 <button id="fixed-call-me" class="fixed call-me" title="Заказать обратный звонок"><?= Icon::phone(); ?></button>
 <button id="hoist" class="fixed hoist" title="Наверх"><?= Icon::scrollUp1(); ?></button>
+
+<script src="/public/d-goals.js"></script>
+
 </body>
 </html>

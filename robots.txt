@@ -20,5 +20,12 @@ Disallow: /404
 
 Disallow: /?*
 
+Disallow: /admin
+Disallow: /like
+Disallow: /offer
+Disallow: /manager
+Disallow: /compare
+Disallow: /auth
+
 Sitemap: https://vitexopt.ru/sitemap.xml
 

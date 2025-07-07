@@ -1,3 +1,156 @@
+
+.blog-list li a{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: #000;
+    margin-bottom: 20px;
+}
+.blog-list li a img{
+    width: 120px;
+}
+
+.review-item{
+    margin-bottom: 30px;
+}
+.review-name{
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.faq-name {
+  cursor: pointer;
+  font-weight: bold;
+  position: relative;
+  padding-right: 20px;
+}
+
+.faq-name::after {
+  content: "▼";
+  position: absolute;
+  right: 0;
+  transition: transform 0.3s ease;
+}
+
+.faq-item.active .faq-name::after {
+  transform: rotate(180deg); /* Повернуть стрелку вверх */
+}
+
+.faq-text {
+  display: none;
+  margin-top: 15px;
+  padding-left: 10px;
+}
+
+.faq-item.active .faq-text {
+  display: block;
+}
+
+.faq-item{
+    margin-bottom: 20px;
+}
+
+.show-feedback{
+    display: none;
+}
+
+.burger .utils .mob-burger{
+    display: block;
+}
+
+.burger .utils .mob-burger .nav-level-1>li:first-child{
+    display: none;
+}
+
+.burger .utils .mob-burger .nav-drill {
+    flex-direction: column;
+}
+
+.burger .utils .mob-menu-contacts {
+    margin-top: 50px;
+    padding-left: 15px;
+}
+
+.burger .utils .mob-burger .nav-items {
+    flex: unset;
+}
+
+.burger .utils .mob-menu-contacts a {
+    color: #4e4e4e;
+    display: block;
+    font-size: 15px;
+    margin-bottom: 10px
+}
+
+.burger .utils .mob-burger .mob-menu-contacts .call-me {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #1a72b8;
+    border-radius: 3px;
+    color: #fff;
+    cursor: pointer;
+    box-sizing: border-box;
+    border: 1px solid #1a72b8;
+    transition: background .3s, color .3s;
+    user-select: none;
+    padding: 10px 15px;
+    font-size: clamp(.875rem, 5vw, 1rem);
+    line-height: 1rem
+}
+
+@media (max-width: 767px) {
+    .show-feedback{
+        display: block;
+        color: #fff;
+        text-align: center;
+        padding: 7px;
+    }
+    .feedback-form{
+        display: none;
+    }
+    .footer .menu .column{
+        order: 1;
+    }
+    .footer .menu .column.feedback{
+        order: 0;
+    }
+}
+
+@media (max-width: 450px) {
+    .burger .info .phone {
+        display: none;
+    }
+}
+    .block_work {
+        display: flex;
+    }
+
+    .block1 {
+        margin-right: 10px;
+        width: 20%;
+    }
+
+    .img_main {
+        width: 150px;
+        text-align: center;
+    }
+
+    .strelka {
+        width: 50px;
+        height: 50px;
+    }
+@media(max-width: 768px) {
+    .strelka {
+        display: none;
+    }
+    .block_work {
+        flex-wrap: wrap;
+    }
+    .block1 {
+        width: 100%;
+    }
+}
 .brands{
     display: flex;
     flex-flow: column;
@@ -44,4 +197,5 @@
 	.brands__wrap>a{
 		width: calc(50% - 15px);
 	}
+
 }

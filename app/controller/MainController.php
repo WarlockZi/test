@@ -123,5 +123,19 @@ class MainController extends AppController
     {
     }
 
+    public function actionOtzyvy()
+    {
+        $this->assets->setMeta('Отзывы',
+            'Отзывы' . $this->titleTail,
+            'Отзывы');
+    }
+
+    public function actionFaq()
+    {
+        $this->assets->setMeta('FAQ',
+            'FAQ' . $this->titleTail,
+            'FAQ');
+    }
+
 
 }
