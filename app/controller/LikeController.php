@@ -4,9 +4,9 @@
 namespace app\controller;
 
 
-use app\core\Response;
 use app\model\Like;
-use app\Repository\LikeRepository;
+use app\repository\LikeRepository;
+use app\service\Response;
 use app\view\Like\LikeView;
 
 class LikeController extends AppController
@@ -22,25 +22,25 @@ class LikeController extends AppController
     {
         $likes   = LikeRepository::all();
         $content = LikeView::all($likes);
-        $this->setVars(compact('content'));
+        Response::view('pages.likes', compact('content'));
     }
 
     public function actionDel(): void
     {
         $req = $this->ajax;
         if (LikeRepository::del($req)) {
-            Response::json(['id' => $req['id']]);
+            response()->json(['id' => $req['id']]);
         }
-        Response::json(['disliked' => false]);
+        response()->json(['disliked' => false]);
     }
 
     public function actionUpdateOrCreate(): void
     {
         $req = $this->ajax;
         if (LikeRepository::updateOrCreate($req)) {
-            Response::json(['liked' => true]);
+            response()->json(['liked' => true]);
         }
-        Response::json(['liked' => false]);
+        response()->json(['liked' => false]);
     }
 
 }

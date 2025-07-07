@@ -1,4 +1,4 @@
-import "./ProductFilter.css";
+import "./ProductFilter.scss";
 import { ael, qa, qs } from "@src/constants.js";
 import { $, post } from "@src/common.js";
 import SelectNew from "@src/components/select/SelectNew.js";
@@ -10,12 +10,14 @@ export default class ProductFilter {
     this.panel = productsFilter[qs](".list-filter");
     this.url = "/adminsc/report/updateFilter";
     this.wrap[ael]("click", this.handleClick.bind(this));
+    this.checkboxes = Array.from(this.panel[qa](`[type='checkbox']`));
+    this.selects = Array.from(this.wrap[qa](`[select-new]`));
+
     this.setSelects();
   }
 
   setSelects() {
-    const selects = this.wrap[qa](`[select-new]`);
-    [].map.call(selects, (select) => {
+    [].map.call(this.selects, (select) => {
       new SelectNew(select);
     });
   }
@@ -33,16 +35,17 @@ export default class ProductFilter {
   getClickedFilters() {
     const req = {};
 
-    const selected = this.wrap[qa](`[select-new]`);
-    [].map.call(selected, (select) => {
-      req[select.getAttribute("name")] = select.dataset.value;
-      return null;
-    });
+    req.toSelect = this.selects
+      .filter((select) => select.dataset.value !== "0")
+      .reduce((obj, select) => {
+        obj[select.getAttribute("name")] = select.dataset.value;
+        return obj;
+      }, {});
 
-    const checked = this.panel[qa](`[type='checkbox']:checked`);
-    [].forEach.call(checked, (check) => {
-      req[check.name] = "on";
-    });
+    req.toSave = this.checkboxes
+      .filter((check) => check.checked === true)
+      .map((check) => check.name);
+
     return req;
   }
 

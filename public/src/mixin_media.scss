@@ -420,6 +420,7 @@
         justify-content: end;
         width: 68px;
         font-size: .8em;
+
       }
     }
 
@@ -433,6 +434,30 @@
         width: 70px;
         height: 1px;
         background-color: var.$color-main-green;
+      }
+    }
+  }
+}
+
+@mixin category-card {
+
+  .category-card {
+    position: relative;
+    font-size: 0.8rem;
+
+    .category-card-a {
+      color: var.$color-gray10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100px;
+      width: 142px;
+      padding: 10px;
+      border: 1px solid #ccc;
+
+      &:hover {
+        border: 1px solid var.$color-main;
       }
     }
   }
@@ -480,9 +505,10 @@
     }
 
     img {
-      width: 100px;
+      max-height: 100%;
       object-fit: contain;
       grid-area: img;
+      justify-self: center;
     }
 
     .cell {
@@ -523,9 +549,13 @@
 
     .sum {
       @include cartRowGrey;
-      align-items: center;
-      justify-content: end;
+      flex-direction: column;
+      align-items: end;
       grid-area: sum;
+
+      .row-sum{
+        min-height: 18px;
+      }
     }
 
     .del {
@@ -641,6 +671,7 @@
         font-size: clamp(.7rem, 4vw, 1rem);
         font-weight: initial;
         padding: 10px;
+        word-wrap: break-word;
       }
 
       .footer {
@@ -1045,12 +1076,7 @@ $border-color:var.$color-main
 
 }
 
-@mixin h1 {
-  font-size: clamp(1rem, 5vw, 2rem);
-  font-weight: 600;
-  color: var.$color-grey-logo;
-  margin: 0 0 clamp(15px, 5vw, 25px);
-}
+
 
 @mixin modal-close {
   position: absolute;
@@ -1078,6 +1104,13 @@ $border-color:var.$color-main
   &:hover {
     transform: rotate(180deg);
   }
+}
+
+@mixin h1 {
+  font-size: clamp(1rem, 5vw, 2rem);
+  font-weight: 600;
+  color: var.$color-grey-logo;
+  margin: 0 0 clamp(15px, 5vw, 25px);
 }
 
 @mixin h2 {

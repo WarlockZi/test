@@ -1,8 +1,7 @@
 <?php
 
-use app\core\Auth;
-use app\core\Icon;
-use app\Services\AdminSidebar\AdminSidebar;
+use app\service\AdminSidebar\AdminSidebar;
+use app\service\AuthService\Auth;
 
 ?>
 

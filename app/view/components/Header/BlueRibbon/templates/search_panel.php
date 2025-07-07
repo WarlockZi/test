@@ -1,6 +1,6 @@
 <?php
 
-use app\core\Icon;
+use app\view\components\Icon\Icon;
 
 ?>
 <aside class="search-panel">

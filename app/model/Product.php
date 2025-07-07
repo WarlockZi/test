@@ -3,14 +3,16 @@
 namespace app\model;
 
 
-use app\core\Auth;
-use app\Services\ProductImageService;
+use app\service\AuthService\Auth;
+use app\service\Image\ProductImageService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 
 class Product extends Model
@@ -56,29 +58,24 @@ class Product extends Model
         );
     }
 
-    public function orderProduct()
+    public function orderProduct(): hasOne
     {
-        $oI = $this->hasOne(
+        return $this->hasOne(
             OrderProduct::class,
             'product_id',
             '1s_id',
         );
-        return $oI;
     }
 
-    public function order(): HasOne|null
+    public function order(): HasOne
     {
         list($field, $value) = Auth::getCartFieldValue();
         $order = Order::where($field, $value)->first();
 
-        return !empty($order)
-
-            ? $this->hasOne(OrderProduct::class,
-                'product_id',
-                '1s_id',
-            )->where('order_id', $order->id)
-
-            : null;
+        return $this->hasOne(OrderProduct::class,
+            'product_id',
+            '1s_id',
+        )->where('order_id', $order->id);
     }
 
     public function orders()
@@ -158,22 +155,25 @@ class Product extends Model
         return parent::castAttribute($key, $value);
     }
 
-    protected function getMainImagePathAttribute()
+    protected function getMainImagePathAttribute(): string
     {
-        return (new ProductImageService())->getImageRelativePath($this);
+        $pis = APP->get(ProductImageService::class);
+        return $pis->getImageRelativePath($this);
     }
 
-    public function getMainImageAttribute()
+    public function getMainImageAttribute(): string
     {
-        return (new ProductImageService())->getImageRelativePath($this);
+        $pis = APP->get(ProductImageService::class);
+        return $pis->getImageRelativePath($this);
+
     }
 
-    public function getPriceAttribute()
+    public function getPriceAttribute(): ?float
     {
-        return $this->priceRelation()->first()->price ?? null;
+        return (float)$this->priceRelation()->first()->price ?? null;
     }
 
-    public function getFormattedPriceAttribute()
+    public function getFormattedPriceAttribute(): string
     {
         return number_format($this->price, 2, '.', ' ');
     }
@@ -183,36 +183,30 @@ class Product extends Model
         return $this->hasOne(Price::class, '1s_id', '1s_id');
     }
 
-    protected function getUnitsTableAttribute()
+    protected function getUnitsTableAttribute(): array
     {
-        $arr      = [];
-        $units    = $this->units;
-        $baseUnit = $this->baseUnit->name;
-        foreach ($units as $unit) {
-            $price                        = number_format((float)$this->price, 2, '.', ' ');
-            $formatted_sum                = number_format((float)$this->price * $unit->pivot->multiplier, 2, '.', ' ');
-            $pivot                        = $unit->pivot;
-            $sid                          = $pivot->product_1s_id;
-            $arr[$sid]['price']           = (float)$this->price;
-            $arr[$sid]['currency']        = '₽';
-            $arr[$sid]['1s_id']           = $sid;
-            $arr[$sid]['name']            = $unit->name;
-            $arr[$sid]['base_unit_name']  = $baseUnit;
-            $arr[$sid]['multiplier']      = $unit->pivot->multiplier;
-            $arr[$sid]['formatted_price'] = $price;
-            $arr[$sid]['formatted_sum']   = $formatted_sum;
+        $arr = [];
+        foreach ($this->units as $unit) {
+            $id                          = $unit->id;
+            $arr[$id]['currency']        = '₽';
+            $arr[$id]['product_1s_id']   = $unit->pivot->product_1s_id;
+            $arr[$id]['multiplier']      = $unit->pivot->multiplier;
+            $arr[$id]['unit_name']       = $unit->name;
+            $arr[$id]['base_unit_name']  = $this->baseUnit->name;
+            $arr[$id]['unit_price']      = (float)number_format((float)$this->price * $unit->pivot->multiplier, 2, '.', ' ');
+            $arr[$id]['base_unit_price'] = (float)number_format((float)$this->price, 2, '.', ' ');
         }
         return $arr;
     }
 
-    protected function getBaseUnitPriceAttribute()
+    protected function getBaseUnitPriceAttribute(): string
     {
         $baseUnit = $this->baseUnit;
         $price    = number_format((float)$this->price, 2, '.', ' ');
         return "{$price} ₽ / {$baseUnit?->name}";
     }
 
-    protected function priceWithCurrncyUnitPromotion(float $number, string $currency, string $oldPrice)
+    protected function priceWithCurrncyUnitPromotion(float $number, string $currency, string $oldPrice): string
     {
         $promos = $this->promotions;
         $str    = '';
@@ -251,62 +245,57 @@ class Product extends Model
         return $this->baseUnitRelation->first();
     }
 
-    public function baseUnitRelation()
+    public function baseUnitRelation(): BelongsToMany
     {
         return $this->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
-            ->withPivot('is_shippable', 'base_is_shippable')
+            ->withPivot('is_shippable', 'is_base')
             ->wherePivot('is_base', '1');
     }
 
-    public function shippableUnits()
+    public function shippableUnits(): BelongsToMany
     {
         return $this
             ->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
-            ->withPivot('multiplier', 'is_base', 'is_shippable', 'base_is_shippable')
-            ->wherePivot('is_shippable', '=', '1');
+            ->withPivot('multiplier', 'is_base', 'is_shippable')
+            ->wherePivot('is_shippable', '=', '1')
+            ->orderByPivot('multiplier');
     }
 
-    public function units(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function units(): BelongsToMany
     {
         return $this
             ->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
             ->withPivot('id', 'multiplier', 'is_base', 'is_shippable')->orderByPivot('multiplier');
     }
 
-    public function values()
+    public function values(): MorphToMany
     {
         return $this->morphToMany(Val::class, 'valuable');
     }
 
-    public function promotions()
+    public function promotions(): HasMany
     {
         return $this
             ->hasMany(Promotion::class, 'product_1s_id', '1s_id');
     }
 
-    public function activePromotions()
+    public function activePromotions(): HasMany
     {
         return $this
             ->hasMany(Promotion::class, 'product_1s_id', '1s_id')
             ->where('active_till', '>=', Carbon::today()->toDateString());
     }
 
-    public function inactivePromotions()
+    public function inactivePromotions(): HasMany
     {
         return $this
             ->hasMany(Promotion::class, 'product_1s_id', '1s_id')
             ->where('active_till', '<', Carbon::today()->toDateString());
     }
 
-    public function manufacturer()
+    public function manufacturer(): BelongsTo
     {
         return $this->belongsTo(Manufacturer::class, 'manufacturer_id');
-    }
-
-
-    public function categoryCategoryRecPropsVals()
-    {
-        return $this->belongsTo(Category::class)->with('parentRecursive.properties.vals');
     }
 
     public function category(): BelongsTo
@@ -317,49 +306,24 @@ class Product extends Model
         );
     }
 
-    public function categories()
+    public function categories(): BelongsTo
     {
         return $this->belongsTo(Category::class)->with('category_rec');
     }
 
-    public function parentCategoryRecursive()
+    public function parentCategoryRecursive(): BelongsTo
     {
         return $this->category()->with('parentRecursive');
     }
 
 
-    public function detailImages()
-    {
-        return $this->morphToMany(
-            Image::class,
-            'imageable',
-        )->where('slug', '=', 'detail');
-    }
-
-    public function mainImages()
-    {
-        return $this->morphToMany(
-            Image::class,
-            'imageable',
-        )->where('slug', '=', 'main');
-    }
-
-    public function smallpackImages()
-    {
-        return $this->morphToMany(
-            Image::class,
-            'imageable',
-        )->where('slug', 'smallpack');
-    }
-
-    public function bigPackImages()
-    {
-        return $this->morphToMany(
-            Image::class,
-            'imageable',
-        )->where('slug', 'bigpack');
-    }
-
+//    public function mainImages(): MorphToMany
+//    {
+//        return $this->morphToMany(
+//            Image::class,
+//            'imageable',
+//        )->where('slug', '=', 'main');
+//    }
 
 }
 

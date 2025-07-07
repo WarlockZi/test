@@ -9,11 +9,11 @@ export class Sync {
 
   async handleClick({ target }) {
     if (target.classList.contains("button")) {
-      let res = await post(`/adminsc/sync/${target.id}`);
-      if (res?.arr?.success) {
-        this.$log_content.innerText = res.arr?.content;
+      const res = await post(`/adminsc/sync/${target.id}`);
+
+      if (res?.success) {
+        this.$log_content.innerText = res.content;
       }
-    } else {
     }
   }
 }

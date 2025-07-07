@@ -2,11 +2,9 @@
 
 namespace app\controller\Admin;
 
-use app\core\Auth;
-use app\core\FS;
-use app\core\Mail\PHPMail;
-use app\core\Response;
 use app\model\TestResult;
+use app\service\AuthService\Auth;
+use app\service\Response;
 use PHPMailer\PHPMailer\PHPMailer;
 
 class TestresultController extends AdminscController

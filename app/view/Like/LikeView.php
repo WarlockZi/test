@@ -33,7 +33,5 @@ class LikeView
             )
             ->del()
             ->get();
-
     }
-
 }

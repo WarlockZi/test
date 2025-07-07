@@ -2,10 +2,9 @@
 
 namespace app\view\Test;
 
-use app\core\FS;
-use app\core\Icon;
 use app\model\Test;
-use app\Repository\TestRepository;
+use app\repository\TestRepository;
+use app\service\FS;
 use app\view\Accordion\AccordionBuilder;
 use app\view\Accordion\AccordionView;
 use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
@@ -13,6 +12,7 @@ use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
+use app\view\components\Icon\Icon;
 use Illuminate\Database\Eloquent\Collection;
 
 
@@ -27,7 +27,7 @@ class TestEditView
 
     public function __construct()
     {
-        $this->fs = new FS(__DIR__);
+        $this->fs = new FS();
 
         $this->accordion = AccordionView::testDo();
     }

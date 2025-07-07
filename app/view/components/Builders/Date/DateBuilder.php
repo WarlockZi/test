@@ -4,7 +4,7 @@
 namespace app\view\components\Builders\Date;
 
 
-use app\core\FS;
+use app\service\FS;
 
 //use app\view\components\Builders\Builder;
 
@@ -26,7 +26,6 @@ class DateBuilder
     public static function build(string|null $date): DateBuilder
     {
         $self     = new self();
-        $self->fs = new FS(__DIR__);
 
         $value       = date('Y-m-d', strtotime($date ?? ''));
         $self->value = "value='{$value}'";

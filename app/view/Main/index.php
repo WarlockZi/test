@@ -1,6 +1,6 @@
 <?php
 
-use app\core\Icon;
+use app\view\components\Icon\Icon;
 
 ?>
 <a href="/catalog/perchatki_medicinskie" class="banner gloves">

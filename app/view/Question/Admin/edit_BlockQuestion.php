@@ -1,6 +1,6 @@
 <?php
 
-use app\core\Icon;
+use app\view\components\Icon\Icon;
 
 ?>
 <div class="question-edit" data-id="<?= $question['id'] ?>">
@@ -30,7 +30,7 @@ use app\core\Icon;
         <div class="question__answers">
             <? if (isset($question->answers)): ?>
                 <? foreach ($question->answers as $i => $a): ?>
-                    <? \app\Repository\AnswerRepository::getAnswer($i, $a); ?>
+                    <? \app\repository\AnswerRepository::getAnswer($i, $a); ?>
                 <? endforeach; ?>
             <? endif; ?>
 

@@ -11,7 +11,7 @@
     <div class="list">
         <? foreach ($test['children'] as $child): ?>
             <div class="path-child__row">
-                <?= \app\core\Icon::path(); ?>
+                <?= \app\view\components\Icon\Icon::path(); ?>
                 <div><?= $child['name'] ?></div>
             </div>
         <? endforeach; ?>

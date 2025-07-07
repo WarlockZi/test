@@ -2,9 +2,8 @@
 
 namespace app\controller\Admin;
 
-use app\controller\AppController;
 use app\model\Country;
-use app\view\Country\CountryView;
+use JetBrains\PhpStorm\NoReturn;
 
 class CountryController extends AdminscController
 {
@@ -15,11 +14,8 @@ class CountryController extends AdminscController
         parent::__construct();
     }
 
-    public function actionIndex(): void
+    #[NoReturn] public function actionIndex(): void
     {
-
-        $countries = CountryView::list($this->model);
-        $this->setVars(compact('countries'));
+        $this->showTable();
     }
-
 }

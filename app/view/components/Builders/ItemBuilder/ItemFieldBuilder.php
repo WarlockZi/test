@@ -4,6 +4,7 @@
 namespace app\view\components\Builders\ItemBuilder;
 
 
+use app\blade\views\admin\product\DndBuilder;
 use Illuminate\Database\Eloquent\Model;
 
 class ItemFieldBuilder
@@ -16,6 +17,8 @@ class ItemFieldBuilder
     public string $id;
 
     public string $html;
+    public DndBuilder $dnd;
+
 //    public string $dataModel;
     public string $link;
 
@@ -56,7 +59,11 @@ class ItemFieldBuilder
         $this->link = $link;
         return $this;
     }
-
+    public function dnd(DndBuilder $dnd): static
+    {
+        $this->dnd = $dnd;
+        return $this;
+    }
     public function relation(string $relation): static
     {
         $this->relation = $relation;

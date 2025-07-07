@@ -2,10 +2,11 @@
 
 namespace app\controller\Admin;
 
-use app\core\Auth;
-use app\core\Response;
+use app\action\admin\UserAction;
 use app\model\User;
-use app\Repository\UserRepository;
+use app\repository\UserRepository;
+use app\service\AuthService\Auth;
+use app\service\Response;
 use app\view\User\UserView;
 use Throwable;
 
@@ -13,7 +14,8 @@ use Throwable;
 class UserController extends AdminscController
 {
     public function __construct(
-        public UserRepository $repo = new UserRepository,
+        public UserAction $actions,
+        public UserRepository $repo,
         public string         $model = User::class,
     )
     {
@@ -22,8 +24,7 @@ class UserController extends AdminscController
 
     public function actionIndex(): void
     {
-        $content = UserView::listAll();
-        $this->setVars(compact('content'));
+        $this->showTable();
     }
 
 
@@ -46,9 +47,9 @@ class UserController extends AdminscController
     {
         if ($data = $this->ajax) {
             if (!Auth::getUser()->can(['user_delete']))
-                Response::json(['popup' => 'Не хватает прав']);
+                response()->json(['popup' => 'Не хватает прав']);
             User::find($data['id'])->delete();
-            Response::json(['popup' => 'Удален']);
+            response()->json(['popup' => 'Удален']);
         }
     }
 

@@ -3,14 +3,12 @@
 namespace app\controller\Admin;
 
 
-use app\core\Auth;
-use app\core\Response;
 use app\model\Lead;
 use app\model\Order;
 use app\model\OrderItem;
-use app\Repository\OrderitemRepository;
+use app\repository\OrderitemRepository;
+use app\service\Response;
 use app\view\Order\OrderView;
-use Carbon\Carbon;
 
 
 class OrderitemController extends AdminscController
@@ -37,7 +35,7 @@ class OrderitemController extends AdminscController
                 $orderItem->order()->associate($order);
                 $orderItem->save();
             }
-            Response::json(['ok']);
+            response()->json(['ok']);
         }
     }
 
@@ -46,11 +44,11 @@ class OrderitemController extends AdminscController
         $product_id = $this->ajax['product_id'];
         $sess       = $this->ajax['sess'];
 
-        if (!$product_id) Response::json(['msg' => 'No id']);
+        if (!$product_id) response()->json(['msg' => 'No id']);
         $trashed = $this->repo->deleteItem($sess, $product_id, $unit_ids);
 
         if ($trashed) {
-            Response::json(['ok' => true, 'popup' => 'Удален']);
+            response()->json(['ok' => true, 'popup' => 'Удален']);
         }
         Response::exitWithPopup('Не удален');
 

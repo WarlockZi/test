@@ -2,11 +2,9 @@
 
 namespace app\controller\Admin;
 
-use app\controller\AppController;
-use app\core\Response;
-use app\core\Route;
-use app\core\Router;
 use app\model\Opentest;
+use app\service\Response;
+use app\service\Router\Router;
 
 
 class OpenquestionController extends AdminscController

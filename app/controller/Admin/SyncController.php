@@ -2,21 +2,22 @@
 
 namespace app\controller\Admin;
 
-use app\core\Auth;
-use app\core\Response;
 use app\model\User;
-use app\Services\Logger\FileLogger;
-use app\Services\Sync\SyncService;
-use app\Services\Sync\TrancateService;
+use app\service\AuthService\Auth;
+use app\service\Logger\FileLogger;
+use app\service\Response;
+use app\service\Router\IRequest;
+use app\service\Sync\SyncService;
+use app\service\Sync\TrancateService;
 use Illuminate\Support\Carbon;
-use Throwable;
+use JetBrains\PhpStorm\NoReturn;
 
 class SyncController extends AdminscController
 {
     public function __construct(
-        protected SyncService     $service = new SyncService(),
-        protected TrancateService $trancateService = new TrancateService(),
-        protected FileLogger      $logger = new FileLogger('import.txt'),
+        protected SyncService     $service,
+        protected TrancateService $trancateService,
+        protected FileLogger      $logger,
     )
     {
         Auth::setUser(User::where('email', 'vvoronik@yandex.ru')->first());
@@ -85,40 +86,35 @@ class SyncController extends AdminscController
 
     public function actionLoadPrices(): void
     {
-        try {
-            $this->service->LoadPrices();
-        } catch (Throwable $exception) {
-            $exc = $exception;
-            exit($exc);
-        }
+        $this->service->LoadPrices();
+
         if (DEV) {
             Response::exitWithPopup('Prices, units,  loaded');
         }
-
     }
 
 
 ///// web
-    public function actionIndex(): void//init
+    #[NoReturn] public function actionIndex(): void
     {
-        $tree = [];
-        $this->setVars(compact('tree'));
+        view('admin.sync.sync');
     }
 
-    public function actionLogshow(): void
+    public function actionLogshow(IRequest $request): void
     {
-        if (isset($_POST['param'])) {
-            Response::json([
-                'success' => true,
-                'content' => 'Log' . PHP_EOL . $this->logger->read()
-            ]);
-        }
+        $read    = $this->logger->read();
+        $content = $read ? "Log {PHP_EOL} $read" : "Лог пустой";
+        response()->json([
+            'success' => true,
+            'content' => $content,
+        ]);
+
     }
 
     public function actionLogclear(): void
     {
         $this->logger->clear();
-        Response::json(['success' => 'success', 'content' => 'Log' . PHP_EOL . $this->logger->read()]);
+        response()->json(['success' => 'success', 'content' => 'Log' . PHP_EOL . $this->logger->read()]);
     }
 
 }

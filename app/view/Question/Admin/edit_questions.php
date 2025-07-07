@@ -1,7 +1,7 @@
 <?
 
-use app\Repository\AnswerRepository;
-use app\Repository\QuestionRepository;
+use app\repository\AnswerRepository;
+use app\repository\QuestionRepository;
 use app\view\Question\QuestionView;
 
 

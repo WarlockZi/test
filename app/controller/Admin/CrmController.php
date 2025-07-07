@@ -2,11 +2,7 @@
 
 namespace app\controller\Admin;
 
-use app\controller\AppController;
-use app\core\App;
-use app\core\Auth;
-use app\model\User;
-use app\view\View;
+use app\service\AuthService\Auth;
 
 
 class CrmController extends AdminscController
@@ -21,18 +17,12 @@ class CrmController extends AdminscController
         }
     }
 
-    public function actionClearCache(): void
-    {
-        $path = ROOT . "/tmp/cache/*.txt";
-        array_map("unlink", glob($path));
-        exit('Успешно');
-    }
-
-    public function actionProdtypes()
-    {
-        $types = App::$app->adminsc->getProd_types();
-        $this->setVars(compact('types'));
-    }
+//    public function actionClearCache(): void
+//    {
+//        $path = ROOT . "/tmp/cache/*.txt";
+//        array_map("unlink", glob($path));
+//        exit('Успешно');
+//    }
 
     public function actionSiteMap(): void
     {
@@ -54,13 +44,7 @@ class CrmController extends AdminscController
     {
     }
 
-    public function actionPics(): void
-    {
-        $pics = App::$app->adminsc->findAll('Pic');
-        $this->setVars(compact('pics'));
-    }
-
-    public function actionDumpWWW()
+      public function actionDumpWWW()
     {
 
     }

@@ -16,7 +16,6 @@ class ProductUnit extends Pivot
         'multiplier',
         'is_base',
         'is_shippable',
-        'base_is_shippable',
     ];
     protected $table = 'product_unit';
 

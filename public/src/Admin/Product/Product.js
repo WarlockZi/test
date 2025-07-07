@@ -1,6 +1,11 @@
 import "./product.scss";
 import "./units.scss";
-import { $, objAndFiles2FormData, post } from "../../common.js";
+import {
+  $,
+  newObjAndFiles2FormData,
+  objAndFiles2FormData,
+  post,
+} from "../../common.js";
 import "./Props.js";
 import { qs } from "../../constants";
 import SelectNew from "@src/components/select/SelectNew.js";
@@ -36,7 +41,7 @@ export default class Product {
     const dragNdrop = document[qs]("[dnd]");
     if (dragNdrop) {
       const { default: Dnd } = await import("../../components/dnd/dnd");
-      const dnd = await new Dnd(dragNdrop, this.addMainImage);
+      await new Dnd(dragNdrop, this.addMainImage);
     }
   }
 
@@ -62,10 +67,11 @@ export default class Product {
 
   async addMainImage(files, target) {
     const obj = { productId: target.closest(".item-wrap").dataset.id };
-    const data = objAndFiles2FormData(obj, files[0]);
+    const data = newObjAndFiles2FormData(obj, files[0]);
 
     const res = await post("/adminsc/product/saveMainImage", data);
-    const src = res?.arr[0];
+    // debugger;
+    const src = res?.mainImage;
     if (src) {
       const mainImage = target.closest(".dnd-container").querySelector("img");
       mainImage.removeAttribute("src");

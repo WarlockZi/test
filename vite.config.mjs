@@ -3,7 +3,6 @@ import liveReload from 'vite-plugin-live-reload';
 import mkcert from 'vite-plugin-mkcert';
 import path from 'node:path';
 import {NodePackageImporter} from 'sass-embedded';
-import { fileURLToPath } from 'url';
 
 export default defineConfig(async ({command, mode}) => {
       const env = loadEnv(mode, process.cwd());
@@ -11,7 +10,7 @@ export default defineConfig(async ({command, mode}) => {
 
       const base = env.VITE_DEV
          ? './'
-         : './public/build/';
+         : '/public/build/';// nb no dot before slash for production
 
       return {
          root: 'public/src',
@@ -24,6 +23,10 @@ export default defineConfig(async ({command, mode}) => {
             port: env.VITE_PORT,
          },
 
+         optimizeDeps: {
+            include: ['xss'] // Для лучшей производительности
+         },
+
          build: {
             outDir: '../build',
             emptyOutDir: true,
@@ -33,6 +36,28 @@ export default defineConfig(async ({command, mode}) => {
             analyze: true,
 
             rollupOptions: {
+               output: {
+                  manualChunks: {
+                     chartjs: ['chart.js'],
+                     quill: ['quill'],
+                     lodashes: ['lodash-es'],
+                  },
+               },
+
+               external: [
+                  '/storage/app/svg/search.svg',
+                  '/storage/app/svg/yandex.svg',
+                  '/storage/app/svg/arrowUp.svg',
+                  '/storage/app/svg/view.svg',
+                  '/storage/app/svg/no-view.svg',
+                  '/storage/app/svg/upDown.svg',
+                  '/storage/app/srvc/main/header-big.png',
+                  '/storage/app/srvc/404_bg_pages.webp',
+                  '/storage/app/srvc/full-logo.jpg',
+                  '/storage/app/srvc/main/site-gloves.jpg',
+                  '/storage/app/srvc/main/site-bootcover-824.jpg',
+                  '/storage/app/srvc/main/site-syringe-gradientt.jpg',
+               ],
                input: {
                   auth: path.resolve(__dirname, 'public/src/Auth/auth.js'),
                   admin: path.resolve(__dirname, 'public/src/Admin/admin.js'),
@@ -48,6 +73,7 @@ export default defineConfig(async ({command, mode}) => {
                __dirname + '/app/**/*.php',
                __dirname + '/.env',
             ]),
+
          ],
 
 
@@ -63,23 +89,12 @@ export default defineConfig(async ({command, mode}) => {
 
          resolve: {
             alias:
-            //    [
-            //       { find: '@src', replacement: fileURLToPath(new URL('./public/src', import.meta.url)) },
-            //       { find: '@components', replacement: fileURLToPath(new URL('./public/src/components', import.meta.url)) },
-            // //    {
-            // //       find:'@src',
-            // //       // replace:path.resolve(__dirname, 'public','src'),
-            // //       replace:fileURLToPath(new URL( path.resolve(__dirname,'public/src', import.meta.url))),
-            // //    },
-            // //    {
-            // //       find:'@components',
-            // //       replace:fileURLToPath(new URL(  path.resolve(__dirname,'public/src/components', import.meta.url))),
-            // //    },
-            // ],
                {
+                  path: 'path-browserify', // for path externalized error fix
                   '@src': `${path.resolve(__dirname, 'public', 'src')}`,
-                  '@components': `${path.resolve(__dirname, 'public', 'src', 'components')}`,
+                  '@components': path.resolve(__dirname, 'public', 'src', 'components'),
                   '@srvc': path.resolve(__dirname, 'storage', 'app', 'srvc'),
+                  '@svg': path.resolve(__dirname, 'storage', 'app', 'svg'),
                },
          },
 

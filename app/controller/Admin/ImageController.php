@@ -2,10 +2,9 @@
 
 namespace app\controller\Admin;
 
-use app\controller\AppController;
-use app\core\Response;
 use app\model\Image;
-use app\Repository\ImageRepository;
+use app\repository\ImageRepository;
+use app\service\Response;
 use app\view\Image\ImageView;
 
 class ImageController extends AdminscController
@@ -35,7 +34,7 @@ class ImageController extends AdminscController
                 ->wherePivot('slug', $post['slug'])
                 ->detach($morphed->id);
 
-            Response::json(['success' => 'ok']);
+            response()->json(['success' => 'ok']);
         }
     }
 
@@ -60,7 +59,7 @@ class ImageController extends AdminscController
 
         $srcs = ImageRepository::sync($images, $morphed, $morph['slug'], 'many', false);
         if ($srcs) {
-            Response::json($srcs);
+            response()->json($srcs);
         }
         Response::exitWithPopup("Уже есть");
     }
@@ -85,7 +84,7 @@ class ImageController extends AdminscController
 
         $res = ImageRepository::sync($image, $morphed, $morph['slug'], 'one', true);
         if ($res) {
-            Response::json($res);
+            response()->json($res);
         }
         Response::exitWithPopup("Уже есть такая картинка");
 

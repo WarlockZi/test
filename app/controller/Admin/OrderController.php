@@ -2,12 +2,14 @@
 
 namespace app\controller\Admin;
 
-use app\core\Response;
 use app\model\Order;
 use app\model\OrderItem;
-use app\Repository\OrderRepository;
+use app\repository\OrderRepository;
+use app\service\Response;
+use app\service\Router\IRequest;
 use app\view\Order\OrderView;
 use Carbon\Carbon;
+use JetBrains\PhpStorm\NoReturn;
 
 class OrderController extends AdminscController
 {
@@ -18,7 +20,7 @@ class OrderController extends AdminscController
         parent::__construct();
     }
 
-    public function actionIndex(): void
+    #[NoReturn] public function actionIndex(): void
     {
         $submitted   = OrderRepository::submitted();
         $unsubmitted = OrderRepository::unsubmitted();
@@ -26,15 +28,18 @@ class OrderController extends AdminscController
         $submittedTable   = OrderView::table($submitted);
         $unsubmittedTable = OrderView::table($unsubmitted);
 
-        $this->setVars(compact('submittedTable', 'unsubmittedTable'));
+        view('admin.order.index',
+            compact('unsubmittedTable',
+                'submittedTable'));
+
     }
 
-    public function actionEdit(): void
+    public function actionEdit(IRequest $request): void
     {
-        $this->view = 'table';
-        $order      = OrderRepository::edit($this->route->id);
+        $order      = OrderRepository::edit($request);
         $table      = OrderView::editOrder($order);
-        $this->setVars(compact('table'));
+        view('admin.order.edit',
+            compact('table'));
     }
 
     public static function updateOrCreate(array $req): void
@@ -56,12 +61,12 @@ class OrderController extends AdminscController
             ]
         );
         if ($order->wasRecentlyCreated) {
-            Response::json(['popup' => "Добавлено в корзину"]);
+            response()->json(['popup' => "Добавлено в корзину"]);
         }
         if ($order->wasChanged()) {
-            Response::json(['popup' => "Заказ изменен"]);
+            response()->json(['popup' => "Заказ изменен"]);
         }
-        Response::json(['popup' => 'не записано', 'error' => "не записано"]);
+        response()->json(['popup' => 'не записано', 'error' => "не записано"]);
     }
 
     public function actionDelete(): void
@@ -75,9 +80,9 @@ class OrderController extends AdminscController
                     ->whereNull('deleted_at')
                     ->update(['deleted_at' => Carbon::today()]);
             }
-            Response::json(['ok' => 'ok', 'popup' => 'удален']);
+            response()->json(['ok' => 'ok', 'popup' => 'удален']);
         } catch (\Throwable $exception) {
-            Response::json(['error' => 'не удален', 'popup' => 'не удален']);
+            response()->json(['error' => 'не удален', 'popup' => 'не удален']);
         }
     }
 }

@@ -2,53 +2,45 @@
 
 namespace app\controller;
 
-use app\core\NotFound;
-use app\Repository\OrderRepository;
-use app\Repository\ProductRepository;
-use app\Services\Breadcrumbs\BreadcrumbsService;
-use app\view\Product\Admin\ProductFormView;
+use app\action\ProductAction;
+use app\repository\ProductRepository;
+use app\service\Meta\MetaService;
+use app\service\Router\IRequest;
+use JetBrains\PhpStorm\NoReturn;
 
 
 class ProductController extends AppController
 {
     public function __construct(
-        protected ProductFormView    $formView = new ProductFormView(),
-        protected ProductRepository  $repo = new ProductRepository(),
-        protected BreadcrumbsService $breadcrumbsService = new BreadcrumbsService(),
+        protected ProductRepository $repo,
+        private MetaService         $meta,
+        private ProductAction       $actions,
     )
     {
         parent::__construct();
     }
 
-    public function actionIndex(): void
+    #[NoReturn] public function actionIndex(IRequest $request): void
     {
-        if (!$slug = $this->route->slug) header('Location:/category');
+        if (!$request->slug) response()->redirect('Location:/category');
 
-        try {
-            $product = $this->repo->main($slug);
-        } catch (\Throwable $exception) {
-            NotFound::NotFound($slug);
-            $product = null;
+        $product = $this->repo->main($request->slug);
+        if (!$product) {
+            $similarCategories = $this->actions->similarProducts($request->slug);
+            view('category.notFound',
+                compact('product', 'similarCategories'),
+                404);
         }
-        $this->view = 'product';
-        if ($product) {
-            $order           = OrderRepository::count();
-            $breadcrumbs     = $this->breadcrumbsService->getProductBreadcrumbs($product->category);
-            $shippablePrices = $this->formView->dopUnitsPrices($product);
-            $this->setVars(compact('shippablePrices', 'product', 'breadcrumbs', 'order'));
+        $this->actions->setMeta($product);
+        $meta        = $this->meta;
+        $breadcrumbs = $this->actions->getBreadcrumbs($product->category, true);
+        $shippableTable = $this->actions->shippableUnits('product', $product);
 
-            $this->assets->setMeta(
-                $product->seo_title(),
-                $product->seo_description(),
-                $product->ownProperties->seo_keywords ?? $product->name);
-
-        } else {
-            $this->view = '404';
-            http_response_code(404);
-            $subslug1        = substr($slug, 0, -5);
-            $subslug2        = substr($slug, 0, -27);
-            $similarProducts = ProductRepository::similarProducts($subslug1, $subslug2);
-            $this->setVars(compact('similarProducts'));
-        }
+        view('product.product', compact(
+            'meta',
+            'breadcrumbs',
+            'product',
+            'shippableTable',
+        ));
     }
 }

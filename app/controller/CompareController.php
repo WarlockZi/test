@@ -4,10 +4,10 @@
 namespace app\controller;
 
 
-use app\core\Auth;
-use app\core\Response;
 use app\model\Compare;
-use app\Repository\CompareRepository;
+use app\repository\CompareRepository;
+use app\service\AuthService\Auth;
+use app\service\Response;
 use app\view\Compare\CompareView;
 
 
@@ -24,17 +24,16 @@ class CompareController extends AppController
     {
         $compares = CompareRepository::all();
         $content  = CompareView::all($compares);
-        $this->setVars(compact('content'));
-
+        Response::view('pages.compares', compact('content'));
     }
 
     public function actionDel(): void
     {
         $req = $this->ajax;
         if (CompareRepository::del($req)) {
-            Response::json(['discompared' => true]);
+            response()->json(['discompared' => true]);
         }
-        Response::json(['discompared' => false]);
+        response()->json(['discompared' => false]);
     }
 
     public function actionUpdateOrCreate(): void
@@ -49,7 +48,7 @@ class CompareController extends AppController
             $field => $value,
             'product_id' => $req['fields']['product_id'],
         ]);
-        Response::json(['compared' => 1]);
+        response()->json(['compared' => 1]);
 
 
     }

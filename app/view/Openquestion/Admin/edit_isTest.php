@@ -1,5 +1,5 @@
-<? use \app\Repository\OpenquestionRepository;
-use \app\Repository\AnswerRepository; ?>
+<? use \app\repository\OpenquestionRepository;
+use \app\repository\AnswerRepository; ?>
 <div class="test-edit__title">
     <p class="test-name">Редактировать открытый тест - <?= $test->name; ?></p>
 </div>
@@ -7,7 +7,7 @@ use \app\Repository\AnswerRepository; ?>
 <div class="questions" data-test-id="<?= $test->id; ?>">
 
     <div class="empty">
-        <?= \app\Repository\OpenquestionRepository::empty($test); ?>
+        <?= \app\repository\OpenquestionRepository::empty($test); ?>
         <!--		 --><? //= AnswerRepository::empty(); ?>
     </div>
 

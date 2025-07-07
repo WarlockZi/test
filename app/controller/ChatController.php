@@ -2,8 +2,8 @@
 
 namespace app\controller;
 
-use app\core\Response;
 use app\model\Chat;
+use app\service\Response;
 
 class ChatController extends AppController
 {
@@ -16,7 +16,7 @@ class ChatController extends AppController
         ], [
             'php_session' => $req['chatId']
         ]);
-        Response::json(['user_name' => $chat->user_name, 'messages' => $chat->messages]);
+        response()->json(['user_name' => $chat->user_name, 'messages' => $chat->messages]);
     }
 
 }

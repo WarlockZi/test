@@ -7,7 +7,7 @@ import {
   sanitizeInput,
 } from "../common.js";
 import { qs } from "@src/constants.js";
-import PhoneValidator from "@src/components/validator/PhoneValidator.js";
+// import PhoneValidator from "@src/components/validator/PhoneValidator.js";
 
 export default class CallMeModal {
   constructor() {
@@ -36,8 +36,11 @@ export default class CallMeModal {
     button.disabled = !!errors.length;
   }
 
-  onKeyUpPhone({ target }) {
+  async onKeyUpPhone({ target }) {
     const container = target.closest(".input-container");
+    const { default: PhoneValidator } = await import(
+      "@src/components/validator/PhoneValidator.js"
+    );
     const errors = new PhoneValidator({
       value: target.value,
       required: true,
@@ -102,7 +105,7 @@ export default class CallMeModal {
     e.preventDefault();
     const form = e.target.closest(".box");
     return {
-      phone: sanitizeInput(form[qs]("input#phone")?.value) ?? null,
+      phone: sanitizeInput(form[qs]("input#phone.blade.php")?.value) ?? null,
       php_session: getPhpSession() ?? null,
     };
   }

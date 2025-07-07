@@ -2,19 +2,21 @@
 
 namespace app\controller\Admin;
 
-use app\core\Auth;
-use app\core\Response;
+use app\action\admin\UserYandexAction;
 use app\model\User;
 use app\model\UserYandex;
-use app\Repository\UserYandexRepository;
+use app\repository\UserYandexRepository;
+use app\service\AuthService\Auth;
+use app\service\Response;
 use app\view\User\UserView;
-use app\view\UserYandex\UserYandexView;
+use JetBrains\PhpStorm\NoReturn;
 use Throwable;
 
 
 class UseryandexController extends AdminscController
 {
     public function __construct(
+        protected UserYandexAction  $actions,
         public UserYandexRepository $repo = new UserYandexRepository,
         public string               $model = UserYandex::class,
     )
@@ -22,10 +24,9 @@ class UseryandexController extends AdminscController
         parent::__construct();
     }
 
-    public function actionIndex(): void
+    #[NoReturn] public function actionIndex(): void
     {
-        $content = UserYandexView::listAll();
-        $this->setVars(compact('content'));
+        $this->showTable();
     }
 
 
@@ -48,9 +49,9 @@ class UseryandexController extends AdminscController
     {
         if ($data = $this->ajax) {
             if (!Auth::getUser()->can(['user_delete']))
-                Response::json(['popup' => 'Не хватает прав']);
+                response()->json(['popup' => 'Не хватает прав']);
             User::find($data['id'])->delete();
-            Response::json(['popup' => 'Удален']);
+            response()->json(['popup' => 'Удален']);
         }
     }
 

@@ -48,12 +48,6 @@ function getConfirm()
     return $confirm->html;
 }
 
-//function getRights($user)
-//{
-//	$rights = \app\model\Right::all();
-//	return include ROOT . '/app/view/User/getRightsTab.php';
-//}
-
 function getUserHtml($item, $self)
 {
     $t = new CustomCatalogItem([

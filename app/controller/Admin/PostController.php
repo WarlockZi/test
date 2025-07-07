@@ -2,27 +2,26 @@
 
 namespace app\controller\Admin;
 
-use app\controller\AppController;
-use app\core\Response;
+use app\action\admin\PostAction;
 use app\model\Post;
+use app\service\Response;
 use app\view\Post\PostView;
+use JetBrains\PhpStorm\NoReturn;
 
 class PostController extends AdminscController
 {
-    public string $model = Post::class;
 
-//	public  $modelName = 'post';
-
-    public function __construct()
+    public function __construct(
+        protected PostAction $actions,
+        public string        $model = Post::class,
+    )
     {
         parent::__construct();
     }
 
-    public function actionIndex(): void
+    #[NoReturn] public function actionIndex(): void
     {
-        $this->view = 'table';
-        $table      = PostView::index();
-        $this->setVars(compact('table'));
+        $this->showTable();
     }
 
 

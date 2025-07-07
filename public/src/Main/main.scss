@@ -6,6 +6,8 @@
 
 @forward "../404/404.scss";
 @use 'oferta.scss';
+@use 'delivery.scss';
+@use 'discount.scss';
 @use '../Auth/auth.scss';
 @use '../components/footer/footer.scss';
 @use '../components/header/header.scss';
@@ -69,9 +71,10 @@
     flex-direction: column;
     margin: 0 auto;
     width: clamp(100px, 100%, 900px);
-    padding: 100px 0 100px;
+    padding: 100px 10px;
     background-color: white;
     min-height: 250px;
+    box-sizing: border-box;
 
     .admin-gap {
       height: 30px;
@@ -87,11 +90,6 @@
         margin: 0 0 15px;
         list-style: disc;
       }
-    }
-
-    @include mixin_media.m800 {
-      padding-left: 5px;
-      padding-right: 5px;
     }
 
     .typing-animation {
@@ -191,7 +189,7 @@
 
     &.boot-cover {
       background: url('/storage/app/srvc/main/site-bootcover-824.jpg') no-repeat center left;
-      //background: url(/storage/app/srvc/main/site-bootcover-824.jpg) no-repeat center left;
+      //background: url(/storage/app/srvc/main.Blade.php/site-bootcover-824.jpg) no-repeat center left;
       background-size: cover;
       align-items: flex-end;
     }

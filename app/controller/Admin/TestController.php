@@ -2,10 +2,10 @@
 
 namespace app\controller\Admin;
 
-use app\core\Response;
 use app\model\Test;
-use app\Repository\AnswerRepository;
-use app\Repository\TestRepository;
+use app\repository\AnswerRepository;
+use app\repository\TestRepository;
+use app\service\Response;
 use app\view\Test\TestView;
 use app\view\View;
 
@@ -83,7 +83,7 @@ class TestController extends AdminscController
 
     public function actionGetCorrectAnswers()
     {
-        Response::json(($_SESSION['correct_answers']));
+        response()->json(($_SESSION['correct_answers']));
     }
 
 
@@ -99,7 +99,7 @@ class TestController extends AdminscController
 
     public function actionTests()
     {
-        Response::json(Test::where('isTest', '1')->get()->toArray());
+        response()->json(Test::where('isTest', '1')->get()->toArray());
     }
 
 

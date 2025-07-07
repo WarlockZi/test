@@ -240,69 +240,9 @@ abstract class UserYandexView
 
     }
 
-    public static function listAll(): string
-    {
-        $userY = UserYandex::with('role')->get();
-        return Table::build($userY)
-            ->pageTitle('Пользователи Yandex')
-            ->model('userYandex')
-            ->column(
-                ColumnBuilder::build('id')
-                    ->name('ID')
-                    ->get())
-            ->column(
-                ColumnBuilder::build('last_name')
-                    ->name('Фамилия')
-                    ->search()
-                    ->width('1fr')
-                    ->get())
-            ->column(
-                ColumnBuilder::build('first_name')
-                    ->name('Имя')
-                    ->search()
-                    ->width('1fr')
-                    ->get())
-            ->column(
-                ColumnBuilder::build('default_email')
-                    ->name('email')
-                    ->search()
-                    ->width('1fr')
-                    ->get())
-            ->column(
-                ColumnBuilder::build('default_phone')
-                    ->name('phone')
-                    ->callback(function ($userY) {
-                        $obj = json_decode($userY->default_phone);
-                        return $obj->number;
-                    })
-                    ->search()
-                    ->width('1fr')
-                    ->get())
-            ->column(
-                ColumnBuilder::build('role')
-                    ->name('роль')
-                    ->width('1fr')
-                    ->callback(function ($user) {
-                        return self::roleSelector($user);
-                    })
-                    ->get())
-            ->edit()
-            ->del()
-            ->get();
-    }
 
-    protected static function roleSelector(UserYandex $user): string
-    {
-        $selected = $user->role->first()->id ?? 0;
-        return SelectBuilder::build(
-            ArrayOptionsBuilder::build(Role::all())
-                ->initialOption()
-                ->selected($selected)
-                ->get())
-            ->relation('role', 'roleUserYandex')
-//            ->field('user_yandex_id')
-            ->get();
-    }
+
+
 
     public static function getRights(UserYandex $user)
     {

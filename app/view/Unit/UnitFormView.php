@@ -10,7 +10,6 @@ use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\Morph\MorphBuilder;
 use app\view\components\Builders\SelectBuilder\optionBuilders\ArrayOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
-use app\view\components\Builders\SelectBuilder\SelectNewBuilder;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\TableBuilder\Table;
 use Illuminate\Database\Eloquent\Collection;
@@ -99,37 +98,4 @@ class UnitFormView
                 ->get();
         return $item;
     }
-
-    public static function index(): string
-    {
-        return Table::build(Unit::all())
-            ->pageTitle('Единицы измерения')
-            ->addButton()
-            ->column(
-                ColumnBuilder::build('id')
-                    ->width('50px')
-                    ->get()
-            )
-            ->column(
-                ColumnBuilder::build('name')
-                    ->name('Краткое')
-                    ->contenteditable()
-                    ->get()
-            )
-            ->column(
-                ColumnBuilder::build('full_name')
-                    ->contenteditable()
-                    ->name('Полное')
-                    ->get()
-            )
-            ->column(
-                ColumnBuilder::build('code')
-                    ->contenteditable()
-                    ->name('Код')
-                    ->get()
-            )
-            ->del()
-            ->get();
-    }
-
 }

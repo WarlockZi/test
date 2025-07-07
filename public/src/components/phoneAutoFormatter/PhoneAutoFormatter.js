@@ -219,11 +219,11 @@ Freedom.PhoneFormatter.prototype.applyPattern = function (
     } else {
       // Ran into non-matching digits at the start -
       // pattern doesn't match, terminating execution.
-      // console.log( "Discarding formatted phone");
+      // console.log( "Discarding formatted phone.blade.php");
       formattedPhone = "";
       break;
     }
-    // console.log( "Formatted phone: ", formattedPhone );
+    // console.log( "Formatted phone.blade.php: ", formattedPhone );
   }
 
   if (formattedPhone && lengthStrictCheck) {
@@ -256,7 +256,7 @@ Freedom.PhoneFormatter.prototype.throwInvalidPatternError = function (
   patternString,
 ) {
   var msg =
-    'Invalid phone pattern "%s". ' +
+    'Invalid phone.blade.php pattern "%s". ' +
     'Only digits, spaces, "+", "-", "(", ")" and "N" are allowed';
   console.error(msg, patternString);
 };

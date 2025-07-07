@@ -4,19 +4,16 @@
 namespace app\view\components\Header\BlueRibbon;
 
 
-use app\core\FS;
-use app\Repository\BlueRibbonRepository;
-use app\Repository\CategoryRepository;
-use Illuminate\Support\Collection;
+use app\repository\delBlueRibbonRepository;
+use Throwable;
 
 class BlueRibbon
 {
 
-    public static function get():string
+    public function __invoke(delBlueRibbonRepository $blueRibbonRepository): array
     {
-        $rootCategories = CategoryRepository::rootCategories();
-        $fs        = new FS(__DIR__ . '/templates');
-        $data      = BlueRibbonRepository::data($rootCategories);
-        return $fs->getContent('template', $data);
+        return $blueRibbonRepository::data();
     }
+
+
 }

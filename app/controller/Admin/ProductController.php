@@ -3,89 +3,86 @@
 namespace app\controller\Admin;
 
 
-use app\core\Response;
+use app\action\admin\ProductAction;
+use app\blade\views\product\del\ProductFormView;
+use app\formRequest\StoreProductMainImageRequest;
 use app\model\Product;
-use app\Repository\BreadcrumbsRepository;
-use app\Repository\ProductFilterRepository;
-use app\Repository\ProductRepository;
-use app\Services\Breadcrumbs\AdminBreadcrumbsService;
-use app\Services\ProductService;
-use app\view\Product\Admin\ProductFormView;
+use app\repository\ProductFilterRepository;
+use app\repository\ProductRepository;
+use app\service\Router\IRequest;
+use JetBrains\PhpStorm\NoReturn;
 
 
 class ProductController extends AdminscController
 {
-
-
     public function __construct(
-        protected string                $model = Product::class,
-        private ProductRepository       $repo = new ProductRepository(),
-        private ProductService          $service = new ProductService(),
-        private AdminBreadcrumbsService $breadcrumbsService = new AdminBreadcrumbsService(),
-
+        private readonly ProductAction           $actions,
+        private readonly ProductFilterRepository $filterRepo,
+        private ProductRepository                $repo,
+        protected string                         $model = Product::class,
     )
     {
         parent::__construct();
     }
 
-    public function actionSaveMainImage(): void
+    #[NoReturn] public function actionSaveMainImage(StoreProductMainImageRequest $request): void
     {
-        $file    = $_FILES['file'];
-        $product = Product::find($_POST['productId']);
-        Response::json([$this->service->saveMainImage($file, $product) ?? 'ошибка сохнанения']);
+        $validated = $request->validated();
+
+        $e = $request->errors;
+        $product = Product::find($validated['post']['productId']);
+        $mainImage = $this->actions->saveMainImage($validated['files']['file'], $product);
+        response()->json(compact('mainImage'));
     }
 
-    public function actionEdit(): void
+    #[NoReturn] public function actionEdit(IRequest $request): void
     {
-        $id   = $this->route->id;
-        $prod = $this->repo->edit($id);
+        $prod = $this->repo->edit($request->id);
 
         if ($prod) {
-            $product     = ProductFormView::edit($prod);
-            $breadcrumbs = $this->breadcrumbsService->getProductBreadcrumbs($prod->category);
-            $this->setVars(compact('product', 'breadcrumbs'));
+            $breadcrumbs = $this->actions->getBreadcrumbs($prod->category, false);
+            $catItem     = ProductFormView::edit($prod);
+            view('admin.product.edit', compact('catItem', 'breadcrumbs'));
         } else {
             $product = null;
-            $this->setVars(compact('product',));
+            view('admin.product.edit', compact('product'));
         }
     }
 
-
-    public function actionFilter(): void
+    public function actionFilter(IRequest $request): void
     {
-        $res = ProductFilterRepository::make($_POST)->get();
-        Response::json($res);
+        $res = $this->filterRepo->filterProducts($request);
+        response()->json($res);
     }
 
-    public function actionChangeval()
+    public function actionChangeval(IRequest $request)
     {
-        $this->repo->changeVal($this->ajax);
+        $this->actions->changeVal($request);
     }
 
-    public function actionDeleteunit(): void
+    public function actionDeleteunit(IRequest $request): void
     {
-        $this->repo->deleteUnit($this->ajax);
+        $this->actions->deleteUnit($request);
     }
 
-    public function actionChangeunit()
+    public function actionChangeunit(IRequest $request): void
     {
-        $this->repo->changeUnit($this->ajax);
+        $this->actions->changeUnit($request);
     }
 
-    public function actionBaseIsShippable(): void
+    public function actionChangepromotion(IRequest $request): void
     {
-        ProductService::changeBaseIsShippable($this->ajax);
+        $this->actions->changePromotion($request);
     }
 
-    public function actionChangepromotion()
-    {
-        ProductAction::changePromotion($this->ajax);
-    }
-
-    public function actionChangebaseisshippable(): void
-    {
-        ProductService::changeBaseIsShippable($this->ajax);
-    }
+//    public function actionChangebaseisshippable(IRequest $request): void
+//    {
+//        $this->actions->changeBaseIsShippable($request);
+//    }
+//    public function actionBaseIsShippable(IRequest $request): void
+//    {
+//        $this->actions->changeBaseIsShippable($request);
+//    }
 
 }
 

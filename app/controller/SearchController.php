@@ -2,8 +2,8 @@
 
 namespace app\controller;
 
-use app\core\Response;
-use app\Repository\SearchRepository;
+use app\repository\SearchRepository;
+use app\service\Response;
 
 class SearchController extends AppController
 {
@@ -19,6 +19,6 @@ class SearchController extends AppController
     {
         if (!$this->ajax) exit();
         $res = $this->service->index($this->ajax['text']);
-        Response::json(['found' => $res]);
+        response()->json(['found' => $res]);
     }
 }

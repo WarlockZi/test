@@ -8,12 +8,12 @@ use app\view\components\Traits\CleanString;
 
 class ItemTabBuilder
 {
-    use CleanString;
 
-    public $model = '';
-    public $html = '';
-    public $tabTitle = '';
-    public $field = '';
+    public string $model = '';
+    public string $html = '';
+    public array $tableData = [];
+    public string $tabTitle = '';
+    public string $field = '';
 
     public static function build(string $title): self
     {
@@ -24,7 +24,13 @@ class ItemTabBuilder
 
     public function html(string $html): static
     {
-        $this->html = $this->clean($html);
+        $this->html = $html;
+        return $this;
+    }
+
+    public function table(array $tableData): static
+    {
+        $this->tableData = $tableData;
         return $this;
     }
 }

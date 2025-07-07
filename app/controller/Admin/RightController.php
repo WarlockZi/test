@@ -2,41 +2,26 @@
 
 namespace app\controller\Admin;
 
-use app\controller\AppController;
-use app\core\Response;
-use app\core\Route;
+use app\action\admin\RightAction;
 use app\model\Right;
-use app\model\User;
-use app\view\Right\RightView;
+use JetBrains\PhpStorm\NoReturn;
 
 
 class RightController extends AdminscController
 {
-    public string $model = Right::class;
-//	public $modelName = 'right';
-//	public $tableName = 'rights';
 
-    public function __construct()
+    public function __construct(
+        protected RightAction $actions,
+        public string         $model = Right::class,
+    )
     {
         parent::__construct();
 
     }
 
-    public function actionIndex(): void
+    #[NoReturn] public function actionIndex(): void
     {
-        $list = RightView::listAll();
-        $this->setVars(compact('list'));
+        $this->showTable();
     }
-
-//	public function actionDelete():void
-//	{
-//		$id = $this->ajax['id']??$_POST['id'];
-//		if ($user->can(['right_delete']) || defined(SU)) {
-//			if ($this->model::delete($id)) {
-//				Response::exitWithPopup("ok");
-//			}
-//		}
-//		header('Location:/adminsc/right');
-//	}
 
 }

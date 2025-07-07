@@ -133,62 +133,6 @@
 
 </main>
 
-<style>
-    .delivery-items {
-        flex-wrap: wrap;
-    }
-
-    .delivery-item {
-        min-height: 620px;
-        border: 1px solid #ddd;
-        padding: 28px 18px 2px;
-        margin: 0 10px 56px;
-        background: rgba(255, 255, 255, .7);
-        min-width: 197px;
-        flex: 1;
-        max-width: 197px;
-    }
-
-    .delivery-items img, .delivery-items svg {
-        display: block;
-        margin: 0 auto;
-        height: 33px;
-        fill: #ff6666;
-    }
-
-    .delivery-items h2 {
-        font-size: 1em;
-        white-space: nowrap;
-        text-align: center;
-        text-transform: uppercase;
-        margin: 22px 0 6px;
-        font-weight: 600;
-    }
-
-    .delivery-item .location-type {
-        margin-top: 7px;
-    }
-
-    .delivery-item p, .delivery-item ul {
-        font-size: 0.875em;
-        margin: 18px 0;
-        color: #2a2a2a;
-    }
-
-    .delivery-item p span {
-        font-size: 13px;
-        margin: 18px 0;
-        color: #7d7d7d;
-    }
-
-    p.location-type {
-        margin-bottom: 1em;
-        color: #ff6666;
-        text-align: center;
-    }
-
-
-</style>
 
 <div class="none">
     <svg>

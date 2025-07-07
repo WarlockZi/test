@@ -68,7 +68,8 @@ class Order extends Model
         return $this->hasManyThrough(
             OrderItem::class,
             OrderProduct::class,
-            'product_id', //in order_product
+//            'product_id', //in order_product
+            'order_id', //in order_product
             'product_id',//in OrderItem
             'id', //in Order
             'product_id', //in order_product
@@ -86,13 +87,5 @@ class Order extends Model
         return $this->hasOne(Unit::class, 'id', 'unit_id');
     }
 
-    public function manager()
-    {
-        return $this->hasOne(User::class);
-    }
 
-    public static function userEmail($builder, $order, $func)
-    {
-        return $order->user->email;
-    }
 }

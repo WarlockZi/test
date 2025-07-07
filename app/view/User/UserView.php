@@ -4,13 +4,13 @@
 namespace app\view\User;
 
 
-use app\core\ConfigNew;
-use app\core\IUser;
 use app\model\Right;
 use app\model\Role;
 use app\model\User;
+use app\service\AuthService\IUser;
 use app\view\components\Builders\Date\DateBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
+use app\view\components\Builders\ItemBuilder\ItemBuilderNew;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
 use app\view\components\Builders\SelectBuilder\optionBuilders\ArrayOptionsBuilder;
@@ -23,17 +23,21 @@ use Illuminate\Database\Eloquent\Model;
 
 abstract class UserView
 {
-    public static function getViewByRole(Model $userToEdit, $thisUser): string
+    public static function getViewByRole(User $userToEdit, User $thisUser): array
     {
-        if ($thisUser->isAdmin()) return self::admin($userToEdit);
-        if ($thisUser->isEmployee()) return self::employee($userToEdit);
-
+        if (!$userToEdit) return [];
+        if ($thisUser->isEmployee()) {
+            if ($thisUser->isAdmin()) {
+                return self::admin($userToEdit);
+            }
+            return self::employee($userToEdit);
+        }
         return self::guest($userToEdit);
     }
 
-    public static function admin(IUser $item): string
+    public static function admin(User $item): array
     {
-        return ItemBuilder::build($item, 'user')
+        return ItemBuilderNew::build($item, 'user')
             ->pageTitle('Редактировать пользователя: ' . $item['surName'] . ' ' . $item['name'])
             ->toList('adminsc/user', 'К списку')
             ->tab(self::getAdminTab($item))
@@ -177,9 +181,9 @@ abstract class UserView
             ->get();
     }
 
-    public static function employee($item): string
+    public static function employee($item): array
     {
-        return ItemBuilder::build($item, 'user')
+        return ItemBuilderNew::build($item, 'user')
             ->pageTitle('Редактировать пользователя: ' . $item['surName'] . ' ' . $item['name'])
             ->toList('adminsc/user/table', '', false)
 //            ->save()
@@ -242,16 +246,16 @@ abstract class UserView
             ->get();
     }
 
-    public static function guest($item): string
+    public static function guest(User $item): array
     {
-        return ItemBuilder::build($item, 'user')
+        return ItemBuilderNew::build($item, 'user')
             ->pageTitle('Редактировать пользователя: ' . $item->fi())
-            ->field(
-                ItemFieldBuilder::build('роль', $item)
-                    ->html($item->role[0]->name)
-                    ->name('роль')
-                    ->get()
-            )
+//            ->field(
+//                ItemFieldBuilder::build('роль', $item)
+//                    ->html($item->role[0]->name)
+//                    ->name('роль')
+//                    ->get()
+//            )
             ->field(
                 ItemFieldBuilder::build('id', $item)
                     ->name('ID')
@@ -304,7 +308,7 @@ abstract class UserView
             ->get();
     }
 
-    public static function listAll(): string
+    public static function listAll(): array
     {
         return Table::build(User::with('role')->get())
             ->pageTitle('Пользователи')

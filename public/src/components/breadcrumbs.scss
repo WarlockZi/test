@@ -26,6 +26,7 @@ nav.breadcrumbs-4 {
   }
 
   li {
+    position: relative;
     margin: 1px 0;
     background: #337AB7;
     text-decoration: none;
@@ -46,7 +47,7 @@ nav.breadcrumbs-4 {
     border-width: 15px 0 15px 10px;
     border-style: solid;
     border-color: transparent transparent transparent #337AB7;
-    //transition: border-color 0.3s;
+    transition: border-color 0.3s;
   }
 
   li:hover {
@@ -190,6 +191,13 @@ nav.breadcrumbs-1 {
 nav.breadcrumbs-5 {
   margin-bottom: 15px;
   padding: 0;
+
+  .card-panel{
+    right: 11px;
+    top: -17px;
+    width: 10px;
+    opacity: .5;
+  }
 
   a:hover {
   }

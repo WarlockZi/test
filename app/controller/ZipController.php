@@ -2,19 +2,20 @@
 
 namespace app\controller;
 
-use app\Services\Logger\ErrorLogger;
-use app\Services\ZipService\ImportFiles;
-use app\Services\ZipService\ZipService;
+use app\service\Logger\ErrorLogger;
+use app\service\Zip\ImportFiles;
+use app\service\Zip\ZipService;
 
 class ZipController extends AppController
 {
-    private ZipService $service;
-    private ErrorLogger $logger;
 
-    public function __construct()
+    public function __construct(
+        private ZipService  $service,
+        private ErrorLogger $logger,
+
+    )
     {
-        $this->service = new ZipService();
-        $this->logger  = new ErrorLogger();
+        parent::__construct();
     }
 
     public function actionDownload()

@@ -4,7 +4,7 @@
 namespace app\view\components\Builders\SelectBuilder;
 
 
-use app\core\FS;
+use app\service\FS;
 use app\view\components\Traits\CleanString;
 
 class SelectBuilder
@@ -23,7 +23,6 @@ class SelectBuilder
     public static function build(string $options): static
     {
         $select          = new static();
-        $select->fs      = new FS(__DIR__);
         $select->options = $options;
         return $select;
     }
@@ -70,7 +69,7 @@ class SelectBuilder
     public function get(): string
     {
         $data = get_object_vars($this);
-        return $this->clean($this->fs->getContent('templates/SelectBuilderTemplate', $data));
+        return $this->clean(FS::getFileContent(__DIR__.'/templates/SelectBuilderTemplate.php', $data));
     }
 
 }

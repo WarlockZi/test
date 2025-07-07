@@ -3,7 +3,7 @@
 namespace app\model;
 
 
-use app\Services\SlugService;
+use app\service\Router\SlugService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -33,7 +33,7 @@ class Category extends Model
             '1s_category_id',
             '1s_id')
             ->where('instore', 0)
-            ->with('mainImages')
+//            ->with('mainImages')
             ->orderBy('name');
     }
 
@@ -41,10 +41,11 @@ class Category extends Model
     {
         return $this->hasMany(Product::class,
             '1s_category_id',
-            '1s_id')
+            '1s_id',
+        )
             ->where('instore', 0)
             ->where('name', 'regexp', '\\s?\\*\\s?$')
-            ->with('mainImages')
+//            ->with('mainImages')
             ->with('ownProperties')
             ->with('shippableUnits')
             ->with('inactivepromotions')
@@ -60,8 +61,7 @@ class Category extends Model
             '1s_category_id',
             '1s_id')
             ->where('instore', '<>', 0)
-            ->with('mainImages')
-            ->with('order.orderitems')
+//            ->with('order.orderitems')
             ->with('shippableUnits')
             ->with('inactivepromotions')
             ->with(['activepromotions' => function ($q) {
@@ -71,11 +71,6 @@ class Category extends Model
             ->with('like')
             ->with('units')
             ->with('ownProperties')
-
-//            ->with('prices')
-//            ->select(['products.*', 'prices.price as product_price'])
-//            ->join('prices', 'prices.1s_id', '=', 'products.1s_id')
-//            ->orderBy('product_price')
         ;
 
         return $pInStore;
@@ -90,7 +85,10 @@ class Category extends Model
     {
         return $this->ownProperties->seo_description ?? $this->name . ". Интернет-магазин медицинских перчаток, одноразового инструмента и расходников VITEX в Вологде. Оперативный ответ менеджера, быстрая доставка, доступные оптовые цены. Звоните и заказывайте прямо сейчас или на сайте онлайн";
     }
-
+    public function seo_keywords()
+    {
+        return $this->ownProperties->seo_keywords ?? $this->name;
+    }
     public function seo_article()
     {
         return $this->ownProperties->seo_article ?? $this->description ?? $this->name;

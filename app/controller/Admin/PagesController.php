@@ -3,7 +3,7 @@
 namespace app\controller\Admin;
 
 use app\model\Pages;
-use app\Repository\PagesRepository;
+use app\repository\PagesRepository;
 
 class PagesController extends AdminscController
 {

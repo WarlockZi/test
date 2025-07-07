@@ -2,25 +2,35 @@
 
 
 namespace app\view\components\cardPanel;
-use app\core\FS;
-use app\core\Icon;
 use app\model\Category;
 use app\model\Product;
+use app\service\FS;
+use app\view\components\Icon\Icon;
 
 class CardPanel
 {
-    public static function card_panel(Product $product): string
+    public static function card_panel(Product $product): array
     {
-        $fs   = new FS(__DIR__);
-        $edit = Icon::edit();
-        return $fs->getContent('product_card_panel', compact('product', 'edit'));
+        return [
+            'product' => $product,
+            'edit'=>Icon::edit(),
+            'forBreadcrumbs'=>false,
+        ];
+//        $edit = Icon::edit();
+//        return $fs->getContent('product_card_panel', compact('product', 'edit'));
     }
 
-    public static function categoryCardPanel(Category $category, bool $forBreadcrumbs = false): string
+    public static function categoryCardPanel(array $category, bool $forBreadcrumbs = false): array
     {
-        $fs   = new FS(__DIR__);
-        $edit = Icon::edit();
-        return $fs->getContent('category_card_panel', compact('category', 'edit', 'forBreadcrumbs'));
+        return [
+            'category' => $category,
+            'edit'=>Icon::edit(),
+            'forBreadcrumbs'=>$forBreadcrumbs,
+        ];
+
+//        $edit = ;
+//        return $category;
+//        return $fs->getContent('category_card_panel', compact('category', 'edit', 'forBreadcrumbs'));
     }
 
 }

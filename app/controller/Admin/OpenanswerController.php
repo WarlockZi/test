@@ -2,10 +2,9 @@
 
 namespace app\controller\Admin;
 
-use app\controller\AppController;
-use app\core\FS;
-use app\core\Response;
 use app\model\Openanswer;
+use app\service\FS;
+use app\service\Response;
 
 
 class OpenanswerController extends AdminscController
@@ -28,7 +27,7 @@ class OpenanswerController extends AdminscController
                 $i           = $this->ajax['sort'] ?? 1;
 
                 $html = FS::getFileContent(ROOT . '/app/view/Opentest/edit_BlockAnswer.php');
-                Response::json(['html' => $html]);
+                response()->json(['html' => $html]);
             }
             Response::exitWithPopup('ok');
         }

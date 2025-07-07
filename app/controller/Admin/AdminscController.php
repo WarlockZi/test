@@ -3,9 +3,8 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
-use app\core\Auth;
-use app\core\IUser;
-use app\view\View;
+use app\service\AuthService\Auth;
+use JetBrains\PhpStorm\NoReturn;
 
 
 class AdminscController extends AppController
@@ -13,29 +12,15 @@ class AdminscController extends AppController
     public function __construct()
     {
         $user = Auth::getUser();
-        if ($user) {
-            $this->checkPermition($user);
-            parent::__construct();
-        }else{
-            header("Location:/");
-        }
-//        return View::noPermition();
+        if (!$user || (!$user->isAdmin() && !$user->isEmployee()))
+            response()->redirect("/");
+
+        parent::__construct();
     }
 
-    protected function checkPermition(IUser $user): void
+    #[NoReturn] public function actionIndex(): void
     {
-        $roles = $user->role()->get();
-        if (!$roles->contains('name', '=', 'role_admin')
-            && !$roles->contains('name', '=', 'role_employee')) {
-            header("Location:/");
-        }
-    }
-
-    public function actionClearCache(): void
-    {
-        $path = ROOT . "/tmp/cache/*.txt";
-        array_map("unlink", glob($path));
-        exit('Успешно');
+        view('admin.index');
     }
 
 
@@ -47,9 +32,6 @@ class AdminscController extends AppController
     {
     }
 
-    public function actionIndex(): void
-    {
-    }
 
     public function createSiteMap()
     {
@@ -63,6 +45,11 @@ class AdminscController extends AppController
     {
     }
 
+    #[NoReturn] public function showTable(): void
+    {
+        $data = $this->actions->table($this->model);
+        view('admin.share.table.table', compact('data'));
+    }
 }
 
 

@@ -9,8 +9,6 @@ use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\MultiSelectBuilder\MultiSelectBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
-use app\view\components\Builders\TableBuilder\ColumnBuilder;
-use app\view\components\Builders\TableBuilder\Table;
 use app\view\components\CustomMultiSelect\CustomMultiSelect;
 
 
@@ -61,7 +59,6 @@ class PostView
     public static function cheifSelect($posts, $post): string
     {
         return SelectBuilder::build($posts)
-//			->model('post')
             ->field('chief')
             ->initialOption('', 0)
             ->selected($post['chief']['id'] ?? null)
@@ -84,46 +81,6 @@ class PostView
             ->get();
     }
 
-    public static function index(): string
-    {
-        return Table::build(
-            Post::with('chief')->get()
-        )
-            ->pageTitle('Должности')
-            ->column(
-                ColumnBuilder::build('id')
-                    ->name('ID')
-                    ->get()
-            )
-            ->column(
-                ColumnBuilder::build('name')
-                    ->name('Краткое наим')
-                    ->contenteditable()
-                    ->class('left')
-                    ->width('100px')
-                    ->get()
-            )
-            ->column(
-                ColumnBuilder::build('full_name')
-                    ->name('Полное наим')
-                    ->contenteditable()
-                    ->class('left')
-                    ->width('250px')
-                    ->get()
-            )
-            ->column(
-                ColumnBuilder::build('chief')
-                    ->callback(fn($post) => $post->chief->name ?? '')
-                    ->class('left')
-                    ->name('Подчиняется')
-                    ->width('1fr')
-                    ->get()
-            )
-            ->edit()
-            ->del()
-            ->addButton()
-            ->get();
-    }
 
     public function getMultiSelectPosts($array, $selected = [])
     {

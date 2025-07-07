@@ -2,25 +2,23 @@
 
 namespace app\controller\Admin;
 
-use app\controller\AppController;
+use app\action\FeedbackAction;
 use app\model\Feedback;
-use app\view\Feedback\FeedbackView;
+use JetBrains\PhpStorm\NoReturn;
 
-class FeedbackController extends AppController
+class FeedbackController extends AdminscController
 {
     public function __construct(
-        public string       $model = Feedback::class,
-        public FeedbackView $feedbackView = new FeedbackView()
+        public FeedbackAction $actions,
+        public string         $model = Feedback::class,
     )
     {
         parent::__construct();
     }
 
-
-    public function actionIndex(): void
+    #[NoReturn] public function actionIndex(): void
     {
-        $content = $this->feedbackView->all();
-        $this->setVars(compact('content'));
+        $this->showTable();
     }
 }
 

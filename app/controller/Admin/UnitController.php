@@ -4,18 +4,23 @@
 namespace app\controller\Admin;
 
 
-use app\controller\AppController;
+use app\action\admin\UnitAction;
+
 use app\model\Unit;
-use app\Repository\UnitRepository;
+use app\repository\UnitRepository;
+use app\service\Router\IRequest;
 use app\view\Unit\UnitFormView;
+use JetBrains\PhpStorm\NoReturn;
 
 
 class UnitController extends AdminscController
 {
-    private UnitRepository $repo;
     protected string $model = Unit::class;
 
-    public function __construct()
+    public function __construct(
+        protected UnitAction $actions,
+        private UnitRepository  $repo
+    )
     {
         parent::__construct();
         $this->repo = new UnitRepository();
@@ -59,9 +64,9 @@ class UnitController extends AdminscController
         $this->repo->detachUnit($this->ajax);
     }
 
-    public function actionEdit()
+    public function actionEdit(IRequest $request)
     {
-        $id = $this->getRoute()->id;
+        $id = $request->id;
         if ($id) {
             $unit     = UnitRepository::edit($id);
             $unitItem = UnitFormView::editItem($unit);
@@ -69,11 +74,9 @@ class UnitController extends AdminscController
         }
     }
 
-    public function actionIndex(): void
+    #[NoReturn] public function actionIndex(): void
     {
-        $this->view = 'table';
-        $table      = UnitFormView::index();
-        $this->setVars(compact('table'));
+        $this->showTable();
     }
 
 }

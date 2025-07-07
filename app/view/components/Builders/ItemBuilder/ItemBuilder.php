@@ -4,6 +4,7 @@
 namespace app\view\components\Builders\ItemBuilder;
 
 use app\model\Product;
+//use app\view\components\Traits\catalogItemDecorator;
 use app\view\components\Traits\CleanString;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -33,7 +34,7 @@ class ItemBuilder
     public static function build(?Model $item, string $model): static
     {
         $view            = new static();
-        $name            = $view->getModelName($item->getTable());
+//        $name            = $view->getModelName($item->getTable());
         $view->dataModel = "data-model='{$model}'";
         $view->model     = $model;
         $view->item      = $item->toArray();

@@ -10,7 +10,7 @@ $("#save").on("click", async function (e) {
     surName: $('[name = "surName"]')[0].value,
     middleName: $('[name = "middleName"]')[0].value,
     birthDate: $('[name = "birthDate"]')[0].value,
-    phone: $('[name = "phone"]')[0].value,
+    phone: $('[name = "phone.blade.php"]')[0].value,
     sex: getSex(),
   };
 

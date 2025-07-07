@@ -3,124 +3,162 @@
 namespace app\controller;
 
 
-use app\model\Category;
-use app\Repository\CategoryRepository;
-use app\view\Category\CategoryFormView;
-use app\view\components\Builders\SelectBuilder\optionBuilders\TreeABuilder;
+use app\action\MainAction;
+use app\repository\PromotionRepository;
+use JetBrains\PhpStorm\NoReturn;
 
 class MainController extends AppController
 {
     public function __construct(
-        private readonly string $titleTail = " купить в интернет-магазине VITEX в Вологде. Большой ассортимент медицинской одежды, оборудования и расходников по выгодной цене. Звоните и заказывайте прямо сейчас онлайн на сайте",
+        private readonly MainAction $actions,
+        private readonly string      $titleTail = " купить в интернет-магазине VITEX в Вологде. Большой ассортимент медицинской одежды, оборудования и расходников по выгодной цене. Звоните и заказывайте прямо сейчас онлайн на сайте",
     )
     {
         parent::__construct();
     }
 
-    public function actionIndex(): void
+    #[NoReturn] public function actionIndex(): void
     {
-        $this->assets->setMeta('Нитриловые перчатки оптом',
+        $meta = $this->actions->setMeta(
+            'Нитриловые перчатки оптом',
             'Доставим нитриловые перчатки, бахилы, маски по России. Оптом.',
-            'нитриловые перчатки, бахилы, маски, расходные материалы, доставка, производство, по России');
+            'нитриловые перчатки, бахилы, маски, расходные материалы, доставка, производство, по России'
+        );
+
+         view('main.index', compact('meta'));
     }
 
-    public function actionContacts()
+    #[NoReturn] public function actionContacts(): void
     {
-        $this->assets->setMeta(
+        $meta = $this->actions->setMeta(
             'Контакты - Витекс',
             'Контакты' . $this->titleTail,
             'Контакты');
+        view('main.contacts', compact('meta'));
     }
-
-    public function actionOferta()
-    {
-        $this->assets->setMeta('Оферта',
-            'Оферта' . $this->titleTail,
-            'Оферта');
-    }
-
-    public function actionAbout()
-    {
-        $this->assets->setMeta('О нас',
-            'О нас' . $this->titleTail,
-            'О нас');
-    }
-
-    public function actionReturnChange()
-    {
-        $this->assets->setMeta('Возврат и обмен',
-            'Возврат и обмен' . $this->titleTail,
-            'Возврат и обмен');
-    }
-
-    public function actionNews()
+    #[NoReturn] public function actionNews(): void
     {
         $content = 'Следите за новостями)';
-        $this->setVars(compact('content'));
-        $this->assets->setMeta('Новости',
+
+        $meta = $this->actions->setMeta(
+            'Новости',
             'Новости' . $this->titleTail,
             'Новости');
+        view('main.news', compact('content', 'meta'));
     }
-
-    public function actionSitemap(): void
+    #[NoReturn] public function actionAbout(): void
     {
-//        $tree = CategoryFormView::sitemap();
-        $categories = "<ul class='category-tree'>" . "</ul>";
-        $content    = file_get_contents(ROOT . '/sitemap.html');
-        $this->setVars(compact('content', 'categories'));
-        $this->assets->setMeta(
-            'Карта сайта - Витекс',
-            'Карта сайта ' . $this->titleTail,
-            'Карта сайта');
+        $meta = $this->actions->setMeta(
+            'О нас',
+            'О нас' . $this->titleTail,
+            'О нас');
+        view('main.about', compact('meta'));
     }
-
-    public function actionYandexauth(): void
+    #[NoReturn] public function actionPromotions(): void
     {
-        $f = 1;
+        $meta = $this->actions->setMeta(
+            'Акции',
+            'Акции' . $this->titleTail,
+            'Акции');
+
+        $activePromotions = PromotionRepository::active()->toArray();
+        $inactivePromotions = PromotionRepository::inactive()->toArray();
+        view('promotion.promotions',
+            compact(
+                'meta',
+                'activePromotions',
+                'inactivePromotions'));
+
     }
-
-    public function actionStatii()
+    #[NoReturn] public function actionStatii(): void
     {
-        $this->assets->setMeta(
+        $meta = $this->actions->setMeta(
             'Статьи - Витекс',
             'Статьи ' . $this->titleTail,
             'Статьи');
+        view('main.statii', compact('meta'));
     }
 
-    public function actionGarantii()
+    #[NoReturn] public function actionGarantii(): void
     {
-        $this->assets->setMeta(
+        $meta = $this->actions->setMeta(
             'Гарантии - Витекс',
             'Гарантии ' . $this->titleTail,
             'Гарантии');
+        view('main.garantii', compact('meta'));
     }
 
-    public function actionPoliticaconf()
+    #[NoReturn] public function actionReturnChange(): void
     {
-        $this->assets->setMeta(
+        $meta = $this->actions->setMeta(
+            'Возврат и обмен',
+            'Возврат и обмен' . $this->titleTail,
+            'Возврат и обмен');
+        view('main.returnchange', compact('meta'));
+    }
+    #[NoReturn] public function actionPoliticaconf()
+    {
+        $meta = $this->actions->setMeta(
             'Политика конфиденциальности - Витекс',
             'Политика конфиденциальности ' . $this->titleTail,
             'Политика конфиденциальности');
+        view('main.politicaconf', compact('meta'));
     }
 
-    public function actionRequisites()
+    #[NoReturn] public function actionOferta(): void
     {
-        $this->assets->setMeta(
+        $meta = $this->actions->setMeta(
+            'Оферта',
+            'Оферта' . $this->titleTail,
+            'Оферта');
+        view('main.oferta', compact('meta'));
+    }
+    #[NoReturn] public function actionSitemap(): void
+    {
+        $categories = "<ul class='category-tree'>" . "</ul>";
+        $content    = file_get_contents(ROOT . '/sitemap.html');
+
+        $meta = $this->actions->setMeta(
+            'Карта сайта - Витекс',
+            'Карта сайта ' . $this->titleTail,
+            'Карта сайта');
+        view('main.sitemap', compact('meta','content'));
+    }
+
+    #[NoReturn] public function actionRequisites(): void
+    {
+        $meta = $this->actions->setMeta(
             'Реквизиты - Витекс',
             'Реквизиты ' . $this->titleTail,
             'Реквизиты');
+        view('main.requisites', compact('meta'));
     }
 
-    public function actionDiscount()
+    #[NoReturn] public function actionDiscount(): void
     {
+        $meta = $this->actions->setMeta(
+            'Скидки - Витекс',
+            'Скидки ' . $this->titleTail,
+            'Скидки от обьема.');
+        view('main.discount', compact('meta'));
     }
 
-    public function actionDelivery()
+    #[NoReturn] public function actionDelivery(): void
     {
+        $meta = $this->actions->setMeta(
+            'Доставка - Витекс',
+            'Доставка ' . $this->titleTail,
+            'Доставка по Росссии.');
+        view('main.delivery', compact('meta'));
     }
 
-    public function actionPayment()
+    #[NoReturn] public function actionPayment(): void
     {
+        $meta = $this->actions->setMeta(
+            'Оплата - Витекс',
+            'Оплата ' . $this->titleTail,
+            'Оплата.');
+        view('main.payment', compact('meta'));
     }
 
     public function actionOtzyvy()

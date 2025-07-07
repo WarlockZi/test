@@ -4,9 +4,9 @@
 namespace app\view\components\Builders\TableBuilder;
 
 
-use app\core\FS;
-use app\core\Icon;
+use app\service\FS;
 use app\view\components\Traits\CleanString;
+use app\view\components\Icon\Icon;
 use Illuminate\Database\Eloquent\Collection;
 
 class Table
@@ -14,7 +14,7 @@ class Table
     use CleanString;
 
     private string $pageTitle = '';
-    private string $header = '';
+    private array $header = [];
     private string $grid = '';
     private array $columns = [];
     private string $class = '';
@@ -36,7 +36,7 @@ class Table
     {
         $list        = new static();
         $list->items = $items;
-        $list->fs    = new FS(__DIR__);
+        $list->fs   = APP->make(FS::class, ['dir'=>__DIR__]);
 
         return $list;
     }
@@ -84,7 +84,7 @@ class Table
         return $this;
     }
 
-    public function header(string $header): static
+    public function header(array $header): static
     {
         $this->header = $header;
         return $this;
@@ -108,14 +108,13 @@ class Table
 
     protected function getDelButton(int $itemId): string
     {
-//        if ($this->headDelCol) {
+
         $hidden    = $itemId ? '' : 'hidden';
         $trashIcon = Icon::trashIcon();
         $str       = "<div {$hidden} class='del cell' $this->dataModel " .
             "data-id='{$itemId}'>$trashIcon</div>";
         return $str;
-//        }
-//        return '';
+
     }
 
     protected function emptyRow(): string
@@ -187,18 +186,11 @@ class Table
         return '';
     }
 
-    public function get(): string
+    public function get(): array
     {
-        try {
-            $this->emptyRow = $this->emptyRow();
-            $this->prepareGridHeader();
-            $this->items = $this->take ? $this->items->take($this->take) : $this->items;
-            $data        = get_object_vars($this);
-            $content     = $this->fs->getContent('tableTemplate', $data);
-            return $this->clean($content);
-
-        } catch (\Throwable $error) {
-            return $error->getMessage();
-        }
+        $this->emptyRow = $this->emptyRow();
+        $this->prepareGridHeader();
+        $this->items = $this->take ? $this->items->take($this->take) : $this->items;
+        return get_object_vars($this);
     }
 }

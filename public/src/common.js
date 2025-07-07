@@ -14,6 +14,7 @@ export const formatter = new Intl.NumberFormat("ru", {
 });
 
 export function objAndFiles2FormData(obj, files, formData = new FormData()) {
+  debugger;
   self.formData = formData;
   if (typeof files === "FileList") {
     for (let i = 0; i < files.length; i++) {
@@ -36,6 +37,39 @@ export function objAndFiles2FormData(obj, files, formData = new FormData()) {
   };
   self.createFormData(obj);
   return self.formData;
+}
+
+function addFiles(formData, files) {
+  // eslint-disable-next-line valid-typeof
+  if (typeof files === "FileList") {
+    for (let i = 0; i < files.length; i++) {
+      formData.formData.append(i, files[i]);
+    }
+  } else {
+    formData.append("file", files);
+  }
+  return formData;
+}
+
+function addData(formData, obj, subKeyStr = "") {
+  for (let i in obj) {
+    let value = obj[i];
+    let subKeyStrTrans = subKeyStr ? subKeyStr + "[" + i + "]" : i;
+
+    if (typeof value === "string" || typeof value === "number") {
+      formData.append(subKeyStrTrans, value);
+    } else if (typeof value === "object") {
+      createFormData(value, subKeyStrTrans);
+    }
+  }
+  return formData;
+}
+
+export function newObjAndFiles2FormData(obj, files) {
+  let formData = new FormData();
+  formData = addFiles(formData, files);
+  formData = addData(formData, obj);
+  return formData;
 }
 
 const debounce = (fn, time = 700) => {
@@ -344,14 +378,11 @@ const time = {
   dMs: 60 * 60 * 24 * 1000,
 };
 
-async function del(url, data = {}, headers = {}) {
-  let p = window.location.search;
-  p = p.match(new RegExp(key + "=([^&=]+)"));
-  return p ? p[1] : false;
-}
-
 async function post(url, data = {}, headers = {}) {
-  const init = setPostBodyHeaders(url, data, headers);
+  const body = setBody(data);
+  const header = setHeaders(data, headers);
+  const init = { method: "POST", header, body };
+
   const res = await sendPost(url, init).catch((err) => {
     console.log(err);
   });
@@ -360,35 +391,42 @@ async function post(url, data = {}, headers = {}) {
   return res;
 }
 
-function isEmptyObj(obj) {
-  return !Object.keys(obj).length;
+function setHeaders(body, headers) {
+  if (body instanceof FormData) {
+    // Заголовок Content-Type НЕ нужно указывать вручную!
+    // Браузер сам установит его с правильным boundary
+    // headers["Content-Type"] = "application/x-www-form-urlencoded";
+    return headers;
+  } else if (isPlainObject(body)) {
+    headers["Content-Type"] = "application/json";
+    headers["X-Requested-With"] = "XMLHttpRequest";
+    return headers;
+  }
 }
 
-function setPostBodyHeaders(url, body, headers) {
-  body.phpSession = getPhpSession();
-  headers = isEmptyObj(headers)
-    ? { "X-Requested-With": "XMLHttpRequest" }
-    : headers;
-  if (!(body instanceof FormData)) {
-    headers["Content-Type"] = "application/x-www-form-urlencoded";
-  } else {
-    return {
-      method: "POST",
-      body: body,
-    };
+function setBody(body) {
+  if (body instanceof FormData) {
+    body.append("phpSession", getPhpSession());
+    return body;
   }
-  return {
-    method: "POST",
-    headers,
-    body: "params=" + JSON.stringify(body, null, 2),
-  };
+  body.phpSession = getPhpSession();
+  return JSON.stringify(body, null, 2);
 }
 
 function damn_ampersand(str) {
   return str.replaceAll("&", "%26");
 }
 
+function isPlainObject(obj) {
+  return (
+    typeof obj === "object" &&
+    obj !== null &&
+    Object.prototype.toString.call(obj) === "[object Object]"
+  );
+}
+
 function sendPost(url, init) {
+  // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
     const res = await fetch(url, init)
       .then(async (res) => {
@@ -420,8 +458,8 @@ function showMessage(res) {
 
 function handleResponse(res) {
   try {
-    if (res?.arr?.popup) {
-      popup.show(res?.arr?.popup);
+    if (res?.popup) {
+      popup.show(res?.popup);
     } else {
       showMessage(res);
     }
@@ -438,31 +476,6 @@ function handleResponse(res) {
     return false;
   }
 }
-
-// function oldPost(url, data) {
-//    return new Promise(async function (resolve, reject) {
-//          data.phpSession = getPhpSession();
-//
-//          let req = new XMLHttpRequest();
-//          req.open('POST', url, true);
-//          req.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-//
-//          if (data instanceof FormData) {
-//             req.send(data);
-//          } else {
-//             req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-//             req.send('param=' + JSON.stringify(data));
-//          }
-//
-//          req.onerror = function (e) {
-//             reject(Error("Network Error" + e.message));
-//          };
-//          req.onload = function () {
-//             resolve(handleResponse(req.response))
-//          }
-//       }
-//    )
-// }
 
 class ElementCollection extends Array {
   on(event, cbOrSelector, cb) {

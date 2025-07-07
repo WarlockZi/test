@@ -2,7 +2,7 @@
 
 namespace app\view\components\ItemBuilder;
 
-use app\core\FS;
+use app\service\FS;
 use app\view\components\Traits\CleanString;
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,7 +35,7 @@ class ItemArrayFieldBuilder
     {
         $field                  = new static();
         $field->fieldName       = $fieldName;
-        $field->fs              = new FS(__DIR__);
+        $field->fs              = new FS();
         $field->dataField       = '';
         $field->contenteditable = '';
         $field->hidden          = '';

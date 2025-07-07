@@ -4,7 +4,7 @@
 namespace app\controller;
 
 
-use app\Repository\SettingsRepository;
+use app\repository\SettingsRepository;
 
 class Address
 {

@@ -2,45 +2,45 @@
 
 namespace app\controller\Admin;
 
-use app\core\Response;
-use app\Repository\ProductFilterRepository;
-use app\Services\Filters\Products\FilterService;
-use app\Services\Filters\Products\PanelService;
-use app\Services\Filters\Products\StringService;
-use app\view\Report\Admin\ReportView;
+use app\action\admin\ReportFilterProductsAction;
+use app\service\Filters\Products\FilterService;
+use app\service\Response;
+use JetBrains\PhpStorm\NoReturn;
 
 
 class ReportController extends AdminscController
 {
     public function __construct(
-        private ReportView              $formView = new ReportView(),
-        private FilterService           $service = new FilterService(),
-        private ProductFilterRepository $repository = new ProductFilterRepository(),
-        private StringService           $stringService = new StringService(),
+        protected ReportFilterProductsAction $actions,
+        private readonly FilterService       $service,
     )
     {
         parent::__construct();
     }
 
-    public function actionFilter(): void
+    #[NoReturn] public function actionFilter(): void
     {
-        $selectFilters = $this->service->getSavedFilters();
-        $filterPanel   = (new PanelService)->getFilterPanel($selectFilters);
+        $selectFilters = $this->actions->getSavedFilters();
+        $filterPanel   = $this->actions->getFilterPanel($selectFilters);
         $filterString  = $this->service->getFilterString($selectFilters);
-        $productsTable = $this->formView->filter($selectFilters, 'Фильтр');
+        $productsTable = $this->actions->filter($selectFilters);
 
-        $this->setVars(compact('productsTable', 'filterString', 'filterPanel'));
+        view('admin.report.productFilter.filterIndex',
+            compact('filterPanel',
+                'productsTable',
+                'filterString'));
     }
 
-    public function actionUpdateFilter()
+    public function actionUpdateFilter(): void
     {
         $req = $this->ajax;
         list($selectFilters, $toSaveFilters) = $this->service->filtersFromReq($req);
         $this->service->saveFilters($toSaveFilters);
-        Response::json([
-            'productsTable' => $this->formView->filter($selectFilters, 'Фильтр'),
+        response()->json([
+            'productsTable' => $this->actions->filter($selectFilters),
             'filterString' => $this->service->getFilterString($selectFilters),
-            'filterPanel' => (new PanelService)->getFilterPanel($selectFilters, $toSaveFilters)]);
+            'filterPanel' => $this->actions->getFilterPanel($selectFilters)
+            ]);
     }
 
 }

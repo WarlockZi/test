@@ -2,9 +2,9 @@
 
 namespace app\controller;
 
-use app\core\Response;
-use app\Repository\CallmeRepository;
-use app\Services\TelegramBot\TelegramBot;
+use app\repository\CallmeRepository;
+use app\service\Response;
+use app\service\TelegramBot\TelegramBot;
 
 class CallmeController extends AppController
 {
@@ -15,9 +15,9 @@ class CallmeController extends AppController
         if (CallmeRepository::firstOrCreate($req)) {
             $TG = new TelegramBot('callme');
             $TG->send($req['phone']);
-            Response::json(['success' => true]);
+            response()->json(['success' => true]);
         }
-        Response::json(['error' => true]);
+        response()->json(['error' => true]);
     }
 
 }

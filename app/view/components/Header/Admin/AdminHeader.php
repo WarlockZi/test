@@ -4,9 +4,8 @@
 namespace app\view\components\Header\Admin;
 
 
-use app\core\FS;
-use app\core\IUser;
-use app\Repository\FeedbackRepository;
+use app\repository\FeedbackRepository;
+use app\service\AuthService\IUser;
 
 class AdminHeader
 {
@@ -14,7 +13,7 @@ class AdminHeader
 
     public function __construct(IUser $user)
     {
-        $fs = new FS(dirname(__DIR__));
+
 
 //        $logo         = $fs->getContent('/Admin/templates/logo_VITEX_grey');
         $searchPanel   = $fs->getContent('/BlueRibbon/templates/search_panel');
@@ -29,8 +28,4 @@ class AdminHeader
         $this->header = $adminSidebar . $adminHeader;
     }
 
-    public function getHeader()
-    {
-        return $this->header;
-    }
 }

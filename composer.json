@@ -2,7 +2,8 @@
   "autoload": {
     "psr-4": {
       "Dotenv\\": "vendor/vlucas/phpdotenv/src",
-      "app\\": "app"
+      "app\\": "app",
+      "public\\blade\\": "app/blade"
     }
   },
   "classmap": [
@@ -10,7 +11,6 @@
     "app"
   ],
   "require": {
-    "ext-simplexml": "*",
     "phpmailer/phpmailer": "^6.4",
     "illuminate/events": "^8.83",
     "illuminate/database": "^8.83",
@@ -18,7 +18,23 @@
     "arthurkushman/php-wss": "^2.0",
     "monolog/monolog": "^3.7",
     "spatie/laravel-sitemap": "^6.4",
-    "eftec/bladeone": "^4.18"
+    "eftec/bladeone": "^4.18",
+    "ext-simplexml": "*",
+    "ext-pdo": "*",
+    "php-di/php-di": "^7.0",
+    "ext-xdebug": "*",
+    "vlucas/phpdotenv": "^5.6",
+    "ext-http": "*",
+    "ext-fileinfo": "*",
+    "ext-mbstring": "*",
+    "illuminate/validation": "^8.83",
+    "illuminate/translation": "^8.83",
+    "ext-imagick": "*",
+    "illuminate/http": "^8.83",
+    "ext-redis": "*",
+    "predis/predis": "^3.0",
+    "illuminate/routing": "^8.83",
+    "illuminate/container": "^8.83"
   },
   "config": {
     "platform-check": false
