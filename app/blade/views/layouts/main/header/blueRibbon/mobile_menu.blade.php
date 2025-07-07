@@ -17,9 +17,6 @@
             </a>
 
             <ul class="nav-items nav-expand-content">
-{{--                <li class="nav-item">--}}
-{{--                    <a class="nav-link nav-back-link" href="#"></a>--}}
-{{--                </li>--}}
 
                 @include('layouts.main.header.blueRibbon.mobileCategoryMenu.mobile_category_menu')
             </ul>

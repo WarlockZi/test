@@ -70,7 +70,7 @@ export default class Product {
     const data = newObjAndFiles2FormData(obj, files[0]);
 
     const res = await post("/adminsc/product/saveMainImage", data);
-    debugger;
+    // debugger;
     const src = res?.mainImage;
     if (src) {
       const mainImage = target.closest(".dnd-container").querySelector("img");
