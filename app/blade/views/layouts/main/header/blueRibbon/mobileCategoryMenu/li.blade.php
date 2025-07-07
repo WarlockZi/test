@@ -1,4 +1,4 @@
-@if(empty($child['children_recursive']))
+@if(!$child->childrenRecursive->count())
 
     <li class="nav-item">
         <a class="nav-link" href="<?= $child['href']; ?>">
@@ -11,4 +11,3 @@
     @include('layouts.main.header.blueRibbon.mobileCategoryMenu.nav-expand')
 
 @endif
-

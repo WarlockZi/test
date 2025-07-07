@@ -5,6 +5,7 @@ namespace app\formRequest;
 
 use app\service\AuthService\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Translation\ArrayLoader;
 use Illuminate\Translation\Translator;
 use Illuminate\Validation\Factory;
@@ -32,9 +33,27 @@ abstract class FormRequest extends Request
 
     public function authorize(): bool
     {
-        $session = $this->all('phpSession');
-        !Auth::validatePphSession($session);
+        $req = ['phpSession' => $this->only('phpSession')['phpSession']];
+        if (!Auth::validatePphSession($req)) throw new \Exception('плохой token');
         return true;
+    }
+
+    public function prepareForValidation(): void
+    {
+        if ($_FILES) {
+            $uploadedFiles = [];
+            foreach ($_FILES as $fileData) {
+                $uploadedFiles[] = new UploadedFile(
+                    $fileData['tmp_name'],          // Temporary file path
+                    $fileData['name'],              // Original name
+                    $fileData['type'],             // MIME type
+                    $fileData['error'],            // Error code
+                    true                           // Test mode (set to false in production)
+                );
+                $_FILES['file']  = $uploadedFiles;
+            }
+        }
+
     }
 
     public function validate(): array
@@ -42,6 +61,8 @@ abstract class FormRequest extends Request
         if (!$this->authorize()) {
             throw new \Exception('Unauthorized', 403);
         }
+
+        $this->prepareForValidation();
 
         $validator = $this->createValidator();
 
@@ -78,16 +99,35 @@ abstract class FormRequest extends Request
         );
     }
 
+    private function UploadedFile2Array(UploadedFile $file): array
+    {
+        return [
+            'originalName' => $file->getClientOriginalName(),
+            'mimeType' => $file->getClientMimeType(),
+            'extension' => $file->getClientOriginalExtension(),
+            'size' => $file->getSize(),
+            'error' => $file->getError(),
+            'path' => $file->getPathname(),
+        ];
+    }
+
+    public function after(): array
+    {
+        $arr = [];
+        if ($_FILES) {
+            foreach ($_FILES['file'] as $fileData) {
+                $arr[] = $this->UploadedFile2Array($fileData);
+            }
+        }
+        return $arr;
+    }
 
     public function validated(): array
     {
-        return $this->createValidator()->validate();
+        $this->authorize();
+        $this->prepareForValidation();
+        $validated = $this->createValidator()->validate();
+        return $this->after();
     }
 
-//    public function all($keys = null): array
-//    {
-//        // Здесь должна быть реализация получения данных запроса
-//        // Например, можно использовать $_POST, $_GET или php://input
-//        return array_merge($_GET, $_POST, $_FILES);
-//    }
 }

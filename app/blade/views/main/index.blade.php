@@ -1,9 +1,13 @@
-<?php
-
+@php
 use app\view\components\Icon\Icon;
+@endphp
 
-?>
+@section('title', $meta->title)
+@section('description', $meta->description)
+@section('keywords', $meta->keywords)
+
 @extends('layouts.main.main')
+
 
 @section('content')
 <a href="/catalog/perchatki_medicinskie" class="banner gloves">
