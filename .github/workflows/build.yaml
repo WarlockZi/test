@@ -7,7 +7,7 @@ on:
       - "dev"
 
 jobs:
-  build-and-deploy:
+  build-and-deploy-js:
     runs-on: ubuntu-latest
 
     steps:
