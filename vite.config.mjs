@@ -3,7 +3,6 @@ import liveReload from 'vite-plugin-live-reload';
 import mkcert from 'vite-plugin-mkcert';
 import path from 'node:path';
 import {NodePackageImporter} from 'sass-embedded';
-import {visualizer} from 'rollup-plugin-visualizer';
 
 export default defineConfig(async ({command, mode}) => {
       const env = loadEnv(mode, process.cwd());
@@ -74,11 +73,7 @@ export default defineConfig(async ({command, mode}) => {
                __dirname + '/app/**/*.php',
                __dirname + '/.env',
             ]),
-            visualizer({
-               open: false, // Opens the report in browser automatically
-               gzipSize: true,
-               brotliSize: true,
-            }),
+
          ],
 
 
