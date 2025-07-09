@@ -5,7 +5,6 @@ namespace app\controller;
 use app\action\CategoryAction;
 use app\repository\CategoryRepository;
 use app\repository\OrderRepository;
-use app\service\Cache\Redis\Cache;
 use app\service\Router\IRequest;
 use JetBrains\PhpStorm\NoReturn;
 

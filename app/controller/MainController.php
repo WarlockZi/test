@@ -161,4 +161,25 @@ class MainController extends AppController
         view('main.payment', compact('meta'));
     }
 
+    public function actionOtzyvy()
+    {
+        $slug = 'Отзывы';
+        $meta = $this->actions->setMeta(
+            $slug.' - Витекс',
+            $slug . $this->titleTail,
+            $slug);
+        view('main.otzyvy', compact('meta'));
+
+    }
+
+    public function actionFaq()
+    {
+        $slug = 'FAQ';
+        $meta = $this->actions->setMeta(
+            $slug.' - Витекс',
+            $slug . $this->titleTail,
+            $slug);
+        view('main.faq', compact('meta'));
+    }
+
 }

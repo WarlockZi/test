@@ -38,7 +38,8 @@ Header set Cache-Control "max-age=2628000, public"
 
 <ifModule mod_headers.c>
 Header set Connection keep-alive
+Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+Header set Referrer-Policy: no-referrer-when-downgrade
+Header set X-Content-Type-Options: nosniff
+Header set X-Frame-Options: deny
 </ifModule>
-
-
-

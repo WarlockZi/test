@@ -193,9 +193,9 @@ export default class cartLogin {
 
   async login(e) {
     YM("click_on_login");
-    const dto = this.authDTO(e);
-    const content = e.target.closest(".content");
-    const res = await post("/auth/login", dto);
+    const dto = this.authDTO(e),
+      content = e.target.closest(".content"),
+      res = await post("/auth/login", dto);
 
     if (res?.error) {
       // popup.show(res?.error);

@@ -33,7 +33,9 @@ abstract class FormRequest extends Request
 
     public function authorize(): bool
     {
-        $req = ['phpSession' => $this->only('phpSession')['phpSession']];
+
+        response()->json($this->json()->all());
+        $req = ['phpSession' => $this->json('phpSession')];
         if (!Auth::validatePphSession($req)) throw new \Exception('плохой token');
         return true;
     }
@@ -126,7 +128,11 @@ abstract class FormRequest extends Request
     {
         $this->authorize();
         $this->prepareForValidation();
-        $validated = $this->createValidator()->validate();
+        $validator = $this->createValidator();
+
+
+        $d = $validator->validate();
+
         return $this->after();
     }
 

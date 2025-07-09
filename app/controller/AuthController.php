@@ -31,7 +31,7 @@ class AuthController extends AppController
      */
     #[NoReturn] public function actionLogin(LoginRequest $request): void
     {
-        $validated = $request->validated();
+        $validated = $request->validate();
 
         $user = User::where('email', $validated['email'])->with('role')->first();
 
@@ -48,7 +48,8 @@ class AuthController extends AppController
         Auth::setUser($user);
 
         if ($user->isEmployee()) {
-            response()->redirect('adminsc');
+            response()->json(['role' => 'employee', 'id' => $user['id']]);
+//            response()->redirect('adminsc');
         } else if ($user->isAdmin()) {
             response()->json(['role' => 'admin', 'id' => $user['id']]);
         } else {
@@ -88,9 +89,7 @@ class AuthController extends AppController
 
     public function actionRegister(RegisterRequest $request): void
     {
-        $this->mailer = new PHPMail();
-
-        $request = $request->validated();
+        $request = $request->validate();
         if (!empty($this->userRepository->getByEmail($request['email']))) {
             response()->json(['error' => 'mail exists',
                 'message' => 'Такая почта уже существует',
@@ -101,6 +100,7 @@ class AuthController extends AppController
         $user = $this->userRepository->createUser($request);
         if (!$user) response()->json(['error' => 'no user', 'popup' => "Пользователь не создан"]);
         try {
+        $this->mailer = new PHPMail();
             $this->mailer->sendRegistrationMail($user);
             response()->json(['success' => true, 'popup' => 'Письмо с регистрацией отпрвлено на указанный Вами email']);
         } catch (Throwable $exception) {

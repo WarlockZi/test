@@ -18,12 +18,13 @@ import CartLogin from "@src/Auth/CartLogin.js";
 import CatalogItem from "@src/Admin/components/catalog-item/catalog-item.js";
 import { $ } from "@src/common.js";
 import YM from "@src/Main/YM.js";
-import Search from "@src/components/search/search.js";
+import Search from "@components/search/search.js";
 import ChatLocalStorage from "@components/chatLocalStorage/ChatLocalStorage.js";
 import Feedback from "@src/Feedback/Feedback.js";
 import CallMe from "@src/CallMe/CallMe.js";
 import setLocalStorageCartId from "@components/cart_id/cart_id.js";
-
+import "./d-goals.js";
+import "./demis/feed_back.js";
 // import "vite/modulepreload-polyfill";
 
 window.YM = YM;
