@@ -34,6 +34,8 @@ abstract class FormRequest extends Request
 
     public function authorize(): bool
     {
+        $f = $this->json()->all();
+        response()->json($f);
         $req = ['phpSession' => $this->json('phpSession')];
         if (!Auth::validatePphSession($req)) throw new \Exception('плохой token');
         return true;
@@ -92,17 +94,12 @@ abstract class FormRequest extends Request
             )
         );
 
-        try {
             return $factory->make(
                 $this->all(),
                 $this->rules(),
                 $this->messages(),
                 $this->attributes()
             );
-
-        } catch (Throwable $exception) {
-            $exc = $exception;
-        }
     }
 
     private function UploadedFile2Array(UploadedFile $file): array

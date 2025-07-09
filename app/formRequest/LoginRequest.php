@@ -10,7 +10,7 @@ use JetBrains\PhpStorm\NoReturn;
 class LoginRequest extends FormRequest
 {
     public function __construct(
-        protected $allowedFields = ['email', 'password']
+        protected $allowedFields = ['email', 'password','phpSession']
     )
     {
         parent::__construct();
