@@ -23,7 +23,8 @@ import ChatLocalStorage from "@components/chatLocalStorage/ChatLocalStorage.js";
 import Feedback from "@src/Feedback/Feedback.js";
 import CallMe from "@src/CallMe/CallMe.js";
 import setLocalStorageCartId from "@components/cart_id/cart_id.js";
-
+import "./d-goals.js";
+import "./demis/feed_back.js";
 // import "vite/modulepreload-polyfill";
 
 window.YM = YM;

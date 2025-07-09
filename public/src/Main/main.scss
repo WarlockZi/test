@@ -15,6 +15,7 @@
 @use '../components/popup.scss';
 @use "../components/breadcrumbs";
 @use "cart";
+@use "demis/demis";
 
 //@import "@srvc";
 @keyframes blinking {
@@ -283,7 +284,7 @@
   }
 }
 
-.workflow {
+.block_work {
   display: flex;
   flex-flow: column;
   align-items: center;
@@ -301,52 +302,51 @@
 
   .workflow__wrap {
     display: flex;
-    flex-flow: column;
-    align-items: start;
-    margin: 0 auto;
-    width: clamp(10px, 58vw, 350px);
 
-    .step {
-      font-size: clamp(8px, 6vw, 17px);
-      font-weight: 400;
-      padding: clamp(4px, 3vw, 20px) 0;
-      position: relative;
-      transform: translate(0, 0);
-      transition: transform 1s ease-in-out, opacity ease-in-out 1s;
-      opacity: 1;
-
-      &.fade-in {
-        opacity: 0;
-        transform: translate(-120px, 30px);
+    .block_work {
+      flex-direction: column;
+    }
+    @media (max-width: 450px) {
+      .burger .info .phone {
+        display: none;
       }
+    }
+    .block_work {
+      display: flex;
+    }
 
-      &:after {
-        content: "";
-        position: absolute;
-        left: -33px;
-        top: 22px;
-        width: 15px;
-        height: 15px;
-        border-radius: 10px;
-        background-color: var.$color-main;
+    .block1 {
+      margin-right: 10px;
+      width: 20%;
+    }
+
+    .img_main {
+      width: 150px;
+      text-align: center;
+    }
+
+    .strelka {
+      width: 50px;
+      height: 50px;
+    }
+
+    @media(max-width: 768px) {
+      .strelka {
+        display: none;
       }
+      .block_work {
+        flex-wrap: wrap;
 
+        .block_work__wrap{
 
-      &:before {
-        content: "";
-        position: absolute;
-        left: -27px;
-        top: 44px;
-        width: 3px;
-        height: 88%;
-        background-color: var.$color-main;
+        }
+      }
+      .block1 {
+        width: 100%;
       }
     }
 
-    .step.last:before {
-      content: '';
-      width: 0;
-    }
+
   }
 
   .about {

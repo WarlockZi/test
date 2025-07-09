@@ -3,16 +3,13 @@
 namespace app\controller;
 
 
-use app\model\Category;
-use app\Repository\CategoryRepository;
-use app\view\Category\CategoryFormView;
-use app\view\components\Builders\SelectBuilder\optionBuilders\TreeABuilder;
+use app\action\BrandAction;
 
 class BrandsController extends AppController
 {
-
     public function __construct(
-        private readonly string $titleTail = " купить в интернет-магазине VITEX в Вологде. Большой ассортимент медицинской одежды, оборудования и расходников по выгодной цене. Звоните и заказывайте прямо сейчас онлайн на сайте",
+        private readonly BrandAction $actions,
+
     )
     {
         parent::__construct();
@@ -20,121 +17,118 @@ class BrandsController extends AppController
 
     public function actionBenovy()
     {
-        $this->assets->setMeta(
-            'Benovy - Витекс',
-            'Benovy ' . $this->titleTail,
-            'Benovy');
-
         $brand = 'Benovy';
-        $this->setVars(compact('brand'));
+        $meta = $this->actions->setMeta('Benovy');
+
+        view('brand.brand',compact('meta','brand'));
     }
     public function actionDispodent()
     {
-        $this->assets->setMeta(
+        $meta = $this->actions->setMeta(
             'Dispodent - Витекс',
             'Dispodent ' . $this->titleTail,
             'Dispodent');
 
         $brand = 'Dispodent';
-        $this->setVars(compact('brand'));
+        view('brand.brand',compact('meta','brand'));
     }
         
     public function actionElegreen()
     {
-        $this->assets->setMeta(
+        $meta = $this->actions->setMeta(
             'Elegreen - Витекс',
             'Elegreen ' . $this->titleTail,
             'Elegreen');
 
         $brand = 'Elegreen';
-        $this->setVars(compact('brand'));
+        view('brand.brand',compact('meta','brand'));
     }
         
     public function actionImsstore()
     {
-        $this->assets->setMeta(
+        $meta = $this->actions->setMeta(
             'Imsstore - Витекс',
             'Imsstore ' . $this->titleTail,
             'Imsstore');
 
         $brand = 'Imsstore';
-        $this->setVars(compact('brand'));
+        view('brand.brand',compact('meta','brand'));
     }
         
     public function actionKlever()
     {
-        $this->assets->setMeta(
+        $meta = $this->actions->setMeta(
             'Klever - Витекс',
             'Klever ' . $this->titleTail,
             'Klevervy');
 
         $brand = 'Klever';
-        $this->setVars(compact('brand'));
+        view('brand.brand',compact('meta','brand'));
     }
         
     public function actionMatrix()
     {
-        $this->assets->setMeta(
+        $meta = $this->actions->setMeta(
             'Matrix - Витекс',
             'Matrix ' . $this->titleTail,
             'Matrixvy');
 
         $brand = 'Matrix';
-        $this->setVars(compact('brand'));
+        view('brand.brand',compact('meta','brand'));
     }
         
     public function actionMedenta()
     {
-        $this->assets->setMeta(
+        $meta = $this->actions->setMeta(
             'Medenta - Витекс',
             'Medenta ' . $this->titleTail,
             'Medentay');
 
         $brand = 'Medenta';
-        $this->setVars(compact('brand'));
+        view('brand.brand',compact('meta','brand'));
     }
         
     public function actionMediok()
     {
-        $this->assets->setMeta(
+        $meta = $this->actions->setMeta(
             'Mediok - Витекс',
             'Mediok ' . $this->titleTail,
             'Mediokvy');
 
         $brand = 'Mediok';
-        $this->setVars(compact('brand'));
+        view('brand.brand',compact('meta','brand'));
     }
         
     public function actionProtecodent()
     {
-        $this->assets->setMeta(
+        $meta = $this->actions->setMeta(
             'Protecodent - Витекс',
             'Protecodent ' . $this->titleTail,
             'Protecodent');
 
         $brand = 'Protecodent';
-        $this->setVars(compact('brand'));
+        view('brand.brand',compact('meta','brand'));
     }
         
     public function actionSitekmed()
     {
-        $this->assets->setMeta(
+        $meta = $this->actions->setMeta(
             'Sitekmed - Витекс',
             'Sitekmed ' . $this->titleTail,
             'Sitekmed');
 
         $brand = 'Sitekmed';
-        $this->setVars(compact('brand'));
+        view('brand.brand',compact('meta','brand'));
     }
         
     public function actionUnite()
     {
-        $this->assets->setMeta(
+        $meta = $this->actions->setMeta(
             'Unite - Витекс',
             'Unite ' . $this->titleTail,
             'Uniteovy');
 
         $brand = 'Unite';
-        $this->setVars(compact('brand'));
+        view('brand.brand',compact('meta','brand'));
     }       
 }
