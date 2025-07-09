@@ -1,3 +1,11 @@
+@section('title', $meta->title)
+@section('description', $meta->description)
+@section('keywords', $meta->keywords)
+
+@extends('layouts.main.main')
+
+@section('content')
+
 <h1>Отзывы</h1>
 <div class="reviews-list">
     <div class="review-item">
@@ -42,3 +50,4 @@
         </div>
     </div>
 </div>
+@endsection

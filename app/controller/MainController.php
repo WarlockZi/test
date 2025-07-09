@@ -163,17 +163,23 @@ class MainController extends AppController
 
     public function actionOtzyvy()
     {
-        $this->assets->setMeta('Отзывы',
-            'Отзывы' . $this->titleTail,
-            'Отзывы');
+        $slug = 'Отзывы';
+        $meta = $this->actions->setMeta(
+            $slug.' - Витекс',
+            $slug . $this->titleTail,
+            $slug);
+        view('main.otzyvy', compact('meta'));
+
     }
 
     public function actionFaq()
     {
-        $this->assets->setMeta('FAQ',
-            'FAQ' . $this->titleTail,
-            'FAQ');
+        $slug = 'FAQ';
+        $meta = $this->actions->setMeta(
+            $slug.' - Витекс',
+            $slug . $this->titleTail,
+            $slug);
+        view('main.faq', compact('meta'));
     }
-
 
 }

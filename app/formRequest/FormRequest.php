@@ -11,6 +11,7 @@ use Illuminate\Translation\Translator;
 use Illuminate\Validation\Factory;
 use Illuminate\Validation\Validator;
 use JetBrains\PhpStorm\NoReturn;
+use Throwable;
 
 abstract class FormRequest extends Request
 {
@@ -33,7 +34,7 @@ abstract class FormRequest extends Request
 
     public function authorize(): bool
     {
-        $req = ['phpSession' => $this->only('phpSession')['phpSession']];
+        $req = ['phpSession' => $this->json('phpSession')];
         if (!Auth::validatePphSession($req)) throw new \Exception('плохой token');
         return true;
     }
@@ -91,12 +92,17 @@ abstract class FormRequest extends Request
             )
         );
 
-        return $factory->make(
-            $this->all(),
-            $this->rules(),
-            $this->messages(),
-            $this->attributes()
-        );
+        try {
+            return $factory->make(
+                $this->all(),
+                $this->rules(),
+                $this->messages(),
+                $this->attributes()
+            );
+
+        } catch (Throwable $exception) {
+            $exc = $exception;
+        }
     }
 
     private function UploadedFile2Array(UploadedFile $file): array
@@ -126,7 +132,14 @@ abstract class FormRequest extends Request
     {
         $this->authorize();
         $this->prepareForValidation();
-        $validated = $this->createValidator()->validate();
+        $validator = $this->createValidator();
+        try {
+
+           $d =  $validator->validate();
+        } catch (Throwable $exception) {
+            $exc = $exception;
+        }
+
         return $this->after();
     }
 

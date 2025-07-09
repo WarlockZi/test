@@ -1,3 +1,10 @@
+@section('title', $meta->title)
+@section('description', $meta->description)
+@section('keywords', $meta->keywords)
+
+@extends('layouts.main.main')
+
+@section('content')
 <h1>FAQ</h1>
 <div class="faqs-list">
     <div class="faq-item">
@@ -61,6 +68,7 @@
         </div>
     </div>
 </div>
+@endsection
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const faqItems = document.querySelectorAll(".faq-item");

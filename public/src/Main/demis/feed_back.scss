@@ -1,0 +1,21 @@
+.show-feedback{
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .show-feedback{
+    display: block;
+    color: #fff;
+    text-align: center;
+    padding: 7px;
+  }
+  .feedback-form{
+    display: none;
+  }
+  .footer .menu .column{
+    order: 1;
+  }
+  .footer .menu .column.feedback{
+    order: 0;
+  }
+}
