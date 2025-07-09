@@ -50,10 +50,10 @@ class Router
         $request = $this->request;
         $this->matchRoute($request);
         $controller = $request->controller();
-        if (!class_exists($controller)) throw new NoControllerException('Bad controller');
+        if (!class_exists($controller)) throw new NoControllerException('Bad controller '.$controller);
 
         $action = $request->action();
-        if (!method_exists($controller, $action)) throw new NoMethodException('Bad action');
+        if (!method_exists($controller, $action)) throw new NoMethodException('Bad action '. $action);
 
         $this->middlwares($request, $controller, $action);
     }
