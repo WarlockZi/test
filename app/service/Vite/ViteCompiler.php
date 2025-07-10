@@ -13,12 +13,12 @@ class ViteCompiler
 {
     public function __construct(
         private string $entry = '',
-        private string          $devHost = '',
-        private array           $manifest = [],
-        private string          $manifestPath = '',
-        private string          $productionPath = '',
-        private string          $js = '',
-        private string          $css = '',
+        private string $devHost = '',
+        private array  $manifest = [],
+        private string $manifestPath = '',
+        private string $productionPath = '',
+        private string $js = '',
+        private string $css = '',
 
     )
     {
@@ -38,6 +38,7 @@ class ViteCompiler
         $this->entry = $entry;
         return $this->getAssets();
     }
+
     public function getAssets(): string
     {
         $this->js  = "\n" . $this->jsTag()
@@ -111,10 +112,13 @@ class ViteCompiler
         return $urls;
     }
 
-    function getManifest(): array|null
+    function getManifest(): array
     {
-        $content = file_get_contents($this->manifestPath);
-        return json_decode($content, true) ?? null;
+        if (is_readable($this->manifestPath)) {
+            $content = file_get_contents($this->manifestPath);
+            return json_decode($content, true) ?? [];
+        }
+        return [];
     }
 
 }
