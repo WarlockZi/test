@@ -51,7 +51,7 @@ jobs:
         run: npm run vbuild
 
       - name: Upload artifact (optional)
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dist
           path: dist
