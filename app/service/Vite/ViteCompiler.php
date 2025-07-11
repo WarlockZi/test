@@ -22,7 +22,7 @@ class ViteCompiler
 
     )
     {
-        $protocol = env('VITE_PROTOCOL', 'http://');
+        $protocol = env('VITE_PROTOCOL', 'https://');
         $host     = env('VITE_HOST', '127.0.0.1');
         $port     = env('VITE_PORT', 5173);
         $path     = env('VITE_PRODUCTION_PATH', '/build/');
