@@ -1,6 +1,6 @@
 <?php
 use \app\service\FS;
-define("ROOT", dirname(__DIR__, 2));
+define("ROOT", dirname(__DIR__, 3));
 define('DEV', env("VITE_DEV"));
 
 define('PIC_SERVICE', env("PIC_SERVICE"));
