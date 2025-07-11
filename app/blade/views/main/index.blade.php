@@ -116,17 +116,39 @@
     <div class="brands">
         <div class="brands__title typing-animation">Популярные бренды</div>
         <div class="brands__wrap">
-            <a href="/brands/benovy"><img src="/pic/brands/benovy.svg"></a>
-            <a href="/brands/dispodent"><img src="/pic/brands/dispodent.png"></a>
-            <a href="/brands/elegreen"><img src="/pic/brands/EleGreen.png"></a>
-            <a href="/brands/imsstore"><img src="/pic/brands/imsstore.gif"></a>
-            <a href="/brands/klever"><img src="/pic/brands/klever.png"></a>
-            <a href="/brands/matrix"><img src="/pic/brands/matrix.svg"></a>
-            <a href="/brands/medenta"><img src="/pic/brands/medenta.jpg"></a>
-            <a href="/brands/mediok"><img src="/pic/brands/mediok.svg"></a>
-            <a href="/brands/protecodent"><img src="/pic/brands/protecodent.svg"></a>
-            <a href="/brands/sitekmed"><img src="/pic/brands/sitekmed.png"></a>
-            <a href="/brands/unite"><img src="/pic/brands/unite.svg"></a>
+            <a href="/brands/benovy">
+{{--                <img src="/pic/brands/benovy.svg">--}}
+            </a>
+            <a href="/brands/dispodent">
+{{--                <img src="/pic/brands/dispodent.png">--}}
+            </a>
+            <a href="/brands/elegreen">
+{{--                <img src="/pic/brands/EleGreen.png">--}}
+            </a>
+            <a href="/brands/imsstore">
+{{--                <img src="/pic/brands/imsstore.gif">--}}
+            </a>
+            <a href="/brands/klever">
+{{--                <img src="/pic/brands/klever.png">--}}
+            </a>
+            <a href="/brands/matrix">
+{{--                <img src="/pic/brands/matrix.svg">--}}
+            </a>
+            <a href="/brands/medenta">
+{{--                <img src="/pic/brands/medenta.jpg">--}}
+            </a>
+            <a href="/brands/mediok">
+{{--                <img src="/pic/brands/mediok.svg">--}}
+            </a>
+            <a href="/brands/protecodent">
+{{--                <img src="/pic/brands/protecodent.svg">--}}
+            </a>
+            <a href="/brands/sitekmed">
+{{--                <img src="/pic/brands/sitekmed.png">--}}
+            </a>
+            <a href="/brands/unite">
+{{--                <img src="/pic/brands/unite.svg">--}}
+            </a>
 
         </div>
     </div>
