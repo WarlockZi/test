@@ -62,5 +62,5 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_KEY }}
           port: ${{ secrets.SERVER_PORT||22 }}
-          source: "dist/*"
+          source: "public/build/*"
           target: ${{ secrets.build_dest }}
