@@ -34,7 +34,7 @@ jobs:
 
 
   build-and-deploy-js:
-    needs: build-and-deploy-js
+    needs: deploy-php
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
