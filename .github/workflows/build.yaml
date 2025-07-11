@@ -34,7 +34,7 @@ jobs:
 
 
   build-and-deploy-js:
-    needs: deploy-php
+    needs: build-and-deploy-js
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -65,4 +65,3 @@ jobs:
           port: ${{ secrets.SERVER_PORT||22 }}
           source: "dist/*"
           target: ${{ secrets.build_dest }}
-          rm: true
