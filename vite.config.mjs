@@ -6,7 +6,6 @@ import {NodePackageImporter} from 'sass-embedded';
 
 export default defineConfig(async ({command, mode}) => {
       const env = loadEnv(mode, process.cwd());
-      console.log('dev - ' + env.VITE_DEV);
 
       const base = env.VITE_DEV
          ? './'
