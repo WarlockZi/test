@@ -7,7 +7,7 @@ on:
       - "dev"
 
 jobs:
-  build-and-deploy-js:
+  build-deploy-js:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,7 +24,13 @@ jobs:
       - name: Build project
         run: npm run vbuild
 
-  deploy:
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+            name: build-output
+            path: public/build/
+
+  deploy-php:
     name: deploy-php
     runs-on: ubuntu-latest
     environment: main < -- here
