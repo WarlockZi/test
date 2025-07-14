@@ -44,8 +44,6 @@
 
 </head>
 
-
-
 <body class="preload">
 
 @include('layouts.main.header.index')
