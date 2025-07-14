@@ -33,7 +33,6 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           source: "public/build/*"
           target: ${{ secrets.BUILD_DEST }}
-          rm: true
 
   deploy-php:
     name: deploy-php
