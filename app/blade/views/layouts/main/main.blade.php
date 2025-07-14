@@ -49,7 +49,6 @@
 
 @include('layouts.main.header.index')
 
-
 <div class="user-content-wrap">
     <main class="user-content">
         @if (Auth::userIsAdmin())
