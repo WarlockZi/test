@@ -40,6 +40,7 @@
         @include('components.yaMetrica.ya_metrica')
     @endif
 
+
     {!! (APP->get(Vite::class))->vite(['Auth/auth.js','Main/main.js']) !!}
 
 </head>
