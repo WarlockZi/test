@@ -23,10 +23,7 @@ class App
     {
         $container = new Container();
 
-        error_log($container);
         define('APP', $container());
-        var_dump('------- app -----');
-        var_dump(APP);
 
         APP->get(Capsule::class);
 
