@@ -23,7 +23,7 @@ class App
     {
         $container = new Container();
 
-        var_dump($container);
+        error_log($container);
         define('APP', $container());
         var_dump('------- app -----');
         var_dump(APP);
