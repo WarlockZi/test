@@ -5,7 +5,6 @@ phpstorm.config.js
 refs/
 .env
 
-storage/app/*
 storage/framework/*
 storage/logs/*
 
@@ -14,4 +13,5 @@ composer.lock
 vendor/*
 
 node_modules/
+package-lock.json
 public/build/*
