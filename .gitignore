@@ -5,7 +5,8 @@ phpstorm.config.js
 refs/
 .env
 
-storage/framework/*
+storage/framework/caches/*
+storage/framework/container/*
 storage/logs/*
 
 composer.phar
