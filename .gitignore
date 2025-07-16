@@ -5,7 +5,8 @@ phpstorm.config.js
 refs/
 .env
 
-storage/framework/caches/*
+
+storage/framework/caches/blade/*
 storage/framework/container/*
 storage/logs/*
 
