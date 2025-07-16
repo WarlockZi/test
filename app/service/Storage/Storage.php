@@ -4,7 +4,7 @@
 namespace app\service\Storage;
 
 
-use app\service\FS;
+use app\service\Fs\FS;
 use DirectoryIterator;
 
 class Storage

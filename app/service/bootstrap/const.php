@@ -1,5 +1,7 @@
 <?php
-use \app\service\FS;
+
+use app\service\Fs\FS;
+
 define("ROOT", dirname(__DIR__, 3));
 define('DEV', env("VITE_DEV"));
 
@@ -12,4 +14,4 @@ define('CACHE_APP', env("CACHE_APP"));
 
 define("APP_STORAGE", FS::platformSlashes(ROOT . '/storage/app/'));
 define("FRAMEWORK_STORAGE", FS::platformSlashes(ROOT . '/storage/framework/'));
-define("LOG_STORAGE", FS::platformSlashes(ROOT . '/storage/log/'));
+define("LOG_STORAGE", FS::platformSlashes(ROOT . '/storage/logs/'));

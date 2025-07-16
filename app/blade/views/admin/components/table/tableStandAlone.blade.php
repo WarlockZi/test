@@ -71,8 +71,7 @@
 
     <!--  ADD BUTTON  -->
     <div class="buttons">
-        <?= $data['add']; ?>
+        <div class="add-model" {!! $data['pivot'] !!}>+</div>
     </div>
-
 
 </div>

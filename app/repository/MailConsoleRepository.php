@@ -2,7 +2,7 @@
 
 namespace app\repository;
 
-use app\service\FS;
+use app\service\Fs\FS;
 
 class MailConsoleRepository
 {

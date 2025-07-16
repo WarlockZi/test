@@ -6,7 +6,7 @@ namespace app\repository;
 
 use app\model\Question;
 use app\model\Test;
-use app\service\FS;
+use app\service\Fs\FS;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 

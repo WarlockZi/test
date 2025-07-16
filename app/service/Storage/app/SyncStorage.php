@@ -4,7 +4,7 @@
 namespace app\service\Storage\app;
 
 
-use app\service\FS;
+use app\service\Fs\FS;
 use app\service\Storage\Storage;
 
 class SyncStorage extends Storage

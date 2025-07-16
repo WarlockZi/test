@@ -4,9 +4,9 @@
 namespace app\view\components\Builders\TableBuilder;
 
 
-use app\service\FS;
-use app\view\components\Traits\CleanString;
+use app\service\Fs\FS;
 use app\view\components\Icon\Icon;
+use app\view\components\Traits\CleanString;
 use Illuminate\Database\Eloquent\Collection;
 
 class Table
@@ -22,7 +22,8 @@ class Table
     private bool $headEditCol = false;
     private bool $headDelCol = false;
     private string $emptyRow = '';
-    private string $add = '';
+    private bool $add = false;
+    private string $pivot = '';
     private string $dataRelation = '';
     private string $dataRelationType = '';
     private string $dataModel = '';
@@ -32,13 +33,13 @@ class Table
 
     private FS $fs;
 
-    public static function build(Collection|null $items): self
+    public static function build(Collection $items): self
     {
-        $list        = new static();
-        $list->items = $items;
-        $list->fs   = APP->make(FS::class, ['dir'=>__DIR__]);
+        $table        = new static();
+        $table->items = $items;
+        $table->fs    = APP->make(FS::class, ['dir' => __DIR__]);
 
-        return $list;
+        return $table;
     }
 
     public function take(int $take): static
@@ -159,10 +160,10 @@ class Table
         return $this;
     }
 
-    public function addButton(string $pivot = ''): static
+    public function addButton(bool $pivot = false): static
     {
-        $this->addButton = $pivot;
-        $this->add       = $this->fs->getContent('add', ['addButton' => $this->addButton]);
+        $this->add   = true;
+        $this->pivot = $pivot ? "data-pivot-field" : '';
         return $this;
     }
 

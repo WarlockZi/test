@@ -4,7 +4,7 @@
 namespace app\service\Logger;
 
 
-use app\service\FS;
+use app\service\Fs\FS;
 
 class ErrorLogger implements ILogger
 {

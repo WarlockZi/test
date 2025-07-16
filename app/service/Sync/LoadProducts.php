@@ -6,8 +6,9 @@ namespace app\service\Sync;
 use app\model\Category;
 use app\model\Product;
 use app\model\ProductProperty;
-use app\service\Router\SlugService;
+
 use app\service\ShortLink\ShortlinkService;
+use app\service\Slug\SlugService;
 use Carbon\Carbon;
 use Throwable;
 

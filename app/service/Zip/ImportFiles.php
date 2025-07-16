@@ -2,7 +2,7 @@
 
 namespace app\service\Zip;
 
-use app\service\FS;
+use app\service\Fs\FS;
 
 class ImportFiles
 {

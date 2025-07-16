@@ -2,7 +2,7 @@
 
 namespace app\blade;
 
-use app\service\FS;
+use app\service\Fs\FS;
 use eftec\bladeone\BladeOne;
 
 class Blade extends BladeOne

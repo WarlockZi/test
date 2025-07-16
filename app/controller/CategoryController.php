@@ -10,7 +10,6 @@ use JetBrains\PhpStorm\NoReturn;
 
 class CategoryController extends AppController
 {
-
     public function __construct(
         protected CategoryRepository    $repo,
         private readonly CategoryAction $actions,

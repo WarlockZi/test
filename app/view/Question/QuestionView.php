@@ -8,7 +8,7 @@ use app\model\Question;
 use app\model\Test;
 use app\repository\ImageRepository;
 use app\repository\QuestionRepository;
-use app\service\FS;
+use app\service\Fs\FS;
 use app\view\Test\TestView;
 
 class QuestionView
