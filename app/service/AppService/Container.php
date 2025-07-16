@@ -21,6 +21,10 @@ class Container
 //            unlink($containerCompiled);
 //        }
 
+        $containerPath = ROOT . '/storage/framework/container';
+        if (!is_writable($containerPath)) {
+            throw new Exception("Container path is not writable");
+        }
         $container = new ContainerBuilder();
 
         $container->addDefinitions('../config/containerConfig.php');
@@ -28,7 +32,7 @@ class Container
 
         $container
             ->useAutowiring(true)
-            ->enableCompilation(ROOT . '/storage/framework/container');
+            ->enableCompilation($containerPath);
 
         return $container->build();
     }
