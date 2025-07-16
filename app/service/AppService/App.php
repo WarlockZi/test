@@ -24,7 +24,6 @@ class App
         $container = new Container();
 
         define('APP', $container());
-        error_log('---App---defined'.defined('APP'));
 
         APP->get(Capsule::class);
 
