@@ -6,8 +6,8 @@ refs/
 .env
 
 
+storage/framework/container/CompiledContainer.php
 storage/framework/caches/blade/*
-storage/framework/container/*
 storage/logs/*
 
 composer.phar
