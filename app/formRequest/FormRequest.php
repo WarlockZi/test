@@ -33,8 +33,6 @@ abstract class FormRequest extends Request
 
     public function authorize(): bool
     {
-
-        response()->json($this->json()->all());
         $req = ['phpSession' => $this->json('phpSession')];
         if (!Auth::validatePphSession($req)) throw new \Exception('плохой token');
         return true;

@@ -22,7 +22,7 @@ class Container
 //        }
 
         $containerPath = ROOT . '/storage/framework/container';
-        if (!is_writable($containerPath)) {
+        if (!is_writable($containerPath)) {// should be 777
             throw new Exception("Container path is not writable");
         }
         $container = new ContainerBuilder();

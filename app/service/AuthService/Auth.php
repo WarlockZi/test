@@ -17,8 +17,8 @@ class Auth
 
     public static function validatePphSession(array $req): bool
     {
-        return !empty($req['phpSession']
-            && session_id() === $req['phpSession']);
+        return !empty($req['phpSession'])
+            && session_id() === $req['phpSession'];
     }
 
     public static function setCartId(string $cartId): void
