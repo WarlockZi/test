@@ -6,9 +6,9 @@ namespace app\service\Sync;
 use app\model\Category;
 use app\model\CategoryProperty;
 use app\service\Logger\ErrorLogger;
-use app\service\Router\SlugService;
 use app\service\Router\UrlService;
 use app\service\ShortLink\ShortlinkService;
+use app\service\Slug\SlugService;
 use Throwable;
 
 class LoadCategories

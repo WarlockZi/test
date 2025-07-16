@@ -49,7 +49,7 @@ class SettingsFormView
             ->get();
     }
 
-    public static function list(Collection $items): string
+    public static function list(Collection $items): array
     {
         return Table::build($items)
             ->pageTitle('Настройки')

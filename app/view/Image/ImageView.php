@@ -6,7 +6,7 @@ namespace app\view\Image;
 
 use app\model\Image;
 use app\repository\ImageRepository;
-use app\service\FS;
+use app\service\Fs\FS;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\TableBuilder\Table;
 use Illuminate\Database\Eloquent\Model;

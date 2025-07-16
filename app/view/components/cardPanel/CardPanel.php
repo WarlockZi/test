@@ -2,9 +2,7 @@
 
 
 namespace app\view\components\cardPanel;
-use app\model\Category;
 use app\model\Product;
-use app\service\FS;
 use app\view\components\Icon\Icon;
 
 class CardPanel

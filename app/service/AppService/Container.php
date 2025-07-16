@@ -2,7 +2,7 @@
 
 namespace app\service\AppService;
 
-use app\service\FS;
+use app\service\Fs\FS;
 use DI\ContainerBuilder;
 use Exception;
 use function DI\create;

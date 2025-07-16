@@ -5,7 +5,7 @@ namespace app\service\Image;
 
 
 use app\model\Product;
-use app\service\FS;
+use app\service\Fs\FS;
 use app\service\Image\TODO\ImagickService;
 
 class ProductMainImage

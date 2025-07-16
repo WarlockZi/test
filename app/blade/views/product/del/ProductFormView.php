@@ -9,7 +9,7 @@ use app\model\Product;
 use app\model\Promotion;
 use app\model\Unit;
 use app\repository\ProductRepository;
-use app\service\FS;
+use app\service\Fs\FS;
 use app\service\Image\ProductImageService;
 use app\view\Category\CategoryFormView;
 use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
@@ -298,7 +298,7 @@ class ProductFormView
                     ->get()
             )
             ->del()
-            ->addButton('pivot')
+            ->addButton(true)
             ->get();
 
     }

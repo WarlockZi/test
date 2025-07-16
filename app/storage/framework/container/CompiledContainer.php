@@ -15,7 +15,7 @@ class CompiledContainer extends DI\CompiledContainer{
   'app\\service\\Router\\IRouteList' => 'get9',
   'orderItemsCount' => 'get10',
   'app\\blade\\Blade' => 'get11',
-  'app\\service\\FS' => 'get12',
+  'app\\service\\Fs\\FS' => 'get12',
   'app\\service\\Logger\\ErrorLogger' => 'get13',
   'app\\service\\Router\\Router' => 'get14',
   'app\\service\\Vite\\ViteCompiler' => 'get15',
@@ -117,9 +117,9 @@ class CompiledContainer extends DI\CompiledContainer{
     protected function get12()
     {
         return $this->resolveFactory(static function (\Psr\Container\ContainerInterface $c, $dir) {
-        return new \app\service\FS($dir . DIRECTORY_SEPARATOR,
+        return new \app\service\Fs\FS($dir . DIRECTORY_SEPARATOR,
             $c->get(\app\service\Logger\FileLogger::class),);
-    }, 'app\\service\\FS');
+    }, 'app\\service\\Fs\\FS');
     }
 
     protected function get13()

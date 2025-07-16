@@ -2,7 +2,7 @@
 
 namespace app\view\components\Icon;
 
-use app\service\FS;
+use app\service\Fs\FS;
 
 class Icon
 {

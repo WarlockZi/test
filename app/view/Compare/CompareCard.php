@@ -3,7 +3,7 @@
 namespace app\view\Compare;
 
 use app\model\Compare;
-use app\service\FS;
+use app\service\Fs\FS;
 
 class CompareCard
 {

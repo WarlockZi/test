@@ -6,7 +6,7 @@ namespace app\repository;
 
 use app\model\Answer;
 use app\model\Test;
-use app\service\FS;
+use app\service\Fs\FS;
 
 class AnswerRepository
 {

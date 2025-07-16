@@ -3,7 +3,7 @@
 namespace app\service\Mail;
 
 use app\model\User;
-use app\service\FS;
+use app\service\Fs\FS;
 use app\view\Mail\MailView;
 use PHPMailer\PHPMailer\PHPMailer;
 use Throwable;

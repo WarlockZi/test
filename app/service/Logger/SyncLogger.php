@@ -4,7 +4,7 @@
 namespace app\service\Logger;
 
 
-use app\service\FS;
+use app\service\Fs\FS;
 use app\service\Storage\app\SyncStorage;
 use app\service\Storage\StorageLog;
 
@@ -16,8 +16,15 @@ class SyncLogger implements ILogger
         private SyncStorage $storage,
     )
     {
-        $this->logFile = FS::platformSlashes(APP_STORAGE . '/logs/sync.txt');
+        $this->createLogFile();
+    }
 
+    protected function createLogFile(): void
+    {
+        $this->logFile = FS::platformSlashes(LOG_STORAGE . '/sync/log.txt');
+        if (!is_readable($this->logFile)) {
+            touch($this->logFile);
+        }
     }
 
     public function read(): string

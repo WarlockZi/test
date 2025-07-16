@@ -3,7 +3,7 @@
 namespace app\controller\Admin;
 
 use app\model\Openanswer;
-use app\service\FS;
+use app\service\Fs\FS;
 use app\service\Response;
 
 

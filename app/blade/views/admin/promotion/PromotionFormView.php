@@ -6,7 +6,7 @@ namespace app\blade\views\admin\promotion;
 
 use app\model\Promotion;
 use app\model\Unit;
-use app\service\FS;
+use app\service\Fs\FS;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\SelectBuilder\optionBuilders\ArrayOptionsBuilder;

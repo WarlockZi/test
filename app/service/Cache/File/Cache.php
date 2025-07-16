@@ -5,7 +5,7 @@ namespace app\service\Cache\File;
 
 use app\service\Cache\BaseCache;
 use app\service\Cache\ICache;
-use app\service\FS;
+use app\service\Fs\FS;
 use Illuminate\Database\Eloquent\Collection;
 
 class Cache extends BaseCache implements ICache

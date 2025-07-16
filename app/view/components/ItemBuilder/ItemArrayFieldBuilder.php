@@ -2,7 +2,7 @@
 
 namespace app\view\components\ItemBuilder;
 
-use app\service\FS;
+use app\service\Fs\FS;
 use app\view\components\Traits\CleanString;
 use Illuminate\Database\Eloquent\Model;
 

@@ -6,7 +6,7 @@ namespace app\repository;
 
 use app\model\Image;
 use app\model\Product;
-use app\service\FS;
+use app\service\Fs\FS;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\Image\ImageView;

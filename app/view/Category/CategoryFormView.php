@@ -8,17 +8,14 @@ use app\model\Category;
 use app\model\CategoryProperty;
 use app\repository\CategoryRepository;
 use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
-use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilderNew;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
-use app\view\components\Builders\Morph\MorphBuilder;
 use app\view\components\Builders\SelectBuilder\optionBuilders\TreeABuilder;
 use app\view\components\Builders\SelectBuilder\optionBuilders\TreeOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\TableBuilder\Table;
-use app\view\Image\ImageView;
 use Illuminate\Database\Eloquent\Collection;
 
 class CategoryFormView
@@ -90,7 +87,7 @@ class CategoryFormView
             ->tab(
                 ItemTabBuilder::build('Товары категории')
                     ->table(
-                        self::getProducts($category)
+                        self::products($category)
                     )
             )
             ->tab(
@@ -105,24 +102,8 @@ class CategoryFormView
             ->tab(
                 ItemTabBuilder::build('Удаленные Подкатегории')
                     ->table(
-                        Table::build($category['childrenDeleted'])
-                            ->pageTitle('Удаленные подкатегории')
-                            ->column(
-                                ColumnBuilder::build('id')
-                                    ->width('40px')
-                                    ->get()
-                            )
-                            ->column(
-                                ColumnBuilder::build('name')
-                                    ->name("Назввание")
-                                    ->contenteditable()
-                                    ->get()
-                            )
-                            ->relation('childrenDeleted', 'category')
-                            ->edit()
-                            ->del()
-                            ->addButton()
-                            ->get()
+                        self::deletedCategories($category)
+
                     )
             )
             ->tab(
@@ -274,7 +255,7 @@ class CategoryFormView
         return ob_get_clean();
     }
 
-    protected static function getProducts(Category $category): array
+    protected static function products(Category $category): array
     {
         return Table::build($category['products'])
             ->pageTitle('Товары категории')
@@ -302,7 +283,27 @@ class CategoryFormView
             ->get();
     }
 
-
+    public static function deletedCategories(Category $category): array
+    {
+        return Table::build($category['childrenDeleted'])
+            ->pageTitle('Удаленные подкатегории')
+            ->column(
+                ColumnBuilder::build('id')
+                    ->width('40px')
+                    ->get()
+            )
+            ->column(
+                ColumnBuilder::build('name')
+                    ->name("Назввание")
+                    ->contenteditable()
+                    ->get()
+            )
+            ->relation('childrenDeleted', 'category')
+            ->edit()
+            ->del()
+            ->addButton()
+            ->get();
+    }
     public static function properties(Collection $properties): array
     {
         return Table::build($properties)
@@ -318,6 +319,7 @@ class CategoryFormView
             ->addButton()
             ->get();
     }
+
     public static function list(): string
     {
         $tree = TreeABuilder::build(
