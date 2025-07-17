@@ -10,7 +10,7 @@ class ErrorLogger implements ILogger
 {
     protected string $errorLog;
 
-    public function __construct(string $fileName)
+    public function __construct(string $fileName='error.txt')
     {
         $this->setFile($fileName);
     }
@@ -30,7 +30,11 @@ class ErrorLogger implements ILogger
 
     public function setFile(string $fileName): ILogger
     {
-        $this->errorLog = FS::platformSlashes(ROOT . '/storage/logs/errors/' . $fileName);
+        $fileName = FS::platformSlashes(ROOT . '/storage/logs/errors/' . $fileName);
+        if (!is_readable($fileName)) {
+            touch($fileName);
+        }
+        $this->errorLog = $fileName;
         return $this;
     }
 

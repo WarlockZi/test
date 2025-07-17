@@ -20,6 +20,10 @@ class MobileMenuRepository
                 'title' => 'О нас',
                 'path' => 'about',
             ], [
+                'title' => 'Блог',
+                'path' => 'blog/index',
+
+            ], [
                 'title' => 'Статьи',
                 'path' => 'statii',
             ], [
