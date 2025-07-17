@@ -87,26 +87,26 @@
         <div class="workflow__wrap">
             <div class="block1">
                 <p style="margin: auto; text-align: center;"><img
-                            src="/pic/icons/21288567_user-experience_12440970_7447763.svg" class="img_main"></p>
+                            src="/storage/app/pic/icons/21288567_user-experience_12440970_7447763.svg" class="img_main"></p>
                 <p style="margin: auto; text-align: center;">Вы звоните нам или оставляете заявку через форму на
                     сайте</p>
             </div>
-            <p style="margin-top: 60px;"><img src="/pic/icons/strelka.png" class="strelka"></p>
+            <p style="margin-top: 60px;"><img src="/storage/app/pic/icons/strelka.png" class="strelka"></p>
             <div class="block1">
                 <p style="margin: auto; text-align: center;"><img
-                            src="/pic/icons/21288568_shopping-list_12441220_7447763.svg" class="img_main"></p>
+                            src="/storage/app/pic/icons/21288568_shopping-list_12441220_7447763.svg" class="img_main"></p>
                 <p style="margin: auto; text-align: center;">Выставляем счет на оплату</p>
             </div>
-            <p style="margin-top: 60px;"><img src="/pic/icons/strelka.png" class="strelka"></p>
+            <p style="margin-top: 60px;"><img src="/storage/app/pic/icons/strelka.png" class="strelka"></p>
             <div class="block1">
-                <p style="margin: auto; text-align: center;"><img src="/pic/icons/21288566_payment_9341320_7447763.svg"
+                <p style="margin: auto; text-align: center;"><img src="/storage/app/pic/icons/21288566_payment_9341320_7447763.svg"
                                                                   class="img_main"></p>
                 <p style="margin: auto; text-align: center;">Вы оплачиваете покупку</p>
             </div>
-            <p style="margin-top: 60px;"><img src="/pic/icons/strelka.png" class="strelka"></p>
+            <p style="margin-top: 60px;"><img src="/storage/app/pic/icons/strelka.png" class="strelka"></p>
             <div class="block1">
                 <p style="margin: auto; text-align: center;"><img
-                            src="/pic/icons/21288569_delivery-truck_17264164_7447763.svg" class="img_main"></p>
+                            src="/storage/app/pic/icons/21288569_delivery-truck_17264164_7447763.svg" class="img_main"></p>
                 <p style="margin: auto; text-align: center;">Мы доставляем товар до клиента</p>
             </div>
         </div>

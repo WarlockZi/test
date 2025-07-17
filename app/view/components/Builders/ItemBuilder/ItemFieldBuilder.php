@@ -5,6 +5,7 @@ namespace app\view\components\Builders\ItemBuilder;
 
 
 use app\blade\views\admin\product\DndBuilder;
+use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
 use Illuminate\Database\Eloquent\Model;
 
 class ItemFieldBuilder
@@ -18,6 +19,7 @@ class ItemFieldBuilder
 
     public string $html;
     public DndBuilder $dnd;
+    public array $checkbox;
 
 //    public string $dataModel;
     public string $link;
@@ -41,7 +43,11 @@ class ItemFieldBuilder
         $this->class = $class;
         return $this;
     }
-
+    public function checkbox(array $checkbox): static
+    {
+        $this->checkbox = $checkbox;
+        return $this;
+    }
     public function name(string $name): static
     {
         $this->name = $name;

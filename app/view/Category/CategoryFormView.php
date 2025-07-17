@@ -55,11 +55,16 @@ class CategoryFormView
             ->field(
                 ItemFieldBuilder::build('show_front', $category)
                     ->name('Показывать на главоной')
-                    ->html(
+                    ->checkbox(
                         CheckboxBuilder::build()
                             ->field('show_front', $category->show_front)
                             ->get()
                     )
+//                    ->html(
+//                        CheckboxBuilder::build()
+//                            ->field('show_front', $category->show_front)
+//                            ->get()
+//                    )
                     ->get()
             )
             ->field(

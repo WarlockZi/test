@@ -3,9 +3,12 @@
 namespace app\controller;
 
 
+use app\service\Meta\MetaService;
+
 class BlogController extends AppController
 {
     public function __construct(
+        private MetaService $meta,
         private readonly string $titleTail = " купить в интернет-магазине VITEX в Вологде. Большой ассортимент медицинской одежды, оборудования и расходников по выгодной цене. Звоните и заказывайте прямо сейчас онлайн на сайте",
     )
     {
@@ -14,11 +17,11 @@ class BlogController extends AppController
 
     public function actionBlog1(): void
     {   
-        $this->assets->setMeta(
+        $meta = $this->meta->setMeta(
             'Как выбрать качественные медицинские перчатки для различных сфер деятельности?',
             'Узнайте, как выбрать идеальные медицинские перчатки для различных отраслей, включая медицину, лаборатории, пищевую промышленность и клининг. Рассмотрим преимущества латексных, нитриловых и виниловых перчаток, их особенности и лучшие сферы применения для каждого типа.',
             'Как выбрать качественные медицинские перчатки для различных сфер деятельности?');
-        
+        view('');
     }
 
     public function actionBlog2(): void
