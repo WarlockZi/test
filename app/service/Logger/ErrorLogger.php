@@ -30,7 +30,12 @@ class ErrorLogger implements ILogger
 
     public function setFile(string $fileName): ILogger
     {
-        $fileName = FS::platformSlashes(ROOT . '/storage/logs/errors/' . $fileName);
+        $dir = FS::platformSlashes(ROOT . '/storage/logs/errors');
+
+        if (!is_dir($dir)) {
+            mkdir($dir);
+        }
+        $fileName = $dir . DIRECTORY_SEPARATOR.$fileName;
         if (!is_readable($fileName)) {
             touch($fileName);
         }
