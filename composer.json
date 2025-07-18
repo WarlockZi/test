@@ -34,7 +34,8 @@
     "ext-redis": "*",
     "predis/predis": "^3.0",
     "illuminate/routing": "^8.83",
-    "illuminate/container": "^8.83"
+    "illuminate/container": "^8.83",
+    "ext-posix": "*"
   },
   "config": {
     "platform-check": false
