@@ -31,7 +31,7 @@ class ErrorLogger implements ILogger
     public function setFile(string $fileName): ILogger
     {
         $dir = FS::platformSlashes(ROOT . '/storage/logs/errors');
-
+        error_log(sys_get_temp_dir());
         if (!is_dir($dir)) {
             if (!mkdir($dir, 0755, true)) {
                 error_log("Failed to create log directory: $dir");
