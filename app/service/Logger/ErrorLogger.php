@@ -33,8 +33,13 @@ class ErrorLogger implements ILogger
         $dir = FS::platformSlashes(ROOT . '/storage/logs/errors');
 
         if (!is_dir($dir)) {
-            mkdir($dir);
+            if (!mkdir($dir, 0755, true)) {
+                error_log("Failed to create log directory: $dir");
+                // Fallback to a different directory if possible
+                $dir = sys_get_temp_dir();
+            }
         }
+
         $fileName = $dir . DIRECTORY_SEPARATOR.$fileName;
         if (!is_readable($fileName)) {
             touch($fileName);
