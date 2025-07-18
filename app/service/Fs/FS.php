@@ -42,16 +42,6 @@ class FS
         return $deleted;
     }
 
-    public static function getPath(...$args): string
-    {
-        $s   = DIRECTORY_SEPARATOR;
-        $str = ROOT . $s;
-        foreach ($args as $arg) {
-            $str .= $arg . $s;
-        }
-        return self::platformSlashes($str);
-    }
-
     public static function getOrCreateAbsolutePath(...$args): string
     {
         $s   = DIRECTORY_SEPARATOR;
@@ -59,15 +49,10 @@ class FS
         foreach ($args as $arg) {
             $dir .= $s . $arg;
             if (!is_dir($dir)) {
-                $res = mkdir($dir, 0777);
+                $res = mkdir($dir, 0766);
             }
         }
-        return $dir;
-    }
-
-    public function getAbsPath(): string
-    {
-        return $this->absPath;
+        return self::platformSlashes($dir);
     }
 
     public function getContent(string $file, array $data = []): string
