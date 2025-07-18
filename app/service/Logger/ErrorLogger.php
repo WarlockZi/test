@@ -29,60 +29,16 @@ class ErrorLogger implements ILogger
         return false;
     }
 
-    private function setLogsPathOwner(): void
-    {
-        $logsPath = $this->logsPath;
-        $dir      = FS::platformSlashes(ROOT . $logsPath);
-        $user = 'vitexopt';
 
-        if (!is_dir($dir)) {
-            die("File does not exist");
-        }
-
-        if (!posix_getpwuid(fileowner($dir))) {
-            die("Cannot get current file owner");
-        }
-
-        if (!posix_getpwnam($user)) {
-            die("User $user does not exist");
-        }
-
-        if (!chown($dir, $user)) {
-            // Get last error
-            $error = error_get_last();
-            die("chown failed: " . $error['message']);
-        }
-
-
-        $res = chown($dir, $user);
-        if (!exec(
-            "chown -R {$user}:{$user} ". escapeshellarg($dir),
-            $output,
-            $retval
-        )) {
-            throw new \Exception("Unable to set logs path owner");
-        }
-    }
 
     public function setFile(string $fileName): ILogger
     {
-        $path = '/storage/logs/errors';
-        $dir  = FS::platformSlashes(ROOT . $path);
-
+        $dir      = FS::resolve(ROOT , '/storage/logs/errors');
         if (!is_dir($dir)) {
-            $this->setLogsPathOwner();
-            $parentPath = $dir;
-
-            $path = FS::getOrCreateAbsolutePath($path);
-//            if (!mkdir($dir, 0755, true)) {
-//                error_log("Failed to create log directory: $dir");
-//                // Fallback to a different directory if possible
-//                $dir = sys_get_temp_dir();
-//            }
+            mkdir($dir, 0766, true);
         }
 
-
-        $fileName = $dir . DIRECTORY_SEPARATOR . $fileName;
+        $fileName = $dir . $fileName;
         if (!is_readable($fileName)) {
             touch($fileName);
         }

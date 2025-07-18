@@ -17,9 +17,11 @@ class FS
     {
         $path = '';
         foreach ($paths as $str) {
-            if ($str) $path .= $str . DIRECTORY_SEPARATOR;
+            if ($str) {
+                $path .= $str . DIRECTORY_SEPARATOR;
+            }
         }
-        return $path;
+        return str_replace(['\\/', '/\\','\\', '\\\\', '/', '//', ], DIRECTORY_SEPARATOR, $path);
     }
 
     public static function getFileContent(string $file, array $vars = []): string
