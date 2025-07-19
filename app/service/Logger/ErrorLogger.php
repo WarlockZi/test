@@ -18,31 +18,38 @@ class ErrorLogger implements ILogger
 
     public function read(): string
     {
+        if (!is_readable($this->errorLog)) {
+            throw new \Exception('Log file not readable');
+        }
         return file_get_contents($this->errorLog);
     }
 
     public function write(string $content): bool
     {
-        if (is_readable($this->errorLog)) {
+        if (is_writable($this->errorLog)) {
             return file_put_contents($this->errorLog, PHP_EOL . PHP_EOL . date('Y-m-d H:i:s') . PHP_EOL . $content . PHP_EOL, FILE_APPEND);
         }
         return false;
     }
 
-
-
-    public function setFile(string $fileName): ILogger
+    private function setPath(): string
     {
-        $dir      = FS::resolve(ROOT , '/storage/logs/errors');
+        $dir = FS::resolve(LOG_STORAGE, '/errors');
         if (!is_dir($dir)) {
             mkdir($dir, 0766, true);
         }
+        return $dir;
+    }
 
-        $fileName = $dir . $fileName;
-        if (!is_readable($fileName)) {
-            touch($fileName);
+    public function setFile(string $fileName): ILogger
+    {
+        $dir = $this->setPath();
+
+        $fullPath = $dir . $fileName;
+        if (!is_readable($fullPath)) {
+            touch($fullPath);
         }
-        $this->errorLog = $fileName;
+        $this->errorLog = $fullPath;
         return $this;
     }
 

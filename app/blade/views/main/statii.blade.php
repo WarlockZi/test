@@ -11,12 +11,12 @@
     <ul>
 
         <li>
-            <a href="statii.php">
+            <a href="/blog/blog1">
                 Статья 1
             </a>
         </li>
         <li>
-            <a href="statii.php">
+            <a href="/blog/blog2">
                 Статья 2
             </a>
         </li>

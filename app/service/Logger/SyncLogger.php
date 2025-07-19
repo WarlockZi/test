@@ -5,44 +5,59 @@ namespace app\service\Logger;
 
 
 use app\service\Fs\FS;
-use app\service\Storage\app\SyncStorage;
-use app\service\Storage\StorageLog;
 
 class SyncLogger implements ILogger
 {
-    protected string $logFile;
+    protected string $syncLog;
+    private string $logsPath = '/storage/logs';
 
     public function __construct(
-        private SyncStorage $storage,
     )
     {
-        $this->createLogFile();
+        $this->setFile('import.txt');
+    }
+    public function setFile(string $fileName): ILogger
+    {
+        $dir = $this->setPath();
+
+        $fullPath = $dir . $fileName;
+        if (!is_readable($fullPath)) {
+            touch($fullPath);
+        }
+        $this->syncLog = $fullPath;
+        return $this;
     }
 
-    protected function createLogFile(): void
+    private function setPath(): string
     {
-        $this->logFile = FS::platformSlashes(LOG_STORAGE . '/sync/log.txt');
-        if (!is_readable($this->logFile)) {
-            touch($this->logFile);
+        $dir = FS::resolve(LOG_STORAGE, '/sync');
+        if (!is_dir($dir)) {
+            mkdir($dir, 0766, true);
         }
+        return $dir;
     }
 
     public function read(): string
     {
-        return file_get_contents($this->storage->getPath());
+        if (!is_readable($this->syncLog)) {
+            throw new \Exception('Log file not readable');
+        }
+        return file_get_contents($this->syncLog);
     }
-
 
     public function write(string $content): bool
     {
-        return file_put_contents($this->logFile, $content . PHP_EOL, FILE_APPEND);
+        if (is_writable($this->syncLog)) {
+            return file_put_contents($this->syncLog,
+                PHP_EOL . PHP_EOL . date('Y-m-d H:i:s') .
+                PHP_EOL . $content . PHP_EOL, FILE_APPEND
+            );
+        }
+        return false;
     }
 
-    public function setFile(string $fileName): ILogger
-    {
-        $this->logFile = StorageLog::getFile($fileName);
-        return $this;
-    }
+
+
 
     public function clear(): void
     {
