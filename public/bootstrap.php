@@ -1,7 +1,7 @@
 <?php
 
-echo 'is console - '.isConsole()?'yes':'no';
-echo "dirname(__DIR__): " . dirname(__DIR__) . "\n";
+//echo 'is console - '.isConsole()?'yes':'no';
+//echo "dirname(__DIR__): " . dirname(__DIR__) . "\n";
 
 
 $root = isConsole()//if app is started from cron

@@ -6,7 +6,7 @@ $_SERVER["REQUEST_URI"] = '/adminsc/sync/load';
 
 require dirname(__DIR__, 3) . '/public/index.php';
 
-echo date("Y_m_d H:i:s") . " querry sent to sync/load" . PHP_EOL;
+//echo date("Y_m_d H:i:s") . " querry sent to sync/load" . PHP_EOL;
 
 try {
     $service = new SyncService();
