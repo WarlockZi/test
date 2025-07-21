@@ -1,7 +1,8 @@
 <?php
 
-echo 'is console - '.isConsole();
-echo dirname(getcwd(), 3);
+echo 'is console - '.(string)isConsole();
+echo "dirname(__FILE__): " . dirname(__FILE__) . "\n";
+echo "\$_SERVER['PWD']: " . ($_SERVER['PWD'] ?? 'Недоступно') . "\n";
 
 $root = isConsole()//if app is started from cron
     ? dirname(getcwd(), 3)
