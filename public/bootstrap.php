@@ -1,18 +1,26 @@
 <?php
 
 
-$root = $_SERVER['SESSIONNAME'] === 'Console'//if app is started from cron
+$root = isConsole()//if app is started from cron
     ? dirname(getcwd(), 3)
-    : ROOT;
+    : dirname(getcwd());
 
+define("ROOT",$root);
 
-require $root . '/app/service/bootstrap/session.php';
+require ROOT . '/app/service/bootstrap/session.php';
 
-require $root . "/vendor/autoload.php";
+require ROOT . "/vendor/autoload.php";
 
-require $root .'/app/service/bootstrap/dotenv.php';
-require $root .'/app/service/bootstrap/helpers.php';
-require $root .'/app/service/bootstrap/const.php';
-require $root .'/app/service/bootstrap/profiler.php';
-require $root .'/app/service/bootstrap/php.php';
-require $root .'/app/service/bootstrap/errorHandler.php';
+require ROOT . '/app/service/bootstrap/dotenv.php';
+require ROOT . '/app/service/bootstrap/helpers.php';
+require ROOT . '/app/service/bootstrap/const.php';
+require ROOT . '/app/service/bootstrap/profiler.php';
+require ROOT . '/app/service/bootstrap/php.php';
+require ROOT . '/app/service/bootstrap/errorHandler.php';
+
+function isConsole(): bool
+{
+    if (!isset($_SERVER['SESSIONNAME'])) return false;
+    if ($_SERVER['SESSIONNAME']!=='Console') return false;
+    return true;
+}

@@ -2,11 +2,7 @@
 
 use app\service\Fs\FS;
 
-$root = $_SERVER['SESSIONNAME'] === 'Console'
-    ? dirname(getcwd(), 3)
-    : dirname(__DIR__, 3);
 
-define("ROOT",$root);
 define('DEV', env("VITE_DEV"));
 
 define('PIC_SERVICE', env("PIC_SERVICE"));
