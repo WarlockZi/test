@@ -16,6 +16,7 @@ class SyncService
         protected SyncLogger      $logger = new SyncLogger(),
     )
     {
+        $this->logger->write(date('d-m-Y-H-i-s').' started');
         $this->importFile = ROOT.$this->importFile;
         $this->offerFile  = ROOT.$this->offerFile;
     }
