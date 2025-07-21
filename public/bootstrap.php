@@ -1,12 +1,12 @@
 <?php
 
-echo 'is console - '.(string)isConsole();
-echo "dirname(__FILE__): " . dirname(__FILE__) . "\n";
-echo "\$_SERVER['PWD']: " . ($_SERVER['PWD'] ?? 'Недоступно') . "\n";
+echo 'is console - '.isConsole()?'yes':'no';
+echo "dirname(__DIR__): " . dirname(__DIR__) . "\n";
+
 
 $root = isConsole()//if app is started from cron
     ? dirname(getcwd(), 3)
-    : dirname(getcwd());
+    : dirname(__DIR__);
 
 define("ROOT",$root);
 
