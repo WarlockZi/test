@@ -1,12 +1,12 @@
 <?php
 
 //echo 'is console - '.isConsole()?'yes':'no';
-//echo "dirname(__DIR__): " . dirname(__DIR__) . "\n";
+//echo "dirname(__DIR__): " . dirname(__DIR__) . PHP_EOL;
 
 
 $root = isConsole()//if app is started from cron
-    ? dirname(getcwd(), 3)
-    : dirname(__DIR__);
+    ? dirname(__DIR__)
+    : dirname(getcwd(), 3);
 
 define("ROOT",$root);
 
