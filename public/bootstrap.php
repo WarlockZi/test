@@ -6,7 +6,7 @@
 
 $root = isConsole()//if app is started from cron
     ? dirname(getcwd(), 3)
-    : dirname(getcwd(), 3);
+    : dirname(__DIR__);
 
 define("ROOT",$root);
 
