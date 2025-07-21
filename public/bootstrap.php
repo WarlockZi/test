@@ -1,5 +1,7 @@
 <?php
 
+echo 'is console - '.isConsole();
+echo dirname(getcwd(), 3);
 
 $root = isConsole()//if app is started from cron
     ? dirname(getcwd(), 3)
