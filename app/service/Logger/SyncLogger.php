@@ -8,29 +8,30 @@ use app\service\Fs\FS;
 
 class SyncLogger implements ILogger
 {
-    protected string $syncLog;
-    private string $logsPath = '/storage/logs';
+    protected string $logPath;
+    protected string $logDir = '/sync';
+    protected string $logName = 'log.txt';
 
-    public function __construct(
-    )
+    public function __construct()
     {
-        $this->setFile('import.txt');
+        $this->setFile($this->logName);
     }
+
     public function setFile(string $fileName): ILogger
     {
         $dir = $this->setPath();
 
-        $fullPath = $dir . $fileName;
+        $fullPath = $dir . $this->logName;
         if (!is_readable($fullPath)) {
             touch($fullPath);
         }
-        $this->syncLog = $fullPath;
+        $this->logPath = $fullPath;
         return $this;
     }
 
     private function setPath(): string
     {
-        $dir = FS::resolve(LOG_STORAGE, '/sync');
+        $dir = FS::resolve(LOG_STORAGE, $this->logDir);
         if (!is_dir($dir)) {
             mkdir($dir, 0766, true);
         }
@@ -39,29 +40,29 @@ class SyncLogger implements ILogger
 
     public function read(): string
     {
-        if (!is_readable($this->syncLog)) {
+        if (!is_readable($this->logPath)) {
             throw new \Exception('Log file not readable');
         }
-        return file_get_contents($this->syncLog);
+        return file_get_contents($this->logPath);
     }
 
     public function write(string $content): bool
     {
-        if (is_writable($this->syncLog)) {
-            return file_put_contents($this->syncLog,
-                PHP_EOL . PHP_EOL . date('Y-m-d H:i:s') .
-                PHP_EOL . $content . PHP_EOL, FILE_APPEND
-            );
+        if (!is_writable($this->logPath)) {
+            throw new \Exception('Log file not writable');
         }
-        return false;
+
+        return file_put_contents($this->logPath,
+            PHP_EOL . PHP_EOL . date('Y-m-d H:i:s') .
+            PHP_EOL . $content . PHP_EOL, FILE_APPEND
+        );
+
     }
-
-
 
 
     public function clear(): void
     {
-        if ($this->logFile) file_put_contents($this->logFile, '');
+        if ($this->logPath) file_put_contents($this->logPath, '');
     }
 
 }

@@ -26,7 +26,7 @@ class ProductRepository
             ->first();
     }
 
-    public function main(string $slug): Product
+    public function main(string $slug): ?Product
     {
         return Product::query()
             ->withTrashed()

@@ -5,23 +5,19 @@ namespace app\service\Sync;
 use app\service\Logger\SyncLogger;
 use app\service\Response;
 use app\service\Router\Request;
-use app\service\Storage\app\SyncStorage;
 use JetBrains\PhpStorm\NoReturn;
 
 class SyncService
 {
-    protected string $importFile = '';
-    protected string $offerFile = '';
+    protected string $importFile = 'storage/app/sync/import0_1.xml';
+    protected string $offerFile = 'storage/app/sync/offers0_1.xml';
 
     public function __construct(
-        protected SyncLogger      $logger,
-        protected SyncStorage     $storage,
-        protected TrancateService $trancateService,
+        protected SyncLogger      $logger = new SyncLogger(),
     )
     {
-        $this->importFile = $this->storage::getFile('import0_1.xml');
-        $this->offerFile  = $this->storage::getFile('offers0_1.xml');
-//        $this->loadProducts = new LoadProducts($this->importFile);
+        $this->importFile = ROOT.$this->importFile;
+        $this->offerFile  = ROOT.$this->offerFile;
     }
 
     public function requestFrom1s(Request $route): void

@@ -39,9 +39,9 @@ export default class Search {
     const text = target.value;
     if (!text) return false;
     const res = await post("/search", { text });
-    if (res?.arr?.found) {
+    if (res?.found) {
       this.result.style.display = "initial";
-      res?.arr?.found.map((row) => {
+      res?.found.map((row) => {
         this.result.append(this.createLi(row));
       });
     }
