@@ -59,7 +59,7 @@ class SyncController extends AdminscController
 
 
     //load
-    public function actionLoad(): void
+    #[NoReturn] public function actionLoad(): void
     {
         $this->logger->write(Carbon::now());
         $this->logger->write('Начата ручная загрузка');

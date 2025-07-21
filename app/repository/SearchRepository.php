@@ -21,8 +21,10 @@ class SearchRepository
         $art  = $this->getProductsByField($this->getQuery($admin), $queryString, 'art');
         $name = $this->getProductsByField($this->getQuery($admin), $queryString, 'name');
         $sId  = $this->getProductsByField($this->getQuery($admin), $queryString, '1s_id');
+        $slug = $this->getProductsByField($this->getQuery($admin), $queryString, 'slug');
 
         $collection = $art->merge($name);
+        $collection = $art->merge($slug);
         return $collection->merge($sId)
             ->map(function ($product) {
                 return [

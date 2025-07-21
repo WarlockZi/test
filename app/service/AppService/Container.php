@@ -27,7 +27,7 @@ class Container
         }
         $container = new ContainerBuilder();
 
-        $container->addDefinitions('../config/containerConfig.php');
+        $container->addDefinitions(ROOT .'/config/containerConfig.php');
         $container->addDefinitions(['\app\controller\*::class' => create()]);
 
         $container

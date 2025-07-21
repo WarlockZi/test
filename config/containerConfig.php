@@ -92,10 +92,4 @@ return [
     ErrorLogger::class => create()
         ->constructor('errors.txt'),
 
-    Router::class => function (ContainerInterface $c) {
-        return new Router(
-            $c->get(ErrorLogger::class),
-            $c->get(IRequest::class),
-        );
-    },
 ];

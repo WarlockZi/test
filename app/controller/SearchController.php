@@ -2,8 +2,9 @@
 
 namespace app\controller;
 
+use app\formRequest\SearchRequest;
 use app\repository\SearchRepository;
-use app\service\Response;
+use JetBrains\PhpStorm\NoReturn;
 
 class SearchController extends AppController
 {
@@ -15,10 +16,9 @@ class SearchController extends AppController
         $this->service = new SearchRepository();
     }
 
-    public function actionIndex(): void
+    #[NoReturn] public function actionIndex(SearchRequest $request): void
     {
-        if (!$this->ajax) exit();
-        $res = $this->service->index($this->ajax['text']);
-        response()->json(['found' => $res]);
+        $text = $this->service->index($request['text']);
+        response()->json(['found' => $text]);
     }
 }

@@ -41,30 +41,3 @@ function start(): void
     $webSocketServer = new WSSC\WebSocketServer(new \app\service\Chat\Chat_3\ServerHandler(), $config);
     $webSocketServer->run();
 }
-
-
-
-
-
-
-//<?php
-//
-//namespace app\service\Chat_3;
-//
-//use WSSC\WebSocketServer;
-//use WSSC\Components\ServerConfig;
-//
-//class Cli
-//{
-//    public function __construct()
-//    {
-//
-//        $config = new ServerConfig();
-//        $config->setClientsPerFork(2500);
-//        $config->setStreamSelectTimeout(2 * 3600);
-//
-//        $webSocketServer = new WebSocketServer(new ServerHandler(), $config);
-//        $webSocketServer->run();
-//    }
-//
-//}

@@ -40,7 +40,7 @@ class Request implements IRequest
 
         $self->url    = $_SERVER['REQUEST_URI'] ?? '';
         $self->method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
-        $self->host   = $_SERVER['HTTP_HOST'];
+        $self->host   = $_SERVER['HTTP_HOST']?? gethostname();
         $self->cookie = $_COOKIE ?? [];
         $self->parseUrl();
         $self->setBody();

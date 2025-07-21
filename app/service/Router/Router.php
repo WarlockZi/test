@@ -11,7 +11,6 @@ use app\service\Logger\ErrorLogger;
 class Router
 {
     public function __construct(
-        protected ErrorLogger $errorLogger,
         protected IRequest    $request,
         protected array       $routes = [],
         protected string      $namespace = '',
