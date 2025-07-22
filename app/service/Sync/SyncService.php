@@ -2,23 +2,30 @@
 
 namespace app\service\Sync;
 
+
+use app\service\Fs\FS;
 use app\service\Logger\SyncLogger;
 use app\service\Response;
 use app\service\Router\Request;
+
+use app\traits\LoggerTrait;
 use JetBrains\PhpStorm\NoReturn;
+
 
 class SyncService
 {
-    protected string $importFile = 'storage/app/sync/import0_1.xml';
-    protected string $offerFile = 'storage/app/sync/offers0_1.xml';
+    use LoggerTrait;
+
+    protected string $importFile = '/storage/app/sync/import0_1.xml';
+    protected string $offerFile = '/storage/app/sync/offers0_1.xml';
+
 
     public function __construct(
-        protected SyncLogger      $logger = new SyncLogger(),
+        protected SyncLogger $logger = new SyncLogger(),
     )
     {
-        $this->logger->write(date('d-m-Y-H-i-s').' started');
-        $this->importFile = ROOT.$this->importFile;
-        $this->offerFile  = ROOT.$this->offerFile;
+        $this->importFile = FS::platformSlashes(ROOT . $this->importFile);
+        $this->offerFile  = FS::platformSlashes(ROOT . $this->offerFile);
     }
 
     public function requestFrom1s(Request $route): void
@@ -48,9 +55,9 @@ class SyncService
         exit("success\ninc\n777777\n55fdsa55");
     }
 
-    protected function zip(): void
+    #[NoReturn] protected function zip(): void
     {
-        $this->log('init');
+        $this->log('init zip');
         exit("zip=no\nfile_limit=10_000_000");
     }
 
@@ -66,16 +73,13 @@ class SyncService
         }
     }
 
-    private function importFilesExist(): bool
+    private function importFilesExist(): void
     {
-        if (!is_readable($this->importFile)) {
-            $this->logger->write('Отсутстует файл importFile');
-            if (!is_readable($this->offerFile)) {
-                $this->logger->write('Отсутстует файл offerFile');
-                return false;
-            }
-        }
-        return true;
+        if (!is_readable($this->importFile))
+            throw new \Exception($this->importFile . 'import file not found');
+
+        if (!is_readable($this->offerFile))
+            throw new \Exception($this->offerFile . 'import file not found');
     }
 
 
@@ -100,42 +104,18 @@ class SyncService
 
     public function load(): void
     {
+        $this->importFilesExist();
         try {
-            if ($this->importFilesExist()) {
 //            $this->trancateService->softTrancate();
-                $this->LoadCategories();
-                $this->LoadProducts();
-                $this->LoadPrices();
-                $this->log('Load успех' . PHP_EOL);
-            } else {
-                throw new \Exception('import file not found');
-            }
+            $this->LoadCategories();
+            $this->LoadProducts();
+            $this->LoadPrices();
+            $this->log('Load успех' . PHP_EOL);
         } catch (\Throwable $e) {
             $this->logError("--- Ошибка load ", $e);
         }
     }
 
-///log
 
-    protected function logDate(): void
-    {
-        $this->log(date("Y-m-d H:i:s"));
-    }
-
-    protected function logError(string $msg, $e): void
-    {
-        $this->logDate();
-        $this->logger->write('- error -' . $msg . PHP_EOL . $e);
-        if (DEV) {
-            Response::exitWithPopup($msg);
-        }
-        exit();
-    }
-
-    protected function log(string $msg): void
-    {
-        $this->logger->write($msg);
-
-    }
 }
 

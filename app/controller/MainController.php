@@ -9,15 +9,17 @@ use JetBrains\PhpStorm\NoReturn;
 
 class MainController extends AppController
 {
+
     public function __construct(
         private readonly MainAction $actions,
-        private readonly string      $titleTail = " купить в интернет-магазине VITEX в Вологде. Большой ассортимент медицинской одежды, оборудования и расходников по выгодной цене. Звоните и заказывайте прямо сейчас онлайн на сайте",
+        private readonly string     $titleTail = " купить в интернет-магазине VITEX в Вологде. Большой ассортимент медицинской одежды, оборудования и расходников по выгодной цене. Звоните и заказывайте прямо сейчас онлайн на сайте",
     )
     {
         parent::__construct();
     }
 
-    #[NoReturn] public function actionIndex(): void
+    #[NoReturn]
+    public function actionIndex(): void
     {
         $meta = $this->actions->setMeta(
             'Нитриловые перчатки оптом',
@@ -25,7 +27,7 @@ class MainController extends AppController
             'нитриловые перчатки, бахилы, маски, расходные материалы, доставка, производство, по России'
         );
 
-         view('main.index', compact('meta'));
+        view('main.index', compact('meta'));
     }
 
     #[NoReturn] public function actionContacts(): void
@@ -36,6 +38,7 @@ class MainController extends AppController
             'Контакты');
         view('main.contacts', compact('meta'));
     }
+
     #[NoReturn] public function actionNews(): void
     {
         $content = 'Следите за новостями)';
@@ -46,6 +49,7 @@ class MainController extends AppController
             'Новости');
         view('main.news', compact('content', 'meta'));
     }
+
     #[NoReturn] public function actionAbout(): void
     {
         $meta = $this->actions->setMeta(
@@ -54,6 +58,7 @@ class MainController extends AppController
             'О нас');
         view('main.about', compact('meta'));
     }
+
     #[NoReturn] public function actionPromotions(): void
     {
         $meta = $this->actions->setMeta(
@@ -61,7 +66,7 @@ class MainController extends AppController
             'Акции' . $this->titleTail,
             'Акции');
 
-        $activePromotions = PromotionRepository::active()->toArray();
+        $activePromotions   = PromotionRepository::active()->toArray();
         $inactivePromotions = PromotionRepository::inactive()->toArray();
         view('promotion.promotions',
             compact(
@@ -70,6 +75,7 @@ class MainController extends AppController
                 'inactivePromotions'));
 
     }
+
     #[NoReturn] public function actionStatii(): void
     {
         $meta = $this->actions->setMeta(
@@ -96,6 +102,7 @@ class MainController extends AppController
             'Возврат и обмен');
         view('main.returnchange', compact('meta'));
     }
+
     #[NoReturn] public function actionPoliticaconf()
     {
         $meta = $this->actions->setMeta(
@@ -113,6 +120,7 @@ class MainController extends AppController
             'Оферта');
         view('main.oferta', compact('meta'));
     }
+
     #[NoReturn] public function actionSitemap(): void
     {
         $categories = "<ul class='category-tree'>" . "</ul>";
@@ -122,7 +130,7 @@ class MainController extends AppController
             'Карта сайта - Витекс',
             'Карта сайта ' . $this->titleTail,
             'Карта сайта');
-        view('main.sitemap', compact('meta','content'));
+        view('main.sitemap', compact('meta', 'content'));
     }
 
     #[NoReturn] public function actionRequisites(): void
@@ -165,7 +173,7 @@ class MainController extends AppController
     {
         $slug = 'Отзывы';
         $meta = $this->actions->setMeta(
-            $slug.' - Витекс',
+            $slug . ' - Витекс',
             $slug . $this->titleTail,
             $slug);
         view('main.otzyvy', compact('meta'));
@@ -176,7 +184,7 @@ class MainController extends AppController
     {
         $slug = 'FAQ';
         $meta = $this->actions->setMeta(
-            $slug.' - Витекс',
+            $slug . ' - Витекс',
             $slug . $this->titleTail,
             $slug);
         view('main.faq', compact('meta'));
