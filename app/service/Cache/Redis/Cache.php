@@ -4,7 +4,6 @@ namespace app\service\Cache\Redis;
 
 use app\service\Cache\BaseCache;
 use app\service\Cache\ICache;
-use Illuminate\Database\Eloquent\Collection;
 use Predis\Client;
 use Redis;
 
@@ -30,16 +29,13 @@ class Cache extends BaseCache implements ICache
             : null;
     }
 
-    public static function set(string $key, string|array|object $data, int $seconds = 6, string $path = ''): string|array|object|null
+    public static function set(string $key, object|array|string|null $data, int $seconds = 6, string $path = ''): string|array|object|null
     {
         self::$redis->set($key, serialize($data), 'EX', $seconds);
         return $data;
     }
 
-    public static function remember(
-        string $key,
-        callable $callable,
-        int $seconds = 5): string|object|array|null
+    public static function remember(string $key, callable $callable, int $seconds = 5): string|object|array|null
     {
         if (Cache::isEnabled()) {
             if (Cache::has($key)) {
