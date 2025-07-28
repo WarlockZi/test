@@ -5,9 +5,7 @@ namespace app\service\Sync;
 
 use app\service\Fs\FS;
 use app\service\Logger\SyncLogger;
-use app\service\Response;
-use app\service\Router\Request;
-
+use app\service\Router\IRequest;
 use app\traits\LoggerTrait;
 use JetBrains\PhpStorm\NoReturn;
 
@@ -28,7 +26,7 @@ class SyncService
         $this->offerFile  = FS::platformSlashes(ROOT . $this->offerFile);
     }
 
-    public function requestFrom1s(Request $route): void
+    public function requestFrom1s(IRequest $route): void
     {
         try {
             if ($route->params['mode'] === 'checkauth') {

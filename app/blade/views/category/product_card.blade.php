@@ -26,7 +26,7 @@
     </a>
 
 
-    @php xdebug_break(); @endphp
+{{--    @php xdebug_break(); @endphp--}}
     @if(!isset($shippableTable))
         @php
             $shippableTable = [
