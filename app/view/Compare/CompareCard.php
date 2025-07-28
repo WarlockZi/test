@@ -3,24 +3,17 @@
 namespace app\view\Compare;
 
 use app\model\Compare;
-use app\service\Fs\FS;
+use JetBrains\PhpStorm\NoReturn;
 
 class CompareCard
 {
     private string $html;
 
-    public function __construct(Compare $compare)
+    #[NoReturn] public function __construct(Compare $compare)
     {
         $product    = $compare->product;
-        $fs         = new FS();
         $txt        = $product->txt;
-        $this->html = $fs->getContent('product_card', compact('product', 'txt'));
+        view('pages.compares', compact('product', 'txt'));
     }
-
-    public function toHtml()
-    {
-        return $this->html;
-    }
-
 
 }

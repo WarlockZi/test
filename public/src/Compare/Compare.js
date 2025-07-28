@@ -21,7 +21,7 @@ export default class Compare {
   async remove(target) {
     const productCard = target.closest(".column");
     const res = await post("/compare/del", this.productDTO(target));
-    if (res?.arr?.discompared) productCard.remove();
+    if (res?.discompared) productCard.remove();
   }
 
   productDTO(target) {

@@ -24,9 +24,9 @@ class SyncController extends AdminscController
         parent::__construct();
     }
 
-    public function actionInit(): void
+    public function actionInit(IRequest $request): void
     {
-        $this->service->requestFrom1s($this->route);
+        $this->service->requestFrom1s($request);
         exit('done');
     }
 

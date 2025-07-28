@@ -4,11 +4,13 @@
 namespace app\controller;
 
 
+use app\formRequest\CompareRequest;
 use app\model\Compare;
 use app\repository\CompareRepository;
 use app\service\AuthService\Auth;
 use app\service\Response;
 use app\view\Compare\CompareView;
+use JetBrains\PhpStorm\NoReturn;
 
 
 class CompareController extends AppController
@@ -20,36 +22,32 @@ class CompareController extends AppController
         parent::__construct();
     }
 
-    public function actionPage(): void
+    #[NoReturn] public function actionPage(): void
     {
         $compares = CompareRepository::all();
-        $content  = CompareView::all($compares);
-        Response::view('pages.compares', compact('content'));
+//        $content  = CompareView::all($compares);
+        view('pages.compares', compact('compares'));
     }
 
-    public function actionDel(): void
+    #[NoReturn] public function actionDel(CompareRequest $request): void
     {
-        $req = $this->ajax;
-        if (CompareRepository::del($req)) {
+        if (CompareRepository::del($request)) {
             response()->json(['discompared' => true]);
         }
         response()->json(['discompared' => false]);
     }
 
-    public function actionUpdateOrCreate(): void
+    #[NoReturn] public function actionUpdateOrCreateCustom(CompareRequest $request): void
     {
-        $req = $this->ajax;
         list($field, $value) = Auth::getCartFieldValue();
 
-        $c = Compare::updateOrCreate([
+        Compare::updateOrCreate([
             $field => $value,
-            'product_id' => $req['fields']['product_id'],
+            'product_id' => $request['fields']['product_id'],
         ], [
             $field => $value,
-            'product_id' => $req['fields']['product_id'],
+            'product_id' => $request['fields']['product_id'],
         ]);
         response()->json(['compared' => 1]);
-
-
     }
 }

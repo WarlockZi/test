@@ -1,19 +1,17 @@
 import "./main.scss";
-import "../components/header/show-front-menu1.js";
+import "@components/header/show-front-menu1.js";
 import "../404/404.scss";
 import "@components/hoist/hoist.js";
-import "../components/animate/animate.js";
+import "@components/animate/animate.js";
 import { qs } from "../constants";
 import scroll from "@components/scroll/scroll.js";
-import headerMenu from "../components/header/show-front-menu.js";
-
-// import '../share/chat/Chat';
+import headerMenu from "@components/header/show-front-menu.js";
 
 import Chat from "@components/chat/chat.js"; //не удалять - стили пропадут
 
 import IntObserver from "@components/scroll/IntObserver.js";
-import MobileMenu from "@src/components/header/mobile-menu.js";
-import Modal from "@src/components/Modal/modal.js";
+import MobileMenu from "@components/header/mobile-menu.js";
+import Modal from "@components/Modal/modal.js";
 import CartLogin from "@src/Auth/CartLogin.js";
 import CatalogItem from "@src/Admin/components/catalog-item/catalog-item.js";
 import { $ } from "@src/common.js";
@@ -25,7 +23,6 @@ import CallMe from "@src/CallMe/CallMe.js";
 import setLocalStorageCartId from "@components/cart_id/cart_id.js";
 import "./d-goals.js";
 import "./demis/feed_back.js";
-// import "vite/modulepreload-polyfill";
 
 window.YM = YM;
 document.addEventListener("DOMContentLoaded", async function () {
@@ -37,20 +34,19 @@ document.addEventListener("DOMContentLoaded", async function () {
   const feedbackButton = $("#feedback-submit").first();
   if (feedbackButton) new Feedback(feedbackButton);
 
-  // new Chat
   new ChatLocalStorage();
   new CallMe();
   new Search();
   new MobileMenu();
-  new Modal({
-    triggers: [".guest-menu", "#cartLogin"],
-    boxes: new CartLogin(),
-  });
 
   const modal = document[qs](".modal");
   if (modal) {
     const { default: Modal } = await import("../components/Modal/modal.js");
-    new Modal();
+    // new Modal();
+    new Modal({
+      triggers: [".guest-menu", "#cartLogin"],
+      boxes: new CartLogin(),
+    });
   }
   IntObserver();
   headerMenu();

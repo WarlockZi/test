@@ -4,6 +4,7 @@
 namespace app\repository;
 
 
+use app\formRequest\LikeRequest;
 use app\model\Like;
 use app\service\AuthService\Auth;
 use Throwable;
@@ -19,7 +20,7 @@ class LikeRepository
         return $likes;
     }
 
-    public static function updateOrCreate($req): bool
+    public static function updateOrCreate(LikeRequest $req): bool
     {
         list($field, $value) = Auth::getCartFieldValue();
         try {

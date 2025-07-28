@@ -48,10 +48,10 @@ export default class Category {
     } else {
       target.dataset.compare = true;
       const res = await post(
-        "/compare/updateOrCreate",
+        "/compare/updateOrCreateCustom",
         this.productDTO(target),
       );
-      if (res?.arr?.compared) target.classList.toggle("green");
+      if (res?.compared) target.classList.toggle("green");
     }
   }
 
@@ -62,8 +62,11 @@ export default class Category {
       if (res?.arr?.disliked) target.classList.toggle("red");
     } else {
       target.dataset.like = true;
-      const res = await post("/like/updateOrCreate", this.productDTO(target));
-      if (res?.arr?.liked) target.classList.toggle("red");
+      const res = await post(
+        "/like/updateOrCreateCustom",
+        this.productDTO(target),
+      );
+      if (res?.liked) target.classList.toggle("red");
     }
   }
 

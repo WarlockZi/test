@@ -26,7 +26,15 @@
     </a>
 
 
-    {{--    @php xdebug_break(); @endphp--}}
+    @php xdebug_break(); @endphp
+    @if(!isset($shippableTable))
+        @php
+            $shippableTable = [
+                'blueButton'=>true,
+                'greenButton'=>true,
+                ]
+        @endphp
+    @endif
 
     @include('components.shippableUnits.shippableUnits', ['row'=>$shippableTable->rows[$product['1s_id']]])
 

@@ -12,8 +12,6 @@ use AllowDynamicProperties;
         parent::__construct();
     }
 
-
-
     public function rules(): array
     {
         return [

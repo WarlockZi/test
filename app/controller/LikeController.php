@@ -4,10 +4,12 @@
 namespace app\controller;
 
 
+use app\formRequest\LikeRequest;
 use app\model\Like;
 use app\repository\LikeRepository;
 use app\service\Response;
 use app\view\Like\LikeView;
+use JetBrains\PhpStorm\NoReturn;
 
 class LikeController extends AppController
 {
@@ -18,26 +20,24 @@ class LikeController extends AppController
         parent::__construct();
     }
 
-    public function actionPage(): void
+    #[NoReturn] public function actionPage(): void
     {
         $likes   = LikeRepository::all();
         $content = LikeView::all($likes);
         Response::view('pages.likes', compact('content'));
     }
 
-    public function actionDel(): void
+    #[NoReturn] public function actionDel(LikeRequest $request): void
     {
-        $req = $this->ajax;
-        if (LikeRepository::del($req)) {
-            response()->json(['id' => $req['id']]);
+        if (LikeRepository::del($request)) {
+            response()->json(['id' => $request['id']]);
         }
         response()->json(['disliked' => false]);
     }
 
-    public function actionUpdateOrCreate(): void
+    #[NoReturn] public function actionUpdateOrCreateCustom(LikeRequest $request): void
     {
-        $req = $this->ajax;
-        if (LikeRepository::updateOrCreate($req)) {
+        if (LikeRepository::updateOrCreate($request)) {
             response()->json(['liked' => true]);
         }
         response()->json(['liked' => false]);

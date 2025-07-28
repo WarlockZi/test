@@ -39,8 +39,8 @@ export default class Feedback {
       } else if (target.id === "email") {
         this.emailError.innerText = emailValidator(target.value)[0] ?? "";
       } else if (target.id === "phone") {
-        const phoneErr = new PhoneValidator(target)[0] ?? "";
-        this.phoneError.innerText = new PhoneValidator(target)[0] ?? "";
+        // const phoneErr = new PhoneValidator(target?.value) ?? "";
+        this.phoneError.innerText = new PhoneValidator(target?.value) ?? "";
       } else if (target.id === "message") {
         const messageErr = filterXSS(target.value, {
           whiteList: {
@@ -61,7 +61,7 @@ export default class Feedback {
     );
     if (
       emailValidator(this.email.value).length ||
-      new PhoneValidator(this.phone).length
+      new PhoneValidator(this.phone.value).length
     )
       return;
     const res = await post("/feedback/updateOrCreate", this.dto());
@@ -109,7 +109,7 @@ export default class Feedback {
   setInputs() {
     this.name = this.formWrapper[qs]("#name");
     this.email = this.formWrapper[qs]("#email");
-    this.phone = this.formWrapper[qs]("#phone.blade.php");
+    this.phone = this.formWrapper[qs]("#phone");
     this.message = this.formWrapper[qs]("#message");
   }
 

@@ -13,7 +13,7 @@ class CompareRepository
     {
         list($field, $value) = Auth::getCartFieldValue();
         $compares = Compare::where($field, $value)
-            ->with('product')
+            ->with('product.shippableUnits')
             ->get();
         return $compares;
     }

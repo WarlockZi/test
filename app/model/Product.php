@@ -5,6 +5,7 @@ namespace app\model;
 
 use app\service\AuthService\Auth;
 use app\service\Image\ProductImageService;
+use app\service\ShippableUnits\ShippableUnitsService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

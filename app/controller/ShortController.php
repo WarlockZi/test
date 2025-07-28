@@ -4,14 +4,15 @@ namespace app\controller;
 
 use app\model\Category;
 use app\model\Product;
+use app\service\Router\IRequest;
 
 class ShortController extends AppController
 {
     protected string $model;
 
-    public function actionIndex(): void
+    public function actionIndex(IRequest $request): void
     {
-        $shortLink = $this->route->slug;
+        $shortLink = $request->slug;
         if (!$shortLink) header("Location:/catalog");
 
         $slug = Product::withWhereHas('ownProperties',
