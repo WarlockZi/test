@@ -72,7 +72,7 @@ class Request implements IRequest
 
         $req = json_decode($json, true) ?? [];
         if (!Auth::validatePphSession($req)) {
-            error_log(' ++++++ Bad session token ++++++++ '. $req);
+            error_log(' ++++++ Bad session token ++++++++ '. json_encode($req));
 
             throw new \Exception('плохой ключ сессии');
         }

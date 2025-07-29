@@ -29,7 +29,7 @@ class SyncService
 
     public function requestFrom1s(IRequest $route): void
     {
-        $this->logDate();
+//        $this->logDate();
         $this->log("Пришел запрос init из 1с");
         try {
             if ($route->params['mode'] === 'checkauth') {
