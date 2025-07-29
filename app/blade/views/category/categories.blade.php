@@ -1,6 +1,6 @@
 @extends('layouts.main.main')
 
-@php xdebug_break()@endphp
+{{--@php xdebug_break()@endphp--}}
 
 @section('title')
     {!! $meta->title !!}

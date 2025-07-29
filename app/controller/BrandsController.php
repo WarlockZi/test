@@ -9,7 +9,6 @@ class BrandsController extends AppController
 {
     public function __construct(
         private readonly BrandAction $actions,
-
     )
     {
         parent::__construct();
@@ -26,7 +25,7 @@ class BrandsController extends AppController
     {
         $meta = $this->actions->setMeta(
             'Dispodent - Витекс',
-            'Dispodent ' . $this->titleTail,
+            'Dispodent',
             'Dispodent');
 
         $brand = 'Dispodent';
@@ -37,7 +36,7 @@ class BrandsController extends AppController
     {
         $meta = $this->actions->setMeta(
             'Elegreen - Витекс',
-            'Elegreen ' . $this->titleTail,
+            'Elegreen',
             'Elegreen');
 
         $brand = 'Elegreen';
@@ -48,7 +47,7 @@ class BrandsController extends AppController
     {
         $meta = $this->actions->setMeta(
             'Imsstore - Витекс',
-            'Imsstore ' . $this->titleTail,
+            'Imsstore',
             'Imsstore');
 
         $brand = 'Imsstore';
@@ -59,7 +58,7 @@ class BrandsController extends AppController
     {
         $meta = $this->actions->setMeta(
             'Klever - Витекс',
-            'Klever ' . $this->titleTail,
+            'Klever',
             'Klevervy');
 
         $brand = 'Klever';
@@ -70,7 +69,7 @@ class BrandsController extends AppController
     {
         $meta = $this->actions->setMeta(
             'Matrix - Витекс',
-            'Matrix ' . $this->titleTail,
+            'Matrix',
             'Matrixvy');
 
         $brand = 'Matrix';
@@ -81,7 +80,7 @@ class BrandsController extends AppController
     {
         $meta = $this->actions->setMeta(
             'Medenta - Витекс',
-            'Medenta ' . $this->titleTail,
+            'Medenta',
             'Medentay');
 
         $brand = 'Medenta';
@@ -92,7 +91,7 @@ class BrandsController extends AppController
     {
         $meta = $this->actions->setMeta(
             'Mediok - Витекс',
-            'Mediok ' . $this->titleTail,
+            'Mediok',
             'Mediokvy');
 
         $brand = 'Mediok';
@@ -103,7 +102,7 @@ class BrandsController extends AppController
     {
         $meta = $this->actions->setMeta(
             'Protecodent - Витекс',
-            'Protecodent ' . $this->titleTail,
+            'Protecodent',
             'Protecodent');
 
         $brand = 'Protecodent';
@@ -114,7 +113,7 @@ class BrandsController extends AppController
     {
         $meta = $this->actions->setMeta(
             'Sitekmed - Витекс',
-            'Sitekmed ' . $this->titleTail,
+            'Sitekmed',
             'Sitekmed');
 
         $brand = 'Sitekmed';
@@ -125,7 +124,7 @@ class BrandsController extends AppController
     {
         $meta = $this->actions->setMeta(
             'Unite - Витекс',
-            'Unite ' . $this->titleTail,
+            'Unite',
             'Uniteovy');
 
         $brand = 'Unite';
