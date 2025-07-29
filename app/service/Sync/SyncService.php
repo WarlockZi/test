@@ -16,6 +16,7 @@ class SyncService
 
     protected string $importFile = '/storage/app/sync/import0_1.xml';
     protected string $offerFile = '/storage/app/sync/offers0_1.xml';
+    protected string $importPath = '/storage/app/sync/';
 
 
     public function __construct(
@@ -28,10 +29,10 @@ class SyncService
 
     public function requestFrom1s(IRequest $route): void
     {
+        $this->logDate();
+        $this->log("Пришел запрос init из 1с");
         try {
             if ($route->params['mode'] === 'checkauth') {
-                $this->logDate();
-                $this->log("Пришел запрос init из 1с");
                 $this->checkauth();
             } elseif ($route->params['mode'] === 'init') {
                 $this->zip();
