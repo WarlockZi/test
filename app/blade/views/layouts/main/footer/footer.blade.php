@@ -86,6 +86,9 @@
                     <a href="/main/returnChange">Возврат и обмен</a>
                 </li>
                 <li>
+                    <a href="/main/payment">Оплата</a>
+                </li>
+                <li>
                     <a href="/main/politicaconf">Политика конфиденциальности</a>
                 </li>
                 <li>
