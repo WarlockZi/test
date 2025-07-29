@@ -40,7 +40,7 @@ class Request implements IRequest
 
         $self->url    = $_SERVER['REQUEST_URI'] ?? '';
         $self->method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
-        $self->host   = $_SERVER['HTTP_HOST']?? gethostname();
+        $self->host   = $_SERVER['HTTP_HOST'] ?? gethostname();
         $self->cookie = $_COOKIE ?? [];
         $self->parseUrl();
         $self->setBody();
@@ -71,7 +71,11 @@ class Request implements IRequest
         if (empty($json)) return;
 
         $req = json_decode($json, true) ?? [];
-        if (!Auth::validatePphSession($req)) throw new \Exception('плохой ключ сессии');
+        if (!Auth::validatePphSession($req)) {
+            error_log(' ++++++ Bad session token ++++++++ '. $req);
+
+            throw new \Exception('плохой ключ сессии');
+        }
         if ($this->isAjax()) {
             unset($req['phpSession']);
             $this->body = $req;
