@@ -5,6 +5,7 @@ namespace app\controller\Admin;
 use app\model\User;
 use app\service\AuthService\Auth;
 use app\service\Logger\FileLogger;
+use app\service\Logger\SyncLogger;
 use app\service\Response;
 use app\service\Router\IRequest;
 use app\service\Sync\SyncService;
@@ -20,6 +21,7 @@ class SyncController extends AdminscController
         protected FileLogger      $logger,
     )
     {
+        $this->service->setLogger(new SyncLogger());
         Auth::setUser(User::where('email', 'vvoronik@yandex.ru')->first());
         parent::__construct();
     }

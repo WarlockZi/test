@@ -2,7 +2,6 @@
 
 namespace app\service\Sync;
 
-
 use app\service\Fs\FS;
 use app\service\Logger\SyncLogger;
 use app\service\Router\IRequest;
@@ -19,9 +18,7 @@ class SyncService
     protected string $importPath = '/storage/app/sync/';
 
 
-    public function __construct(
-        protected SyncLogger $logger = new SyncLogger(),
-    )
+    public function __construct()
     {
         $this->importFile = FS::platformSlashes(ROOT . $this->importFile);
         $this->offerFile  = FS::platformSlashes(ROOT . $this->offerFile);
@@ -51,6 +48,16 @@ class SyncService
     #[NoReturn] protected function checkauth(): void
     {
         $this->log('checkauth');
+        if ($_GET['type'] == 'checkauth') {
+            header("Content-Type: text/plain; charset=utf-8");
+            echo "success\n";
+            echo session_name() . "\n";
+            echo session_id() . "\n";
+            // Или фиксированные значения, как в вашем примере:
+            // echo "success\nnic\n7777\n";
+            exit;
+        }
+
         exit("success\ninc\n777777\n55fdsa55");
     }
 

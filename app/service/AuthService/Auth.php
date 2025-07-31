@@ -17,6 +17,10 @@ class Auth
 
     public static function validatePphSession(array $req): bool
     {
+
+        if (isConsole())  error_log('команда пришла из консоли');
+        if (isConsole())  return true;
+
         return !empty($req['phpSession'])
             && session_id() === $req['phpSession'];
     }
