@@ -3,10 +3,7 @@
 namespace app\service\Sync;
 
 use app\service\Fs\FS;
-use app\service\Logger\SyncLogger;
-use app\service\Router\IRequest;
 use app\traits\LoggerTrait;
-use JetBrains\PhpStorm\NoReturn;
 
 
 class SyncService
@@ -24,60 +21,91 @@ class SyncService
         $this->offerFile  = FS::platformSlashes(ROOT . $this->offerFile);
     }
 
-    public function requestFrom1s(IRequest $route): void
+    public function requestFrom1s(): void
     {
-//        $this->logDate();
-        $this->log("Пришел запрос init из 1с");
-        try {
-            if ($route->params['mode'] === 'checkauth') {
-                $this->checkauth();
-            } elseif ($route->params['mode'] === 'init') {
-                $this->zip();
-            } elseif ($route->params['mode'] === 'file') {
-                $this->file($route->params['filename']);
-            } elseif ($route->params['mode'] === 'import') {
-                $this->log("Файлы из 1с загружены");
+        $mode = $_GET['mode'];
+//        $type = $_GET['type'];
+
+        switch ($mode) {
+            case 'checkauth':
+                header('Content-Type: text/plain; charset=utf-8');
+                echo "success\n\n\n";
+                break;
+
+            case 'file':
+                $filename = $_GET['filename'];
+                $data     = file_get_contents('php://input');
+                file_put_contents($this->importPath . $filename, $data);
+                echo "success\n";
+                break;
+
+            case 'import':
                 $this->load();
-                exit('success');
-            }
-        } catch (\Throwable $e) {
-            $this->logError("---SyncControllerError---", $e);
+                echo "success\n";
+                break;
+
+            default:
+                header('HTTP/1.0 400 Bad Request');
+                echo "Unknown mode";
         }
     }
+//    public function requestFrom1s(IRequest $req): void
+//    {
+//        $this->log("Пришел запрос init из 1с");
+//        try {
+//            if ($req->params['mode'] === 'checkauth') {
+//                $this->checkauth();
+//            } elseif ($req->params['mode'] === 'init') {
+//                $this->zip();
+//            } elseif ($req->params['mode'] === 'file') {
+//                $this->file($req->params['filename']);
+//            } elseif ($req->params['mode'] === 'import') {
+//                $this->log("Файлы из 1с загружены");
+//                $this->load();
+//                exit('success');
+//            }
+//        } catch (\Throwable $e) {
+//            $this->logError("---SyncControllerError---", $e);
+//        }
+//    }
 
-    #[NoReturn] protected function checkauth(): void
-    {
-        $this->log('checkauth');
-        if ($_GET['type'] == 'checkauth') {
-            header("Content-Type: text/plain; charset=utf-8");
-            echo "success\n";
-            echo session_name() . "\n";
-            echo session_id() . "\n";
-            // Или фиксированные значения, как в вашем примере:
-            // echo "success\nnic\n7777\n";
-            exit;
-        }
+//    #[NoReturn] protected function checkauth(): void
+//    {
+//        $this->log('checkauth');
+//        if ($_GET['type'] == 'checkauth') {
+//            header("Content-Type: text/plain; charset=utf-8");
+//            echo "success\n";
+//            echo session_name() . "\n";
+//            echo session_id() . "\n";
+//            // Или фиксированные значения, как в вашем примере:
+//            // echo "success\nnic\n7777\n";
+//            exit;
+//        }
+////        exit("success\ninc\n777777\n55fdsa55");
+//    }
 
-        exit("success\ninc\n777777\n55fdsa55");
-    }
+//    #[NoReturn] protected function zip(): void
+//    {
+//        $this->log('init zip');
+//        if ($_GET['type'] == 'init') {
+//            echo "zip=no\n";
+//            echo "file_limit=10_000_000\n";
+//            exit;
+//        }
+////        exit("zip=no\nfile_limit=10_000_000");
+//    }
 
-    #[NoReturn] protected function zip(): void
-    {
-        $this->log('init zip');
-        exit("zip=no\nfile_limit=10_000_000");
-    }
-
-    protected function file(string $filename): void
-    {
-        try {
-            file_put_contents($this->importPath . $filename, file_get_contents('php://input'));
-            $this->log('file');
-            exit('success');
-        } catch (\Throwable $exception) {
-            $this->log('file load fail. ' . $exception->getMessage());
-            exit('file load fail.');
-        }
-    }
+//    protected function file(string $filename): void
+//    {
+//        try {
+//            file_put_contents($this->importPath . $filename, file_get_contents('php://input'));
+//            $this->log('file');
+//            exit('success');
+//        } catch (\Throwable $exception) {
+//            $this->log('file load fail. ' . $exception->getMessage());
+//            exit('file load fail.');
+//        }
+//    }
 
     private function importFilesExist(): void
     {
