@@ -4,32 +4,32 @@ namespace app\controller\Admin;
 
 use app\model\User;
 use app\service\AuthService\Auth;
-use app\service\Logger\FileLogger;
 use app\service\Logger\SyncLogger;
 use app\service\Response;
 use app\service\Router\IRequest;
 use app\service\Sync\SyncService;
 use app\service\Sync\TrancateService;
+use app\traits\LoggerTrait;
 use Illuminate\Support\Carbon;
 use JetBrains\PhpStorm\NoReturn;
 
 class SyncController extends AdminscController
 {
+    use LoggerTrait;
     public function __construct(
         protected SyncService     $service,
         protected TrancateService $trancateService,
-        protected FileLogger      $logger,
     )
     {
-        $this->service->setLogger(new SyncLogger());
+        $this->setLogger(new SyncLogger());
         Auth::setUser(User::where('email', 'vvoronik@yandex.ru')->first());
         parent::__construct();
     }
 
-    public function actionInit(IRequest $request): void
+    #[NoReturn] public function actionInit(): void
     {
-        $this->service->requestFrom1s($request);
-        exit('done');
+        $this->service->requestFrom1s();
+
     }
 
 
@@ -65,14 +65,14 @@ class SyncController extends AdminscController
     {
         $this->logger->write(Carbon::now());
         $this->logger->write('Начата ручная загрузка');
-        $this->service->load();
+//        $this->service->load();
         if (DEV) {
             Response::exitWithPopup('Все перенесено');
         }
         exit();
     }
 
-    public function actionLoadCategories(): void
+    #[NoReturn] public function actionLoadCategories(): void
     {
         $this->service->LoadCategories();
         Response::exitWithPopup('Categories loaded');

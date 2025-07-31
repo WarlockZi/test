@@ -3,6 +3,7 @@
 namespace app\service\Sync;
 
 use app\service\Fs\FS;
+use app\service\Logger\SyncLogger;
 use app\traits\LoggerTrait;
 
 
@@ -17,38 +18,90 @@ class SyncService
 
     public function __construct()
     {
+        $this->setLogger(new SyncLogger());
         $this->importFile = FS::platformSlashes(ROOT . $this->importFile);
         $this->offerFile  = FS::platformSlashes(ROOT . $this->offerFile);
     }
 
     public function requestFrom1s(): void
     {
-        $mode = $_GET['mode'];
-//        $type = $_GET['type'];
+        header("Content-Type: text/plain; charset=utf-8");
+        header("Pragma: no-cache");
 
-        switch ($mode) {
-            case 'checkauth':
-                header('Content-Type: text/plain; charset=utf-8');
-                echo "success\n\n\n";
-                break;
+// Session initialization for CheckAuth
+        session_start();
 
-            case 'file':
-                $filename = $_GET['filename'];
-                $data     = file_get_contents('php://input');
-                file_put_contents($this->importPath . $filename, $data);
+// Check the request method
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            // CheckAuth request
+            if (isset($_GET['mode']) && $_GET['mode'] === 'checkauth') {
+                // Generate session ID and return success response
                 echo "success\n";
-                break;
+                echo session_name() . "\n";
+                echo session_id() . "\n";
+                exit;
+            }
 
-            case 'import':
-                $this->load();
-                echo "success\n";
-                break;
-
-            default:
-                header('HTTP/1.0 400 Bad Request');
-                echo "Unknown mode";
+            // Init request (not implemented in this example)
+            if (isset($_GET['mode']) && $_GET['mode'] === 'init') {
+                echo "zip=no\n";
+                echo "file_limit=104857600\n"; // 100MB limit
+                exit;
+            }
         }
+
+// Handle file import
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if (isset($_GET['mode']) && $_GET['mode'] === 'import') {
+                // Check if filename is provided
+                if (!isset($_GET['filename'])) {
+                    http_response_code(400);
+                    echo "failure\n";
+                    echo "Filename not specified";
+                    exit;
+                }
+
+                $filename = $_GET['filename'];
+
+                // Validate filename (basic security check)
+                if (preg_match('/\.\.|\/|\\\\/', $filename)) {
+                    http_response_code(400);
+                    echo "failure\n";
+                    echo "Invalid filename";
+                    exit;
+                }
+
+                // Create import directory if it doesn't exist
+                $importDir = $this->importPath;
+                if (!file_exists($importDir)) {
+                    mkdir($importDir, 0755, true);
+                }
+
+                // Get the file content from the input stream
+                $fileContent = file_get_contents('php://input');
+
+                // Save the file
+                $filePath = $importDir . basename($filename);
+                if (file_put_contents($filePath, $fileContent) !== false) {
+                    $this->load();
+                    echo "success\n";
+                    // Here you can add processing of the imported file
+                    // For example: processImportFile($filePath);
+                } else {
+                    http_response_code(500);
+                    echo "failure\n";
+                    echo "Failed to save file";
+                }
+                exit;
+            }
+        }
+
+        http_response_code(400);
+        echo "failure\n";
+        echo "Invalid request";
     }
+
+
 //    public function requestFrom1s(IRequest $req): void
 //    {
 //        $this->log("Пришел запрос init из 1с");
