@@ -9,12 +9,16 @@ export default class Feedback {
     if (!button) return false;
 
     this.button = button;
+    this.button.disabled = true;
 
     this.formWrapper = button.closest(".feedback");
     this.form = this.formWrapper[qs]("form");
     this.title = this.formWrapper[qs](".feedback-title");
     this.checkmark = this.formWrapper[qs](".check-icon");
     this.inputs = this.formWrapper[qa](".input-container input");
+    this.email = this.formWrapper[qs]("input#email");
+    this.phone = this.formWrapper[qs]("input#phone");
+    this.name = this.formWrapper[qs]("input#name");
 
     this.setInputs();
     this.setErrorTags();
@@ -24,6 +28,9 @@ export default class Feedback {
   }
 
   async handelKeyup({ target }) {
+    this.button.disabled =
+      !(this.email.value || this.phone.value) || !this.name.value;
+
     if (target.tagName === "INPUT") {
       const { emailValidator } = await import("@src/common.js");
       const { default: PhoneValidator } = await import(
@@ -57,13 +64,15 @@ export default class Feedback {
 
     const { emailValidator } = await import("@src/common.js");
     const { default: PhoneValidator } = await import(
-      "@src/components/validator/PhoneValidator.js"
+      "@components/validator/PhoneValidator.js"
     );
     if (
       emailValidator(this.email.value).length ||
       new PhoneValidator(this.phone.value).length
-    )
+    ) {
+      this.button.disabled = true;
       return;
+    }
     const res = await post("/feedback/updateOrCreate", this.dto());
     if (res?.arr?.id) {
       this.title.innerText = "Сообщение отправлено";

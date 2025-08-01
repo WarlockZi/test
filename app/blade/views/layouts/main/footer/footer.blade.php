@@ -127,14 +127,14 @@
                     </div>
 
                     <div class="input-container">
-                        <input type="text" placeholder=" " required="" name="email" id="email" autocomplete="false">
+                        <input type="text" placeholder=" " name="email" id="email" autocomplete="false">
                         <div class="badge"></div>
                         <label for="email">эл. почта</label>
                         <div id="emailError"></div>
                     </div>
 
                     <div class="input-container">
-                        <input type="text" placeholder=" " required="" name="phone" id="phone" autocomplete="false">
+                        <input type="text" placeholder=" " name="phone" id="phone" autocomplete="false">
                         <div class="badge"></div>
                         <label for="phone">телефон</label>
                         <div id="phoneError"></div>
