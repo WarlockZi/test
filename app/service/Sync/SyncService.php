@@ -29,7 +29,7 @@ class SyncService
         header("Pragma: no-cache");
 
 // Session initialization for CheckAuth
-        session_start();
+//        session_start();
 
 // Check the request method
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
