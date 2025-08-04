@@ -301,6 +301,7 @@ function emailValidator(mail) {
   if (!email.match(domainLength)) {
     errors.push("Меньше 2 знаков После точки");
   }
+  // this.errors = errors;
   return errors;
 }
 

@@ -1,7 +1,7 @@
 import "./feedback.scss";
 import { ael, qa, qs } from "@src/constants.js";
 import filterXSS from "xss";
-import { debounce, getPhpSession, post } from "@src/common.js"; // import PhoneValidator from "../components/validator/PhoneValidator.js";
+import { createElement, debounce, getPhpSession, post } from "@src/common.js"; // import PhoneValidator from "../components/validator/PhoneValidator.js";
 // import PhoneValidator from "../components/validator/PhoneValidator.js";
 
 export default class Feedback {
@@ -27,9 +27,26 @@ export default class Feedback {
     this.formWrapper[ael]("keyup", debounce(this.handelKeyup.bind(this), 1000));
   }
 
-  async handelKeyup({ target }) {
+  toggleSubmitButton() {
+    if (!this.name.value) {
+      const formError = this.formWrapper.querySelector("#formError");
+      if (!formError) {
+        const error = new createElement()
+          .tag("div")
+          .attr("id", "formError")
+          .attr("style", "color:brown;padding-left:15px;padding-top:10px;")
+          .text("Заполните пожалуйста Ваше имя")
+          .get();
+        this.button.before(error);
+      }
+    }
+
     this.button.disabled =
       !(this.email.value || this.phone.value) || !this.name.value;
+  }
+
+  async handelKeyup({ target }) {
+    this.toggleSubmitButton();
 
     if (target.tagName === "INPUT") {
       const { emailValidator } = await import("@src/common.js");
@@ -46,8 +63,9 @@ export default class Feedback {
       } else if (target.id === "email") {
         this.emailError.innerText = emailValidator(target.value)[0] ?? "";
       } else if (target.id === "phone") {
-        // const phoneErr = new PhoneValidator(target?.value) ?? "";
-        this.phoneError.innerText = new PhoneValidator(target?.value) ?? "";
+        const phoneErr = new PhoneValidator();
+        phoneErr.validate(target.value);
+        this.phoneError.innerText = phoneErr.errors[0] ?? "";
       } else if (target.id === "message") {
         const messageErr = filterXSS(target.value, {
           whiteList: {
@@ -59,22 +77,32 @@ export default class Feedback {
     }
   }
 
-  async handleSubmit(e) {
-    e.preventDefault();
-
-    const { emailValidator } = await import("@src/common.js");
+  async validateInputs() {
+    const { default: EmailValidator } = await import(
+      "@components/validator/EmailValidator.js"
+    );
     const { default: PhoneValidator } = await import(
       "@components/validator/PhoneValidator.js"
     );
-    if (
-      emailValidator(this.email.value).length ||
-      new PhoneValidator(this.phone.value).length
-    ) {
-      this.button.disabled = true;
-      return;
-    }
+    const emailV = new EmailValidator().validate(this.email.value);
+    const phoneV = new PhoneValidator().validate(this.phone.value);
+    return [...emailV.errors, ...phoneV.errors];
+  }
+
+  buttonVisibility(boolean) {
+    this.button.disabled = boolean;
+  }
+
+  async handleSubmit(e) {
+    e.preventDefault();
+
+    this.buttonVisibility(!this.name || !(this.email || this.phone));
+
+    const errors = this.validateInputs();
+    this.buttonVisibility(!!errors.length);
+
     const res = await post("/feedback/updateOrCreate", this.dto());
-    if (res?.arr?.id) {
+    if (res?.id) {
       this.title.innerText = "Сообщение отправлено";
       this.title.classList.add("sent");
       this.checkmark.classList.remove("none");

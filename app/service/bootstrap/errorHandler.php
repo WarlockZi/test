@@ -37,7 +37,9 @@ function productionExceptionHandler($exception): void
         "Production exception: " . $exception->getMessage().PHP_EOL.
         " in file: " . $exception->getFile().PHP_EOL.
         " on line: " . $exception->getLine().PHP_EOL.
-        " TRACE: " . $exception->getTraceAsString()
+        " TRACE: " . $exception->getTraceAsString().
+        " REQUEST0: " . $_REQUEST[0].
+        " REQUEST1: " . $_REQUEST[1]
     );
 
     if (!headers_sent()) {

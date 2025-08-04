@@ -5,6 +5,7 @@ namespace app\service\Router;
 
 
 use app\service\AuthService\Auth;
+use Exception;
 use Illuminate\Support\Str;
 
 class Request implements IRequest
@@ -32,7 +33,7 @@ class Request implements IRequest
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public static function capture(): IRequest
     {
@@ -57,7 +58,7 @@ class Request implements IRequest
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function setFiles(): void
     {
@@ -65,20 +66,23 @@ class Request implements IRequest
         $this->files = $_FILES['file'];
     }
 
+    /**
+     * @throws Exception
+     */
     public function setBody(): void
     {
         $json = file_get_contents('php://input') ?? $_POST;
         if (empty($json)) return;
 
-        $req = json_decode($json, true) ?? [];
-        if (!Auth::validatePphSession($req)) {
-            error_log(' ++++++ Bad session token ++++++++ '. $json);
-            throw new \Exception('плохой ключ сессии');
+        $body = json_decode($json, true) ?? [];
+        if (isset($body['phpSession'])) {
+            if (!Auth::validatePphSession($body)) {
+                error_log(' ++++++ Bad session token ++++++++ ');
+                throw new Exception('плохой ключ сессии');
+            }
+            unset($body['phpSession']);
         }
-        if ($this->isAjax()) {
-            unset($req['phpSession']);
-            $this->body = $req;
-        }
+        $this->body = $body;
     }
 
     public function setMiddlewares(array $middlewares): void
