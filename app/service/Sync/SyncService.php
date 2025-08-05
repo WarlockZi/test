@@ -52,20 +52,19 @@ class SyncService
                     $this->import();
                 }
             }
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $this->import();
+            }
             echo "type=not catalog\n";
             $this->log('fail start');
             exit;
-
-
         }
-
-
         http_response_code(400);
         echo "failure\n";
         echo "Invalid request";
     }
 
-    private function import()
+    private function import(): void
     {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
