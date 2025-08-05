@@ -46,22 +46,23 @@ class SyncService
                     echo "file_limit=104857600\n"; // 100MB limit
                     exit;
                 }
-                if (isset($_GET['mode']) && $_GET['mode'] === 'file') {
-                    $this->log('import');
-                    $this->import();
-                }
-            }
 
-
-            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-                $this->log('file');
-                $this->import();
+//                if (isset($_GET['mode']) && $_GET['mode'] === 'file') {
+//                    $this->log('import');
+//                    $this->import();
+//                }
             }
 
             echo "type=not catalog\n";
             $this->log('fail start');
             exit;
         }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $this->log('file');
+            $this->import();
+        }
+
         http_response_code(400);
         echo "failure\n";
         echo "Invalid request";
