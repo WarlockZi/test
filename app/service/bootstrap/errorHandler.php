@@ -33,13 +33,15 @@ function productionErrorHandler($errno, $errstr, $errfile, $errline)
 
 function productionExceptionHandler($exception): void
 {
+    $req0 = isset($_REQUEST[0]) ? $_REQUEST[0] : 'req 0 is empty';
+    $req1 = isset($_REQUEST[1]) ? $_REQUEST[1] : 'req 1 is empty';
     error_log(
-        "Production exception: " . $exception->getMessage().PHP_EOL.
-        " in file: " . $exception->getFile().PHP_EOL.
-        " on line: " . $exception->getLine().PHP_EOL.
-        " TRACE: " . $exception->getTraceAsString().
-        " REQUEST0: " . $_REQUEST[0]??''.
-        " REQUEST1: " . $_REQUEST[1]??''
+        "Production exception: " . $exception->getMessage() . PHP_EOL .
+        " in file: " . $exception->getFile() . PHP_EOL .
+        " on line: " . $exception->getLine() . PHP_EOL .
+        " TRACE: " . $exception->getTraceAsString() .
+        " REQUEST0: " . $req0 .
+        " REQUEST1: " . $req1
     );
 
     if (!headers_sent()) {
