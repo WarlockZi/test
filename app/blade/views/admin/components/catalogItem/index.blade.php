@@ -1,4 +1,3 @@
-{{--@php xdebug_break() @endphp--}}
 @if($catItem['pageTitle'])
     <div class='page-name'>{!! $catItem['pageTitle']!!}</div>
 @endif
@@ -8,6 +7,7 @@
      data-id="{!! $catItem['item']['id'] !!}"
 >
 
+{{--@php xdebug_break() @endphp--}}
     @if($catItem['tabs'])
         @include('admin.components.catalogItem.withTabs')
     @else

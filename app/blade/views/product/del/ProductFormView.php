@@ -54,10 +54,10 @@ class ProductFormView
         if (!$product->shippableUnits->count()) return '';
         $shippable = [];
         foreach ($product->shippableUnits as $unit) {
-            $promotion         = $product->activePromotions->first() ?? null;
-            $shippable['formattedPrice']=$this->getFormattedPrice($product->price, $unit->pivot->multiplier);;
-            $shippable['promotionNewPrice']=$promotion ? $this->getFormattedPrice($promotion->new_price, 1) : '';
-            $shippable['promotion']=$product->activePromotions->first() ?? null;
+            $promotion                   = $product->activePromotions->first() ?? null;
+            $shippable['formattedPrice'] = $this->getFormattedPrice($product->price, $unit->pivot->multiplier);;
+            $shippable['promotionNewPrice'] = $promotion ? $this->getFormattedPrice($promotion->new_price, 1) : '';
+            $shippable['promotion']         = $product->activePromotions->first() ?? null;
 //            $str               .= $this->fs->getContent('shippableUnitRow',
 //                compact('product', 'formattedPrice', 'unit', 'promotion', 'promotionNewPrice'));
         }
@@ -295,6 +295,14 @@ class ProductFormView
                             ->data('relation', 'units')
                             ->get();
                     })
+                    ->component(
+                        CheckboxBuilder::build()
+//                            ->checked($unit->pivot->is_shippable)
+//                            ->data('id', $unit->id)
+                            ->data('pivot', 'is_shippable')
+//                            ->data('pivot-value', $unit->pivot->is_shippable)
+                            ->data('relation', 'units')
+                            ->get())
                     ->get()
             )
             ->del()
@@ -318,7 +326,7 @@ class ProductFormView
 
     public static function mainImage(Product $product): DndBuilder
     {
-        $pis = APP->get(ProductImageService::class);
+        $pis          = APP->get(ProductImageService::class);
         $img['src']   = $pis->getRelativeImage($product);
         $img['alt']   = $product->name;
         $img['title'] = $product->name;
