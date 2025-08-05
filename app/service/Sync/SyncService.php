@@ -46,11 +46,6 @@ class SyncService
                     echo "file_limit=104857600\n"; // 100MB limit
                     exit;
                 }
-
-//                if (isset($_GET['mode']) && $_GET['mode'] === 'file') {
-//                    $this->log('import');
-//                    $this->import();
-//                }
             }
 
             echo "type=not catalog\n";
@@ -92,7 +87,7 @@ class SyncService
                 }
 
                 // Create import directory if it doesn't exist
-                $importDir = $this->importPath;
+                $importDir = FS::platformSlashes(ROOT.$this->importPath);
                 if (!file_exists($importDir)) {
                     mkdir($importDir, 0755, true);
                 }
