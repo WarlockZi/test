@@ -35,7 +35,7 @@ class SyncService
                     // Generate session ID and return success response
                     $this->log('checkauth');
                     echo "success\n";
-                    echo "sess_name **".session_name() . "\n";
+                    echo "sess_name **" . session_name() . "\n";
                     echo session_id() . "\n";
                     exit;
                 }
@@ -61,52 +61,49 @@ class SyncService
 
     private function import(): void
     {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (isset($_GET['mode']) && $_GET['mode'] === 'file') {
-                $this->log('file get');
-                // Check if filename is provided
-                if (!isset($_GET['filename'])) {
-                    http_response_code(400);
-                    echo "failure\n";
-                    echo "Filename not specified";
-                    exit;
-                }
-
-                $filename = $_GET['filename'];
-
-                // Validate filename (basic security check)
-                if (preg_match('/\.\.|\/|\\\\/', $filename)) {
-                    http_response_code(400);
-                    echo "failure\n";
-                    echo "Invalid filename";
-                    exit;
-                }
-
-                // Create import directory if it doesn't exist
-                $importDir = FS::platformSlashes(ROOT.$this->importPath);
-                if (!file_exists($importDir)) {
-                    mkdir($importDir, 0755, true);
-                }
-
-                // Get the file content from the input stream
-                $fileContent = file_get_contents('php://input');
-
-                // Save the file
-                $filePath = $importDir . basename($filename);
-                if (file_put_contents($filePath, $fileContent) !== false) {
-                    $this->log('load');
-                    $this->load();
-                    echo "success\n";
-                    // Here you can add processing of the imported file
-                    // For example: processImportFile($filePath);
-                } else {
-                    http_response_code(500);
-                    echo "failure\n";
-                    echo "Failed to save file";
-                }
+        if (isset($_GET['mode']) && $_GET['mode'] === 'file') {
+            $this->log('file get');
+            // Check if filename is provided
+            if (!isset($_GET['filename'])) {
+                http_response_code(400);
+                echo "failure\n";
+                echo "Filename not specified";
                 exit;
             }
+
+            $filename = $_GET['filename'];
+
+            // Validate filename (basic security check)
+            if (preg_match('/\.\.|\/|\\\\/', $filename)) {
+                http_response_code(400);
+                echo "failure\n";
+                echo "Invalid filename";
+                exit;
+            }
+
+            // Create import directory if it doesn't exist
+            $importDir = FS::platformSlashes(ROOT . $this->importPath);
+            if (!file_exists($importDir)) {
+                mkdir($importDir, 0755, true);
+            }
+
+            // Get the file content from the input stream
+            $fileContent = file_get_contents('php://input');
+
+            // Save the file
+            $filePath = $importDir . basename($filename);
+            if (file_put_contents($filePath, $fileContent) !== false) {
+                $this->log('load');
+                $this->load();
+                echo "success\n";
+            } else {
+                http_response_code(500);
+                echo "failure\n";
+                echo "Failed to save file";
+            }
+            exit;
         }
+
     }
 
 //    public function requestFrom1s(IRequest $req): void

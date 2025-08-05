@@ -17,6 +17,7 @@ abstract class TreeBuilder
 
     protected int|string|null $selected = null;
     protected string $selectedField;
+    protected string $selectedValue;
 
     protected $excluded = null;
     protected $localtab;
