@@ -42,7 +42,7 @@ class SyncService
 
                 if (isset($_GET['mode']) && $_GET['mode'] === 'init') {
                     $this->log('zip');
-                    echo "zip=no\n";
+                    echo "zip=yes\n";
                     echo "file_limit=104857600\n"; // 100MB limit
                     exit;
                 }
@@ -51,10 +51,13 @@ class SyncService
                     $this->import();
                 }
             }
+
+
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $this->log('file');
                 $this->import();
             }
+
             echo "type=not catalog\n";
             $this->log('fail start');
             exit;
