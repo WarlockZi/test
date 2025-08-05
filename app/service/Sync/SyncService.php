@@ -28,31 +28,27 @@ class SyncService
         header("Content-Type: text/plain; charset=utf-8");
         header("Pragma: no-cache");
 
-// Session initialization for CheckAuth
-//        session_start();
-
-// Check the request method
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            // CheckAuth request
             if (isset($_GET['mode']) && $_GET['mode'] === 'checkauth') {
                 // Generate session ID and return success response
+                $this->log('checkauth');
                 echo "success\n";
                 echo session_name() . "\n";
                 echo session_id() . "\n";
                 exit;
             }
 
-            // Init request (not implemented in this example)
             if (isset($_GET['mode']) && $_GET['mode'] === 'init') {
+                $this->log('zip');
                 echo "zip=no\n";
                 echo "file_limit=104857600\n"; // 100MB limit
                 exit;
             }
         }
 
-// Handle file import
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_GET['mode']) && $_GET['mode'] === 'import') {
+                $this->log('import');
                 // Check if filename is provided
                 if (!isset($_GET['filename'])) {
                     http_response_code(400);
@@ -83,6 +79,7 @@ class SyncService
                 // Save the file
                 $filePath = $importDir . basename($filename);
                 if (file_put_contents($filePath, $fileContent) !== false) {
+                $this->log('load');
                     $this->load();
                     echo "success\n";
                     // Here you can add processing of the imported file
