@@ -93,9 +93,10 @@ class SyncService
             // Save the file
             $filePath = $importDir . basename($filename);
             if (file_put_contents($filePath, $fileContent) !== false) {
+                echo 'success\n';
                 $this->log('load');
                 $this->load();
-                exit('success');
+                exit();
             } else {
                 http_response_code(500);
                 echo "failure\n";
