@@ -34,7 +34,7 @@ class CategoryRepository
         );
     }
 
-    public function indexInstore(string $url): object
+    public function indexInstore(string $url): ?object
     {
         $cacheKey = 'categoryWithProducts' . str_replace("/", "", $url);
 

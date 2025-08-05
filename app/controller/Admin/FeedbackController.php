@@ -18,6 +18,7 @@ class FeedbackController extends AdminscController
 
     #[NoReturn] public function actionIndex(): void
     {
+//        view('admin.components.table.table');
         $this->showTable();
     }
 }

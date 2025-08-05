@@ -12,7 +12,7 @@
 
         <h2>Активные акции</h2>
 
-        @if (!count($activePromotions))
+        @if (!isset($activePromotions))
             <p>В даный момент активных акций нет, но скоро, возможно, появятся</p>
 
         @else
