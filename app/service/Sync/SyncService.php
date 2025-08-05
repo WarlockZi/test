@@ -30,7 +30,6 @@ class SyncService
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             if (isset($_GET['type']) && $_GET['type'] === 'catalog') {
-                $this->log('start');
 
                 if (isset($_GET['mode']) && $_GET['mode'] === 'checkauth') {
                     // Generate session ID and return success response
@@ -53,6 +52,7 @@ class SyncService
                 }
             }
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $this->log('import');
                 $this->import();
             }
             echo "type=not catalog\n";
@@ -66,10 +66,8 @@ class SyncService
 
     private function import(): void
     {
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_GET['mode']) && $_GET['mode'] === 'import') {
-                $this->log('import');
                 // Check if filename is provided
                 if (!isset($_GET['filename'])) {
                     http_response_code(400);
