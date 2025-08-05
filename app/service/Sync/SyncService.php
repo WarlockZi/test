@@ -29,22 +29,44 @@ class SyncService
         header("Pragma: no-cache");
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            if (isset($_GET['mode']) && $_GET['mode'] === 'checkauth') {
-                // Generate session ID and return success response
-                $this->log('checkauth');
-                echo "success\n";
-                echo session_name() . "\n";
-                echo session_id() . "\n";
-                exit;
-            }
+            if (isset($_GET['type']) && $_GET['type'] === 'catalog') {
+                $this->log('start');
 
-            if (isset($_GET['mode']) && $_GET['mode'] === 'init') {
-                $this->log('zip');
-                echo "zip=no\n";
-                echo "file_limit=104857600\n"; // 100MB limit
-                exit;
+                if (isset($_GET['mode']) && $_GET['mode'] === 'checkauth') {
+                    // Generate session ID and return success response
+                    $this->log('checkauth');
+                    echo "success\n";
+                    echo session_name() . "\n";
+                    echo session_id() . "\n";
+                    exit;
+                }
+
+                if (isset($_GET['mode']) && $_GET['mode'] === 'init') {
+                    $this->log('zip');
+                    echo "zip=no\n";
+                    echo "file_limit=104857600\n"; // 100MB limit
+                    exit;
+                }
+                if (isset($_GET['mode']) && $_GET['mode'] === 'import') {
+                    $this->log('import');
+                    $this->import();
+                }
             }
+            echo "type=not catalog\n";
+            $this->log('fail start');
+            exit;
+
+
         }
+
+
+        http_response_code(400);
+        echo "failure\n";
+        echo "Invalid request";
+    }
+
+    private function import()
+    {
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (isset($_GET['mode']) && $_GET['mode'] === 'import') {
@@ -79,7 +101,7 @@ class SyncService
                 // Save the file
                 $filePath = $importDir . basename($filename);
                 if (file_put_contents($filePath, $fileContent) !== false) {
-                $this->log('load');
+                    $this->log('load');
                     $this->load();
                     echo "success\n";
                     // Here you can add processing of the imported file
@@ -92,12 +114,7 @@ class SyncService
                 exit;
             }
         }
-
-        http_response_code(400);
-        echo "failure\n";
-        echo "Invalid request";
     }
-
 
 //    public function requestFrom1s(IRequest $req): void
 //    {
