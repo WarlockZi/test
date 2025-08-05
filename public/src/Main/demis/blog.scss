@@ -8,24 +8,3 @@
 .blog-list li a img{
   width: 120px;
 }
-
-@media (max-width: 450px) {
-  .burger .info .phone {
-    display: none;
-  }
-}
-
-.img_main {
-  width: 150px;
-  text-align: center;
-}
-
-.strelka {
-  width: 50px;
-  height: 50px;
-}
-@media(max-width: 768px) {
-  .strelka {
-    display: none;
-  }
-}

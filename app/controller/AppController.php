@@ -40,10 +40,11 @@ class AppController extends Controller
 
         if ($model->wasRecentlyCreated) {
             response()->json(['popup' => 'Создан', 'id' => $model->id]);
-        } else {
+        } elseif ($model->wasChanged()) {
             response()->json(['popup' => 'Обновлен', 'model' => $model->toArray()]);
+        } else {
+            response()->json(['error' => 'Ошибка']);
         }
-        response()->json(['error' => 'Ошибка']);
     }
 
     public function actionDelete(): void
@@ -104,7 +105,6 @@ class AppController extends Controller
         $this->model->$relation()->syncWithoutDetaching($created);
         response()->json(['popup' => 'Создан', 'id' => $created->id]);
     }
-
 
 
     protected function updateOrCreateRelation(array $req): void

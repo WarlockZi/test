@@ -1,6 +1,6 @@
 export default class BaseValidator {
   constructor(obj) {
-    this.errors = [];
+    this._errors = [];
     this.min = obj?.min ?? 0;
     this.max = obj?.max ?? 0;
     this.errorMassage = {
@@ -13,20 +13,26 @@ export default class BaseValidator {
     }
     if (obj?.required) {
       if (!obj.value.length) {
-        this.errors.push(this.errorMassage.required);
+        this._errors.push(this.errorMassage.required);
       }
     }
 
     if (obj?.min) {
       if (obj.value.length < obj?.min) {
-        this.errors.push(this.errorMassage.min);
+        this._errors.push(this.errorMassage.min);
       }
     }
 
     if (obj?.max) {
       if (obj.value.length > obj?.max) {
-        this.errors.push(this.errorMassage.max);
+        this._errors.push(this.errorMassage.max);
       }
     }
+  }
+  get errors() {
+    return this._errors;
+  }
+  set errors(error) {
+    this._errors.push(error);
   }
 }
