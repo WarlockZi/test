@@ -38,8 +38,8 @@ function productionExceptionHandler($exception): void
         " in file: " . $exception->getFile().PHP_EOL.
         " on line: " . $exception->getLine().PHP_EOL.
         " TRACE: " . $exception->getTraceAsString().
-        " REQUEST0: " . $_REQUEST[0].
-        " REQUEST1: " . $_REQUEST[1]
+        " REQUEST0: " . $_REQUEST[0]??''.
+        " REQUEST1: " . $_REQUEST[1]??''
     );
 
     if (!headers_sent()) {

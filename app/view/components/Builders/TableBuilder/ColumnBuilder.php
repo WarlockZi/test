@@ -4,6 +4,8 @@
 namespace app\view\components\Builders\TableBuilder;
 
 
+use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
+
 class ColumnBuilder
 {
 
@@ -26,6 +28,7 @@ class ColumnBuilder
     public $html;
     public $function;
     public $callbackFn;
+    public $component;
     public $functionClass;
 
     public $select = false;
@@ -151,9 +154,19 @@ class ColumnBuilder
         return $this;
     }
 
+    public function component($component): self
+    {
+        $this->component = $component;
+        return $this;
+    }
+
     public function getData($column, $item, $field)
     {
-        if ($column->function) {
+        if ($column->component) {
+            if ($column->component instanceof CheckboxBuilder) {
+                $column->component->checked($item->$field);
+            }
+        } elseif ($column->function) {
             $func = $column->function;
             return $column->functionClass::$func($column, $item, $field);
         } else if ($column->select) {

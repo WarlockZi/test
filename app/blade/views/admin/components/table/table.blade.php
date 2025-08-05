@@ -1,3 +1,6 @@
+@php
+use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
+@endphp
 @extends('layouts.admin.admin')
 
 @section('content')
@@ -56,7 +59,16 @@
                                 <?= $c->class; ?>
                                 <?= $c->contenteditable; ?>
                             >
-                                    <?= $c->getData($c, $item, $field); ?>
+                                @if($c->component instanceof CheckboxBuilder)
+                                    @php
+                                        //                                        xdebug_break();
+                                                                                $c->getData($c, $item, $field);
+                                    @endphp
+
+                                    @include('admin.components.checkbox.checkbox',['checkbox'=>$c->component] )
+                                @else
+                                    {!!  $c->getData($c, $item, $field) !!}
+                                @endif
                             </div>
                         @endif
 

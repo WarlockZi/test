@@ -53,12 +53,9 @@ class SyncLogger implements ILogger
         }
 
         return file_put_contents($this->logPath,
-            PHP_EOL . PHP_EOL . date('Y-m-d H:i:s') .
-            PHP_EOL . $content . PHP_EOL, FILE_APPEND
+            PHP_EOL . date('Y-m-d H:i:s') .' - '. $content . PHP_EOL, FILE_APPEND
         );
-
     }
-
 
     public function clear(): void
     {

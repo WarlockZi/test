@@ -95,13 +95,12 @@ class SyncService
             if (file_put_contents($filePath, $fileContent) !== false) {
                 $this->log('load');
                 $this->load();
-                echo "success\n";
+                exit('success');
             } else {
                 http_response_code(500);
                 echo "failure\n";
-                echo "Failed to save file";
+                exit("Failed to save file");
             }
-            exit;
         }
 
     }

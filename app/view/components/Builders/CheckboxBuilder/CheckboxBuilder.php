@@ -5,20 +5,17 @@ namespace app\view\components\Builders\CheckboxBuilder;
 
 
 use app\service\Fs\FS;
-use app\view\components\Traits\CleanString;
 
 class CheckboxBuilder
 {
-    use CleanString;
-
-    private string $field = '';
-    private string $pivot = '';
-    private string $checked = '';
-    private string $data = '';
-    private string $class = '';
-    private string $id = '';
-    private string $for = '';
-    private string $label = '';
+    public string $field = '';
+    public string $pivot = '';
+    public string $checked = '';
+    public string $data = '';
+    public string $class = '';
+    public string $id = '';
+    public string $for = '';
+    public string $label = '';
     public string $labelClass = '';
 
 
@@ -68,15 +65,18 @@ class CheckboxBuilder
         return $this;
     }
 
-    public function get(): array
+    public function get(): self
     {
-        return get_object_vars($this);
+        return $this;
+//        $vars = get_object_vars($this);
+//        return $vars;
+//        return get_object_vars($this);
 //        $box = get_object_vars($this);
-        if ($this->label) {
-            return FS::getFileContent(ROOT . '/app/view/components/Builders/CheckboxBuilder/labelCheckboxTemplate.php', compact('box'));
-        } else {
-            return FS::getFileContent(ROOT . '/app/view/components/Builders/CheckboxBuilder/checkboxTemplate.php', compact('box'));
-        }
+//        if ($this->label) {
+//            return FS::getFileContent(ROOT . '/app/view/components/Builders/CheckboxBuilder/labelCheckboxTemplate.php', compact('box'));
+//        } else {
+//            return FS::getFileContent(ROOT . '/app/view/components/Builders/CheckboxBuilder/checkboxTemplate.php', compact('box'));
+//        }
     }
 
 }

@@ -1,10 +1,10 @@
 {{--@php xdebug_break() @endphp--}}
-@if(!empty($checkbox['label']))
+@if(!empty($checkbox->label))
     <label
-            <?= $checkbox['labelClass']; ?>
-        <?= $checkbox['for']; ?>
+            <?= $checkbox->labelClass; ?>
+        <?= $checkbox->for; ?>
     >
-            <?= $checkbox['label']; ?>
+            <?= $checkbox->label; ?>
     </label>
 
 @endif
@@ -14,9 +14,9 @@
         my-checkbox
         type="checkbox"
         {{--                @php xdebug_break() @endphp--}}
-    <?= $checkbox["data"] ?? ''; ?>
-    <?= $checkbox["class"] ?? ''; ?>
-    <?= $checkbox["field"] ?? ''; ?>
-    <?= $checkbox["pivot"] ?? ''; ?>
-    <?= $checkbox["checked"] ? 'checked' : '' ?>
+    <?= $checkbox->data ?? ''; ?>
+    <?= $checkbox->class ?? ''; ?>
+    <?= $checkbox->field ?? ''; ?>
+    <?= $checkbox->pivot ?? ''; ?>
+    <?= $checkbox->checked ? 'checked' : '' ?>
 >
