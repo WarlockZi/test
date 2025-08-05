@@ -35,7 +35,7 @@ class SyncService
                     // Generate session ID and return success response
                     $this->log('checkauth');
                     echo "success\n";
-                    echo session_name() . "\n";
+                    echo "sess_name **".session_name() . "\n";
                     echo session_id() . "\n";
                     exit;
                 }
@@ -46,13 +46,13 @@ class SyncService
                     echo "file_limit=104857600\n"; // 100MB limit
                     exit;
                 }
-                if (isset($_GET['mode']) && $_GET['mode'] === 'import') {
+                if (isset($_GET['mode']) && $_GET['mode'] === 'file') {
                     $this->log('import');
                     $this->import();
                 }
             }
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $this->log('import');
+                $this->log('file');
                 $this->import();
             }
             echo "type=not catalog\n";
@@ -67,7 +67,8 @@ class SyncService
     private function import(): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            if (isset($_GET['mode']) && $_GET['mode'] === 'import') {
+            if (isset($_GET['mode']) && $_GET['mode'] === 'file') {
+                $this->log('file get');
                 // Check if filename is provided
                 if (!isset($_GET['filename'])) {
                     http_response_code(400);
