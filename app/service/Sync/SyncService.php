@@ -53,7 +53,7 @@ class SyncService
             }
 
 
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                 $this->log('file');
                 $this->import();
             }
