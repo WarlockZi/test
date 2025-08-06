@@ -55,7 +55,7 @@
                         >
                             @if($c->component instanceof CheckboxBuilder)
                                 @php
-//                                    xdebug_break();
+                                    xdebug_break();
                                     $c->getData($c, $item, $field);
                                 @endphp
                                 @include('admin.components.checkbox.checkbox',['checkbox'=>$c->component] )

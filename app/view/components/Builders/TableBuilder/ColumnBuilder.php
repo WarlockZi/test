@@ -165,6 +165,9 @@ class ColumnBuilder
         if ($column->component) {
             if ($column->component instanceof CheckboxBuilder) {
                 $column->component->checked($item->$field);
+                foreach ($column->component->itemData as $itemField) {
+                    $column->component->itemData[$itemField]=$item[$itemField];
+                }
             }
         } elseif ($column->function) {
             $func = $column->function;

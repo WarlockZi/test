@@ -14,7 +14,11 @@
         my-checkbox
         type="checkbox"
         {{--                @php xdebug_break() @endphp--}}
-    <?= $checkbox->data ?? ''; ?>
+        <?= $checkbox->data ?? ''; ?>
+        @foreach($checkbox->itemData as $field=>$value)
+            data-{!! $field !!}={!! $value !!}
+        @endforeach
+
     <?= $checkbox->class ?? ''; ?>
     <?= $checkbox->field ?? ''; ?>
     <?= $checkbox->pivot ?? ''; ?>

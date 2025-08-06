@@ -291,16 +291,14 @@ class ProductFormView
                             ->checked($unit->pivot->is_shippable)
                             ->data('id', $unit->id)
                             ->data('pivot', 'is_shippable')
-//                            ->data('pivot-value', $unit->pivot->is_shippable)
                             ->data('relation', 'units')
                             ->get();
                     })
                     ->component(
                         CheckboxBuilder::build()
 //                            ->checked($unit->pivot->is_shippable)
-//                            ->data('id', $unit->id)
+                            ->itemData('id')
                             ->data('pivot', 'is_shippable')
-//                            ->data('pivot-value', $unit->pivot->is_shippable)
                             ->data('relation', 'units')
                             ->get())
                     ->get()

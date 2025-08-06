@@ -4,6 +4,8 @@
 namespace app\service\Storage;
 
 
+use app\service\Fs\FS;
+
 class StorageProd extends Storage
 {
     protected string $path;
@@ -11,7 +13,7 @@ class StorageProd extends Storage
     public function __construct()
     {
         parent::__construct();
-        $this->path = $this->path . 'userData' . DIRECTORY_SEPARATOR;
+        $this->path = FS::platformSlashes(ROOT . '/storage/app/userData/');
         return $this;
     }
 
