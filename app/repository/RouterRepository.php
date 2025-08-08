@@ -7,6 +7,9 @@ class RouterRepository
     public static function getRoutes(): array
     {
         return [
+            ["^\/main/statii/kak-vybrat-kachestvennyye-meditsinskiye-perchatki-dlya-razlichnykh-sfer-deyatelnosti?$", ['controller' => 'Blog', 'action' => 'blog1']],
+            ["^\/main/statii/meditsinskiye-prinadlezhnosti-kotoryye-dolzhny-byt-v-kazhdom-kabinete-vracha?$", ['controller' => 'Blog', 'action' => 'blog2']],
+            ["^\/main/statii/rukovodstvo-po-vyboru-meditsinskikh-perchatok-dlya-personala-kliniki-i-laboratorii?$", ['controller' => 'Blog', 'action' => 'blog3']],
             ["^\/(?P<controller>product)\/?(?P<slug>[_a-z0-9-]+)$", ['controller' => 'Product']],
             ["^\/short\/(?P<slug>.+)?\/?$", ['controller' => 'Short']],
 
