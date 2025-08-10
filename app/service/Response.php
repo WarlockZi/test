@@ -156,8 +156,8 @@ class Response
 
     #[NoReturn] public static function view(string $file, array $data = [], int $status = 200): string
     {
-        $view = APP->get(View::class);
         http_response_code($status);
+        $view = APP->get(View::class);
         exit($view->render($file, $data));
     }
 

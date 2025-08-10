@@ -160,14 +160,17 @@ class ColumnBuilder
         return $this;
     }
 
+    private function handleCheckbox($checkbox, $item): void
+    {
+        $checkedFFn               = $checkbox->checkedFFn;
+        $checkbox->checked = $checkedFFn($item) ? 'checked' : '';
+    }
+
     public function getData($column, $item, $field)
     {
         if ($column->component) {
             if ($column->component instanceof CheckboxBuilder) {
-                $column->component->checked($item->$field);
-                foreach ($column->component->itemData as $itemField) {
-                    $column->component->itemData[$itemField]=$item[$itemField];
-                }
+                $this->handleCheckbox($column->component, $item);
             }
         } elseif ($column->function) {
             $func = $column->function;
@@ -183,13 +186,11 @@ class ColumnBuilder
 
     public function get(): self|string
     {
-        try {
-            $this->class       = $this->class ?? "class='cell'";
-            $this->classHeader = $this->classHeader ?? "class='head'";
-            $this->name        = $this->name ?? $this->field;
-            return $this;
-        } catch (\Throwable $exception) {
-            return $exception->getMessage();
-        }
+
+        $this->class       = $this->class ?? "class='cell'";
+        $this->classHeader = $this->classHeader ?? "class='head'";
+        $this->name        = $this->name ?? $this->field;
+        return $this;
+
     }
 }

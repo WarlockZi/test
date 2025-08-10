@@ -4,7 +4,6 @@ namespace app\blade;
 
 
 use app\service\Router\IRequest;
-use app\view\layouts\Admin\AdminLayout;
 use Exception;
 
 class View implements IView

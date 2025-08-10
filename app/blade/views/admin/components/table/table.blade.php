@@ -61,7 +61,7 @@ use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
                             >
                                 @if($c->component instanceof CheckboxBuilder)
                                     @php
-                                        //                                        xdebug_break();
+                                                                                xdebug_break();
                                                                                 $c->getData($c, $item, $field);
                                     @endphp
 
@@ -85,10 +85,10 @@ use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
         @endif
 
         <!--  ADD BUTTON  -->
+        @php xdebug_break() @endphp
         <div class="buttons">
-            <?= $data['add']; ?>
+            <div class="add-model" {!! $data['pivot'] !!}>+</div>
         </div>
-
 
     </div>
 @endsection

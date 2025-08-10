@@ -4,15 +4,15 @@
 namespace app\view\components\Builders\CheckboxBuilder;
 
 
-use app\service\Fs\FS;
-
 class CheckboxBuilder
 {
     public string $field = '';
     public string $pivot = '';
     public string $checked = '';
+    public $checkedFFn;
     public string $data = '';
     public array $itemData = [];
+    public array $pivotData = [];
     public string $class = '';
     public string $id = '';
     public string $for = '';
@@ -37,16 +37,36 @@ class CheckboxBuilder
         return $this;
     }
 
-    public function checked($checked = true): static
+    public function checkedFn(callable $callback): static
     {
-        $this->checked = $checked ? "checked" : "";
+        $this->checkedFFn = $callback;
         return $this;
     }
+
+    public function pivotData(string $field): static
+    {
+        $this->pivotData[] = $field;
+        return $this;
+    }
+
+    public function getPivotData($item, $pivotDataIndex)
+    {
+        $field = $this->pivotData[$pivotDataIndex];
+        return $item->$field;
+    }
+
     public function itemData(string $field): static
     {
         $this->itemData[] = $field;
         return $this;
     }
+
+    public function getItemData($item, $itemDataIndex)
+    {
+        $field = $this->itemData[$itemDataIndex];
+        return $item->$field;
+    }
+
     public function data(string $postfix, string|null $value): static
     {
         $this->data .= $this->data . "data-$postfix=$value ";

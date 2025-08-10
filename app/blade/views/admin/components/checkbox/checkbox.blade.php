@@ -1,4 +1,3 @@
-{{--@php xdebug_break() @endphp--}}
 @if(!empty($checkbox->label))
     <label
             <?= $checkbox->labelClass; ?>
@@ -9,18 +8,25 @@
 
 @endif
 
-
 <input
         my-checkbox
         type="checkbox"
-        {{--                @php xdebug_break() @endphp--}}
+        @php
+            $checkedFFn               = $checkbox->checkedFFn;
+        @endphp
+        {!!  $checkedFFn($item)?'checked':'';!!}
         <?= $checkbox->data ?? ''; ?>
-        @foreach($checkbox->itemData as $field=>$value)
+        @foreach( $checkbox->itemData as $index=>$field)
+            @php $value = $checkbox->getItemData($item,$index) @endphp
             data-{!! $field !!}={!! $value !!}
+        @endforeach
+
+        @foreach($checkbox->pivotData as $index=>$field)
+            @php $value = $checkbox->getItemData($item,$index) @endphp
+            data-pivot-{!! $field !!}={!! $value !!}
         @endforeach
 
     <?= $checkbox->class ?? ''; ?>
     <?= $checkbox->field ?? ''; ?>
     <?= $checkbox->pivot ?? ''; ?>
-    <?= $checkbox->checked ? 'checked' : '' ?>
 >

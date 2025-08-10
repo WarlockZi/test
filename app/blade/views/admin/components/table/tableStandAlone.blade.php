@@ -1,3 +1,7 @@
+@php
+    use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
+@endphp
+
 <div custom-table
     <?= $data['class']; ?>
     <?= $data['dataModel'] ?>
@@ -44,7 +48,6 @@
                     @if ($c->html)
                             <?= $c->html ?>
                     @else
-
                         <div
                                 data-id='<?= $item['id'] ?? 0; ?>'
                                 <?= $c->dataField; ?>
@@ -54,11 +57,7 @@
                             <?= $c->contenteditable; ?>
                         >
                             @if($c->component instanceof CheckboxBuilder)
-                                @php
-                                    xdebug_break();
-                                    $c->getData($c, $item, $field);
-                                @endphp
-                                @include('admin.components.checkbox.checkbox',['checkbox'=>$c->component] )
+                                @include('admin.components.checkbox.checkbox', ['checkbox'=>$c->component, 'item'=>$item] )
                             @else
                                 {!!  $c->getData($c, $item, $field) !!}
                             @endif
@@ -78,6 +77,7 @@
     @endif
 
     <!--  ADD BUTTON  -->
+    @php xdebug_break() @endphp
     <div class="buttons">
         <div class="add-model" {!! $data['pivot'] !!}>+</div>
     </div>

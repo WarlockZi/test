@@ -9,6 +9,7 @@ refs/
 storage/framework/container/CompiledContainer.php
 storage/framework/caches/blade/*
 storage/logs/**/*
+storage/app/userData/**/*
 
 composer.phar
 composer.lock

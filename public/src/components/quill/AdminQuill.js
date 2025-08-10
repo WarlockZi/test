@@ -34,7 +34,9 @@ export default class AdminQuill {
     if (IsJson(this.el.innerText)) {
       this.quill.setContents(JSON.parse(this.el.innerText + "\n"));
     } else {
-      this.quill.setText(this.el.innerText);
+      const cleanText = this.el.innerText.replace(/\n\n/gi, "\n"); // Заменяем <br> на переносы строки
+      // const cleanText = this.el.innerText.replace(/<br\s*\/?>/gi, ""); // Заменяем <br> на переносы строки
+      this.quill.setText(cleanText);
     }
   }
 

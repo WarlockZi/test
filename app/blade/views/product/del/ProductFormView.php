@@ -26,7 +26,6 @@ use Illuminate\Database\Eloquent\Collection;
 
 class ProductFormView
 {
-
     public function __construct(
         private readonly FS $fs,
     )
@@ -233,10 +232,10 @@ class ProductFormView
                     ->name('Единица')
                     ->callback(function ($unit) use ($baseUnit) {
                         if ($unit->id === $baseUnit->id) {
-                            return $baseUnit->name;
+                            return $baseUnit->full_name;
                         }
                         return SelectBuilder::build(
-                            PluckOptionsBuilder::build(Unit::pluck('name', 'id'))
+                            PluckOptionsBuilder::build(Unit::pluck('full_name', 'id'))
                                 ->selected($unit->id)
                                 ->get()
                         )
@@ -262,13 +261,13 @@ class ProductFormView
                     ->name('Базовая ед')
                     ->removeDataField()
                     ->emptyRow(function () use ($baseUnit) {
-                        return $baseUnit->name;
+                        return $baseUnit->full_name;
                     })
                     ->callback(function ($unit) use ($baseUnit) {
                         if ($unit->id === $baseUnit->id) {
                             return '';
                         }
-                        return $baseUnit->name;
+                        return $baseUnit->full_name;
                     })
                     ->get()
             )
@@ -278,7 +277,9 @@ class ProductFormView
                     ->pivot('is_shippable')
                     ->emptyRow(function () {
                         return CheckboxBuilder::build()
-                            ->checked(false)
+                            ->checkedFn(function ($item) {
+                                return $item->pivot->is_shippable;
+                            })
                             ->data('id', 0)
 //                            ->data('pivot-field', 'is_shippable')
                             ->data('pivot', 'is_shippable')
@@ -286,18 +287,23 @@ class ProductFormView
                             ->get();
                     })
                     ->name('Отгруж ед')
-                    ->callback(function ($unit) {
-                        return CheckboxBuilder::build()
-                            ->checked($unit->pivot->is_shippable)
-                            ->data('id', $unit->id)
-                            ->data('pivot', 'is_shippable')
-                            ->data('relation', 'units')
-                            ->get();
-                    })
+//                    ->callback(function ($unit) {
+//                        return CheckboxBuilder::build()
+//                            ->checked($unit->pivot->is_shippable)
+//                            ->data('id', $unit->id)
+//                            ->data('pivot', 'is_shippable')
+//                            ->data('relation', 'units')
+//                            ->get();
+//                    })
                     ->component(
                         CheckboxBuilder::build()
-//                            ->checked($unit->pivot->is_shippable)
+                            ->checkedFn(
+                                function ($item) {
+                                    return boolval($item->pivot->is_shippable);
+                                }
+                            )
                             ->itemData('id')
+                            ->pivotData('is_shippable')
                             ->data('pivot', 'is_shippable')
                             ->data('relation', 'units')
                             ->get())

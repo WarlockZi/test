@@ -7,7 +7,7 @@ class RouterRepository
     public static function getRoutes(): array
     {
         return [
-            ["^\/(?P<controller>product)\/?(?P<slug>[_a-z0-9-]+)$", ['controller' => 'Product']],
+            ["^\/(?P<controller>product)\/?(?P<slug>[_a-z0-9-+]+)$", ['controller' => 'Product']],
             ["^\/short\/(?P<slug>.+)?\/?$", ['controller' => 'Short']],
 
             ["^\/(?P<controller>catalog)\/(?P<slug>[_a-zA-Z0-9-\/%]+)?$", ['controller' => 'Category']],

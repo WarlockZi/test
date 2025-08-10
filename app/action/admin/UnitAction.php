@@ -15,7 +15,6 @@ class UnitAction implements IShowTable
     {
         return Table::build(Unit::all())
             ->pageTitle('Единицы измерения')
-            ->addButton()
             ->column(
                 ColumnBuilder::build('id')
                     ->width('50px')
@@ -39,6 +38,7 @@ class UnitAction implements IShowTable
                     ->name('Код')
                     ->get()
             )
+            ->addButton()
             ->del()
             ->get();
     }

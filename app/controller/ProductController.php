@@ -27,7 +27,7 @@ class ProductController extends AppController
         $product = $this->repo->main($request->slug);
         if (!$product) {
             $similarCategories = $this->actions->similarProducts($request->slug);
-            view('category.notFound',
+            response()->view('category.notFound',
                 compact('product', 'similarCategories'),
                 404);
         }

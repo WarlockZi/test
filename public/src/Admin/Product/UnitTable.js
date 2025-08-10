@@ -183,8 +183,6 @@ export default class UnitTable {
     const res = await post("/adminsc/product/changeUnit", data);
   }
 
-  newDTO(row) {}
-
   dto(row) {
     const pivot = {
       product_id: this.product1sId,
