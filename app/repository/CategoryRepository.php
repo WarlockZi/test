@@ -23,7 +23,7 @@ class CategoryRepository
             60);
     }
 
-    public static function getBySubslug(string $subslug): object
+    public static function getBySubslug(string $subslug): object|null
     {
         return Cache::get('similarCategories' . $subslug);
     }
