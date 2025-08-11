@@ -16,6 +16,7 @@
             @if(Auth::getUser()->isSU())
                 <a href="/zip/download">Download</a>
                 <a href="/adminsc/sync"> Sync</a>
+                <a href="/adminsc/errors">Errors</a>
             @endif
 
             @if(Auth::getUser()->isOlya())@endif
