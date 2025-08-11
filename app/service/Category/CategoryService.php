@@ -12,7 +12,7 @@ class CategoryService
         $collection = new Collection();
         foreach ($subslugs as $subslug) {
             $c = CategoryRepository::getBySubslug($subslug);
-            $collection = $collection->merge($c);
+            if ($c) $collection = $collection->merge($c);
         }
         return $collection;
     }
