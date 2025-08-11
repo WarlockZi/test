@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace app\service;
 
 use app\blade\View;
+use app\service\Nonce\Nonce;
 use JetBrains\PhpStorm\NoReturn;
 
 class Response
@@ -154,9 +155,47 @@ class Response
         exit();
     }
 
+    private static function setCSPHeaders() {
+        $nonce = Nonce::getInstance();
+        $nonce = $nonce->getNonce();
+
+        $csp = [
+            "default-src 'self'",
+            "script-src 'self' https://vi-prod:5173 'nonce-$nonce' ",
+            "style-src 'self' localhost:5173 'nonce-$nonce' ",
+
+            "style-src-elem https://fonts.googleapis.com 'unsafe-inline'",
+            "font-src fonts.gstatic.com",
+            "connect-src wss://localhost:5173",
+            "script-src-attr 'unsafe-inline'",
+
+            "img-src 'self' data:",
+            "frame-ancestors 'none'",
+            "form-action 'self'",
+            "base-uri 'self'",
+            "object-src 'none'"
+        ];
+
+        header("Content-Security-Policy: " . implode('; ', $csp));
+
+        return $nonce;
+    }
+
     #[NoReturn] public static function view(string $file, array $data = [], int $status = 200): string
     {
         http_response_code($status);
+
+//        $nonce = base64_encode(random_bytes(16));
+        $nonce = self::setCSPHeaders();
+//        header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' localhost:5173; style-src 'self' 'nonce-'$nonce; img-src 'self' data:");
+        header("X-Content-Type-Options: nosniff");
+        header("Strict-Transport-Security: max-age=31536000; includeSubDomains; preload");
+        header("X-XSS-Protection: 1; mode=block");
+        header("Referrer-Policy: strict-origin-when-cross-origin");
+
+        header("Cross-Origin-Embedder-Policy: require-corp");
+        header("Cross-Origin-Opener-Policy: same-origin");
+        header("Cross-Origin-Resource-Policy: same-origin");
         $view = APP->get(View::class);
         exit($view->render($file, $data));
     }

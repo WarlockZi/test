@@ -9,6 +9,8 @@ namespace app\service\Vite;
 // you might check @vitejs/plugin-legacy if you need to support older browsers
 // https://github.com/vitejs/vite/tree/main/packages/plugin-legacy
 
+use app\service\Nonce\Nonce;
+
 class ViteCompiler
 {
     public function __construct(
@@ -41,36 +43,49 @@ class ViteCompiler
 
     public function getAssets(): string
     {
-        $this->js  = "\n" . $this->jsTag()
-            . "\n" . $this->jsPreloadImports();
-        $this->css = "\n" . $this->cssTag();
+//        $nonce = Nonce::getInstance();
+        $nonce = Nonce::getNonce();
+        $this->js  = "\n" . $this->jsTag($nonce)
+            . "\n" . $this->jsPreloadImports($nonce);
+        $this->css = "\n" . $this->cssTag($nonce);
         return $this->js . $this->css;
     }
-
-    function client(): string
+//    function vite_asset($entry) {
+//        if (is_dev_server_running()) {
+//            return '
+//            <script type="module" src="http://localhost:3000/@vite/client" nonce="' . generate_nonce() . '"></script>
+//            <script type="module" src="http://localhost:3000/resources/js/app.js" nonce="' . generate_nonce() . '"></script>
+//        ';
+//        }
+//    }
+//
+//    function is_dev_server_running() {
+//        return file_exists(__DIR__ . '/hot');
+//    }
+    function client(string $nonce): string
     {
         return DEV
-            ? "<script type='module' src='$this->devHost@vite/client'></script>"
+            ? "<script nonce='$nonce' type='module' src='$this->devHost@vite/client'></script>"
             : "";
     }
 
-    function jsTag(): string
+    function jsTag(string $nonce): string
     {
-        if (DEV) return "<script type='module' src='{$this->devHost}{$this->entry}'></script>";
+         if (DEV) return "<script nonce='$nonce' type='module' src='{$this->devHost}{$this->entry}'></script>";
 
         $url = $this->productionPath . $this->manifest[$this->entry]['file'];
         return !empty($url)
-            ? "<script type='module' src='$url'></script>"
+            ? "<script nonce='{$nonce}' type='module' src='$url'></script>"
             : '';
     }
 
-    function cssTag(): string
+    function cssTag(string $nonce): string
     {
         // not needed on dev, it's inject by Vite
         if (DEV) return '';
         $tags = '';
         foreach ($this->cssUrls() as $url) {
-            $tags .= "<link rel='stylesheet' href='$url'>";
+            $tags .= "<link nonce='{$nonce}' rel='stylesheet' href='$url'>";
         }
         return $tags;
     }

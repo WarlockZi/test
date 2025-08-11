@@ -2,6 +2,8 @@
 
 namespace app\service\Vite;
 
+use app\service\Nonce\Nonce;
+
 class Vite
 {
     public function __construct(
@@ -14,8 +16,11 @@ class Vite
     {
         $jsCss   = '';
 
+        $nonce = Nonce::getInstance();
+        $nonce = $nonce->getNonce();
+
         if (DEV) {
-            $jsCss = $this->compiler->client();
+            $jsCss = $this->compiler->client($nonce);
         }
         foreach ($assets as $asset) {
             $jsCss .= $this->compiler->getAsset($asset);

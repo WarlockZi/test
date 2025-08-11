@@ -4,7 +4,6 @@ namespace app\service\Utils;
 
 class UtilsServise
 {
-
     public static function checkExtendion(string $extendion)
     {
         if (extension_loaded($extendion)) {

@@ -25,16 +25,10 @@ class CategoryRepository
 
     public static function getBySubslug(string $subslug): object
     {
-        return Cache::get('similarCategories' . $subslug,
-            function () use ($subslug) {
-                return Category::where('slug', 'LIKE', "%{$subslug}%")
-                    ->get();
-            },
-            Cache::$timeLife1_000
-        );
+        return Cache::get('similarCategories' . $subslug);
     }
 
-    public function indexInstore(string $url): ?object
+    public function indexInstore(string $url): object|null
     {
         $cacheKey = 'categoryWithProducts' . str_replace("/", "", $url);
 

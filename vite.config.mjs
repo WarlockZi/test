@@ -3,9 +3,16 @@ import liveReload from 'vite-plugin-live-reload';
 import mkcert from 'vite-plugin-mkcert';
 import path from 'node:path';
 import {NodePackageImporter} from 'sass-embedded';
+import * as bcrypt from "crypto";
 
+let styleNonce = '';
 export default defineConfig(async ({command, mode}) => {
       const env = loadEnv(mode, process.cwd());
+
+      // Generate nonce only once
+      if (!styleNonce) {
+         styleNonce = Buffer.from(bcrypt.randomUUID()).toString('base64');
+      }
 
       const base = env.VITE_DEV
          ? './'
@@ -23,7 +30,7 @@ export default defineConfig(async ({command, mode}) => {
          },
 
          optimizeDeps: {
-            include: ['xss'] // Для лучшей производительности
+            include: ['xss'], // Для лучшей производительности
          },
 
          build: {
@@ -65,6 +72,53 @@ export default defineConfig(async ({command, mode}) => {
             },
          },
          plugins: [
+            // {
+            //    name: 'svg-nonce',
+            //    transform(src, id) {
+            //       console.log(styleNonce);
+            //       if (id.endsWith('.svg')) {
+            //          const nonce = nonce;
+            //          // const nonce = generateNonce() // ваша функция генерации nonce
+            //          return src.replace('<svg', `<svg nonce="${nonce}"`);
+            //       }
+            //    },
+            // },
+
+            {
+               name: 'add-nonce-to-styles',
+               transformIndexHtml(html, {command}) {
+                  if (command === 'serve') { // Only in dev mode
+                     // console.log('trns html', command);
+                     return html.replace(
+                        /(<style[^>]*)(>)/g,
+                        `$1 nonce="${styleNonce}"$2`,
+                     );
+                  }
+                  return html;
+               },
+               configureServer(server) {
+                  server.middlewares.use((req, res, next) => {
+                     res.setHeader(
+                        "Content-Security-Policy",
+                        `style-src 'self' 'nonce-${styleNonce}'`,
+                     );
+                     next();
+                  });
+               },
+               // transform(code, id) {
+               //    if (command === 'serve' && id.endsWith('.scss')) {
+               //       console.log(',,,', command);
+               //       return {
+               //          code: code.replace(
+               //             /<style[^>]*>/,
+               //             `<style nonce="${styleNonce}">`,
+               //          ),
+               //          map: null,
+               //       };
+               //    }
+               // },
+            },
+
             mkcert(),
             liveReload([
                // __dirname + '/(app|config|views)/**/*.php',
