@@ -55,16 +55,16 @@ class CategoryFormView
             ->field(
                 ItemFieldBuilder::build('show_front', $category)
                     ->name('Показывать на главоной')
-                    ->checkbox(
+                    ->component(
                         CheckboxBuilder::build()
-                            ->field('show_front', $category->show_front)
+                            ->checkedFn(
+                                function ($item) {
+                                    return boolval($item->done);
+                                }
+                            )
+                            ->field('show_front')
                             ->get()
                     )
-//                    ->html(
-//                        CheckboxBuilder::build()
-//                            ->field('show_front', $category->show_front)
-//                            ->get()
-//                    )
                     ->get()
             )
             ->field(
@@ -256,7 +256,7 @@ class CategoryFormView
     public static function getSeoArticle($categoryProperty): string
     {
         ob_start();
-        include ROOT.'/app/blade/views/admin/category/seoArticle.php';
+        include ROOT . '/app/blade/views/admin/category/seoArticle.php';
         return ob_get_clean();
     }
 
@@ -309,6 +309,7 @@ class CategoryFormView
             ->addButton()
             ->get();
     }
+
     public static function properties(Collection $properties): array
     {
         return Table::build($properties)

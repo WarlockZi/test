@@ -287,14 +287,6 @@ class ProductFormView
                             ->get();
                     })
                     ->name('Отгруж ед')
-//                    ->callback(function ($unit) {
-//                        return CheckboxBuilder::build()
-//                            ->checked($unit->pivot->is_shippable)
-//                            ->data('id', $unit->id)
-//                            ->data('pivot', 'is_shippable')
-//                            ->data('relation', 'units')
-//                            ->get();
-//                    })
                     ->component(
                         CheckboxBuilder::build()
                             ->checkedFn(
@@ -306,7 +298,8 @@ class ProductFormView
                             ->pivotData('is_shippable')
                             ->data('pivot', 'is_shippable')
                             ->data('relation', 'units')
-                            ->get())
+                            ->get()
+                    )
                     ->get()
             )
             ->del()

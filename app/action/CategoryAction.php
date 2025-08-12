@@ -34,12 +34,12 @@ class CategoryAction
 
     public function similarCategories(string $slug): array
     {
-        $slugLastSegment = $this->slug::categoryLastSegment($slug);
+       $slugLastSegment = $this->slug::categoryLastSegment($slug);
         return Cache::remember('similarCategories_' . $slugLastSegment,
             function () use ($slugLastSegment) {
                 $subslugs = $this->slug::getSubslugs($slugLastSegment, 4);
 
-                return $this->category::similarCategories($subslugs)->toArray();
+                return $this->category::similarCategories($subslugs)??[];
             },
             Cache::$timeLife1_000
         );

@@ -7,7 +7,6 @@ namespace app\view\components\Builders\CheckboxBuilder;
 class CheckboxBuilder
 {
     public string $field = '';
-    public string $pivot = '';
     public string $checked = '';
     public $checkedFFn;
     public string $data = '';
@@ -23,12 +22,6 @@ class CheckboxBuilder
     public static function build(): CheckboxBuilder
     {
         return new self();
-    }
-
-    public function pivot(string $field): static
-    {
-        $this->pivot = "data-pivot=$field";
-        return $this;
     }
 
     public function field(string $field): static
@@ -93,15 +86,6 @@ class CheckboxBuilder
     public function get(): self
     {
         return $this;
-//        $vars = get_object_vars($this);
-//        return $vars;
-//        return get_object_vars($this);
-//        $box = get_object_vars($this);
-//        if ($this->label) {
-//            return FS::getFileContent(ROOT . '/app/view/components/Builders/CheckboxBuilder/labelCheckboxTemplate.php', compact('box'));
-//        } else {
-//            return FS::getFileContent(ROOT . '/app/view/components/Builders/CheckboxBuilder/checkboxTemplate.php', compact('box'));
-//        }
     }
 
 }

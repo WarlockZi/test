@@ -5,7 +5,6 @@ namespace app\view\components\Builders\ItemBuilder;
 
 
 use app\blade\views\admin\product\DndBuilder;
-use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
 use Illuminate\Database\Eloquent\Model;
 
 class ItemFieldBuilder

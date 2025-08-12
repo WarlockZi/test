@@ -7,7 +7,6 @@ use app\repository\TestRepository;
 use app\service\Fs\FS;
 use app\view\Accordion\AccordionBuilder;
 use app\view\Accordion\AccordionView;
-use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
@@ -77,12 +76,6 @@ class TestEditView
             ->field(
                 ItemFieldBuilder::build('enable', $test)
                     ->name('Показывать')
-                    ->html(
-                        CheckboxBuilder::build(
-                            'enable',
-                            $test->enable,
-                        )->get()
-                    )
                     ->get()
             )
             ->field(

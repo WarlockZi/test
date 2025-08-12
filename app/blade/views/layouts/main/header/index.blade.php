@@ -1,5 +1,5 @@
 <header class="burger">
-    @include('layouts.main.header.adminPanel')
+    @include('components.adminPanel.adminPanel')
     <div class="info" itemscope itemtype="https://schema.org/Organization">
 
         <div class="column none">

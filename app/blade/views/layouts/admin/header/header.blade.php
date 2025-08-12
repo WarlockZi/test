@@ -5,7 +5,7 @@
 
 <div class="admin-layout_header a-header">
 
-    @include('layouts.admin.header.adminPanel')
+    @include('components.adminPanel.adminPanel')
 
     <div class="a-header-main">
         <div class="burger">

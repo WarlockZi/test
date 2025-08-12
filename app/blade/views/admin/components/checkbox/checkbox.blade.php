@@ -11,18 +11,16 @@
 <input
         my-checkbox
         type="checkbox"
-        @php
-            $checkedFFn               = $checkbox->checkedFFn;
-        @endphp
-        {!!  $checkedFFn($item)?'checked':'';!!}
+
+        {!!  $checkbox->checkedFn($item) !!}
         <?= $checkbox->data ?? ''; ?>
         @foreach( $checkbox->itemData as $index=>$field)
-            @php $value = $checkbox->getItemData($item,$index) @endphp
+            @php $value = $checkbox->dataField($item,$index) @endphp
             data-{!! $field !!}={!! $value !!}
         @endforeach
 
         @foreach($checkbox->pivotData as $index=>$field)
-            @php $value = $checkbox->getItemData($item,$index) @endphp
+            @php $value = $checkbox->dataPivotField($item,$index) @endphp
             data-pivot-{!! $field !!}={!! $value !!}
         @endforeach
 
