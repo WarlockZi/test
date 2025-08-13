@@ -1,5 +1,5 @@
 @php
-    use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
+    use app\view\components\Builders\CheckboxBuilder\Checkbox\ICheckbox;
 @endphp
 
 <div custom-table

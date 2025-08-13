@@ -4,7 +4,6 @@ namespace app\action;
 
 use app\action\admin\IShowTable;
 use app\model\Feedback;
-use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
 use app\view\components\Builders\CheckboxBuilder\FeedbackCheckboxBuilder;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\TableBuilder\Table;
@@ -13,8 +12,8 @@ class FeedbackAction implements IShowTable
 {
     public function table(): array
     {
-//        return Table::build(Feedback::all())
-        return Table::build(Feedback::take(3)->get())
+        return Table::build(Feedback::all())
+//        return Table::build(Feedback::take(3)->get())
             ->model('feedback')
             ->pageTitle('Сообщения пользователей')
             ->column(

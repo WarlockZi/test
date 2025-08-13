@@ -61,10 +61,6 @@ use app\view\components\Builders\CheckboxBuilder\Checkbox\ICheckbox;
                             >
 {{--                                @php xdebug_break() @endphp--}}
                                 @if($c->component instanceof ICheckbox)
-                                    @php
-                                         $c->getData($c, $item, $field);
-                                    @endphp
-
                                     @include('admin.components.checkbox.checkbox',['checkbox'=>$c->component, 'item'=>$item] )
                                 @else
                                     {!!  $c->getData($c, $item, $field) !!}

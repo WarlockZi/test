@@ -1,6 +1,12 @@
+import CheckboxDTO from "@src/Admin/CheckboxDTO.js";
+
 export default class TableDTO {
   constructor(target, prev) {
     if (!target) return;
+
+    if (target.hasAttribute("my-checkbox")) {
+      return new CheckboxDTO(target);
+    }
     this.target = target;
     //model
     this.id =
@@ -8,7 +14,8 @@ export default class TableDTO {
       target?.dataset?.id ??
       target?.parentNode?.dataset?.id;
 
-    this.fields = target?.dataset?.field ?? false;
+    this.fields = this.filterAttributes(target) ?? false;
+    // this.fields = target.querySelectorAll('[data^="field"]') ?? false;
 
     this.relation =
       target?.dataset?.relation ??
@@ -23,7 +30,7 @@ export default class TableDTO {
     if (this.fields) {
       this.fields = {
         [target?.dataset?.field]:
-          target?.dataset?.value ?? target?.checked ?? target?.innerText,
+          target?.dataset?.value ?? +target?.checked ?? target?.innerText,
       };
     }
 
@@ -59,5 +66,16 @@ export default class TableDTO {
     delete this.attach;
     delete this.pivot;
     delete this.target;
+  }
+
+  filterAttributes(target) {
+    const fieldAttrs = [];
+    for (const attr of target.attributes) {
+      if (attr.name === "data-field") {
+        const field = attr.value;
+        fieldAttrs.push(field);
+      }
+    }
+    return fieldAttrs;
   }
 }

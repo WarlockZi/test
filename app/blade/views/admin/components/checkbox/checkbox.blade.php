@@ -12,18 +12,21 @@
         my-checkbox
         type="checkbox"
 
-        {!!  $checkbox->checkedFn($item) !!}
-        <?= $checkbox->data ?? ''; ?>
-        @foreach( $checkbox->itemData as $index=>$field)
-            @php $value = $checkbox->dataField($item,$index) @endphp
-            data-{!! $field !!}={!! $value !!}
+        {!!  $checkbox->execCheckedFn($item) !!}
+
+{{--@php xdebug_break(); @endphp--}}
+        @foreach( $checkbox->dataField as $field)
+            data-field='{!! $field !!}'
         @endforeach
 
-        @foreach($checkbox->pivotData as $index=>$field)
-            @php $value = $checkbox->dataPivotField($item,$index) @endphp
-            data-pivot-{!! $field !!}={!! $value !!}
+        @foreach($checkbox->dataPivotField as $field)
+{{--            @php $value = $checkbox->dataPivotField($item,$field) @endphp--}}
+            data-pivot='{!! $field !!}'
         @endforeach
-
+        @foreach( $checkbox->data as $key=>$value)
+{{--@php xdebug_break(); @endphp--}}
+            data-{!! $key !!}='{!! $value!!}'
+        @endforeach
     <?= $checkbox->class ?? ''; ?>
     <?= $checkbox->field ?? ''; ?>
     <?= $checkbox->pivot ?? ''; ?>

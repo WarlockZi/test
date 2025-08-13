@@ -6,6 +6,7 @@ namespace app\controller;
 use app\repository\MorphRepository;
 use app\service\Response;
 use app\service\Router\IRequest;
+use Throwable;
 
 class AppController extends Controller
 {
@@ -109,7 +110,6 @@ class AppController extends Controller
 
     protected function updateOrCreateRelation(array $req): void
     {
-        $action       = '';
         $modalId      = $req['id'];
         $relationName = $req['relation']['name'] ?? null;
         $pivot        = $req['relation']['pivot'] ?? null;
@@ -145,7 +145,7 @@ class AppController extends Controller
                 $value                      = $req['relation']['fields'][$key] ?? null;
                 $model->$relationName->$key = $value;
                 $model->push();
-            } elseif ($req['relation']['id']) {
+//            } elseif ($req['relation']['id']) {
 //                $id           = $req['relation']['id'];
 //                $withRelation = $model->$relationName()->syncWithoutDetaching([$id]);
             }

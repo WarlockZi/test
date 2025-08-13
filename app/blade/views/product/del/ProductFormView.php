@@ -13,6 +13,7 @@ use app\service\Fs\FS;
 use app\service\Image\ProductImageService;
 use app\view\Category\CategoryFormView;
 use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
+use app\view\components\Builders\CheckboxBuilder\ProductUnitCheckboxBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilderNew;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
@@ -274,30 +275,24 @@ class ProductFormView
             ->column(
                 ColumnBuilder::build('is_shippable')
                     ->removeDataField()
-                    ->pivot('is_shippable')
                     ->emptyRow(function () {
                         return CheckboxBuilder::build()
                             ->checkedFn(function ($item) {
                                 return $item->pivot->is_shippable;
                             })
                             ->data('id', 0)
-//                            ->data('pivot-field', 'is_shippable')
                             ->data('pivot', 'is_shippable')
-                            ->data('relation', 'units')
                             ->get();
                     })
                     ->name('Отгруж ед')
                     ->component(
-                        CheckboxBuilder::build()
-                            ->checkedFn(
+                        (new ProductUnitCheckboxBuilder)
+                            ->setCheckedFn(
                                 function ($item) {
                                     return boolval($item->pivot->is_shippable);
                                 }
                             )
-                            ->itemData('id')
-                            ->pivotData('is_shippable')
-                            ->data('pivot', 'is_shippable')
-                            ->data('relation', 'units')
+                            ->setData('pivot', 'is_shippable')
                             ->get()
                     )
                     ->get()
