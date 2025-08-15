@@ -13,8 +13,8 @@ class SyncService
 {
     use LoggerTrait;
 
-    protected string $importFile = '/storage/app/sync/import0_1.xml';
-    protected string $offerFile = '/storage/app/sync/offers0_1.xml';
+    protected string $importFile = '/storage/app/sync/unzipped/import0_1.xml';
+    protected string $offerFile = '/storage/app/sync/unzipped/offers0_1.xml';
     protected string $importPath = '/storage/app/sync/';
 
 
@@ -95,6 +95,7 @@ class SyncService
             // Save the file
             $filePath = $importDir . basename($filename);
             if (file_put_contents($filePath, $fileContent) !== false) {
+                $this->sendSuccessMessage();
                 echo "success\n";
                 $this->log('load');
                 $this->load($filePath);
@@ -106,6 +107,27 @@ class SyncService
             }
         }
 
+    }
+
+    private function sendSuccessMessage()
+    {
+        header('Content-Type: text/xml; charset=utf-8');
+
+        $response = <<<XML
+<?xml version="1.0" encoding="UTF-8"?>
+<КоммерческаяИнформация ВерсияСхемы="2.11" ДатаФормирования="%s">
+    <УспешноВыполнено xmlns="urn:1C.ru:commerceml_3">
+        <Сообщение>Обмен завершен успешно</Сообщение>
+        <ВремяВыполнения>%s</ВремяВыполнения>
+        <Результат>Данные каталога и предложений успешно загружены</Результат>
+    </УспешноВыполнено>
+</КоммерческаяИнформация>
+XML;
+
+        $date = date('Y-m-d');
+        $time = date('H:i:s');
+
+        printf($response, $date, $time);
     }
 
 //    public function requestFrom1s(IRequest $req): void
