@@ -6,6 +6,7 @@ use app\service\Fs\FS;
 use app\service\Logger\SyncLogger;
 use app\traits\LoggerTrait;
 use Exception;
+use SimpleXMLElement;
 use ZipArchive;
 
 
@@ -113,21 +114,19 @@ class SyncService
     {
         header('Content-Type: text/xml; charset=utf-8');
 
-        $response = <<<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<КоммерческаяИнформация ВерсияСхемы="2.11" ДатаФормирования="%s">
-    <УспешноВыполнено xmlns="urn:1C.ru:commerceml_3">
-        <Сообщение>Обмен завершен успешно</Сообщение>
-        <ВремяВыполнения>%s</ВремяВыполнения>
-        <Результат>Данные каталога и предложений успешно загружены</Результат>
-    </УспешноВыполнено>
-</КоммерческаяИнформация>
-XML;
+// Формируем XML-ответ для 1С
+        $xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><КоммерческаяИнформация></КоммерческаяИнформация>');
+        $xml->addAttribute('ВерсияСхемы', '2.11');
+        $xml->addAttribute('ДатаФормирования', date('Y-m-d'));
 
-        $date = date('Y-m-d');
-        $time = date('H:i:s');
+// Добавляем узел с успешным выполнением
+        $successNode = $xml->addChild('УспешноВыполнено');
+        $successNode->addAttribute('xmlns', 'urn:1C.ru:commerceml_3');
 
-        printf($response, $date, $time);
+// Можно добавить дополнительную информацию
+        $successNode->addChild('Сообщение', 'Данные успешно загружены');
+
+        echo $xml->asXML();
     }
 
 //    public function requestFrom1s(IRequest $req): void
