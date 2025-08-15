@@ -113,7 +113,7 @@ class SyncService
 
     #[NoReturn] private function sendSuccessMessage()
     {
-        exit('success');
+        exit("success\n");
         header('Content-Type: text/xml; charset=utf-8');
 
 // Формируем XML-ответ для 1С
