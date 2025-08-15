@@ -10,6 +10,7 @@ storage/framework/container/CompiledContainer.php
 storage/framework/caches/blade/*
 storage/logs/**/*
 storage/app/userData/**/*
+storage/app/sync/**/*
 
 composer.phar
 composer.lock
