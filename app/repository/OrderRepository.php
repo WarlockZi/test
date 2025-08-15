@@ -28,8 +28,7 @@ class OrderRepository
         $order = Order::where($field, $value)
             ->whereNull('submitted')
             ->with('products.orderItems.unit')
-            ->get()
-        ;
+            ->get();
         return $order;
     }
 
@@ -143,15 +142,28 @@ class OrderRepository
     {
         list($field, $value) = Auth::getCartFieldValue();
 
+        $order = null;
+        try {
+            $order = Order::where($field, $value)
+                ->select('id')
+//            ->with('productsHaveOrderItems')
+//                ->with(['products' => function ($q) {
+//                    return $q->select('name');
+//                }])
+                ->whereNull('submitted')
+                ->first();
+        } catch (Throwable $exception) {
+            $exc = $exception;
+        }
+
+//        $userOrder = self::usersOrder();
         $order = Order::where($field, $value)
             ->select('id')
-            ->with(['products' => function ($q) {
-                return $q->select('name');
-            }])
+//            ->with('products')
             ->whereNull('submitted')
             ->first();
 
-        return $order?->products->count() ?? 0;
+        return $order?->count() ?? 0;
     }
     //    public static function unsubmittedUsersOrder()
 //    {

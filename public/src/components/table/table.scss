@@ -9,6 +9,7 @@
   background-color: #fff;
   padding-bottom: 10px;
   max-width: 1300px;
+  margin-bottom: 40px;
 
   @include mixin_media.m600 {
     overflow-x: auto;

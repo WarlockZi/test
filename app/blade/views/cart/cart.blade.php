@@ -11,12 +11,14 @@
         use app\service\AuthService\Auth;
         use app\view\components\Icon\Icon;
         $authed = Auth::getUser();
-//        xdebug_break();
     @endphp
     <div class="cart">
 
         <h1>Корзина</h1>
 
+        @php
+            xdebug_break();
+        @endphp
         @if (empty($order) || !$order?->products?->count())
 
             <div class="empty-cart">

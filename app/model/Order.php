@@ -33,6 +33,18 @@ class Order extends Model
             ;
     }
 
+    public function orderItems(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            OrderItem::class,
+            OrderProduct::class,
+//            'product_id', //in order_product
+            'order_id', //in order_product
+            'product_id',//in OrderItem
+            'id', //in Order
+            'product_id', //in order_product
+        );
+    }
     public function productsHaveOrderItems(): BelongsToMany
     {
         return $this->belongsToMany(Product::class,
@@ -62,20 +74,6 @@ class Order extends Model
     {
         return $this->hasMany(OrderProduct::class);
     }
-
-    public function orderItems(): HasManyThrough
-    {
-        return $this->hasManyThrough(
-            OrderItem::class,
-            OrderProduct::class,
-//            'product_id', //in order_product
-            'order_id', //in order_product
-            'product_id',//in OrderItem
-            'id', //in Order
-            'product_id', //in order_product
-        );
-    }
-
 
     public function user(): BelongsTo
     {

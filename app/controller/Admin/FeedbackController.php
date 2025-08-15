@@ -18,8 +18,9 @@ class FeedbackController extends AdminscController
 
     #[NoReturn] public function actionIndex(): void
     {
-//        view('admin.components.table.table'); 202321
-        $this->showTable();
+        $done = $this->actions->DoneTable();
+        $undone = $this->actions->UndoneTable();
+        view('admin.feedback.feedback', compact('done', 'undone'));
     }
 }
 
