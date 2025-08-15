@@ -1,5 +1,6 @@
 @extends('layouts.main.main')
 
+{{--        @php         xdebug_break() @endphp--}}
 @section('title')
     {!! $meta->title !!}
 @endsection
@@ -42,25 +43,25 @@
         @else
             @include('components.breadcrumbs.index')
 
-            <h1>{{$category['ownProperties']['seo_h1'] ?? $category->name}}</h1>
+            <h1>{{$category['own_properties']['seo_h1'] ?? $category->name}}</h1>
 
-            @if ($category['childrenRecursive']->count())
+            @if (!empty($category['children_recursive']))
 
                 <div class="category-child-wrap">
-                    @foreach ($category['childrenRecursive'] as $child)
+                    @foreach ($category['children_recursive'] as $child)
                         @include('category.category_card', compact('child'))
                     @endforeach
                 </div>
             @endif
 
 
-            @if ($category->productsInStore->count())
+            @if (!empty($category['products_in_store']))
                 <div class="products-header">
                     <h2>Товары в наличии</h2>
                 </div>
 
                 <div class="product-wrap">
-                    @foreach($category->productsInStore as $product)
+                    @foreach($category['products_in_store'] as $product)
                         @include('category.product_card', compact('product'))
                     @endforeach
                 </div>
@@ -68,12 +69,12 @@
             @endif
 
 
-            @if ($category->productsNotInStoreInMatrix->count())
+            @if (!empty($category['products_not_in_store_in_matrix']))
                 <div class="products-header">
                     <h2>Товары под заказ</h2>
                 </div>
                 <div class="product-wrap">
-                    @foreach ($category->productsNotInStoreInMatrix as $product)
+                    @foreach ($category['products_notin_store_in_matrix'] as $product)
                         @if (str_ends_with($product->name, '*'))
                             @include('category.product_card', compact('product'))
                         @endif
@@ -82,7 +83,7 @@
             @endif
 
             <div id="seo_article">
-                    <?= $category->seo_article() ?>
+                    <?= $category['own_properties']['seo_article'] ?>
             </div>
 
         @endif

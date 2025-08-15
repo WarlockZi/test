@@ -105,7 +105,6 @@ class ProductFormView
             ->field(
                 ItemFieldBuilder::build('name', $product)
                     ->name('Рабочее наименование')
-//                    ->contenteditable()
                     ->required()
                     ->get()
             )
@@ -452,11 +451,12 @@ class ProductFormView
         return $inactivePromotions . '<hr>' . $activePromotions;
     }
 
-    private static function commonPromotions(Collection $items,
-                                             string     $relation,
-                                             string     $title,
-                                             bool       $addButton,
-                                             bool       $edit): array
+    private static function commonPromotions(
+        Collection $items,
+        string     $relation,
+        string     $title,
+        bool       $addButton,
+        bool       $edit): array
     {
         $customList = Table::build($items)
             ->relation($relation, 'promotion')
@@ -531,15 +531,5 @@ class ProductFormView
             ->addButton()
             ->get();
     }
-    //    protected static function unitSelector(int $selected): string
-//    {
-//        return SelectBuilder::build(
-//            ArrayOptionsBuilder::build(Unit::select(['name', 'id'])->get())
-//                ->selected($selected)
-//                ->get()
-//        )
-//            ->initialOption()
-//            ->get();
-//    }
 
 }

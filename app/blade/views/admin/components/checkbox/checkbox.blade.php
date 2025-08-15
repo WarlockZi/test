@@ -20,7 +20,6 @@
         @endforeach
 
         @foreach($checkbox->dataPivotField as $field)
-{{--            @php $value = $checkbox->dataPivotField($item,$field) @endphp--}}
             data-pivot='{!! $field !!}'
         @endforeach
         @foreach( $checkbox->data as $key=>$value)

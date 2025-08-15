@@ -32,16 +32,17 @@ class CategoryController extends AppController
 
             $meta        = $this->actions->setCategoryMeta($category);
             $breadcrumbs = $this->actions->getBreadcrumbs($category, false);
-
             $order          = OrderRepository::usersOrder();
-            $shippableTable = $this->actions->shippableTable($category);
+            $category = $category->toArray();
+//            $shippableTable = $this->actions->shippableTable($category);
+
             view('category.category',
                 compact(
                     'category',
                     'meta',
                     'breadcrumbs',
                     'order',
-                    'shippableTable',
+//                    'shippableTable',
                 )
             );
 

@@ -5,6 +5,8 @@ namespace app\service\Sync;
 use app\service\Fs\FS;
 use app\service\Logger\SyncLogger;
 use app\traits\LoggerTrait;
+use Exception;
+use ZipArchive;
 
 
 class SyncService
@@ -42,7 +44,7 @@ class SyncService
 
                 if (isset($_GET['mode']) && $_GET['mode'] === 'init') {
                     $this->log('zip');
-                    echo "zip=no\n";
+                    echo "zip=yes\n";
                     echo "file_limit=104857600\n"; // 100MB limit
                     exit;
                 }
@@ -95,7 +97,7 @@ class SyncService
             if (file_put_contents($filePath, $fileContent) !== false) {
                 echo "success\n";
                 $this->log('load');
-                $this->load();
+                $this->load($filePath);
                 exit();
             } else {
                 http_response_code(500);
@@ -193,8 +195,9 @@ class SyncService
         $this->log('--- price     loaded ---');
     }
 
-    public function load(): void
+    public function load(string $filePath): void
     {
+        $this->unzip($filePath);
         $this->importFilesExist();
         try {
 //            $this->trancateService->softTrancate();
@@ -204,6 +207,62 @@ class SyncService
             $this->log('Load успех' . PHP_EOL);
         } catch (\Throwable $e) {
             $this->logError("--- Ошибка load ", $e);
+        }
+    }
+
+    public function unzip(string $filePath): void
+    {
+        $extractTo = ROOT . '/storage/app/sync/unzipped';
+        try {
+            $this->unzipFile($filePath, $extractTo);
+            $this->log('Extraction successful!');
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+    function unzipFile($zipFile, $extractTo): true
+    {
+        // Check if zip file exists
+        if (!file_exists($zipFile)) {
+            throw new Exception("ZIP file not found: $zipFile");
+        }
+
+        // Check if destination exists and is writable
+        if (!file_exists($extractTo)) {
+            if (!mkdir($extractTo, 0777, true)) {
+                throw new Exception("Failed to create directory: $extractTo");
+            }
+        } elseif (!is_writable($extractTo)) {
+            throw new Exception("Destination is not writable: $extractTo");
+        }
+
+        $zip = new ZipArchive;
+        $res = $zip->open($zipFile);
+
+        if ($res === TRUE) {
+            try {
+                $zip->extractTo($extractTo);
+                $zip->close();
+                return true;
+            } catch (Exception $e) {
+                $zip->close();
+                throw new Exception("Extraction failed: " . $e->getMessage());
+            }
+        } else {
+            $errorMsg = [
+                ZipArchive::ER_EXISTS => 'File already exists',
+                ZipArchive::ER_INCONS => 'Zip archive inconsistent',
+                ZipArchive::ER_INVAL => 'Invalid argument',
+                ZipArchive::ER_MEMORY => 'Malloc failure',
+                ZipArchive::ER_NOENT => 'No such file',
+                ZipArchive::ER_NOZIP => 'Not a zip archive',
+                ZipArchive::ER_OPEN => 'Can\'t open file',
+                ZipArchive::ER_READ => 'Read error',
+                ZipArchive::ER_SEEK => 'Seek error',
+            ];
+
+            throw new Exception("Failed to open ZIP file: " . ($errorMsg[$res] ?? "Unknown error (code $res)"));
         }
     }
 

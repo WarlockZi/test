@@ -45,19 +45,10 @@ class Product extends Model
     protected $appends = [
         'price',
         'mainImage',
+        'shippableUnits'
     ];
 
-    public function orderItems(): HasManyThrough
-    {
-        return $this->hasManyThrough(
-            OrderItem::class,
-            OrderProduct::class,
-            'product_id', //in order_product
-            'order_product_id',//in OrderItem
-            '1s_id', //in Product
-            'id' //in order_product
-        );
-    }
+
 
     public function orderProduct(): hasOne
     {
@@ -252,7 +243,14 @@ class Product extends Model
             ->withPivot('is_shippable', 'is_base')
             ->wherePivot('is_base', '1');
     }
-
+    public function getShippableUnitsAttribute(): BelongsToMany
+    {
+        return $this
+            ->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
+            ->withPivot('multiplier', 'is_base', 'is_shippable')
+            ->wherePivot('is_shippable', '=', '1')
+            ->orderByPivot('multiplier');
+    }
     public function shippableUnits(): BelongsToMany
     {
         return $this
@@ -266,7 +264,7 @@ class Product extends Model
     {
         return $this
             ->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
-            ->withPivot('id', 'multiplier', 'is_base', 'is_shippable')->orderByPivot('multiplier');
+            ->withPivot('id', 'multiplier', 'is_base', 'is_shippable', 'price')->orderByPivot('multiplier');
     }
 
     public function values(): MorphToMany

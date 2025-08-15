@@ -28,7 +28,7 @@ class Table
     private string $dataRelationType = '';
     private string $dataModel = '';
     private string $html = '';
-    private string $addButton = '';
+    private bool $addButton = false;
     private Collection|null $items;
 
     private FS $fs;
@@ -160,10 +160,9 @@ class Table
         return $this;
     }
 
-    public function addButton(bool $pivot = false): static
+    public function addButton(): static
     {
-        $this->add   = true;
-        $this->pivot = $pivot ? "data-pivot-field" : '';
+        $this->addButton   = true;
         return $this;
     }
 

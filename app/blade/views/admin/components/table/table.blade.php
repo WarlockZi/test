@@ -1,5 +1,5 @@
 @php
-use app\view\components\Builders\CheckboxBuilder\Checkbox\ICheckbox;
+    use app\view\components\Builders\CheckboxBuilder\Checkbox\ICheckbox;use app\view\components\Builders\CheckboxBuilder\Checkbox\ICheckbox;
 @endphp
 @extends('layouts.admin.admin')
 
@@ -59,7 +59,7 @@ use app\view\components\Builders\CheckboxBuilder\Checkbox\ICheckbox;
                                 <?= $c->class; ?>
                                 <?= $c->contenteditable; ?>
                             >
-{{--                                @php xdebug_break() @endphp--}}
+                                {{--                                @php xdebug_break() @endphp--}}
                                 @if($c->component instanceof ICheckbox)
                                     @include('admin.components.checkbox.checkbox',['checkbox'=>$c->component, 'item'=>$item] )
                                 @else
@@ -81,10 +81,13 @@ use app\view\components\Builders\CheckboxBuilder\Checkbox\ICheckbox;
         @endif
 
         <!--  ADD BUTTON  -->
-{{--        @php xdebug_break() @endphp--}}
-        <div class="buttons">
-            <div class="add-model" {!! $data['pivot'] !!}>+</div>
-        </div>
+        {{--        @php xdebug_break() @endphp--}}
+        @if($data['addButton'])
+
+            <div class="buttons">
+                <div class="add-model" {!! $data['pivot']??'' !!}>+</div>
+            </div>
+        @endif
 
     </div>
 @endsection

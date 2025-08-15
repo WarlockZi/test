@@ -56,7 +56,7 @@
                             <?= $c->class; ?>
                             <?= $c->contenteditable; ?>
                         >
-{{--                            @php xdebug_break() @endphp--}}
+                            {{--                            @php xdebug_break() @endphp--}}
                             @if($c->component instanceof ICheckbox)
                                 @include('admin.components.checkbox.checkbox', ['checkbox'=>$c->component, 'item'=>$item] )
                             @else
@@ -64,11 +64,8 @@
                             @endif
                         </div>
                     @endif
-
                 @endforeach
-
             @endforeach
-
         @endif
 
     </div>
@@ -78,9 +75,11 @@
     @endif
 
     <!--  ADD BUTTON  -->
-{{--    @php xdebug_break() @endphp--}}
-    <div class="buttons">
-        <div class="add-model" {!! $data['pivot'] !!}>+</div>
-    </div>
+{{--        @php xdebug_break() @endphp--}}
+    @if($data['addButton'])
+        <div class="buttons">
+            <div class="add-model" {!! $data['pivot'] !!}>+</div>
+        </div>
+    @endif
 
 </div>
