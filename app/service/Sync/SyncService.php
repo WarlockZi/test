@@ -6,6 +6,7 @@ use app\service\Fs\FS;
 use app\service\Logger\SyncLogger;
 use app\traits\LoggerTrait;
 use Exception;
+use JetBrains\PhpStorm\NoReturn;
 use SimpleXMLElement;
 use ZipArchive;
 
@@ -110,8 +111,9 @@ class SyncService
 
     }
 
-    private function sendSuccessMessage()
+    #[NoReturn] private function sendSuccessMessage()
     {
+        exit('success');
         header('Content-Type: text/xml; charset=utf-8');
 
 // Формируем XML-ответ для 1С
