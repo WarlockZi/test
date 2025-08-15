@@ -91,17 +91,15 @@ class SyncService
                 mkdir($importDir, 0755, true);
             }
 
-            // Get the file content from the input stream
             $fileContent = file_get_contents('php://input');
 
-            // Save the file
             $filePath = $importDir . basename($filename);
             if (file_put_contents($filePath, $fileContent) !== false) {
-                $this->sendSuccessMessage();
-                echo "success\n";
+//                echo "success\n";
                 $this->log('load');
                 $this->load($filePath);
-                exit();
+                $this->sendSuccessMessage();
+//                exit();
             } else {
                 http_response_code(500);
                 echo "failure\n";
@@ -111,9 +109,18 @@ class SyncService
 
     }
 
-    #[NoReturn] private function sendSuccessMessage()
+    #[NoReturn] private function sendHTMLSuccessMessage(): void
     {
-        exit("success\n");
+        $date = date('Y-m-d');
+        $time = date('H:i:s');
+        echo "success\n";
+        echo $date . "\n";
+        echo $time . "\n";
+        exit();
+    }
+
+    #[NoReturn] private function sendXMLSuccessMessage(): void
+    {
         header('Content-Type: text/xml; charset=utf-8');
 
 // Формируем XML-ответ для 1С
@@ -129,6 +136,12 @@ class SyncService
         $successNode->addChild('Сообщение', 'Данные успешно загружены');
 
         echo $xml->asXML();
+    }
+
+    #[NoReturn] private function sendSuccessMessage(): void
+    {
+        $this->sendHTMLSuccessMessage();
+//        $this->sendXMLSuccessMessage();
     }
 
 //    public function requestFrom1s(IRequest $req): void
