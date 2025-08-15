@@ -5,7 +5,6 @@ phpstorm.config.js
 refs/
 .env
 
-
 storage/framework/container/CompiledContainer.php
 storage/framework/caches/blade/*
 storage/logs/**/*
