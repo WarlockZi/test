@@ -58,8 +58,6 @@ class ProductFormView
             $shippable['formattedPrice'] = $this->getFormattedPrice($product->price, $unit->pivot->multiplier);;
             $shippable['promotionNewPrice'] = $promotion ? $this->getFormattedPrice($promotion->new_price, 1) : '';
             $shippable['promotion']         = $product->activePromotions->first() ?? null;
-//            $str               .= $this->fs->getContent('shippableUnitRow',
-//                compact('product', 'formattedPrice', 'unit', 'promotion', 'promotionNewPrice'));
         }
         return $shippable;
     }

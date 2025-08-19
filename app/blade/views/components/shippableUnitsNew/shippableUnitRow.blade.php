@@ -1,9 +1,10 @@
 <div
         unit-row
         class="unit-row"
-        data-unitid="{!! $unit['unit_id'] !!}"
-        data-multiplier="{!! $unit['multiplier'] !!}"
+        data-unitid="{!! $unit['id'] !!}"
+        data-multiplier="{!! $unit['pivot']['multiplier'] !!}"
         data-orderitem-id="{!! $unit['order_item_id']??''!!}">
+{{--    @php xdebug_break() @endphp--}}
     <input
             type="text"
             class="input"
@@ -12,7 +13,7 @@
     >
 
     <div class="unit-name">
-        <span class="name">{!! $unit['unit_name'] !!}</span>
+        <span class="name">{!! $unit['full_name'] !!}</span>
 
 {{--        @if($shippableTable->description)--}}
 {{--            <div class="description text-small">--}}

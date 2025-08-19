@@ -37,7 +37,7 @@ class OrderRepository
         list($field, $value) = Auth::getCartFieldValue();
         $order = Order::where($field, $value)
             ->whereNull('submitted')
-            ->with('products.orderItems.unit')
+            ->with('products')
             ->first();
         return $order;
     }
@@ -88,16 +88,11 @@ class OrderRepository
     public static function updateOrCreate(array $req): void
     {
         try {
-            $order        = self::firstOrCreateOrder($req['loc_storage_cart_id']);
-            $orderProduct = OrderProductRepository::firstOrCreate($order->id, $req['product_id']);
-            $orderItem    = OrderItemRepository::updateOrCreate($orderProduct, $req);
-            $order->load('products.orderItems.unit');
+            $orderItem    = OrderItemRepository::updateOrCreate($req);
             response()->json(['popup' => 'заказ изменен', 'success' => "записано"]);
         } catch (Throwable $exception) {
             response()->json(['popup' => 'не записано', 'error' => "не записано"]);
         }
-
-
     }
 
     public static function detachItems(string $product_id, array $unitIds): bool

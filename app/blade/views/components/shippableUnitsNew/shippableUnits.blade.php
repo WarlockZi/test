@@ -8,13 +8,13 @@
         <button class='button blue-button'>Добавить</button>
 
 
-        <div class="green-button-wrap">
+        <div class="green-button-wrap none">
             <button class='button green-button'>Перейти в корзину</button>
 
 
-            @foreach($product->shippableUnits as $unit)
+            @foreach($product['shippableUnits'] as $unit)
 {{--                @php xdebug_break() @endphp--}}
-                @include('components.shippableUnitsNew.shippableUnitRow', ['unit'=>$unit])
+                @include('components.shippableUnitsNew.shippableUnitRow', compact('unit','product'))
             @endforeach
 
         </div>

@@ -5,10 +5,10 @@ namespace app\controller;
 
 use app\model\Order;
 use app\model\OrderItem;
+use app\repository\CartRepository;
 use app\repository\OrderRepository;
 use app\service\Response;
 use app\service\Router\IRequest;
-use app\service\ShippableUnits\ShippableUnitsService;
 use app\view\Cart\CartView;
 use JetBrains\PhpStorm\NoReturn;
 
@@ -16,6 +16,7 @@ class CartController extends AppController
 {
     public function __construct(
         protected CartView       $cartView,
+        protected CartRepository $repository,
     )
     {
         parent::__construct();
@@ -23,11 +24,11 @@ class CartController extends AppController
 
     #[NoReturn] public function actionIndex(): void
     {
-        $order    = OrderRepository::usersOrder();
-        $shippableTable = new ShippableUnitsService('cart', $order);
+        $order    = $this->repository::order();
 
-        view('cart.cart',
-            compact('order','shippableTable'));
+//        $shippableTable = new ShippableUnitsService('cart', $order);
+
+        view('cart.cart',compact('order'));
     }
 
     public function actionDrop(): void
@@ -65,7 +66,8 @@ class CartController extends AppController
 
     public function actionUpdateOrCreate(IRequest $request): void
     {
-        OrderRepository::updateOrCreate($this->ajax);
+        $this->repository::updateOrCreate($request->body());
+        OrderRepository::updateOrCreate($request->body());
     }
 }
 

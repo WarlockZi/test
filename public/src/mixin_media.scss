@@ -348,7 +348,7 @@
     }
 
     .green-button-wrap {
-      display: none;
+      display: flex;
       flex-direction: column;
     }
 
@@ -389,7 +389,7 @@
         margin-bottom: 2px;
 
         .name {
-          width: 30px;
+          //width: 30px;
           margin-bottom: 1px;
           font-weight: 600;
           font-size: .65rem;
@@ -505,7 +505,7 @@
     }
 
     img {
-      max-height: 100%;
+      max-height: 100px;
       object-fit: contain;
       grid-area: img;
       justify-self: center;
@@ -701,10 +701,11 @@
 }
 
 @mixin cartRowGrey {
-  display: flex;
+  //display: flex;
   padding: 10px;
   background-color: #f0f0f0;
   border-radius: 5px;
+  display: flow;
 }
 
 @mixin white_svg_button(

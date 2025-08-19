@@ -36,7 +36,7 @@ class SyncService
             if (isset($_GET['type']) && $_GET['type'] === 'catalog') {
 
                 if (isset($_GET['mode']) && $_GET['mode'] === 'checkauth') {
-                    // Generate session ID and return success response
+
                     $this->log('checkauth');
                     echo "success\n";
                     echo "sess_name **" . session_name() . "\n";
@@ -54,7 +54,6 @@ class SyncService
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $this->log('file');
             $this->import();
         }
 
@@ -66,8 +65,8 @@ class SyncService
     private function import(): void
     {
         if (isset($_GET['mode']) && $_GET['mode'] === 'file') {
-            $this->log('file get');
-            // Check if filename is provided
+            $this->log('file');
+
             if (!isset($_GET['filename'])) {
                 http_response_code(400);
                 echo "failure\n";
@@ -85,7 +84,6 @@ class SyncService
                 exit;
             }
 
-            // Create import directory if it doesn't exist
             $importDir = FS::platformSlashes(ROOT . $this->importPath);
             if (!file_exists($importDir)) {
                 mkdir($importDir, 0755, true);
@@ -95,11 +93,9 @@ class SyncService
 
             $filePath = $importDir . basename($filename);
             if (file_put_contents($filePath, $fileContent) !== false) {
-//                echo "success\n";
-                $this->log('load');
                 $this->load($filePath);
-                $this->sendSuccessMessage();
-//                exit();
+                $this->log('Load успех' . PHP_EOL);
+                $this->sendHTMLSuccessMessage();
             } else {
                 http_response_code(500);
                 echo "failure\n";
@@ -123,26 +119,18 @@ class SyncService
     {
         header('Content-Type: text/xml; charset=utf-8');
 
-// Формируем XML-ответ для 1С
         $xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><КоммерческаяИнформация></КоммерческаяИнформация>');
         $xml->addAttribute('ВерсияСхемы', '2.11');
         $xml->addAttribute('ДатаФормирования', date('Y-m-d'));
 
-// Добавляем узел с успешным выполнением
         $successNode = $xml->addChild('УспешноВыполнено');
         $successNode->addAttribute('xmlns', 'urn:1C.ru:commerceml_3');
 
-// Можно добавить дополнительную информацию
         $successNode->addChild('Сообщение', 'Данные успешно загружены');
 
         echo $xml->asXML();
     }
 
-    #[NoReturn] private function sendSuccessMessage(): void
-    {
-        $this->sendHTMLSuccessMessage();
-//        $this->sendXMLSuccessMessage();
-    }
 
 //    public function requestFrom1s(IRequest $req): void
 //    {
@@ -240,7 +228,6 @@ class SyncService
             $this->LoadCategories();
             $this->LoadProducts();
             $this->LoadPrices();
-            $this->log('Load успех' . PHP_EOL);
         } catch (\Throwable $e) {
             $this->logError("--- Ошибка load ", $e);
         }
@@ -259,12 +246,10 @@ class SyncService
 
     function unzipFile($zipFile, $extractTo): true
     {
-        // Check if zip file exists
         if (!file_exists($zipFile)) {
             throw new Exception("ZIP file not found: $zipFile");
         }
 
-        // Check if destination exists and is writable
         if (!file_exists($extractTo)) {
             if (!mkdir($extractTo, 0777, true)) {
                 throw new Exception("Failed to create directory: $extractTo");

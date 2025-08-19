@@ -4,6 +4,8 @@ namespace app\model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrderItem extends Model
@@ -15,8 +17,7 @@ class OrderItem extends Model
 
     protected $fillable = [
         'order_product_id',
-        'product_id',
-        'order_id',
+//        'product_id',
         'unit_id',
         'count',
         'created_at',
@@ -43,13 +44,44 @@ class OrderItem extends Model
         return "{$name} - {$company} - {$phone}";
     }
 
-    public function product(): \Illuminate\Database\Eloquent\Relations\HasOne
-    {
-        return $this->hasOne(Product::class, '1s_id', 'product_id');
-    }
 
-    public function unit(): \Illuminate\Database\Eloquent\Relations\HasOne
+    public function productUnit(): HasOne
     {
-        return $this->hasOne(Unit::class, 'id', 'unit_id');
+        return $this->hasOne(
+            ProductUnit::class,
+            'id',
+            'product_unit_id');
+    }
+//    public function products(): HasOneThrough
+//    {
+//        return $this->hasOneThrough(
+//            Product::class,
+//            ProductUnit::class,
+//            'product_id',
+//            '1s_id',
+//            'id',
+//            'unit_id',
+//        );
+//    }
+//    public function product(): HasOne
+//    {
+//        return $this->hasOne(Product::class, '1s_id', 'product_id');
+//    }
+
+    public function unit(): HasOne
+    {
+        return $this->hasOne(
+            Unit::class,
+            'id',
+            'unit_id'
+        );
+//        return $this->hasOneThrough(
+//            Unit::class,
+//            ProductUnit::class,
+//            'unit_id',
+//            'id',
+//            '1s_id',
+//            'product_1s_id',
+//        );
     }
 }

@@ -12,23 +12,36 @@ use app\service\AuthService\Auth;
 class OrderitemRepository
 {
 
-    public static function updateOrCreate(OrderProduct $orderProduct, array $req)
+    public static function updateOrCreate(array $req)
     {
         return OrderItem::updateOrCreate(
             [
-                'order_product_id' => $orderProduct->id,
-                'unit_id' => $req['unit_id']
+                'id' => $req['id'],
+//                'unit_id' => $req['unit_id']
             ],
             [
-                'order_product_id' => $orderProduct->id,
+                'id' => $req['id'],
                 'count' => $req['count'],
-                'product_id' => $req['product_id'],
-                'unit' => $req['unit_id'],
+//                'product_id' => $req['product_id'],
+//                'unit' => $req['unit_id'],
             ]
         );
-
     }
-
+//    public static function updateOrCreate(OrderProduct $orderProduct, array $req)
+//    {
+//        return OrderItem::updateOrCreate(
+//            [
+//                'order_product_id' => $orderProduct->id,
+//                'unit_id' => $req['unit_id']
+//            ],
+//            [
+//                'order_product_id' => $orderProduct->id,
+//                'count' => $req['count'],
+//                'product_id' => $req['product_id'],
+//                'unit' => $req['unit_id'],
+//            ]
+//        );
+//    }
     public static function main()
     {
         $user = Auth::getUser();
