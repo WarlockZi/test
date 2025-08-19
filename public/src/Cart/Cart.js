@@ -110,8 +110,7 @@ export default class Cart {
   async handleKeyUp({ target }) {
     if (target.classList.contains("input") && target.tagName === "INPUT") {
       this.renderSums();
-      const count = +target.value;
-      this.updateOrCreate(target, count);
+      this.updateOrCreate(target);
     }
   }
 
@@ -121,10 +120,11 @@ export default class Cart {
     }, 0);
   }
 
-  updateOrCreate(target, count) {
-    const product_id = target.closest("[shippable-table]").dataset["1sid"];
-    const unit_id = target.closest("[unit-row]").dataset["unitid"];
-    post(`/cart/updateOrCreate`, { product_id, unit_id, count });
+  async updateOrCreate(target) {
+    const count = +target.value;
+    const orderItemId = target.dataset.orderItemId;
+    // const unit_id = target.closest("[unit-row]").dataset["unitid"];
+    await post(`/cart/updateOrCreate`, { orderItemId, count });
   }
 
   async deleteCartRow(target) {

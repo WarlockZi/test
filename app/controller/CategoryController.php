@@ -34,7 +34,6 @@ class CategoryController extends AppController
             $breadcrumbs = $this->actions->getBreadcrumbs($category, false);
             $order          = OrderRepository::usersOrder();
             $category = $category->toArray();
-//            $shippableTable = $this->actions->shippableTable($category);
 
             view('category.category',
                 compact(
@@ -42,7 +41,6 @@ class CategoryController extends AppController
                     'meta',
                     'breadcrumbs',
                     'order',
-//                    'shippableTable',
                 )
             );
 

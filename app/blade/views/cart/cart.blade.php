@@ -16,10 +16,7 @@
 
         <h1>Корзина</h1>
 
-        @php
-            xdebug_break();
-        @endphp
-        @if (empty($order) || !$order?->products?->count())
+        @if (empty($order) || !isset($order['products']))
 
             <div class="empty-cart">
                 Корзина пуста
@@ -29,34 +26,36 @@
 
             <div class="content">
 
-                <div class="table" data-order-id="<?= $order->id; ?>">
+                <div class="table" data-order-id="<?= $order['id']; ?>">
 
-                    @foreach ($order?->products as $i => $product)
+                    @foreach ($order['products'] as $i => $product)
+{{--                        @php $product = $orderItem['product'] @endphp--}}
 
-                        <div class="row cart-item" data-product-id="<?= $product['1s_id']; ?>">
+                        <div class="row cart-item" data-product-id="{!! $product['1s_id'] !!} ">
                             <div class="num cell"><?= ++$i; ?></div>
 
-                            <img class="img" src="<?= $product->mainImagePath; ?>" alt="<?= $product->name; ?>">
+{{--                          @php xdebug_break() @endphp--}}
+                            <img class="img" src="<?= $product['mainImage']; ?>" alt="<?= $product['name']; ?>">
 
                             <div class="name-price cell">
-                                <a href="/product/<?= $product->slug; ?>"
+                                <a href="/product/<?= $product['slug']; ?>"
                                    class="name">
-                                        <?= $product->name; ?>
+                                        <?= $product['name']; ?>
                                 </a>
                             </div>
 
+{{--        @php xdebug_break() @endphp--}}
                             <div class="cart-shippable-table cell">
-                                @include('components.shippableUnits.shippableUnits', compact('product'))
+                                @include('components.shippableUnitsNew.cartShippableUnits', compact('product'))
                             </div>
 
                             <div class="sub-sum sum cell">
-                                @foreach($shippableTable->rows[$product['1s_id']] as $unit)
+                                @foreach($product['shippableUnits'] as $unit)
+{{--                                    @php$orderItem = $product['order_items']@endphp--}}
+                                @foreach($product['order_items'] as $orderItem) @endforeach
 
-                                    {{--                                    @php xdebug_break() @endphp--}}
                                     <div class="row-sum">
-                                        @if($unit['row_sum'])
-                                            {!!$unit['formatted_row_sum']!!}
-                                        @endif
+                                            {!!$unit['pivot']['multiplier']*$product['price']*$orderItem['count']!!}
                                     </div>
 
                                 @endforeach

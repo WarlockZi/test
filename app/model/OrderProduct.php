@@ -22,7 +22,12 @@ class OrderProduct extends Pivot
 
     public function products(): HasMany
     {
-        return $this->hasMany(Product::class);
+        return $this->hasMany(
+            Product::class,
+            'product_id',
+            '1s_id'
+        )
+            ->with('orderItems');
     }
 
     public function orderItems(): HasMany

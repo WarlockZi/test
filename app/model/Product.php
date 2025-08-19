@@ -5,7 +5,6 @@ namespace app\model;
 
 use app\service\AuthService\Auth;
 use app\service\Image\ProductImageService;
-use app\service\ShippableUnits\ShippableUnitsService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -47,9 +46,20 @@ class Product extends Model
         'mainImage',
         'shippableUnits'
     ];
-
-
-
+    public function orderItems(): hasManyThrough
+    {
+        return $this->hasManyThrough(
+            OrderItem::class, //дб order_product_id
+            OrderProduct::class,
+            'product_id',
+            'product_id',
+            '1s_id',
+            'product_id',
+        )
+            ->with('unit')
+            ->select('orderitems.*')
+            ;
+    }
     public function orderProduct(): hasOne
     {
         return $this->hasOne(
@@ -70,7 +80,7 @@ class Product extends Model
         )->where('order_id', $order->id);
     }
 
-    public function orders()
+    public function orders(): HasMany|BelongsToMany
     {
         $user = Auth::getUser();
         if ($user) {
@@ -175,21 +185,7 @@ class Product extends Model
         return $this->hasOne(Price::class, '1s_id', '1s_id');
     }
 
-    protected function getUnitsTableAttribute(): array
-    {
-        $arr = [];
-        foreach ($this->units as $unit) {
-            $id                          = $unit->id;
-            $arr[$id]['currency']        = '₽';
-            $arr[$id]['product_1s_id']   = $unit->pivot->product_1s_id;
-            $arr[$id]['multiplier']      = $unit->pivot->multiplier;
-            $arr[$id]['unit_name']       = $unit->name;
-            $arr[$id]['base_unit_name']  = $this->baseUnit->name;
-            $arr[$id]['unit_price']      = (float)number_format((float)$this->price * $unit->pivot->multiplier, 2, '.', ' ');
-            $arr[$id]['base_unit_price'] = (float)number_format((float)$this->price, 2, '.', ' ');
-        }
-        return $arr;
-    }
+
 
     protected function getBaseUnitPriceAttribute(): string
     {
@@ -243,22 +239,31 @@ class Product extends Model
             ->withPivot('is_shippable', 'is_base')
             ->wherePivot('is_base', '1');
     }
-    public function getShippableUnitsAttribute(): BelongsToMany
+    public function getShippableUnitsAttribute(): array
+    {
+        return $this
+            ->shippableUnitsRelation()
+            ->get()
+//            ->getRelationValue('shippableUnitsRelation')
+            ?->toArray();
+    }
+    public function shippableUnitsRelation(): BelongsToMany
     {
         return $this
             ->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
             ->withPivot('multiplier', 'is_base', 'is_shippable')
             ->wherePivot('is_shippable', '=', '1')
-            ->orderByPivot('multiplier');
+            ->orderByPivot('multiplier')
+            ;
     }
-    public function shippableUnits(): BelongsToMany
-    {
-        return $this
-            ->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
-            ->withPivot('multiplier', 'is_base', 'is_shippable')
-            ->wherePivot('is_shippable', '=', '1')
-            ->orderByPivot('multiplier');
-    }
+//    public function shippableUnits(): BelongsToMany
+//    {
+//        return $this
+//            ->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
+//            ->withPivot('multiplier', 'is_base', 'is_shippable')
+//            ->wherePivot('is_shippable', '=', '1')
+//            ->orderByPivot('multiplier');
+//    }
 
     public function units(): BelongsToMany
     {
@@ -314,15 +319,6 @@ class Product extends Model
     {
         return $this->category()->with('parentRecursive');
     }
-
-
-//    public function mainImages(): MorphToMany
-//    {
-//        return $this->morphToMany(
-//            Image::class,
-//            'imageable',
-//        )->where('slug', '=', 'main');
-//    }
 
 }
 
