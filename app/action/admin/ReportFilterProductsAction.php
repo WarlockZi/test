@@ -14,10 +14,10 @@ use app\view\components\Builders\TableBuilder\Table;
 class ReportFilterProductsAction
 {
     public function __construct(
-
-        protected FilterView              $filterView ,
         protected InitialFiltersService $initialFilters,
-    ) { }
+    ) {
+
+    }
     public function getSavedFilters(): array
     {
         return ProductFilterRepository::product(Auth::getUser()->id);

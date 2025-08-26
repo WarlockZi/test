@@ -40,6 +40,7 @@
         <?= $data['emptyRow'] ?>
 
                 <!--		 Data rows-->
+{{--        @php(xdebug_break())--}}
         @if ($data['items']->count())
             @foreach ($data['items'] as $item)
 
@@ -69,6 +70,8 @@
         @endif
 
     </div>
+{{--    @php(xdebug_break())--}}
+
     @if (!$data['items']->count())
 
         <h3 class="no-items">Элементы не найдены</h3>
