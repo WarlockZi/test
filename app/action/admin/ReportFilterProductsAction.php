@@ -43,7 +43,8 @@ class ReportFilterProductsAction
 
     public function filter(array $userFilters): array
     {
-        return Table::build(ProductFilterRepository::filterProducts($userFilters))
+        $repo = new ProductFilterRepository();
+        return Table::build($repo->filterProducts($userFilters))
             ->pageTitle('Фильтр')
             ->model('product')
             ->column(

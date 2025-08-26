@@ -6,6 +6,7 @@ namespace app\controller;
 use app\repository\MorphRepository;
 use app\service\Response;
 use app\service\Router\IRequest;
+use JetBrains\PhpStorm\NoReturn;
 use Throwable;
 
 class AppController extends Controller
@@ -19,7 +20,7 @@ class AppController extends Controller
         parent::__construct();
     }
 
-    public function actionUpdateOrCreate(IRequest $request): void
+    #[NoReturn] public function actionUpdateOrCreate(IRequest $request): void
     {
         $req = $request->body();
 

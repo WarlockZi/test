@@ -17,9 +17,10 @@ class OrderItem extends Model
 
     protected $fillable = [
         'order_product_id',
-//        'product_id',
+        'product_id',
         'unit_id',
         'count',
+        'price',
         'created_at',
         'updated_at',
         'deleted_at'
@@ -52,21 +53,7 @@ class OrderItem extends Model
             'id',
             'product_unit_id');
     }
-//    public function products(): HasOneThrough
-//    {
-//        return $this->hasOneThrough(
-//            Product::class,
-//            ProductUnit::class,
-//            'product_id',
-//            '1s_id',
-//            'id',
-//            'unit_id',
-//        );
-//    }
-//    public function product(): HasOne
-//    {
-//        return $this->hasOne(Product::class, '1s_id', 'product_id');
-//    }
+
 
     public function unit(): HasOne
     {
@@ -75,13 +62,5 @@ class OrderItem extends Model
             'id',
             'unit_id'
         );
-//        return $this->hasOneThrough(
-//            Unit::class,
-//            ProductUnit::class,
-//            'unit_id',
-//            'id',
-//            '1s_id',
-//            'product_1s_id',
-//        );
     }
 }

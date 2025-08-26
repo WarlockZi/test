@@ -29,13 +29,7 @@ class CategoryProperty extends Model
         'path',
     ];
 
-//    public function product()
-//    {
-//        return $this->belongsTo(Category::class,
-//            '1s_category_id',
-//            '1s_id'
-//        );
-//    }
+    protected $attributes = [];
 
     public function category()
     {

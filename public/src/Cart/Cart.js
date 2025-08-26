@@ -22,9 +22,6 @@ export default class Cart {
   }
 
   async submitCart() {
-    // const rows = [].map.call(this.rows, (row) => {
-    //    return this.cartRowDTO(row)
-    // })
     const orderId = this.orderId;
 
     const res = post("/cart/submit", { orderId });
@@ -45,8 +42,8 @@ export default class Cart {
   cartRowDTO(target) {
     const row = target.closest(".row");
     return {
-      product_id: row.dataset.productId,
-      units: this.rowUnits(row),
+      order_id: this.orderId,
+      product_1s_id: row.dataset.productId,
     };
   }
 
@@ -129,7 +126,7 @@ export default class Cart {
 
   async deleteCartRow(target) {
     const res = await post(`/cart/deleteRow`, this.cartRowDTO(target));
-    if (res?.arr?.ok) {
+    if (res?.deleted) {
       target.closest(".row").remove();
       if (this.rows.length < 1) this.showEmptyCart();
       this.renderSums();

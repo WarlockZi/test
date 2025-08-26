@@ -29,12 +29,12 @@
                 <div class="table" data-order-id="<?= $order['id']; ?>">
 
                     @foreach ($order['products'] as $i => $product)
-{{--                        @php $product = $orderItem['product'] @endphp--}}
+                        {{--                        @php $product = $orderItem['product'] @endphp--}}
 
                         <div class="row cart-item" data-product-id="{!! $product['1s_id'] !!} ">
                             <div class="num cell"><?= ++$i; ?></div>
 
-{{--                          @php xdebug_break() @endphp--}}
+                            {{--                          @php xdebug_break() @endphp--}}
                             <img class="img" src="<?= $product['mainImage']; ?>" alt="<?= $product['name']; ?>">
 
                             <div class="name-price cell">
@@ -44,18 +44,25 @@
                                 </a>
                             </div>
 
-{{--        @php xdebug_break() @endphp--}}
+                            {{--        @php xdebug_break() @endphp--}}
                             <div class="cart-shippable-table cell">
-                                @include('components.shippableUnitsNew.cartShippableUnits', compact('product'))
+                                @include('components.shippableUnitsNew.cart.cartShippableUnits', compact('product'))
                             </div>
 
                             <div class="sub-sum sum cell">
-                                @foreach($product['shippableUnits'] as $unit)
-{{--                                    @php$orderItem = $product['order_items']@endphp--}}
-                                @foreach($product['order_items'] as $orderItem) @endforeach
+                                @foreach($product['shippable_units'] as $unit)
+
+                                    @foreach($product['order_items'] as $order_Item)
+                                        {{--                                        @php(xdebug_break())--}}
+                                        @if($order_Item['unit_id']===$unit['id'])
+                                            @php($orderItem = $order_Item)
+                                        @endif
+                                    @endforeach
 
                                     <div class="row-sum">
-                                            {!!$unit['pivot']['multiplier']*$product['price']*$orderItem['count']!!}
+                                        {{--                                        @php(xdebug_break())--}}
+                                        @php($subSum = $unit['pivot']['multiplier']*$product['price']*$orderItem['count'])
+                                        {!! empty($subSum)?'-':number_format($subSum, 2, '.', ' ') !!}
                                     </div>
 
                                 @endforeach

@@ -14,10 +14,14 @@ use app\service\Router\IRequest;
 use app\service\Router\IRouteList;
 use app\service\Router\Request;
 use app\service\Router\RouteList;
-use app\service\Router\Router;
 use app\service\Vite\Vite;
 use app\service\Vite\ViteCompiler;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Redis;
+use Illuminate\Translation\FileLoader;
+use Illuminate\Translation\Translator;
+use Illuminate\Validation\Factory;
 use Predis\Client;
 use Psr\Container\ContainerInterface;
 use function DI\create;
@@ -41,7 +45,6 @@ return [
     Vite::class => create(Vite::class)
         ->constructor(get(ViteCompiler::class)),
 
-
     'db.config' => [
         'driver' => 'mysql',
         'host' => 'localhost',
@@ -53,7 +56,6 @@ return [
         'prefix' => '',
     ],
 
-
     Capsule::class => function (ContainerInterface $c) {
         $capsule = new Capsule;
         $capsule->addConnection($c->get('db.config'));
@@ -61,7 +63,6 @@ return [
         $capsule->bootEloquent();
         return $capsule;
     },
-
 
     IView::class => function (ContainerInterface $c) {
         return new View(
@@ -77,9 +78,15 @@ return [
     IRouteList::class => function () {
         return new RouteList();
     },
+    'validator' => function () {
+        $loader = new FileLoader(new Filesystem(), __DIR__ . '/lang');
+        $translator = new Translator($loader, 'en');
+        $validatorFactory = new Factory($translator);
 
+        return $validatorFactory;
+    },
     'orderItemsCount' => function () {
-        return OrderRepository::count();
+        return OrderRepository::productsCount();
     },
 
     Blade::class => create(Blade::class),

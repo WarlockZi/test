@@ -3,20 +3,21 @@ declare(strict_types=1);
 
 namespace app\controller;
 
+use app\action\CartAction;
+use app\formRequest\CartRequest;
 use app\model\Order;
 use app\model\OrderItem;
 use app\repository\CartRepository;
-use app\repository\OrderRepository;
 use app\service\Response;
 use app\service\Router\IRequest;
-use app\view\Cart\CartView;
+use Illuminate\Validation\ValidationException;
 use JetBrains\PhpStorm\NoReturn;
 
 class CartController extends AppController
 {
     public function __construct(
-        protected CartView       $cartView,
         protected CartRepository $repository,
+        protected CartAction     $action,
     )
     {
         parent::__construct();
@@ -24,14 +25,32 @@ class CartController extends AppController
 
     #[NoReturn] public function actionIndex(): void
     {
-        $order    = $this->repository::order();
-
-//        $shippableTable = new ShippableUnitsService('cart', $order);
-
-        view('cart.cart',compact('order'));
+        $order = $this->repository::order();
+        view('cart.cart', compact('order'));
     }
 
-    public function actionDrop(): void
+    #[NoReturn] public function actionDeleteRow(IRequest $request): void
+    {
+        $trashed = $this->action->deleteRow($request->body);
+
+        $trashed
+            ? response()->json(['deleted' => true, 'popup' => 'Удален'])
+            : Response::exitWithPopup('Не удален');
+    }
+
+    #[NoReturn] public function actionUpdateOrCreateCustom(CartRequest $request): void
+    {
+        try {
+            $validatedData = $request->validate();
+            $this->repository->updateOrCreate($validatedData);
+            response()->json(['ok' => true, 'popup' => 'Заказ изменен']);
+        } catch (ValidationException $validator) {
+            $errors = $validator->errors();
+            response()->json(['console' => $errors, 'popup' => 'Ошибка обновления заказа']);
+        }
+    }
+
+    #[NoReturn] public function actionDrop(): void
     {
         OrderItem::query()
             ->delete();
@@ -39,7 +58,7 @@ class CartController extends AppController
         response()->json(['ok' => true]);
     }
 
-    public function actionSubmit(): void
+    #[NoReturn] public function actionSubmit(): void
     {
         $orderId = $this->ajax['orderId'];
         if (empty($orderId)) exit('No cart order id');
@@ -48,26 +67,5 @@ class CartController extends AppController
     }
 
 
-    public function actionDeleterow(): void
-    {
-        $req        = $this->ajax;
-        $product_id = $req['product_id'];
-        $unit_ids   = $req['units'];
-
-        if (!$product_id) response()->json(['msg' => 'No id']);
-        $trashed = $this->orderRepo::detachItems($product_id, $unit_ids);
-
-        if ($trashed) {
-            response()->json(['ok' => true, 'popup' => 'Удален']);
-        }
-        Response::exitWithPopup('Не удален');
-
-    }
-
-    public function actionUpdateOrCreate(IRequest $request): void
-    {
-        $this->repository::updateOrCreate($request->body());
-        OrderRepository::updateOrCreate($request->body());
-    }
 }
 

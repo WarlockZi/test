@@ -13,7 +13,6 @@ class ProductController extends AppController
 {
     public function __construct(
         protected ProductRepository $repo,
-        private MetaService         $meta,
         private ProductAction       $actions,
     )
     {
@@ -31,16 +30,17 @@ class ProductController extends AppController
                 compact('product', 'similarCategories'),
                 404);
         }
-        $this->actions->setMeta($product);
-        $meta        = $this->meta;
-        $breadcrumbs = $this->actions->getBreadcrumbs($product->category, true);
-        $shippableTable = $this->actions->shippableUnits('product', $product);
 
+        $meta        = $this->actions->setMeta($product);
+        $order       = $this->actions->order();
+        $breadcrumbs = $this->actions->getBreadcrumbs($product['category'], true);
+
+        $product = $product->toArray();
         view('product.product', compact(
             'meta',
             'breadcrumbs',
             'product',
-            'shippableTable',
+            'order',
         ));
     }
 }

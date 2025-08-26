@@ -17,6 +17,7 @@
 
         <div class="short-link card-panel-item"
              title='Скопировать короткую ссылку'
+{{--             @php(xdebug_break())--}}
              data-shortLink= {{ $category['shortLink']}}
         >
             {!! Icon::link()!!}

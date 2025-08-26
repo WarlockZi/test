@@ -2,15 +2,15 @@
 
 {{--@php xdebug_break(); @endphp--}}
 
-@section('title', $meta->title)
-@section('description', $meta->description)
-@section('keywords', $meta->keywords)
+@section('title', $meta['title'])
+@section('description', $meta['description'])
+@section('keywords', $meta['keywords'])
 
 @section('content')
 
     @if (!empty($product))
 
-        @if ($product->deleted_at)
+        @if ($product['deleted_at'])
             <div class="deleted-overlay">
                 <h1 class="deleted">
                     Товар закончился
@@ -24,29 +24,40 @@
 
             <h1>{!! $product['print_name'] !!}</h1>
 
-
             <div class="product-card_hero">
-                    @include('product.main_image')
-                    @include ('product.card.toCart')
+                @include('product.main_image')
+{{--            @php (xdebug_break())--}}
+                @include ('product.card.toCart')
             </div>
 
             <div class="info-wrap">
                 <div class="info-tag">Информация о товаре</div>
                 <div class="properties">
-                    <h2>{!!  $product->seo_h1() !!}</h2>
+                    <h2>{!!
+                    $product['own_properties']['seo_h1'] ?? $product['name'];
+                    !!}</h2>
 
-                    <div id="seo-article">{!! $product->seo_article() !!}</div>
+                    <div id="seo-article">{!!
+                     $product['own_properties']['seo_article']
+                     ?? $product['own_properties']['seo_description']
+                     ?? 'Описание товара отстутствует';
+                     !!}</div>
 
+{{--                    @php(xdebug_break())--}}
+                    @if (isset($product->values) && !empty($product->values))
                         @foreach ($product->values as $value)
-                        @include( __DIR__ . '/property.php')
-                    @endforeach
+                            @include( __DIR__ . '/property.php')
+                        @endforeach
+                    @endif
+
+
                 </div>
             </div>
 
             <div class="info-wrap">
                 <div class="info-tag">Характеристики</div>
 
-                <article id="detail-text"><?= $product->txt; ?></article>
+                <article id="detail-text"><?= $product['own_properties']['txt']; ?></article>
             </div>
 
 

@@ -15,13 +15,13 @@ class CategoryMetaService extends MetaService
         string|null $title,
         string|null $description,
         string|null $keywords,
-    ): self
+    ): array
     {
         $this->title = $title ?? $this->title;
         $this->description = $description ?? $this->description;
         $this->keywords = $keywords ?? $this->keywords;
 
-        return $this;
+        return get_object_vars($this);
     }
 
 }

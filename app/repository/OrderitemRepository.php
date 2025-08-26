@@ -8,41 +8,23 @@ use app\model\Order;
 use app\model\OrderItem;
 use app\model\OrderProduct;
 use app\service\AuthService\Auth;
+use Illuminate\Database\Eloquent\Collection;
 
 class OrderitemRepository
 {
-
     public static function updateOrCreate(array $req)
     {
         return OrderItem::updateOrCreate(
             [
                 'id' => $req['id'],
-//                'unit_id' => $req['unit_id']
             ],
             [
                 'id' => $req['id'],
                 'count' => $req['count'],
-//                'product_id' => $req['product_id'],
-//                'unit' => $req['unit_id'],
             ]
         );
     }
-//    public static function updateOrCreate(OrderProduct $orderProduct, array $req)
-//    {
-//        return OrderItem::updateOrCreate(
-//            [
-//                'order_product_id' => $orderProduct->id,
-//                'unit_id' => $req['unit_id']
-//            ],
-//            [
-//                'order_product_id' => $orderProduct->id,
-//                'count' => $req['count'],
-//                'product_id' => $req['product_id'],
-//                'unit' => $req['unit_id'],
-//            ]
-//        );
-//    }
-    public static function main()
+    public static function main(): Collection|array
     {
         $user = Auth::getUser();
         if ($user) {

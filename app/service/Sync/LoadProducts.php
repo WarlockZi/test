@@ -6,7 +6,6 @@ namespace app\service\Sync;
 use app\model\Category;
 use app\model\Product;
 use app\model\ProductProperty;
-
 use app\service\ShortLink\ShortlinkService;
 use app\service\Slug\SlugService;
 use Carbon\Carbon;
@@ -59,7 +58,7 @@ class LoadProducts
                     ['1s_id' => $good['Ид']],
                     $this->fillNewProduct($good)
                 );
-            $this->setProductOwnProps($product);
+            $this->setProductOwnProps($good);
 
             if ($product->wasRecentlyCreated) {
                 $this->created[] = $product['name'];
@@ -67,34 +66,33 @@ class LoadProducts
         }
     }
 
-    protected function setProductOwnProps(Product $product): void
+    protected function setProductOwnProps(array $good): void
     {
-        $prodProps = ProductProperty::where('product_1s_id', $product['1s_id'])
+        $prodProps = ProductProperty::where('product_1s_id', $good['Ид'])
             ->first();
         if (!$prodProps) {
             $ownProps = ProductProperty::create([
-                'product_1s_id' => $product['1s_id'],
+                'product_1s_id' => $good['Ид'],
                 'short_link' => ShortlinkService::getValidShortLink(),
-                'txt' => $product->txt,
+                'txt' => $good['Описание']
+                    ? preg_replace('/\n/', '<br>', $good['Описание'])
+                    : '',
             ]);
+            if ($prodProps && !$prodProps->short_link) {
+                $prodProps->short_link = ShortlinkService::getValidShortLink();
+                $prodProps->save();
+            }
         }
-        if ($prodProps && !$prodProps->short_link) {
-            $prodProps->short_link = ShortlinkService::getValidShortLink();
-            $prodProps->save();
-        }
-
     }
-
     protected function fillNewProduct($good): array
     {
         $g['1s_id']          = $good['Ид'];
+        $g['1s_category_id'] = $good['Группы']['Ид'];
+        $g['category_id']    = $this->setCategory($good);
         $g['art']            = $good['Артикул'] ? trim($good['Артикул']) : '';
-        $g['txt']            = $good['Описание'] ? preg_replace('/\n/', '<br>', $good['Описание']) : '';
         $g['name']           = $good['Наименование'];
         $g['print_name']     = $good['ЗначенияРеквизитов']['ЗначениеРеквизита'][3]['Значение'];
-        $g['1s_category_id'] = $good['Группы']['Ид'];
         $g['slug']           = $this->setSlug($g);
-        $g['category_id']    = $this->setCategory($good);
         $g['deleted_at']     = null;
         $g['updated_at']     = Carbon::now()->toDateTimeString();
         return $g;

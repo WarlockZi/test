@@ -58,7 +58,7 @@ export default class MyQuill {
     return {
       theme: "snow",
       // theme: 'bubble',
-      placeholder: "Начните писать...",
+      // placeholder: "Начните писать...",
       modules: {
         toolbar: this.toolbar,
       },

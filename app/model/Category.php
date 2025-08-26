@@ -27,6 +27,25 @@ class Category extends Model
 
     protected $appends = ['shortLink', 'href'];
 
+    public function meta(): hasOne
+    {
+        $self = $this;
+        return $this->hasOne(
+            CategoryProperty::class,
+            '1s_category_id',
+            '1s_id'
+        )
+            ->select(['seo_title', 'seo_desc', 'seo_keywords'])
+            ->withDefault(function ($properties, $category) {
+                $properties->seo_title = $properties->seo_title
+                    ?? $category->name . " - купить оптом недорого в интернет-магазине VITEX в Вологде";
+                $properties->seo_desc = $properties->seo_desc
+                    ?? $category->name . ". Интернет-магазин медицинских перчаток, одноразового инструмента и расходников VITEX в Вологде. Оперативный ответ менеджера, быстрая доставка, доступные оптовые цены. Звоните и заказывайте прямо сейчас или на сайте онлайн";
+                $properties->seo_keywords = $properties->seo_keywords
+                    ?? $category->name;
+            });
+    }
+
     public function productsNotInStore()
     {
         return $this->hasMany(Product::class,
@@ -45,13 +64,11 @@ class Category extends Model
         )
             ->where('instore', 0)
             ->where('name', 'regexp', '\\s?\\*\\s?$')
-//            ->with('mainImages')
-            ->with('ownProperties')
-            ->with('shippableUnits')
             ->with('inactivepromotions')
             ->with(['activepromotions' => function ($q) {
                 $q->whereNull('active_till');
             }])
+            ->with('ownProperties')
             ->orderBy('name');
     }
 
@@ -61,8 +78,6 @@ class Category extends Model
             '1s_category_id',
             '1s_id')
             ->where('instore', '<>', 0)
-//            ->with('order.orderitems')
-            ->with('shippableUnits')
             ->with('inactivepromotions')
             ->with(['activepromotions' => function ($q) {
                 $q->whereNull('active_till');
@@ -76,23 +91,6 @@ class Category extends Model
         return $pInStore;
     }
 
-    public function seo_title()
-    {
-        return $this->ownProperties->seo_title ?? $this->name . " - купить оптом недорого в интернет-магазине VITEX в Вологде";
-    }
-
-    public function seo_description()
-    {
-        return $this->ownProperties->seo_description ?? $this->name . ". Интернет-магазин медицинских перчаток, одноразового инструмента и расходников VITEX в Вологде. Оперативный ответ менеджера, быстрая доставка, доступные оптовые цены. Звоните и заказывайте прямо сейчас или на сайте онлайн";
-    }
-    public function seo_keywords()
-    {
-        return $this->ownProperties->seo_keywords ?? $this->name;
-    }
-    public function seo_article()
-    {
-        return $this->ownProperties->seo_article ?? $this->description ?? $this->name;
-    }
 
     public function InactivePromotions()
     {

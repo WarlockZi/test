@@ -2,9 +2,10 @@
         unit-row
         class="unit-row"
         data-unitid="{!! $unit['id'] !!}"
+{{--        @php(xdebug_break())--}}
         data-multiplier="{!! $unit['pivot']['multiplier'] !!}"
-        data-orderitem-id="{!! $unit['order_item_id']??''!!}">
-{{--    @php xdebug_break() @endphp--}}
+{{--        data-orderitem-id="{!! $orderItem['id']??''!!}"--}}
+>
     <input
             type="text"
             class="input"

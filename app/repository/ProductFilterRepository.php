@@ -6,6 +6,7 @@ namespace app\repository;
 use app\model\FilterUser;
 use app\model\Product;
 use app\service\Image\ProductImageService;
+use Illuminate\Database\Eloquent\Collection;
 
 class ProductFilterRepository
 {
@@ -23,7 +24,7 @@ class ProductFilterRepository
         return !in_array(false, array_map($callback, $array));
     }
 
-    public function filterProducts($req):array
+    public function filterProducts($req):Collection
     {
         extract($req);
         $query = Product::query()->take(10);

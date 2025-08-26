@@ -459,6 +459,9 @@ function showMessage(res) {
 
 function handleResponse(res) {
   try {
+    if (res?.console) {
+      console.log(res?.console);
+    }
     if (res?.popup) {
       popup.show(res?.popup);
     } else {

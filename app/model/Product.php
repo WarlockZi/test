@@ -12,12 +12,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 
 class Product extends Model
 {
-    use \Illuminate\Database\Eloquent\SoftDeletes;
+    use SoftDeletes;
 
     public $timestamps = true;
 
@@ -44,8 +46,8 @@ class Product extends Model
     protected $appends = [
         'price',
         'mainImage',
-        'shippableUnits'
     ];
+
     public function orderItems(): hasManyThrough
     {
         return $this->hasManyThrough(
@@ -56,10 +58,9 @@ class Product extends Model
             '1s_id',
             'product_id',
         )
-            ->with('unit')
-            ->select('orderitems.*')
-            ;
+            ->with('unit');
     }
+
     public function orderProduct(): hasOne
     {
         return $this->hasOne(
@@ -115,25 +116,6 @@ class Product extends Model
             ->where($field, $value);
     }
 
-    public function seo_h1()
-    {
-        return $this->ownProperties->seo_h1 ?? $this->name;
-    }
-
-    public function seo_article()
-    {
-        return $this->ownProperties->seo_article ?? $this->ownProperties->seo_description ?? 'Описание товара отстутствует';
-    }
-
-    public function seo_title()
-    {
-        return $this->ownProperties->seo_title ?? $this->name . " - купить в Вологде оптом выгодно - VITEX";
-    }
-
-    public function seo_description()
-    {
-        return $this->ownProperties->seo_description ?? $this->name . " Интернет-магазин медицинских перчаток, одноразового инструмента и расходников VITEX в Вологде. Оперативный ответ менеджера, быстрая доставка, доступные оптовые цены. Звоните и заказывайте прямо сейчас или на сайте онлайн";
-    }
 
     public function scopeWithWhereHas($query, $relation, $constraint)
     {
@@ -165,16 +147,19 @@ class Product extends Model
 
     public function getMainImageAttribute(): string
     {
-        $pis = APP->get(ProductImageService::class);
-        return $pis->getImageRelativePath($this);
-
+        return APP->get(ProductImageService::class)->getImageRelativePath($this);
     }
+
+    
+    
+    ///price
+    /// 
 
     public function getPriceAttribute(): ?float
     {
         return (float)$this->priceRelation()->first()->price ?? null;
     }
-
+    
     public function getFormattedPriceAttribute(): string
     {
         return number_format($this->price, 2, '.', ' ');
@@ -184,9 +169,6 @@ class Product extends Model
     {
         return $this->hasOne(Price::class, '1s_id', '1s_id');
     }
-
-
-
     protected function getBaseUnitPriceAttribute(): string
     {
         $baseUnit = $this->baseUnit;
@@ -228,42 +210,36 @@ class Product extends Model
     }
 
 
-    public function getBaseUnitAttribute()
+    public function baseUnit(): hasOneThrough
     {
-        return $this->baseUnitRelation->first();
+        return $this->hasOneThrough(
+            Unit::class,
+            ProductUnit::class,
+            'product_1s_id',// in productUnit
+            'id',//in unit
+            '1s_id',//in product
+            'unit_id'//in productUnit
+        )
+            ->select('units.*',
+                'product_unit.is_shippable as is_shippable',
+                'product_unit.multiplier as multiplier',
+                'product_unit.is_base as is_base',
+                'product_unit.price as price',
+            )
+            ->where('product_unit.is_base', '1');
     }
 
-    public function baseUnitRelation(): BelongsToMany
-    {
-        return $this->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
-            ->withPivot('is_shippable', 'is_base')
-            ->wherePivot('is_base', '1');
-    }
-    public function getShippableUnitsAttribute(): array
-    {
-        return $this
-            ->shippableUnitsRelation()
-            ->get()
-//            ->getRelationValue('shippableUnitsRelation')
-            ?->toArray();
-    }
-    public function shippableUnitsRelation(): BelongsToMany
+    public function shippableUnits(): BelongsToMany
     {
         return $this
             ->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
-            ->withPivot('multiplier', 'is_base', 'is_shippable')
+            ->withPivot('multiplier',
+                'is_base',
+                'is_shippable',
+                'price')
             ->wherePivot('is_shippable', '=', '1')
-            ->orderByPivot('multiplier')
-            ;
+            ->orderByPivot('multiplier');
     }
-//    public function shippableUnits(): BelongsToMany
-//    {
-//        return $this
-//            ->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
-//            ->withPivot('multiplier', 'is_base', 'is_shippable')
-//            ->wherePivot('is_shippable', '=', '1')
-//            ->orderByPivot('multiplier');
-//    }
 
     public function units(): BelongsToMany
     {

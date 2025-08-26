@@ -1,13 +1,12 @@
-{{--@php xdebug_break() @endphp--}}
 
 <div class="price">
 
     <div class="new-price">
-        {!! $product['base_unit_price'] !!}
-        {!! $product->baseUnit['base_unit_name']!!}
+        {!! $product['price'] !!}
+        {!! $product['base_unit']['name']!!}
     </div>
 
 </div>
 <div class="price-units ">
-    @include('components.shippableUnits.shippableUnits', compact('shippableTable'))
+    @include('components.shippableUnitsNew.product.shippableUnits', ['shippableUnits'=>$product['shippable_units']])
 </div>

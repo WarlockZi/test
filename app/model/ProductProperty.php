@@ -18,6 +18,7 @@ class ProductProperty extends Model
         'seo_keywords',
         'new',
         'leader',
+        'txt',
         'created_at',
         'updated_at',
         'deleted_at',
