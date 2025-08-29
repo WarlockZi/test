@@ -3,8 +3,7 @@
 namespace app\controller\Admin;
 
 use app\action\admin\ReportFilterProductsAction;
-use app\service\Filters\Products\FilterService;
-use app\service\Response;
+use app\formRequest\ProductFilterReport;
 use JetBrains\PhpStorm\NoReturn;
 
 
@@ -12,7 +11,6 @@ class ReportController extends AdminscController
 {
     public function __construct(
         protected ReportFilterProductsAction $actions,
-        private readonly FilterService       $service,
     )
     {
         parent::__construct();
@@ -21,28 +19,35 @@ class ReportController extends AdminscController
     #[NoReturn] public function actionFilter(): void
     {
         $selectFilters = $this->actions->getSavedFilters();
-        $filterPanel   = $this->actions->getFilterPanel($selectFilters);
-        $filterString  = $this->service->getFilterString($selectFilters);
-        $productsTable = $this->actions->filter($selectFilters);
+
+        $initialFilters = $this->actions->initialFilters();
+        $filterPanel    = $this->actions->panel($selectFilters);
+        $filterString   = $this->actions->filterString($selectFilters);
+        $filterTable    = $this->actions->table($selectFilters);
 
         view('admin.report.productFilter.filterIndex',
-            compact('filterPanel',
-                'productsTable',
-                'filterString'));
+            compact(
+                'initialFilters',
+                'filterPanel',
+                'filterString',
+                'filterTable',
+            ));
     }
 
-    public function actionUpdateFilter(): void
+    #[NoReturn] public function actionUpdateFilter(ProductFilterReport $request): void
     {
-        $req = $this->ajax;
-        list($selectFilters, $toSaveFilters) = $this->service->filtersFromReq($req);
-        $this->service->saveFilters($toSaveFilters);
-        response()->json([
-            'productsTable' => $this->actions->filter($selectFilters),
-            'filterString' => $this->service->getFilterString($selectFilters),
-            'filterPanel' => $this->actions->getFilterPanel($selectFilters)
-            ]);
-    }
+        $req            = $request->validate();
 
+        [$toSave, $toSelect] = $this->actions->toSelectToSave($req);
+        $this->actions->saveFilters($toSave);
+
+        response()->json([
+            'initialFilters' => $this->actions->initialFilters(),
+            'filterPanel' => $this->actions->panelHtml($toSelect, $toSave),
+            'filterString' => $this->actions->filterStringHtml($toSelect),
+            'productsTable' => $this->actions->tableHtml($toSelect),
+        ]);
+    }
 }
 
 

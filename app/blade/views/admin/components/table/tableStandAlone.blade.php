@@ -2,6 +2,7 @@
     use app\view\components\Builders\CheckboxBuilder\Checkbox\ICheckbox;
 @endphp
 
+{{--@php(xdebug_break())--}}
 <div custom-table
     <?= $data['class']; ?>
     <?= $data['dataModel'] ?>

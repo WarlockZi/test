@@ -11,7 +11,7 @@ class MainAction
         private MainMetaService       $meta,
     )
     {}
-    public function setMeta($title, $description, $keywords): MetaService
+    public function setMeta($title, $description, $keywords): array
     {
         return $this->meta->setMeta(
             $title, $description, $keywords

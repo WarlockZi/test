@@ -1,6 +1,6 @@
 <?php
 
-namespace app\formRequest;
+namespace app\formRequest\baseFormRequests;
 
 
 use app\service\AuthService\Auth;
@@ -14,6 +14,7 @@ use JetBrains\PhpStorm\NoReturn;
 
 abstract class FormRequest extends Request
 {
+
     public function __construct()
     {
         parent::__construct();
@@ -31,13 +32,6 @@ abstract class FormRequest extends Request
         return [];
     }
 
-    public function authorize(): bool
-    {
-        $req = ['phpSession' => $this->json('phpSession')];
-        if (!Auth::validatePphSession($req)) throw new \Exception('плохой token');
-        return true;
-    }
-
     public function prepareForValidation(): void
     {
         if ($_FILES) {
@@ -53,7 +47,13 @@ abstract class FormRequest extends Request
                 $_FILES['file']  = $uploadedFiles;
             }
         }
+    }
 
+    public function authorize(): bool
+    {
+        $req = ['phpSession' => $this->json('phpSession')];
+        if (!Auth::validatePphSession($req)) throw new \Exception('плохой token');
+        return true;
     }
 
     public function validate(): array
@@ -70,8 +70,9 @@ abstract class FormRequest extends Request
             $errors = $validator->errors();
             $this->throwValidationException($validator);
         }
-        return $validator->getData();
+        $validated = $this->after();
 
+        return $validated;
     }
 
     #[NoReturn] protected function throwValidationException($validator): void
@@ -118,6 +119,12 @@ abstract class FormRequest extends Request
             foreach ($_FILES['file'] as $fileData) {
                 $arr[] = $this->UploadedFile2Array($fileData);
             }
+
+        }
+        if ($this->json('phpSession') !== null) {
+            $data = $this->json()->all();
+            unset($data['phpSession']);
+            $arr = array_merge($arr, $data);
         }
         return $arr;
     }
@@ -127,11 +134,10 @@ abstract class FormRequest extends Request
         $this->authorize();
         $this->prepareForValidation();
         $validator = $this->createValidator();
+        $this->after();
+        $data = $validator->getData();
 
-
-        $d = $validator->validate();
-
-        return $this->after();
+        return $data;
     }
 
 }

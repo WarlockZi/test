@@ -1,5 +1,5 @@
 @php
-    use app\view\components\Builders\CheckboxBuilder\Checkbox\ICheckbox;use app\view\components\Builders\CheckboxBuilder\Checkbox\ICheckbox;
+    use app\view\components\Builders\CheckboxBuilder\Checkbox\ICheckbox;
 @endphp
 @extends('layouts.admin.admin')
 

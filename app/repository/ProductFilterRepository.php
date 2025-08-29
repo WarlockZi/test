@@ -19,11 +19,6 @@ class ProductFilterRepository
         return $userFilters ? json_decode($userFilters->name, true) : [];
     }
 
-    private static function array_every(array $array, callable $callback): bool
-    {
-        return !in_array(false, array_map($callback, $array));
-    }
-
     public function filterProducts($req):Collection
     {
         extract($req);
