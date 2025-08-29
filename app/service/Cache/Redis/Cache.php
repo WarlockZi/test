@@ -4,8 +4,9 @@ namespace app\service\Cache\Redis;
 
 use app\service\Cache\BaseCache;
 use app\service\Cache\ICache;
+use Illuminate\Support\Facades\Redis;
 use Predis\Client;
-use Redis;
+
 
 class Cache extends BaseCache implements ICache
 {

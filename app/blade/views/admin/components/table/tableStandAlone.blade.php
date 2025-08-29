@@ -2,6 +2,7 @@
     use app\view\components\Builders\CheckboxBuilder\Checkbox\ICheckbox;
 @endphp
 
+{{--@php(xdebug_break())--}}
 <div custom-table
     <?= $data['class']; ?>
     <?= $data['dataModel'] ?>
@@ -40,6 +41,7 @@
         <?= $data['emptyRow'] ?>
 
                 <!--		 Data rows-->
+{{--        @php(xdebug_break())--}}
         @if ($data['items']->count())
             @foreach ($data['items'] as $item)
 
@@ -69,6 +71,8 @@
         @endif
 
     </div>
+{{--    @php(xdebug_break())--}}
+
     @if (!$data['items']->count())
 
         <h3 class="no-items">Элементы не найдены</h3>

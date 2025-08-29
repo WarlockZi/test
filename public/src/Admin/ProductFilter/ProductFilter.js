@@ -10,14 +10,13 @@ export default class ProductFilter {
     this.panel = productsFilter[qs](".list-filter");
     this.url = "/adminsc/report/updateFilter";
     this.wrap[ael]("click", this.handleClick.bind(this));
-    this.checkboxes = Array.from(this.panel[qa](`[type='checkbox']`));
-    this.selects = Array.from(this.wrap[qa](`[select-new]`));
 
     this.setSelects();
   }
 
   setSelects() {
-    [].map.call(this.selects, (select) => {
+    const selects = Array.from(this.wrap[qa](`[select-new]`));
+    [].map.call(selects, (select) => {
       new SelectNew(select);
     });
   }
@@ -34,26 +33,30 @@ export default class ProductFilter {
 
   getClickedFilters() {
     const req = {};
-
-    req.toSelect = this.selects
+    const selects = Array.from(this.wrap[qa](`[select-new]`));
+    req.changedFilters = selects
       .filter((select) => select.dataset.value !== "0")
       .reduce((obj, select) => {
-        obj[select.getAttribute("name")] = select.dataset.value;
+        const selectedOption = select[qs]("ul li.selected");
+        const name = select.getAttribute("name");
+        const value = selectedOption.dataset.value;
+        const checkbox = select.parentNode[qs]('[type="checkbox"]');
+        const checked = checkbox.checked;
+        obj[name] = {
+          value: value,
+          checked,
+        };
         return obj;
       }, {});
-
-    req.toSave = this.checkboxes
-      .filter((check) => check.checked === true)
-      .map((check) => check.name);
 
     return req;
   }
 
   renderDataFromResponce(res) {
-    $(".used-filters").first().innerHTML = res?.arr?.filterString;
-    $(".list-filter").first().innerHTML = res?.arr?.filterPanel;
+    $(".used-filters").first().innerHTML = res?.filterString;
+    $(".list-filter").first().innerHTML = res?.filterPanel;
     const table = $("[custom-table]").first();
-    table.innerHTML = res?.arr?.productsTable;
+    table.innerHTML = res?.productsTable;
     this.setSelects();
   }
 }

@@ -1,36 +1,40 @@
 @php
 
 use app\service\AuthService\Auth;
+use \app\view\components\Icon\Icon;
 
 @endphp
 
 <div class="card-panel">
 
+{{--    @php(xdebug_break())--}}
     <div class="short-link card-panel-item"
          title='Скопировать короткую ссылку'
-         data-shortLink= <?= $product->shortLink; ?>
+         data-shortLink= <?= $product['own_properties']['short_link']; ?>
     >
-        <?= \app\view\components\Icon\Icon::link(); ?>
+        <?= Icon::link(); ?>
     </div>
 
-    <div class="compare card-panel-item <?= $product->compare ? 'green' : '' ?>"
+{{--    @php(xdebug_break())--}}
+    <div class="compare card-panel-item {!!  isset($product['compare']) ? 'green' : '' !!}"
          data-compare="false"
          title='Добавить в сравнение'
     >
-        <?= \app\view\components\Icon\Icon::chart(); ?>
+        <?= Icon::chart(); ?>
     </div>
 
-    <div class="like card-panel-item <?= $product->like ? 'red' : '' ?>"
+{{--         @php(xdebug_break())--}}
+    <div class="like card-panel-item {!!  isset($product['like'])? 'red' : ''  !!}"
          data-like="false"
          title='Добавить в избранное'
     >
-        <?= \app\view\components\Icon\Icon::heart(); ?>
+        <?= Icon::heart(); ?>
     </div>
     @if(Auth::getUser()?->isAdmin())
-        <a href="/adminsc/product/edit/<?= $product->id ?>"
+        <a href="/adminsc/product/edit/<?= $product['id'] ?>"
            class="edit card-panel-item"
         >
-                <?= \app\view\components\Icon\Icon::edit(); ?>
+                <?= Icon::edit(); ?>
         </a>
     @endif
 </div>

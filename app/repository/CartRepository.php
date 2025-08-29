@@ -3,6 +3,8 @@
 namespace app\repository;
 
 use app\model\Order;
+use app\model\OrderItem;
+use app\model\OrderProduct;
 use app\service\AuthService\Auth;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -27,47 +29,31 @@ class CartRepository
         $order = Order::where($field, $value)
             ->whereNull('submitted')
             ->with(['products' => function ($q) {
-                $q->whereHas('orderItems');
+                $q->whereHas('orderItems')
+                    ->withoutTrashed()
+                ->with('shippableUnits');
             }])
-
             ->first();
-
-        $o         = $order->toArray();
-        $shippable = self::setShippableUnits($order);
-
-        $order['products'] = $order['products_with_order_items_and_units'];
-        unset($order['products_with_order_items_and_units']);
-
-        return $order;
+        $o     = $order->toArray();
+        return $o;
     }
 
-    private static function setShippableUnits(Order $order): array
+    public function updateOrCreate(array $body): void
     {
-        $table = [];
-        foreach ($order->productsWithOrderItemsAndUnits as $product) {
-            foreach ($product->orderItems as $orderItem) {
-                $table['currency']   = '₽';
-                $table['multiplier'] = $orderItem->product->unit->pivot->multiplier;
-                $table['unit_name']  = $orderItem->product->unit->pivot->full_name;
-                $table['unit_price'] = $orderItem->product->price;
-            }
-        }
-        return $table;
-    }
-
-    protected function getUnitsTableAttribute(): array
-    {
-        $arr = [];
-        foreach ($this->units as $unit) {
-            $id                          = $unit->id;
-            $arr[$id]['currency']        = '₽';
-            $arr[$id]['product_1s_id']   = $unit->pivot->product_1s_id;
-            $arr[$id]['multiplier']      = $unit->pivot->multiplier;
-            $arr[$id]['unit_name']       = $unit->name;
-            $arr[$id]['base_unit_name']  = $this->baseUnit->name;
-            $arr[$id]['unit_price']      = (float)number_format((float)$this->price * $unit->pivot->multiplier, 2, '.', ' ');
-            $arr[$id]['base_unit_price'] = (float)number_format((float)$this->price, 2, '.', ' ');
-        }
-        return $arr;
+        $orderId        = OrderRepository::userOrder()->id;
+        $orderProductId = OrderProduct::updateOrCreate([
+            'order_id' => $orderId,
+            'product_id' => $body['product_1s_id'],
+        ])->id;
+        $orderItem      = OrderItem::updateOrCreate([
+            'order_product_id' => $orderProductId,
+            'unit_id'=>$body['unit_id'],
+            'product_id'=>$body['product_1s_id'],
+        ],
+        [
+            'order_product_id' => $orderProductId,
+            'count'=>$body['count'],
+            'product_id'=>$body['product_1s_id'],
+        ]);
     }
 }

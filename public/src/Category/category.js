@@ -27,10 +27,6 @@ export default class Category {
   }
 
   handleClick({ target }) {
-    if (target.classList.contains("blue-button")) {
-      const table = target.closest("[shipable-table]");
-    }
-
     if (target.hasAttribute("data-like")) {
       this.handleLike(target);
     } else if (target.hasAttribute("data-compare")) {

@@ -32,21 +32,24 @@ class CategoryRepository
     {
         $cacheKey = 'categoryWithProducts' . str_replace("/", "", $url);
 
+        Cache::enabled(false);
+        $cacheTime = DEV?Cache::$timeLife1_000:0;
         return Cache::remember($cacheKey,
             function () use ($url) {
                 $category = Category::query()
+                    ->with('meta')
                     ->with('childrenRecursive')
                     ->with('parentRecursive')
                     ->withWhereHas('ownProperties',
                         fn($query) => $query->where('path', 'like', $url)
                     )
-                    ->with('productsInStore')
-                    ->with('productsNotInStoreInMatrix')
+                    ->with('productsInStore.shippableUnits')
+                    ->with('productsNotInStoreInMatrix.shippableUnits')
                     ->get()
                     ->first();
                 return $category;
             },
-            Cache::$timeLife1_000);
+            $cacheTime);
     }
 
 

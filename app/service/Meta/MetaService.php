@@ -17,13 +17,11 @@ class MetaService
         string|null $title,
         string|null $description,
         string|null $keywords,
-    ): self
+    ): array
     {
         $this->title       = $title;
         $this->description = $description;
         $this->keywords    = $keywords;
-        return $this;
-
+        return get_object_vars($this);
     }
-
 }

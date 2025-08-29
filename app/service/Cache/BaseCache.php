@@ -6,7 +6,7 @@ use Psr\SimpleCache\CacheInterface;
 
 class BaseCache
 {
-    protected static bool $enabled = true;
+    protected static bool $enabled = false;
     public static int $timeLife1 = 1;
     public static int $timeLife10 = 10;
     public static int $timeLife100 = 100;

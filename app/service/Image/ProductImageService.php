@@ -14,11 +14,12 @@ class ProductImageService
     private string $absNoImage;
     private string $art;
     private array $extensions = ['jpg', 'jpeg', 'png', 'webp'];
+    private $imageService;
 
     public function __construct(
-        protected ImageService   $imageService,
     )
     {
+        $this->imageService = new ImageService();
         $this->absNoImage   = FS::platformSlashes(ROOT . $this->relNoImage);
         $this->absolutePath = FS::platformSlashes(ROOT . $this->relativePath);
     }

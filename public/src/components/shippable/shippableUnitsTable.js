@@ -23,11 +23,11 @@ export default class shippableTable {
   showButtons() {
     if (!this.blueButton || !this.greenButtonWrap) return false;
     if (this.getTotalCount()) {
-      this.blueButton.style.display = "none";
-      this.greenButtonWrap.style.display = "flex";
+      this.blueButton.classList.toggle("none");
+      this.greenButtonWrap.classList.toggle("none");
     } else {
-      this.blueButton.style.display = "flex";
-      this.greenButtonWrap.style.display = "none";
+      this.blueButton.classList.remove("none");
+      this.greenButtonWrap.classList.add("none");
     }
   }
 
@@ -75,10 +75,8 @@ export default class shippableTable {
     this.renderSums();
     if (count === 0) {
       this.showBlueButton();
-      this.toServer(this.dto(row));
-    } else {
-      this.toServer(this.dto(row));
     }
+    this.toServer(this.dto(row));
   }
 
   renderSums() {
@@ -98,9 +96,9 @@ export default class shippableTable {
   showBlueButton() {
     if (!this.blueButton) return false;
     if (!this.getTotalCount()) {
-      this.greenButtonWrap.style.display = "none";
+      this.greenButtonWrap.classList.add("none");
       this.greenButtonWrap[qs]("input").value = "" + 0;
-      this.blueButton.style.display = "flex";
+      this.blueButton.classList.remove("none");
       this.deleteOrderItems(this.tableDTO(this.table));
     }
   }
@@ -108,11 +106,11 @@ export default class shippableTable {
   showGreenButton() {
     if (!this.greenButtonWrap) return false;
     window.YM("tovar_v_korzine");
-    this.greenButtonWrap.style.display = "flex";
-    const count = +this.greenButtonWrap[qs]("input").value;
-    this.greenButtonWrap[qs]("input").value = count ? count : 1;
+    this.greenButtonWrap.classList.remove("none");
+    const count = this.greenButtonWrap[qs]("input").value;
+    this.greenButtonWrap[qs]("input").value = !count ? count : "1";
     this.renderSums();
-    this.blueButton.style.display = "none";
+    this.blueButton.classList.add("none");
     this.toServer(this.dto(this.greenButtonWrap[qs]("[unit-row]")));
   }
 
@@ -121,7 +119,7 @@ export default class shippableTable {
   }
 
   async toServer(dto) {
-    const res = await post(`/cart/updateOrCreate`, dto);
+    const res = await post(`/cart/updateOrCreateCustom`, dto);
   }
 
   setFormatter() {
@@ -157,7 +155,8 @@ export default class shippableTable {
   dto(row) {
     return {
       count: row[qs]("input").value,
-      id: row.dataset.orderitemId,
+      product_1s_id: row.closest("[data-1sid]").dataset["1sid"],
+      unit_id: row.dataset.unitid,
       loc_storage_cart_id: localStorage.getItem("loc_storage_cart_id"),
     };
   }

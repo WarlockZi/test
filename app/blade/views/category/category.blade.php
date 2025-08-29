@@ -2,15 +2,15 @@
 
 {{--        @php         xdebug_break() @endphp--}}
 @section('title')
-    {!! $meta->title !!}
+    {!! $category['meta']['seo_title'] !!}
 @endsection
-
+{{--@php(xdebug_break())--}}
 @section('description')
-    {!! $meta->description !!}
+    {!! $category['meta']['seo_desc'] !!}
 @endsection
 
 @section('keywords')
-    {!! $meta->keywords !!}
+    {!! $category['meta']['seo_keywords'] !!}
 @endsection
 
 @section('content')
@@ -61,6 +61,7 @@
                 </div>
 
                 <div class="product-wrap">
+{{--                    @php(xdebug_break())--}}
                     @foreach($category['products_in_store'] as $product)
                         @include('category.product_card', compact('product'))
                     @endforeach
@@ -74,8 +75,9 @@
                     <h2>Товары под заказ</h2>
                 </div>
                 <div class="product-wrap">
-                    @foreach ($category['products_notin_store_in_matrix'] as $product)
-                        @if (str_ends_with($product->name, '*'))
+{{--                    @php(xdebug_break())--}}
+                    @foreach ($category['products_not_in_store_in_matrix'] as $product)
+                        @if (str_ends_with($product['name'], '*'))
                             @include('category.product_card', compact('product'))
                         @endif
                     @endforeach

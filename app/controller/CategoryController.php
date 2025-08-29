@@ -30,15 +30,13 @@ class CategoryController extends AppController
                     404);
             }
 
-            $meta        = $this->actions->setCategoryMeta($category);
-            $breadcrumbs = $this->actions->getBreadcrumbs($category, false);
-            $order          = OrderRepository::usersOrder();
+            $breadcrumbs = $this->actions->breadcrumbs($category, false);
+            $order          = OrderRepository::usersOrder()->toArray();
             $category = $category->toArray();
 
             view('category.category',
                 compact(
                     'category',
-                    'meta',
                     'breadcrumbs',
                     'order',
                 )

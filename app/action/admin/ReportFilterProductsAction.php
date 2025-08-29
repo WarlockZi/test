@@ -3,7 +3,9 @@
 namespace app\action\admin;
 
 
+use app\blade\Blade;
 use app\blade\views\admin\report\productFilter\FilterView;
+use app\model\FilterUser;
 use app\repository\ProductFilterRepository;
 use app\service\AuthService\Auth;
 use app\service\Filters\Products\InitialFiltersService;
@@ -14,20 +16,59 @@ use app\view\components\Builders\TableBuilder\Table;
 class ReportFilterProductsAction
 {
     public function __construct(
+        public array $initialFilters = [],
+    )
+    {
+        $this->initialFilters = InitialFiltersService::get();
+    }
 
-        protected FilterView              $filterView ,
-        protected InitialFiltersService $initialFilters,
-    ) { }
+    public function initialFilters(): array
+    {
+        return $this->initialFilters;
+    }
+
+    public function filtersFromReq(array $req = []): array
+    {
+        if (!count($req)) return [];
+        $toSelect = [];
+        $toSave   = [];
+        foreach ($req as $string => $value) {
+            if (str_ends_with($string, '-filter')) {
+                $key          = str_replace('-filter', '', $string);
+                $value        = $req[$key];
+                $toSave[$key] = $value;
+            } else {
+                $toSelect[$string] = $value;
+            }
+        }
+        $arr = [0 => $toSelect, 1 => $toSave];
+        return $arr;
+    }
+
+    public function saveFilters(array $prparedToSave): void
+    {
+        $json = json_encode($prparedToSave);
+        FilterUser::updateOrCreate(
+            ["user_id" => Auth::getUser()['id'],
+                "model" => 'product',
+            ],
+            ["user_id" => Auth::getUser()['id'],
+                "model" => 'product',
+                'name' => $json,
+            ]);
+    }
+
     public function getSavedFilters(): array
     {
         return ProductFilterRepository::product(Auth::getUser()->id);
     }
-    public function getFilterPanel(array $toFilter = [], array $toSave = []): array
+
+    public function panel(array $toFilter = [], array $toSave = []): array
     {
-        $toSave  = count($toSave) ? $toSave : $toFilter;
-        $filters = [];
-        $initialFilters = $this->initialFilters->get();
-        foreach ( $initialFilters as $filterName => $filterOptions) {
+        $toSave         = count($toSave) ? $toSave : $toFilter;
+        $filters        = [];
+        $initialFilters = $this->initialFilters;
+        foreach ($initialFilters as $filterName => $filterOptions) {
             $filters[] = (new FilterView())
                 ->filterName($filterName)
                 ->toFilter($toFilter)
@@ -38,12 +79,61 @@ class ReportFilterProductsAction
                 ->get();
         }
         return $filters;
-//        return $this->filterView->getProductFilterPanel($filters);
     }
 
-    public function filter(array $userFilters): array
+    public function panelHtml(array $toSelect = [], array $toSave = []): string
     {
-        return Table::build(ProductFilterRepository::filterProducts($userFilters))
+        $filterPanel = $this->panel($toSelect, $toSave);
+        return APP
+            ->get(Blade::class)
+            ->run("admin.report.productFilter.panel", compact('filterPanel'));
+    }
+
+    public function toSelectToSave(array $req): array
+    {
+        $toSave   = [];
+        $toSelect = [];
+        foreach ($req as $filterName => $data) {
+            if ($data['checked'] && $data['value']) {
+                $toSave[$filterName] = $data['value'];
+            }
+            if ($data['value']) {
+                $toSelect[$filterName] = $data['value'];
+            }
+        }
+        return [$toSave, $toSelect];
+    }
+
+    public function filterString(array $req): array
+    {
+        return array_filter($req, function ($filter) {
+            return $filter <> '0' && $filter <> 'on';
+        });
+    }
+
+    public function filterStringHtml(array $req = []): string
+    {
+        $filterString   = $this->filterString($req);
+        $initialFilters = $this->initialFilters;
+        return APP
+            ->get(Blade::class)
+            ->run("admin.report.productFilter.filterString",
+                compact('filterString', 'initialFilters'));
+
+    }
+
+    public function tableHtml($userFilters)
+    {
+        $data  = $this->table($userFilters);
+        $blade = APP->get(Blade::class);
+        return $blade->run("admin.components.table.tableStandAlone", compact('data'));
+    }
+
+
+    public function table(array $userFilters): array
+    {
+        $repo = new ProductFilterRepository();
+        return Table::build($repo->filterProducts($userFilters))
             ->pageTitle('Фильтр')
             ->model('product')
             ->column(
@@ -104,6 +194,7 @@ class ReportFilterProductsAction
             )
             ->edit()
             ->del()
-            ->get() ;
+            ->get();
+
     }
 }

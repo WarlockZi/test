@@ -26,7 +26,7 @@ class CategoryAction
     /**
      * @throws Exception
      */
-    public function getBreadcrumbs(Category $category, bool $lastItemIsLink): NewBread
+    public function breadcrumbs(Category $category, bool $lastItemIsLink): NewBread
     {
         if (!$category) throw new Exception('Breadcrumbs service has no category');
         return $this->breadcrumbs->getParents($category, $lastItemIsLink);
@@ -45,7 +45,7 @@ class CategoryAction
         );
     }
 
-    public function setCategoryMeta(Category $category): CategoryMetaService
+    public function categoryMeta(Category $category): array
     {
         return $this->meta->setMeta(
             $category->seo_title(),
@@ -54,7 +54,7 @@ class CategoryAction
         );
     }
 
-    public function setCategoriesMeta(): CategoryMetaService
+    public function setCategoriesMeta(): array
     {
         return $this->meta->setMeta(
             'Категории',

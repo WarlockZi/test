@@ -2,9 +2,9 @@
     use app\view\components\Icon\Icon;
 @endphp
 
-@section('title', $meta->title)
-@section('description', $meta->description)
-@section('keywords', $meta->keywords)
+@section('title', $meta['title'])
+@section('description', $meta['description'])
+@section('keywords', $meta['keywords'])
 
 @extends('layouts.main.main')
 

@@ -2,8 +2,6 @@
 
 namespace app\service\Meta;
 
-use Illuminate\Database\Eloquent\Model;
-
 class MainMetaService extends MetaService
 {
 
@@ -15,14 +13,13 @@ class MainMetaService extends MetaService
     public function setMeta(
         string|null $title,
         string|null $description,
-        string|null $keywords):self
+        string|null $keywords):array
     {
 
         $this->title = $title;
         $this->description = $description;
         $this->keywords = $keywords;
 
-        return $this;
+        return get_object_vars($this);
     }
-
 }

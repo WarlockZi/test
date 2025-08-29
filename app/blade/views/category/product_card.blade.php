@@ -1,4 +1,3 @@
-        @php xdebug_break(); @endphp
 <div
         class="column"
         data-instore="<?= $product['instore'] ?? 0; ?>"
@@ -18,9 +17,9 @@
 
             @if(isset($product['baseUnitPrice']))
 
-            <p>Цена: <?= $product['instore']
-                    ? $product['baseUnitPrice']
-                    : "<span class='danger'>от</span> " . $product['baseUnitPrice']; ?></p>
+                <p>Цена: <?= $product['instore']
+                        ? $product['baseUnitPrice']
+                        : "<span class='danger'>от</span> " . $product['baseUnitPrice']; ?></p>
             @endif
             <p>Статус: <?= $product['instore']
                     ? "<span class='success'>в наличии</span>"
@@ -29,14 +28,9 @@
         </div>
     </a>
 
-
-    {{--    @php xdebug_break(); @endphp--}}
-    @include('components.shippableUnitsNew.shippableUnits')
+    {{--    @php(xdebug_break())--}}
+    @include('components.shippableUnitsNew.category.shippableUnits', $product)
 
     @include('components.card_panel.product_card_panel', compact('product'))
-
-    @if (isset($txt))
-        <div class="txt"><?= $txt ?? '' ?></div>
-    @endif
 
 </div>

@@ -3,6 +3,7 @@
 namespace app\service\Filters\Products;
 
 use app\model\Category;
+use app\repository\CategoryRepository;
 use app\service\Cache\Redis\Cache;
 
 class InitialFiltersService
@@ -10,7 +11,7 @@ class InitialFiltersService
     protected static function categoriesSelector(): array
     {
         $CategoryFlatNestedArray = [0 => ''];
-        $rootCats = Cache::get('rootCategories');
+        $rootCats = CategoryRepository::rootCategories();
         $reversed = array_reverse($rootCats);
 
         foreach ($reversed as $rootCat) {
@@ -37,7 +38,7 @@ class InitialFiltersService
 
     public static function get(): array
     {
-        return Cache::get('initialFilters', function () {
+        return Cache::remember('initialFilters', function () {
             return [
                 "instore" => [
                     "title" => "наличие",
