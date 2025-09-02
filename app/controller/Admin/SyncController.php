@@ -8,7 +8,7 @@ use app\service\Logger\SyncLogger;
 use app\service\Response;
 use app\service\Router\IRequest;
 use app\service\Sync\SyncService;
-use app\service\Sync\TrancateService;
+use app\service\Sync\Trancate\TrancateService;
 use app\traits\LoggerTrait;
 use Illuminate\Support\Carbon;
 use JetBrains\PhpStorm\NoReturn;
@@ -29,32 +29,31 @@ class SyncController extends AdminscController
     #[NoReturn] public function actionInit(): void
     {
         $this->service->requestFrom1s();
-
     }
 
 
     //remove
     public function actionRemoveall(): void
     {
-        $this->trancateService->softTrancate();
+        $this->trancateService->trancateAll();
     }
 
     public function actionTruncate(): void
     {
-        $this->trancateService->trancate();
+        $this->trancateService->trancateAll();
     }
 
-    public function actionRemovecategories(): void
+    #[NoReturn] public function actionRemovecategories(): void
     {
-        $this->trancateService->softRemoveCategories();
+        $this->trancateService->removeCategories();
     }
 
-    public function actionRemoveproducts(): void
+    #[NoReturn] public function actionRemoveproducts(): void
     {
-        $this->trancateService->softRemoveProducts();
+        $this->trancateService->removeProducts();
     }
 
-    public function actionRemoveprices(): void
+    #[NoReturn] public function actionRemoveprices(): void
     {
         $this->trancateService->removePrices();
     }

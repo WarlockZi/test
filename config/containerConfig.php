@@ -14,6 +14,7 @@ use app\service\Router\IRequest;
 use app\service\Router\IRouteList;
 use app\service\Router\Request;
 use app\service\Router\RouteList;
+use app\service\Sync\SyncService;
 use app\service\Vite\Vite;
 use app\service\Vite\ViteCompiler;
 use Illuminate\Database\Capsule\Manager as Capsule;
@@ -37,6 +38,9 @@ return [
             ]
         );
     },
+
+
+    SyncService::class=>\DI\autowire(SyncService::class),
 
     ICache::class => function () {
         return Cache::getInstance();

@@ -4,6 +4,9 @@ namespace app\service\Sync;
 
 use app\service\Fs\FS;
 use app\service\Logger\SyncLogger;
+use app\service\Sync\Load\LoadService;
+use app\service\Sync\Trancate\SoftTrancateService;
+use app\service\Sync\Trancate\TrancateService;
 use app\traits\LoggerTrait;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
@@ -18,13 +21,17 @@ class SyncService
     protected string $importFile = '/storage/app/sync/unzipped/import0_1.xml';
     protected string $offerFile = '/storage/app/sync/unzipped/offers0_1.xml';
     protected string $importPath = '/storage/app/sync/';
+    private bool $softDelete = true;
+    protected SoftTrancateService|TrancateService $trancatedService;
+    protected LoadService $loadService;
 
 
     public function __construct()
     {
         $this->setLogger(new SyncLogger());
-        $this->importFile = FS::platformSlashes(ROOT . $this->importFile);
-        $this->offerFile  = FS::platformSlashes(ROOT . $this->offerFile);
+        $this->importFile  = FS::platformSlashes(ROOT . $this->importFile);
+        $this->offerFile   = FS::platformSlashes(ROOT . $this->offerFile);
+        $this->loadService = new LoadService($this->offerFile, $this->importFile);
     }
 
     public function requestFrom1s(): void
@@ -38,9 +45,9 @@ class SyncService
                 if (isset($_GET['mode']) && $_GET['mode'] === 'checkauth') {
 
                     $this->log('checkauth');
-                    echo "success\n";
-                    echo "sess_name **" . session_name() . "\n";
-                    echo session_id() . "\n";
+                    echo "success\n";                    /// success inc
+                    echo "sess_name **" . session_name() . "\n"; ///  777777
+                    echo session_id() . "\n"; ///   55fdsa55;
                     exit;
                 }
 
@@ -62,6 +69,9 @@ class SyncService
         echo "Invalid request";
     }
 
+    /**
+     * @throws Exception
+     */
     private function import(): void
     {
         if (isset($_GET['mode']) && $_GET['mode'] === 'file') {
@@ -131,27 +141,6 @@ class SyncService
         echo $xml->asXML();
     }
 
-
-//    public function requestFrom1s(IRequest $req): void
-//    {
-//        $this->log("Пришел запрос init из 1с");
-//        try {
-//            if ($req->params['mode'] === 'checkauth') {
-//                $this->checkauth();
-//            } elseif ($req->params['mode'] === 'init') {
-//                $this->zip();
-//            } elseif ($req->params['mode'] === 'file') {
-//                $this->file($req->params['filename']);
-//            } elseif ($req->params['mode'] === 'import') {
-//                $this->log("Файлы из 1с загружены");
-//                $this->load();
-//                exit('success');
-//            }
-//        } catch (\Throwable $e) {
-//            $this->logError("---SyncControllerError---", $e);
-//        }
-//    }
-
 //    #[NoReturn] protected function checkauth(): void
 //    {
 //        $this->log('checkauth');
@@ -167,29 +156,9 @@ class SyncService
 ////        exit("success\ninc\n777777\n55fdsa55");
 //    }
 
-//    #[NoReturn] protected function zip(): void
-//    {
-//        $this->log('init zip');
-//        if ($_GET['type'] == 'init') {
-//            echo "zip=no\n";
-//            echo "file_limit=10_000_000\n";
-//            exit;
-//        }
-////        exit("zip=no\nfile_limit=10_000_000");
-//    }
-
-//    protected function file(string $filename): void
-//    {
-//        try {
-//            file_put_contents($this->importPath . $filename, file_get_contents('php://input'));
-//            $this->log('file');
-//            exit('success');
-//        } catch (\Throwable $exception) {
-//            $this->log('file load fail. ' . $exception->getMessage());
-//            exit('file load fail.');
-//        }
-//    }
-
+    /**
+     * @throws Exception
+     */
     private function importFilesExist(): void
     {
         if (!is_readable($this->importFile))
@@ -199,35 +168,18 @@ class SyncService
             throw new \Exception($this->offerFile . 'import file not found');
     }
 
-
 //load
-    public function LoadCategories(): void
-    {
-        new LoadCategories($this->importFile);
-        $this->log('--- category  loaded ---');
-    }
 
-    public function LoadProducts(): void
-    {
-        new LoadProducts($this->importFile);
-        $this->log('--- products loaded  ---');
-    }
 
-    public function LoadPrices(): void
-    {
-        new LoadPrices($this->offerFile);
-        $this->log('--- price     loaded ---');
-    }
-
+    /**
+     * @throws Exception
+     */
     public function load(string $filePath): void
     {
-        $this->unzip($filePath);
-        $this->importFilesExist();
         try {
-//            $this->trancateService->softTrancate();
-            $this->LoadCategories();
-            $this->LoadProducts();
-            $this->LoadPrices();
+            $this->unzip($filePath);
+            $this->importFilesExist();
+            $this->loadService->load();
         } catch (\Throwable $e) {
             $this->logError("--- Ошибка load ", $e);
         }
@@ -238,13 +190,27 @@ class SyncService
         $extractTo = ROOT . '/storage/app/sync/unzipped';
         try {
             $this->unzipFile($filePath, $extractTo);
+            $this->cleanDir($filePath, $extractTo);
             $this->log('Extraction successful!');
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
         }
     }
 
-    function unzipFile($zipFile, $extractTo): true
+    public function cleanDir(): void
+    {
+        try {
+            FS::delFilesFromPath($this->importPath, 'zip');
+            $this->log('Directory is clean');
+        } catch (Exception $e) {
+            echo 'Directory cleaning Error : ' . $e->getMessage();
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function unzipFile($zipFile, $extractTo): bool
     {
         if (!file_exists($zipFile)) {
             throw new Exception("ZIP file not found: $zipFile");

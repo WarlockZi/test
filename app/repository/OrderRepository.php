@@ -63,11 +63,17 @@ class OrderRepository
         list($field, $value) = Auth::getCartFieldValue();
         $order = Order::where($field, $value)
             ->whereNull('submitted')
+//            ->with('products')
             ->with(['products' => function ($q) {
-                $q->whereHas('orderItems')
-                    ->withoutTrashed();
+                $q->whereHas('orderItem')
+                    ->with(['orderitem'=>function($q){
+                        $q->with('unit','price.currency','price.type');
+                }])
+                    ->withoutTrashed()
+;
             }])
             ->first();
+
         $o     = $order->toArray();
         return $order;
     }
@@ -167,13 +173,13 @@ class OrderRepository
         list($field, $value) = Auth::getCartFieldValue();
         $order = Order::where($field, $value)
             ->select('id')
-            ->with(['products' => function ($query) {
+            ->with(['onlyProducts' => function ($query) {
                 $query
                     ->wherePivotNull('deleted_at'); // withoutTrashed() не работает
             }])
             ->whereNull('submitted')
             ->first();
-
+//        $o = $order->toArray();
         return $order?->products->count() ?? 0;
     }
 }

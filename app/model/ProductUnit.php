@@ -15,6 +15,7 @@ class ProductUnit extends Pivot
     protected $fillable = [
         'product_1s_id',
         'unit_id',
+        'price_id',
         'multiplier',
         'is_base',
         'is_shippable',

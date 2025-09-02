@@ -1,11 +1,11 @@
 @extends('layouts.admin.admin')
 
 @section('content')
-    <?php
+    @php
+        use app\view\components\Icon\Icon;
+    //xdebug_break();
+    @endphp
 
-    use app\view\components\Icon\Icon;
-
-    ?>
     <div class="sync">
 
         <div class="container files">
@@ -22,20 +22,20 @@
 
         <div class="container">
 
-            <!--        <div class="buttons-block">-->
-            <!--            <fieldset>-->
-            <!--                <legend>удалить</legend>-->
-            <!--                <div class="buttons-block-left">-->
-            <!--                    <div class="button" id="removecategories">категории</div>-->
-            <!--                    <div class="button" id="removeproducts">товары</div>-->
-            <!--                    <div class="button" id="removeprices">цены</div>-->
-            <!--                </div>-->
-            <!--            </fieldset>-->
-            <!---->
-            <!--            <div class="buttons-block-right">-->
-            <!--                <div class="button" id="removeall">Удалить все</div>-->
-            <!--            </div>-->
-            <!--        </div>-->
+                    <div class="buttons-block">
+                        <fieldset>
+                            <legend>удалить</legend>
+                            <div class="buttons-block-left">
+                                <div class="button" id="removecategories">категории</div>
+                                <div class="button" id="removeproducts">товары</div>
+                                <div class="button" id="removeprices">цены</div>
+                            </div>
+                        </fieldset>
+
+                        <div class="buttons-block-right">
+                            <div class="button" id="removeall">Удалить все</div>
+                        </div>
+                    </div>
 
             <BR>
 

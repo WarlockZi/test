@@ -4,8 +4,8 @@ namespace app\model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrderItem extends Model
@@ -19,12 +19,30 @@ class OrderItem extends Model
         'order_product_id',
         'product_id',
         'unit_id',
+        'price_id',
         'count',
-        'price',
         'created_at',
         'updated_at',
         'deleted_at'
     ];
+
+    public function price(): hasOne
+    {
+        return $this->hasOne(
+            Price::class,
+            'id',
+            'price_id',
+        );
+    }
+
+    public function unit(): HasOne
+    {
+        return $this->hasOne(
+            Unit::class,
+            'id',
+            'unit_id'
+        );
+    }
 
     public function order(): BelongsTo
     {
@@ -45,22 +63,11 @@ class OrderItem extends Model
         return "{$name} - {$company} - {$phone}";
     }
 
-
     public function productUnit(): HasOne
     {
         return $this->hasOne(
             ProductUnit::class,
             'id',
             'product_unit_id');
-    }
-
-
-    public function unit(): HasOne
-    {
-        return $this->hasOne(
-            Unit::class,
-            'id',
-            'unit_id'
-        );
     }
 }

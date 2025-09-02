@@ -44,21 +44,20 @@ class Product extends Model
         'art' => 'string',
     ];
     protected $appends = [
-        'price',
+//        'price',
         'mainImage',
     ];
 
-    public function orderItems(): hasManyThrough
+    public function orderItem(): hasOneThrough
     {
-        return $this->hasManyThrough(
+        return $this->hasOneThrough(
             OrderItem::class, //дб order_product_id
             OrderProduct::class,
-            'product_id',
-            'product_id',
-            '1s_id',
-            'product_id',
-        )
-            ->with('unit');
+            'product_id',//orderitems
+            'order_product_id', //order_product for orderitems
+            '1s_id', //proudcts
+            'id', //order_product
+        );
     }
 
     public function orderProduct(): hasOne
