@@ -13,7 +13,7 @@
                     @php($orderProduct=$OrderProduct)
 
                     @foreach($OrderProduct['order_items'] as $OrderItem)
-{{--                        @php(xdebug_break())--}}
+                        @php(xdebug_break())
                         @if ($unit['id']==$OrderItem['unit_id'])
                             @php($orderItem=$OrderItem)
                         @endif

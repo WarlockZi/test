@@ -4,37 +4,49 @@
 namespace app\repository;
 
 use app\model\Product;
+use app\service\Utils\UtilsServise;
 use Illuminate\Support\Collection;
 
 class ProductRepository
 {
     public function edit(int $id)
     {
+//        UtilsServise::cleanUnitsFromIs();
         return Product::query()
             ->withTrashed()
             ->where('id', $id)
-            ->whereNotNull('1s_id')
-            ->with('category.properties.vals')
-            ->with('values')
-            ->with('units')
-            ->with('ownProperties')
-            ->with('category.parentRecursive')
-            ->with('manufacturer.country')
-            ->with('promotions')
-            ->with('activePromotions')
-            ->with('inactivePromotions')
+//            ->whereNotNull('1s_id')
+//            ->with('category.properties.vals')
+//            ->with('values')
+
+            ->with([
+                'units.prices',
+
+//                'prices',
+//                'units.prices',
+                'unitFrom1s'
+            ])
+//            ->with('shippableUnits')
+//            ->with('unitFrom1s.price1s.type')
+
+//            ->with('ownProperties')
+//            ->with('category.parentRecursive')
+//            ->with('manufacturer.country')
+//            ->with('promotions')
+//            ->with('activePromotions')
+//            ->with('inactivePromotions')
             ->first();
     }
 
-    public function main(string $slug): ?Product
+    public function index(string $slug): ?Product
     {
         return Product::query()
             ->withTrashed()
 //            ->orderBy('sort')
             ->with('category.properties.vals')
             ->with('values.property')
-            ->with('baseUnit')
-            ->with('shippableUnits')
+            ->with('baseUnit.price1s')
+            ->with('shippableUnits.price1s')
             ->with('category.parentRecursive')
             ->with('category.ownProperties')
             ->with('ownProperties')

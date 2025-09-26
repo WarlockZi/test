@@ -18,23 +18,22 @@ class Price extends Model
         'value',
     ];
 
+    public function productUnit(): BelongsTo
+    {
+        return $this->belongsTo(ProductUnit::class);
+    }
     public function type(): belongsTo
     {
-        return $this->belongsTo(
-            PriceType::class,
-            'price-type_id',
-            'id',
-        );
+        return $this->belongsTo(PriceType::class);
     }
 
     public function currency(): belongsTo
     {
         return $this->belongsTo(Currency::class);
     }
-//    public function product()
-//    {
-//        return $this->belongsTo(Product::class);
-//    }
-
+    public function scopeWithPriceTypeAndCurrency($q)
+    {
+        return $q->with(['type', 'currency']);
+    }
 
 }

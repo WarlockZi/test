@@ -5,28 +5,30 @@ namespace app\service\Sync\Load;
 
 use app\model\Category;
 use app\model\CategoryProperty;
-use app\service\Logger\ErrorLogger;
+use app\service\Logger\ILogger;
+use app\service\Logger\SyncLogger;
 use app\service\Router\UrlService;
 use app\service\ShortLink\ShortlinkService;
 use app\service\Slug\SlugService;
 use Exception;
 use Throwable;
 
-class LoadCategories
+class LoadCategories extends LoadService
 {
+
     public function __construct(
-        readonly private string      $file,
-        private readonly ErrorLogger $logger = new ErrorLogger('error.txt'),
-        private array                $data = [],
-        public array                 $deleted = [],
-        public array                 $created = [],
-        private array                $existed = [],
+        public array                $deleted = [],
+        public array                $created = [],
+        private array               $existed = [],
     )
     {
-        $xml        = simplexml_load_file($this->file);
-        $xmlObj     = json_decode(json_encode($xml), true);
-        $this->data = $xmlObj['Классификатор']['Группы']['Группа']['Группы']['Группа'];
-        $this->run($this->data);
+        parent::__construct();
+    }
+
+    public function load(): void
+    {
+        $this->setCategoriesData();
+        $this->exec($this->categoriesData);
         $this->deleteNonexisted();
     }
 
@@ -39,18 +41,18 @@ class LoadCategories
         });
     }
 
-    protected function run($groups, $level = 0, $parent = null): void
+    protected function exec($groups, $level = 0, $parent = null): void
     {
         if (!$this->isAssoc($groups)) {
             foreach ($groups as $group) {
-                $this->run($group, $level, $parent);
+                $this->exec($group, $level, $parent);
             }
         } else {
             $item                         = $this->fillItem($groups, $parent);
             $this->existed[$groups['Ид']] = $groups['Ид'];
             if (isset($groups['Группы'])) {
                 $parent = $item['1s_id'];
-                $this->run($groups['Группы']['Группа'], ++$level, $parent);
+                $this->exec($groups['Группы']['Группа'], ++$level, $parent);
             }
         }
     }

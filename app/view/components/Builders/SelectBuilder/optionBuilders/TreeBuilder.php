@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 abstract class TreeBuilder
 {
-    protected Collection $items;
+    protected array $items;
     protected string $relation;
     protected int $multiply;
     protected string $tab;
@@ -24,10 +24,10 @@ abstract class TreeBuilder
 
     protected $initialOption;
 
-    public function __construct(Collection $items, string $relation, int $multiply = 1, string $tab = '&nbsp;')
+    public function __construct(array $items, string $relation, int $multiply = 1, string $tab = '&nbsp;')
     {
         $this->items    = $items;
-        $this->arr      = $items->toArray();
+        $this->arr      = $items;
         $this->relation = $relation;
         $this->multiply = $multiply;
         $this->tab      = $tab;

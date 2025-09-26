@@ -7,6 +7,8 @@ import { qs } from "../constants";
 import scroll from "@components/scroll/scroll.js";
 import headerMenu from "@components/header/show-front-menu.js";
 
+import "@components/adminPanel/adminPanel.js";
+
 import Chat from "@components/chat/chat.js"; //не удалять - стили пропадут
 
 import IntObserver from "@components/scroll/IntObserver.js";
@@ -23,6 +25,7 @@ import CallMe from "@src/CallMe/CallMe.js";
 import setLocalStorageCartId from "@components/cart_id/cart_id.js";
 import "./d-goals.js";
 import "./demis/feed_back.js";
+import adminPanel from "@components/adminPanel/adminPanel.js";
 
 window.YM = YM;
 document.addEventListener("DOMContentLoaded", async function () {
@@ -52,6 +55,8 @@ document.addEventListener("DOMContentLoaded", async function () {
   headerMenu();
   scroll();
   setLocalStorageCartId();
+
+  new adminPanel();
 
   const path = window.location.pathname;
   if (path.startsWith("/auth/profile")) {

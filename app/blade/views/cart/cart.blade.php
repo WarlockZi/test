@@ -53,15 +53,15 @@
                                 @foreach($product['shippable_units'] as $unit)
 
                                     @foreach($product['order_items'] as $order_Item)
-                                        {{--                                        @php(xdebug_break())--}}
                                         @if($order_Item['unit_id']===$unit['id'])
                                             @php($orderItem = $order_Item)
                                         @endif
                                     @endforeach
 
+{{--                                    @php(xdebug_break())--}}
                                     <div class="row-sum">
-                                        {{--                                        @php(xdebug_break())--}}
-                                        @php($subSum = $unit['pivot']['multiplier']*$product['price']*$orderItem['count'])
+
+                                        @php($subSum = $unit['pivot']['multiplier']*$orderItem['price']['value']*$orderItem['count'])
                                         {!! empty($subSum)?'-':number_format($subSum, 2, '.', ' ') !!}
                                     </div>
 

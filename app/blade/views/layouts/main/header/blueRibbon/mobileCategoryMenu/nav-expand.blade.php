@@ -8,8 +8,8 @@
 
         <li class="nav-item">
 
-            @if($child->childrenRecursive->count())
-                @foreach($child->childrenRecursive as $child)
+            @if(count($child['children']))
+                @foreach($child['children'] as $child)
                     @include('layouts.main.header.blueRibbon.mobileCategoryMenu.li', compact('child'))
                 @endforeach
             @endif

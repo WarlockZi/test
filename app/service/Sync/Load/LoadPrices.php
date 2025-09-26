@@ -8,122 +8,149 @@ use app\model\PriceType;
 use app\model\Product;
 use app\model\ProductUnit;
 use app\model\Unit;
+use app\traits\MeasureTime;
+use Exception;
+use JetBrains\PhpStorm\NoReturn;
+use Throwable;
 
-class LoadPrices
+class LoadPrices extends LoadService
 {
-    private array $productIds = [];
-    private array $data = [];
+    use MeasureTime;
+    use ChunkTrait;
+    private array $offer;
+    private $currency1s;
+    private $unit;
+    private $product;
+    private $priceType1s;
+    private $priceTypeComputed;
+    private $price;
+    private $productUnit;
 
-    public function __construct
-    (
-        readonly private string $file,
-    )
+    public function __construct()
     {
-        $xml        = simplexml_load_file($this->file);
-        $xmlObj     = json_decode(json_encode($xml), true);
-        $this->data = $xmlObj['ПакетПредложений']['Предложения']['Предложение'];
-
-        $priceType = PriceType::updateOrCreate(
-            ['1s-name' => '1s',],
-            ['1s-name' => '1s',]
-        );
-        $currency['1s-name'] = $price['Цены']['Цена']['Валюта'] ?? '';
-
-        $currency = Currency::updateOrCreate([
-            '1s-name' => $currency['1s-name'],
-        ], $currency);
-
-        $this->run();
+        parent::__construct();
     }
 
-    protected function run(): void
+    /**
+     * @throws Exception|Throwable
+     */
+    #[NoReturn]
+    public function load(): void
     {
-        foreach ($this->data as $price) {
-            $Price = $this->createPrice($price);
-            $Unit  = $this->createUnit($price, $Price);
+        $this->setOfferData();
+        $this->firstOrCreatePriceType();
+        $this->firstOrCreateCurrency();
 
-            if (Product::where('1s_id', $Price['1s_id'])
-                ->update(['instore' => $price['Количество']])) {
-                $this->productIds[] = $price['Ид'];
+        $this->measureTime($this, 'optimizedProcess');
+        $this->logger->write('--- price     loaded ---');
+    }
+
+    protected function firstOrCreateUnit(): void
+    {
+        $this->unit = Unit::firstOrCreate(
+            ['code' => $this->offer['unit_code']],
+            [
+                'name' => lcfirst(substr($this->offer['unit'], 0, 3)) ?? null,
+                'international' => $this->offer['international'] ?? null,
+                'full_name' => $this->offer['unit'],
+            ]);
+    }
+
+    protected function cleanDoubleUnits(): void
+    {
+        $ids = [];
+        foreach ($this->product->units as $unit) {
+            if (in_array($unit->id, $ids)) {
+                $unit->pivot->delete();
+            } else {
+                $ids[] = $unit->id;
             }
-            $this->pruductUnit($Price, $Unit);
         }
     }
 
-    protected function createPrice($price)
+    /**
+     * @throws Exception
+     */
+    protected function findProductUpdateInstore(): void
     {
+        try {
+            $this->product = Product::where('1s_id', $this->offer['1s_id'])
+                ->with(['units.price1s.type'])
+                ->first();
 
+            $this->cleanDoubleUnits();
+//                $p = $this->product->toArray();
 
+            $this->product->update(['instore' => $this->offer['instore']]);
+        } catch (Throwable $exception) {
+            throw new Exception('Load prices failed to find product');
+        }
+    }
 
-        ProductUnit::updateOrCreate(
+    protected function firstOrCreatePruductUnit(): void
+    {
+        $this->productUnit = ProductUnit::firstOrCreate(
+            ['product_1s_id' => $this->product['1s_id'],
+                'unit_id' => $this->unit->id,
+                'is_from_1s' => 1,
+            ],
+            ['is_shippable' => 0,
+                'multiplier' => null,
+            ]);
+    }
+
+    protected function updateOrCreatePrice(): void
+    {
+        $this->price = Price::updateOrCreate(
             [
-
+                'product_unit_id' => $this->productUnit->id,
+                'price-type_id' => $this->priceType1s->id,
+                'currency_id' => $this->currency1s->id,
             ],
             [
-
+                'value' => $this->offer['value'] ?? '',
             ]);
-
-        $pri['currency_id'] = $currency->id;
-
-        $pri['1s_id'] = $price['Ид'];
-
-        $pri['unit_code']     = $price['БазоваяЕдиница']['@attributes']['Код'] ?? '';
-        $pri['value']         = $price['Цены']['Цена']['ЦенаЗаЕдиницу'] ?? '';
-        $pri['price-type_id'] = '1s';
-
-
-        return Price::updateOrCreate([
-            '1s_id' => $pri['1s_id'],
-            'price-type_id' => $pri['price-type_id'],
-            'currency_id' => $currency['id'],
-        ], $pri);
     }
 
-    protected function createCurrency($price)
+    private function prepareOffer($data): void
     {
-        $pri['1s_id'] = $price['Ид'];
+        $this->offer = [
+            '1s_id' => trim($data['Ид']),
+            'art' => trim($data['Артикул']),
+            'instore' => trim($data['Количество']),
 
-        $pri['unit']      = $price['БазоваяЕдиница']['@attributes']['НаименованиеПолное'] ?? '';
-        $pri['unit_code'] = $price['БазоваяЕдиница']['@attributes']['Код'] ?? '';
+            'value' => trim($data['Цены']['Цена']['ЦенаЗаЕдиницу'] ?? ''),
+            'currency' => trim($data['Цены']['Цена']['Валюта']),
 
-        $pri['currency'] = $price['Цены']['Цена']['Валюта'] ?? '';
-        $pri['price']    = $price['Цены']['Цена']['ЦенаЗаЕдиницу'] ?? '';
+            'unit_code' => trim($data['БазоваяЕдиница']['@attributes']['Код'] ?? ''),
+            'international' => trim($data['БазоваяЕдиница']['@attributes']['МеждународноеСокращение'] ?? null),
+            'unit' => trim($data['БазоваяЕдиница']['@attributes']['НаименованиеПолное'] ?? null),
+        ];
 
-        return Price::updateOrCreate([
-            '1s_id' => $pri['1s_id'],
-            'unit_code' => $pri['unit_code'],
-        ], $pri);
     }
 
-    protected function createUnit($price, $Price)
+    private function firstOrCreatePriceType(): void
     {
-        return Unit::firstOrCreate(
-            ['code' => $Price->unit_code],
+        $this->priceType1s       = PriceType::firstOrCreate(
+            ['type' => '1s',],
+            ['type' => '1s',]
+        );
+        $this->priceTypeComputed = PriceType::firstOrCreate(
+            ['type' => 'Computed',],
+            ['type' => 'Computed',]
+        );
+    }
+
+    private function firstOrCreateCurrency(): void
+    {
+        $currency1sName   = $this->pricesData[0]['Цены']['Цена']['Валюта'] ?? $this->pricesData[1]['Цены']['Цена']['Валюта'];
+        $this->currency1s = Currency::firstOrCreate(
             [
-                'name' => lcfirst(substr($Price->unit, 0, 2)) ?? null,
-                'international' => $price['Цены']['Цена']['Единица'] ?? null,
-                'code' => $Price->unit_code,
-                'full_name' => $Price->unit,
-            ]);
-
-    }
-
-    protected function pruductUnit(Price $Price, Unit $Unit): void
-    {
-        $find = [
-            'product_1s_id' => $Price['1s_id'],
-            'unit_id' => $Unit['id'],
-            'is_base' => '1',
-        ];
-        $new  = [
-            'product_1s_id' => $Price['1s_id'],
-            'unit_id' => $Unit['id'],
-            'multiplier' => '1',
-            'is_base' => '1',
-            'is_shippable' => '1',
-        ];
-
-        ProductUnit::firstOrCreate($find, $new);
+                '1s_name' => $currency1sName],
+            [
+                '1s_name' => $currency1sName,
+                'web_name' => '₽']
+        );
     }
 
 }

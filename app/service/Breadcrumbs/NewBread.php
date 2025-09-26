@@ -28,12 +28,12 @@ class NewBread
         $this->itemsCount = count($this->parentsArray);
     }
 
-    public function getParents(Category $category, bool $lastItemIsLink = false): self
+    public function getParents(Category $category, bool $lastItemIsLink = false): array
     {
         $this->lastItemIsLink = $lastItemIsLink;
 
         $this->flatParents($category);
         $this->parentsArray = array_reverse($this->parentsArray);
-        return $this;
+        return get_object_vars($this);
     }
 }

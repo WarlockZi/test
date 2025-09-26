@@ -18,6 +18,7 @@ class Order extends Model
         'ip',
         'submitted',
     ];
+
     public function products(): belongsToMany
     {
         return $this->belongsToMany(
@@ -28,24 +29,7 @@ class Order extends Model
             'id',
             '1s_id',
         )
-            ;
-    }
-    public function orderItems(): HasMany
-    {
-        return $this->hasMany(
-            OrderItem::class,
-        )
-            ->groupBy('product_id')
-            ->with('productUnit');
-    }
-    public function orderProducts(): hasMany
-    {
-        return $this->hasMany(
-            OrderProduct::class,
-//            '1s_id',
-//            'id'
-        )
-            ;
+;
     }
 
     public function onlyProducts(): belongsToMany
@@ -58,10 +42,26 @@ class Order extends Model
             'id',
             '1s_id',
         )
-            ->select('1s_id', )
-            ->withPivot('deleted_at')
             ;
     }
+
+    public function orderItems(): HasMany
+    {
+        return $this->hasMany(
+            OrderItem::class,
+        )
+            ->groupBy('product_id')
+            ->with('productUnit');
+    }
+
+    public function orderProducts(): hasMany
+    {
+        return $this->hasMany(
+            OrderProduct::class,
+        );
+    }
+
+
     public function productUnits(): HasManyThrough
     {
         return $this->hasManyThrough(
@@ -73,9 +73,6 @@ class Order extends Model
             'product_unit_id'
         );
     }
-
-
-
 
 
     public function productsHaveOrderItems(): hasMany

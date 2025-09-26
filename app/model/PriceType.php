@@ -9,10 +9,11 @@ class PriceType extends Model
 {
     public $timestamps = false;
     protected $table = 'price-types';
+    protected $primaryKey = 'priceid';
 
     protected $fillable = [
         'type',
-        'web-name',
+        'web_name',
     ];
 
 }

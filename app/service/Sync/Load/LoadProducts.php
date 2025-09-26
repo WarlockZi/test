@@ -11,24 +11,22 @@ use app\service\Slug\SlugService;
 use Carbon\Carbon;
 use Throwable;
 
-class LoadProducts
+class LoadProducts extends LoadService
 {
+
     public function __construct(
-        readonly private string $file,
-        private array           $data = [],
-        private array           $existing = [],
-        private array           $created = [],
-        private array           $deleted = [],
     )
     {
-        $xml        = simplexml_load_file($this->file);
-        $xmlObj     = json_decode(json_encode($xml), true);
-        $this->data = $xmlObj['Каталог']['Товары']['Товар'];
-
-        $this->run();
+        parent::__construct();
     }
 
-    protected function run(): void
+    public function load(): void
+    {
+        $this->setProductsData();
+        $this->exec();
+    }
+
+    private function exec(): void
     {
         try {
             $this->updateOrCreateProducts();
@@ -39,7 +37,7 @@ class LoadProducts
 
     }
 
-    protected function deleteNonexisted(): void
+    private function deleteNonexisted(): void
     {
         $toDelete        = Product::whereNotIn('1s_id', $this->existing)->pluck('1s_id')->toArray();
         $this->deleted[] = $toDelete;
@@ -51,7 +49,7 @@ class LoadProducts
 
     private function updateOrCreateProducts(): void
     {
-        foreach ($this->data as $good) {
+        foreach ($this->productsData as $good) {
             $this->existing[$good['Ид']] = $good['Ид'];
             $product                     = Product::withTrashed()
                 ->updateOrCreate(
@@ -66,7 +64,7 @@ class LoadProducts
         }
     }
 
-    protected function setProductOwnProps(array $good): void
+    private function setProductOwnProps(array $good): void
     {
         $prodProps = ProductProperty::where('product_1s_id', $good['Ид'])
             ->first();
@@ -84,7 +82,8 @@ class LoadProducts
             }
         }
     }
-    protected function fillProduct(array $good): array
+
+    private function fillProduct(array $good): array
     {
         $g['1s_id']          = $good['Ид'];
         $g['1s_category_id'] = $good['Группы']['Ид'];
@@ -97,7 +96,8 @@ class LoadProducts
         $g['updated_at']     = Carbon::now()->toDateTimeString();
         return $g;
     }
-    protected function fillProductProperties($good): array
+
+    private function fillProductProperties($good): array
     {
         $g['1s_id']          = $good['Ид'];
         $g['1s_category_id'] = $good['Группы']['Ид'];
@@ -110,10 +110,11 @@ class LoadProducts
         $g['updated_at']     = Carbon::now()->toDateTimeString();
         return $g;
     }
+
     private function setSlug($g): string
     {
         return SlugService::getValidProductSlug($g);
-   }
+    }
 
     private function setCategory($good): string
     {

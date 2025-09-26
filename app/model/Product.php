@@ -3,6 +3,7 @@
 namespace app\model;
 
 
+use app\model\Traits\HasFilteredUnits;
 use app\service\AuthService\Auth;
 use app\service\Image\ProductImageService;
 use Carbon\Carbon;
@@ -20,6 +21,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Product extends Model
 {
     use SoftDeletes;
+    use HasFilteredUnits;
 
     public $timestamps = true;
 
@@ -44,9 +46,67 @@ class Product extends Model
         'art' => 'string',
     ];
     protected $appends = [
-//        'price',
-        'mainImage',
+        'mainImage'
     ];
+
+    public function productUnits(): HasMany
+    {
+        return $this->hasMany(
+            ProductUnit::class,
+            'product_1s_id',
+            '1s_id',
+        );
+    }
+    public function scopeWithShippableUnitsPrice($query)
+    {
+        return $query->with(['shippableUnits' => function ($q) {
+            return $q
+                ->with([
+                    'price1s.currency',
+                    'price1s.type',
+                ]);
+        }]);
+    }
+
+    public function scopeWithBaseUnitPrice($query)
+    {
+        return $query->with([
+            'baseUnit' => function ($q) {
+                return $q
+                    ->with([
+                        'price1s.currency',
+                        'price1s.type',
+                    ]);
+            }
+        ]);
+    }
+//    public function shippableUnits():belongsToMany
+//    {
+//        return $this->units()
+//            ->wherePivot('is_shippable', '1')
+//            ;
+//    }
+//    public function baseUnit():belongsToMany
+//    {
+//        return $this->units()
+//            ->wherePivot('multiplier', '1')
+//            ;
+//    }
+
+//    public function shippableUnits(): BelongsToMany
+////    {
+////        return $this
+////            ->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
+////            ->withPivot(
+////                'multiplier',
+////                'is_base',
+////                'is_shippable',
+////                'is_from_1s',
+////                'price_id',
+////            )
+////            ->wherePivot('is_shippable', '1')
+////            ->orderByPivot('multiplier');
+////    }
 
     public function orderItem(): hasOneThrough
     {
@@ -57,6 +117,18 @@ class Product extends Model
             'order_product_id', //order_product for orderitems
             '1s_id', //proudcts
             'id', //order_product
+        );
+    }
+
+    public function orderItems(): hasManyThrough
+    {
+        return $this->hasManyThrough(
+            OrderItem::class, //дб order_product_id
+            OrderProduct::class,
+            'product_id',//orderitems
+            'order_product_id', //order_product for orderitems
+            '1s_id', //proudcts
+            'id', //in order_product
         );
     }
 
@@ -115,7 +187,6 @@ class Product extends Model
             ->where($field, $value);
     }
 
-
     public function scopeWithWhereHas($query, $relation, $constraint)
     {
         return $query->whereHas($relation, $constraint)
@@ -149,30 +220,10 @@ class Product extends Model
         return APP->get(ProductImageService::class)->getImageRelativePath($this);
     }
 
-    
-    
     ///price
-    /// 
-
-    public function getPriceAttribute(): ?float
-    {
-        return (float)$this->priceRelation()->first()->price ?? null;
-    }
-    
     public function getFormattedPriceAttribute(): string
     {
         return number_format($this->price, 2, '.', ' ');
-    }
-
-    public function priceRelation(): HasOne
-    {
-        return $this->hasOne(Price::class, '1s_id', '1s_id');
-    }
-    protected function getBaseUnitPriceAttribute(): string
-    {
-        $baseUnit = $this->baseUnit;
-        $price    = number_format((float)$this->price, 2, '.', ' ');
-        return "{$price} ₽ / {$baseUnit?->name}";
     }
 
     protected function priceWithCurrncyUnitPromotion(float $number, string $currency, string $oldPrice): string
@@ -191,6 +242,7 @@ class Product extends Model
         if ($type) {
             return $query->withTrashed();
         }
+        throw new \Exception('type is required');
     }
 
     public function scopeWithMainImages($query)
@@ -208,67 +260,25 @@ class Product extends Model
         return $orders;
     }
 
-
-    public function baseUnit(): hasOneThrough
-    {
-        return $this->hasOneThrough(
-            Unit::class,
-            ProductUnit::class,
-            'product_1s_id',// in productUnit
-            'id',//in unit
-            '1s_id',//in product
-            'unit_id'//in productUnit
-        )
-            ->select('units.*',
-                'product_unit.is_shippable as is_shippable',
-                'product_unit.multiplier as multiplier',
-                'product_unit.is_base as is_base',
-                'product_unit.price as price',
-            )
-            ->where('product_unit.is_base', '1');
-    }
-
-    public function shippableUnits(): BelongsToMany
-    {
-        return $this
-            ->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
-            ->withPivot('multiplier',
-                'is_base',
-                'is_shippable',
-                'price')
-            ->wherePivot('is_shippable', '=', '1')
-            ->orderByPivot('multiplier');
-    }
-
-    public function units(): BelongsToMany
-    {
-        return $this
-            ->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
-            ->withPivot('id', 'multiplier', 'is_base', 'is_shippable', 'price')->orderByPivot('multiplier');
-    }
-
     public function values(): MorphToMany
     {
         return $this->morphToMany(Val::class, 'valuable');
     }
 
-    public function promotions(): HasMany
+    public function promotions(): hasMany
     {
-        return $this
-            ->hasMany(Promotion::class, 'product_1s_id', '1s_id');
+        return $this->hasMany(Promotion::class, 'product_1s_id', '1s_id');
     }
 
-    public function activePromotions(): HasMany
+    public function activePromotions(): hasMany
     {
-        return $this
-            ->hasMany(Promotion::class, 'product_1s_id', '1s_id')
+        return $this->promotions()
             ->where('active_till', '>=', Carbon::today()->toDateString());
     }
 
-    public function inactivePromotions(): HasMany
+    public function inactivePromotions(): hasMany
     {
-        return $this
-            ->hasMany(Promotion::class, 'product_1s_id', '1s_id')
+        return $this->promotions()
             ->where('active_till', '<', Carbon::today()->toDateString());
     }
 
@@ -294,7 +304,18 @@ class Product extends Model
     {
         return $this->category()->with('parentRecursive');
     }
-
+//    public function baseUnit(): hasOneThrough
+//    {
+//        return $this->hasOneThrough(
+//            Unit::class,
+//            ProductUnit::class,
+//            'product_1s_id',// in productUnit
+//            'id',//in unit
+//            '1s_id',//in product
+//            'unit_id'//in productUnit
+//        )
+//            ->where('multiplier', '1');
+//    }
 }
 
 

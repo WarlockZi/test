@@ -23,7 +23,7 @@ class ProductAction
     /**
      * @throws Exception
      */
-    public function getBreadcrumbs(Category $category, bool $lastItemIsLink = false): NewBread
+    public function getBreadcrumbs(Category $category, bool $lastItemIsLink = false): array
     {
         if (!$category) throw new Exception('Breadcrumbs service has no category');
         return $this->breadcrumbs->getParents($category, $lastItemIsLink);

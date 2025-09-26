@@ -15,6 +15,7 @@
 
 @section('content')
 
+{{--    @php(xdebug_break())--}}
     <div class="category">
 
         @if (empty($category))
@@ -31,7 +32,7 @@
                     @if (!empty($rootCategories) && is_array($rootCategories))
                         @foreach ($rootCategories as $cat)
                             <li>
-                                <a href="<?= $cat['href'] ?>"><?= $cat['name'] ?></a>
+                                <a href="<?= $cat['own_properties']['path'] ?>"><?= $cat['name'] ?></a>
                             </li>
                         @endforeach
                     @endif
@@ -41,10 +42,12 @@
             </div>
 
         @else
-            @include('components.breadcrumbs.index')
+
+            @include('components.breadcrumbs.index', ['breadcrumbs'=>$category['breadcrumbs']])
 
             <h1>{{$category['own_properties']['seo_h1'] ?? $category->name}}</h1>
 
+{{--        @php(xdebug_break())--}}
             @if (!empty($category['children_recursive']))
 
                 <div class="category-child-wrap">

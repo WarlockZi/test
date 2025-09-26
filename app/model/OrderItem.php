@@ -4,8 +4,8 @@ namespace app\model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrderItem extends Model
@@ -26,21 +26,35 @@ class OrderItem extends Model
         'deleted_at'
     ];
 
-    public function price(): hasOne
+//    public function price(): hasOne
+//    {
+//        return $this->hasOne(
+//            Price::class,
+//            'id',
+//            'price_id',
+//        );
+//    }
+    public function price(): belongsTo
     {
-        return $this->hasOne(
-            Price::class,
-            'id',
-            'price_id',
-        );
+        return $this->belongsTo(Price::class);
     }
 
-    public function unit(): HasOne
+    public function scopeWithPrice($q)
     {
-        return $this->hasOne(
+        return $q->with(['price'=>function ($q) {
+            return $q->withPriceTypeAndCurrency();
+        }]);
+    }
+
+    public function unit(): hasOneThrough
+    {
+        return $this->hasOneThrough(
             Unit::class,
+            ProductUnit::class,
+            'unit_id',
             'id',
-            'unit_id'
+            'product_unit_id',
+            'id',
         );
     }
 

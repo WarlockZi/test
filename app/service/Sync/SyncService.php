@@ -5,9 +5,6 @@ namespace app\service\Sync;
 use app\service\Fs\FS;
 use app\service\Logger\SyncLogger;
 use app\service\Sync\Load\LoadService;
-use app\service\Sync\Trancate\SoftTrancateService;
-use app\service\Sync\Trancate\TrancateService;
-use app\traits\LoggerTrait;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
 use SimpleXMLElement;
@@ -16,24 +13,18 @@ use ZipArchive;
 
 class SyncService
 {
-    use LoggerTrait;
-
-    protected string $importFile = '/storage/app/sync/unzipped/import0_1.xml';
-    protected string $offerFile = '/storage/app/sync/unzipped/offers0_1.xml';
-    protected string $importPath = '/storage/app/sync/';
     private bool $softDelete = true;
-    protected SoftTrancateService|TrancateService $trancatedService;
-    protected LoadService $loadService;
 
-
-    public function __construct()
+    public function __construct(
+        protected LoadService $loadService,
+        protected SyncLogger  $logger,
+    )
     {
-        $this->setLogger(new SyncLogger());
-        $this->importFile  = FS::platformSlashes(ROOT . $this->importFile);
-        $this->offerFile   = FS::platformSlashes(ROOT . $this->offerFile);
-        $this->loadService = new LoadService($this->offerFile, $this->importFile);
     }
 
+    /**
+     * @throws Exception
+     */
     public function requestFrom1s(): void
     {
         header("Content-Type: text/plain; charset=utf-8");
@@ -44,7 +35,7 @@ class SyncService
 
                 if (isset($_GET['mode']) && $_GET['mode'] === 'checkauth') {
 
-                    $this->log('checkauth');
+                    $this->logger->write('checkauth');
                     echo "success\n";                    /// success inc
                     echo "sess_name **" . session_name() . "\n"; ///  777777
                     echo session_id() . "\n"; ///   55fdsa55;
@@ -52,7 +43,7 @@ class SyncService
                 }
 
                 if (isset($_GET['mode']) && $_GET['mode'] === 'init') {
-                    $this->log('zip');
+                    $this->logger->write('zip');
                     echo "zip=yes\n";
                     echo "file_limit=104857600\n"; // 100MB limit
                     exit;
@@ -75,7 +66,7 @@ class SyncService
     private function import(): void
     {
         if (isset($_GET['mode']) && $_GET['mode'] === 'file') {
-            $this->log('file');
+            $this->logger->write('file');
 
             if (!isset($_GET['filename'])) {
                 http_response_code(400);
@@ -104,7 +95,7 @@ class SyncService
             $filePath = $importDir . basename($filename);
             if (file_put_contents($filePath, $fileContent) !== false) {
                 $this->load($filePath);
-                $this->log('Load успех' . PHP_EOL);
+                $this->logger->write('Load успех' . PHP_EOL);
                 $this->sendHTMLSuccessMessage();
             } else {
                 http_response_code(500);
@@ -181,7 +172,7 @@ class SyncService
             $this->importFilesExist();
             $this->loadService->load();
         } catch (\Throwable $e) {
-            $this->logError("--- Ошибка load ", $e);
+            $this->logger->write("--- Ошибка load ", $e);
         }
     }
 
@@ -191,7 +182,7 @@ class SyncService
         try {
             $this->unzipFile($filePath, $extractTo);
             $this->cleanDir($filePath, $extractTo);
-            $this->log('Extraction successful!');
+            $this->logger->write('Extraction successful!');
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
         }
@@ -201,7 +192,7 @@ class SyncService
     {
         try {
             FS::delFilesFromPath($this->importPath, 'zip');
-            $this->log('Directory is clean');
+            $this->logger->write('Directory is clean');
         } catch (Exception $e) {
             echo 'Directory cleaning Error : ' . $e->getMessage();
         }

@@ -7,6 +7,7 @@ use app\middleware\CartMiddleware;
 $this->addRoute("^\/(?P<controller>product)\/?(?P<slug>[_a-z0-9-]+)$", ['controller' => 'Product']);
 $this->addRoute("^\/short\/(?P<slug>.+)?\/?$", ['controller' => 'Short']);
 
+//$this->addRoute("^\/(?P<controller>catalog)\/short\/(?P<short>[_a-zA-Z0-9-\/%]+)?$", ['controller' => 'Category','action' => 'actionShort']);
 $this->addRoute("^\/(?P<controller>catalog)\/(?P<slug>[_a-zA-Z0-9-\/%]+)?$", ['controller' => 'Category']);
 $this->addRoute("^\/(?P<controller>catalog)$", ['controller' => 'Category']);
 $this->addRoute("^\/(?P<controller>category)\/(?P<slug>[_a-zA-Z0-9-]+)?$", ['controller' => 'Category']);

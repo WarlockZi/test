@@ -4,6 +4,7 @@ declare(strict_types=1);
 use app\blade\Blade;
 use app\blade\IView;
 use app\blade\View;
+use app\repository\CategoryRepository;
 use app\repository\OrderRepository;
 use app\service\Cache\ICache;
 use app\service\Cache\Redis\Cache;
@@ -14,7 +15,6 @@ use app\service\Router\IRequest;
 use app\service\Router\IRouteList;
 use app\service\Router\Request;
 use app\service\Router\RouteList;
-use app\service\Sync\SyncService;
 use app\service\Vite\Vite;
 use app\service\Vite\ViteCompiler;
 use Illuminate\Database\Capsule\Manager as Capsule;
@@ -38,9 +38,6 @@ return [
             ]
         );
     },
-
-
-    SyncService::class=>\DI\autowire(SyncService::class),
 
     ICache::class => function () {
         return Cache::getInstance();
@@ -75,6 +72,8 @@ return [
         );
     },
 
+    Blade::class => create(Blade::class),
+
     IRequest::class => function () {
         return Request::capture();
     },
@@ -83,8 +82,8 @@ return [
         return new RouteList();
     },
     'validator' => function () {
-        $loader = new FileLoader(new Filesystem(), __DIR__ . '/lang');
-        $translator = new Translator($loader, 'en');
+        $loader           = new FileLoader(new Filesystem(), __DIR__ . '/lang');
+        $translator       = new Translator($loader, 'en');
         $validatorFactory = new Factory($translator);
 
         return $validatorFactory;
@@ -92,8 +91,9 @@ return [
     'orderItemsCount' => function () {
         return OrderRepository::productsCount();
     },
-
-    Blade::class => create(Blade::class),
+    'rootCategories' => function () {
+        return CategoryRepository::rootCategories();
+    },
 
     FS::class => function (ContainerInterface $c, $dir) {
         return new FS($dir . DIRECTORY_SEPARATOR,

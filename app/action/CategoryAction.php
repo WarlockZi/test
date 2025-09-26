@@ -18,18 +18,8 @@ class CategoryAction
         private readonly CategoryMetaService $meta,
         private readonly SlugService         $slug,
         private readonly CategoryService     $category,
-        private readonly NewBread            $breadcrumbs,
     )
     {
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function breadcrumbs(Category $category, bool $lastItemIsLink): NewBread
-    {
-        if (!$category) throw new Exception('Breadcrumbs service has no category');
-        return $this->breadcrumbs->getParents($category, $lastItemIsLink);
     }
 
     public function similarCategories(string $slug): array
@@ -45,14 +35,14 @@ class CategoryAction
         );
     }
 
-    public function categoryMeta(Category $category): array
-    {
-        return $this->meta->setMeta(
-            $category->seo_title(),
-            $category->seo_description(),
-            $category->seo_keywords(),
-        );
-    }
+//    public function categoryMeta(Category $category): array
+//    {
+//        return $this->meta->setMeta(
+//            $category->seo_title(),
+//            $category->seo_description(),
+//            $category->seo_keywords(),
+//        );
+//    }
 
     public function setCategoriesMeta(): array
     {

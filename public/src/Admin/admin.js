@@ -14,6 +14,8 @@ import "./Settings/settings.js";
 import "./Videoinstructions/videoinstructions.js";
 import "./Category/Category.js";
 
+import "@components/adminPanel/adminPanel.js";
+
 import AdminHeader from "../components/header/header-adm.js";
 import Search from "../components/search/search.js";
 // import '../components/table/Table.js'
@@ -25,6 +27,7 @@ import Users from "@src/Admin/User/users.js";
 import User from "@src/Admin/User/user.js";
 import AdminSidebar from "@src/Admin/components/AdminSidebar/AdminSidebar.js";
 import Cache from "./cache/Cache.js";
+import adminPanel from "@components/adminPanel/adminPanel.js";
 // import Promotion from "@src/Promotions/Promotion.js";
 
 $(document).ready(async function () {
@@ -42,6 +45,7 @@ $(document).ready(async function () {
   new Search(true);
   new Navigation();
   new AdminHeader();
+  new adminPanel();
   adminScroll();
   const adminSidebar = $(".sidebar").first();
   new AdminSidebar(adminSidebar);

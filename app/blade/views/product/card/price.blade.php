@@ -1,9 +1,10 @@
 
 <div class="price">
 
+{{--    @php(xdebug_break())--}}
     <div class="new-price">
-        {!! $product['price'] !!}
-        {!! $product['base_unit']['name']!!}
+{{--        {!! $product['price'] !!}--}}
+{{--        {!! $product['base_unit']['name']!!}--}}
     </div>
 
 </div>
