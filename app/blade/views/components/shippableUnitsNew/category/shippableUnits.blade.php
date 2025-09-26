@@ -6,55 +6,55 @@
     <div class="green-button-wrap none">
         <button class='button green-button'>Перейти в корзину</button>
 {{--@php(xdebug_break())--}}
-        @foreach($product['shippable_units'] as $unit)
+{{--        @foreach($product['shippable_units'] as $unit)--}}
 
-            @foreach($order['products'] as $OrderProduct)
-                @if (in_array($product['1s_id'], $OrderProduct))
-                    @php($orderProduct=$OrderProduct)
+{{--            @foreach($order['products'] as $OrderProduct)--}}
+{{--                @if (in_array($product['1s_id'], $OrderProduct))--}}
+{{--                    @php($orderProduct=$OrderProduct)--}}
 
-                    @foreach($OrderProduct['order_items'] as $OrderItem)
+{{--                    @foreach($OrderProduct['order_items'] as $OrderItem)--}}
 {{--                        @php(xdebug_break())--}}
-                        @if ($unit['id']==$OrderItem['unit_id'])
-                            @php($orderItem=$OrderItem)
-                        @endif
-                    @endforeach
+{{--                        @if ($unit['id']==$OrderItem['unit_id'])--}}
+{{--                            @php($orderItem=$OrderItem)--}}
+{{--                        @endif--}}
+{{--                    @endforeach--}}
 
-                @endif
-            @endforeach
+{{--                @endif--}}
+{{--            @endforeach--}}
 
-            <div
-                    unit-row
-                    class="unit-row"
-                    data-orderitem-id="{!! $orderItem['id']??''!!}"
-                    data-unitId="{!! $unit['id']??''!!}"
-            >
-                <input
-                        type="text"
-                        class="input"
-                        value="{!! $orderItem['count']??0 !!}"
-                        onclick="this.value??'';"
-                >
+{{--            <div--}}
+{{--                    unit-row--}}
+{{--                    class="unit-row"--}}
+{{--                    data-orderitem-id="{!! $orderItem['id']??''!!}"--}}
+{{--                    data-unitId="{!! $unit['id']??''!!}"--}}
+{{--            >--}}
+{{--                <input--}}
+{{--                        type="text"--}}
+{{--                        class="input"--}}
+{{--                        value="{!! $orderItem['count']??0 !!}"--}}
+{{--                        onclick="this.value??'';"--}}
+{{--                >--}}
 
-                <div class="unit-name">
-                    <span class="name">{!! $unit['full_name'] !!}</span>
+{{--                <div class="unit-name">--}}
+{{--                    <span class="name">{!! $unit['full_name'] !!}</span>--}}
 
-                    {{--        @if($shippableTable->description)--}}
-                    {{--            <div class="description text-small">--}}
-                    {{--                <span class="contains">{!! $unit['multiplier'] !!} {!! $unit['base_unit_name'] !!}</span>--}}
-                    {{--                <span class="cost" data-cost="{{$unit['unit_price']}}">{{$unit['formatted_unit_price']}} ₽</span>--}}
-                    {{--            </div>--}}
-                    {{--        @endif--}}
+{{--                    --}}{{--        @if($shippableTable->description)--}}
+{{--                    --}}{{--            <div class="description text-small">--}}
+{{--                    --}}{{--                <span class="contains">{!! $unit['multiplier'] !!} {!! $unit['base_unit_name'] !!}</span>--}}
+{{--                    --}}{{--                <span class="cost" data-cost="{{$unit['unit_price']}}">{{$unit['formatted_unit_price']}} ₽</span>--}}
+{{--                    --}}{{--            </div>--}}
+{{--                    --}}{{--        @endif--}}
 
-                </div>
+{{--                </div>--}}
 
-                <div class="arrows">
-                    <div class="arrow plus"></div>
-                    <div class="arrow minus"></div>
-                </div>
+{{--                <div class="arrows">--}}
+{{--                    <div class="arrow plus"></div>--}}
+{{--                    <div class="arrow minus"></div>--}}
+{{--                </div>--}}
 
-            </div>
+{{--            </div>--}}
 
-        @endforeach
+{{--        @endforeach--}}
 
     </div>
 </div>

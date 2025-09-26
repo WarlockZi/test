@@ -30,22 +30,46 @@ class CategoryController extends AppController
                     404);
             }
 
-            $breadcrumbs = $this->actions->breadcrumbs($category, false);
             $order          = OrderRepository::usersOrder()->toArray();
             $category = $category->toArray();
 
             view('category.category',
                 compact(
                     'category',
-                    'breadcrumbs',
                     'order',
                 )
             );
 
-
         } else {
+            $categories = APP->get('rootCategories');
             $meta = $this->actions->setCategoriesMeta();
-            view('category.categories', compact('meta'));
+            view('category.categories', compact('meta', 'categories'));
         }
     }
+//    #[NoReturn] public function actionShort(IRequest $request): void
+//    {
+//        if ($request->slug) {
+//            $category = $this->repo->indexInstore($request->slug);
+//
+//            if (!$category) {
+//                $similarCategories = $this->actions->similarCategories($request->slug);
+//                view('category.notFound',
+//                    compact('category', 'similarCategories'),
+//                    404);
+//            }
+////            $order          = OrderRepository::usersOrder()->toArray();
+//            $category = $category->toArray();
+//
+//            view('category.category',
+//                compact(
+//                    'category',
+//                    'order',
+//                )
+//            );
+//        } else {
+//            $categories = APP->get('rootCategories');
+//            $meta = $this->actions->setCategoriesMeta();
+//            view('category.categories', compact('meta', 'categories'));
+//        }
+//    }
 }

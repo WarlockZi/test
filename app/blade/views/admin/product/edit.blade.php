@@ -1,7 +1,7 @@
 @extends('layouts.admin.admin')
 
 @section('content')
-
+{{--    @php(xdebug_break())--}}
     @if ($catItem)
 {{--        @php xdebug_break(); @endphp--}}
         @include('components.breadcrumbs.index', compact('breadcrumbs'))

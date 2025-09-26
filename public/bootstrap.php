@@ -15,7 +15,7 @@ require ROOT . '/app/service/bootstrap/session.php';
 require ROOT . "/vendor/autoload.php";
 
 require ROOT . '/app/service/bootstrap/dotenv.php';
-require ROOT . '/app/service/bootstrap/helpers.php';
+require ROOT . '/app/service/bootstrap/globalFunction.php';
 require ROOT . '/app/service/bootstrap/const.php';
 require ROOT . '/app/service/bootstrap/profiler.php';
 require ROOT . '/app/service/bootstrap/php.php';

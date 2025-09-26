@@ -1,17 +1,16 @@
 @extends('layouts.main.main')
 
-{{--@php xdebug_break()@endphp--}}
 
 @section('title')
-    {!! $meta->title !!}
+    {!! $meta['title'] !!}
 @endsection
 
 @section('description')
-    {!! $meta->description !!}
+    {!! $meta['description'] !!}
 @endsection
 
 @section('keywords')
-    {!! $meta->keywords !!}
+    {!! $meta['keywords'] !!}
 @endsection
 
 
@@ -20,7 +19,7 @@
     <div class="category">
 
 
-        @if (isset($categories) && $categories)
+        @if (!empty($categories))
 
             <div class="category-child-wrap">
 
@@ -28,14 +27,14 @@
                     @if ($category)
 
                         <div class="category-card">
+{{--                            @php(xdebug_break())--}}
                             <a
                                     class="category-card-a"
                                     href="/catalog/{{$category['slug']}}"
                             >
                                 {{$category['name']}}
                             </a>
-                            @php $forBreadcrumbs= false; @endphp
-                            @include('components.category_card_panel', compact('category', 'forBreadcrumbs'))
+                            @include('components.card_panel.category_card_panel', compact('category'))
                         </div>
 
                     @endif

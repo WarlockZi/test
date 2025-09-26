@@ -32,6 +32,5 @@ trait LoggerTrait
     protected function log(string $msg): void
     {
         $this->logger->write($msg);
-
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 
 class TreeOptionsBuilder extends TreeBuilder
 {
-    public static function build(Collection $collection, string $relation, int $multiply = 1, string $tab = '&nbsp;'): self
+    public static function build(array $collection, string $relation, int $multiply = 1, string $tab = '&nbsp;'): self
     {
         return new self($collection, $relation, $multiply, $tab);
     }

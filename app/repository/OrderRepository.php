@@ -10,7 +10,9 @@ use app\model\OrderProduct;
 use app\model\Product;
 use app\service\AuthService\Auth;
 use app\service\Router\IRequest;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Throwable;
 
 
@@ -61,15 +63,24 @@ class OrderRepository
     public static function usersOrder()
     {
         list($field, $value) = Auth::getCartFieldValue();
+
         $order = Order::where($field, $value)
             ->whereNull('submitted')
             ->with(['products' => function ($q) {
-                $q->whereHas('orderItems')
-                    ->withoutTrashed();
+                $q
+                    ->whereHas('orderItems')
+                    ->with(['orderitems' => function ($q) {
+                        $q->with('unit', 'price.currency', 'price.type');
+                    }])
+                    ->withoutTrashed()
+                    ->with('unitFrom1s')
+                ;
             }])
             ->first();
-        $o     = $order->toArray();
+//        $o     = $order->toArray();
+
         return $order;
+
     }
 
     public static function deleteOrderItem(Order $order, Product $product, string $unit_id,)
@@ -151,7 +162,7 @@ class OrderRepository
         return $orderItems;
     }
 
-    public static function edit(IRequest $request)
+    public static function edit(IRequest $request): Model|Collection|Builder|array|null
     {
         $orders = Order::
         with('user',
@@ -165,15 +176,16 @@ class OrderRepository
     public static function productsCount(): int
     {
         list($field, $value) = Auth::getCartFieldValue();
+//        $start = microtime(true);
         $order = Order::where($field, $value)
-            ->select('id')
-            ->with(['products' => function ($query) {
-                $query
-                    ->wherePivotNull('deleted_at'); // withoutTrashed() не работает
-            }])
             ->whereNull('submitted')
+            ->select('id')
+            ->withCount(['products as products_count' => function ($query) {
+                $query->where('order_product.deleted_at', NULL); // withoutTrashed() не работает
+            }])
             ->first();
 
-        return $order?->products->count() ?? 0;
+//        $time = (microtime(true) - $start)*1000;
+        return $order->products_count ?? 0;
     }
 }

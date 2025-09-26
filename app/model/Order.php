@@ -29,9 +29,39 @@ class Order extends Model
             'id',
             '1s_id',
         )
-            ->with('orderItems')
+;
+    }
+
+    public function onlyProducts(): belongsToMany
+    {
+        return $this->belongsToMany(
+            Product::class,
+            'order_product',
+            'order_id',
+            'product_id',
+            'id',
+            '1s_id',
+        )
             ;
     }
+
+    public function orderItems(): HasMany
+    {
+        return $this->hasMany(
+            OrderItem::class,
+        )
+            ->groupBy('product_id')
+            ->with('productUnit');
+    }
+
+    public function orderProducts(): hasMany
+    {
+        return $this->hasMany(
+            OrderProduct::class,
+        );
+    }
+
+
     public function productUnits(): HasManyThrough
     {
         return $this->hasManyThrough(
@@ -44,16 +74,6 @@ class Order extends Model
         );
     }
 
-
-
-    public function orderItems(): HasMany
-    {
-        return $this->hasMany(
-            OrderItem::class,
-        )
-            ->groupBy('product_id')
-            ->with('productUnit');
-    }
 
     public function productsHaveOrderItems(): hasMany
     {

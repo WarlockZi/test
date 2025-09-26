@@ -31,7 +31,7 @@ export default class Category {
       this.handleLike(target);
     } else if (target.hasAttribute("data-compare")) {
       this.handleCompare(target);
-    } else if (target.classList.contains("short-link")) {
+    } else if (target.hasAttribute("data-shortLink")) {
       this.cardPanel.shortLink(target);
     }
   }

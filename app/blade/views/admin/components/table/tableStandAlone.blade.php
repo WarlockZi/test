@@ -2,7 +2,6 @@
     use app\view\components\Builders\CheckboxBuilder\Checkbox\ICheckbox;
 @endphp
 
-{{--@php(xdebug_break())--}}
 <div custom-table
     <?= $data['class']; ?>
     <?= $data['dataModel'] ?>
@@ -42,7 +41,7 @@
 
                 <!--		 Data rows-->
 {{--        @php(xdebug_break())--}}
-        @if ($data['items']->count())
+        @if (count($data['items']))
             @foreach ($data['items'] as $item)
 
                 @foreach ($data['columns'] as $field => $c)

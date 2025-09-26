@@ -2,7 +2,7 @@
 
 namespace app\model;
 
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\hasMany;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -15,27 +15,23 @@ class OrderProduct extends Pivot
     protected $fillable = [
         'order_id',
         'product_id',
-//        'created_at',
-//        'updated_at',
         'deleted_at',
     ];
 
-
-
-    public function products(): HasMany
+    public function products(): hasMany
     {
         return $this->hasMany(
             Product::class,
+            '1s_id',
             'product_id',
-            '1s_id'
         )
-            ->with('orderItems');
+            ;
     }
-    public function orders(): HasMany
+    public function orders(): hasMany
     {
         return $this->hasMany(Order::class);
     }
-    public function orderItems(): HasMany
+    public function orderItems(): hasMany
     {
         return $this->hasMany(OrderItem::class,
             'order_product_id',

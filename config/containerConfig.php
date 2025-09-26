@@ -4,6 +4,7 @@ declare(strict_types=1);
 use app\blade\Blade;
 use app\blade\IView;
 use app\blade\View;
+use app\repository\CategoryRepository;
 use app\repository\OrderRepository;
 use app\service\Cache\ICache;
 use app\service\Cache\Redis\Cache;
@@ -71,6 +72,8 @@ return [
         );
     },
 
+    Blade::class => create(Blade::class),
+
     IRequest::class => function () {
         return Request::capture();
     },
@@ -79,8 +82,8 @@ return [
         return new RouteList();
     },
     'validator' => function () {
-        $loader = new FileLoader(new Filesystem(), __DIR__ . '/lang');
-        $translator = new Translator($loader, 'en');
+        $loader           = new FileLoader(new Filesystem(), __DIR__ . '/lang');
+        $translator       = new Translator($loader, 'en');
         $validatorFactory = new Factory($translator);
 
         return $validatorFactory;
@@ -88,8 +91,9 @@ return [
     'orderItemsCount' => function () {
         return OrderRepository::productsCount();
     },
-
-    Blade::class => create(Blade::class),
+    'rootCategories' => function () {
+        return CategoryRepository::rootCategories();
+    },
 
     FS::class => function (ContainerInterface $c, $dir) {
         return new FS($dir . DIRECTORY_SEPARATOR,

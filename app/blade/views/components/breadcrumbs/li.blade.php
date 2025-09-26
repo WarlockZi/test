@@ -5,8 +5,8 @@
 
 
 <li itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
-    @if(!$breadcrumbs->lastItemIsLink
-        && $breadcrumbs->itemsCount===$position)
+    @if(!$breadcrumbs['lastItemIsLink']
+        && $breadcrumbs['itemsCount']===$position)
         <div itemprop="item">
             <span itemprop="name">{!! $item['name']!!}</span>
         </div>

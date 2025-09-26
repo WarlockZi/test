@@ -11,6 +11,7 @@
 
             @foreach ($adminSidebar as $item)
 
+{{--                @php(xdebug_break())--}}
                 @if ($item['children'])
 
                     @if ($item['permissions'] && $user->can($item['permissions']))

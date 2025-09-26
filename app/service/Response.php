@@ -96,9 +96,20 @@ class Response
 
         $this->send();
     }
+    #[NoReturn] public function consoleLog(array $data = [], int $status = 200, array $headers = []): \Symfony\Component\HttpFoundation\Response
+    {
+//        $data = ['console'=>$data];
+        $this->content = json_encode($data, JSON_UNESCAPED_UNICODE);
+        $this->status  = $status;
+        $this->headers = array_merge($this->headers, [
+            'Content-Type' => 'application/json; charset=UTF-8'
+        ], $headers);
+
+        $this->send();
+    }
     #[NoReturn] public function back(array $data = [], int $status = 200, array $headers = []): self
     {
-        $HTTP_REFERER = $_SERVER['HTTP_REFERER'] ?? '';
+        $HTTP_REFERER  = $_SERVER['HTTP_REFERER'] ?? '';
         $this->status  = $status;
         $this->headers = array_merge([
             'Location' => $HTTP_REFERER
@@ -149,13 +160,19 @@ class Response
 
     #[NoReturn] public static function exitWithPopup(string $msg): void
     {
-        if ($msg) {
-            exit(json_encode(['popup' => $msg]));
-        }
-        exit();
+        $self          = new self();
+        $self->content = json_encode(['popup'=>$msg], JSON_UNESCAPED_UNICODE);
+        $self->status  = 200;
+        $self->headers = array_merge($self->headers, [
+            'Content-Type' => 'application/json; charset=UTF-8'
+        ]);
+
+        $self->send();
+
     }
 
-    private static function setCSPHeaders() {
+    private static function setCSPHeaders()
+    {
         $nonce = Nonce::getInstance();
         $nonce = $nonce->getNonce();
 
@@ -166,7 +183,7 @@ class Response
 
             "style-src-elem https://fonts.googleapis.com 'unsafe-inline'",
             "font-src fonts.gstatic.com",
-            "connect-src wss://localhost:5173",
+            "connect-src 'self' wss://localhost:5173 https://vitexopt.ru",
             "script-src-attr 'unsafe-inline'",
 
             "img-src 'self' data:",

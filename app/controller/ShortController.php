@@ -17,7 +17,7 @@ class ShortController extends AppController
 
         $slug = Product::withWhereHas('ownProperties',
             fn($query) => $query->where('short_link', 'like', $shortLink)
-        )->first()->slug;
+        )->first();
 
         if ($slug) {
             header("Location:/product/{$slug}");

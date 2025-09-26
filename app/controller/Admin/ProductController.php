@@ -29,8 +29,7 @@ class ProductController extends AdminscController
     {
         $validated = $request->validated();
 
-        $e = $request->errors;
-        $product = Product::find($validated['post']['productId']);
+        $product   = Product::find($validated['post']['productId']);
         $mainImage = $this->actions->saveMainImage($validated['files']['file'], $product);
         response()->json(compact('mainImage'));
     }
@@ -38,18 +37,13 @@ class ProductController extends AdminscController
     #[NoReturn] public function actionEdit(IRequest $request): void
     {
         $prod = $this->repo->edit($request->id);
-
-        if ($prod) {
-            $breadcrumbs = $this->actions->getBreadcrumbs($prod->category, false);
-            $catItem     = ProductFormView::edit($prod);
-            view('admin.product.edit', compact('catItem', 'breadcrumbs'));
-        } else {
-            $product = null;
-            view('admin.product.edit', compact('product'));
-        }
+        $p = $prod->toArray();
+        $breadcrumbs = $this->actions->getBreadcrumbs($prod->category, false);
+        $catItem     = ProductFormView::edit($prod);
+        view('admin.product.edit', compact('catItem', 'breadcrumbs'));
     }
 
-    public function actionFilter(IRequest $request): void
+    #[NoReturn] public function actionFilter(IRequest $request): void
     {
         $res = $this->filterRepo->filterProducts($request);
         response()->json($res);

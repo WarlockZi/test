@@ -31,13 +31,10 @@ class Table
     private bool $addButton = false;
     private Collection|null $items;
 
-    private FS $fs;
-
     public static function build(Collection $items): self
     {
         $table        = new static();
         $table->items = $items;
-        $table->fs    = APP->make(FS::class, ['dir' => __DIR__]);
 
         return $table;
     }
@@ -188,7 +185,7 @@ class Table
 
     public function get(): array
     {
-        $this->emptyRow = $this->emptyRow();
+//        $this->emptyRow = $this->emptyRow();
         $this->prepareGridHeader();
         $this->items = $this->take ? $this->items->take($this->take) : $this->items;
         return get_object_vars($this);

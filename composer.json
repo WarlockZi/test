@@ -37,7 +37,8 @@
     "illuminate/container": "^8.83",
     "ext-posix": "*",
     "ext-curl": "*",
-    "ext-zip": "*"
+    "ext-zip": "*",
+    "staudenmeir/laravel-adjacency-list": "^1.9"
   },
   "config": {
     "platform-check": false

@@ -14,8 +14,6 @@ class CardPanel
             'edit'=>Icon::edit(),
             'forBreadcrumbs'=>false,
         ];
-//        $edit = Icon::edit();
-//        return $fs->getContent('product_card_panel', compact('product', 'edit'));
     }
 
     public static function categoryCardPanel(array $category, bool $forBreadcrumbs = false): array
@@ -25,10 +23,6 @@ class CardPanel
             'edit'=>Icon::edit(),
             'forBreadcrumbs'=>$forBreadcrumbs,
         ];
-
-//        $edit = ;
-//        return $category;
-//        return $fs->getContent('category_card_panel', compact('category', 'edit', 'forBreadcrumbs'));
     }
 
 }

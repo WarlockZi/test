@@ -14,6 +14,7 @@ export default class UnitTable {
       el.classList.contains("selected"),
     );
 
+    debugger;
     this.addButton = $(".add-model").first();
     this.$rows = $(".rows").first();
     // this.$emtyRow = $(this.$rows).find('.none');

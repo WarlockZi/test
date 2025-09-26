@@ -24,7 +24,7 @@ class SlugService
 
     );
 
-    public static function getValidProductSlug(Product $product): string
+    public static function getValidProductSlug(array $product): string
     {
         $slug = SlugService::slug($product['print_name']);
         if (Product::where('slug', $slug)->first()) {

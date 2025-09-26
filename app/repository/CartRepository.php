@@ -29,9 +29,18 @@ class CartRepository
         $order = Order::where($field, $value)
             ->whereNull('submitted')
             ->with(['products' => function ($q) {
-                $q->whereHas('orderItems')
-                    ->withoutTrashed()
-                ->with('shippableUnits');
+                return $q
+                    ->whereHas('orderItems')
+                    ->where('order_product.deleted_at', null)
+                    ->with(['orderItems' => function ($q) {
+                            return
+                                $q->withPrice()
+                                ->with('unit');
+                        }]
+                    )
+                    ->withBaseUnitPrice()
+                    ->withShippableUnitsPrice()
+                ;
             }])
             ->first();
         $o     = $order->toArray();
@@ -47,13 +56,13 @@ class CartRepository
         ])->id;
         $orderItem      = OrderItem::updateOrCreate([
             'order_product_id' => $orderProductId,
-            'unit_id'=>$body['unit_id'],
-            'product_id'=>$body['product_1s_id'],
+            'unit_id' => $body['unit_id'],
+            'product_id' => $body['product_1s_id'],
         ],
-        [
-            'order_product_id' => $orderProductId,
-            'count'=>$body['count'],
-            'product_id'=>$body['product_1s_id'],
-        ]);
+            [
+                'order_product_id' => $orderProductId,
+                'count' => $body['count'],
+                'product_id' => $body['product_1s_id'],
+            ]);
     }
 }

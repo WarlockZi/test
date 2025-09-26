@@ -19,11 +19,14 @@ class ProductController extends AppController
         parent::__construct();
     }
 
+    /**
+     * @throws \Exception
+     */
     #[NoReturn] public function actionIndex(IRequest $request): void
     {
         if (!$request->slug) response()->redirect('Location:/category');
 
-        $product = $this->repo->main($request->slug);
+        $product = $this->repo->index($request->slug);
         if (!$product) {
             $similarCategories = $this->actions->similarProducts($request->slug);
             response()->view('category.notFound',

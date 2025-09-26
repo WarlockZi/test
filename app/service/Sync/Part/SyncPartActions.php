@@ -8,9 +8,9 @@ use AllowDynamicProperties;
 use app\controller\AppController;
 use app\model\Category;
 use app\service\Storage\{app\SyncStorage, StorageDev, StorageLog};
-use app\service\Sync\LoadCategories;
-use app\service\Sync\LoadPrices;
-use app\service\Sync\LoadProducts;
+use app\service\Sync\Load\LoadCategories;
+use app\service\Sync\Load\LoadPrices;
+use app\service\Sync\Load\LoadProducts;
 
 #[AllowDynamicProperties] class SyncPartActions extends AppController
 {

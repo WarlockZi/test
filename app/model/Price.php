@@ -4,7 +4,7 @@ namespace app\model;
 
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Price extends Model
 {
@@ -12,20 +12,28 @@ class Price extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        '1s_id',
-        '1s_art',
-        'unit',
-        'unit_code',
-        'currency',
-        'price',
-        '1s_type_code',
+        'price-type_id',
+        'product_unit_id',
+        'currency_id',
+        'value',
     ];
 
-
-    public function product()
+    public function productUnit(): BelongsTo
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(ProductUnit::class);
+    }
+    public function type(): belongsTo
+    {
+        return $this->belongsTo(PriceType::class);
     }
 
+    public function currency(): belongsTo
+    {
+        return $this->belongsTo(Currency::class);
+    }
+    public function scopeWithPriceTypeAndCurrency($q)
+    {
+        return $q->with(['type', 'currency']);
+    }
 
 }

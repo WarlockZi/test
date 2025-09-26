@@ -3,16 +3,17 @@
 namespace app\model;
 
 
-use app\service\Router\SlugService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Staudenmeir\LaravelAdjacencyList\Eloquent\HasRecursiveRelationships;
 
 class Category extends Model
 {
     use SoftDeletes;
+    use HasRecursiveRelationships;
 
     public $timestamps = true;
     protected $fillable = [
@@ -25,7 +26,10 @@ class Category extends Model
         'deleted_at',
     ];
 
-    protected $appends = ['shortLink', 'href'];
+    protected $appends = [
+//        'shortLink',
+//        'href'
+    ];
 
     public function meta(): hasOne
     {
@@ -37,23 +41,37 @@ class Category extends Model
         )
             ->select(['seo_title', 'seo_desc', 'seo_keywords'])
             ->withDefault(function ($properties, $category) {
-                $properties->seo_title = $properties->seo_title
+                $properties->seo_title    = $properties->seo_title
                     ?? $category->name . " - купить оптом недорого в интернет-магазине VITEX в Вологде";
-                $properties->seo_desc = $properties->seo_desc
+                $properties->seo_desc     = $properties->seo_desc
                     ?? $category->name . ". Интернет-магазин медицинских перчаток, одноразового инструмента и расходников VITEX в Вологде. Оперативный ответ менеджера, быстрая доставка, доступные оптовые цены. Звоните и заказывайте прямо сейчас или на сайте онлайн";
                 $properties->seo_keywords = $properties->seo_keywords
                     ?? $category->name;
             });
     }
-
-    public function productsNotInStore()
+    public function getParentKeyName(): string
     {
-        return $this->hasMany(Product::class,
+        return '1s_category_id';
+    }
+    public function getLocalKeyName(): string
+    {
+        return '1s_id';
+    }
+    public function productsInStore(): hasMany
+    {
+      return $this->hasMany(Product::class,
             '1s_category_id',
-            '1s_id')
-            ->where('instore', 0)
-//            ->with('mainImages')
-            ->orderBy('name');
+            '1s_id',
+        )
+            ->where('instore', '<>', 0)
+            ->with('inactivepromotions')
+            ->with('activepromotions')
+            ->with('compare')
+            ->with('like')
+            ->with('units')
+            ->with('ownProperties')
+            ->orderBy('name')
+;
     }
 
     public function productsNotInStoreInMatrix(): HasMany
@@ -68,29 +86,13 @@ class Category extends Model
             ->with(['activepromotions' => function ($q) {
                 $q->whereNull('active_till');
             }])
-            ->with('ownProperties')
-            ->orderBy('name');
-    }
-
-    public function productsInStore()
-    {
-        $pInStore = $this->hasMany(Product::class,
-            '1s_category_id',
-            '1s_id')
-            ->where('instore', '<>', 0)
-            ->with('inactivepromotions')
-            ->with(['activepromotions' => function ($q) {
-                $q->whereNull('active_till');
-            }])
             ->with('compare')
             ->with('like')
             ->with('units')
             ->with('ownProperties')
-        ;
-
-        return $pInStore;
+            ->orderBy('name')
+            ;
     }
-
 
     public function InactivePromotions()
     {
@@ -129,14 +131,14 @@ class Category extends Model
         return $this->products->activepromotions();
     }
 
-    protected static function booted()
+    protected static function booted(): void
     {
-        static::Updating(function ($category) {
-            if (!$category->slug) {
-                $category->slug = SlugService::slug($category->name);
-            }
-            return $category;
-        });
+//        static::Updating(function ($category) {
+//            if (!$category->slug) {
+//                $category->slug = SlugService::slug($category->name);
+//            }
+//            return $category;
+//        });
     }
 
 
@@ -166,7 +168,7 @@ class Category extends Model
         return $this->morphToMany(Property::class, 'propertable');
     }
 
-    public function products()
+    public function products(): hasMany
     {
         return $this->hasMany(Product::class,
             "1s_category_id",
@@ -204,23 +206,10 @@ class Category extends Model
 
     public function childrenDeleted()
     {
-        return $this
-            ->hasMany(Category::class,
+        return $this->hasMany(Category::class,
                 '1s_category_id',
                 '1s_id')
             ->whereNotNull('deleted_at');
     }
-//    public function cat(): BelongsTo
-//    {
-//        return $this->belongsTo(Category::class,
-//            '1s_category_id',
-//            '1s_id',
-//        );
-//    }
-//
-//    public function parents(): BelongsTo
-//    {
-//        return $this->cat()->with('parents');
-//    }
 
 }

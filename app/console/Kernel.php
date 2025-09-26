@@ -2,7 +2,7 @@
 
 namespace app\console;
 
-use App\Core\Application;
+use app\Application;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
