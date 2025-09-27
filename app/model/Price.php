@@ -5,6 +5,7 @@ namespace app\model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Price extends Model
 {
@@ -24,7 +25,7 @@ class Price extends Model
     }
     public function type(): belongsTo
     {
-        return $this->belongsTo(PriceType::class);
+        return $this->belongsTo(PriceType::class,'price-type_id','id',);
     }
 
     public function currency(): belongsTo

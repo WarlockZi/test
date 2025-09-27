@@ -18,9 +18,8 @@ class ProductRepository
 //            ->whereNotNull('1s_id')
 //            ->with('category.properties.vals')
 //            ->with('values')
-
             ->with([
-                'units.prices',
+                'units.prices.type',
 
 //                'prices',
 //                'units.prices',
