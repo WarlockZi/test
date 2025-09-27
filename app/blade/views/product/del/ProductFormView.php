@@ -223,6 +223,7 @@ class ProductFormView
             ->pageTitle("Единица")
             ->column(
                 ColumnBuilder::build('unit')
+                    ->name('Единица')
                     ->removeDataField()
                     ->attach()
                     ->width('clamp(100px,10vw,130px)')
@@ -230,14 +231,13 @@ class ProductFormView
                         PluckOptionsBuilder::build(Unit::pluck('name', 'id'))
                             ->get())
                         ->get())
-                    ->name('Единица')
                     ->callback(function ($unit) use ($unitFrom1s) {
                         if ($unit->id === $unitFrom1s->id) {
                             return $unitFrom1s->full_name;
                         }
                         return SelectBuilder::build(
                             PluckOptionsBuilder::build(Unit::pluck('full_name', 'id'))
-                                ->selected($unit->id)
+                                ->selected($unit->unit_id)
                                 ->get()
                         )
                             ->get();
@@ -246,48 +246,31 @@ class ProductFormView
             )
             ->column(
                 ColumnBuilder::build('multiplier')
+                    ->name('Коэфф')
                     ->emptyRow('1')
                     ->width('clamp(40px,7vw,55px)')
                     ->removeDataField()
                     ->pivot('multiplier')
-                    ->name('Коэфф')
                     ->callback(function ($unit) {
-                        return $unit->pivot->multiplier;
+                        return $unit->multiplier;
                     })
                     ->contenteditable()
                     ->get()
             )
             ->column(
                 ColumnBuilder::build('is_from_1s')
+                    ->name('Тип')
                     ->emptyRow('0')
                     ->width('clamp(40px,7vw,55px)')
                     ->removeDataField()
                     ->pivot('is_from_1s')
-                    ->name('Тип')
                     ->callback(function ($unit) {
-                        if ($unit->pivot->is_from_1s === 1) {
-                            return 'из 1с';
+                        if ($unit->is_from_1s === 1) {
+                            return '(из 1с)';
                         }
                         return '';
                     })
                     ->contenteditable()
-                    ->get()
-            )
-            ->column(
-                ColumnBuilder::build('base_unit')
-                    ->name('Баз ед')
-                    ->width('35px')
-                    ->removeDataField()
-                    ->emptyRow(function () use ($unitFrom1s) {
-                        return $unitFrom1s->full_name;
-                    })
-                    ->callback(function ($unit) use ($product) {
-                        if (!$product->minUnit) {
-                            return 'базовая ед не установлена';
-                        }
-
-                        return $product->minUnit->first()->name;
-                    })
                     ->get()
             )
             ->column(
@@ -317,33 +300,22 @@ class ProductFormView
             )
             ->column(
                 ColumnBuilder::build('prices')
+                    ->name('Цены')
                     ->removeDataField()
 //                    ->emptyRow(function () {
 //                        return 'ffd';
 //                    })
-                    ->name('Цены')
                     ->callback(function ($unit) {
-                        $prices = [];
+
                         foreach ($unit->prices as $price) {
-                            $prices[] =  number_format($price->value,2, '.',' ');
+                            if ($price->type->type === '1s') {
+                                return '('.
+                                    number_format($price->value, 2, '.', ' ').
+                            ')';
+                            }
+                            return number_format($price->value, 2, '.', ' ');
                         }
-                        $str = implode('<br>',$prices,);
-                        return $str;
-                    })
-                    ->get()
-            )
-            ->column(
-                ColumnBuilder::build('priceы')
-                    ->removeDataField()
-                    ->emptyRow(function () {
-                        return 'ffd';
-                    })
-                    ->name('Цена')
-                    ->callback(function ($unit) use ($unitFrom1s) {
-                        if ($unit->id === $unitFrom1s->id) {
-                            return number_format($unit->price1s->value,2, '.',' ');
-                        }
-                        return '';
+                        return 'нет цен';
                     })
                     ->get()
             )
