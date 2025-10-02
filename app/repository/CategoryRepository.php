@@ -49,6 +49,7 @@ class CategoryRepository
                 $tree = Category::tree()
                     ->with('ownProperties')
                     ->get()->toTree()->toArray();
+                exit($tree);
                 return $tree;
             },
             60);
