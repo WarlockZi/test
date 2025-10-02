@@ -46,10 +46,11 @@
 </head>
 
 <body class="preload">
-
+ddd
 @include('layouts.main.header.index')
 
 <div class="user-content-wrap">
+   ddd
     <main class="user-content">
         @if (Auth::userIsAdmin())
             <div class="admin-gap"></div>
