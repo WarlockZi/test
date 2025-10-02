@@ -35,7 +35,7 @@ class Product extends Model
         'image_id',
         'manufacturer_id',
         'category_id',
-        '1s_category_id',
+        'category_1s_id',
         '1s_id',
         'instore',
         'deleted_at',
@@ -46,17 +46,9 @@ class Product extends Model
         'art' => 'string',
     ];
     protected $appends = [
-        'mainImage'
+        'mainImage',
     ];
 
-    public function productUnits(): HasMany
-    {
-        return $this->hasMany(
-            ProductUnit::class,
-            'product_1s_id',
-            '1s_id',
-        );
-    }
     public function scopeWithShippableUnitsPrice($query)
     {
         return $query->with(['shippableUnits' => function ($q) {
@@ -80,33 +72,6 @@ class Product extends Model
             }
         ]);
     }
-//    public function shippableUnits():belongsToMany
-//    {
-//        return $this->units()
-//            ->wherePivot('is_shippable', '1')
-//            ;
-//    }
-//    public function baseUnit():belongsToMany
-//    {
-//        return $this->units()
-//            ->wherePivot('multiplier', '1')
-//            ;
-//    }
-
-//    public function shippableUnits(): BelongsToMany
-////    {
-////        return $this
-////            ->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
-////            ->withPivot(
-////                'multiplier',
-////                'is_base',
-////                'is_shippable',
-////                'is_from_1s',
-////                'price_id',
-////            )
-////            ->wherePivot('is_shippable', '1')
-////            ->orderByPivot('multiplier');
-////    }
 
     public function orderItem(): hasOneThrough
     {
@@ -290,7 +255,7 @@ class Product extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class,
-            '1s_category_id',
+            'category_1s_id',
             '1s_id',
         );
     }

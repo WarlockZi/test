@@ -63,7 +63,7 @@ class LoadCategories extends LoadService
     protected function fillItem(array $group, string|null $parent): Category
     {
         $item['1s_id']          = $group['Ид'];
-        $item['1s_category_id'] = $parent;
+        $item['category_1s_id'] = $parent;
 
         $item['name']       = $group['Наименование'];
         $item['slug']       = SlugService::slug($item['name']);
@@ -86,8 +86,8 @@ class LoadCategories extends LoadService
     {
         try {
             $catProps = CategoryProperty::firstOrCreate(
-                ['1s_category_id' => $category['1s_id']],
-                ['1s_category_id' => $category['1s_id']],
+                ['category_1s_id' => $category['1s_id']],
+                ['category_1s_id' => $category['1s_id']],
             );
             if (!$catProps->short_link) {
                 $catProps->short_link = ShortlinkService::getValidShortLink();

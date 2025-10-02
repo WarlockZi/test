@@ -86,7 +86,7 @@ class LoadProducts extends LoadService
     private function fillProduct(array $good): array
     {
         $g['1s_id']          = $good['Ид'];
-        $g['1s_category_id'] = $good['Группы']['Ид'];
+        $g['category_1s_id'] = $good['Группы']['Ид'];
         $g['category_id']    = $this->setCategory($good);
         $g['art']            = $good['Артикул'] ? trim($good['Артикул']) : '';
         $g['name']           = $good['Наименование'];
@@ -100,7 +100,7 @@ class LoadProducts extends LoadService
     private function fillProductProperties($good): array
     {
         $g['1s_id']          = $good['Ид'];
-        $g['1s_category_id'] = $good['Группы']['Ид'];
+        $g['category_1s_id'] = $good['Группы']['Ид'];
         $g['category_id']    = $this->setCategory($good);
         $g['art']            = $good['Артикул'] ? trim($good['Артикул']) : '';
         $g['name']           = $good['Наименование'];

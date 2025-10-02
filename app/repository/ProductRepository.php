@@ -4,37 +4,27 @@
 namespace app\repository;
 
 use app\model\Product;
-use app\service\Utils\UtilsServise;
 use Illuminate\Support\Collection;
 
 class ProductRepository
 {
     public function edit(int $id)
     {
-//        UtilsServise::cleanUnitsFromIs();
-        return Product::query()
+        $product = Product::query()
             ->withTrashed()
-            ->where('id', $id)
-//            ->whereNotNull('1s_id')
-//            ->with('category.properties.vals')
-//            ->with('values')
+            ->with('category.properties.vals')
+            ->with('values')
             ->with([
-                'units.prices.type',
-
-//                'prices',
-//                'units.prices',
-                'unitFrom1s'
+                'units.prices',
             ])
-//            ->with('shippableUnits')
-//            ->with('unitFrom1s.price1s.type')
-
-//            ->with('ownProperties')
-//            ->with('category.parentRecursive')
-//            ->with('manufacturer.country')
-//            ->with('promotions')
-//            ->with('activePromotions')
-//            ->with('inactivePromotions')
-            ->first();
+            ->with('ownProperties')
+            ->with('category.parentRecursive')
+            ->with('manufacturer.country')
+            ->with('promotions')
+            ->with('activePromotions')
+            ->with('inactivePromotions')
+            ->find($id);
+        return $product;
     }
 
     public function index(string $slug): ?Product

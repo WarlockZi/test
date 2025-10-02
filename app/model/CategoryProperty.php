@@ -25,7 +25,7 @@ class CategoryProperty extends Model
         'leader',
         'show_front',
         'sort',
-        '1s_category_id',
+        'category_1s_id',
         'path',
     ];
 
@@ -34,7 +34,7 @@ class CategoryProperty extends Model
     public function category()
     {
         return $this->belongsTo(Category::class,
-            '1s_category_id',
+            'category_1s_id',
             '1s_id');
     }
 

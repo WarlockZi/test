@@ -77,9 +77,9 @@ class CategoryRepository
     {
         return Cache::remember('categoryTree',
             function () {
-                return Category::whereNull('1s_category_id')
+                return Category::whereNull('category_1s_id')
                     ->with('childrenRecursive')
-                    ->get(['id', '1s_id', '1s_category_id', 'name'])
+                    ->get(['id', '1s_id', 'category_1s_id', 'name'])
                     ->toArray();
             },
             Cache::$timeLife10_000

@@ -71,7 +71,7 @@ class CategoryFormView
                 ItemFieldBuilder::build('category_id', $category)
                     ->name('Принадлежит')
                     ->html(
-                        self::selectorByField(['1s_category_id' => $category['1s_category_id']])
+                        self::selectorByField(['category_1s_id' => $category['category_1s_id']])
                     )
                     ->get()
             )
@@ -141,7 +141,7 @@ class CategoryFormView
             CategoryRepository::treeAll(),
             'children_recursive', 2)
             ->initialOption()
-            ->selected($category['1s_category_id'])
+            ->selected($category['category_1s_id'])
             ->excluded($category->id)
             ->get();
 

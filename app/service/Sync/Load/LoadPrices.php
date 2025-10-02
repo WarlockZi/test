@@ -17,6 +17,7 @@ class LoadPrices extends LoadService
 {
     use MeasureTime;
     use ChunkTrait;
+
     private array $offer;
     private $currency1s;
     private $unit;
@@ -89,14 +90,16 @@ class LoadPrices extends LoadService
 
     protected function firstOrCreatePruductUnit(): void
     {
-        $this->productUnit = ProductUnit::firstOrCreate(
-            ['product_1s_id' => $this->product['1s_id'],
-                'unit_id' => $this->unit->id,
-                'is_from_1s' => 1,
-            ],
-            ['is_shippable' => 0,
-                'multiplier' => null,
-            ]);
+        $this->productUnit = ProductUnit::where('price', '<>', null)
+            ->firstOrCreate(
+                ['product_1s_id' => $this->product['1s_id'],
+                    'unit_id' => $this->unit->id,
+
+                ],
+                ['is_shippable' => null,
+                    'multiplier' => null,
+                    'price'=>$this->offer['price']
+                ]);
     }
 
     protected function updateOrCreatePrice(): void
@@ -108,7 +111,7 @@ class LoadPrices extends LoadService
                 'currency_id' => $this->currency1s->id,
             ],
             [
-                'value' => $this->offer['value'] ?? '',
+                'value' => $this->offer['price'] ?? '',
             ]);
     }
 
@@ -119,7 +122,7 @@ class LoadPrices extends LoadService
             'art' => trim($data['Артикул']),
             'instore' => trim($data['Количество']),
 
-            'value' => trim($data['Цены']['Цена']['ЦенаЗаЕдиницу'] ?? ''),
+            'price' => trim($data['Цены']['Цена']['ЦенаЗаЕдиницу'] ?? ''),
             'currency' => trim($data['Цены']['Цена']['Валюта']),
 
             'unit_code' => trim($data['БазоваяЕдиница']['@attributes']['Код'] ?? ''),
