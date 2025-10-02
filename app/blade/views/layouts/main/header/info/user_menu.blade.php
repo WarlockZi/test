@@ -2,6 +2,7 @@
     use app\service\AuthService\Auth;
     use app\view\components\Icon\Icon;
     $user = Auth::getUser();
+    echo $user;
 @endphp
 
 @if (!$user)
