@@ -3,6 +3,7 @@
     use app\view\components\Icon\Icon;
     $user = Auth::getUser();
     var_dump($user);
+    exit($user);
 @endphp
 
 @if (!$user)
