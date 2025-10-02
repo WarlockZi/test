@@ -9,8 +9,9 @@ storage/framework/container/CompiledContainer.php
 storage/framework/caches/blade/*
 storage/logs/**/*
 storage/app/userData/**/*
-app/storage/sync/*
-!app/storage/sync/.gitkeep
+
+storage/app/sync/*
+!storage/app/sync/.gitkeep
 
 composer.phar
 composer.lock
