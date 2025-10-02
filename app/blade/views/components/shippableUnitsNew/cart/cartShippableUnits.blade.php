@@ -27,7 +27,7 @@
             >
 
             <div class="unit-name">
-                @php(xdebug_break())
+{{--                @php(xdebug_break())--}}
                 <span class="name">{!! $unit['name'] !!}</span>
 
                     <div class="ps-2 description text-small">
