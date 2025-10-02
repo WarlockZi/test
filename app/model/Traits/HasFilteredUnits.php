@@ -4,29 +4,22 @@ namespace app\model\Traits;
 
 use app\model\ProductUnit;
 use app\model\Unit;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 trait HasFilteredUnits
 {
-    public function units(): HasMany
+    public function units()
     {
-        return $this->hasMany(ProductUnit::class, 'product_1s_id', '1s_id');
-    }
-
-    public function unitFrom1s()
-    {
-        return $this->units()->where('is_from_1s', 1);
-    }
-
-    public function minUnit()
-    {
-        return $this->units()->where('multiplier', 1);
-    }
-
-    public function shippableUnits(): HasMany
-    {
-        return $this->units()->where('is_shippable', 1);
+        return $this->belongsToMany(
+            Unit::class,
+            'product_unit',
+            'product_1s_id',
+            'unit_id',
+            '1s_id',
+            'id',
+        )
+            ->using(ProductUnit::class)
+            ->orderByPivot('multiplier')
+            ->withPivot('id','price','is_shippable','multiplier')
+ ;
     }
 }

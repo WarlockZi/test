@@ -19,7 +19,7 @@ class Category extends Model
     protected $fillable = [
         'name',
         'slug',
-        '1s_category_id',
+        'category_1s_id',
         '1s_id',
         'created_at',
         'updated_at',
@@ -36,7 +36,7 @@ class Category extends Model
         $self = $this;
         return $this->hasOne(
             CategoryProperty::class,
-            '1s_category_id',
+            'category_1s_id',
             '1s_id'
         )
             ->select(['seo_title', 'seo_desc', 'seo_keywords'])
@@ -51,7 +51,7 @@ class Category extends Model
     }
     public function getParentKeyName(): string
     {
-        return '1s_category_id';
+        return 'category_1s_id';
     }
     public function getLocalKeyName(): string
     {
@@ -60,7 +60,7 @@ class Category extends Model
     public function productsInStore(): hasMany
     {
       return $this->hasMany(Product::class,
-            '1s_category_id',
+            'category_1s_id',
             '1s_id',
         )
             ->where('instore', '<>', 0)
@@ -77,7 +77,7 @@ class Category extends Model
     public function productsNotInStoreInMatrix(): HasMany
     {
         return $this->hasMany(Product::class,
-            '1s_category_id',
+            'category_1s_id',
             '1s_id',
         )
             ->where('instore', 0)
@@ -114,7 +114,7 @@ class Category extends Model
     {
         return collect([$this])->merge(
             $this->childrenRecursive->flatMap(function ($q) {
-                return $q->flatSelfAndChildren ?? collect([$this->id, $this->name, $this['1s_category_id']]);
+                return $q->flatSelfAndChildren ?? collect([$this->id, $this->name, $this['category_1s_id']]);
             })
         );
     }
@@ -153,7 +153,7 @@ class Category extends Model
     public function ownProperties(): HasOne
     {
         return $this->hasOne(CategoryProperty::class,
-            '1s_category_id',
+            'category_1s_id',
             '1s_id');
     }
 
@@ -171,7 +171,7 @@ class Category extends Model
     public function products(): hasMany
     {
         return $this->hasMany(Product::class,
-            "1s_category_id",
+            "category_1s_id",
             '1s_id'
         )
             ->orderByDesc('name');
@@ -181,7 +181,7 @@ class Category extends Model
     public function parent(): BelongsTo
     {
         return $this->belongsTo(Category::class,
-            '1s_category_id',
+            'category_1s_id',
             '1s_id'
         );
     }
@@ -199,7 +199,7 @@ class Category extends Model
     public function childrenNotDeleted(): HasMany
     {
         return $this->hasMany(Category::class,
-            '1s_category_id',
+            'category_1s_id',
             '1s_id',
         );
     }
@@ -207,7 +207,7 @@ class Category extends Model
     public function childrenDeleted()
     {
         return $this->hasMany(Category::class,
-                '1s_category_id',
+                'category_1s_id',
                 '1s_id')
             ->whereNotNull('deleted_at');
     }

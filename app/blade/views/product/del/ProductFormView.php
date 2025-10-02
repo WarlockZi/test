@@ -215,7 +215,7 @@ class ProductFormView
 
     protected static function units(Product $product): array
     {
-        $unitFrom1s = $product->unitFrom1s->toArray();
+//        $unitFrom1s = $product->unitFrom1s->toArray();
         $p          = $product->toArray();
         return Table::build($product->units)
             ->class('units')
@@ -231,13 +231,13 @@ class ProductFormView
                         PluckOptionsBuilder::build(Unit::pluck('name', 'id'))
                             ->get())
                         ->get())
-                    ->callback(function ($unit) use ($unitFrom1s) {
-                        if ($unit->id === $unitFrom1s->id) {
-                            return $unitFrom1s->full_name;
+                    ->callback(function ($unit)  {
+                        if ($unit->pivot->price) {
+                            return $unit->full_name;
                         }
                         return SelectBuilder::build(
                             PluckOptionsBuilder::build(Unit::pluck('full_name', 'id'))
-                                ->selected($unit->unit_id)
+                                ->selected($unit->id)
                                 ->get()
                         )
                             ->get();
@@ -252,7 +252,7 @@ class ProductFormView
                     ->removeDataField()
                     ->pivot('multiplier')
                     ->callback(function ($unit) {
-                        return $unit->multiplier;
+                        return $unit->pivot->multiplier;
                     })
                     ->contenteditable()
                     ->get()
@@ -265,7 +265,7 @@ class ProductFormView
                     ->removeDataField()
                     ->pivot('is_from_1s')
                     ->callback(function ($unit) {
-                        if ($unit->is_from_1s === 1) {
+                        if ($unit->pivot->price) {
                             return '(из 1с)';
                         }
                         return '';

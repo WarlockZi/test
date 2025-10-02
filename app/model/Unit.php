@@ -3,9 +3,7 @@
 namespace app\model;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+
 
 class Unit extends Model
 {
@@ -17,47 +15,31 @@ class Unit extends Model
     ];
 
     public $timestamps = false;
-//    public function prices(): HasMany
-//    {
-//        return $this->hasMany(Price::class, 'product_unit_id');
-//    }
-//    public function prices(): hasManyThrough
-//    {
-//        return $this->hasManyThrough(
-//            Price::class,
-//            ProductUnit::class,
-//            'unit_id',
-//            'product_unit_id',
-//            'id',
-//            'id',
-//        );
-//    }
-//    public function prices(): belongsToMany
-//    {
-//        return $this->belongsToMany(
-//            Price::class,
-//            'product_unit',
-//            'unit_id', // Внешний ключ в product_unit
-//            'id', // Локальный ключ в units
-//            'id', // Локальный ключ в product_unit
-//            'product_unit_id', // Внешний ключ в prices
-//        )
-//            ->using(ProductUnit::class)
-//            ->withPivot('id')
-//            ;
-//    }
-    public function price1s(): belongsToMany
+
+   public function products()
     {
         return $this->belongsToMany(
-            Price::class,
+            Product::class,
             'product_unit',
-
+            'product_1s_id',
             'unit_id',
             'id',
-            'id',
-            'product_unit_id',
+            '1s_id',
+        );
+    }
+    public function prices()
+    {
+        $productId = $this->products()->first()->pivot->product_1s_id;
+        return $this->hasManyThrough(
+            Price::class,
+            ProductUnit::class, // промежуточная модель
+            'unit_id', // внешний ключ в промежуточной таблице
+            'product_unit_id', // внешний ключ в целевой таблице
+            'id', // локальный ключ
+            'id' // ключ в промежуточной таблице
         )
-            ->using(ProductUnit::class)
+            ->where('product_unit.product_1s_id',$productId)
+            ->with(['type','currency'])
             ;
     }
 }
