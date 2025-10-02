@@ -1,6 +1,7 @@
 @php
     $level = 1;
     $rootCategories = APP->get('rootCategories');
+    var_dump($rootCategories);
 @endphp
 
 @foreach ($rootCategories as $rootCategory)
