@@ -61,7 +61,7 @@ class Category extends Model
     {
       return $this->hasMany(Product::class,
             'category_1s_id',
-            '1s_id',
+            's_id',
         )
             ->where('instore', '<>', 0)
             ->with('inactivepromotions')
@@ -78,7 +78,7 @@ class Category extends Model
     {
         return $this->hasMany(Product::class,
             'category_1s_id',
-            '1s_id',
+            's_id',
         )
             ->where('instore', 0)
             ->where('name', 'regexp', '\\s?\\*\\s?$')
@@ -154,7 +154,7 @@ class Category extends Model
     {
         return $this->hasOne(CategoryProperty::class,
             'category_1s_id',
-            '1s_id');
+            's_id');
     }
 
     public function scopeWithWhereHas($query, $relation, $constraint)
@@ -172,7 +172,7 @@ class Category extends Model
     {
         return $this->hasMany(Product::class,
             "category_1s_id",
-            '1s_id'
+            's_id'
         )
             ->orderByDesc('name');
     }
@@ -182,7 +182,7 @@ class Category extends Model
     {
         return $this->belongsTo(Category::class,
             'category_1s_id',
-            '1s_id'
+            's_id'
         );
     }
 
@@ -200,7 +200,7 @@ class Category extends Model
     {
         return $this->hasMany(Category::class,
             'category_1s_id',
-            '1s_id',
+            's_id',
         );
     }
 
@@ -208,7 +208,7 @@ class Category extends Model
     {
         return $this->hasMany(Category::class,
                 'category_1s_id',
-                '1s_id')
+                's_id')
             ->whereNotNull('deleted_at');
     }
 

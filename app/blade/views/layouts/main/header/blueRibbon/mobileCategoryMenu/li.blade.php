@@ -1,5 +1,5 @@
 {{--@php(xdebug_break())--}}
-@if(!count($child['children']))
+@if(!count($child['children_recursive']))
 
     <li class="nav-item">
         <a class="nav-link" href="<?= $child['own_properties']['path']; ?>">

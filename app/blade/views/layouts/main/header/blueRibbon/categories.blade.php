@@ -13,8 +13,8 @@
             <ul class="h-cat_submenu level-{!! $level !!}">
 
 
-                @if(!empty($rootCategory['children']))
-                    @foreach($rootCategory['children'] as $child)
+                @if(!empty($rootCategory['children_recursive']))
+                    @foreach($rootCategory['children_recursive'] as $child)
                         {{--                    @php(xdebug_break())--}}
                         @include('layouts.main.header.blueRibbon.headerCategoryMenu.li',compact('child','level'))
                     @endforeach

@@ -7,7 +7,6 @@ namespace app\repository;
 use app\model\Category;
 use app\service\Breadcrumbs\NewBread;
 use app\service\Cache\Redis\Cache;
-use Throwable;
 
 class CategoryRepository
 {
@@ -40,27 +39,41 @@ class CategoryRepository
             $cacheTime);
     }
 
-
     public static function rootCategories(): array
     {
         return Cache::remember(
-        /**
-         * @throws \Exception
-         */ 'rootCategories',
+            'rootCategories',
             function () {
-                try {
-                    $tree = Category::tree()
-                        ->with('ownProperties')
-                        ->get()
-                        ->toTree()->toArray();
-                } catch (Throwable $exception) {
-                    throw new \Exception('rootCategories tree is empty' . $exception);
-                }
-
-                return $tree;
+                return Category::withWhereHas(
+                    'ownProperties',
+                    fn($q) => $q->where('show_front', 1))
+                    ->with('childrenRecursive')
+                    ->with('ownProperties')
+                    ->get()->toArray();
             },
             60);
     }
+
+//    public static function rootCategories(): array
+//    {
+//        return Cache::remember(
+//        /**
+//         * @throws \Exception
+//         */ 'rootCategories',
+//            function () {
+//                try {
+//                    $tree = Category::tree()
+//                        ->with('ownProperties')
+//                        ->get()
+//                        ->toTree()->toArray();
+//                } catch (Throwable $exception) {
+//                    throw new \Exception('rootCategories tree is empty' . $exception);
+//                }
+//
+//                return $tree;
+//            },
+//            60);
+//    }
 
     public static function getBySubslug(string $subslug): object|null
     {
