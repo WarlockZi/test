@@ -7,6 +7,7 @@ namespace app\repository;
 use app\model\Category;
 use app\service\Breadcrumbs\NewBread;
 use app\service\Cache\Redis\Cache;
+use Throwable;
 
 class CategoryRepository
 {
@@ -43,15 +44,19 @@ class CategoryRepository
     public static function rootCategories(): array
     {
         return Cache::remember(
-            'rootCategories',
+        /**
+         * @throws \Exception
+         */ 'rootCategories',
             function () {
-                $tree = Category::tree()
-                    ->with('ownProperties')
-                    ->get()
-                    ->toTree()->toArray();
-                if (empty($tree)) {
-                    throw new \Exception('rootCategories tree is empty');
+                try {
+                    $tree = Category::tree()
+                        ->with('ownProperties')
+                        ->get()
+                        ->toTree()->toArray();
+                } catch (Throwable $exception) {
+                    throw new \Exception('rootCategories tree is empty' . $exception);
                 }
+
                 return $tree;
             },
             60);
