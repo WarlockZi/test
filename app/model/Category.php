@@ -20,7 +20,7 @@ class Category extends Model
         'name',
         'slug',
         'category_1s_id',
-        '1s_id',
+        's_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -37,7 +37,7 @@ class Category extends Model
         return $this->hasOne(
             CategoryProperty::class,
             'category_1s_id',
-            '1s_id'
+            's_id'
         )
             ->select(['seo_title', 'seo_desc', 'seo_keywords'])
             ->withDefault(function ($properties, $category) {
@@ -55,7 +55,7 @@ class Category extends Model
     }
     public function getLocalKeyName(): string
     {
-        return '1s_id';
+        return 's_id';
     }
     public function productsInStore(): hasMany
     {

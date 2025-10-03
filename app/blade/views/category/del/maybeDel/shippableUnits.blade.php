@@ -1,5 +1,5 @@
 @php
-    use    \app\view\components\Sshippable\ShippUnits;
+    use    \app\view\components\Shippable\ShippUnits;
     //    xdebug_break()
 @endphp
 

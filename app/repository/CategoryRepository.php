@@ -21,7 +21,7 @@ class CategoryRepository
             function () use ($url) {
                 $category = Category::query()
                     ->with('meta')
-                    ->with(['childrenRecursive'=>fn($q)=>$q->with('ownProperties')])
+                    ->with(['childrenRecursive' => fn($q) => $q->with('ownProperties')])
                     ->with('parentRecursive')
                     ->withWhereHas('ownProperties',
                         fn($query) => $query->where('path', 'like', $url)
@@ -40,7 +40,6 @@ class CategoryRepository
     }
 
 
-
     public static function rootCategories(): array
     {
         return Cache::remember(
@@ -48,7 +47,8 @@ class CategoryRepository
             function () {
                 $tree = Category::tree()
                     ->with('ownProperties')
-                    ->get()->toTree()->toArray();
+                    ->get()
+                    ->toTree()->toArray();
                 if (empty($tree)) {
                     throw new \Exception('rootCategories tree is empty');
                 }
