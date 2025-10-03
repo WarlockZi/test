@@ -1,12 +1,8 @@
+@extends('layouts.main.main_with_meta')
 @php
-use app\controller\Address;
+    use app\controller\Address;
 @endphp
 
-@section('title', $meta->title)
-@section('description', $meta->description)
-@section('keywords', $meta->keywords)
-
-@extends('layouts.main.main')
 
 @section('content')
     <main class="contacts">

@@ -49,7 +49,9 @@ class CategoryRepository
                 $tree = Category::tree()
                     ->with('ownProperties')
                     ->get()->toTree()->toArray();
-                exit($tree);
+                if (empty($tree)) {
+                    throw new \Exception('rootCategories tree is empty');
+                }
                 return $tree;
             },
             60);

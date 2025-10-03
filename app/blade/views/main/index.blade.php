@@ -1,12 +1,8 @@
+@extends('layouts.main.main_with_meta')
+
 @php
     use app\view\components\Icon\Icon;
 @endphp
-
-@section('title', $meta['title'])
-@section('description', $meta['description'])
-@section('keywords', $meta['keywords'])
-
-@extends('layouts.main.main')
 
 
 @section('content')
@@ -88,7 +84,8 @@
             <div class="block1">
                 <p style="margin: auto; text-align: center;"><img
                             style="width:clamp(6vw, 9vw, 150px);object-fit:scale-down;"
-                            src="/storage/app/pic/icons/21288567_user-experience_12440970_7447763.svg" class="img_main"></p>
+                            src="/storage/app/pic/icons/21288567_user-experience_12440970_7447763.svg" class="img_main">
+                </p>
                 <p style="margin: auto; text-align: center;">Вы звоните нам или оставляете заявку через форму на
                     сайте</p>
             </div>
@@ -97,7 +94,7 @@
             <div class="block1">
                 <p style="margin: auto; text-align: center;">
                     <img style="width:clamp(6vw, 9vw, 150px);object-fit:scale-down;"
-                            src="/storage/app/pic/icons/21288568_shopping-list_12441220_7447763.svg" class="img_main"></p>
+                         src="/storage/app/pic/icons/21288568_shopping-list_12441220_7447763.svg" class="img_main"></p>
                 <p style="margin: auto; text-align: center;">Выставляем счет на оплату</p>
             </div>
             <p style="margin-top: 60px;"><img src="/storage/app/pic/icons/strelka.png" class="strelka"></p>
@@ -106,7 +103,7 @@
                 <p style="margin: auto; text-align: center;"><img
                             style="width:clamp(6vw, 9vw, 150px);object-fit:scale-down;"
                             src="/storage/app/pic/icons/21288566_payment_9341320_7447763.svg"
-                                                                  class="img_main"></p>
+                            class="img_main"></p>
                 <p style="margin: auto; text-align: center;">Вы оплачиваете покупку</p>
             </div>
             <p style="margin-top: 60px;"><img src="/storage/app/pic/icons/strelka.png" class="strelka"></p>
@@ -114,7 +111,8 @@
             <div class="block1">
                 <p style="margin: auto; text-align: center;"><img
                             style="width:clamp(6vw, 9vw, 150px);object-fit:scale-down;"
-                            src="/storage/app/pic/icons/21288569_delivery-truck_17264164_7447763.svg" class="img_main"></p>
+                            src="/storage/app/pic/icons/21288569_delivery-truck_17264164_7447763.svg" class="img_main">
+                </p>
                 <p style="margin: auto; text-align: center;">Мы доставляем товар до клиента</p>
             </div>
         </div>
@@ -122,7 +120,6 @@
     </div>
 
     @include('main.brands')
-
 
 @endsection
 
