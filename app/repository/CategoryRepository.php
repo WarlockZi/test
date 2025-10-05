@@ -47,9 +47,7 @@ class CategoryRepository
                 return Category::withWhereHas(
                     'ownProperties',
                     fn($q) => $q->where('show_front', 1))
-                    ->with(['childrenRecursive'=>function($q){
-                        return $q->with('ownProperties');
-                    }])
+                    ->with('childrenRecursive')
                     ->with('ownProperties')
                     ->get()->toArray();
             },

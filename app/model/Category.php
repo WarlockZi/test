@@ -31,6 +31,41 @@ class Category extends Model
 //        'href'
     ];
 
+    public function childrenRecursive(): HasMany
+    {
+        return $this->childrenWithOwnProps()->with('childrenRecursive');
+    }
+    public function childrenRecursiveWithOwnProps(): HasMany
+    {
+        return $this
+            ->childrenWithOwnProps()
+            ->with('childrenRecursiveWithOwnProps');
+    }
+
+    public function childrenWithOwnProps(): HasMany
+    {
+        return $this->hasMany(Category::class,
+            'category_1s_id',
+            's_id',
+        )
+            ->with('ownProperties');
+    }
+
+    public function children(): HasMany
+    {
+        return $this->hasMany(Category::class,
+            'category_1s_id',
+            's_id',
+        );
+    }
+
+    public function ownProperties(): HasOne
+    {
+        return $this->hasOne(CategoryProperty::class,
+            'category_1s_id',
+            's_id');
+    }
+
     public function meta(): hasOne
     {
         $self = $this;
@@ -49,17 +84,20 @@ class Category extends Model
                     ?? $category->name;
             });
     }
+
     public function getParentKeyName(): string
     {
         return 'category_1s_id';
     }
+
     public function getLocalKeyName(): string
     {
         return 's_id';
     }
+
     public function productsInStore(): hasMany
     {
-      return $this->hasMany(Product::class,
+        return $this->hasMany(Product::class,
             'category_1s_id',
             's_id',
         )
@@ -70,8 +108,7 @@ class Category extends Model
             ->with('like')
             ->with('units')
             ->with('ownProperties')
-            ->orderBy('name')
-;
+            ->orderBy('name');
     }
 
     public function productsNotInStoreInMatrix(): HasMany
@@ -90,8 +127,7 @@ class Category extends Model
             ->with('like')
             ->with('units')
             ->with('ownProperties')
-            ->orderBy('name')
-            ;
+            ->orderBy('name');
     }
 
     public function InactivePromotions()
@@ -131,30 +167,12 @@ class Category extends Model
         return $this->products->activepromotions();
     }
 
-    protected static function booted(): void
-    {
-//        static::Updating(function ($category) {
-//            if (!$category->slug) {
-//                $category->slug = SlugService::slug($category->name);
-//            }
-//            return $category;
-//        });
-    }
-
-
     public function mainImages()
     {
         return $this->morphToMany(
             Image::class,
             'imageable',
         )->where('slug', '=', 'main');
-    }
-
-    public function ownProperties(): HasOne
-    {
-        return $this->hasOne(CategoryProperty::class,
-            'category_1s_id',
-            's_id');
     }
 
     public function scopeWithWhereHas($query, $relation, $constraint)
@@ -177,7 +195,6 @@ class Category extends Model
             ->orderByDesc('name');
     }
 
-
     public function parent(): BelongsTo
     {
         return $this->belongsTo(Category::class,
@@ -191,24 +208,11 @@ class Category extends Model
         return $this->parent()->with('parentRecursive');
     }
 
-    public function childrenRecursive(): HasMany
-    {
-        return $this->childrenNotDeleted()->with('childrenRecursive');
-    }
-
-    public function childrenNotDeleted(): HasMany
-    {
-        return $this->hasMany(Category::class,
-            'category_1s_id',
-            's_id',
-        );
-    }
-
     public function childrenDeleted()
     {
         return $this->hasMany(Category::class,
-                'category_1s_id',
-                's_id')
+            'category_1s_id',
+            's_id')
             ->whereNotNull('deleted_at');
     }
 

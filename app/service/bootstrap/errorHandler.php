@@ -23,7 +23,6 @@ if (DEV) {
 function productionErrorHandler($errno, $errstr, $errfile, $errline)
 {
     error_log("Production Error [$errno]: $errstr in $errfile on line $errline");
-    exit($errstr);
     if (!headers_sent()) {
         header('HTTP/1.1 500 Internal Server Error');
         view('category.notFound');
@@ -36,7 +35,6 @@ function productionErrorHandler($errno, $errstr, $errfile, $errline)
 function productionExceptionHandler($exception): void
 {
     $req0 = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : 'REQUEST_URI is empty';
-    exit($exception->getMessage());
     error_log(
         "Production exception: " . $exception->getMessage() . PHP_EOL .
         " in file: " . $exception->getFile() . PHP_EOL .
@@ -55,7 +53,6 @@ function productionExceptionHandler($exception): void
 function productionShutdownHandler($e): void
 {
     $error = error_get_last();
-    exit($error);
     if ($error && in_array($error['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR])) {
         productionErrorHandler($error['type'], $error['message'], $error['file'], $error['line']);
         view('category.notFound');

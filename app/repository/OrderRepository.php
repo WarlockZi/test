@@ -73,7 +73,7 @@ class OrderRepository
                         $q->with('unit', 'price.currency', 'price.type');
                     }])
                     ->withoutTrashed()
-                    ->with('unitFrom1s')
+//                    ->with('unitFrom1s')
                 ;
             }])
             ->first();

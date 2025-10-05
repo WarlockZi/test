@@ -92,7 +92,8 @@ return [
         return OrderRepository::productsCount();
     },
     'rootCategories' => function () {
-        return CategoryRepository::rootCategories();
+        $r = CategoryRepository::rootCategories();
+        return $r;
     },
 
     FS::class => function (ContainerInterface $c, $dir) {

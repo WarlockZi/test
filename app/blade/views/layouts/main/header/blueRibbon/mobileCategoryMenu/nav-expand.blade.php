@@ -7,7 +7,7 @@
     <ul class="nav-items nav-expand-content">
 
         <li class="nav-item">
-
+{{--            @php(xdebug_break())--}}
             @if(count($child['children_recursive']))
                 @foreach($child['children_recursive'] as $child)
                     @include('layouts.main.header.blueRibbon.mobileCategoryMenu.li', compact('child'))
