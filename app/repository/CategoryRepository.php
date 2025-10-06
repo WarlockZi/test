@@ -14,7 +14,6 @@ class CategoryRepository
     public function indexInstore(string $slug): object|null
     {
         $cacheKey  = 'categoryWithProducts' . str_replace("/", "", $slug);
-        $cacheTime = DEV ? null : Cache::$timeLife1_000;
 
         return Cache::remember($cacheKey,
             function () use ($slug) {
@@ -38,7 +37,7 @@ class CategoryRepository
                 return null;
 //                $o = $category->toArray();
             },
-            $cacheTime);
+            Cache::$timeLife1_000);
     }
 
     public static function rootCategories(): array

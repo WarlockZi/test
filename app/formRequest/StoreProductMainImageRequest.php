@@ -3,6 +3,7 @@
 namespace app\formRequest;
 
 use AllowDynamicProperties;
+use app\formRequest\baseFormRequests\FormRequest;
 
 
 #[AllowDynamicProperties] class StoreProductMainImageRequest extends FormRequest
