@@ -14,7 +14,7 @@ class CategoryRepository
     public function indexInstore(string $slug): object|null
     {
         $cacheKey  = 'categoryWithProducts' . str_replace("/", "", $slug);
-        $cacheTime = DEV ? Cache::$timeLife1_000 : 0;
+        $cacheTime = DEV ? null : Cache::$timeLife1_000;
 
         return Cache::remember($cacheKey,
             function () use ($slug) {

@@ -4,7 +4,7 @@ import { post } from "../../common.js";
 export default class adminPanel {
   constructor() {
     this.panel = document[qs](".admin-panel");
-    if (!this.panel.className) return;
+    if (!this.panel) return;
     this.panel[ael]("click", this.handleClick.bind(this));
   }
 
