@@ -54,6 +54,7 @@ function productionExceptionHandler($exception): void
 function productionShutdownHandler($e): void
 {
     $error = error_get_last();
+    error_log("Production shutdownHandler: ".$error );
     if ($error && in_array($error['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR])) {
         productionErrorHandler($error['type'], $error['message'], $error['file'], $error['line']);
         view('category.notFound');

@@ -177,20 +177,20 @@ class Response
         $nonce = $nonce->getNonce();
 
         $csp = [
-//            "default-src 'self'",
-//            "script-src 'self' https://vi-prod:5173 'nonce-$nonce' ",
-//            "style-src 'self' localhost:5173 'nonce-$nonce' ",
-//
-//            "style-src-elem https://fonts.googleapis.com 'unsafe-inline'",
-//            "font-src fonts.gstatic.com",
-//            "connect-src 'self' wss://localhost:5173 https://vitexopt.ru",
-//            "script-src-attr 'unsafe-inline'",
-//
-//            "img-src 'self' data:",
-//            "frame-ancestors 'none'",
-//            "form-action 'self'",
-//            "base-uri 'self'",
-//            "object-src 'none'"
+            "default-src 'self'",
+            "script-src 'self' https://vi-prod:5173 'nonce-$nonce' ",
+            "style-src 'self' localhost:5173 'nonce-$nonce' ",
+
+            "style-src-elem https://fonts.googleapis.com 'unsafe-inline'",
+            "font-src fonts.gstatic.com",
+            "connect-src 'self' wss://localhost:5173 https://vitexopt.ru",
+            "script-src-attr 'unsafe-inline'",
+
+            "img-src 'self' data:",
+            "frame-ancestors 'none'",
+            "form-action 'self'",
+            "base-uri 'self'",
+            "object-src 'none'"
         ];
 
         header("Content-Security-Policy: " . implode('; ', $csp));
@@ -219,26 +219,31 @@ class Response
 
     #[NoReturn] public function send(): void
     {
-        http_response_code($this->status);
+        try {
+            http_response_code($this->status);
 
-        foreach ($this->headers as $name => $value) {
-            header("{$name}: {$value}");
+            foreach ($this->headers as $name => $value) {
+                header("{$name}: {$value}");
+            }
+
+            foreach ($this->cookies as $cookie) {
+                setcookie(
+                    $cookie['name'],
+                    $cookie['value'],
+                    $cookie['minutes'] ? time() + ($cookie['minutes'] * 60) : 0,
+                    $cookie['path'],
+                    $cookie['domain'],
+                    $cookie['secure'],
+                    $cookie['httpOnly']
+                );
+            }
+
+            echo $this->content;
+            exit;
+        }catch (\Throwable $throwable) {
+            $t = $throwable;
         }
 
-        foreach ($this->cookies as $cookie) {
-            setcookie(
-                $cookie['name'],
-                $cookie['value'],
-                $cookie['minutes'] ? time() + ($cookie['minutes'] * 60) : 0,
-                $cookie['path'],
-                $cookie['domain'],
-                $cookie['secure'],
-                $cookie['httpOnly']
-            );
-        }
-
-        echo $this->content;
-        exit;
     }
 }
 
