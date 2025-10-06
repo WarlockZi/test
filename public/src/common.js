@@ -384,6 +384,10 @@ async function post(url, data = {}, headers = {}) {
   const header = setHeaders(data, headers);
   const init = { method: "POST", header, body };
 
+  // Verify the login endpoint exists
+  fetch("https://vitexopt.ru/auth/login", { method: "HEAD" }).then((response) =>
+    console.log("Login endpoint:", response.status),
+  );
   const res = await sendPost(url, init).catch((err) => {
     console.log(err);
   });
