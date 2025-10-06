@@ -94,6 +94,11 @@ class Response
             'Content-Type' => 'application/json; charset=UTF-8'
         ], $headers);
 
+        exit(
+            $this->content.'<br>'.
+            $this->status.'<br>'.
+            json_encode($this->headers).'<br>'
+        );
         $this->send();
     }
     #[NoReturn] public function consoleLog(array $data = [], int $status = 200, array $headers = []): \Symfony\Component\HttpFoundation\Response
