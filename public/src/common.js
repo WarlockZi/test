@@ -429,9 +429,6 @@ function isPlainObject(obj) {
 }
 
 function sendPost(url, init) {
-  fetch("https://vitexopt.ru/auth/register", { method: "POST" }).then(
-    (response) => console.log("Login endpoint:", response.status),
-  );
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
     const res = await fetch(url, init)
