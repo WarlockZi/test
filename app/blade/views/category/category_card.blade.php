@@ -1,6 +1,6 @@
 <div class="category-card">
-
-    <a class="category-card-a" href="{{$child['own_properties']['path']}}">
+{{--    @php(xdebug_break())--}}
+    <a class="category-card-a" href="/catalog/{{$child['own_properties']['seo_path']??$child['own_properties']['path']}}">
         {{$child['name']}}
     </a>
 {{--@php(xdebug_break())--}}

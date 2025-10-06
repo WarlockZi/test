@@ -68,7 +68,7 @@ class CategoryFormView
                     ->get()
             )
             ->field(
-                ItemFieldBuilder::build('category_id', $category)
+                ItemFieldBuilder::build('category_1s_id', $category)
                     ->name('Принадлежит')
                     ->html(
                         self::selectorByField(['category_1s_id' => $category['category_1s_id']])
@@ -130,7 +130,7 @@ class CategoryFormView
                 ->excluded($excluded)
                 ->get()
         )
-            ->field('category_id')
+            ->field('category_1s_id')
             ->class('categories')
             ->get();
     }
@@ -148,7 +148,7 @@ class CategoryFormView
         return SelectBuilder::build(
             $tree1
         )
-            ->field('category_id')
+            ->field('category_1s_id')
             ->get();
 
     }
@@ -164,7 +164,7 @@ class CategoryFormView
                 ->excluded($excluded)
                 ->get()
         )
-            ->field('category_id')
+            ->field('category_1s_id')
             ->class('categories')
             ->get();
     }
@@ -178,7 +178,7 @@ class CategoryFormView
                 ->selected($selected)
                 ->get()
         )
-            ->field('category_id')
+            ->field('category_1s_id')
             ->name('category')
             ->class('categories')
             ->get();

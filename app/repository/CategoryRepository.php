@@ -11,30 +11,32 @@ use app\service\Cache\Redis\Cache;
 class CategoryRepository
 {
 
-    public function indexInstore(string $url): object|null
+    public function indexInstore(string $slug): object|null
     {
-        $cacheKey = 'categoryWithProducts' . str_replace("/", "", $url);
-        Cache::enabled(false);
+        $cacheKey  = 'categoryWithProducts' . str_replace("/", "", $slug);
         $cacheTime = DEV ? Cache::$timeLife1_000 : 0;
 
         return Cache::remember($cacheKey,
-            function () use ($url) {
+            function () use ($slug) {
                 $category = Category::query()
+                    ->withWhereHas('ownProperties',
+                        fn($query) => $query
+                            ->where('path', 'like', $slug)
+                            ->orWhere('seo_path', 'like', $slug)
+                    )
                     ->with('meta')
                     ->with(['childrenRecursive' => fn($q) => $q->with('ownProperties')])
                     ->with('parentRecursive')
-                    ->withWhereHas('ownProperties',
-                        fn($query) => $query->where('path', 'like', $url)
-                    )
                     ->with('productsInStore')
                     ->with('productsNotInStoreInMatrix')
                     ->first();
                 if ($category) {
                     $breadcrumbs           = new NewBread;
                     $category->breadcrumbs = $breadcrumbs->getParents($category);
+                    return $category;
                 }
-                $o = $category->toArray();
-                return $category;
+                return null;
+//                $o = $category->toArray();
             },
             $cacheTime);
     }

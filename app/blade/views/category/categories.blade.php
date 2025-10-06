@@ -27,7 +27,7 @@
                     @if ($category)
 
                         <div class="category-card">
-{{--                            @php(xdebug_break())--}}
+
                             <a
                                     class="category-card-a"
                                     href="/catalog/{{$category['slug']}}"

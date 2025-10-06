@@ -78,7 +78,7 @@ class ProductFilterRepository
 
         if (!empty($category)) {
             if ($category) {
-                $query->where('category_id', $category);
+                $query->where('category_1s_id', $category);
             }
         }
 

@@ -74,7 +74,7 @@ use app\service\Sync\Load\LoadProducts;
         if ($found) {
             $found->delete();
             if ($level > 0 && isset($parent['id']))
-                $item['category_id'] = $parent['id'];
+                $item['category_1s_id'] = $parent['id'];
             if ($level === 1) {
                 $item['show_front'] = 1;
             }

@@ -26,6 +26,9 @@ class Product extends Model
     public $timestamps = true;
 
     protected $fillable = [
+        'category_1s_id',
+        'manufacturer_id',
+        '1s_id',
         'name',
         'print_name',
         'sort',
@@ -33,10 +36,6 @@ class Product extends Model
         'txt',
         'slug',
         'image_id',
-        'manufacturer_id',
-        'category_id',
-        'category_1s_id',
-        '1s_id',
         'instore',
         'deleted_at',
         'created_at',

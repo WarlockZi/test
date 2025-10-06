@@ -87,7 +87,6 @@ class LoadProducts extends LoadService
     {
         $g['1s_id']          = $good['Ид'];
         $g['category_1s_id'] = $good['Группы']['Ид'];
-        $g['category_id']    = $this->setCategory($good);
         $g['art']            = $good['Артикул'] ? trim($good['Артикул']) : '';
         $g['name']           = $good['Наименование'];
         $g['print_name']     = $good['ЗначенияРеквизитов']['ЗначениеРеквизита'][3]['Значение'];
@@ -101,7 +100,6 @@ class LoadProducts extends LoadService
     {
         $g['1s_id']          = $good['Ид'];
         $g['category_1s_id'] = $good['Группы']['Ид'];
-        $g['category_id']    = $this->setCategory($good);
         $g['art']            = $good['Артикул'] ? trim($good['Артикул']) : '';
         $g['name']           = $good['Наименование'];
         $g['print_name']     = $good['ЗначенияРеквизитов']['ЗначениеРеквизита'][3]['Значение'];
@@ -116,10 +114,4 @@ class LoadProducts extends LoadService
         return SlugService::getValidProductSlug($g);
     }
 
-    private function setCategory($good): string
-    {
-        $category_id = Category::where('1s_id', $good['Группы']['Ид'])
-            ->first()->id;
-        return $category_id;
-    }
 }

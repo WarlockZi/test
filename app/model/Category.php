@@ -33,7 +33,8 @@ class Category extends Model
 
     public function childrenRecursive(): HasMany
     {
-        return $this->childrenWithOwnProps()->with('childrenRecursive');
+        return $this->childrenWithOwnProps()
+            ->with('childrenRecursive');
     }
     public function childrenRecursiveWithOwnProps(): HasMany
     {

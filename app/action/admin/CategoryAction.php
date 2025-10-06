@@ -25,7 +25,7 @@ class CategoryAction
 
     public function changeProperty(IRequest $req): void
     {
-        $category = Category::find($req['category_id']);
+        $category = Category::find($req['category_1s_id']);
         $newVal   = $req['morphed']['new_id'];
         $oldVal   = $req['morphed']['old_id'];
 
