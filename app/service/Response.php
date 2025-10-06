@@ -219,7 +219,6 @@ class Response
 
     #[NoReturn] public function send(): void
     {
-        try {
             http_response_code($this->status);
 
             foreach ($this->headers as $name => $value) {
@@ -240,10 +239,6 @@ class Response
 
             echo $this->content;
             exit;
-        }catch (\Throwable $throwable) {
-            $t = $throwable;
-        }
-
     }
 }
 

@@ -49,11 +49,14 @@ class AuthController extends AppController
             Auth::setUser($user);
 
             if ($user->isEmployee()) {
+                error_log("Production shutdownHandler: empl" );
                 response()->json(['role' => 'employee', 'id' => $user['id']]);
 //            response()->redirect('adminsc');
             } else if ($user->isAdmin()) {
+                error_log("Production shutdownHandler: ad" );
                 response()->json(['role' => 'admin', 'id' => $user['id']]);
             } else {
+                error_log("Production shutdownHandler: ggg" );
 //            response()->redirect('auth/profile');
                 response()->json(['role' => 'guest', 'id' => $user['id']]);
             }
