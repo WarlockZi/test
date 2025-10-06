@@ -385,9 +385,7 @@ async function post(url, data = {}, headers = {}) {
   const init = { method: "POST", header, body };
 
   // Verify the login endpoint exists
-  fetch("https://vitexopt.ru/auth/login", { method: "HEAD" }).then((response) =>
-    console.log("Login endpoint:", response.status),
-  );
+
   const res = await sendPost(url, init).catch((err) => {
     console.log(err);
   });
@@ -431,6 +429,9 @@ function isPlainObject(obj) {
 }
 
 function sendPost(url, init) {
+  fetch("https://vitexopt.ru/auth/login", { method: "POST" }).then((response) =>
+    console.log("Login endpoint:", response.status),
+  );
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
     const res = await fetch(url, init)
