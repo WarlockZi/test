@@ -177,20 +177,20 @@ class Response
         $nonce = $nonce->getNonce();
 
         $csp = [
-            "default-src 'self'",
-            "script-src 'self' https://vi-prod:5173 'nonce-$nonce' ",
-            "style-src 'self' localhost:5173 'nonce-$nonce' ",
-
-            "style-src-elem https://fonts.googleapis.com 'unsafe-inline'",
-            "font-src fonts.gstatic.com",
-            "connect-src 'self' wss://localhost:5173 https://vitexopt.ru",
-            "script-src-attr 'unsafe-inline'",
-
-            "img-src 'self' data:",
-            "frame-ancestors 'none'",
-            "form-action 'self'",
-            "base-uri 'self'",
-            "object-src 'none'"
+//            "default-src 'self'",
+//            "script-src 'self' https://vi-prod:5173 'nonce-$nonce' ",
+//            "style-src 'self' localhost:5173 'nonce-$nonce' ",
+//
+//            "style-src-elem https://fonts.googleapis.com 'unsafe-inline'",
+//            "font-src fonts.gstatic.com",
+//            "connect-src 'self' wss://localhost:5173 https://vitexopt.ru",
+//            "script-src-attr 'unsafe-inline'",
+//
+//            "img-src 'self' data:",
+//            "frame-ancestors 'none'",
+//            "form-action 'self'",
+//            "base-uri 'self'",
+//            "object-src 'none'"
         ];
 
         header("Content-Security-Policy: " . implode('; ', $csp));

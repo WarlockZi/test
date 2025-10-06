@@ -48,7 +48,6 @@ class AuthController extends AppController
             Auth::setAuth($user);
             Auth::setUser($user);
 
-            exit($user);
             if ($user->isEmployee()) {
                 response()->json(['role' => 'employee', 'id' => $user['id']]);
 //            response()->redirect('adminsc');
