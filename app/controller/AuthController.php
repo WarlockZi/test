@@ -31,34 +31,38 @@ class AuthController extends AppController
      */
     #[NoReturn] public function actionLogin(LoginRequest $request): void
     {
-        $validated = $request->validate();
+        try {
+            $validated = $request->validate();
 
-        $user = User::where('email', $validated['email'])->with('role')->first();
+            $user = User::where('email', $validated['email'])->with('role')->first();
 
-        if (!$user) response()->json(['errors' => 'not registered', 'popup' => 'Пройдите регистрацию']);
+            if (!$user) response()->json(['errors' => 'not registered', 'popup' => 'Пройдите регистрацию']);
 
-        if (!$user->confirm) response()->json(['popup' => 'Зайдите на почту чтобы подтвердить регистрацию', 'error' => 'Зайдите на почту чтобы подтвердить регистрацию']);
-        if ($user->password !== $this->userRepository->preparePassword($validated['password'])) {
-            Auth::setUser($user);// Если данные правильные, запоминаем пользователя (в сессию)
-            if (!$user->isSU()) {
-                response()->json(['error' => 'Не верный email или пароль']);
+            if (!$user->confirm) response()->json(['popup' => 'Зайдите на почту чтобы подтвердить регистрацию', 'error' => 'Зайдите на почту чтобы подтвердить регистрацию']);
+            if ($user->password !== $this->userRepository->preparePassword($validated['password'])) {
+                Auth::setUser($user);// Если данные правильные, запоминаем пользователя (в сессию)
+                if (!$user->isSU()) {
+                    response()->json(['error' => 'Не верный email или пароль']);
+                }
             }
-        }
-        Auth::setAuth($user);
-        Auth::setUser($user);
+            Auth::setAuth($user);
+            Auth::setUser($user);
 
-        if ($user->isEmployee()) {
-            response()->json(['role' => 'employee', 'id' => $user['id']]);
+            if ($user->isEmployee()) {
+                response()->json(['role' => 'employee', 'id' => $user['id']]);
 //            response()->redirect('adminsc');
-        } else if ($user->isAdmin()) {
-            response()->json(['role' => 'admin', 'id' => $user['id']]);
-        } else {
+            } else if ($user->isAdmin()) {
+                response()->json(['role' => 'admin', 'id' => $user['id']]);
+            } else {
 //            response()->redirect('auth/profile');
-            response()->json(['role' => 'guest', 'id' => $user['id']]);
+                response()->json(['role' => 'guest', 'id' => $user['id']]);
+            }
+        } catch (Throwable $exception) {
+
+            exit($exception);
         }
-//        view('auth.login');
-//        $url = $this->getUrl();
-//        $this->setVars(compact('url'));
+
+
     }
 
     public function actionReturnpass(): void
