@@ -30,7 +30,8 @@ class ProductAction
     }
     public function order()
     {
-        return OrderRepository::usersOrder()->toArray();
+        $userOrder = OrderRepository::usersOrder();
+        return $userOrder->toArray()??null;
     }
 
     public function setMeta(Product $product): array
