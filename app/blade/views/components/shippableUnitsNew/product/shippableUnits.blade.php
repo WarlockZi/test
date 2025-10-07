@@ -5,7 +5,7 @@
     <button class='button blue-button'>Добавить</button>
     <div class="green-button-wrap none">
         <button class='button green-button'>Перейти в корзину</button>
-        @foreach($product['shippable_units'] as $unit)
+        @foreach($product['units'] as $unit)
 
 {{--        @php (xdebug_break())--}}
             @foreach($order['products'] as $OrderProduct)
