@@ -8,6 +8,7 @@
         @foreach($product['units'] as $unit)
 
 {{--        @php (xdebug_break())--}}
+        @if($order)
             @foreach($order['products'] as $OrderProduct)
                 @if (in_array($product['1s_id'], $OrderProduct))
                     @php($orderProduct=$OrderProduct)
@@ -21,6 +22,8 @@
 
                 @endif
             @endforeach
+
+            @endif
 
             <div
                     unit-row
