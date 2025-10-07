@@ -428,21 +428,29 @@ function isPlainObject(obj) {
   );
 }
 
-function sendPost(url, data) {
-  // eslint-disable-next-line no-async-promise-executor
-  return new Promise(async (resolve, reject) => {
-    const res = await fetch(url, data)
-      .then(async (res) => {
-        if (res.status === 200) {
-          const data = await res.json();
-          resolve(data);
-        }
-      })
-      .catch((err) => {
-        console.log("Fetch error" + err.message);
-        reject(err.message);
-      });
-  });
+async function sendPost(url, data) {
+  const res = await fetch(url, data);
+  if (res.status === 200) {
+    const data = await res.json();
+    return data;
+  }
+  if (res.status === 500) {
+    console.log(res.text);
+  }
+  // // eslint-disable-next-line no-async-promise-executor
+  // return new Promise(async (resolve, reject) => {
+  //   const res = await fetch(url, data)
+  //     .then(async (res) => {
+  //       if (res.status === 200) {
+  //         const data = await res.json();
+  //         resolve(data);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log("Fetch error" + err.message);
+  //       reject(err.message);
+  //     });
+  // });
 }
 
 function showMessage(res) {
