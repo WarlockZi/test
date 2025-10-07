@@ -428,10 +428,10 @@ function isPlainObject(obj) {
   );
 }
 
-function sendPost(url, init) {
+function sendPost(url, data) {
   // eslint-disable-next-line no-async-promise-executor
   return new Promise(async (resolve, reject) => {
-    const res = await fetch(url, init)
+    const res = await fetch(url, data)
       .then(async (res) => {
         if (res.status === 200) {
           const data = await res.json();
