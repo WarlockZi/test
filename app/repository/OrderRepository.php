@@ -77,10 +77,7 @@ class OrderRepository
                 ;
             }])
             ->first();
-//        $o     = $order->toArray();
-
         return $order;
-
     }
 
     public static function deleteOrderItem(Order $order, Product $product, string $unit_id,)
