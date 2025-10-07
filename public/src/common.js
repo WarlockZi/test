@@ -437,6 +437,7 @@ async function sendPost(url, data) {
   if (res.status === 500) {
     const json = await res.json();
     console.log(json);
+    return json;
   }
   // // eslint-disable-next-line no-async-promise-executor
   // return new Promise(async (resolve, reject) => {
