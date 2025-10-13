@@ -29,7 +29,7 @@ class ProductRepository
 
     public function index(string $slug): ?Product
     {
-            $prod = Product::query()
+        $prod = Product::query()
             ->withTrashed()
 //            ->orderBy('sort')
             ->with('category.properties.vals')
@@ -48,8 +48,10 @@ class ProductRepository
             ->where('slug', $slug)
             ->first();
 
-        $prod->append('base_unit');
-        $prod->append('shippable_units');
+        if ($prod) {
+            $prod->append('base_unit');
+            $prod->append('shippable_units');
+        }
 
         return $prod;
 
