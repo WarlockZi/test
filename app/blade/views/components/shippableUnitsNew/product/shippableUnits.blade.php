@@ -29,7 +29,7 @@
             <div
                     unit-row
                     class="unit-row"
-                    @php(xdebug_break())
+{{--                    @php(xdebug_break())--}}
                     data-order_product_id="{!! $orderItem['order_product_id']??''!!}"
                     data-product_unit_id="{!! $orderItem['product_unit_id']??''!!}"
             >
