@@ -4,8 +4,8 @@ namespace app\model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrderItem extends Model
@@ -19,6 +19,7 @@ class OrderItem extends Model
         'order_product_id',
         'product_id',
         'unit_id',
+        'product_unit_id',
         'price_id',
         'count',
         'created_at',
@@ -26,39 +27,36 @@ class OrderItem extends Model
         'deleted_at'
     ];
 
-//    public function price(): hasOne
-//    {
-//        return $this->hasOne(
-//            Price::class,
-//            'id',
-//            'price_id',
-//        );
-//    }
     public function price(): belongsTo
     {
         return $this->belongsTo(Price::class);
     }
 
-    public function scopeWithPrice($q)
+//    public function unit(): hasOneThrough
+//    {
+//        return $this->hasOneThrough(
+//            Unit::class,
+//            ProductUnit::class,
+//            'id',
+//            'id',
+//            'product_unit_id',
+//            'unit_id',
+//        );
+//    }
+    public function unit(): belongsToMany
     {
-        return $q->with(['price'=>function ($q) {
-            return $q->withPriceTypeAndCurrency();
-        }]);
-    }
-
-    public function unit(): hasOneThrough
-    {
-        return $this->hasOneThrough(
+        return $this->belongsToMany(
             Unit::class,
-            ProductUnit::class,
-            'unit_id',
+            'product_unit',
             'id',
+            'unit_id',
             'product_unit_id',
             'id',
-        );
+        )->withPivot('price')
+            ;
     }
 
-    public function order(): BelongsTo
+    public function order(): belongsTo
     {
         return $this->belongsTo(Order::class);
     }

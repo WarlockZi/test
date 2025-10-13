@@ -186,7 +186,7 @@ class Response
             "script-src 'self' https://vi-prod:5173 'nonce-$nonce' ",
             "style-src 'self' localhost:5173 'nonce-$nonce' ",
 
-            "style-src-elem https://fonts.googleapis.com 'unsafe-inline'",
+            "style-src-elem https://fonts.googleapis.com https://vitexopt.ru 'unsafe-inline'",
             "font-src fonts.gstatic.com",
             "connect-src 'self' wss://localhost:5173 https://vitexopt.ru",
             "script-src-attr 'unsafe-inline'",

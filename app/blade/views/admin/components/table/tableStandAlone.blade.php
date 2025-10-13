@@ -1,6 +1,3 @@
-@php
-    use app\view\components\Builders\CheckboxBuilder\Checkbox\ICheckbox;
-@endphp
 
 <div custom-table
     <?= $data['class']; ?>
@@ -35,42 +32,25 @@
         @endforeach
 
         <!--  TABLE  -->
-
+{{--        @php(xdebug_break())--}}
         <!--		 Empty row-->
         <?= $data['emptyRow'] ?>
 
                 <!--		 Data rows-->
-{{--        @php(xdebug_break())--}}
+        {{--        @php(xdebug_break())--}}
         @if (count($data['items']))
             @foreach ($data['items'] as $item)
 
                 @foreach ($data['columns'] as $field => $c)
 
-                    @if ($c->html)
-                            <?= $c->html ?>
-                    @else
-                        <div
-                                data-id='<?= $item['id'] ?? 0; ?>'
-                                <?= $c->dataField; ?>
-                            <?= $c->pivot; ?>
-                            <?= $c->attach; ?>
-                            <?= $c->class; ?>
-                            <?= $c->contenteditable; ?>
-                        >
-                            {{--                            @php xdebug_break() @endphp--}}
-                            @if($c->component instanceof ICheckbox)
-                                @include('admin.components.checkbox.checkbox', ['checkbox'=>$c->component, 'item'=>$item] )
-                            @else
-                                {!!  $c->getData($c, $item, $field) !!}
-                            @endif
-                        </div>
-                    @endif
+                    @include('admin.components.table.tableRow', compact('field', 'c','item'))
+
                 @endforeach
             @endforeach
         @endif
 
     </div>
-{{--    @php(xdebug_break())--}}
+    {{--    @php(xdebug_break())--}}
 
     @if (!$data['items']->count())
 
@@ -78,7 +58,7 @@
     @endif
 
     <!--  ADD BUTTON  -->
-{{--        @php xdebug_break() @endphp--}}
+    {{--        @php xdebug_break() @endphp--}}
     @if($data['addButton'])
         <div class="buttons">
             <div class="add-model" {!! $data['pivot'] !!}>+</div>

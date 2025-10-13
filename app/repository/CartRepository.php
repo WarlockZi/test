@@ -5,6 +5,8 @@ namespace app\repository;
 use app\model\Order;
 use app\model\OrderItem;
 use app\model\OrderProduct;
+use app\model\Product;
+use app\model\ProductUnit;
 use app\service\AuthService\Auth;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -32,17 +34,22 @@ class CartRepository
                 return $q
                     ->whereHas('orderItems')
                     ->where('order_product.deleted_at', null)
-                    ->with(['orderItems' => function ($q) {
-                            return
-                                $q->withPrice()
-                                ->with('unit');
-                        }]
-                    )
-                    ->withBaseUnitPrice()
-                    ->withShippableUnitsPrice()
-                ;
+                    ->with(['orderItems.unit'])
+//                    ->with(['orderItems' => function ($q) {
+//                            return
+//                                $q->withPrice()
+//                                    ->with('unit');
+//                        }]
+//                    )
+//                    ->withBaseUnitPrice()
+//                    ->withShippableUnitsPrice()
+                    ;
             }])
             ->first();
+        $o     = $order->products->each(function (Product $product) {
+            $product->append('base_unit');
+            $product->append('shippable_units');
+        });
         $o     = $order->toArray();
         return $o;
     }
@@ -50,19 +57,24 @@ class CartRepository
     public function updateOrCreate(array $body): void
     {
         $orderId        = OrderRepository::userOrder()->id;
-        $orderProductId = OrderProduct::updateOrCreate([
+        $orderProductId = OrderProduct::firstOrCreate([
             'order_id' => $orderId,
             'product_id' => $body['product_1s_id'],
         ])->id;
+        $productUnitId  = ProductUnit::where([
+            'product_1s_id' => $body['product_1s_id'],
+            'unit_id' => $body['unit_id'],
+        ])
+            ->select('id')
+            ->first()->id;
         $orderItem      = OrderItem::updateOrCreate([
             'order_product_id' => $orderProductId,
-            'unit_id' => $body['unit_id'],
-            'product_id' => $body['product_1s_id'],
+            'product_unit_id' => $productUnitId,
         ],
             [
                 'order_product_id' => $orderProductId,
+                'product_unit_id' => $productUnitId,
                 'count' => $body['count'],
-                'product_id' => $body['product_1s_id'],
             ]);
     }
 }

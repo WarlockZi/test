@@ -37,6 +37,5 @@ class OrderProduct extends Pivot
             'order_product_id',
             'id',
         );
-
     }
 }

@@ -11,10 +11,14 @@
 <input
         my-checkbox
         type="checkbox"
+{{--@php(xdebug_break())--}}
+        @if(method_exists($checkbox, 'execCheckedFn'))
+            {!!  $checkbox->execCheckedFn($item) !!}
+        @else
+            {!!  $checkbox->checked !!}
+        @endif
 
-        {!!  $checkbox->execCheckedFn($item) !!}
-
-{{--@php xdebug_break(); @endphp--}}
+        {{--@php xdebug_break(); @endphp--}}
         @foreach( $checkbox->dataField as $field)
             data-field='{!! $field !!}'
         @endforeach
@@ -23,7 +27,7 @@
             data-pivot='{!! $field !!}'
         @endforeach
         @foreach( $checkbox->data as $key=>$value)
-{{--@php xdebug_break(); @endphp--}}
+            {{--@php xdebug_break(); @endphp--}}
             data-{!! $key !!}='{!! $value!!}'
         @endforeach
     <?= $checkbox->class ?? ''; ?>

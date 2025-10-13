@@ -101,7 +101,7 @@ class CategoryRepository
             function () {
                 return Category::whereNull('category_1s_id')
                     ->with('childrenRecursive')
-                    ->get(['id', '1s_id', 'category_1s_id', 'name'])
+                    ->get(['id', 's_id', 'category_1s_id', 'name'])
                     ->toArray();
             },
             Cache::$timeLife10_000

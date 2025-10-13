@@ -43,30 +43,33 @@
 
                     <!--		 Data rows-->
             @if ($data['items']->count())
+{{--            @php(xdebug_break())--}}
                 @foreach ($data['items'] as $item)
 
                     @foreach ($data['columns'] as $field => $c)
 
-                        @if ($c->html)
-                                <?= $c->html ?>
-                        @else
+                        @include('admin.components.table.tableRow', compact('field', 'c'))
 
-                            <div
-                                    data-id='<?= $item['id'] ?? 0; ?>'
-                                    <?= $c->dataField; ?>
-                                <?= $c->pivot; ?>
-                                <?= $c->attach; ?>
-                                <?= $c->class; ?>
-                                <?= $c->contenteditable; ?>
-                            >
-                                {{--                                @php xdebug_break() @endphp--}}
-                                @if($c->component instanceof ICheckbox)
-                                    @include('admin.components.checkbox.checkbox',['checkbox'=>$c->component, 'item'=>$item] )
-                                @else
-                                    {!!  $c->getData($c, $item, $field) !!}
-                                @endif
-                            </div>
-                        @endif
+{{--                        @if ($c->html)--}}
+{{--                                <?= $c->html ?>--}}
+{{--                        @else--}}
+
+{{--                            <div--}}
+{{--                                    data-id='<?= $item['id'] ?? 0; ?>'--}}
+{{--                                    <?= $c->dataField; ?>--}}
+{{--                                <?= $c->pivot; ?>--}}
+{{--                                <?= $c->attach; ?>--}}
+{{--                                <?= $c->class; ?>--}}
+{{--                                <?= $c->contenteditable; ?>--}}
+{{--                            >--}}
+{{--                                --}}{{--                                @php xdebug_break() @endphp--}}
+{{--                                @if($c->component instanceof ICheckbox)--}}
+{{--                                    @include('admin.components.checkbox.checkbox',['checkbox'=>$c->component, 'item'=>$item] )--}}
+{{--                                @else--}}
+{{--                                    {!!  $c->getData($c, $item, $field) !!}--}}
+{{--                                @endif--}}
+{{--                            </div>--}}
+{{--                        @endif--}}
 
                     @endforeach
 

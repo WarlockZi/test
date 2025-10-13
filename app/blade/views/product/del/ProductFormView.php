@@ -75,32 +75,14 @@ class ProductFormView
                     )
                     ->get()
             )
-            ->field(
-                ItemFieldBuilder::build('active_promotions', $product)
-                    ->name('Действующие акции')
-                    ->html(
-                        SelectBuilder::build(
-                            ArrayOptionsBuilder::build(
-                                $product->activePromotions, ['count' => 'кол-о', 'active_till' => 'до', 'new_price' => 'новая цена'])
-                                ->field('active_till')
-                                ->get()
-                        )
-                            ->get()
-                    )
-                    ->get()
-            )
+
             ->field(
                 ItemFieldBuilder::build('art', $product)
                     ->name('Артикул')
                     ->required()
                     ->get()
             )
-            ->field(
-                ItemFieldBuilder::build('1s_id', $product)
-                    ->name('Категория')
-                    ->html(CategoryFormView::selectorByField(['1s_id' => $product->category['1s_id']]))
-                    ->get()
-            )
+
             ->field(
                 ItemFieldBuilder::build('name', $product)
                     ->name('Рабочее наименование')
@@ -140,15 +122,12 @@ class ProductFormView
                     ->get()
             )
             ->field(
-                ItemFieldBuilder::build('id', $product)
-                    ->name('ID')
+                ItemFieldBuilder::build('s_id', $product)
+                    ->name('Категория')
+                    ->html(CategoryFormView::selectorByField(['s_id' => $product->category['s_id']]))
                     ->get()
             )
-            ->field(
-                ItemFieldBuilder::build('1s_id', $product)
-                    ->name('1s_ID')
-                    ->get()
-            )
+
             ->field(
                 ItemFieldBuilder::build('sort', $product)
                     ->name('Порядок')
@@ -166,6 +145,30 @@ class ProductFormView
                     ->html(
                         self::getManufacturer($product)
                     )
+                    ->get()
+            )
+            ->field(
+                ItemFieldBuilder::build('active_promotions', $product)
+                    ->name('Действующие акции')
+                    ->html(
+                        SelectBuilder::build(
+                            ArrayOptionsBuilder::build(
+                                $product->activePromotions, ['count' => 'кол-о', 'active_till' => 'до', 'new_price' => 'новая цена'])
+                                ->field('active_till')
+                                ->get()
+                        )
+                            ->get()
+                    )
+                    ->get()
+            )
+            ->field(
+                ItemFieldBuilder::build('id', $product)
+                    ->name('ID')
+                    ->get()
+            )
+            ->field(
+                ItemFieldBuilder::build('1s_id', $product)
+                    ->name('1s_ID')
                     ->get()
             )
             ->tab(
@@ -255,6 +258,7 @@ class ProductFormView
                         return $unit->pivot->multiplier;
                     })
                     ->contenteditable()
+
                     ->get()
             )
             ->column(
@@ -278,12 +282,10 @@ class ProductFormView
                     ->removeDataField()
                     ->emptyRow(function () {
                         return CheckboxBuilder::build()
-                            ->checkedFn(function ($item) {
-                                return $item->pivot->is_shippable;
-                            })
+                            ->checked()
                             ->data('id', 0)
                             ->data('pivot', 'is_shippable')
-                            ->get();
+                            ->get()->toHtml();
                     })
                     ->name('Отгруж ед')
                     ->component(
@@ -307,15 +309,16 @@ class ProductFormView
 //                    })
                     ->callback(function ($unit) {
 
-                        foreach ($unit->prices as $price) {
-                            if ($price->type->type === '1s') {
-                                return '('.
-                                    number_format($price->value, 2, '.', ' ').
-                            ')';
-                            }
-                            return number_format($price->value, 2, '.', ' ');
-                        }
-                        return 'нет цен';
+
+//                        foreach ($unit->prices as $price) {
+//                            if ($price->type->type === '1s') {
+//                                return '('.
+//                                    number_format($price->value, 2, '.', ' ').
+//                            ')';
+//                            }
+//                            return number_format($price->value, 2, '.', ' ');
+//                        }
+                        return $unit->pivot->price??'нет цены';
                     })
                     ->get()
             )

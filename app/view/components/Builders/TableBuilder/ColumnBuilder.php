@@ -4,6 +4,7 @@
 namespace app\view\components\Builders\TableBuilder;
 
 
+use app\blade\View;
 use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
 
 class ColumnBuilder
@@ -183,14 +184,19 @@ class ColumnBuilder
             return $item[$field];
         }
     }
+    public function getEmptyRow(): string
+    {
+        $v =APP->get(View::class);
+        $view = $v->render('admin.components.table.tableRow',['c'=>$this, 'field'=>$this->field]);
+        return $view;
 
+    }
     public function get(): self|string
     {
-
         $this->class       = $this->class ?? "class='cell'";
         $this->classHeader = $this->classHeader ?? "class='head'";
         $this->name        = $this->name ?? $this->field;
+        $this->emptyRow      =  $this->getEmptyRow();
         return $this;
-
     }
 }

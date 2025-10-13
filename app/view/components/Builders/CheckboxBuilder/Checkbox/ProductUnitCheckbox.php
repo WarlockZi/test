@@ -57,7 +57,7 @@ class ProductUnitCheckbox implements ICheckbox
     }
 
 
-    public function execCheckedFn(Model $item): string
+    public function execCheckedFn(?Model $item): string
     {
         $fn  = $this->checkeFn;
         $res = (boolean)$fn($item);

@@ -32,7 +32,8 @@ class ProductAction
     {
         $userOrder = OrderRepository::usersOrder();
         if ($userOrder) {
-            return $userOrder->toArray();
+            $arr = $userOrder->toArray();
+            return $arr;
         }
         return null;
     }
@@ -55,5 +56,8 @@ class ProductAction
     {
         return [];
     }
-
+    public function prepareIndex(Product $product): array
+    {
+        return [];
+    }
 }

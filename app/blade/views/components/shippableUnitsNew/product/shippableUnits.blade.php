@@ -5,31 +5,33 @@
     <button class='button blue-button'>Добавить</button>
     <div class="green-button-wrap none">
         <button class='button green-button'>Перейти в корзину</button>
-        @foreach($product['units'] as $unit)
+{{--                            @php (xdebug_break())--}}
+        @foreach($product['shippable_units'] as $shippableUnit)
 
-{{--        @php (xdebug_break())--}}
-        @if($order)
-            @foreach($order['products'] as $OrderProduct)
-                @if (in_array($product['1s_id'], $OrderProduct))
-                    @php($orderProduct=$OrderProduct)
+            @if($order)
+                @foreach($order['products'] as $OrderProduct)
+                    @if (in_array($product['1s_id'], $OrderProduct))
+                        @php($orderProduct=$OrderProduct)
 
-                    @foreach($OrderProduct['order_items'] as $OrderItem)
-{{--                        @php(xdebug_break())--}}
-                        @if ($unit['id']==$OrderItem['unit_id'])
-                            @php($orderItem=$OrderItem)
-                        @endif
-                    @endforeach
+                        @foreach($OrderProduct['orderitems'] as $OrderItem)
+                            {{--                        @php(xdebug_break())--}}
+                            @if ($shippableUnit['id']==$OrderItem['unit_id'])
+                                @php($orderItem=$OrderItem)
+                            @endif
+                        @endforeach
 
-                @endif
-            @endforeach
+                    @endif
+                @endforeach
 
             @endif
 
+            {{--        @php(xdebug_break())--}}
             <div
                     unit-row
                     class="unit-row"
-                    data-orderitem-id="{!! $orderItem['id']??''!!}"
-                    data-unitId="{!! $unit['id']??''!!}"
+                    @php(xdebug_break())
+                    data-order_product_id="{!! $orderItem['order_product_id']??''!!}"
+                    data-product_unit_id="{!! $orderItem['product_unit_id']??''!!}"
             >
                 <input
                         type="text"

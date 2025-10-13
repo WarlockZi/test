@@ -4,6 +4,8 @@
 namespace app\view\components\Builders\CheckboxBuilder;
 
 
+use app\blade\View;
+
 class CheckboxBuilder
 {
     public string $field = '';
@@ -17,6 +19,7 @@ class CheckboxBuilder
     public string $for = '';
     public string $label = '';
     public string $labelClass = '';
+    public string $emptyRow = '';
 
 
     public static function build(): CheckboxBuilder
@@ -29,7 +32,11 @@ class CheckboxBuilder
         $this->field = "data-field=$field";
         return $this;
     }
-
+    public function checked(): static
+    {
+        $this->checked = "checked";
+        return $this;
+    }
     public function checkedFn(callable $callback): static
     {
         $this->checkedFFn = $callback;
@@ -85,7 +92,20 @@ class CheckboxBuilder
 
     public function get(): self
     {
+//
+//        $checkbox = get_object_vars($this);
+//        $view  =  APP->get(View::class);
+//        $html = $view->render('admin.components.checkbox.checkbox', compact('checkbox'));
+//        $this->emptyRow = $html;
         return $this;
     }
-
+    public function toHtml(): string
+    {
+        $checkbox = $this;
+//        $checkbox = get_object_vars($this);
+        $view  =  APP->get(View::class);
+        $html = $view->render('admin.components.checkbox.checkbox', compact('checkbox'));
+        $this->emptyRow = $html;
+        return $html;
+    }
 }

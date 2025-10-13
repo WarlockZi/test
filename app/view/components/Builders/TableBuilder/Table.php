@@ -5,6 +5,7 @@ namespace app\view\components\Builders\TableBuilder;
 
 
 use app\service\Fs\FS;
+use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
 use app\view\components\Icon\Icon;
 use app\view\components\Traits\CleanString;
 use Illuminate\Database\Eloquent\Collection;
@@ -177,6 +178,9 @@ class Table
         if ($column->emptyRow) {
             if (is_callable($column->emptyRow)) {
                 return call_user_func($column->emptyRow);
+            }elseif ($column->emptyRow instanceof CheckboxBuilder) {
+                $html = $column->emptyRow->toHtml();
+                return $html;
             }
             return $column->emptyRow;
         }
@@ -185,7 +189,7 @@ class Table
 
     public function get(): array
     {
-//        $this->emptyRow = $this->emptyRow();
+        $this->emptyRow = $this->emptyRow();
         $this->prepareGridHeader();
         $this->items = $this->take ? $this->items->take($this->take) : $this->items;
         return get_object_vars($this);

@@ -46,7 +46,11 @@
 
                             {{--        @php xdebug_break() @endphp--}}
                             <div class="cart-shippable-table cell">
-                                @include('components.shippableUnitsNew.cart.cartShippableUnits', compact('product'))
+                                @if(!$product)
+                                    <div>продукт не определен</div>
+                                @else
+                                    @include('components.shippableUnitsNew.cart.cartShippableUnits', compact('product'))
+                                @endif
                             </div>
 
                             <div class="sub-sum sum cell">
@@ -58,7 +62,7 @@
                                         @endif
                                     @endforeach
 
-{{--                                    @php(xdebug_break())--}}
+                                    {{--                                    @php(xdebug_break())--}}
                                     <div class="row-sum">
 
                                         @php($subSum = $unit['pivot']['multiplier']*$orderItem['price']['value']*$orderItem['count'])

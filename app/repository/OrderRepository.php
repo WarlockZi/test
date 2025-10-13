@@ -77,6 +77,7 @@ class OrderRepository
                 ;
             }])
             ->first();
+        $o = $order->toArray();
         return $order;
     }
 

@@ -48,6 +48,14 @@ class Product extends Model
         'mainImage',
     ];
 
+    public function getBaseUnitAttribute()
+    {
+        return $this->units()->wherePivot('multiplier', 1)->first();
+    }
+    public function getShippableUnitsAttribute()
+{
+    return $this->units()->wherePivot('is_shippable', 1)->get();
+}
     public function scopeWithShippableUnitsPrice($query)
     {
         return $query->with(['shippableUnits' => function ($q) {
