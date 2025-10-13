@@ -72,12 +72,13 @@ class OrderRepository
                     ->with(['orderitems' => function ($q) {
                         $q->with('unit', 'price.currency', 'price.type');
                     }])
-                    ->withoutTrashed()
-//                    ->with('unitFrom1s')
+                    ->withoutTrashed()//                    ->with('unitFrom1s')
                 ;
             }])
             ->first();
-        $o = $order->toArray();
+        if ($order) {
+            $o = $order->toArray();
+        }
         return $order;
     }
 
