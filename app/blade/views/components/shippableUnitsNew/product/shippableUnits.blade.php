@@ -5,7 +5,8 @@
     <button class='button blue-button'>Добавить</button>
     <div class="green-button-wrap none">
         <button class='button green-button'>Перейти в корзину</button>
-{{--                            @php (xdebug_break())--}}
+                            @php (xdebug_break())
+
         @foreach($product['shippable_units'] as $shippableUnit)
 
             @if($order)

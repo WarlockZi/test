@@ -35,8 +35,6 @@ class ProductRepository
             ->with('category.properties.vals')
             ->with('values.property')
             ->with('units.prices.type')
-//            ->with('baseUnit.price1s')
-//            ->with('shippableUnits.price1s')
             ->with('category.parentRecursive')
             ->with('category.ownProperties')
             ->with('ownProperties')
@@ -49,6 +47,7 @@ class ProductRepository
             ->first();
 
         if ($prod) {
+            $p = $prod->toArray();
             $prod->append('base_unit');
             $prod->append('shippable_units');
         }

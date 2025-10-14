@@ -3,7 +3,6 @@
 namespace app\model;
 
 
-use app\model\Traits\HasFilteredUnits;
 use app\service\AuthService\Auth;
 use app\service\Image\ProductImageService;
 use Carbon\Carbon;
@@ -21,7 +20,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Product extends Model
 {
     use SoftDeletes;
-    use HasFilteredUnits;
 
     public $timestamps = true;
 
@@ -48,6 +46,21 @@ class Product extends Model
         'mainImage',
     ];
 
+    public function units(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Unit::class,
+            'product_unit',
+            'product_1s_id',
+            'unit_id',
+            '1s_id',
+            'id',
+        )
+            ->using(ProductUnit::class)
+            ->orderByPivot('multiplier')
+            ->withPivot('id','price','is_shippable','multiplier')
+            ;
+    }
     public function getBaseUnitAttribute()
     {
         return $this->units()->wherePivot('multiplier', 1)->first();
@@ -113,7 +126,7 @@ class Product extends Model
         );
     }
 
-    public function order(): HasOne
+    public function order(): hasOne
     {
         list($field, $value) = Auth::getCartFieldValue();
         $order = Order::where($field, $value)->first();
