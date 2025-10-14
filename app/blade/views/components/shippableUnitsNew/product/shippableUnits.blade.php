@@ -5,28 +5,26 @@
     <button class='button blue-button'>Добавить</button>
     <div class="green-button-wrap none">
         <button class='button green-button'>Перейти в корзину</button>
-        {{--                            @php (xdebug_break())--}}
-        @if($product['shippable_units'])
 
 {{--            @php(xdebug_break())--}}
-                @foreach($product['shippable_units'] as $shippableUnit)
+{{--                @foreach($product['shippable_units'] as $shippableUnit)--}}
 
-                    @if($order)
-                        @foreach($order['products'] as $OrderProduct)
-                            @if (in_array($product['1s_id'], $OrderProduct))
-                                @php($orderProduct=$OrderProduct)
+{{--                    @if($order)--}}
+{{--                        @foreach($order['products'] as $OrderProduct)--}}
+{{--                            @if (in_array($product['1s_id'], $OrderProduct))--}}
+{{--                                @php($orderProduct=$OrderProduct)--}}
 
-                                @foreach($OrderProduct['orderitems'] as $OrderItem)
-                                    {{--                        @php(xdebug_break())--}}
-                                    @if ($shippableUnit['id']==$OrderItem['unit_id'])
-                                        @php($orderItem=$OrderItem)
-                                    @endif
-                                @endforeach
+{{--                                @foreach($OrderProduct['orderitems'] as $OrderItem)--}}
+{{--                                    --}}{{--                        @php(xdebug_break())--}}
+{{--                                    @if ($shippableUnit['id']==$OrderItem['unit_id'])--}}
+{{--                                        @php($orderItem=$OrderItem)--}}
+{{--                                    @endif--}}
+{{--                                @endforeach--}}
 
-                            @endif
-                        @endforeach
+{{--                            @endif--}}
+{{--                        @endforeach--}}
 
-                    @endif
+{{--                    @endif--}}
 
                     <div
                             unit-row
@@ -62,7 +60,6 @@
                     </div>
 
                 @endforeach
-                @endif
 
     </div>
 </div>
