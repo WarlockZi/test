@@ -5,7 +5,7 @@
 
     <div class="art">Арт. {!! $product['art'] !!} </div>
 
-{{--            @php(xdebug_break())--}}
+    {{--            @php(xdebug_break())--}}
     <div>
         {{$product['base_unit']['pivot']['price']}} р / {{$product['base_unit']['name']}}
     </div>
@@ -19,7 +19,9 @@
 
     </div>
     <div class="price-units ">
-        @include('components.shippableUnitsNew.product.shippableUnits', ['shippableUnits'=>$product['shippable_units']])
+        @if($product['shippable_units'])
+            @include('components.shippableUnitsNew.product.shippableUnits', ['shippableUnits'=>$product['shippable_units']])
+        @endif
     </div>
     @include( 'product.card.promotion')
 
