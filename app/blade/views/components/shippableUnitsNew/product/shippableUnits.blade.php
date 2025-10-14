@@ -7,7 +7,7 @@
         <button class='button green-button'>Перейти в корзину</button>
 
 {{--            @php(xdebug_break())--}}
-{{--                @foreach($product['shippable_units'] as $shippableUnit)--}}
+                @foreach($product['shippable_units'] as $shippableUnit)
 
 {{--                    @if($order)--}}
 {{--                        @foreach($order['products'] as $OrderProduct)--}}
