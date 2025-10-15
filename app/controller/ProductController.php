@@ -35,7 +35,7 @@ class ProductController extends AppController
         }
 
         $meta        = $this->actions->setMeta($product);
-        $order       = $this->actions->order();
+        $orderItem       = $this->actions->orderItem($product);
         $breadcrumbs = $this->actions->getBreadcrumbs($product['category'], true);
 
         $product = $product->toArray();
@@ -43,7 +43,7 @@ class ProductController extends AppController
             'meta',
             'breadcrumbs',
             'product',
-            'order',
+            'orderItem',
         ));
     }
 }

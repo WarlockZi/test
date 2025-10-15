@@ -40,7 +40,7 @@ class ProductRepository
             ->with('ownProperties')
             ->with('manufacturer.country')
             ->with('activepromotions.unit')
-            ->with('orders')
+            ->with('order')
             ->with('like')
             ->with('compare')
             ->where('slug', $slug)

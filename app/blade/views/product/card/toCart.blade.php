@@ -18,10 +18,12 @@
 
     </div>
     <div class="price-units ">
-{{--                @php(xdebug_break())--}}
-{{--        @if($product['shippable_units'])--}}
-            @include('components.shippableUnitsNew.product.shippableUnits', ['shippableUnits'=>$product['shippable_units']])
-{{--        @endif--}}
+
+
+        {{--        @php(xdebug_break())--}}
+
+        @include('product.card.shippableUnits', ['shippableUnits'=>$product['shippable_units']])
+
     </div>
     @include( 'product.card.promotion')
 

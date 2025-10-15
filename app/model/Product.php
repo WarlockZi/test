@@ -126,8 +126,18 @@ class Product extends Model
         );
     }
 
-    public function order(): hasOne
+    public function order()
     {
+//        list($field, $value) = Auth::getCartFieldValue();
+//        $order = Order::where($field, $value)
+//            ->whereNull('submitted')
+////            ->select('id')
+////            ->withCount(['products as products_count' => function ($query) {
+////                $query->where('order_product.deleted_at', NULL); // withoutTrashed() не работает
+////            }])
+//            ->first();
+//        return $order;
+
         list($field, $value) = Auth::getCartFieldValue();
         $order = Order::where($field, $value)->first();
 

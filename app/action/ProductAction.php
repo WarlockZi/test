@@ -28,12 +28,11 @@ class ProductAction
         return $this->breadcrumbs->getParents($category, $lastItemIsLink);
     }
 
-    public function order()
+    public function orderItem(Product $product)
     {
         $userOrder = OrderRepository::usersOrder();
         if ($userOrder) {
-            $arr = $userOrder->toArray();
-            return $arr;
+            return $userOrder->products->where('1s_id', $product['1s_id'])->toArray();
         }
         return null;
     }
@@ -56,6 +55,7 @@ class ProductAction
     {
         return [];
     }
+
     public function prepareIndex(Product $product): array
     {
         return [];
