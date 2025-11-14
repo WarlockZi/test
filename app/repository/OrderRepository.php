@@ -77,12 +77,12 @@ class OrderRepository
                 ;
             }])
             ->first();
-        dd($order);
+
         if ($order) {
 //            $order->products->each->append('mainImage');
-//            $o = $order->toArray();
+            return $order->toArray();
         }
-        return $order;
+        return null;
     }
 
     public static function deleteOrderItem(Order $order, Product $product, string $unit_id,)

@@ -31,8 +31,7 @@ class CategoryController extends AppController
                     404);
             }
 
-//            dd($category);
-            $order          = OrderRepository::usersOrder()->toArray();
+            $order          = OrderRepository::usersOrder();
             $category = $category->toArray();
             view('category.category',
                 compact(
