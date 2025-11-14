@@ -31,7 +31,7 @@ class CategoryController extends AppController
                     404);
             }
 
-            $order          = OrderRepository::usersOrder();
+            $order = OrderRepository::usersOrder()?->toArray() ?: [];
             $category = $category->toArray();
             view('category.category',
                 compact(
@@ -42,7 +42,7 @@ class CategoryController extends AppController
 
         } else {
             $categories = APP->get('rootCategories');
-            $meta = $this->actions->setCategoriesMeta();
+            $meta       = $this->actions->setCategoriesMeta();
             view('category.categories', compact('meta', 'categories'));
         }
     }

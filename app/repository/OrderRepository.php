@@ -78,11 +78,7 @@ class OrderRepository
             }])
             ->first();
 
-        if ($order) {
-//            $order->products->each->append('mainImage');
-            return $order->toArray();
-        }
-        return null;
+            return $order;
     }
 
     public static function deleteOrderItem(Order $order, Product $product, string $unit_id,)
