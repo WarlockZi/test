@@ -21,7 +21,9 @@ class CategoryController extends AppController
     #[NoReturn] public function actionIndex(IRequest $request): void
     {
         if ($request->slug) {
+//            exit('before');
             $category = $this->repo->indexInstore($request->slug);
+            exit('after');
 
             if (!$category) {
                 $similarCategories = $this->actions->similarCategories($request->slug);

@@ -17,7 +17,6 @@ class CategoryRepository
         $cacheKey = 'categoryWithProducts' . str_replace("/", "", $slug);
 
         try {
-
             return Cache::remember($cacheKey,
                 function () use ($slug) {
                     $category = Category::query()
