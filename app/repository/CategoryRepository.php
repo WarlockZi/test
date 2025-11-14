@@ -28,8 +28,8 @@ class CategoryRepository
                         ->with('meta')
                         ->with(['childrenRecursive' => fn($q) => $q->with('ownProperties')])
                         ->with('parentRecursive')
-//                    ->with('productsInStore')
-//                    ->with('productsNotInStoreInMatrix')
+                        ->with('productsInStore')
+                        ->with('productsNotInStoreInMatrix')
                         ->first();
 
                     if ($category) {
