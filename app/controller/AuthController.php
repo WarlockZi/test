@@ -32,7 +32,7 @@ class AuthController extends AppController
     #[NoReturn] public function actionLogin(LoginRequest $request): void
     {
         try {
-            $validated = $request->validate();
+            $validated = $request->safe()->only('email', 'password');
 
             $user = User::where('email', $validated['email'])->with('role')->first();
 

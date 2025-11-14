@@ -3,29 +3,27 @@
 namespace app\formRequest;
 
 
-use app\formRequest\baseFormRequests\FormRequest4;
+use app\formRequest\baseFormRequests\FormRequest;
 
-class CartRequest extends FormRequest4
+class CartRequest extends FormRequest
 {
-    public function __construct(
-        protected array $allowedFields = [
-            'count',
-            'unit_id',
-            'product_1s_id',
-            'loc_storage_cart_id',
-        ]
-    )
-    {
-    }
-    public function rules(): array
-{
-    return [
-        'count' => 'required|integer',
-        'unit_id' => 'required|string',
-        'product_1s_id' => 'required|string',
-        'loc_storage_cart_id'=>'string',
+    protected array $allowedFields = [
+        'count',
+        'unit_id',
+        'product_1s_id',
+        'loc_storage_cart_id',
     ];
-}
+
+    public function rules(): array
+    {
+        return [
+            'count' => 'required|integer',
+            'unit_id' => 'required|string',
+            'product_1s_id' => 'required|string',
+            'loc_storage_cart_id' => 'string',
+        ];
+    }
+
     public function messages(): array
     {
         return [
@@ -37,11 +35,13 @@ class CartRequest extends FormRequest4
             'product_1s_id.string' => 'product_1s_id is to be string',
         ];
     }
+
     public function authorize(): bool
     {
         return true;
     }
-    public function all($keys=null): array
+
+    public function all($keys = null): array
     {
         return parent::all();
     }

@@ -15,6 +15,7 @@ use JetBrains\PhpStorm\NoReturn;
 
 abstract class FormRequest extends Request
 {
+    private array $validatedData;
 
     public function __construct()
     {
@@ -53,9 +54,7 @@ abstract class FormRequest extends Request
         $this->prepareForValidation();
 
         $validator = $this->createValidator();
-//        if (!$this->authorize()) {
-//            throw new \Exception('Unauthorized', 403);
-//        }
+
         if ($validator->fails()) {
             $errors = $validator->errors();
             $this->throwValidationException($validator);
@@ -122,14 +121,48 @@ abstract class FormRequest extends Request
         $this->authorize();
         $this->prepareForValidation();
         $validator = $this->createValidator();
-//        $this->after();
 
         if ($validator->getData()['phpSession']) {
             $data = $validator->getData();
             unset($data['phpSession']);
         }
+        $this->validatedData = $validator->getData();
 
         return $data;
+    }
+
+    public function safe(): object
+    {
+        return new class($this->validated()) {
+            private $data;
+
+            public function __construct($data)
+            {
+                $this->data = $data;
+            }
+
+            public function __get($name)
+            {
+                return $this->data[$name] ?? null;
+            }
+
+            public function all()
+            {
+                return $this->data;
+            }
+
+            public function only($keys)
+            {
+                $keys = is_array($keys) ? $keys : func_get_args();
+                return array_intersect_key($this->data, array_flip($keys));
+            }
+
+            public function except($keys)
+            {
+                $keys = is_array($keys) ? $keys : func_get_args();
+                return array_diff_key($this->data, array_flip($keys));
+            }
+        };
     }
 
 }
