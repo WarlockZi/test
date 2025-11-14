@@ -109,7 +109,9 @@ class Category extends Model
             ->with('like')
             ->with('units')
             ->with('ownProperties')
-            ->orderBy('name');
+//            ->mainImage()
+            ->orderBy('name')
+            ;
     }
 
     public function productsNotInStoreInMatrix(): HasMany
@@ -128,7 +130,8 @@ class Category extends Model
             ->with('like')
             ->with('units')
             ->with('ownProperties')
-            ->orderBy('name');
+//            ->mainImage()
+             ->orderBy('name');
     }
 
     public function InactivePromotions()

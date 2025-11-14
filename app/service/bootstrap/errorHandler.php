@@ -1,6 +1,6 @@
 <?php
 
-
+$errorsArray = [];
 if (DEV) {
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
@@ -54,14 +54,12 @@ function productionExceptionHandler($exception): void
 function productionShutdownHandler($e): void
 {
     $error = error_get_last();
-    error_log("Production shutdownHandler: ".$error );
+    error_log("Production shutdownHandler: " . $error);
     if ($error && in_array($error['type'], [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR])) {
         productionErrorHandler($error['type'], $error['message'], $error['file'], $error['line']);
         view('category.notFound');
     }
 }
-
-
 
 
 function devShutdownHandler(): void
@@ -74,11 +72,14 @@ function devShutdownHandler(): void
 
 function devErrorHandler($errno, $errstr, $errfile, $errline)
 {
-    error_log("Dev Error [$errno]: $errstr in $errfile on line $errline");
-    if (!headers_sent()) {
-        header('HTTP/1.1 500 Internal Server Error');
-//        include ROOT.'/app/view/404/404.php';
-    }
+//    error_log("Dev Error [$errno]: $errstr in $errfile on line $errline");
+    $error = $errstr . "<br> in " . $errfile . "<br> on line " . $errline;
+//    if (!headers_sent()) {
+//        header('HTTP/1.1 500 Internal Server Error');
+////        include ROOT.'/app/view/404/404.php';
+//    }
+//    response()->consoleLog($errstr);
+    view('exceptions.error', compact('error'));
     // Don't execute PHP internal error handler
     return true;
 }
@@ -92,13 +93,13 @@ function devExceptionHandler($exception): void
 
     foreach ($trace as $key => $value) {
         $traceStr .= 'class: ' . ($value['class'] ?? 'no class name') . '<br>' .
-            'function: ' . '<b>'.($value['function'] ?? 'no function name'). '</b>' . " : " . ($value['line'] ?? 'no line number') . "<br><br>";
+            'function: ' . '<b>' . ($value['function'] ?? 'no function name') . '</b>' . " : " . ($value['line'] ?? 'no line number') . "<br><br>";
     }
 
     $lines = [
         $exception->getMessage() . " : Dev exception<br>",
         "file: " . $exception->getFile() . " : " . $exception->getLine(),
-        "URL: " . $url."<br>",
+        "URL: " . $url . "<br>",
         "TRACE: <br><br>" . $traceStr,
     ];
 

@@ -12,8 +12,10 @@ class CheckboxBuilder
     public string $checked = '';
     public $checkedFFn;
     public string $data = '';
-    public array $itemData = [];
     public array $pivotData = [];
+    public array $dataField = [];
+    public array $dataPivotField = [];
+    public array $itemData = [];
     public string $class = '';
     public string $id = '';
     public string $for = '';
@@ -69,7 +71,7 @@ class CheckboxBuilder
 
     public function data(string $postfix, string|null $value): static
     {
-        $this->data .= $this->data . "data-$postfix=$value ";
+        $this->data .=  "data-$postfix=$value ";
         return $this;
     }
 

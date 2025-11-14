@@ -4,7 +4,6 @@
 <!--  BUTTONS  -->
 <div class="item_buttons">
 
-
     @if ($catItem['del'])
         <div class="del"
              data-model="<?= $catItem['model']; ?>"
@@ -12,7 +11,6 @@
         >
             <?= Icon::trashIcon() ?>
         </div>
-
     @endif
 
     @if ($catItem['softDel'])
@@ -20,7 +18,6 @@
             <?= Icon::trashIcon() ?>
         </div>
     @endif
-
 
     @if ($catItem['save'])
         <div class="save"

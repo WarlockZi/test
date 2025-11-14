@@ -2,7 +2,6 @@
 
 namespace app\action\admin;
 
-use app\model\Category;
 use app\model\Product;
 use app\model\ProductUnit;
 use app\service\Breadcrumbs\NewBread;
@@ -10,13 +9,14 @@ use app\service\Image\ProductMainImage;
 use app\service\Response;
 use app\service\Router\IRequest;
 use Exception;
+use JetBrains\PhpStorm\NoReturn;
+use Throwable;
 
 
 class ProductAction
 {
     public function __construct(
-        protected ProductMainImage $productMainImage,
-        private NewBread $breadcrumbs,
+        private NewBread           $breadcrumbs,
     )
     {
     }
@@ -30,25 +30,35 @@ class ProductAction
         return $this->breadcrumbs->getParents($category, $lastItemIsLink);
     }
 
-    public function saveMainImage(array $file, Product $product): string
+    /**
+     * @throws Exception
+     */
+    public function saveMainImage(array $validated): string
     {
-        $absPath = $this->productMainImage->init($file, $product)->save();
+        $product = Product::find($validated['productId'])->toArray();
+        $file = $validated['file'];
+
+        $productMainImage = (new ProductMainImage($product, $file))
+        ->save();
+        return $productMainImage->getRelativePath();
+
+//        $image = $this->productMainImage->init($file, $product)->save();
 //        $this->productMainImage->reduceQuality();
-        return $absPath;
+//        return $image->getFullRelativePath();
     }
 
-    public static function changeBaseIsShippable(IRequest $req): void
-    {
-        $pu              = ProductUnit::query()
-            ->where('product_1s_id', $req['product_1s_id'])
-            ->where('is_base', 1)
-            ->where('multiplier', 1)
-            ->first();
-        $pu->isBase      = 1;
-        $pu->isShippable = (int)$req['base_is_shippable'];
-        $pu->save();
-        response()->json(['popup' => 'ok']);
-    }
+//    public static function changeBaseIsShippable(IRequest $req): void
+//    {
+//        $pu              = ProductUnit::query()
+//            ->where('product_1s_id', $req['product_1s_id'])
+//            ->where('is_base', 1)
+//            ->where('multiplier', 1)
+//            ->first();
+//        $pu->isBase      = 1;
+//        $pu->isShippable = (int)$req['base_is_shippable'];
+//        $pu->save();
+//        response()->json(['popup' => 'ok']);
+//    }
 
     public function changeUnit(IRequest $req): void
     {
@@ -72,6 +82,21 @@ class ProductAction
         }
     }
 
+    public function changeUnitPrice(array $req): void
+    {
+        $product = Product::find($req['id']);
+        try {
+            $product->units()
+            ->where('unit_id', $req['relation']['id'])
+            ->first()->pivot->update([
+                'price' => $req['relation']['pivot']['price']]);
+            response()->json(['popup' => 'Изменен']);
+        } catch (Throwable $exception) {
+            response()->json(['popup' => 'цена единицы не поменялась. Ошибка']);
+        }
+
+    }
+
     public function deleteUnit(IRequest $req): void
     {
         try {
@@ -86,7 +111,7 @@ class ProductAction
         }
     }
 
-    public function changeVal(IRequest $req): void
+    #[NoReturn] public function changeVal(IRequest $req): void
     {
         $product = Product::find($req['product_id']);
         $newVal  = $req['morphed']['new_id'];

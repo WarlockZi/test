@@ -4,7 +4,7 @@ namespace app\model;
 
 
 use app\service\AuthService\Auth;
-use app\service\Image\ProductImageService;
+use app\service\Image\del\ProductImageService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -46,6 +46,11 @@ class Product extends Model
         'mainImage',
     ];
 
+    public function getMainImageAttribute(): string
+    {
+        return APP->get(ProductImageService::class)->getImageRelativePath($this);
+    }
+
     public function units(): BelongsToMany
     {
         return $this->belongsToMany(
@@ -58,17 +63,19 @@ class Product extends Model
         )
             ->using(ProductUnit::class)
             ->orderByPivot('multiplier')
-            ->withPivot('id','price','is_shippable','multiplier')
-            ;
+            ->withPivot('id', 'price', 'is_shippable', 'multiplier');
     }
+
     public function getBaseUnitAttribute()
     {
         return $this->units()->wherePivot('multiplier', 1)->first();
     }
+
     public function getShippableUnitsAttribute()
-{
-    return $this->units()->wherePivot('is_shippable', 1)->get();
-}
+    {
+        return $this->units()->wherePivot('is_shippable', 1)->get();
+    }
+
     public function scopeWithShippableUnitsPrice($query)
     {
         return $query->with(['shippableUnits' => function ($q) {
@@ -210,10 +217,6 @@ class Product extends Model
         return $pis->getImageRelativePath($this);
     }
 
-    public function getMainImageAttribute(): string
-    {
-        return APP->get(ProductImageService::class)->getImageRelativePath($this);
-    }
 
     ///price
     public function getFormattedPriceAttribute(): string

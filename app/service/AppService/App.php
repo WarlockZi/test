@@ -21,7 +21,6 @@ class App
      */
     public function __construct()
     {
-//        xdebug_info();
         $container = new Container();
 
         define('APP', $container());

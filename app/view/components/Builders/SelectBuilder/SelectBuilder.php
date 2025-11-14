@@ -4,6 +4,8 @@
 namespace app\view\components\Builders\SelectBuilder;
 
 
+use app\blade\Blade;
+use app\blade\View;
 use app\service\Fs\FS;
 use app\view\components\Traits\CleanString;
 
@@ -19,6 +21,7 @@ class SelectBuilder
     private string $name = '';
     private string $options;
     private string $initialOption = '';
+    private string $selectAttr = 'select-new';
 
     public static function build(string $options): static
     {
@@ -26,7 +29,11 @@ class SelectBuilder
         $select->options = $options;
         return $select;
     }
-
+    public function removeSelectNewAttr(): static
+    {
+        $this->selectAttr = "";
+        return $this;
+    }
 
     public function class(string $class): static
     {
@@ -69,7 +76,12 @@ class SelectBuilder
     public function get(): string
     {
         $data = get_object_vars($this);
-        return $this->clean(FS::getFileContent(__DIR__.'/templates/SelectBuilderTemplate.php', $data));
+        return APP->get(View::class)
+            ->render('admin.components.select.select',
+                compact('data')
+//                ['c' => $this, 'field' => $this->field, 'content' => $data]
+            );
+//        return $this->clean(FS::getFileContent(__DIR__.'/templates/SelectBuilderTemplate.php', $data));
     }
 
 }

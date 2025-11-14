@@ -13,17 +13,25 @@ use app\formRequest\baseFormRequests\FormRequest;
         parent::__construct();
     }
 
+    public function authorize(): bool
+    {
+        return isset($this->phpSession)
+        && $this->phpSession === session_id();
+    }
+
     public function rules(): array
     {
         return [
             'productId' => 'required|string',
-            'file.*' => 'max:12000|image|mimes:jpeg,jpg,gif',
+            'file.*' => 'max:5000|image|mimes:jpeg,jpg,gif,png',
         ];
     }
 
     public function all($keys = null): array
     {
-            return array_merge($_POST, $_FILES);
+        $post  = json_decode(file_get_contents('php://input'), true) ?? $_POST;
+        $files = $_FILES;
+        return array_merge($post, $files);
     }
 
     public function messages(): array
@@ -32,7 +40,7 @@ use app\formRequest\baseFormRequests\FormRequest;
             'post.productId.required' => 'отсутствует поле productId',
             'post.productId.string' => 'поле productId должно быть строкой',
 
-            'file.max' => 'размер файла больше 13',
+            'file.max' => 'размер файла больше 12',
             'file.mimes' => 'тип файла не тот',
             'file.image' => 'кто сказал, что это картинка!...',
         ];

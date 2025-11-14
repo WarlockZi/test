@@ -24,6 +24,9 @@ class ProductRepository
             ->with('activePromotions')
             ->with('inactivePromotions')
             ->find($id);
+        if ($product) {
+            $product->append('mainImage');
+        }
         return $product;
     }
 
@@ -44,10 +47,12 @@ class ProductRepository
             ->with('like')
             ->with('compare')
             ->where('slug', $slug)
-            ->first();
+            ->first()
+        ;
 
         if ($prod) {
-            $p = $prod->toArray();
+//            $p = $prod->toArray();
+            $prod->append('mainImage');
             $prod->append('base_unit');
             $prod->append('shippable_units');
         }

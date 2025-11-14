@@ -1,9 +1,10 @@
 @extends('layouts.admin.admin')
 
 @section('content')
-{{--    @php(xdebug_break())--}}
+
+{{--    @deb--}}
     @if ($catItem)
-{{--        @php xdebug_break(); @endphp--}}
+
         @include('components.breadcrumbs.index', compact('breadcrumbs'))
         @include('admin.components.catalogItem.index', compact('catItem'))
 
@@ -12,4 +13,5 @@
         <br>
         <a href="/adminsc/category">Перейти в каталог</a>
     @endif
+
 @endsection

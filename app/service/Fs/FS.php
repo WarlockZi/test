@@ -31,7 +31,10 @@ class FS
         require FS::platformSlashes($file);
         return ob_get_clean();
     }
-
+    public static function invertSlashes(string $path): string
+    {
+        return strtr($path, ['\\'=> '/', '/'=> '\\']);
+    }
     public static function delFilesFromPath(string $path, string $ext = ''): array
     {
         $ext     = $ext ?? '*';

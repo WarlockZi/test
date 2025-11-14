@@ -12,6 +12,7 @@ use Illuminate\Validation\Factory;
 use Illuminate\Validation\Validator;
 use JetBrains\PhpStorm\NoReturn;
 
+
 abstract class FormRequest extends Request
 {
 
@@ -34,38 +35,27 @@ abstract class FormRequest extends Request
 
     public function prepareForValidation(): void
     {
-        if ($_FILES) {
-            $uploadedFiles = [];
-            foreach ($_FILES as $fileData) {
-                $uploadedFiles[] = new UploadedFile(
-                    $fileData['tmp_name'],          // Temporary file path
-                    $fileData['name'],              // Original name
-                    $fileData['type'],             // MIME type
-                    $fileData['error'],            // Error code
-                    true                           // Test mode (set to false in production)
-                );
-                $_FILES['file']  = $uploadedFiles;
-            }
-        }
     }
 
     public function authorize(): bool
     {
-        $req = ['phpSession' => $this->json('phpSession')];
-        if (!Auth::validatePphSession($req)) throw new \Exception('плохой token');
+
+        if (!Auth::validatePphSession($this->all())) throw new \Exception('плохой token');
         return true;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function validate(): array
     {
-        if (!$this->authorize()) {
-            throw new \Exception('Unauthorized', 403);
-        }
-
+        $this->authorize();
         $this->prepareForValidation();
 
         $validator = $this->createValidator();
-
+//        if (!$this->authorize()) {
+//            throw new \Exception('Unauthorized', 403);
+//        }
         if ($validator->fails()) {
             $errors = $validator->errors();
             $this->throwValidationException($validator);
@@ -112,30 +102,32 @@ abstract class FormRequest extends Request
         ];
     }
 
-    public function after(): array
-    {
-        $arr = [];
-        if ($_FILES) {
-            foreach ($_FILES['file'] as $fileData) {
-                $arr[] = $this->UploadedFile2Array($fileData);
-            }
+//    public function after(): array
+//    {
+//        $arr = [];
+//        if ($_FILES) {
+//            foreach ($_FILES['file'] as $fileData) {
+//                $arr[] = $this->UploadedFile2Array($fileData);
+//            }
+//        }
+//
+//        return $arr;
+//    }
 
-        }
-        if ($this->json('phpSession') !== null) {
-            $data = $this->json()->all();
-            unset($data['phpSession']);
-            $arr = array_merge($arr, $data);
-        }
-        return $arr;
-    }
-
+    /**
+     * @throws \Exception
+     */
     public function validated(): array
     {
         $this->authorize();
         $this->prepareForValidation();
         $validator = $this->createValidator();
-        $this->after();
-        $data = $validator->getData();
+//        $this->after();
+
+        if ($validator->getData()['phpSession']) {
+            $data = $validator->getData();
+            unset($data['phpSession']);
+        }
 
         return $data;
     }

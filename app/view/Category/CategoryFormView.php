@@ -256,7 +256,7 @@ class CategoryFormView
     public static function getSeoArticle($categoryProperty): string
     {
         ob_start();
-        include ROOT . '/app/blade/views/admin/category/seoArticle.php';
+        include ROOT . '/app/blade/views/admin/category/seoArticle.blade.php';
         return ob_get_clean();
     }
 

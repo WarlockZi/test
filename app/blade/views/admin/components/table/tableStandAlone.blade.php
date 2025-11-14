@@ -1,64 +1,56 @@
-
 <div custom-table
-    <?= $data['class']; ?>
-    <?= $data['dataModel'] ?>
-    <?= $data['dataRelation'] ?>
-    <?= $data['dataRelationType'] ?>
+        {!!$data['class']??''!!}
+        {!!$data['dataAttributes']??''!!}
 >
 
-    <div class='table-title'><?= $data['pageTitle'] ?></div>
+    <div class='table-title'>{!!$data['pageTitle']??''!!}</div>
 
     @foreach($data['header'] as $title=>$html)
         <div class="table-header-row">
-                <?= $title ?> : <?= $html ?>
+                {!!$title??''!!} : {!!$html??''!!}
         </div>
     @endforeach
 
-    <div class="custom-table"
-        <?= $data['grid'] ?>
-    >
-
+    <div class="custom-table" {!!$data['grid']??''!!}>
+        {{--@deb--}}
         <!--  HEADER  -->
         @foreach ($data['columns'] as $c)
+{{--            @deb--}}
             <div
-                    <?= $c->classHeader; ?>
-                <?= $c->type; ?>
-                <?= $c->sort; ?>
+                    {!!$c->classHeader??''!!}
+                {!!$c->sort??''!!}
             >
-                    <?= $c->sortIcon; ?>
-                    <?= $c->name; ?>
-                    <?= $c->search; ?>
+                    {!!$c->sortIcon??''!!}
+                    {!!$c->name??''!!}
+                    {!!$c->search??''!!}
             </div>
         @endforeach
 
         <!--  TABLE  -->
-{{--        @php(xdebug_break())--}}
-        <!--		 Empty row-->
-        <?= $data['emptyRow'] ?>
 
-                <!--		 Data rows-->
-        {{--        @php(xdebug_break())--}}
+        <!--		 Empty row-->
+        @include('admin.components.table.row.emptyRow',compact('data','c'))
+
+        <!--		 Data rows-->
+
         @if (count($data['items']))
             @foreach ($data['items'] as $item)
 
                 @foreach ($data['columns'] as $field => $c)
 
-                    @include('admin.components.table.tableRow', compact('field', 'c','item'))
+                    @include('admin.components.table.row.tableRow', compact('field', 'c','item'))
 
                 @endforeach
             @endforeach
         @endif
 
     </div>
-    {{--    @php(xdebug_break())--}}
 
     @if (!$data['items']->count())
-
         <h3 class="no-items">Элементы не найдены</h3>
     @endif
 
     <!--  ADD BUTTON  -->
-    {{--        @php xdebug_break() @endphp--}}
     @if($data['addButton'])
         <div class="buttons">
             <div class="add-model" {!! $data['pivot'] !!}>+</div>

@@ -4,12 +4,13 @@ namespace app\controller\Admin;
 
 
 use app\action\admin\ProductAction;
-use app\blade\views\product\del\ProductFormView;
+use app\blade\views\product\ProductFormView;
 use app\formRequest\StoreProductMainImageRequest;
 use app\model\Product;
 use app\repository\ProductFilterRepository;
 use app\repository\ProductRepository;
 use app\service\Router\IRequest;
+use Exception;
 use JetBrains\PhpStorm\NoReturn;
 
 
@@ -25,19 +26,18 @@ class ProductController extends AdminscController
         parent::__construct();
     }
 
+    /**
+     * @throws Exception
+     */
     #[NoReturn] public function actionSaveMainImage(StoreProductMainImageRequest $request): void
     {
-        $validated = $request->validated();
-
-        $product   = Product::find($validated['post']['productId']);
-        $mainImage = $this->actions->saveMainImage($validated['files']['file'], $product);
+        $mainImage = $this->actions->saveMainImage($request->validated());
         response()->json(compact('mainImage'));
     }
 
     #[NoReturn] public function actionEdit(IRequest $request): void
     {
-        $prod = $this->repo->edit($request->id);
-        $p = $prod->toArray();
+        $prod        = $this->repo->edit($request->id);
         $breadcrumbs = $this->actions->getBreadcrumbs($prod->category, false);
         $catItem     = ProductFormView::edit($prod);
         view('admin.product.edit', compact('catItem', 'breadcrumbs'));
@@ -63,7 +63,10 @@ class ProductController extends AdminscController
     {
         $this->actions->changeUnit($request);
     }
-
+    public function actionChangeunitprice(IRequest $request): void
+    {
+        $this->actions->changeUnitPrice($request->body);
+    }
     public function actionChangepromotion(IRequest $request): void
     {
         $this->actions->changePromotion($request);

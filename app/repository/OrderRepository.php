@@ -68,16 +68,18 @@ class OrderRepository
             ->whereNull('submitted')
             ->with(['products' => function ($q) {
                 $q
+                    ->select('*')
                     ->whereHas('orderItems')
                     ->with(['orderitems' => function ($q) {
                         $q->with('unit', 'price.currency', 'price.type');
                     }])
-                    ->withoutTrashed()//                    ->with('unitFrom1s')
+                    ->withoutTrashed()
                 ;
             }])
             ->first();
         if ($order) {
-            $o = $order->toArray();
+//            $order->products->each->append('mainImage');
+//            $o = $order->toArray();
         }
         return $order;
     }

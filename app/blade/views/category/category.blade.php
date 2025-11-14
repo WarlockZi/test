@@ -78,7 +78,6 @@
                     <h2>Товары под заказ</h2>
                 </div>
                 <div class="product-wrap">
-{{--                    @php(xdebug_break())--}}
                     @foreach ($category['products_not_in_store_in_matrix'] as $product)
                         @if (str_ends_with($product['name'], '*'))
                             @include('category.product_card', compact('product'))

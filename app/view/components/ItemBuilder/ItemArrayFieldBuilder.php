@@ -81,12 +81,6 @@ class ItemArrayFieldBuilder
         return $this;
     }
 
-    public function hidden()
-    {
-        $this->hidden = 'hidden';
-        return $this;
-    }
-
     public function contenteditable()
     {
         $this->contenteditable = 'contenteditable';

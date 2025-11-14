@@ -38,7 +38,8 @@
     "ext-posix": "*",
     "ext-curl": "*",
     "ext-zip": "*",
-    "staudenmeir/laravel-adjacency-list": "^1.9"
+    "staudenmeir/laravel-adjacency-list": "^1.9",
+    "ext-gd": "*"
   },
   "config": {
     "platform-check": false

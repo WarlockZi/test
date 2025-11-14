@@ -49,17 +49,17 @@ class AppController extends Controller
         }
     }
 
-    public function actionDelete(): void
+    public function actionDelete(IRequest $request): void
     {
-        $id = $this->ajax['id'];
-        if (!$id) response()->json(['msg' => 'No id']);
-        $model        = $this->model::find($id);
-        $relationType = $this->ajax['relationType'] ?? null;
-        if (!empty($relationType)) {
-            $relationName = $this->ajax['relationName'] ?? null;
-            if ($relationType === 'attach') {
-                $relationId = $this->ajax['relationId'] ?? null;
-                if ($model->$relationName()->detach($relationId)) {
+        $body = $request->body();
+        if (!$body['id']) response()->json(['msg' => 'No id']);
+        $model        = $this->model::find($body['id']);
+        $relation = $body['relation'] ?? null;
+        if (!empty($relation)) {
+            $relationName = $relation['name'] ?? null;
+            if ($relation['attach']) {
+                $relationId = $relation['attach'] ?? null;
+                if ($model->$relationName()->detach((int)$relationId)) {
                     response()->json(['deleted' => $relationId, 'popup' => 'Удален']);
                 }
             }

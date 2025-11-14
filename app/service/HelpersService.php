@@ -4,11 +4,37 @@ namespace app\service;
 
 use app\model\Product;
 use app\model\ProductUnit;
+use app\service\Fs\FS;
 use app\service\Logger\FileLogger;
+use JetBrains\PhpStorm\NoReturn;
 
 class HelpersService
 {
 
+    private function getArt(string $ar): string
+    {
+        $art       = str_replace(['/', '//', '\\', '\\\\'], '_', $ar);
+        return trim(strip_tags($art));
+    }
+
+    #[NoReturn] public function saveProductImages(): void
+    {
+        $products = Product::all();
+        $exts = ['jpg', 'jpeg', 'png', 'webp'];
+
+        foreach ($products as $product) {
+            $art = $this->getArt($product->art);
+            foreach ($exts as $ext) {
+                $path = FS::resolve(ROOT, env(PIC_PRODUCT));
+                $imgName = $art.'.'.$ext;
+                $fullPath =  $path . $imgName;
+                if (is_readable($fullPath)) {
+                    $product->txt = $imgName;
+                    $product->save();
+                }
+            }
+        }
+    }
     //    if (DEV) {
 //        \app\service\MockUserService::mockUser();
 //    }

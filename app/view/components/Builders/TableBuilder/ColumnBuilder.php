@@ -4,61 +4,56 @@
 namespace app\view\components\Builders\TableBuilder;
 
 
-use app\blade\View;
 use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
+use app\view\components\Traits\CleanString;
 
 class ColumnBuilder
 {
+    use CleanString;
 
-    public $field = 'id';
+//    public string $field = '';
+    public string $dataAttributes = '';
     public $dataField;
-    public $class = "class='cell left'";
-    public $classHeader;
+    public string $class = "class='cell left'";
+    public string $classHeader;
 
-    public $name;
-    public $type;
+    public string $name;
+//    public $type;
     public $sort;
     public $sortIcon;
     public $search;
-    public $width = 'auto';
+    public string $width = 'auto';
     public $hidden;
     public $contenteditable;
     public $pivot;
     public string $attach = '';
 
-    public $html;
     public $function;
     public $callbackFn;
     public $component;
     public $functionClass;
 
-    public $select = false;
+    public bool $select = false;
     public mixed $emptyRow = '';
 
-    public static function build(string $title = ''): self
+    public static function build(string $name): self
     {
-        $column            = new static();
-        $column->field     = $title;
-        $column->dataField = $title ? "data-field='{$title}'" : '';
+        $column       = new static();
+        $column->name = $name;
         return $column;
     }
-
-    public function attach(): static
+    public function data(array $data): self
     {
-        $this->attach = 'data-attach=true';
+        foreach ($data as $key => $value) {
+            $this->dataAttributes.="data-$key=$value ";
+        }
         return $this;
     }
-
-    public function removeDataField(): static
-    {
-        $this->dataField = '';
-        return $this;
-    }
-
-    public function emptyRow(mixed $emptyRow): self
+    public function emptyRow(callable|string $emptyRow): self
     {
         if (is_callable($emptyRow)) {
-            $this->emptyRow = call_user_func($emptyRow);
+            $content        = $this->clean(call_user_func($emptyRow));
+            $this->emptyRow = $content;
         } else {
             $this->emptyRow = $emptyRow;
         }
@@ -71,44 +66,34 @@ class ColumnBuilder
         return $this;
     }
 
-    public function pivot(string $pivotField): self
-    {
-        $this->pivot = "data-pivot='{$pivotField}'";
-        return $this;
-    }
-
+//    public function pivot(string $pivotField): self
+//    {
+//        $this->pivot = "data-pivot='{$pivotField}'";
+//        return $this;
+//    }
+//    public function type(string $type): self
+//    {
+//        $this->type = "data-type='{$type}'";
+//        return $this;
+//    }
     public function classHeader(string $class): self
     {
         $this->classHeader = "class='{$class}'";
         return $this;
     }
 
-    public function name(string $name): self
+    public function headerIcon(string $icon): self
     {
-        $this->name = $name;
+        $this->name = $icon;
         return $this;
     }
 
-    public function type(string $type): self
-    {
-        $this->type = "data-type='{$type}'";
-        return $this;
-    }
+//
 
     public function sort(): self
     {
         $this->sort     = 'data-sort';
         $this->sortIcon = '<div class="icon"></div>';
-        return $this;
-    }
-
-    public function html(string|callable $html): self
-    {
-        if (is_callable($html)) {
-            $this->html = $html();
-        } else {
-            $this->html = $html;
-        }
         return $this;
     }
 
@@ -118,7 +103,7 @@ class ColumnBuilder
         return $this;
     }
 
-    public function function (string $class, string $function, $params = ''): self
+    public function function (string $class, string $function): self
     {
         $this->functionClass = $class;
         $this->function      = $function;
@@ -142,13 +127,6 @@ class ColumnBuilder
         return $this;
     }
 
-    public function hidden(): self
-    {
-        $this->hidden = 'hidden';
-        return $this;
-    }
-
-
     public function contenteditable(): self
     {
         $this->contenteditable = 'contenteditable';
@@ -163,7 +141,7 @@ class ColumnBuilder
 
     private function handleCheckbox($checkbox, $item): void
     {
-        $checkedFFn               = $checkbox->checkedFFn;
+        $checkedFFn        = $checkbox->checkedFFn;
         $checkbox->checked = $checkedFFn($item) ? 'checked' : '';
     }
 
@@ -181,22 +159,15 @@ class ColumnBuilder
         } else if ($column->callbackFn) {
             return $column->callCallback($item);
         } else {
-            return $item[$field];
+            return $item[$field] ?? '';
         }
     }
-    public function getEmptyRow(): string
-    {
-        $v =APP->get(View::class);
-        $view = $v->render('admin.components.table.tableRow',['c'=>$this, 'field'=>$this->field]);
-        return $view;
 
-    }
+
     public function get(): self|string
     {
         $this->class       = $this->class ?? "class='cell'";
         $this->classHeader = $this->classHeader ?? "class='head'";
-        $this->name        = $this->name ?? $this->field;
-        $this->emptyRow      =  $this->getEmptyRow();
         return $this;
     }
 }

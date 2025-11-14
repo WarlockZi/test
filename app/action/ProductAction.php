@@ -28,13 +28,22 @@ class ProductAction
         return $this->breadcrumbs->getParents($category, $lastItemIsLink);
     }
 
-    public function orderItem(Product $product)
+    public function orderProduct(Product $product)
     {
         $userOrder = OrderRepository::usersOrder();
-        if ($userOrder) {
-            return $userOrder->products->where('1s_id', $product['1s_id'])->toArray();
-        }
-        return null;
+        if (!$userOrder) return null;
+
+        $orderProduct = $userOrder
+            ->products
+            ->where('1s_id', $product['1s_id']);
+
+        if (!$orderProduct->count()) return null;
+
+//        $uo = $userOrder->toArray();
+//        $p  = $product->toArray();
+//        $op = $orderProduct->toArray();
+//            $ordItems = $product[0]['orderitems'];
+        return $orderProduct->first()->orderitems->toArray();
     }
 
     public function setMeta(Product $product): array

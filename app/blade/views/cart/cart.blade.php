@@ -34,7 +34,7 @@
                         <div class="row cart-item" data-product-id="{!! $product['1s_id'] !!} ">
                             <div class="num cell"><?= ++$i; ?></div>
 
-                            {{--                          @php xdebug_break() @endphp--}}
+
                             <img class="img" src="<?= $product['mainImage']; ?>" alt="<?= $product['name']; ?>">
 
                             <div class="name-price cell">
@@ -49,23 +49,23 @@
                                 @if(!$product)
                                     <div>продукт не определен</div>
                                 @else
-                                    @include('components.shippableUnitsNew.cart.cartShippableUnits', compact('product'))
+                                    @include('cart.cartShippableUnits', compact('product'))
                                 @endif
                             </div>
 
                             <div class="sub-sum sum cell">
                                 @foreach($product['shippable_units'] as $unit)
 
-                                    @foreach($product['order_items'] as $order_Item)
-                                        @if($order_Item['unit_id']===$unit['id'])
-                                            @php($orderItem = $order_Item)
+                                    @foreach($product['order_items'] as $oi)
+
+                                        @if(!empty($oi['unit'][0])&&$oi['unit'][0]['id']===$unit['id'])
+                                            @php($orderItem = $oi)
                                         @endif
                                     @endforeach
 
-                                    {{--                                    @php(xdebug_break())--}}
                                     <div class="row-sum">
-
-                                        @php($subSum = $unit['pivot']['multiplier']*$orderItem['price']['value']*$orderItem['count'])
+                                        {{--                                        @deb--}}
+                                        @php($subSum = $unit['pivot']['multiplier']*$orderItem['unit'][0]['pivot']['price']*$orderItem['count'])
                                         {!! empty($subSum)?'-':number_format($subSum, 2, '.', ' ') !!}
                                     </div>
 

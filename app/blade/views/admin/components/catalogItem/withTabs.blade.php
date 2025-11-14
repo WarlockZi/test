@@ -5,7 +5,6 @@
 <div class="item_content">
 
     <section data-tab="1" class="show">
-
         <!--  TABLE  -->
         @foreach ($catItem['fields'] as $field)
             @include('admin.components.catalogItem.row',['field'=>$field])
@@ -18,7 +17,6 @@
                 {!! $tab->field !!}
                 data-tab={!! $n!!}
         >
-{{--                @php xdebug_break() @endphp--}}
             @if($tab->html)
                 {!! $tab->html !!}
             @elseif($tab->tableData)

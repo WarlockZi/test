@@ -26,6 +26,9 @@ class BaseCache
     {
         self::$enabled = $enabled;
     }
-
+    public static function disable(): void
+    {
+        self::$enabled = false;
+    }
 
 }

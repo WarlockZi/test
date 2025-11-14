@@ -3,8 +3,9 @@
 namespace app\controller;
 
 use app\action\ProductAction;
+use app\model\Product;
 use app\repository\ProductRepository;
-use app\service\Meta\MetaService;
+use app\service\Fs\FS;
 use app\service\Router\IRequest;
 use JetBrains\PhpStorm\NoReturn;
 
@@ -34,16 +35,18 @@ class ProductController extends AppController
                 404);
         }
 
-        $meta        = $this->actions->setMeta($product);
-        $orderItem       = $this->actions->orderItem($product);
-        $breadcrumbs = $this->actions->getBreadcrumbs($product['category'], true);
+        $meta         = $this->actions->setMeta($product);
+        $orderProduct = $this->actions->orderProduct($product);
+        $breadcrumbs  = $this->actions->getBreadcrumbs($product['category'], true);
 
         $product = $product->toArray();
         view('product.product', compact(
             'meta',
             'breadcrumbs',
             'product',
-            'orderItem',
+            'orderProduct',
         ));
     }
+
+
 }

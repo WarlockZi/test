@@ -4,7 +4,7 @@
 namespace app\view\components\Builders\ItemBuilder;
 
 
-use app\view\components\Traits\CleanString;
+use app\blade\View;
 
 class ItemTabBuilder
 {
@@ -14,10 +14,12 @@ class ItemTabBuilder
     public array $tableData = [];
     public string $tabTitle = '';
     public string $field = '';
+    public $blade = null;
 
     public static function build(string $title): self
     {
-        $view           = new self();
+        $view        = new self();
+        $view->blade = APP->get(View::class);;
         $view->tabTitle = $title;
         return $view;
     }
@@ -31,6 +33,20 @@ class ItemTabBuilder
     public function table(array $tableData): static
     {
         $this->tableData = $tableData;
+        return $this;
+    }
+
+    public function blade(array|string $templates, array $params): static
+    {
+        if (is_string($templates)) {
+            $this->html = $this->blade->render($templates, $params);
+        } else {
+            foreach ($templates as $template) {
+
+            }
+
+        }
+        $this->templates = $templates;
         return $this;
     }
 }

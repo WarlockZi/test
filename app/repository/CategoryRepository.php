@@ -13,7 +13,7 @@ class CategoryRepository
 
     public function indexInstore(string $slug): object|null
     {
-        $cacheKey  = 'categoryWithProducts' . str_replace("/", "", $slug);
+        $cacheKey = 'categoryWithProducts' . str_replace("/", "", $slug);
 
         return Cache::remember($cacheKey,
             function () use ($slug) {
@@ -29,18 +29,20 @@ class CategoryRepository
                     ->with('productsInStore')
                     ->with('productsNotInStoreInMatrix')
                     ->first();
+
                 if ($category) {
                     $breadcrumbs           = new NewBread;
                     $category->breadcrumbs = $breadcrumbs->getParents($category);
+                    $o = $category->toArray();
                     return $category;
                 }
                 return null;
-//                $o = $category->toArray();
             },
             Cache::$timeLife1_000);
     }
 
-    public static function rootCategories(): array
+    public
+    static function rootCategories(): array
     {
         return Cache::remember(
             'rootCategories',
@@ -76,13 +78,15 @@ class CategoryRepository
 //            60);
 //    }
 
-    public static function getBySubslug(string $subslug): object|null
+    public
+    static function getBySubslug(string $subslug): object|null
     {
         return Cache::get('similarCategories' . $subslug);
     }
 
 
-    public static function edit(int $id): object
+    public
+    static function edit(int $id): object
     {
         return Category::with(
             'products',
@@ -95,7 +99,8 @@ class CategoryRepository
             ->findOrNew($id);
     }
 
-    public static function treeAll(): array
+    public
+    static function treeAll(): array
     {
         return Cache::remember('categoryTree',
             function () {

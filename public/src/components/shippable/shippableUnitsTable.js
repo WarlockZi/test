@@ -155,8 +155,8 @@ export default class shippableTable {
   dto(row) {
     return {
       count: row[qs]("input").value,
-      product_unit_id: row.dataset.product_unit_id,
-      order_product_id: row.dataset.order_product_id,
+      product_1s_id: row.dataset.product_1s_id,
+      unit_id: row.dataset.unit_id,
       loc_storage_cart_id: localStorage.getItem("loc_storage_cart_id"),
     };
   }

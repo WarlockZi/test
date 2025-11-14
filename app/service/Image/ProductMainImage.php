@@ -6,160 +6,172 @@ namespace app\service\Image;
 
 use app\model\Product;
 use app\service\Fs\FS;
-use app\service\Image\TODO\ImagickService;
+use app\service\Image\ImageProcessor\ImageOptimizer;
+use Exception;
+use Throwable;
 
-class ProductMainImage
+class ProductMainImage extends BaseImage
 {
+    private ImageOptimizer $optimizer;
 
     public function __construct(
-        protected ProductImageService $imageService,
-        protected Product             $product,
-        protected array               $file = [],
-        protected string              $art = '',
-        protected                     $thumbDir = 'thumbs' . DIRECTORY_SEPARATOR,
-        protected                     $fullPath = '',
-        protected                     $maxImgHeight = 700,
-        protected                     $maxImgWidth = 700,
-        protected                     $quality = 60,
-        protected                     $maxThumbHeight = 300,
-        protected                     $maxThumbWidth = 300,
-        protected string              $relativePath = '',
-        protected string              $absolutePath = '',
-        private readonly string       $relNoImage = PIC_SERVICE . "nophoto-min.jpg",
-        protected string              $absoluteThumbPath = '',
-        protected array               $acceptedTypes = ['jpg', 'jpeg', 'png', 'webp', 'gif'],
-        protected array               $types = [
-            "image/jpg" => "jpg",
-            "image/jpeg" => "jpeg",
-            "image/png" => "png",
-            "image/webp" => "webp",
-        ],
-
+        protected array $product, //иначе не видит контейнер при загрузке через DI in ProductActions
+        protected array $file,
+        protected       $productImageDir = 'product',
+        protected       $thumbDir = 'thumbs',
     )
     {
-
-        $this->fullPath = $this->art . '.' . $this->getExtension();
+        parent::__construct();
+        $this->optimizer = new ImageOptimizer(70, $this->maxWidth, $this->maxHeight);
     }
 
-    public function setProduct(Product $product): self
+    /**
+     * @throws Exception
+     */
+    private function getAbsProductMainImageDir(): string
     {
-        $this->product = $product;
+        $dir = FS::resolve(ROOT . $this->basePath . $this->productImageDir);
+        try {
+            is_readable($dir);
+            return $dir;
+        } catch (Throwable $exception) {
+            throw new Exception("Директория основной картинки продукта не существует. -" . $exception);
+        }
+    }
+
+    public function makeThumb(int $quality = 0, int $sideWidth = 0): self
+    {
         return $this;
     }
 
-    public function setFile(array $file): self
+    private function getNameFromArt(): string
     {
-        $this->file = $file;
-        return $this;
+        $art = str_replace(['/', '//', '\\', '\\\\'], '_', $this->product['art']);
+        return trim(strip_tags($art));
     }
 
+    private function getFileName(): string
+    {
+        $name = $this->getNameFromArt();
+        return $name . '.' . $this->file['extension'];
+    }
+    /**
+     * @throws Exception
+     */
+    public function getUploadFileTo(): string
+    {
+        $dir  = $this->getAbsProductMainImageDir();
+        $name = $this->getNameFromArt();
+        $type = $this->getType();
+        $path = "$dir$name.$type";
+        return $path;
+    }
+    /**
+     * @throws Exception
+     */
+    public function getRelativePath(): string
+    {
+        $dir  = FS::resolve($this->basePath . $this->productImageDir);;
+        $name = $this->getNameFromArt();
+        $type = $this->getType();
+        $path = "$dir$name.$type";
+        return FS::invertSlashes($path);
+    }
+
+    public function delFileWithDifferentExt(): string
+    {
+        $art = $this->getAbsoluteImage();
+        foreach ($this->extensions as $ext) {
+            $relFile = $this->relativePath . $art . ".{$ext}";
+            $file    = FS::platformSlashes(ROOT . $relFile);
+            if (file_exists($file)) {
+                return $relFile;
+            }
+        }
+        return $this->relNoImage;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function save(): self
+    {
+        $from = $this->file['tmp_name'];
+        $to   = $this->getUploadFileTo();
+        try {
+//            move_uploaded_file($from, $to);
+            $this->deletePreviousFile();
+            $f = $this->optimizer->optimize($from, $to);
+            return $this;
+        } catch (Throwable $exception) {
+            throw new Exception("Попытка загрузки файла за пределы разрешенной директории");
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
     public function deletePreviousFile(): void
     {
+        $dir  =  $this->getAbsProductMainImageDir();
+        $name = $this->getNameFromArt();
         foreach ($this->acceptedTypes as $ext) {
-            $fileName = "{$this->absolutePath}{$this->product->art}.{$ext}";
-            if (file_exists($fileName)) {
-                unlink($fileName);
+            $path = "$dir$name.$ext";
+            if (file_exists($path)) {
+                unlink($path);
+                break;
             }
         }
     }
 
-    private function getDestination(): string
-    {
-        $absPath = $this->imageService->getAbsolutePath();
-
-        $extension = pathinfo($this->file['name'], PATHINFO_EXTENSION);
-        $art       = $this->imageService->getArt($this->product);
-        $name      = $art . ".{$extension}";
-
-        return $absPath . $name;
-    }
-
-    public function init(array $file, Product $product): self
-    {
-        $this->file    = $file;
-        $this->product = $product;
-        return $this;
-    }
-
-    public function save(): string
-    {
-        $uploadDir = $this->imageService->getAbsolutePath();
-
-        $absolutePath = realpath($uploadDir);
-
-        if ($absolutePath === false) {
-            die("Указанная директория не существует");
-        }
-
-        if (isset($_FILES['file'])) {
-            $tmpName  = $_FILES['file']['tmp_name'];
-            $fileName = basename($_FILES['file']['name']);
-
-            $targetPath = $absolutePath . DIRECTORY_SEPARATOR . $fileName;
-
-            // Проверяем, что файл перемещается в разрешенную директорию
-            if (str_starts_with(realpath(dirname($targetPath)), $absolutePath)) {
-                move_uploaded_file($tmpName, $targetPath);
-                return $targetPath;
-
-            } else {
-                echo "Попытка загрузки файла за пределы разрешенной директории";
-            }
-        }
-        return '';
-    }
-
-//    public function save(): string
+//    private function getDestination(): string
 //    {
-//        $this->deletePreviousFile();
-////        $destination_path = $this->getDestination();
-////        if (move_uploaded_file($this->file['tmp_name'], $destination_path)) {
-//            return $this->imageService->getRelativeImage($product);
-//        }
-//        return '';
-////		$mainImage->thumbnail();
+//        $absPath = $this->imageService->getAbsolutePath();
+//
+//        $extension = pathinfo($this->file['name'], PATHINFO_EXTENSION);
+//        $art       = $this->imageService->getArt($this->product);
+//        $name      = $art . ".{$extension}";
+//
+//        return $absPath . $name;
 //    }
 
-    protected function getPathWithExt($relOrAbs, $type = null): string
-    {
-        $type = $type ?? $this->getExtension();
-        return $this->$relOrAbs .
-            $this->art .
-            '.' . $type;
-    }
 
-    public function getExtension(): string
-    {
-        if ($this->file) {
-            preg_match('~\..{2,4}$~', $this->file['name'], $matches);
-            return str_replace('.', '', $matches[0]);
-        }
-        return $this->getFromAcceptedTypes();
-    }
+//    protected function getPathWithExt($relOrAbs, $type = null): string
+//    {
+//        $type = $type ?? $this->getExtension();
+//        return $this->$relOrAbs .
+//            $this->art .
+//            '.' . $type;
+//    }
 
-    protected function getFromAcceptedTypes(): string
-    {
-        foreach ($this->acceptedTypes as $type) {
-            $fileName = $this->getPathWithExt('absolutePath', $type);
+//    public function getExtension(): string
+//    {
+//        if ($this->file) {
+//            preg_match('~\..{2,4}$~', $this->file['name'], $matches);
+//            return str_replace('.', '', $matches[0]);
+//        }
+//        return $this->getFromAcceptedTypes();
+//    }
 
-            if (file_exists($fileName)) {
-                return $this->getPathWithExt('relativePath', $type);
-            }
-        }
-        return '';
-    }
+//    protected function getFromAcceptedTypes(): string
+//    {
+//        foreach ($this->acceptedTypes as $type) {
+//            $fileName = $this->getPathWithExt('absolutePath', $type);
+//
+//            if (file_exists($fileName)) {
+//                return $this->getPathWithExt('relativePath', $type);
+//            }
+//        }
+//        return '';
+//    }
 
-    public function reduceQuality(int $quality = null): void
+    public function reduceQuality(int $quality = 70): void
     {
-        $quality      = $quality ?? $this->quality;
-        $imageService = new ImagickService($this->getAbsolutePath());
-        $q            = $imageService->img->getImageCompressionQuality();
-        if ($q > $quality) {
-            $imageService->img->setImageCompressionQuality($quality);
-            $imageService->img->writeImage();
-            $imageService->img->clear();
-            $imageService->img->destroy();
-        }
+        $this->processor->reduceQuality($quality);
+
+        $imageService->img->writeImage();
+        $imageService->img->clear();
+        $imageService->img->destroy();
     }
 
     public function thumbnail()
@@ -182,13 +194,13 @@ class ProductMainImage
         $ima->img->destroy();
     }
 
-    public function getAbsoluteImage(Product $product): string
-    {
-        if ($this->getImageAbsolutePath($product)) {
-            return $this->getAbsoluteImage($product);
-        }
-        return FS::platformSlashes(ROOT . $this->relNoImage);
-    }
+//    public function getAbsoluteImage(Product $product): string
+//    {
+//        if ($this->getImageAbsolutePath($product)) {
+//            return $this->getAbsoluteImage($product);
+//        }
+//        return FS::platformSlashes(ROOT . $this->relNoImage);
+//    }
 
 
 }

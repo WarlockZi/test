@@ -6,38 +6,53 @@
     <div class="green-button-wrap none">
         <button class='button green-button'>Перейти в корзину</button>
 
-{{--            @php(xdebug_break())--}}
-                @foreach($product['shippable_units'] as $shippableUnit)
+        @foreach($product['shippable_units'] as $shippableUnit)
 
-                    <div
-                            unit-row
-                            class="unit-row"
-                            {{--                    @php(xdebug_break())--}}
-                            data-order_product_id="{!! $orderItem['order_product_id']??''!!}"
-                            data-product_unit_id="{!! $orderItem['product_unit_id']??''!!}"
-                    >
-                        <input
-                                type="text"
-                                class="input"
-                                value="{!! $orderItem['count']??0 !!}"
-                                onclick="this.value??'';"
-                        >
+            <div
+                    unit-row
+                    class="unit-row"
+                    data-product_1s_id="{!! $product['1s_id']??''!!}"
+                    data-unit_id="{!! $shippableUnit['id']??''!!}"
+            >
+                @if($variables['orderProduct'])
+                    @php($count = 0)
+                    @foreach($orderProduct as $orderitem)
+{{--                        @deb--}}
+                        @if(!empty($orderitem['unit'][0]))
 
-                        <div class="unit-name">
-                            <span class="name">{!! $shippableUnit['name'] !!}</span>
+                            @if($orderitem['unit'][0]['id']==$shippableUnit['id'])
+                                @php
+                                    $count = $orderitem['count'];
+                                    break;
+                                @endphp
+                            @endif
+                        @endif
+                    @endforeach
+                @endif
 
-                            @include('product.card.shippableDescription',compact('shippableUnit','orderItem'))
+                <input
+                        type="text"
+                        class="input"
+                        value="{!! $count??"0" !!}"
+                        onclick="this.value??'';"
+                >
 
-                        </div>
+                <div class="unit-name">
+                    <span class="name">{!! $shippableUnit['name']??'ед.' !!}</span>
 
-                        <div class="arrows">
-                            <div class="arrow plus"></div>
-                            <div class="arrow minus"></div>
-                        </div>
+                    {{--                                @deb--}}
+                    @include('product.card.shippableDescription',compact('shippableUnit'))
 
-                    </div>
+                </div>
 
-                @endforeach
+                <div class="arrows">
+                    <div class="arrow plus"></div>
+                    <div class="arrow minus"></div>
+                </div>
+
+            </div>
+
+        @endforeach
 
     </div>
 </div>

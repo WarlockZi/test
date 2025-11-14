@@ -15,6 +15,9 @@ class View implements IView
     {
         $this->blade
             ->share('request', $request);
+        $this->blade->directive('deb', function () {
+            return DEV ? "<?php  (xdebug_break()); ?>" : "";
+        });
     }
 
     /**
@@ -22,6 +25,45 @@ class View implements IView
      */
     public function render(string $template, array $data = []): string
     {
-        return $this->blade->run($template, $data);
+        try {
+            return $this->blade->run($template, $data);
+        } catch (\Throwable $exception) {
+            return $this->handleError($exception);
+        }
+    }
+
+    protected function handleError($e)
+    {
+        // Логирование
+        $this->logError($e);
+
+        // В зависимости от режима
+        if ($this->blade->getMode() === $this->blade::MODE_DEBUG) {
+            return $this->debugError($e);
+        } else {
+            return $this->productionError($e);
+        }
+    }
+    protected function logError( $e) {
+        $logMessage = date('Y-m-d H:i:s') . " - Blade Error: " .
+            $e->getMessage() . " in " .
+            $e->getFile() . ":" . $e->getLine() . PHP_EOL;
+        file_put_contents('blade_errors.log', $logMessage, FILE_APPEND);
+    }
+    protected function debugError( $e) {
+        return "<div style='padding: 20px; background: #fee; border: 1px solid red;'>
+                <h3>Blade Template Error</h3>
+                <p><strong>Message:</strong> {$e->getMessage()}</p>
+                <p><strong>File:</strong> {$e->getFile()}:{$e->getLine()}</p>
+                </div>";
+    }
+
+    protected function productionError( $e) {
+        // Попытка показать страницу ошибки
+        try {
+            return $this->run("errors.template", ['error' => 'Template error occurred']);
+        } catch (Exception $e2) {
+            return "A template error occurred. Please try again later.";
+        }
     }
 }

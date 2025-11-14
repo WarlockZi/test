@@ -21,6 +21,7 @@ class Blade extends BladeOne
             $mode,
             0
         );
+
     }
 }
 

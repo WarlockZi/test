@@ -17,14 +17,13 @@
         @endif
 
         <div class="product-card" data-1sid="<?= $product['1s_id']; ?>">
-
+{{--            @deb--}}
             @include('components.breadcrumbs.index')
 
             <h1>{!! $product['print_name'] !!}</h1>
 
             <div class="product-card_hero">
                 @include('product.main_image')
-{{--            @php (xdebug_break())--}}
                 @include ('product.card.toCart')
             </div>
 
@@ -41,7 +40,6 @@
                      ?? 'Описание товара отстутствует';
                      !!}</div>
 
-{{--                    @php(xdebug_break())--}}
                     @if (isset($product->values) && !empty($product->values))
                         @foreach ($product->values as $value)
                             @include( __DIR__ . '/property.php')

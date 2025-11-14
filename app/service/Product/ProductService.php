@@ -3,7 +3,7 @@
 namespace app\service\Product;
 
 use app\model\Product;
-use app\service\Image\ProductImageService;
+use app\service\Image\del\ProductImageService;
 use app\service\Image\TODO\ImagickService;
 
 class ProductService
@@ -29,24 +29,24 @@ class ProductService
         Response::json(['popup' => 'ok']);
     }
 
-    public function saveMainImage(array $file, Product $product): string
-    {
-        $this->deletePreviousFile($product);
-        $absPath = $this->imageService->getAbsolutePath();
-
-        $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
-        $art       = $this->imageService->getArt($product);
-        $name      = $art . ".{$extension}";
-
-        $uploaded_file    = $file['tmp_name'];
-        $destination_path = $absPath . $name;
-
-        if (move_uploaded_file($uploaded_file, $destination_path)) {
-            return $this->imageService->getRelativeImage($product);
-        }
-        return '';
-//		$mainImage->thumbnail();
-    }
+//    public function saveMainImage(array $file, Product $product): string
+//    {
+//        $this->deletePreviousFile($product);
+//        $absPath = $this->imageService->getAbsolutePath();
+//
+//        $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+//        $art       = $this->imageService->getArt($product);
+//        $name      = $art . ".{$extension}";
+//
+//        $uploaded_file    = $file['tmp_name'];
+//        $destination_path = $absPath . $name;
+//
+//        if (move_uploaded_file($uploaded_file, $destination_path)) {
+//            return $this->imageService->getRelativeImage($product);
+//        }
+//        return '';
+////		$mainImage->thumbnail();
+//    }
 
     public static function baseIsShippable($col, $product): string
     {

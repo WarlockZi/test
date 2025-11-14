@@ -5,7 +5,7 @@ namespace app\repository;
 
 use app\model\FilterUser;
 use app\model\Product;
-use app\service\Image\ProductImageService;
+use app\service\Image\del\ProductImageService;
 use Illuminate\Database\Eloquent\Collection;
 
 class ProductFilterRepository

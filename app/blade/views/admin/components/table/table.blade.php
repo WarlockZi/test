@@ -1,9 +1,11 @@
 @php
     use app\view\components\Builders\CheckboxBuilder\Checkbox\ICheckbox;
 @endphp
+
 @extends('layouts.admin.admin')
 
 @section('content')
+
     <div custom-table
         <?= $data['class']; ?>
         <?= $data['dataModel'] ?>
@@ -13,6 +15,7 @@
 
         <div class='table-title'><?= $data['pageTitle'] ?></div>
 
+        @deb
         @foreach($data['header'] as $title=>$html)
             <div class="table-header-row">
                     <?= $title ?> : <?= $html ?>
@@ -42,35 +45,13 @@
             <?= $data['emptyRow'] ?>
 
                     <!--		 Data rows-->
+
             @if ($data['items']->count())
-{{--            @php(xdebug_break())--}}
+
                 @foreach ($data['items'] as $item)
 
                     @foreach ($data['columns'] as $field => $c)
-
-                        @include('admin.components.table.tableRow', compact('field', 'c'))
-
-{{--                        @if ($c->html)--}}
-{{--                                <?= $c->html ?>--}}
-{{--                        @else--}}
-
-{{--                            <div--}}
-{{--                                    data-id='<?= $item['id'] ?? 0; ?>'--}}
-{{--                                    <?= $c->dataField; ?>--}}
-{{--                                <?= $c->pivot; ?>--}}
-{{--                                <?= $c->attach; ?>--}}
-{{--                                <?= $c->class; ?>--}}
-{{--                                <?= $c->contenteditable; ?>--}}
-{{--                            >--}}
-{{--                                --}}{{--                                @php xdebug_break() @endphp--}}
-{{--                                @if($c->component instanceof ICheckbox)--}}
-{{--                                    @include('admin.components.checkbox.checkbox',['checkbox'=>$c->component, 'item'=>$item] )--}}
-{{--                                @else--}}
-{{--                                    {!!  $c->getData($c, $item, $field) !!}--}}
-{{--                                @endif--}}
-{{--                            </div>--}}
-{{--                        @endif--}}
-
+                        @include('admin.components.table.row.tableRow', compact('field', 'c'))
                     @endforeach
 
                 @endforeach
@@ -84,7 +65,6 @@
         @endif
 
         <!--  ADD BUTTON  -->
-        {{--        @php xdebug_break() @endphp--}}
         @if($data['addButton'])
 
             <div class="buttons">

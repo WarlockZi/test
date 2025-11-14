@@ -1,12 +1,15 @@
 import "./table.scss";
 import { $, debounce, post } from "../../common";
 import { ael, qa, qs } from "@src/constants.js";
-import SelectNew from "../../components/select/SelectNew.js";
+import SelectNew from "@components/select/SelectNew.js";
 import TableDTO from "@src/Admin/TableDTO.js";
 
 export default class Table {
   constructor(table) {
     this.table = table;
+
+    this.tableCallbacksFile = this.table.dataset.jscallbacksfile;
+
     this.model =
       table.dataset.model ?? table.closest("[data-model]")?.dataset.model;
     this.modelId =
@@ -16,7 +19,7 @@ export default class Table {
     this.headers = $(".head");
     this.inputs = $("[data-search]");
     this.hidden = this.table[qa]("[hidden]");
-    this.delUrl = `/adminsc/${this.model}/del`;
+    this.delUrl = `/adminsc/${this.model}/delete`;
     this.updateOrCreateUrl = `/adminsc/${this.model}/updateOrCreate`;
 
     this.table[ael]("click", this.handleClick.bind(this), true);
@@ -25,12 +28,20 @@ export default class Table {
     this.table[ael]("customSelect.changed", this.selectChange.bind(this));
 
     if (!this.relation) {
-      // this.table[ael]('customSelect.changed', this.selectChange.bind(this));
       this.table[ael]("checkbox.changed", this.checkboxChange.bind(this));
     }
+    this.columnsCallbacks = this.table.dataset.columnsCallbacks;
+
     this.setCheckboxes();
     this.setSelects();
     this.setSortables();
+  }
+
+  async getCallbacks() {
+    if (!this.tableCallbacksFile) return false;
+    const path = "./callbacks/" + this.tableCallbacksFile + ".js";
+    const { default: Callbacks } = await import(path);
+    return new Callbacks();
   }
 
   setDelUrl(delUrl) {
@@ -44,9 +55,17 @@ export default class Table {
 
   async selectChange({ detail }) {
     const target = detail.target;
+    const colummnJsCallback = target.closest("[data-id]").dataset.jscallback;
+    if (colummnJsCallback) {
+      const cb = await this.getCallbacks();
+      cb.callMethod(colummnJsCallback, [
+        detail,
+        this.getRowCells(detail.prev.value),
+      ]);
+    }
     const dto = new TableDTO(target, detail?.prev?.value);
     const res = await post(`/adminsc/${this.model}/updateorcreate`, dto);
-    if (res?.arr?.detach) {
+    if (res?.detached) {
       const prevCells = this.table[qa](`[data-id='${detail.prev.value}']`);
       for (let prevCell of prevCells) {
         prevCell.dataset.id = detail.next.value;
@@ -81,6 +100,8 @@ export default class Table {
       !target.classList.contains("head")
     ) {
       this.modelDel(target);
+
+      /// sort
     } else if (
       target.classList.contains("head") ||
       target.classList.contains("icon")
@@ -123,6 +144,11 @@ export default class Table {
     if (target.hasAttribute("data-search")) {
       this.search(target);
     } else if (target.hasAttribute("contenteditable")) {
+      const colummnJsCallback = target.closest("[data-id]").dataset.jscallback;
+      if (colummnJsCallback) {
+        const cb = await this.getCallbacks();
+        cb.callMethod(colummnJsCallback, [target, this.getRows()]);
+      }
       const res = await post(this.updateOrCreateUrl, new TableDTO(target));
       if (res?.arr?.id) {
         this.newRow(res?.arr.id);
@@ -130,31 +156,78 @@ export default class Table {
     }
   }
 
+  getRows() {
+    const cells = this.table[qa](`[data-row]`);
+    let rowId = "0";
+    let newRows = [];
+    let columnId = 0;
+    [].map.call(
+      cells,
+      (cell) => {
+        if (rowId === "0") {
+          rowId = cell.dataset.id;
+          columnId = 0;
+          newRows[rowId] = [];
+          newRows[rowId][columnId] = cell;
+          columnId++;
+        } else if (rowId === cell.dataset.id) {
+          newRows[rowId][columnId] = cell;
+          columnId++;
+        } else {
+          rowId = cell.dataset.id;
+          columnId = 0;
+          newRows[rowId] = [];
+          newRows[rowId][columnId] = cell;
+          columnId++;
+        }
+      },
+      [rowId, newRows, columnId],
+    );
+    return newRows;
+  }
+
   // DELETE
   async modelDel(target) {
-    if (!confirm("Удалить?")) return;
     const dto = new TableDTO(target);
-    const res = await post(this.delUrl, dto);
-    if (res?.arr?.id) {
-      this.delRow(res?.arr?.id);
+    if (dto?.relation?.id === "0") {
+      this.removeRowCells(this.getRowCells(0));
+    } else {
+      if (!confirm("Удалить?")) return;
+
+      const res = await post(this.delUrl, dto);
+      if (res?.deleted) {
+        this.removeRowCells(this.getRowCells(res?.deleted));
+      }
     }
   }
 
-  // UPDATE OR CREATE
-  async updateOrcreate(target) {
-    const res = await post(this.updateOrCreateUrl, new TableDTO(target));
-    if (res?.arr?.success) {
-      this.copyEmptyRow(target);
-    } else {
-      this.newRow(res?.arr.id);
-    }
+  getRowCells(id) {
+    return this.table[qa](`[data-id="${id}"]:not([hidden]):not([my-checkbox])`);
   }
+
+  removeRowCells(sells) {
+    [].forEach.call(sells, function (el) {
+      el.remove();
+    });
+  }
+
+  // UPDATE OR CREATE
+  // async updateOrcreate(target) {
+  //   const res = await post(this.updateOrCreateUrl, new TableDTO(target));
+  //   if (res?.arr?.success) {
+  //     this.copyEmptyRow(target);
+  //   } else {
+  //     this.newRow(res?.arr.id);
+  //   }
+  // }
 
   copyEmptyRow() {
     [].forEach.call(this.hidden, (cell) => {
       const cloneCell = cell.cloneNode(true);
       cloneCell.removeAttribute("hidden");
-      this.addSelectInNewRow(cloneCell);
+      if (cloneCell[qs]("select")) {
+        this.addSelectInNewRow(cloneCell);
+      }
       const table = this.table[qa](".custom-table")[0];
       table.append(cloneCell);
     });
@@ -167,7 +240,7 @@ export default class Table {
         const newEl = el.cloneNode(true);
         newEl.removeAttribute("hidden");
 
-        this.addSelectInNewRow(newEl);
+        // this.addSelectInNewRow(newEl);
         const tableContent = $(this.table).find(".custom-table");
         tableContent.appendChild(newEl);
 
@@ -187,24 +260,25 @@ export default class Table {
   }
 
   addSelectInNewRow(newEl) {
-    if (newEl[qs]("[select-new]")) {
-      const select = newEl[qs]("[select-new]");
-      this.removeUsedSelectOptions(select);
-      new SelectNew(select);
-    }
+    const select = newEl[qs]("select");
+    const cleanedSelect = this.removeUsedSelectOptions(select);
+    new SelectNew(cleanedSelect);
   }
 
   removeUsedSelectOptions(select) {
-    const usedSelects = this.table[qa]("[data-attach]");
-    [].forEach.call(usedSelects, (usedSelects) => {
-      [].forEach.call(select.options, (option) => {
-        if (option.value === usedSelects.dataset.id) option.remove();
-      });
+    const usedSelects = this.table[qa]("[select-new]");
+    const ids = [].map.call(usedSelects, (usedSelect, i) => {
+      return usedSelect.dataset.value;
     });
+
+    [].forEach.call(select.options, (option) => {
+      if (ids.includes(option.value)) option.remove();
+    });
+    return select;
   }
 
   /// SEARCH
-  search(target, iddex) {
+  search(target) {
     const rows = this.fillRows();
     [].forEach.call(rows, (row) => {
       [].forEach.call(row, (el) => (el.style.display = "flex"));
@@ -292,13 +366,6 @@ export default class Table {
     if (!this.sortables[index]) return;
     const type = this.sortables[index].getAttribute("data-type");
     return type === "number" ? parseFloat(content) : content;
-  }
-
-  delRow(id) {
-    const cells = $(`[data-id='${id}']`);
-    [].forEach.call(cells, function (cell) {
-      cell.remove();
-    });
   }
 
   setSortables() {

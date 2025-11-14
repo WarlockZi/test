@@ -7,7 +7,6 @@
      data-id="{!! $catItem['item']['id'] !!}"
 >
 
-{{--@php xdebug_break() @endphp--}}
     @if($catItem['tabs'])
         @include('admin.components.catalogItem.withTabs')
     @else
