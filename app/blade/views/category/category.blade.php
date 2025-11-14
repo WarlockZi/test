@@ -1,10 +1,9 @@
 @extends('layouts.main.main')
 
-{{--        @php         xdebug_break() @endphp--}}
 @section('title')
     {!! $category['meta']['seo_title'] !!}
 @endsection
-{{--@php(xdebug_break())--}}
+
 @section('description')
     {!! $category['meta']['seo_desc'] !!}
 @endsection
@@ -15,7 +14,6 @@
 
 @section('content')
 
-{{--    @php(xdebug_break())--}}
     <div class="category">
 
         @if (empty($category))

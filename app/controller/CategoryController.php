@@ -25,7 +25,6 @@ class CategoryController extends AppController
             $category = $this->repo->indexInstore($request->slug);
 
             if (!$category) {
-            dd($category);
                 $similarCategories = $this->actions->similarCategories($request->slug);
                 view('category.notFound',
                     compact('category', 'similarCategories'),
@@ -34,7 +33,7 @@ class CategoryController extends AppController
 
             $order          = OrderRepository::usersOrder()->toArray();
             $category = $category->toArray();
-
+            dd($category);
             view('category.category',
                 compact(
                     'category',
