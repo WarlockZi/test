@@ -182,7 +182,7 @@ class Response
         $nonce = $nonce->getNonce();
 
         $csp = [
-            "default-src 'self'",
+            "default-src 'self' https://autofill.yandex.ru",
             "script-src 'self' https://vi-prod:5173 'nonce-$nonce' ",
             "style-src 'self' localhost:5173 'nonce-$nonce' ",
 
