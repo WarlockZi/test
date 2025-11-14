@@ -42,8 +42,8 @@ class CategoryRepository
                 },
                 Cache::$timeLife1_000);
         } catch (Throwable $exception) {
-            $exc = $exception;
-            echo($exc->getMessage());
+//            $exc = $exception;
+//            echo($exc->getMessage());
             return null;
         }
     }

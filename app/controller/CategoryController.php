@@ -23,9 +23,9 @@ class CategoryController extends AppController
         if ($request->slug) {
 
             $category = $this->repo->indexInstore($request->slug);
-            dd($category);
 
             if (!$category) {
+            dd($category);
                 $similarCategories = $this->actions->similarCategories($request->slug);
                 view('category.notFound',
                     compact('category', 'similarCategories'),
