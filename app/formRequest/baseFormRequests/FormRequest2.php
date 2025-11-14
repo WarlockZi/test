@@ -10,6 +10,10 @@ abstract class FormRequest2
 {
     protected $input = [];
     protected $errors = [];
+    public function __construct(array $input = [])
+    {
+        $this->input = $input ?: $this->getInputFromGlobal();
+    }
     abstract public function rules(): array;
 
     public function messages(): array
@@ -20,11 +24,6 @@ abstract class FormRequest2
     public function attributes(): array
     {
         return [];
-    }
-
-    public function __construct(array $input = [])
-    {
-        $this->input = $input ?: $this->getInputFromGlobal();
     }
 
     protected function getInputFromGlobal(): array
@@ -39,7 +38,6 @@ abstract class FormRequest2
             return $input;
         }
         return $_POST + $_GET;
-
     }
 
     public function authorize(): bool

@@ -3,9 +3,7 @@
 namespace app\formRequest\baseFormRequests;
 
 
-use app\service\AuthService\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Translation\ArrayLoader;
 use Illuminate\Translation\Translator;
 use Illuminate\Validation\Factory;
@@ -15,8 +13,6 @@ use JetBrains\PhpStorm\NoReturn;
 
 abstract class FormRequest extends Request
 {
-    private array $validatedData;
-
     public function __construct()
     {
         parent::__construct();
@@ -40,9 +36,10 @@ abstract class FormRequest extends Request
 
     public function authorize(): bool
     {
-
-        if (!Auth::validatePphSession($this->all())) throw new \Exception('плохой token');
-        return true;
+        return isset($this->phpSession)
+            && $this->phpSession === session_id();
+//        if (!Auth::validatePphSession($this->all())) throw new \Exception('плохой token');
+//        return true;
     }
 
     /**
@@ -89,30 +86,6 @@ abstract class FormRequest extends Request
         );
     }
 
-    private function UploadedFile2Array(UploadedFile $file): array
-    {
-        return [
-            'originalName' => $file->getClientOriginalName(),
-            'mimeType' => $file->getClientMimeType(),
-            'extension' => $file->getClientOriginalExtension(),
-            'size' => $file->getSize(),
-            'error' => $file->getError(),
-            'path' => $file->getPathname(),
-        ];
-    }
-
-//    public function after(): array
-//    {
-//        $arr = [];
-//        if ($_FILES) {
-//            foreach ($_FILES['file'] as $fileData) {
-//                $arr[] = $this->UploadedFile2Array($fileData);
-//            }
-//        }
-//
-//        return $arr;
-//    }
-
     /**
      * @throws \Exception
      */
@@ -126,8 +99,6 @@ abstract class FormRequest extends Request
             $data = $validator->getData();
             unset($data['phpSession']);
         }
-        $this->validatedData = $validator->getData();
-
         return $data;
     }
 
@@ -151,13 +122,13 @@ abstract class FormRequest extends Request
                 return $this->data;
             }
 
-            public function only($keys)
+            public function only($keys): array
             {
                 $keys = is_array($keys) ? $keys : func_get_args();
                 return array_intersect_key($this->data, array_flip($keys));
             }
 
-            public function except($keys)
+            public function except($keys): array
             {
                 $keys = is_array($keys) ? $keys : func_get_args();
                 return array_diff_key($this->data, array_flip($keys));
@@ -165,4 +136,27 @@ abstract class FormRequest extends Request
         };
     }
 
+    //    private function UploadedFile2Array(UploadedFile $file): array
+//    {
+//        return [
+//            'originalName' => $file->getClientOriginalName(),
+//            'mimeType' => $file->getClientMimeType(),
+//            'extension' => $file->getClientOriginalExtension(),
+//            'size' => $file->getSize(),
+//            'error' => $file->getError(),
+//            'path' => $file->getPathname(),
+//        ];
+//    }
+
+//    public function after(): array
+//    {
+//        $arr = [];
+//        if ($_FILES) {
+//            foreach ($_FILES['file'] as $fileData) {
+//                $arr[] = $this->UploadedFile2Array($fileData);
+//            }
+//        }
+//
+//        return $arr;
+//    }
 }
