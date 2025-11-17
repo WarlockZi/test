@@ -8,15 +8,12 @@
         @php($count = 0)
         @foreach($product['order_items'] as $orderitem)
             @php
-                if(
-                    !empty($orderitem['unit'][0])
-                &&$orderitem['unit'][0]['id']==$shippable['id']
-                ){
+                if(!empty($orderitem['unit'][0])&&$orderitem['unit'][0]['id']==$shippable['id']){
                     $count = $orderitem['count'];
                     break;
                 }
             @endphp
-{{--            @deb--}}
+            {{--            @deb--}}
         @endforeach
 
         <div

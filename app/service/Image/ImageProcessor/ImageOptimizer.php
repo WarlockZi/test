@@ -20,16 +20,13 @@ class ImageOptimizer {
         $imageInfo = getimagesize($sourcePath);
         $mimeType = $imageInfo['mime'];
 
-        // Create image resource
         $image = $this->createImageResource($sourcePath, $mimeType);
         if (!$image) return false;
 
-        // Resize if needed
         if ($this->maxWidth || $this->maxHeight) {
-            $image = $this->resizeImage($image);
+            $image = $this->resizeImage($image );
         }
 
-        // Save optimized image
         $result = $this->saveImage($image, $destinationPath, $mimeType);
         imagedestroy($image);
 
@@ -39,6 +36,7 @@ class ImageOptimizer {
     private function createImageResource($path, $mimeType) {
         switch($mimeType) {
             case 'image/jpeg': return imagecreatefromjpeg($path);
+            case 'image/webp': return imagecreatefromwebp($path);
             case 'image/png': return imagecreatefrompng($path);
             case 'image/gif': return imagecreatefromgif($path);
             default: return false;
@@ -55,13 +53,13 @@ class ImageOptimizer {
         if ($this->maxWidth && $originalWidth > $this->maxWidth) {
             $ratio = $this->maxWidth / $originalWidth;
             $newWidth = $this->maxWidth;
-            $newHeight = $originalHeight * $ratio;
+            $newHeight = floor($originalHeight * $ratio);
         }
 
         if ($this->maxHeight && $newHeight > $this->maxHeight) {
             $ratio = $this->maxHeight / $newHeight;
             $newHeight = $this->maxHeight;
-            $newWidth = $newWidth * $ratio;
+            $newWidth = floor($newWidth * $ratio);
         }
 
         if ($newWidth == $originalWidth && $newHeight == $originalHeight) {
@@ -81,7 +79,8 @@ class ImageOptimizer {
         return $newImage;
     }
 
-    private function saveImage($image, $path, $mimeType) {
+    private function saveImage($image, $path, $mimeType): bool
+    {
         switch($mimeType) {
             case 'image/jpeg':
                 return imagejpeg($image, $path, $this->quality);
@@ -90,6 +89,8 @@ class ImageOptimizer {
                 return imagepng($image, $path, $pngQuality);
             case 'image/gif':
                 return imagegif($image, $path);
+            case 'image/webp':
+                return imagewebp($image, $path);
             default:
                 return false;
         }

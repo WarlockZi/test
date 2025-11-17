@@ -506,7 +506,8 @@
     }
 
     img {
-      max-height: 100px;
+      height: 100px;
+      max-width: 100px;
       object-fit: contain;
       grid-area: img;
       justify-self: center;

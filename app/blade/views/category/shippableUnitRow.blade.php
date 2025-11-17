@@ -2,9 +2,10 @@
 <div
         unit-row
         class="unit-row"
-        data-unitid="{{$row['unit']->id}}"
+        data-unit_id="{{$row['unit']['id']}}"
         data-multiplier="{{$row['multiplier']}}"
 {{--        data-orderitem-id="{{$row['orderItem']?->id??''}}">--}}
+>
     <input
             type="text"
             class="input"

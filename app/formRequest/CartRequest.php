@@ -38,7 +38,7 @@ class CartRequest extends FormRequest
 
     public function authorize(): bool
     {
-        return true;
+        return parent::authorize();
     }
 
     public function all($keys = null): array

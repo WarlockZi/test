@@ -136,6 +136,9 @@ class AppController extends Controller
                     $model->$relationName()->attach($req['relation']['attach']);
                     $model->$relationName()->detach($req['relation']['detach']);
                     response()->json(['popup' => 'Заменен', 'attach' => $attach, 'detached' => $detach]);
+                } elseif($detach==='0') {
+                    $model->$relationName()->attach($req['relation']['attach']);
+                    response()->json(['popup' => 'Создан новый', 'attach' => $attach, 'detached' => $detach]);
                 } else {
                     $model->$relationName()->syncWithoutDetaching($detach);
                     response()->json(['popup' => 'Заменен', 'attach' => $attach]);

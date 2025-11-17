@@ -45,7 +45,7 @@ class ColumnBuilder
     public function data(array $data): self
     {
         foreach ($data as $key => $value) {
-            $this->dataAttributes.="data-$key=$value ";
+            $this->dataAttributes.="data-$key='$value'";
         }
         return $this;
     }

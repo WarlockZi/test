@@ -3,6 +3,7 @@
 namespace app\formRequest\baseFormRequests;
 
 
+use app\service\AuthService\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Translation\ArrayLoader;
 use Illuminate\Translation\Translator;
@@ -13,9 +14,25 @@ use JetBrains\PhpStorm\NoReturn;
 
 abstract class FormRequest extends Request
 {
-    public function __construct()
+    protected $input = [];
+    protected $errors = [];
+    public function __construct(array $input = [])
     {
+        $this->input = $input ?: $this->getInputFromGlobal();
         parent::__construct();
+    }
+    protected function getInputFromGlobal(): array
+    {
+        $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
+        $rawInput    = file_get_contents('php://input');
+
+        if (str_contains($contentType, 'application/json')) {
+            return json_decode($rawInput, true) ?? [];
+        } elseif (str_contains($contentType, 'application/x-www-form-urlencoded')) {
+            parse_str($rawInput, $input);
+            return $input;
+        }
+        return $_POST + $_GET;
     }
 
     abstract public function rules(): array;
@@ -36,8 +53,8 @@ abstract class FormRequest extends Request
 
     public function authorize(): bool
     {
-        return isset($this->phpSession)
-            && $this->phpSession === session_id();
+        return isset($this->input['phpSession'])
+            && $this->input['phpSession'] === session_id();
 //        if (!Auth::validatePphSession($this->all())) throw new \Exception('плохой token');
 //        return true;
     }
@@ -53,7 +70,7 @@ abstract class FormRequest extends Request
         $validator = $this->createValidator();
 
         if ($validator->fails()) {
-            $errors = $validator->errors();
+//            $errors = $validator->errors();
             $this->throwValidationException($validator);
         }
         $validated = $this->after();
@@ -95,11 +112,10 @@ abstract class FormRequest extends Request
         $this->prepareForValidation();
         $validator = $this->createValidator();
 
-        if ($validator->getData()['phpSession']) {
-            $data = $validator->getData();
-            unset($data['phpSession']);
+        if (isset($this->input['phpSession'])) {
+            unset($this->input['phpSession']);
         }
-        return $data;
+        return $this->input;
     }
 
     public function safe(): object
@@ -120,6 +136,7 @@ abstract class FormRequest extends Request
             public function all()
             {
                 return $this->data;
+
             }
 
             public function only($keys): array

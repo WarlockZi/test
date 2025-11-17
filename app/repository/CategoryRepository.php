@@ -5,9 +5,9 @@ namespace app\repository;
 
 
 use app\model\Category;
+use app\model\Product;
 use app\service\Breadcrumbs\NewBread;
 use app\service\Cache\Redis\Cache;
-use Throwable;
 
 class CategoryRepository
 {
@@ -16,36 +16,36 @@ class CategoryRepository
     {
         $cacheKey = 'categoryWithProducts' . str_replace("/", "", $slug);
 
-        try {
-            return Cache::remember($cacheKey,
-                function () use ($slug) {
-                    $category = Category::query()
-                        ->withWhereHas('ownProperties',
-                            fn($query) => $query
-                                ->where('path', 'like', $slug)
-                                ->orWhere('seo_path', 'like', $slug)
-                        )
-                        ->with('meta')
-                        ->with(['childrenRecursive' => fn($q) => $q->with('ownProperties')])
-                        ->with('parentRecursive')
-                        ->with('productsInStore')
-                        ->with('productsNotInStoreInMatrix')
-                        ->first();
+        return Cache::remember($cacheKey,
+            function () use ($slug) {
+                $category = Category::query()
+                    ->withWhereHas('ownProperties',
+                        fn($query) => $query
+                            ->where('path', 'like', $slug)
+                            ->orWhere('seo_path', 'like', $slug)
+                    )
+                    ->with('meta')
+                    ->with(['childrenRecursive' => fn($q) => $q->with('ownProperties')])
+                    ->with('parentRecursive')
+                    ->with('productsInStore')
+                    ->with('productsNotInStoreInMatrix')
+                    ->first();
 
-                    if ($category) {
-                        $breadcrumbs           = new NewBread;
-                        $category->breadcrumbs = $breadcrumbs->getParents($category);
+                if ($category) {
+                    $breadcrumbs           = new NewBread;
+                    $category->breadcrumbs = $breadcrumbs->getParents($category);
 //                    $o = $category->toArray();
-                        return $category;
-                    }
-                    return null;
-                },
-                Cache::$timeLife1_000);
-        } catch (Throwable $exception) {
-//            $exc = $exception;
-//            echo($exc->getMessage());
-            return null;
-        }
+                    $category->productsInStore->each(function (Product $product) {
+                        $product->append('base_unit');
+                    });
+                    $category->productsNotInStoreInMatrix->each(function (Product $product) {
+                        $product->append('base_unit');
+                    });
+                    return $category;
+                }
+                return null;
+            },
+            Cache::$timeLife1_000);
     }
 
     public

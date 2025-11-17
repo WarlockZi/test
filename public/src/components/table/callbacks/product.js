@@ -2,9 +2,11 @@ import { post } from "@src/common.js";
 import TableDTO from "@src/Admin/TableDTO.js";
 
 export default class Callbacks {
-  changeunit(detail, cells) {
+  changeunit(detail, rows) {
     const select = detail.target;
     const cellWrapper = select.closest("[data-id]");
+    const selectedValue = select.dataset.value;
+    cellWrapper.dataset.id = selectedValue;
   }
 
   changeprice(target, rows, updateFn = null) {

@@ -23,7 +23,7 @@ use app\formRequest\baseFormRequests\FormRequest;
     {
         return [
             'productId' => 'required|string',
-            'file.*' => 'max:5000|image|mimes:jpeg,jpg,gif,png',
+            'file.*' => 'max:5000|image|mimes:jpeg,jpg,gif,png,webp',
         ];
     }
 

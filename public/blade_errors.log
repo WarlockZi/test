@@ -23,3 +23,9 @@
 2025-11-02 11:50:59 - Blade Error: Template not found: D:\OSPanel\domains\vi-prod\app\blade\views/admin.components.table.emptyRow in D:\OSPanel\domains\vi-prod\vendor\eftec\bladeone\lib\BladeOne.php:1433
 2025-11-02 11:50:59 - Blade Error: Template not found: D:\OSPanel\domains\vi-prod\app\blade\views/admin.components.table.emptyRow in D:\OSPanel\domains\vi-prod\vendor\eftec\bladeone\lib\BladeOne.php:1433
 2025-11-02 11:50:59 - Blade Error: Template not found: D:\OSPanel\domains\vi-prod\app\blade\views/admin.components.table.emptyRow in D:\OSPanel\domains\vi-prod\vendor\eftec\bladeone\lib\BladeOne.php:1433
+2025-11-14 23:17:34 - Blade Error: Template not found: D:\OSPanel\domains\vi-prod\app\blade\views/components.shippableUnitsNew.category.shippableUnits in D:\OSPanel\domains\vi-prod\vendor\eftec\bladeone\lib\BladeOne.php:1433
+2025-11-16 20:16:26 - Blade Error: Class "Auth" not found in D:\OSPanel\domains\vi-prod\storage\framework\caches\blade\cart.cartProroducts_483645d40019c43ac0a62aebfca69e47f0e5e794.bladec:58
+2025-11-16 20:16:27 - Blade Error: Class "Auth" not found in D:\OSPanel\domains\vi-prod\storage\framework\caches\blade\cart.cartProroducts_483645d40019c43ac0a62aebfca69e47f0e5e794.bladec:58
+2025-11-16 22:36:20 - Blade Error: Template not found: D:\OSPanel\domains\vi-prod\app\blade\views/cartSubSum in D:\OSPanel\domains\vi-prod\vendor\eftec\bladeone\lib\BladeOne.php:1433
+2025-11-16 22:36:25 - Blade Error: Template not found: D:\OSPanel\domains\vi-prod\app\blade\views/cartSubSum in D:\OSPanel\domains\vi-prod\vendor\eftec\bladeone\lib\BladeOne.php:1433
+2025-11-17 08:03:56 - Blade Error: Template not found: D:\OSPanel\domains\vi-prod\app\blade\views/cart.cartProroducts in D:\OSPanel\domains\vi-prod\vendor\eftec\bladeone\lib\BladeOne.php:1433

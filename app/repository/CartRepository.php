@@ -34,23 +34,14 @@ class CartRepository
                 return $q
                     ->whereHas('orderItems')
                     ->where('order_product.deleted_at', null)
-                    ->with(['orderItems.unit'])
-//                    ->with(['orderItems' => function ($q) {
-//                            return
-//                                $q->withPrice()
-//                                    ->with('unit');
-//                        }]
-//                    )
-//                    ->withBaseUnitPrice()
-//                    ->withShippableUnitsPrice()
-                    ;
+                    ->with(['orderItems.unit']);
             }])
             ->first();
-        $o     = $order->products->each(function (Product $product) {
+        $o     = $order?->products->each(function (Product $product) {
             $product->append('base_unit');
             $product->append('shippable_units');
         });
-        $o     = $order->toArray();
+        $o = $order?->toArray() ?? [];
         return $o;
     }
 

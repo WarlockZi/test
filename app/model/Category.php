@@ -98,7 +98,7 @@ class Category extends Model
 
     public function productsInStore(): hasMany
     {
-        return $this->hasMany(Product::class,
+        $product =  $this->hasMany(Product::class,
             'category_1s_id',
             's_id',
         )
@@ -109,14 +109,15 @@ class Category extends Model
             ->with('like')
             ->with('units')
             ->with('ownProperties')
-//            ->mainImage()
             ->orderBy('name')
             ;
+
+        return $product;
     }
 
     public function productsNotInStoreInMatrix(): HasMany
     {
-        return $this->hasMany(Product::class,
+        $product=  $this->hasMany(Product::class,
             'category_1s_id',
             's_id',
         )
@@ -130,8 +131,9 @@ class Category extends Model
             ->with('like')
             ->with('units')
             ->with('ownProperties')
-//            ->mainImage()
              ->orderBy('name');
+
+        return $product;
     }
 
     public function InactivePromotions()

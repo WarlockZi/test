@@ -230,6 +230,7 @@ class ProductFormView
                     ->emptyRow(function () {
                         return SelectBuilder::build(
                             PluckOptionsBuilder::build(Unit::pluck('name', 'id'))
+                                ->initialOption()
                                 ->get())
                             ->removeSelectNewAttr()
                             ->get();

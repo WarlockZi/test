@@ -4,10 +4,12 @@
     @foreach ($data['columns'] as $field=>$c)
         <div
                 hidden
+                data-row
                 data-id='0'
-                {!!$c->class!!}
-                {!!$c->dataField!!}
-                {!!$c->contenteditable!!}
+                {!!$c->dataAttributes??''!!}
+                {!!$c->class??''!!}
+                {!!$c->dataField??''!!}
+                {!!$c->contenteditable??''!!}
         >
             {!!$c->emptyRow!!}
         </div>

@@ -14,7 +14,6 @@ export const formatter = new Intl.NumberFormat("ru", {
 });
 
 export function objAndFiles2FormData(obj, files, formData = new FormData()) {
-  debugger;
   self.formData = formData;
   if (typeof files === "FileList") {
     for (let i = 0; i < files.length; i++) {
@@ -379,14 +378,10 @@ const time = {
   dMs: 60 * 60 * 24 * 1000,
 };
 
-async function post(url, data = {}, headers = {}) {
+async function post(url, data = {}) {
   const body = setBody(data);
-  const header = setHeaders(data, headers);
-  const init = { method: "POST", header, body };
 
-  // Verify the login endpoint exists
-
-  const res = await sendPost(url, init).catch((err) => {
+  const res = await sendPost(url, body).catch((err) => {
     console.log(err);
   });
   handleResponse(res);
@@ -394,7 +389,8 @@ async function post(url, data = {}, headers = {}) {
   return res;
 }
 
-function setHeaders(body, headers) {
+function setHeaders(body) {
+  const headers = {};
   if (body instanceof FormData) {
     // Заголовок Content-Type НЕ нужно указывать вручную!
     // Браузер сам установит его с правильным boundary
@@ -407,13 +403,20 @@ function setHeaders(body, headers) {
   }
 }
 
-function setBody(body) {
+function prepareBody(body) {
   if (body instanceof FormData) {
     body.append("phpSession", getPhpSession());
     return body;
   }
   body.phpSession = getPhpSession();
   return JSON.stringify(body, null, 2);
+}
+function setBody(body) {
+  return {
+    method: "POST",
+    headers: setHeaders(body),
+    body: prepareBody(body),
+  };
 }
 
 function damn_ampersand(str) {
@@ -428,8 +431,8 @@ function isPlainObject(obj) {
   );
 }
 
-async function sendPost(url, data) {
-  const res = await fetch(url, data);
+async function sendPost(url, body) {
+  const res = await fetch(url, body);
   if (res.status === 200) {
     const data = await res.json();
     return data;
@@ -439,20 +442,6 @@ async function sendPost(url, data) {
     console.log(json);
     return json;
   }
-  // // eslint-disable-next-line no-async-promise-executor
-  // return new Promise(async (resolve, reject) => {
-  //   const res = await fetch(url, data)
-  //     .then(async (res) => {
-  //       if (res.status === 200) {
-  //         const data = await res.json();
-  //         resolve(data);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log("Fetch error" + err.message);
-  //       reject(err.message);
-  //     });
-  // });
 }
 
 function showMessage(res) {

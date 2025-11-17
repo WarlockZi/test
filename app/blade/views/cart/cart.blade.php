@@ -7,11 +7,6 @@
 
 @section('content')
 
-    @php
-        use app\service\AuthService\Auth;
-        use app\view\components\Icon\Icon;
-        $authed = Auth::getUser();
-    @endphp
     <div class="cart">
 
         <h1>Корзина</h1>
@@ -27,73 +22,7 @@
             <div class="content">
 
                 <div class="table" data-order-id="<?= $order['id']; ?>">
-
-                    @foreach ($order['products'] as $i => $product)
-                        {{--                        @php $product = $orderItem['product'] @endphp--}}
-
-                        <div class="row cart-item" data-product-id="{!! $product['1s_id'] !!} ">
-                            <div class="num cell"><?= ++$i; ?></div>
-
-
-                            <img class="img" src="<?= $product['mainImage']; ?>" alt="<?= $product['name']; ?>">
-
-                            <div class="name-price cell">
-                                <a href="/product/<?= $product['slug']; ?>"
-                                   class="name">
-                                        <?= $product['name']; ?>
-                                </a>
-                            </div>
-
-                            {{--        @php xdebug_break() @endphp--}}
-                            <div class="cart-shippable-table cell">
-                                @if(!$product)
-                                    <div>продукт не определен</div>
-                                @else
-                                    @include('cart.cartShippableUnits', compact('product'))
-                                @endif
-                            </div>
-
-                            <div class="sub-sum sum cell">
-                                @foreach($product['shippable_units'] as $unit)
-
-                                    @foreach($product['order_items'] as $oi)
-
-                                        @if(!empty($oi['unit'][0])&&$oi['unit'][0]['id']===$unit['id'])
-                                            @php($orderItem = $oi)
-                                        @endif
-                                    @endforeach
-
-                                    <div class="row-sum">
-                                        {{--                                        @deb--}}
-                                        @php($subSum = $unit['pivot']['multiplier']*$orderItem['unit'][0]['pivot']['price']*$orderItem['count'])
-                                        {!! empty($subSum)?'-':number_format($subSum, 2, '.', ' ') !!}
-                                    </div>
-
-                                @endforeach
-
-                            </div>
-                            <div class="del cell"><?= Icon::trashWhite(); ?></div>
-                        </div>
-
-                    @endforeach
-
-
-                    <div class="total">
-                        <div class="title">Всего -&nbsp;&nbsp;</div>
-                        <span></span>
-                    </div>
-
-                    <div class="buttons">
-                        @if (!Auth::getUser())
-                            <div class="button" id="cartLogin"
-                                 title="Чтобы оформить заказ Вам &#10;необходимо зарегистрироваться &#10;или войти под своей учеткой">
-                                Войти
-                            </div>
-                        @else
-                            <div class="button" id="cartSubmit">Оформить заказ</div>
-                        @endif
-                    </div>
-
+                    @include('cart.cartProducts')
                 </div>
 
             </div>
