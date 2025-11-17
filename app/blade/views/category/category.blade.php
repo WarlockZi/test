@@ -45,7 +45,6 @@
 
             <h1>{{$category['own_properties']['seo_h1'] ?? $category->name}}</h1>
 
-{{--        @php(xdebug_break())--}}
             @if (!empty($category['children_recursive']))
 
                 <div class="category-child-wrap">
@@ -55,14 +54,13 @@
                 </div>
             @endif
 
-
             @if (!empty($category['products_in_store']))
                 <div class="products-header">
                     <h2>Товары в наличии</h2>
                 </div>
 
                 <div class="product-wrap">
-{{--                    @php(xdebug_break())--}}
+
                     @foreach($category['products_in_store'] as $product)
                         @include('category.product_card', compact('product'))
                     @endforeach

@@ -8,19 +8,21 @@
 
         @foreach($product['units'] as $unit)
 
-            @foreach($order['products'] as $OrderProduct)
-                @if (in_array($product['1s_id'], $OrderProduct))
-                    @php($orderProduct=$OrderProduct)
+            @if($order)
+                @foreach($order['products'] as $OrderProduct)
+                    @if (in_array($product['1s_id'], $OrderProduct))
+                        @php($orderProduct=$OrderProduct)
 
-                    @foreach($OrderProduct['order_items'] as $OrderItem)
-                        @php(xdebug_break())
-                        @if ($unit['id']==$OrderItem['unit_id'])
-                            @php($orderItem=$OrderItem)
-                        @endif
-                    @endforeach
+                        @foreach($OrderProduct['order_items'] as $oi)
 
-                @endif
-            @endforeach
+                            @if ($unit['id']==$oi['unit_id'])
+                                @php($orderItem=$oi)
+                            @endif
+                        @endforeach
+
+                    @endif
+                @endforeach
+            @endif
 
             <div
                     unit-row
@@ -37,14 +39,13 @@
 
                 <div class="unit-name">
                     <span class="name">{!! $unit['name'] !!}</span>
-{{--                    @deb--}}
+                    {{--                    @deb--}}
                     {{--                           @if($shippableTable->description)--}}
                     <div class="description text-small">
                         <span class="contains">{!! $unit['pivot']['multiplier']??0 !!} {!! $product['base_unit']['name'] !!}</span>
                         <span class="cost"
                               data-cost="{{$unit['pivot']['price']??0}}">{{$unit['pivot']['price']??0}} ₽</span>
                     </div>
-                    {{--                            @endif--}}
 
                 </div>
 
