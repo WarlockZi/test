@@ -3,6 +3,7 @@
 namespace app\formRequest\baseFormRequests;
 
 
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Translation\ArrayLoader;
 use Illuminate\Translation\Translator;
@@ -59,7 +60,7 @@ abstract class FormRequest extends Request
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function validate(): array
     {
@@ -69,8 +70,10 @@ abstract class FormRequest extends Request
         $validator = $this->createValidator();
 
         if ($validator->fails()) {
-//            $errors = $validator->errors();
+            $errors = $validator->errors();
             $this->throwValidationException($validator);
+        }else{
+            $validatedData  = $validator->validated();
         }
         $validated = $this->after();
 
@@ -103,7 +106,7 @@ abstract class FormRequest extends Request
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function validated(): array
     {
@@ -114,7 +117,13 @@ abstract class FormRequest extends Request
         if (isset($this->input['phpSession'])) {
             unset($this->input['phpSession']);
         }
-        return $this->input;
+
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            $this->throwValidationException($validator);
+        }
+
+        return $validator->validated();
     }
 
     public function safe(): object
@@ -152,27 +161,4 @@ abstract class FormRequest extends Request
         };
     }
 
-    //    private function UploadedFile2Array(UploadedFile $file): array
-//    {
-//        return [
-//            'originalName' => $file->getClientOriginalName(),
-//            'mimeType' => $file->getClientMimeType(),
-//            'extension' => $file->getClientOriginalExtension(),
-//            'size' => $file->getSize(),
-//            'error' => $file->getError(),
-//            'path' => $file->getPathname(),
-//        ];
-//    }
-
-//    public function after(): array
-//    {
-//        $arr = [];
-//        if ($_FILES) {
-//            foreach ($_FILES['file'] as $fileData) {
-//                $arr[] = $this->UploadedFile2Array($fileData);
-//            }
-//        }
-//
-//        return $arr;
-//    }
 }

@@ -14,9 +14,7 @@ class ProductRepository
             ->withTrashed()
             ->with('category.properties.vals')
             ->with('values')
-            ->with([
-                'units.prices',
-            ])
+            ->with('units.prices')
             ->with('ownProperties')
             ->with('category.parentRecursive')
             ->with('manufacturer.country')

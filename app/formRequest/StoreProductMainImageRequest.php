@@ -2,12 +2,9 @@
 
 namespace app\formRequest;
 
-use AllowDynamicProperties;
 use app\formRequest\baseFormRequests\FormRequest;
-use app\service\Sync\Part\SyncPartActions;
 
-
-#[AllowDynamicProperties] class StoreProductMainImageRequest extends FormRequest
+ class StoreProductMainImageRequest extends FormRequest
 {
     public function __construct()
     {
