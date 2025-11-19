@@ -133,35 +133,38 @@ class ReportFilterProductsAction
     public function table(array $userFilters): array
     {
         $repo = new ProductFilterRepository();
-        return Table::build($repo->filterProducts($userFilters))
+        $products = $repo->filterProducts($userFilters);
+        return Table::build($products)
             ->pageTitle('Фильтр')
-            ->model('product')
+            ->data(['model' => 'product'])
             ->column(
                 ColumnBuilder::build('id')
-                    ->name('ID')
                     ->class('cell left')
                     ->width('15px')
                     ->get()
             )
             ->column(
-                ColumnBuilder::build('art')
-                    ->name('Арт')
+                ColumnBuilder::build('Арт')
+                    ->callback(function ($item) {
+                        return $item->art;
+                    })
                     ->class('cell left')
                     ->search()
                     ->width('minmax(30px, 70px)')
                     ->get()
             )
             ->column(
-                ColumnBuilder::build('name')
-                    ->name('Наименование')
+                ColumnBuilder::build('Наименование')
+                    ->callback(function ($item) {
+                        return $item->name;
+                    })
                     ->class('cell left')
                     ->search()
                     ->width('minmax(60px,1fr)')
                     ->get()
             )
             ->column(
-                ColumnBuilder::build('matrix')
-                    ->name('В матрице')
+                ColumnBuilder::build('В матрице')
                     ->class('cell font-size-1-5em')
                     ->callback(function ($prod) {
                         return $prod->name ? (str_ends_with($prod->name, '*') ? '*' : '') : '';
@@ -170,23 +173,23 @@ class ReportFilterProductsAction
                     ->get()
             )
             ->column(
-                ColumnBuilder::build('img')
-                    ->name('Картинка')
+                ColumnBuilder::build('Картинка')
                     ->function(ProductService::class, 'productImg')
                     ->width('50px')
                     ->class('img')
                     ->get()
             )
             ->column(
-                ColumnBuilder::build('instore')
+                ColumnBuilder::build('В наличии')
+                    ->callback(function ($prod) {
+                        return $prod->instore;
+                    })
                     ->class('cell')
-                    ->name('Количество')
                     ->width('50px')
                     ->get()
             )
             ->column(
-                ColumnBuilder::build('is_base')
-                    ->name('баз=отгруж')
+                ColumnBuilder::build('баз=отгруж')
                     ->class('cell')
                     ->function(ProductService::class, 'baseIsShippable')
                     ->width('30px')
@@ -195,6 +198,5 @@ class ReportFilterProductsAction
             ->edit()
             ->del()
             ->get();
-
     }
 }

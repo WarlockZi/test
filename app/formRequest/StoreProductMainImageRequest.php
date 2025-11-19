@@ -4,6 +4,7 @@ namespace app\formRequest;
 
 use AllowDynamicProperties;
 use app\formRequest\baseFormRequests\FormRequest;
+use app\service\Sync\Part\SyncPartActions;
 
 
 #[AllowDynamicProperties] class StoreProductMainImageRequest extends FormRequest
@@ -13,25 +14,19 @@ use app\formRequest\baseFormRequests\FormRequest;
         parent::__construct();
     }
 
-    public function authorize(): bool
-    {
-        return isset($this->phpSession)
-        && $this->phpSession === session_id();
-    }
-
     public function rules(): array
     {
         return [
             'productId' => 'required|string',
-            'file.*' => 'max:5000|image|mimes:jpeg,jpg,gif,png,webp',
+            'file.*' => 'max:15000|image|mimes:jpeg,jpg,gif,png,webp',
         ];
     }
 
     public function all($keys = null): array
     {
         $post  = json_decode(file_get_contents('php://input'), true) ?? $_POST;
-        $files = $_FILES;
-        return array_merge($post, $files);
+        $file = $_FILES['file'];
+        return ['post'=>$post, 'file'=>$file];
     }
 
     public function messages(): array

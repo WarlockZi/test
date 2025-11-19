@@ -41,10 +41,6 @@ class ProductAction
         $productMainImage = (new ProductMainImage($product, $file))
         ->save();
         return $productMainImage->getRelativePath();
-
-//        $image = $this->productMainImage->init($file, $product)->save();
-//        $this->productMainImage->reduceQuality();
-//        return $image->getFullRelativePath();
     }
 
 //    public static function changeBaseIsShippable(IRequest $req): void

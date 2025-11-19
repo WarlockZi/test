@@ -3,7 +3,6 @@
 namespace app\formRequest\baseFormRequests;
 
 
-use app\service\AuthService\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Translation\ArrayLoader;
 use Illuminate\Translation\Translator;
@@ -16,11 +15,13 @@ abstract class FormRequest extends Request
 {
     protected $input = [];
     protected $errors = [];
+
     public function __construct(array $input = [])
     {
         $this->input = $input ?: $this->getInputFromGlobal();
         parent::__construct();
     }
+
     protected function getInputFromGlobal(): array
     {
         $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
@@ -32,7 +33,7 @@ abstract class FormRequest extends Request
             parse_str($rawInput, $input);
             return $input;
         }
-        return $_POST + $_GET;
+        return $_POST + $_GET + $_FILES;
     }
 
     abstract public function rules(): array;
@@ -55,8 +56,6 @@ abstract class FormRequest extends Request
     {
         return isset($this->input['phpSession'])
             && $this->input['phpSession'] === session_id();
-//        if (!Auth::validatePphSession($this->all())) throw new \Exception('плохой token');
-//        return true;
     }
 
     /**

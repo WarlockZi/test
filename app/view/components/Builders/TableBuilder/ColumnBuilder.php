@@ -66,16 +66,6 @@ class ColumnBuilder
         return $this;
     }
 
-//    public function pivot(string $pivotField): self
-//    {
-//        $this->pivot = "data-pivot='{$pivotField}'";
-//        return $this;
-//    }
-//    public function type(string $type): self
-//    {
-//        $this->type = "data-type='{$type}'";
-//        return $this;
-//    }
     public function classHeader(string $class): self
     {
         $this->classHeader = "class='{$class}'";
@@ -89,7 +79,6 @@ class ColumnBuilder
     }
 
 //
-
     public function sort(): self
     {
         $this->sort     = 'data-sort';
@@ -103,7 +92,7 @@ class ColumnBuilder
         return $this;
     }
 
-    public function function (string $class, string $function): self
+    public function function(string $class, string $function): self
     {
         $this->functionClass = $class;
         $this->function      = $function;

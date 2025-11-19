@@ -256,21 +256,6 @@ class ProductFormView
                     ->contenteditable()
                     ->get()
             )
-//            ->column(
-//                ColumnBuilder::build('is_from_1s')
-//                    ->name('Тип')
-//                    ->emptyRow('0')
-//                    ->width('clamp(40px,7vw,55px)')
-//                    ->pivot('is_from_1s')
-//                    ->callback(function ($unit) {
-//                        if ($unit->pivot->price) {
-//                            return '(из 1с)';
-//                        }
-//                        return '';
-//                    })
-//                    ->contenteditable()
-//                    ->get()
-//            )
             ->column(
                 ColumnBuilder::build('Отгруж ед')
                     ->emptyRow(function () {

@@ -53,7 +53,7 @@ class Table
         $this->columns[$field] = ColumnBuilder::build($field)
             ->classHeader($classHeader)
             ->class($class)
-            ->name($name)
+//            ->name($name)
             ->width($width)
             ->function($className, $funcName)
             ->get();
@@ -65,12 +65,6 @@ class Table
         return $this;
     }
 
-//    public function relation(string $relation, string $relationType): static
-//    {
-//        $this->dataRelation     = "data-relation='$relation'";
-//        $this->dataRelationType = "data-relationType='$relationType'";
-//        return $this;
-//    }
     public function data(array $data): self
     {
         foreach ($data as $key => $value) {
@@ -143,66 +137,10 @@ class Table
         $this->grid .= "style='display: grid; grid-template-columns:{$columns}'";
     }
 
-//    protected function getEmpty($column)
-//    {
-//        if ($column->emptyRow) {
-//            if (is_callable($column->emptyRow)) {
-//                return call_user_func($column->emptyRow);
-//            }elseif ($column->emptyRow instanceof CheckboxBuilder) {
-//                $html = $column->emptyRow->toHtml();
-//                return $html;
-//            }
-//            return $column->emptyRow;
-//        }
-//        return '';
-//    }
-
     public function get(): array
     {
-//        $this->emptyRow = $this->emptyRow();
         $this->prepareGridHeader();
         $this->items = $this->take ? $this->items->take($this->take) : $this->items;
         return get_object_vars($this);
     }
-
-//    protected function getEditButton(int $itemId): string
-//    {
-//        if ($this->headEditCol) {
-//            $hidden = $itemId ? '' : 'hidden';
-//            return "<div {$hidden} class='edit'  $this->dataModel " .
-//                "data-id='{$itemId}'></div>";
-//        }
-//        return '';
-//    }
-
-//    protected function getDelButton(int $itemId): string
-//    {
-//
-//        $hidden    = $itemId ? '' : 'hidden';
-//        $trashIcon = Icon::trashIcon();
-//        $str       = "<div {$hidden} class='del cell' $this->dataModel " .
-//            "data-id='{$itemId}'>$trashIcon</div>";
-//        return $str;
-//
-//    }
-
-//    protected function emptyRow(): string
-//    {
-//        if (!$this->addButton) return '';
-//        $str = '';
-//        foreach ($this->columns as $field => $column) {
-//            if ($field === 'del') continue;
-//
-//            $str .= "<div hidden {$column->class} " .
-//                $column->dataField .
-//                "data-id='0' " .
-//                "{$column->contenteditable}" .
-//                ">{$this->getEmpty($column)}</div>";
-//        }
-//        $str .= $this->getEditButton(0);
-//        $str .= $this->getDelButton(0);
-//
-//        return $str;
-//    }
-
 }

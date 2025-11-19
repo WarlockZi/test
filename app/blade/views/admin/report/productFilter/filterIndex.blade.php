@@ -3,7 +3,6 @@
 @section('content')
     <div class="products-filter">
         <div class="filter-wrap">
-{{--            @php(xdebug_break())--}}
             @include('admin.report.productFilter.panel',compact('filterPanel'))
         </div>
 

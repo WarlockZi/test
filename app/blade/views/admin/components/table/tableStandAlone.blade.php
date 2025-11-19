@@ -12,10 +12,9 @@
     @endforeach
 
     <div class="custom-table" {!!$data['grid']??''!!}>
-        {{--@deb--}}
+
         <!--  HEADER  -->
         @foreach ($data['columns'] as $c)
-{{--            @deb--}}
             <div
                     {!!$c->classHeader??''!!}
                 {!!$c->sort??''!!}
@@ -28,7 +27,7 @@
 
         <!--  TABLE  -->
 
-        <!--		 Empty row-->
+        <!--   Empty row-->
         @include('admin.components.table.row.emptyRow',compact('data','c'))
 
         <!--		 Data rows-->
@@ -50,10 +49,10 @@
         <h3 class="no-items">Элементы не найдены</h3>
     @endif
 
-    <!--  ADD BUTTON  -->
+          <!--  ADD BUTTON  -->
     @if($data['addButton'])
         <div class="buttons">
-            <div class="add-model" {!! $data['pivot'] !!}>+</div>
+            <div class="add-model" {!!$data['pivot']!!}>+</div>
         </div>
     @endif
 

@@ -47,7 +47,6 @@ class ProductFilterRepository
                     ->having('units_count', '=', 1);
             }
         }
-
         if (!empty($deleted)) {
             if ($deleted == "1") { //все
                 $query->withTrashed();
@@ -57,7 +56,6 @@ class ProductFilterRepository
                 $query->onlyTrashed();
             }
         }
-
         if (!empty($matrix)) {
             if ($matrix === '1') {
                 $query->where("name", 'REGEXP', "\\*$");
@@ -65,17 +63,15 @@ class ProductFilterRepository
                 $query->where("name", 'NOT REGEXP', "\\*$");
             }
         }
-
         if (!empty($take)) {
             if ($take === "1") {
                 $query->take(20);
             } else if ($take === "2") {
                 $query->take(40);
             } else {
-                $query->take(10);
+                $query->take(80);
             }
         }
-
         if (!empty($category)) {
             if ($category) {
                 $query->where('category_1s_id', $category);
@@ -104,6 +100,7 @@ class ProductFilterRepository
                 });
             }
         }
+
 //        $arr = $p->toArray();
         return $p;
     }

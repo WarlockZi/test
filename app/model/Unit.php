@@ -3,6 +3,8 @@
 namespace app\model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 
 class Unit extends Model
@@ -16,8 +18,8 @@ class Unit extends Model
 
     public $timestamps = false;
 
-   public function products()
-    {
+   public function products(): BelongsToMany
+   {
         return $this->belongsToMany(
             Product::class,
             'product_unit',
@@ -27,7 +29,7 @@ class Unit extends Model
             '1s_id',
         );
     }
-    public function prices()
+    public function prices(): HasManyThrough
     {
         $productId = $this->products()->first()->pivot->product_1s_id;
         return $this->hasManyThrough(
