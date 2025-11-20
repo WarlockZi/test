@@ -137,6 +137,7 @@ class Product extends Model
     {
         list($field, $value) = Auth::getCartFieldValue();
         $order = Order::where($field, $value)->first();
+        $id = $order?->id?:null;
         return $this->hasOne(OrderProduct::class,
             'product_id',
             '1s_id',
