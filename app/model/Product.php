@@ -141,7 +141,7 @@ class Product extends Model
         return $this->hasOne(OrderProduct::class,
             'product_id',
             '1s_id',
-        )->where('order_id', $order->id);
+        )->where('order_id', $id);
     }
 
     public function orders(): HasMany|BelongsToMany
