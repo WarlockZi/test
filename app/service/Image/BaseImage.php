@@ -39,7 +39,7 @@ class BaseImage
 
     protected function getType(): string
     {
-        if (empty($this->file)) throw new \Exception('Файл основной картинки товара не найдена');
-        return $this->types[$this->file['type']];
+        if (empty($this->file->getMimeType())) throw new \Exception('Файл основной картинки товара не найдена');
+        return $this->types[$this->file->getMimeType()];
     }
 }

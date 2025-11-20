@@ -16,7 +16,7 @@ class ProductMainImage extends BaseImage
 
     public function __construct(
         protected array $product, //иначе не видит контейнер при загрузке через DI in ProductActions
-        protected array $file,
+        protected  $file,
         protected       $productImageDir = 'product',
         protected       $thumbDir = 'thumbs',
     )
@@ -96,10 +96,9 @@ class ProductMainImage extends BaseImage
      */
     public function save(): self
     {
-        $from = $this->file['tmp_name'];
+        $from = $this->file->getRealPath();
         $to   = $this->getUploadFileTo();
         try {
-//            move_uploaded_file($from, $to);
             $this->deletePreviousFile();
             $f = $this->optimizer->optimize($from, $to);
             return $this;

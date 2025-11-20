@@ -15,22 +15,21 @@ use app\formRequest\baseFormRequests\FormRequest;
     {
         return [
             'productId' => 'required|string',
-            'file.*' => 'max:15000|image|mimes:jpeg,jpg,gif,png,webp',
+//            'file'=>'required',
+            'file' => 'max:15000|image|mimes:jpeg,jpg,gif,png,webp',
         ];
     }
 
     public function all($keys = null): array
     {
-        $post  = json_decode(file_get_contents('php://input'), true) ?? $_POST;
-        $file = $_FILES['file'];
-        return ['post'=>$post, 'file'=>$file];
+        return $this->input;
     }
 
     public function messages(): array
     {
         return [
-            'post.productId.required' => 'отсутствует поле productId',
-            'post.productId.string' => 'поле productId должно быть строкой',
+            'productId.required' => 'отсутствует поле productId',
+            'productId.string' => 'поле productId должно быть строкой',
 
             'file.max' => 'размер файла больше 12',
             'file.mimes' => 'тип файла не тот',

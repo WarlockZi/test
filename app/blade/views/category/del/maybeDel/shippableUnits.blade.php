@@ -13,9 +13,9 @@
 
         <button class='button green-button'>Перейти в корзину</button>
 
-        @foreach($product->shippableUnits as $unit)
-            @include('category.shippableUnitRow', ['row'=>ShippUnits::row($product, $unit)])
-        @endforeach
+{{--        @foreach($product->shippableUnits as $unit)--}}
+{{--            @include('category.shippableUnitRow', ['row'=>ShippUnits::row($product, $unit)])--}}
+{{--        @endforeach--}}
 
     </div>
 

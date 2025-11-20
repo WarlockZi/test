@@ -5,6 +5,7 @@ namespace app\formRequest\baseFormRequests;
 
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Translation\ArrayLoader;
 use Illuminate\Translation\Translator;
 use Illuminate\Validation\Factory;
@@ -34,7 +35,39 @@ abstract class FormRequest extends Request
             parse_str($rawInput, $input);
             return $input;
         }
-        return $_POST + $_GET + $_FILES;
+        $files = $this->convertFilesToUploadedFiles();
+        return $_POST + $_GET + $files;
+    }
+    function convertFilesToUploadedFiles()
+    {
+        $uploadedFiles = [];
+
+        foreach ($_FILES as $fieldName => $fileData) {
+            if (is_array($fileData['name'])) {
+                // Multiple files
+                $uploadedFiles[$fieldName] = [];
+                foreach ($fileData['name'] as $index => $name) {
+                    $uploadedFiles[$fieldName][$index] = new UploadedFile(
+                        $fileData['tmp_name'][$index],
+                        $fileData['name'][$index],
+                        $fileData['type'][$index],
+                        $fileData['error'][$index],
+                        true // test mode
+                    );
+                }
+            } else {
+                // Single file
+                $uploadedFiles[$fieldName] = new UploadedFile(
+                    $fileData['tmp_name'],
+                    $fileData['name'],
+                    $fileData['type'],
+                    $fileData['error'],
+                    true // test mode
+                );
+            }
+        }
+
+        return $uploadedFiles;
     }
 
     abstract public function rules(): array;
@@ -119,8 +152,9 @@ abstract class FormRequest extends Request
         }
 
         if ($validator->fails()) {
-            $errors = $validator->errors();
-            $this->throwValidationException($validator);
+            $errors = $validator->errors()->all();
+            response()->json(['popup'=>$errors]);
+//            $this->throwValidationException($validator);
         }
 
         return $validator->validated();

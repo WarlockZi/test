@@ -54,9 +54,7 @@ class ProductRepository
             $prod->append('base_unit');
             $prod->append('shippable_units');
         }
-
         return $prod;
-
     }
 
 

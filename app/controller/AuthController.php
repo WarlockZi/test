@@ -36,9 +36,13 @@ class AuthController extends AppController
 
             $user = User::where('email', $validated['email'])->with('role')->first();
 
-            if (!$user) response()->json(['errors' => 'not registered', 'popup' => 'Пройдите регистрацию']);
+            if (!$user) response()->json([
+                'error' => 'email не зарегистрирован',
+                'popup' => 'Пройдите регистрацию']);
 
-            if (!$user->confirm) response()->json(['popup' => 'Зайдите на почту чтобы подтвердить регистрацию', 'error' => 'Зайдите на почту чтобы подтвердить регистрацию']);
+            if (!$user->confirm) response()->json([
+                'error' => 'Зайдите на почту чтобы подтвердить регистрацию',
+                'popup' => 'Зайдите на почту чтобы подтвердить регистрацию',]);
             if ($user->password !== $this->userRepository->preparePassword($validated['password'])) {
                 Auth::setUser($user);// Если данные правильные, запоминаем пользователя (в сессию)
                 if (!$user->isSU()) {
