@@ -4,6 +4,7 @@ namespace app\controller;
 
 use app\formRequest\LoginRequest;
 use app\formRequest\RegisterRequest;
+use app\formRequest\ReturnPassRequest;
 use app\model\User;
 use app\repository\UserRepository;
 use app\service\AuthService\Auth;
@@ -11,15 +12,17 @@ use app\service\Mail\PHPMail;
 use app\service\Router\IRequest;
 use app\service\YandexAuth\YaAuthService;
 use app\view\User\UserView;
+use Exception;
 use Illuminate\Validation\ValidationException;
 use JetBrains\PhpStorm\NoReturn;
 use Throwable;
 
 class AuthController extends AppController
 {
-    protected $mailer;
+//    protected $mailer;
 
     public function __construct(
+        protected PHPMail        $mailer,
         protected UserRepository $userRepository,
     )
     {
@@ -27,72 +30,84 @@ class AuthController extends AppController
     }
 
     /**
-     * @throws ValidationException
+     * @throws ValidationException|Exception
      */
     #[NoReturn] public function actionLogin(LoginRequest $request): void
     {
-        try {
-            $validated = $request->safe()->only('email', 'password');
+        $validated = $request->safe()->only('email', 'password');
 
-            $user = User::where('email', $validated['email'])->with('role')->first();
+        $user = User::where('email', $validated['email'])->with('role')->first();
 
-            if (!$user) response()->json([
-                'error' => 'email не зарегистрирован',
-                'popup' => 'Пройдите регистрацию']);
+        if (!$user) response()->json([
+            'error' => 'email не зарегистрирован',
+            'popup' => 'Пройдите регистрацию']);
 
-            if (!$user->confirm) response()->json([
-                'error' => 'Зайдите на почту чтобы подтвердить регистрацию',
-                'popup' => 'Зайдите на почту чтобы подтвердить регистрацию',]);
-            if ($user->password !== $this->userRepository->preparePassword($validated['password'])) {
-                Auth::setUser($user);// Если данные правильные, запоминаем пользователя (в сессию)
-                if (!$user->isSU()) {
-                    response()->json(['error' => 'Не верный email или пароль']);
-                }
+        if (!$user->confirm) response()->json([
+            'error' => 'Зайдите на почту чтобы подтвердить регистрацию',
+            'popup' => 'Зайдите на почту чтобы подтвердить регистрацию',]);
+        if ($user->password !== $this->userRepository->preparePassword($validated['password'])) {
+            Auth::setUser($user);// Если данные правильные, запоминаем пользователя (в сессию)
+            if (!$user->isSU()) {
+                response()->json(['error' => 'Не верный email или пароль']);
             }
-            Auth::setAuth($user);
-            Auth::setUser($user);
+        }
+        Auth::setAuth($user);
+        Auth::setUser($user);
 
-            if ($user->isEmployee()) {
-                response()->json(['role' => 'employee', 'id' => $user['id']]);
-            } else if ($user->isAdmin()) {
-                response()->json(['role' => 'admin', 'id' => $user['id']]);
-            } else {
-                response()->json(['role' => 'guest', 'id' => $user['id']]);
-            }
-        } catch (Throwable $exception) {
-            exit($exception);
+        if ($user->isEmployee()) {
+            response()->json(['role' => 'employee', 'id' => $user['id']]);
+        } else if ($user->isAdmin()) {
+            response()->json(['role' => 'admin', 'id' => $user['id']]);
+        } else {
+            response()->json(['role' => 'guest', 'id' => $user['id']]);
         }
     }
 
-    public function actionReturnpass(): void
+    /**
+     * @throws ValidationException
+     */
+    public function actionReturnpass(ReturnPassRequest $request): void
     {
-        $this->mailer = new PHPMail();
+        $req = $request->validated();
 
-        if ($req = $this->ajax) {
-            $_SESSION['id'] = '';
-            $user           = $this->userRepository->getByEmail($req['email']);
+        $_SESSION['id'] = '';
+        $user           = $this->userRepository->getByEmail($req['email']);
 
-            if ($user) {
-                $newPassword    = $this->userRepository->randomPassword();
-                $hashedPassword = $this->userRepository->preparePassword($newPassword);
-                $this->userRepository->changePassword($user, $hashedPassword);
+        if ($user) {
+            $newPassword    = $this->userRepository->randomPassword();
+            $hashedPassword = $this->userRepository->preparePassword($newPassword);
+            $this->userRepository->changePassword($user, $hashedPassword);
 
-                try {
-                    $sent = $this->mailer->sendNewPasswordMail($user, $newPassword);
+            try {
+                $sent = $this->mailer->sendNewPasswordMail($user, $newPassword);
+                if ($sent) {
                     response()->json(['success' => true,
-                        'popup' => 'Новый пароль проверьте на почте']);
-                } catch (\Throwable $exception) {
-                    response()->json(['error' => 'not sent', 'popup' => 'Ошибка отправки письма']);
+                        'popup' => 'Новый пароль проверьте на почте',
+                        'message' => 'Новый пароль проверьте на почте',
+                    ]);
                 }
-            } else {
-                response()->json(['error' => "Пользователя с таким e-mail нет"]);
+            } catch (\Throwable $exception) {
+                response()->json([
+                    'error' => 'not sent',
+                    'popup' => 'Ошибка отправки письма',
+                    'message' => 'Ошибка почтового сервера. Новый пароль не отправлен. 
+                    Попробуйте через несколько минут',
+                ]);
             }
+        } else {
+            response()->json([
+                'error' => "Пользователя с таким e-mail нет",
+                'message' => "Пользователя с таким e-mail нет",
+            ]);
         }
     }
 
+    /**
+     * @throws ValidationException
+     */
     public function actionRegister(RegisterRequest $request): void
     {
-        $request = $request->validate();
+        $request = $request->validated();
         if (!empty($this->userRepository->getByEmail($request['email']))) {
             response()->json(['error' => 'mail exists',
                 'message' => 'Такая почта уже существует',
@@ -103,7 +118,7 @@ class AuthController extends AppController
         $user = $this->userRepository->createUser($request);
         if (!$user) response()->json(['error' => 'no user', 'popup' => "Пользователь не создан"]);
         try {
-        $this->mailer = new PHPMail();
+
             $this->mailer->sendRegistrationMail($user);
             response()->json(['success' => true, 'popup' => 'Письмо с регистрацией отпрвлено на указанный Вами email']);
         } catch (Throwable $exception) {

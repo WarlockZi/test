@@ -9,6 +9,7 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Translation\ArrayLoader;
 use Illuminate\Translation\Translator;
 use Illuminate\Validation\Factory;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Validator;
 use JetBrains\PhpStorm\NoReturn;
 
@@ -38,7 +39,7 @@ abstract class FormRequest extends Request
         $files = $this->convertFilesToUploadedFiles();
         return $_POST + $_GET + $files;
     }
-    function convertFilesToUploadedFiles()
+    function convertFilesToUploadedFiles(): array
     {
         $uploadedFiles = [];
 
@@ -105,14 +106,30 @@ abstract class FormRequest extends Request
         if ($validator->fails()) {
             $errors = $validator->errors();
             $this->throwValidationException($validator);
-        }else{
-            $validatedData  = $validator->validated();
         }
-        $validated = $this->after();
-
-        return $validated;
+        return $this->after();
     }
 
+    /**
+     * @throws ValidationException
+     */
+    public function validated(): array
+    {
+        $this->authorize();
+        $this->prepareForValidation();
+        $validator = $this->createValidator();
+
+        if (isset($this->input['phpSession'])) {
+            unset($this->input['phpSession']);
+        }
+
+        if ($validator->fails()) {
+            $errors = $validator->errors()->all();
+            response()->json(['popup'=>$errors]);
+        }
+
+        return $validator->validated();
+    }
     #[NoReturn] protected function throwValidationException($validator): void
     {
         response()->json([
@@ -130,6 +147,7 @@ abstract class FormRequest extends Request
             )
         );
 
+//        $data = $this->all();
         return $factory->make(
             $this->all(),
             $this->rules(),
@@ -141,25 +159,6 @@ abstract class FormRequest extends Request
     /**
      * @throws Exception
      */
-    public function validated(): array
-    {
-        $this->authorize();
-        $this->prepareForValidation();
-        $validator = $this->createValidator();
-
-        if (isset($this->input['phpSession'])) {
-            unset($this->input['phpSession']);
-        }
-
-        if ($validator->fails()) {
-            $errors = $validator->errors()->all();
-            response()->json(['popup'=>$errors]);
-//            $this->throwValidationException($validator);
-        }
-
-        return $validator->validated();
-    }
-
     public function safe(): object
     {
         return new class($this->validated()) {

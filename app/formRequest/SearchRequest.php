@@ -2,6 +2,7 @@
 
 namespace app\formRequest;
 
+use app\formRequest\baseFormRequests\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use JetBrains\PhpStorm\NoReturn;

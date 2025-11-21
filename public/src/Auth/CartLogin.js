@@ -213,13 +213,7 @@ export default class cartLogin {
       // } else if (res?.role === "guest") {
     } else if (res?.role === "guest") {
       window.location = window.location.pathname;
-      // window.location = "/adminsc";
     }
-    // if (window.location.pathname !== "/") {
-    //   window.location = window.location.pathname;
-    // } else {
-    //   window.location = "/auth/profile";
-    // }
   }
 
   async register(e) {
@@ -243,9 +237,9 @@ export default class cartLogin {
   async forgot(e) {
     const dto = this.authDTO(e);
     const res = await post("/auth/returnpass", dto);
-    if (res?.arr?.success) {
+    if (res?.success) {
       const content = e.target.closest(".content");
-      content.innerHTML = "Новый пароль отпарвлен на почту";
+      content.innerHTML = res?.message;
     }
   }
 

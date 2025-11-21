@@ -18,7 +18,8 @@ class SearchController extends AppController
 
     #[NoReturn] public function actionIndex(SearchRequest $request): void
     {
-        $text = $this->service->index($request['text']);
+        $req = $request->validated();
+        $text = $this->service->index($req['text']);
         response()->json(['found' => $text]);
     }
 }
