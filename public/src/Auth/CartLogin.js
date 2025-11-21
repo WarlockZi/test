@@ -205,12 +205,10 @@ export default class cartLogin {
 
     content.innerHTML = "Вход выполнен";
 
-    const id = res.id;
+    const id = res.id ?? null;
     localStorage.setItem("id", id);
     if (["employee", "admin"].includes(res?.role)) {
-      // window.location = "/adminsc";
       window.location = window.location.pathname;
-      // } else if (res?.role === "guest") {
     } else if (res?.role === "guest") {
       window.location = window.location.pathname;
     }
