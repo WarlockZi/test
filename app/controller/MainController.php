@@ -22,6 +22,7 @@ class MainController extends AppController
     #[NoReturn]
     public function actionIndex(): void
     {
+
         $meta = $this->actions->setMeta(
             'Нитриловые перчатки оптом',
             'Доставим нитриловые перчатки, бахилы, маски по России. Оптом.',
