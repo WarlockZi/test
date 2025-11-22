@@ -204,6 +204,7 @@ export default class cartLogin {
     }
 
     content.innerHTML = "Вход выполнен";
+    const i = 1;
 
     const id = res.id ?? null;
     localStorage.setItem("id", id);
