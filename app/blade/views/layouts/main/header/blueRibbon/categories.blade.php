@@ -10,7 +10,7 @@
             {{$rootCategory['name']}}
             <a href="{{$rootCategory['own_properties']['path']}}" class='show-front-a'></a>
 
-            <ul class="h-cat_submenu level-{!! $level !!}">
+            <ul class="h-cat_submenu level-{!!$level!!}">
 
 
                 @if(!empty($rootCategory['children_recursive']))

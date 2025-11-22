@@ -155,7 +155,6 @@ class AuthController extends AppController
         $user = Auth::getUser();
         if (!$user) {
             response()->redirect('/');
-            exit();
         }
 
         if ($user->isAdmin() || $user->isEmployee()) {
@@ -172,6 +171,13 @@ class AuthController extends AppController
 
     public function actionChangePassword(): void
     {
+        $user = Auth::getUser();
+
+        if(!$user){
+            response()->redirect('/');
+        }
+
+
         if ($req = $this->ajax) {
             if (!$req['old_password'] || !$req['new_password'])
                 response()->json(['error' => 'Заполните старый и новый пароль']);
@@ -194,7 +200,7 @@ class AuthController extends AppController
         }
     }
 
-    public function actionLogout(): void
+    #[NoReturn] public function actionLogout(): void
     {
         if (isset($_COOKIE[session_name()])) {
             setcookie(session_name(), '', time() - 86400, '/');

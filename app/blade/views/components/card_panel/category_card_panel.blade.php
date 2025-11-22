@@ -13,10 +13,10 @@
          title='Скопировать короткую ссылку'
          data-shortLink={{$link}}{{ $child['own_properties']['short_link']}}
     >
-        {!! Icon::link()!!}
+        {!!Icon::link()!!}
     </div>
     @if ($isAdmin)
         <a href="/adminsc/category/edit/<?= $child['id'] ?>"
-           class="edit card-panel-item">{!! Icon::edit() !!}</a>
+           class="edit card-panel-item">{!!Icon::edit()!!}</a>
     @endif
 </div>

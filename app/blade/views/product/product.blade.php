@@ -20,7 +20,7 @@
 {{--            @deb--}}
             @include('components.breadcrumbs.index')
 
-            <h1>{!! $product['print_name'] !!}</h1>
+            <h1>{!!$product['print_name']!!}</h1>
 
             <div class="product-card_hero">
                 @include('product.main_image')
@@ -32,13 +32,13 @@
                 <div class="properties">
                     <h2>{!!
                     $product['own_properties']['seo_h1'] ?? $product['name'];
-                    !!}</h2>
+                   !!}</h2>
 
                     <div id="seo-article">{!!
                      $product['own_properties']['seo_article']
                      ?? $product['own_properties']['seo_description']
                      ?? 'Описание товара отстутствует';
-                     !!}</div>
+                    !!}</div>
 
                     @if (isset($product->values) && !empty($product->values))
                         @foreach ($product->values as $value)

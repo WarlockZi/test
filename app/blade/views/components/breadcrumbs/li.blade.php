@@ -9,16 +9,16 @@
     @if(!$variables['breadcrumbs']['lastItemIsLink']
         && $variables['breadcrumbs']['itemsCount']===$position)
         <div itemprop="item">
-            <span itemprop="name">{!! $item['name']!!}</span>
+            <span itemprop="name">{!!$item['name']!!}</span>
         </div>
     @else
 
-        <a itemprop="item" href="/category/{!! $item['ownProperties']['path'] !!}">
-            <span itemprop="name">{!! $item['name']!!}</span>
+        <a itemprop="item" href="/category/{!!$item['ownProperties']['path']!!}">
+            <span itemprop="name">{!!$item['name']!!}</span>
         </a>
     @endif
 
-    <meta itemprop="position" content="{!! $position !!}">
+    <meta itemprop="position" content="{!!$position!!}">
 
 
     <div class="card-panel">
@@ -27,7 +27,7 @@
                     href="/adminsc/category/edit/<?= $item['id'] ?>"
                     class="edit card-panel-item"
             >
-                {!! Icon::edit() !!}
+                {!!Icon::edit()!!}
             </a>
         @endif
     </div>

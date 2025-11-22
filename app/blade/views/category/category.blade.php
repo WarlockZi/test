@@ -1,18 +1,24 @@
 @extends('layouts.main.main')
 
 @section('title')
-    {!! $category['meta']['seo_title'] !!}
+    {!!$category['meta']['seo_title']!!}
 @endsection
 
 @section('description')
-    {!! $category['meta']['seo_desc'] !!}
+    @deb
+    {!!$category['meta']['seo_desc']!!}
 @endsection
 
 @section('keywords')
-    {!! $category['meta']['seo_keywords'] !!}
+    {!!$category['meta']['seo_keywords']!!}
+@endsection
+
+@section('error')
+    {!!$_SESSION['error']!!}
 @endsection
 
 @section('content')
+
 
     <div class="category">
 

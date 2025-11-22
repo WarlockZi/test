@@ -2,17 +2,21 @@
 
 
 @section('title')
-    {!! $meta['title'] !!}
+    {!!$meta['title']!!}
 @endsection
 
 @section('description')
-    {!! $meta['description'] !!}
+    {!!$meta['description']!!}
 @endsection
 
 @section('keywords')
-    {!! $meta['keywords'] !!}
+    {!!$meta['keywords']!!}
 @endsection
 
+@section('error')
+    {!!$_SESSION['error']!!}
+    {{ $_SESSION['error']=''}}
+@endsection
 
 @section('content')
     <h1 class="page-name">Каталог</h1>

@@ -19,10 +19,10 @@
         @endphp
 
         @foreach($brands as $brand=>$img)
-            <a href="/brands/{!! $brand !!}">
-                <img src="/storage/app/pic/brands/{!! $img !!}"
+            <a href="/brands/{!!$brand!!}">
+                <img src="/storage/app/pic/brands/{!!$img!!}"
                      onerror="this.src='/storage/app/srvc/nophoto.png';this.onerror=false;"
-                     alt="{!! $brand !!}">
+                     alt="{!!$brand!!}">
             </a>
         @endforeach
 

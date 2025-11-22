@@ -7,5 +7,5 @@
         {!!$data['relation']??''!!}
         {!!$data['class']??''!!}
 >
-    {!!$data['options']??'' !!}
+    {!!$data['options']??''!!}
 </select>

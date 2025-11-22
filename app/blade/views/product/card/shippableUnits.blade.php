@@ -11,8 +11,8 @@
             <div
                     unit-row
                     class="unit-row"
-                    data-product_1s_id="{!! $product['1s_id']??''!!}"
-                    data-unit_id="{!! $shippableUnit['id']??''!!}"
+                    data-product_1s_id="{!!$product['1s_id']??''!!}"
+                    data-unit_id="{!!$shippableUnit['id']??''!!}"
             >
                 @if($variables['orderProduct'])
                     @php($count = 0)
@@ -33,12 +33,12 @@
                 <input
                         type="text"
                         class="input"
-                        value="{!! $count??"0" !!}"
+                        value="{!!$count??"0"!!}"
                         onclick="this.value??'';"
                 >
 
                 <div class="unit-name">
-                    <span class="name">{!! $shippableUnit['name']??'ед.' !!}</span>
+                    <span class="name">{!!$shippableUnit['name']??'ед.'!!}</span>
 
                     {{--                                @deb--}}
                     @include('product.card.shippableDescription',compact('shippableUnit'))

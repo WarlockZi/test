@@ -5,7 +5,7 @@
 
 <button class="nav-top util-item">
     <span class="hamburger material-icons" id="ham">
-        {!! Icon::menu('feather') !!}
+        {!!Icon::menu('feather')!!}
     </span>
 </button>
 
@@ -23,8 +23,8 @@
 
         @foreach(MobileMenuRepository::items() as $item)
             <li class="nav-item">
-                <a class="nav-link" href="/main/{!! $item['path'] !!}">
-                    {!! $item['title'] !!}
+                <a class="nav-link" href="/main/{!!$item['path']!!}">
+                    {!!$item['title']!!}
                 </a>
             </li>
         @endforeach

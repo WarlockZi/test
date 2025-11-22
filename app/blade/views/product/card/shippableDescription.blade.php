@@ -7,7 +7,7 @@
     /
         </span>
         <span class="contains">
-            {!! $shippableUnit['pivot']['multiplier']??0 !!} {!! $product['base_unit']['name']??'баз. ед.' !!}
+            {!!$shippableUnit['pivot']['multiplier']??0!!} {!!$product['base_unit']['name']??'баз. ед.'!!}
         </span>
 </div>
 

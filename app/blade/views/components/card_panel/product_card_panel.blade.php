@@ -16,7 +16,7 @@ use \app\view\components\Icon\Icon;
     </div>
 
 {{--    @php(xdebug_break())--}}
-    <div class="compare card-panel-item {!!  isset($product['compare']) ? 'green' : '' !!}"
+    <div class="compare card-panel-item {!! isset($product['compare']) ? 'green' : ''!!}"
          data-compare="false"
          title='Добавить в сравнение'
     >
@@ -24,7 +24,7 @@ use \app\view\components\Icon\Icon;
     </div>
 
 {{--         @php(xdebug_break())--}}
-    <div class="like card-panel-item {!!  isset($product['like'])? 'red' : ''  !!}"
+    <div class="like card-panel-item {!! isset($product['like'])? 'red' : '' !!}"
          data-like="false"
          title='Добавить в избранное'
     >

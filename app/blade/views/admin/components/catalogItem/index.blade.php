@@ -1,10 +1,10 @@
 @if($catItem['pageTitle'])
-    <div class='page-name'>{!! $catItem['pageTitle']!!}</div>
+    <div class='page-name'>{!!$catItem['pageTitle']!!}</div>
 @endif
 
 <div class="item-wrap"
-     data-model="{!! $catItem['model'] !!}"
-     data-id="{!! $catItem['item']['id'] !!}"
+     data-model="{!!$catItem['model']!!}"
+     data-id="{!!$catItem['item']['id']!!}"
 >
 
     @if($catItem['tabs'])

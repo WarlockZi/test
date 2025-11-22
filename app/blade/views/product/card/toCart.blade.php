@@ -4,7 +4,7 @@
 
     @include('components.card_panel.product_card_panel')
 
-    <div class="art">Арт. {!! $product['art'] !!} </div>
+    <div class="art">Арт. {!!$product['art']!!} </div>
 
     <div>
         {{$product['base_unit']['pivot']['price']}} ₽ / {{$product['base_unit']['name']}}
@@ -13,8 +13,8 @@
     <div class="price">
 
         <div class="new-price">
-            {{--        {!! $product['price'] !!}--}}
-            {{--        {!! $product['base_unit']['name']!!}--}}
+            {{--        {!!$product['price']!!}--}}
+            {{--        {!!$product['base_unit']['name']!!}--}}
         </div>
 
     </div>

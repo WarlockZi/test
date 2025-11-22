@@ -17,13 +17,13 @@
 
                 <li>
                     <a href="/catalog" class="util-item catalog" title="Каталог">
-                        {!! Icon::catalog() !!}
+                        {!!Icon::catalog()!!}
                     </a>
                 </li>
 
                 <li>
                     <button class="util-item search" title="Поиск">
-                        {!! Icon::search('feather') !!}
+                        {!!Icon::search('feather')!!}
                     </button>
                 </li>
 
@@ -32,22 +32,22 @@
                     <a href="/cart" class="util-item cart-link" title="Корзина">
 
                         @if (APP->get('orderItemsCount'))
-                            <div class="count show">{!! APP->get('orderItemsCount') !!}</div>
+                            <div class="count show">{!!APP->get('orderItemsCount')!!}</div>
                         @endif
 
-                        {!! Icon::shoppingCart('feather') !!}
+                        {!!Icon::shoppingCart('feather')!!}
                     </a>
                 </li>
 
 
                 <li>
                     <a href="/compare/page" class="util-item compare" title="Сравнить товары">
-                        {!! Icon::chart() !!}
+                        {!!Icon::chart()!!}
                     </a>
                 </li>
                 <li>
                     <a href="/like/page" class="util-item like" title="Избранное">
-                        {!! Icon::heart() !!}
+                        {!!Icon::heart()!!}
                     </a>
                 </li>
 

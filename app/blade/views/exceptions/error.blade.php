@@ -2,5 +2,5 @@
 
 @section('exceptions')
 {{--    @deb--}}
-    {!! $error!!}
+    {!!$error!!}
 @endsection

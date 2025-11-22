@@ -1,7 +1,7 @@
 <li>
     <div class="label">
-        {!! $item['icon'] !!}
-        {!! $item['name'] !!}
+        {!!$item['icon']!!}
+        {!!$item['name']!!}
         <span class="arrow"></span>
     </div>
 

@@ -12,6 +12,7 @@ class Response
     protected mixed $content;
     protected int $status;
     protected array $headers;
+    protected string $error;
     protected array $cookies = [];
     public static $statusTexts = [
         100 => 'Continue',
@@ -94,13 +95,9 @@ class Response
             'Content-Type' => 'application/json; charset=UTF-8'
         ], $headers);
 
-//        exit(
-//            $this->content.'<br>'.
-//            $this->status.'<br>'.
-//            json_encode($this->headers).'<br>'
-//        );
         $this->send();
     }
+
     #[NoReturn] public function consoleLog(array $data = [], int $status = 200, array $headers = []): \Symfony\Component\HttpFoundation\Response
     {
 //        $data = ['console'=>$data];
@@ -112,6 +109,7 @@ class Response
 
         $this->send();
     }
+
     #[NoReturn] public function back(array $data = [], int $status = 200, array $headers = []): self
     {
         $HTTP_REFERER  = $_SERVER['HTTP_REFERER'] ?? '';
@@ -145,6 +143,13 @@ class Response
         $this->send();
     }
 
+    #[NoReturn] public function withError(string $error): self
+    {
+        $this->error = $error;
+        $_SESSION['error'] = $error;
+        return $this;
+    }
+
     public function cookie(string $name, string $value, int $minutes = 0, string $path = '/', string $domain = null, bool $secure = false, bool $httpOnly = true): self
     {
         $this->cookies[] = compact('name', 'value', 'minutes', 'path', 'domain', 'secure', 'httpOnly');
@@ -166,7 +171,7 @@ class Response
     #[NoReturn] public static function exitWithPopup(string $msg): void
     {
         $self          = new self();
-        $self->content = json_encode(['popup'=>$msg], JSON_UNESCAPED_UNICODE);
+        $self->content = json_encode(['popup' => $msg], JSON_UNESCAPED_UNICODE);
         $self->status  = 200;
         $self->headers = array_merge($self->headers, [
             'Content-Type' => 'application/json; charset=UTF-8'
@@ -224,26 +229,26 @@ class Response
 
     #[NoReturn] public function send(): void
     {
-            http_response_code($this->status);
+        http_response_code($this->status);
 
-            foreach ($this->headers as $name => $value) {
-                header("{$name}: {$value}");
-            }
+        foreach ($this->headers as $name => $value) {
+            header("{$name}: {$value}");
+        }
 
-            foreach ($this->cookies as $cookie) {
-                setcookie(
-                    $cookie['name'],
-                    $cookie['value'],
-                    $cookie['minutes'] ? time() + ($cookie['minutes'] * 60) : 0,
-                    $cookie['path'],
-                    $cookie['domain'],
-                    $cookie['secure'],
-                    $cookie['httpOnly']
-                );
-            }
+        foreach ($this->cookies as $cookie) {
+            setcookie(
+                $cookie['name'],
+                $cookie['value'],
+                $cookie['minutes'] ? time() + ($cookie['minutes'] * 60) : 0,
+                $cookie['path'],
+                $cookie['domain'],
+                $cookie['secure'],
+                $cookie['httpOnly']
+            );
+        }
 
-            echo $this->content;
-            exit;
+        echo $this->content;
+        exit;
     }
 }
 

@@ -1,8 +1,8 @@
 <a
-        class="{!!  $item['class'] !!}"
-        href='{!! $item['href'] !!}'
+        class="{!! $item['class']!!}"
+        href='{!!$item['href']!!}'
 >
-    {!! $item['name'] !!}
+    {!!$item['name']!!}
 </a>
 
 

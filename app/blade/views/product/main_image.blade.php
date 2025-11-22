@@ -2,11 +2,11 @@
 
 
     <figure class="zoom"
-            style="background-image: url('{!! $product['mainImage'] !!}');background-repeat: no-repeat;">
+            style="background-image: url('{!!$product['mainImage']!!}');background-repeat: no-repeat;">
         <img
-                src='{!! $product['mainImage'] !!}'
-                title='{!! $product['name'] !!}'
-                alt='{!! $product['name']!!}'
+                src='{!!$product['mainImage']!!}'
+                title='{!!$product['name']!!}'
+                alt='{!!$product['name']!!}'
         />
     </figure>
 </div>

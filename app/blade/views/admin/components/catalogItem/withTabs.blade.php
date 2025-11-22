@@ -14,11 +14,11 @@
     @php $n = 2 @endphp
     @foreach ($catItem['tabs'] as $k => $tab)
         <section
-                {!! $tab->field !!}
-                data-tab={!! $n!!}
+                {!!$tab->field!!}
+                data-tab={!!$n!!}
         >
             @if($tab->html)
-                {!! $tab->html !!}
+                {!!$tab->html!!}
             @elseif($tab->tableData)
                 @include('admin.components.table.tableStandAlone', ['data'=>$tab->tableData])
             @endif

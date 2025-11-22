@@ -13,31 +13,31 @@
         type="checkbox"
 
         @if(method_exists($checkbox, 'execCheckedFn'))
-            {!!  $checkbox->execCheckedFn($item) !!}
+            {!! $checkbox->execCheckedFn($item)!!}
         @else
-            {!!  $checkbox->checked !!}
+            {!! $checkbox->checked!!}
         @endif
 
         @if(is_array($checkbox->data))
             {{--            @deb--}}
             @foreach($checkbox->data as $key=>$value)
-                data-{!! $key !!}={!! $value !!}
+                data-{!!$key!!}={!!$value!!}
         @endforeach
         @else
 
-        {!! $checkbox->data !!}
+        {!!$checkbox->data!!}
         @endif
         @foreach( $checkbox->dataField as $field)
-            data-field='{!! $field !!}'
+            data-field='{!!$field!!}'
         @endforeach
 
         @foreach($checkbox->dataPivotField as $field)
-            data-pivot='{!! $field !!}'
+            data-pivot='{!!$field!!}'
         @endforeach
 
         {{--        @deb--}}
         {{--        @foreach( $checkbox->data as $key=>$value)--}}
-        {{--            data-{!! $key !!}='{!! $value!!}'--}}
+        {{--            data-{!!$key!!}='{!!$value!!}'--}}
         {{--        @endforeach--}}
     <?= $checkbox->class ?? ''; ?>
     <?= $checkbox->field ?? ''; ?>

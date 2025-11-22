@@ -3,5 +3,5 @@
 @section('content')
 {{--    @php xdebug_break() @endphp--}}
     @include('admin.components.table.tableStandAlone', ['data'=>$content])
-{{--    {!!  $content!!}--}}
+{{--    {!! $content!!}--}}
 @endsection

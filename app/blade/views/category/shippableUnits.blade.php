@@ -28,13 +28,13 @@
             <div
                     unit-row
                     class="unit-row"
-                    data-product_1s_id="{!! $product['1s_id']??''!!}"
-                    data-unit_id="{!! $unit['id']??''!!}"
+                    data-product_1s_id="{!!$product['1s_id']??''!!}"
+                    data-unit_id="{!!$unit['id']??''!!}"
             >
                 <input
                         type="text"
                         class="input"
-                        value="{!! $orderItem['count']??0 !!}"
+                        value="{!!$orderItem['count']??0!!}"
                         onclick="this.value??'';"
                 >
 
@@ -43,7 +43,7 @@
 {{--                                        @deb--}}
                     {{--                           @if($shippableTable->description)--}}
                     <div class="description text-small">
-                        <span class="contains">{!!$unit['pivot']['multiplier']??0 !!} {!!$product['base_unit']['name']??''!!}</span>
+                        <span class="contains">{!!$unit['pivot']['multiplier']??0!!} {!!$product['base_unit']['name']??''!!}</span>
                         <span class="cost"
                               data-cost="{{$unit['pivot']['price']??0}}">{{$unit['pivot']['price']??0}} ₽</span>
                     </div>

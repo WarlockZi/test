@@ -13,7 +13,7 @@
     <link rel='icon' href='{{DEV ? PIC_SERVICE."logo-square-dev.svg" : PIC_SERVICE."logo-square.svg"}}'
           type='image/svg+xml'>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {!! (APP->get(Vite::class))->vite(['Admin/admin.js']) !!}
+    {!!(APP->get(Vite::class))->vite(['Admin/admin.js'])!!}
 
 
 </head>

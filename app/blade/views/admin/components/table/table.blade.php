@@ -68,7 +68,7 @@
         @if($data['addButton'])
 
             <div class="buttons">
-                <div class="add-model" {!! $data['pivot']??'' !!}>+</div>
+                <div class="add-model" {!!$data['pivot']??''!!}>+</div>
             </div>
         @endif
 

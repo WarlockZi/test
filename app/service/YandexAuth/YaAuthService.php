@@ -96,7 +96,7 @@ class YaAuthService
         Auth::setUser($userYandex);
     }
 
-    public function getUser()
+    public function getUser(): array
     {
         return $this->user;
     }

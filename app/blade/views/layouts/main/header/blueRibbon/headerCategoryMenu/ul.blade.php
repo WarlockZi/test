@@ -1,4 +1,4 @@
-<ul class="h-cat_submenu level-{!! $level !!}">
+<ul class="h-cat_submenu level-{!!$level!!}">
     @php ++$level; @endphp
     @if(!empty($child['children_recursive']))
             @foreach($child['children_recursive'] as $child)

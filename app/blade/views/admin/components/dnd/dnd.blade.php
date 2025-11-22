@@ -5,11 +5,11 @@
 <div class='dnd-container'>
     <div
             dnd
-            {!!  $dnd->path !!}
-            {!!  $dnd->class !!}
-            {!!  $dnd->tooltip !!}
+            {!! $dnd->path!!}
+            {!! $dnd->class!!}
+            {!! $dnd->tooltip!!}
     >
-        {!!  Icon::download() !!}
+        {!! Icon::download()!!}
     </div>
     @include('admin.components.image.image', ['img'=>$dnd->img])
 </div>
