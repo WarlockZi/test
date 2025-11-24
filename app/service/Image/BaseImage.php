@@ -2,6 +2,7 @@
 
 namespace app\service\Image;
 
+use app\service\Fs\FS;
 use app\service\Image\ImageProcessor\GDImageProcessor;
 use app\service\Image\ImageProcessor\IImageProcessor;
 
@@ -35,6 +36,21 @@ class BaseImage
         if (extension_loaded('gd') && function_exists('gd_info')) {
             $this->processor = new GDImageProcessor();
         }
+    }
+
+    public function getImageFile(string $path, string $name, ?string $extension): string
+    {
+        $path = FS::resolve(ROOT, $this->basePath, $path);
+        if (!$extension) {
+            foreach ($this->acceptedTypes as $type) {
+                $fileName = $name . '.' . $type;
+                $file = $path . $fileName;
+                if (is_readable($file)) {
+                    return $fileName;
+                }
+            }
+        }
+        return '';
     }
 
     protected function getType(): string

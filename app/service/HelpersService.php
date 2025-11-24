@@ -5,29 +5,45 @@ namespace app\service;
 use app\model\Product;
 use app\model\ProductUnit;
 use app\service\Fs\FS;
+use app\service\Image\BaseImage;
+use app\service\Image\ProductMainImage;
 use app\service\Logger\FileLogger;
 use JetBrains\PhpStorm\NoReturn;
 
 class HelpersService
 {
 
+    public static function setMainImages(): void
+    {
+        $products = Product::with('ownProperties')->get();
+        foreach ($products as $product) {
+            $name      = ProductMainImage::getFileNameFromArt($product);
+
+            $pmi       = new BaseImage();
+            $mainImage = $pmi->getImageFile('product', $name, null);
+
+            $product->ownProperties->main_image = $mainImage;
+            $product->ownProperties->save();
+        }
+    }
+
     private function getArt(string $ar): string
     {
-        $art       = str_replace(['/', '//', '\\', '\\\\'], '_', $ar);
+        $art = str_replace(['/', '//', '\\', '\\\\'], '_', $ar);
         return trim(strip_tags($art));
     }
 
     #[NoReturn] public function saveProductImages(): void
     {
         $products = Product::all();
-        $exts = ['jpg', 'jpeg', 'png', 'webp'];
+        $exts     = ['jpg', 'jpeg', 'png', 'webp'];
 
         foreach ($products as $product) {
             $art = $this->getArt($product->art);
             foreach ($exts as $ext) {
-                $path = FS::resolve(ROOT, env(PIC_PRODUCT));
-                $imgName = $art.'.'.$ext;
-                $fullPath =  $path . $imgName;
+                $path     = FS::resolve(ROOT, env(PIC_PRODUCT));
+                $imgName  = $art . '.' . $ext;
+                $fullPath = $path . $imgName;
                 if (is_readable($fullPath)) {
                     $product->txt = $imgName;
                     $product->save();
@@ -140,7 +156,6 @@ class HelpersService
         }
         Response::exitWithPopup('конец');
     }
-
 
 
     public static function profile()

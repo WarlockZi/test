@@ -50,7 +50,11 @@ class ProductMainImage extends BaseImage
         $art = $this->decodeBase64Filename($art); // мб такая строка "/var/www/vitexopt/data/www/vitexopt.ru/storage/app/pic/product/\xd0\x9f\xd0\x9d\xd0\x94-8_19_2\xd1\x80-\xd0\x91-\xd0\xa1_450.jpg"
         return trim(strip_tags($art));
     }
-
+    public static function getFileNameFromArt(Product $product): string
+    {
+        $art = str_replace(['/', '//', '\\', '\\\\', '.','{','}','$'], '_', $product['art']);
+        return trim(strip_tags($art));
+    }
     private function decodeBase64Filename($filename): bool
     {
         return json_decode('"' . $filename . '"');
@@ -130,47 +134,6 @@ class ProductMainImage extends BaseImage
         }
     }
 
-//    private function getDestination(): string
-//    {
-//        $absPath = $this->imageService->getAbsolutePath();
-//
-//        $extension = pathinfo($this->file['name'], PATHINFO_EXTENSION);
-//        $art       = $this->imageService->getArt($this->product);
-//        $name      = $art . ".{$extension}";
-//
-//        return $absPath . $name;
-//    }
-
-
-//    protected function getPathWithExt($relOrAbs, $type = null): string
-//    {
-//        $type = $type ?? $this->getExtension();
-//        return $this->$relOrAbs .
-//            $this->art .
-//            '.' . $type;
-//    }
-
-//    public function getExtension(): string
-//    {
-//        if ($this->file) {
-//            preg_match('~\..{2,4}$~', $this->file['name'], $matches);
-//            return str_replace('.', '', $matches[0]);
-//        }
-//        return $this->getFromAcceptedTypes();
-//    }
-
-//    protected function getFromAcceptedTypes(): string
-//    {
-//        foreach ($this->acceptedTypes as $type) {
-//            $fileName = $this->getPathWithExt('absolutePath', $type);
-//
-//            if (file_exists($fileName)) {
-//                return $this->getPathWithExt('relativePath', $type);
-//            }
-//        }
-//        return '';
-//    }
-
     public function reduceQuality(int $quality = 70): void
     {
         $this->processor->reduceQuality($quality);
@@ -200,13 +163,6 @@ class ProductMainImage extends BaseImage
         $ima->img->destroy();
     }
 
-//    public function getAbsoluteImage(Product $product): string
-//    {
-//        if ($this->getImageAbsolutePath($product)) {
-//            return $this->getAbsoluteImage($product);
-//        }
-//        return FS::platformSlashes(ROOT . $this->relNoImage);
-//    }
 
 
 }

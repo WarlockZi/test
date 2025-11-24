@@ -65,7 +65,19 @@ class Product extends Model
             ->orderByPivot('multiplier')
             ->withPivot('id', 'price', 'is_shippable', 'multiplier');
     }
-
+    public function images(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            ImageProduct::class,
+            'image_product',
+            'image_id',
+            'product_id',
+            'id',
+            'id',
+        )
+            ->using(ImageProduct::class)
+            ->withPivot('name', 'type',);
+    }
     public function getBaseUnitAttribute()
     {
         return $this->units()->wherePivot('multiplier', 1)->first();
