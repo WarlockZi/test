@@ -27,7 +27,7 @@ class MainController extends AppController
             'Доставим нитриловые перчатки, бахилы, маски по России. Оптом.',
             'нитриловые перчатки, бахилы, маски, расходные материалы, доставка, производство, по России'
         );
-        HelpersService::setMainImages();
+//        HelpersService::setMainImages();
 
         view('main.index', compact('meta'));
     }
