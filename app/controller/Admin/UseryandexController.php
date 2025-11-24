@@ -8,6 +8,7 @@ use app\model\UserYandex;
 use app\repository\UserYandexRepository;
 use app\service\AuthService\Auth;
 use app\service\Response;
+use app\service\Router\IRequest;
 use app\view\User\UserView;
 use JetBrains\PhpStorm\NoReturn;
 use Throwable;
@@ -45,7 +46,7 @@ class UseryandexController extends AdminscController
     }
 
 
-    public function actionDelete(): void
+    public function actionDelete(IRequest $request): void
     {
         if ($data = $this->ajax) {
             if (!Auth::getUser()->can(['user_delete']))

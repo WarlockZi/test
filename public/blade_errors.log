@@ -29,3 +29,8 @@
 2025-11-16 22:36:20 - Blade Error: Template not found: D:\OSPanel\domains\vi-prod\app\blade\views/cartSubSum in D:\OSPanel\domains\vi-prod\vendor\eftec\bladeone\lib\BladeOne.php:1433
 2025-11-16 22:36:25 - Blade Error: Template not found: D:\OSPanel\domains\vi-prod\app\blade\views/cartSubSum in D:\OSPanel\domains\vi-prod\vendor\eftec\bladeone\lib\BladeOne.php:1433
 2025-11-17 08:03:56 - Blade Error: Template not found: D:\OSPanel\domains\vi-prod\app\blade\views/cart.cartProroducts in D:\OSPanel\domains\vi-prod\vendor\eftec\bladeone\lib\BladeOne.php:1433
+2025-11-23 11:43:49 - Blade Error: Template not found: D:\OSPanel\domains\vi-prod\app\blade\views/auth.change-password in D:\OSPanel\domains\vi-prod\vendor\eftec\bladeone\lib\BladeOne.php:1433
+2025-11-24 10:16:46 - Blade Error: Template not found: D:\OSPanel\domains\vi-prod\app\blade\views/admin.components.tableStandAlone in D:\OSPanel\domains\vi-prod\vendor\eftec\bladeone\lib\BladeOne.php:1433
+2025-11-24 11:42:18 - Blade Error: Template not found: D:\OSPanel\domains\vi-prod\app\blade\views/admin.components.tableStandAlone in D:\OSPanel\domains\vi-prod\vendor\eftec\bladeone\lib\BladeOne.php:1433
+2025-11-24 11:42:19 - Blade Error: Template not found: D:\OSPanel\domains\vi-prod\app\blade\views/admin.components.tableStandAlone in D:\OSPanel\domains\vi-prod\vendor\eftec\bladeone\lib\BladeOne.php:1433
+2025-11-24 12:12:27 - Blade Error: Template not found: D:\OSPanel\domains\vi-prod\app\blade\views/admin.admin in D:\OSPanel\domains\vi-prod\vendor\eftec\bladeone\lib\BladeOne.php:1433

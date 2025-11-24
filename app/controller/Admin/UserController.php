@@ -7,6 +7,7 @@ use app\model\User;
 use app\repository\UserRepository;
 use app\service\AuthService\Auth;
 use app\service\Response;
+use app\service\Router\IRequest;
 use app\view\User\UserView;
 use Throwable;
 
@@ -22,11 +23,10 @@ class UserController extends AdminscController
         parent::__construct();
     }
 
-    public function actionIndex(): void
+    public function actionTable(): void
     {
         $this->showTable();
     }
-
 
     public function actionEdit(): void
     {
@@ -43,7 +43,7 @@ class UserController extends AdminscController
     }
 
 
-    public function actionDelete(): void
+    public function actionDelete(IRequest $request): void
     {
         if ($data = $this->ajax) {
             if (!Auth::getUser()->can(['user_delete']))

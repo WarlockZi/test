@@ -48,7 +48,7 @@ class AdminscController extends AppController
     #[NoReturn] public function showTable(): void
     {
         $data = $this->actions->table($this->model);
-        view('admin.share.table.table', compact('data'));
+        view('admin.components.table.adminTableStandAlone', compact('data'));
     }
 }
 

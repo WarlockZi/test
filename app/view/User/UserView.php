@@ -186,23 +186,7 @@ abstract class UserView
         return ItemBuilderNew::build($item, 'user')
             ->pageTitle('Редактировать пользователя: ' . $item['surName'] . ' ' . $item['name'])
             ->toList('adminsc/user/table', '', false)
-//            ->save()
             ->del(false)
-            ->field(
-                ItemFieldBuilder::build('роль', $item)
-                    ->html($item->role[0]->name)
-                    ->name('роль')
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('id', $item)
-                    ->name('ID')
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('email', $item)
-                    ->get()
-            )
             ->field(
                 ItemFieldBuilder::build('surName', $item)
                     ->name('Фамилия')
@@ -241,6 +225,21 @@ abstract class UserView
                     ->html(
                         self::getSex($item)
                     )
+                    ->get()
+            )
+            ->field(
+                ItemFieldBuilder::build('роль', $item)
+                    ->html($item->role[0]->name)
+                    ->name('роль')
+                    ->get()
+            )
+            ->field(
+                ItemFieldBuilder::build('id', $item)
+                    ->name('ID')
+                    ->get()
+            )
+            ->field(
+                ItemFieldBuilder::build('email', $item)
                     ->get()
             )
             ->get();

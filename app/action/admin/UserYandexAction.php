@@ -22,29 +22,29 @@ class UserYandexAction implements IShowTable
             ->model('userYandex')
             ->column(
                 ColumnBuilder::build('id')
-                    ->name('ID')
+//                    ->name('ID')
                     ->get())
             ->column(
                 ColumnBuilder::build('last_name')
-                    ->name('Фамилия')
+//                    ->name('Фамилия')
                     ->search()
                     ->width('1fr')
                     ->get())
             ->column(
                 ColumnBuilder::build('first_name')
-                    ->name('Имя')
+//                    ->name('Имя')
                     ->search()
                     ->width('1fr')
                     ->get())
             ->column(
                 ColumnBuilder::build('default_email')
-                    ->name('email')
+//                    ->name('email')
                     ->search()
                     ->width('1fr')
                     ->get())
             ->column(
                 ColumnBuilder::build('default_phone')
-                    ->name('phone')
+//                    ->name('phone')
                     ->callback(function ($userY) {
                         $obj = json_decode($userY->default_phone);
                         return $obj->number;
@@ -54,7 +54,7 @@ class UserYandexAction implements IShowTable
                     ->get())
             ->column(
                 ColumnBuilder::build('role')
-                    ->name('роль')
+//                    ->name('роль')
                     ->width('1fr')
                     ->callback(function ($user) {
                         return self::roleSelector($user);

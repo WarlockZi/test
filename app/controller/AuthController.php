@@ -135,19 +135,19 @@ class AuthController extends AppController
     }
 
 
-    private function getUrl(): string
-    {
-        if (DEV) {
-            return 'https://vi-prod/auth/yandex';
-        }
-        return 'https://oauth.yandex.ru/authorize?' . urldecode(http_build_query(
-                array(
-                    'client_id' => '1cacd478c22b49c1a22e59ac811d0fc0',
-                    'redirect_uri' => 'https://vitexopt.ru/auth/yandex',
-                    'response_type' => 'code',
-                    'state' => '123'
-                )));
-    }
+//    private function getUrl(): string
+//    {
+//        if (DEV) {
+//            return 'https://vi-prod/auth/yandex';
+//        }
+//        return 'https://oauth.yandex.ru/authorize?' . urldecode(http_build_query(
+//                array(
+//                    'client_id' => '1cacd478c22b49c1a22e59ac811d0fc0',
+//                    'redirect_uri' => 'https://vitexopt.ru/auth/yandex',
+//                    'response_type' => 'code',
+//                    'state' => '123'
+//                )));
+//    }
 
 
     #[NoReturn] public function actionProfile(): void
@@ -159,23 +159,21 @@ class AuthController extends AppController
 
         if ($user->isAdmin() || $user->isEmployee()) {
             $catItem = UserView::employee($user);
-            view('admin.profile.profile', compact('catItem'));
         } else {
             $catItem = UserView::guest($user);
-            view('profile.profile', compact('catItem'));
         }
-//        UserView::admin($user)
-//                : UserView::employee($user  );
-//        $item = UserView::guest($user);
+        view('profile.profile', compact('catItem'));
     }
 
     public function actionChangePassword(): void
     {
         $user = Auth::getUser();
 
-        if(!$user){
-            response()->redirect('/');
+        if (!$user) {
+            response()->withError('чтобы поменять пароль нужно войти в свой аккаунт')->redirect('/');
         }
+
+        view('auth.change-password', compact('user'));
 
 
         if ($req = $this->ajax) {

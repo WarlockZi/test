@@ -7,42 +7,42 @@
 @section('content')
 
     <div custom-table
-        <?= $data['class']; ?>
-        <?= $data['dataModel'] ?>
-        <?= $data['dataRelation'] ?>
-        <?= $data['dataRelationType'] ?>
+        {!!$data['class']??''!!}
+        {!!$data['dataModel']??''!!}
+        {!!$data['dataRelation']??''!!}
+        {!!$data['dataRelationType']??''!!}
     >
 
-        <div class='table-title'><?= $data['pageTitle'] ?></div>
+        <div class='table-title'>{!!$data['pageTitle']!!}</div>
 
-        @deb
+{{--        @deb--}}
         @foreach($data['header'] as $title=>$html)
             <div class="table-header-row">
-                    <?= $title ?> : <?= $html ?>
+                    {!!$title!!} : {!!$html!!}
             </div>
         @endforeach
 
         <div class="custom-table"
-            <?= $data['grid'] ?>
+            {!!$data['grid']!!}
         >
 
             <!--  HEADER  -->
             @foreach ($data['columns'] as $c)
                 <div
-                        <?= $c->classHeader; ?>
-                    <?= $c->type; ?>
-                    <?= $c->sort; ?>
+                        {!!$c->classHeader;!!}
+                    {!!$c->type;!!}
+                    {!!$c->sort;!!}
                 >
-                        <?= $c->sortIcon; ?>
-                        <?= $c->name; ?>
-                        <?= $c->search; ?>
+                        {!!$c->sortIcon;!!}
+                        {!!$c->name;!!}
+                        {!!$c->search;!!}
                 </div>
             @endforeach
 
             <!--  TABLE  -->
 
             <!--		 Empty row-->
-            <?= $data['emptyRow'] ?>
+            {!!$data['emptyRow']!!}
 
                     <!--		 Data rows-->
 

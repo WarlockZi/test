@@ -339,7 +339,7 @@ class AdminSidebar
                     ],
                     [
                         "name" => "Изменить свой профиль",
-                        "href" => "/auth/profile",
+                        "href" => "/adminsc/profile",
                         "class" => "neon",
                         "permissions" => [],
                     ],

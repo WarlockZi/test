@@ -4,6 +4,9 @@
     use app\view\components\Icon\Icon;
 @endphp
 
+@section('error')
+    @include('layouts.main.error')
+@endsection
 
 @section('content')
     <a href="/catalog/perchatki_medicinskie" class="banner gloves">

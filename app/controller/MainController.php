@@ -5,7 +5,6 @@ namespace app\controller;
 
 use app\action\MainAction;
 use app\repository\PromotionRepository;
-use app\service\AuthService\Auth;
 use JetBrains\PhpStorm\NoReturn;
 
 class MainController extends AppController
@@ -74,7 +73,6 @@ class MainController extends AppController
                 'meta',
                 'activePromotions',
                 'inactivePromotions'));
-
     }
 
     #[NoReturn] public function actionStatii(): void

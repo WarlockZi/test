@@ -14,8 +14,7 @@
 @endsection
 
 @section('error')
-    {!!$_SESSION['error']!!}
-    {{ $_SESSION['error']=''}}
+    @include('layouts.main.error')
 @endsection
 
 @section('content')
