@@ -19,7 +19,7 @@ class FeedbackAction
             ->pageTitle('Обработанные сообщения пользователей')
             ->column(
                 ColumnBuilder::build('created_at')
-                    ->name('создан')
+//                    ->name('создан')
                     ->width('100px')
                     ->search()
                     ->sort()
@@ -27,31 +27,31 @@ class FeedbackAction
             )
             ->column(
                 ColumnBuilder::build('name')
-                    ->name('Имя')
+//                    ->name('Имя')
                     ->search()
                     ->sort()
                     ->get()
             )
             ->column(
                 ColumnBuilder::build('email')
+//                    ->name('email')
                     ->sort()
                     ->search()
-                    ->name('email')
                     ->get()
             )
             ->column(
                 ColumnBuilder::build('phone')
+//                    ->name('Телефон')
                     ->sort()
-                    ->name('Телефон')
                     ->get()
             )
             ->column(
                 ColumnBuilder::build('message')
-                    ->name('Сообщение')
+//                    ->name('Сообщение')
                     ->get()
             )
             ->column(ColumnBuilder::build('done')
-                ->name('Обработан')
+//                ->name('Обработан')
                 ->component(
                     (new FeedbackCheckboxBuilder)
                         ->setCheckedFn(
@@ -74,7 +74,7 @@ class FeedbackAction
             ->pageTitle('Необработанные сообщения пользователей')
             ->column(
                 ColumnBuilder::build('created_at')
-                    ->name('создан')
+//                    ->name('создан')
                     ->width('100px')
                     ->search()
                     ->sort()
@@ -82,7 +82,7 @@ class FeedbackAction
             )
             ->column(
                 ColumnBuilder::build('name')
-                    ->name('Имя')
+//                    ->name('Имя')
                     ->search()
                     ->sort()
                     ->get()
@@ -91,22 +91,22 @@ class FeedbackAction
                 ColumnBuilder::build('email')
                     ->sort()
                     ->search()
-                    ->name('email')
+//                    ->name('email')
                     ->get()
             )
             ->column(
                 ColumnBuilder::build('phone')
                     ->sort()
-                    ->name('Телефон')
+//                    ->name('Телефон')
                     ->get()
             )
             ->column(
                 ColumnBuilder::build('message')
-                    ->name('Сообщение')
+//                    ->name('Сообщение')
                     ->get()
             )
             ->column(ColumnBuilder::build('done')
-                ->name('Обработан')
+//                ->name('Обработан')
                 ->component(
                     (new FeedbackCheckboxBuilder)
                         ->setCheckedFn(

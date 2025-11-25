@@ -5,7 +5,7 @@
 @endsection
 
 @section('description')
-    @deb
+
     {!!$category['meta']['seo_desc']!!}
 @endsection
 

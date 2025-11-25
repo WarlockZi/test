@@ -8,11 +8,12 @@ use app\model\Product;
 use app\service\Fs\FS;
 use app\service\Image\ImageProcessor\ImageOptimizer;
 use Exception;
+use Intervention\Image\ImageManager;
 use Throwable;
 
 class ProductMainImage extends BaseImage
 {
-    private ImageOptimizer $optimizer;
+    private $optimizer;
 
     public function __construct(
         protected array $product, //иначе не видит контейнер при загрузке через DI in ProductActions
@@ -22,9 +23,25 @@ class ProductMainImage extends BaseImage
     )
     {
         parent::__construct();
-        $this->optimizer = new ImageOptimizer(70, $this->maxWidth, $this->maxHeight);
+        exit(phpinfo());
+        $this->optimizer = new ImageManager(['driver' => 'gd']);
+//        $this->optimizer = new ImageOptimizer(70, $this->maxWidth, $this->maxHeight);
     }
-
+    /**
+     * @throws Exception
+     */
+    public function save(): self
+    {
+        $from = $this->file->getRealPath();
+        $to   = $this->getUploadFileTo()['path'];
+        try {
+            $this->deletePreviousFile();
+            $f = $this->optimizer->optimize($from, $to);
+            return $this;
+        } catch (Throwable $exception) {
+            throw new Exception("Попытка загрузки файла за пределы разрешенной директории");
+        }
+    }
     /**
      * @throws Exception
      */
@@ -69,13 +86,10 @@ class ProductMainImage extends BaseImage
     /**
      * @throws Exception
      */
-    public function getUploadFileTo(): string
+    public function getUploadFileTo(): array
     {
-        $dir  = $this->getAbsProductMainImageDir();
-        $name = $this->getNameFromArt();
-        $type = $this->getType();
-        $path = "$dir$name.$type";
-        return $path;
+        $safeUpload = (new SafeImageFileUploadService())->safeUpload($this->file, $this->productImageDir);
+        return $safeUpload;
     }
     /**
      * @throws Exception
@@ -89,34 +103,6 @@ class ProductMainImage extends BaseImage
         return FS::invertSlashes($path);
     }
 
-    public function delFileWithDifferentExt(): string
-    {
-        $art = $this->getAbsoluteImage();
-        foreach ($this->extensions as $ext) {
-            $relFile = $this->relativePath . $art . ".{$ext}";
-            $file    = FS::platformSlashes(ROOT . $relFile);
-            if (file_exists($file)) {
-                return $relFile;
-            }
-        }
-        return $this->relNoImage;
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function save(): self
-    {
-        $from = $this->file->getRealPath();
-        $to   = $this->getUploadFileTo();
-        try {
-            $this->deletePreviousFile();
-            $f = $this->optimizer->optimize($from, $to);
-            return $this;
-        } catch (Throwable $exception) {
-            throw new Exception("Попытка загрузки файла за пределы разрешенной директории");
-        }
-    }
 
     /**
      * @throws Exception

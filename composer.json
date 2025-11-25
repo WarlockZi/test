@@ -38,7 +38,8 @@
     "ext-curl": "*",
     "ext-zip": "*",
     "staudenmeir/laravel-adjacency-list": "^1.9",
-    "ext-gd": "*"
+    "ext-gd": "*",
+    "intervention/image": "^3.11"
   },
   "config": {
     "platform-check": false

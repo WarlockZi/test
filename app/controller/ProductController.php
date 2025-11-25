@@ -3,9 +3,7 @@
 namespace app\controller;
 
 use app\action\ProductAction;
-use app\model\Product;
 use app\repository\ProductRepository;
-use app\service\Fs\FS;
 use app\service\Router\IRequest;
 use JetBrains\PhpStorm\NoReturn;
 

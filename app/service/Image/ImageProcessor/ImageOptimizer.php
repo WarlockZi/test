@@ -11,23 +11,23 @@ class ImageOptimizer {
         $this->maxHeight = $maxHeight;
     }
 
-    public function optimize($sourcePath, $destinationPath = null): bool
+    public function optimize(string $from, string $to = ''): bool
     {
-        if (!$destinationPath) {
-            $destinationPath = $sourcePath;
+        if (!$to) {
+            $to = $from;
         }
 
-        $imageInfo = getimagesize($sourcePath);
+        $imageInfo = getimagesize($from);
         $mimeType = $imageInfo['mime'];
 
-        $image = $this->createImageResource($sourcePath, $mimeType);
+        $image = $this->createImageResource($from, $mimeType);
         if (!$image) return false;
 
         if ($this->maxWidth || $this->maxHeight) {
-            $image = $this->resizeImage($image );
+            $image = $this->resizeImage($image);
         }
 
-        $result = $this->saveImage($image, $destinationPath, $mimeType);
+        $result = $this->saveImage($image, $to, $mimeType);
         imagedestroy($image);
 
         return $result;

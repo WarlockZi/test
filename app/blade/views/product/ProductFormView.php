@@ -92,14 +92,6 @@ class ProductFormView
                     ->required()
                     ->get()
             )
-//            ->field(
-//                ItemFieldBuilder::build('base_unit', $product)
-//                    ->name('Базовая единица')
-//                    ->html(
-//                        $product->baseUnit->name
-//                    )
-//                    ->get()
-//            )
             ->field(
                 ItemFieldBuilder::build('instore', $product)
                     ->name('наличие')
@@ -309,7 +301,9 @@ class ProductFormView
     public static function mainImage(Product $product): DndBuilder
     {
         $pis          = APP->get(ProductImageService::class);
-        $img['src']   = $pis->getRelativeImage($product);
+        $img['src']   = $product->ownProperties->main_image
+            ?env('PIC_PRODUCT').$product->ownProperties->main_image
+            :$pis->getNoPhoto();
         $img['alt']   = $product->name;
         $img['title'] = $product->name;
         $img['class'] = 'main-image';
