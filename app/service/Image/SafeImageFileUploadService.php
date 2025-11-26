@@ -31,16 +31,8 @@ class SafeImageFileUploadService
      */
     public function safeUpload(UploadedFile $uploadedFile, string $storagePath): array
     {
-        if (!in_array($uploadedFile->getMimeType(), $this->allowedMimeTypes)) {
-            throw new Exception('File type not allowed');
-        }
 
-        $extension = strtolower($uploadedFile->getClientOriginalExtension());
-        if (!in_array($extension, $this->allowedExtensions)) {
-            throw new Exception('File extension not allowed');
-        }
-
-        $safeFilename = $this->generateSafeFilename($extension);
+//        $safeFilename = $this->generateSafeFilename($extension);
         $storagePath = $this->PIC_BASE_PATH . $storagePath.'/';
 
         $path = FS::platformSlashes(ROOT.$storagePath. $safeFilename);

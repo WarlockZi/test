@@ -31,14 +31,12 @@ class ProductController extends AdminscController
      */
     #[NoReturn] public function actionSaveMainImage(StoreProductMainImageRequest $request): void
     {
-
         $mainImage = $this->actions->saveMainImage($request->validated());
         response()->json(compact('mainImage'));
     }
 
     #[NoReturn] public function actionEdit(IRequest $request): void
     {
-
         $prod        = $this->repo->edit($request->id);
         $breadcrumbs = $this->actions->getBreadcrumbs($prod->category, false);
         $catItem     = ProductFormView::edit($prod);

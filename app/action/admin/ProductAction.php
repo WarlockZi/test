@@ -35,12 +35,14 @@ class ProductAction
      */
     public function saveMainImage(array $validated): string
     {
-        $product = Product::find($validated['productId'])->toArray();
+        $product = Product::with('ownProperties')->find($validated['productId']);
         $file = $validated['file'];
 
-        $productMainImage = (new ProductMainImage($product, $file))
+        $productMainImage = (new ProductMainImage($product?->toArray(), $file))
         ->save();
-        return $productMainImage->getRelativePath();
+        $product->ownProperties->main_image = $productMainImage->getImageFileName();
+        $product->ownProperties->save();
+        return $productMainImage->getRelativeDestinationPath();
     }
 
 //    public static function changeBaseIsShippable(IRequest $req): void

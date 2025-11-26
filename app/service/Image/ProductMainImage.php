@@ -6,7 +6,6 @@ namespace app\service\Image;
 
 use app\model\Product;
 use app\service\Fs\FS;
-use app\service\Image\ImageProcessor\ImageOptimizer;
 use Exception;
 use Intervention\Image\ImageManager;
 use Throwable;
@@ -14,34 +13,71 @@ use Throwable;
 class ProductMainImage extends BaseImage
 {
     private $optimizer;
+    protected int $quality = 20;
+    protected int $maxWidth = 600;
+    protected int $maxHeight = 600;
+    protected string $destinationPath = '';
+    protected string $absDestinationPath;
 
     public function __construct(
         protected array $product, //иначе не видит контейнер при загрузке через DI in ProductActions
-        protected  $file,
+        protected       $file,
         protected       $productImageDir = 'product',
         protected       $thumbDir = 'thumbs',
+        protected       $fileNameFromArt = '',
     )
     {
         parent::__construct();
 
-        $this->optimizer = new ImageManager(['driver' => 'gd']);
-//        $this->optimizer = new ImageOptimizer(70, $this->maxWidth, $this->maxHeight);
+        $this->optimizer = ImageManager::imagick();
+        $this->fileNameFromArt = $this->getFileName();
     }
+
     /**
      * @throws Exception
      */
     public function save(): self
     {
         $from = $this->file->getRealPath();
-        $to   = $this->getUploadFileTo()['path'];
+
+        $this->absDestinationPath = $this->getAbsoluteDestinationPath();
+        $this->destinationPath    = $this->getRelativeDestinationPath();
         try {
             $this->deletePreviousFile();
-            $f = $this->optimizer->optimize($from, $to);
+            $image     = $this->optimizer->read($from);
+            $image     = $image->scaleDown(width: $this->maxWidth);
+            $extension = strtolower($this->file->getClientOriginalExtension());
+
+            switch ($extension) {
+                case 'jpg':
+                case 'jpeg':
+                    $image->toJpeg($this->quality)->save($this->absDestinationPath);
+                    break;
+
+                case 'png':
+                    // PNG uses compression level (0-9) instead of quality
+                    $compression = round(9 - ($this->quality / 100 * 9));
+                    $image->toPng($compression)->save($this->absDestinationPath);
+                    break;
+
+                case 'webp':
+                    $image->toWebp($this->quality)->save($this->absDestinationPath);
+                    break;
+
+                default:
+                    $image->save($this->absDestinationPath, quality: $this->quality);
+            }
             return $this;
         } catch (Throwable $exception) {
             throw new Exception("Попытка загрузки файла за пределы разрешенной директории");
         }
     }
+
+    public function getImageFileName()
+    {
+        return $this->fileNameFromArt;
+    }
+
     /**
      * @throws Exception
      */
@@ -63,15 +99,17 @@ class ProductMainImage extends BaseImage
 
     private function getNameFromArt(): string
     {
-        $art = str_replace(['/', '//', '\\', '\\\\'], '_', $this->product['art']);
-        $art = $this->decodeBase64Filename($art); // мб такая строка "/var/www/vitexopt/data/www/vitexopt.ru/storage/app/pic/product/\xd0\x9f\xd0\x9d\xd0\x94-8_19_2\xd1\x80-\xd0\x91-\xd0\xa1_450.jpg"
+        $art = str_replace(['/', '//', '\\', '\\\\', '.'], '_', $this->product['art']);
+//        $art = $this->decodeBase64Filename($art); // мб такая строка "/var/www/vitexopt/data/www/vitexopt.ru/storage/app/pic/product/\xd0\x9f\xd0\x9d\xd0\x94-8_19_2\xd1\x80-\xd0\x91-\xd0\xa1_450.jpg"
         return trim(strip_tags($art));
     }
+
     public static function getFileNameFromArt(Product $product): string
     {
-        $art = str_replace(['/', '//', '\\', '\\\\', '.','{','}','$'], '_', $product['art']);
+        $art = str_replace(['/', '//', '\\', '\\\\', '.', '{', '}', '$'], '_', $product['art']);
         return trim(strip_tags($art));
     }
+
     private function decodeBase64Filename($filename): bool
     {
         return json_decode('"' . $filename . '"');
@@ -81,8 +119,9 @@ class ProductMainImage extends BaseImage
     private function getFileName(): string
     {
         $name = $this->getNameFromArt();
-        return $name . '.' . $this->file['extension'];
+        return $name . '.' . $this->file->getClientOriginalExtension();
     }
+
     /**
      * @throws Exception
      */
@@ -91,16 +130,23 @@ class ProductMainImage extends BaseImage
         $safeUpload = (new SafeImageFileUploadService())->safeUpload($this->file, $this->productImageDir);
         return $safeUpload;
     }
-    /**
-     * @throws Exception
-     */
-    public function getRelativePath(): string
+
+
+    public function getRelativeDestinationPath(): string
     {
-        $dir  = FS::resolve($this->basePath . $this->productImageDir);;
+        $dir = FS::resolve($this->basePath . $this->productImageDir);;
+        $name = $this->fileNameFromArt;
+        $path = "$dir$name";
+        return FS::invertSlashes($path);
+    }
+
+    public function getAbsoluteDestinationPath(): string
+    {
+        $dir = FS::resolve($this->basePath . $this->productImageDir);;
         $name = $this->getNameFromArt();
         $type = $this->getType();
-        $path = "$dir$name.$type";
-        return FS::invertSlashes($path);
+        $path = ROOT . "$dir$name.$type";
+        return $path;
     }
 
 
@@ -109,7 +155,7 @@ class ProductMainImage extends BaseImage
      */
     public function deletePreviousFile(): void
     {
-        $dir  =  $this->getAbsProductMainImageDir();
+        $dir  = $this->getAbsProductMainImageDir();
         $name = $this->getNameFromArt();
         foreach ($this->acceptedTypes as $ext) {
             $path = "$dir$name.$ext";
@@ -119,36 +165,5 @@ class ProductMainImage extends BaseImage
             }
         }
     }
-
-    public function reduceQuality(int $quality = 70): void
-    {
-        $this->processor->reduceQuality($quality);
-
-        $imageService->img->writeImage();
-        $imageService->img->clear();
-        $imageService->img->destroy();
-    }
-
-    public function thumbnail()
-    {
-        $absPath = $this->getAbsolutePath();
-
-        $webpName = $this->absoluteThumbPath . $this->art . '.webp';
-        copy($absPath, $webpName);
-        $ima = new ImagickService($webpName);
-        $ima->img->setImageFormat("WEBP");
-        $ima->thumbnail(
-            $webpName,
-            $this->maxThumbWidth,
-            $this->maxThumbHeight,
-            $this->quality,
-        );
-
-//		$ima->img->writeImage($webpName);
-        $ima->img->clear();
-        $ima->img->destroy();
-    }
-
-
 
 }
