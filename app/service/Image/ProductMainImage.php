@@ -30,7 +30,7 @@ class ProductMainImage extends BaseImage
     {
         parent::__construct();
 
-        $this->optimizer = new ImageManager(new Driver());
+        $this->optimizer       = new ImageManager(new Driver());
         $this->fileNameFromArt = $this->getFileName();
     }
 
@@ -161,9 +161,8 @@ class ProductMainImage extends BaseImage
         foreach ($this->acceptedTypes as $ext) {
             $path = "$dir$name.$ext";
             if (file_exists($path)) {
-                if (!mb_check_encoding($path, 'UTF-8')) {
-                    $path = mb_convert_encoding($path, 'UTF-8');
-                }
+
+                $path = stripcslashes($path);
                 unlink($path);
                 break;
             }
