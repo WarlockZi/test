@@ -158,14 +158,10 @@ class ProductMainImage extends BaseImage
     {
         $dir  = $this->getAbsProductMainImageDir();
         $name = $this->getNameFromArt();
+        $name = mb_convert_encoding($name, 'ASCII');
         foreach ($this->acceptedTypes as $ext) {
             $path = "$dir$name.$ext";
             if (file_exists($path)) {
-
-                $encoding = mb_detect_encoding($path);
-                error_log($encoding);
-                $encoding = mb_detect_encoding($dir);
-                error_log($encoding);
                 unlink($path);
                 break;
             }
