@@ -164,6 +164,8 @@ class ProductMainImage extends BaseImage
 
                 $encoding = mb_detect_encoding($path);
                 error_log($encoding);
+                $encoding = mb_detect_encoding($dir);
+                error_log($encoding);
                 unlink($path);
                 break;
             }
