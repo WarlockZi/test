@@ -43,7 +43,7 @@ class ProductMainImage extends BaseImage
 
         $this->absDestinationPath = $this->getAbsoluteDestinationPath();
         $this->destinationPath    = $this->getRelativeDestinationPath();
-        try {
+
             $this->deletePreviousFile();
             $image     = $this->optimizer->read($from);
             $image     = $image->scaleDown(width: $this->maxWidth);
@@ -69,9 +69,7 @@ class ProductMainImage extends BaseImage
                     $image->save($this->absDestinationPath, quality: $this->quality);
             }
             return $this;
-        } catch (Throwable $exception) {
-            throw new Exception("Попытка загрузки файла за пределы разрешенной директории");
-        }
+
     }
 
     public function getImageFileName()
