@@ -101,7 +101,9 @@ class ProductMainImage extends BaseImage
     {
         $art = str_replace(['/', '//', '\\', '\\\\', '.', '{', '}', '$'], '_', $this->product['art']);
 //        $art = $this->decodeBase64Filename($art); // мб такая строка "/var/www/vitexopt/data/www/vitexopt.ru/storage/app/pic/product/\xd0\x9f\xd0\x9d\xd0\x94-8_19_2\xd1\x80-\xd0\x91-\xd0\xa1_450.jpg"
-        return trim(strip_tags(mb_convert_encoding($art, 'ASCII')));
+        $art =  trim(strip_tags(mb_convert_encoding($art, 'ASCII')));
+        error_log('************ '. $art . ' ***********');
+        return $art;
     }
 
     public static function getFileNameFromArt(Product $product): string
