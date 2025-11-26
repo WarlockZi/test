@@ -38,7 +38,7 @@ class ProductController extends AdminscController
 
     #[NoReturn] public function actionEdit(IRequest $request): void
     {
-        exit(phpinfo());
+
         $prod        = $this->repo->edit($request->id);
         $breadcrumbs = $this->actions->getBreadcrumbs($prod->category, false);
         $catItem     = ProductFormView::edit($prod);
