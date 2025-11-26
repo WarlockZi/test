@@ -13,9 +13,9 @@ use Throwable;
 class ProductMainImage extends BaseImage
 {
     private $optimizer;
-    protected int $quality = 20;
-    protected int $maxWidth = 600;
-    protected int $maxHeight = 600;
+    protected int $quality = 70;
+    protected int $maxWidth = 550;
+    protected int $maxHeight = 550;
     protected string $destinationPath = '';
     protected string $absDestinationPath;
 
@@ -29,7 +29,7 @@ class ProductMainImage extends BaseImage
     {
         parent::__construct();
 
-        $this->optimizer = ImageManager::imagick();
+        $this->optimizer = new ImageManager('imagick');
         $this->fileNameFromArt = $this->getFileName();
     }
 
