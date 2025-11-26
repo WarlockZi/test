@@ -7,6 +7,7 @@ namespace app\service\Image;
 use app\model\Product;
 use app\service\Fs\FS;
 use Exception;
+use Intervention\Image\Drivers\Imagick\Driver;
 use Intervention\Image\ImageManager;
 use Throwable;
 
@@ -29,7 +30,7 @@ class ProductMainImage extends BaseImage
     {
         parent::__construct();
 
-        $this->optimizer = new ImageManager('imagick');
+        $this->optimizer = new ImageManager(new Driver());
         $this->fileNameFromArt = $this->getFileName();
     }
 
