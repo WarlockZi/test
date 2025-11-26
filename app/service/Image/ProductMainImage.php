@@ -162,7 +162,8 @@ class ProductMainImage extends BaseImage
             $path = "$dir$name.$ext";
             if (file_exists($path)) {
 
-                $path = stripcslashes($path);
+//                $path = stripcslashes($path);
+                error_log($path);
                 unlink($path);
                 break;
             }
