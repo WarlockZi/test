@@ -42,6 +42,7 @@ class ProductAction
         ->save();
         $product->ownProperties->main_image = $productMainImage->getImageFileName();
         $product->ownProperties->save();
+
         return $productMainImage->getRelativeDestinationPath();
     }
 
