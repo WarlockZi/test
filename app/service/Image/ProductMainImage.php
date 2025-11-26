@@ -101,10 +101,12 @@ class ProductMainImage extends BaseImage
 
     public function getNameFromArt(): string
     {
+//        setlocale(LC_ALL, 'ru_RU.UTF-8', 'ru_RU', 'rus');
         $art = str_replace(['/', '//', '\\', '\\\\', '.', '{', '}', '$'], '_', $this->product['art']);
-//        $art = $this->decodeBase64Filename($art); // мб такая строка "/var/www/vitexopt/data/www/vitexopt.ru/storage/app/pic/product/\xd0\x9f\xd0\x9d\xd0\x94-8_19_2\xd1\x80-\xd0\x91-\xd0\xa1_450.jpg"
+//       мб такая строка "/var/www/vitexopt/data/www/vitexopt.ru/storage/app/pic/product/\xd0\x9f\xd0\x9d\xd0\x94-8_19_2\xd1\x80-\xd0\x91-\xd0\xa1_450.jpg"
         $enc =  mb_detect_encoding($art);
-        error_log('**** enc0 ******** '. $enc . ' ***********');
+        $artName = escapeshellarg($art);
+        error_log('**** $artName ******** '. $artName . ' ***********');
         $art =  trim(strip_tags(mb_convert_encoding($art, 'ASCII')));
         error_log('************ '. $art . ' ***********');
         $enc =  mb_detect_encoding($art);
