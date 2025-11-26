@@ -44,31 +44,32 @@ class ProductMainImage extends BaseImage
         $this->absDestinationPath = $this->getAbsoluteDestinationPath();
         $this->destinationPath    = $this->getRelativeDestinationPath();
 
-            $this->deletePreviousFile();
-            $image     = $this->optimizer->read($from);
-            $image     = $image->scaleDown(width: $this->maxWidth);
-            $extension = strtolower($this->file->getClientOriginalExtension());
+        $this->deletePreviousFile();
+        $image     = $this->optimizer->read($from);
+        $image     = $image->scaleDown(width: $this->maxWidth);
+        $extension = strtolower($this->file->getClientOriginalExtension());
+        error_log($this->absDestinationPath);
 
-            switch ($extension) {
-                case 'jpg':
-                case 'jpeg':
-                    $image->toJpeg($this->quality)->save($this->absDestinationPath);
-                    break;
+        switch ($extension) {
+            case 'jpg':
+            case 'jpeg':
+                $image->toJpeg($this->quality)->save($this->absDestinationPath);
+                break;
 
-                case 'png':
-                    // PNG uses compression level (0-9) instead of quality
-                    $compression = round(9 - ($this->quality / 100 * 9));
-                    $image->toPng($compression)->save($this->absDestinationPath);
-                    break;
+            case 'png':
+                // PNG uses compression level (0-9) instead of quality
+                $compression = round(9 - ($this->quality / 100 * 9));
+                $image->toPng($compression)->save($this->absDestinationPath);
+                break;
 
-                case 'webp':
-                    $image->toWebp($this->quality)->save($this->absDestinationPath);
-                    break;
+            case 'webp':
+                $image->toWebp($this->quality)->save($this->absDestinationPath);
+                break;
 
-                default:
-                    $image->save($this->absDestinationPath, quality: $this->quality);
-            }
-            return $this;
+            default:
+                $image->save($this->absDestinationPath, quality: $this->quality);
+        }
+        return $this;
 
     }
 
