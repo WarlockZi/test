@@ -161,6 +161,9 @@ class ProductMainImage extends BaseImage
         foreach ($this->acceptedTypes as $ext) {
             $path = "$dir$name.$ext";
             if (file_exists($path)) {
+                if (!mb_check_encoding($path, 'UTF-8')) {
+                    $path = mb_convert_encoding($path, 'UTF-8');
+                }
                 unlink($path);
                 break;
             }
