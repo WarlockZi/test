@@ -97,17 +97,17 @@ class ProductMainImage extends BaseImage
         return $this;
     }
 
-    private function getNameFromArt(): string
+    public function getNameFromArt(): string
     {
-        $art = str_replace(['/', '//', '\\', '\\\\', '.'], '_', $this->product['art']);
+        $art = str_replace(['/', '//', '\\', '\\\\', '.', '{', '}', '$'], '_', $this->product['art']);
 //        $art = $this->decodeBase64Filename($art); // мб такая строка "/var/www/vitexopt/data/www/vitexopt.ru/storage/app/pic/product/\xd0\x9f\xd0\x9d\xd0\x94-8_19_2\xd1\x80-\xd0\x91-\xd0\xa1_450.jpg"
-        return trim(strip_tags($art));
+        return trim(strip_tags(mb_convert_encoding($art, 'ASCII')));
     }
 
     public static function getFileNameFromArt(Product $product): string
     {
-        $art = str_replace(['/', '//', '\\', '\\\\', '.', '{', '}', '$'], '_', $product['art']);
-        return trim(strip_tags($art));
+        $art = str_replace(['/', '//', '\\', '\\\\', '.'], '_', $product['art']);
+        return trim(strip_tags(mb_convert_encoding($art, 'ASCII')));
     }
 
     private function decodeBase64Filename($filename): bool
@@ -157,7 +157,7 @@ class ProductMainImage extends BaseImage
     {
         $dir  = $this->getAbsProductMainImageDir();
         $name = $this->getNameFromArt();
-        $name = mb_convert_encoding($name, 'ASCII');
+
         foreach ($this->acceptedTypes as $ext) {
             $path = "$dir$name.$ext";
             if (file_exists($path)) {
