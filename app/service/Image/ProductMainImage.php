@@ -23,7 +23,7 @@ class ProductMainImage extends BaseImage
     )
     {
         parent::__construct();
-        exit(phpinfo());
+
         $this->optimizer = new ImageManager(['driver' => 'gd']);
 //        $this->optimizer = new ImageOptimizer(70, $this->maxWidth, $this->maxHeight);
     }
