@@ -169,8 +169,10 @@ class ProductMainImage extends BaseImage
         $enc = mb_detect_encoding($image);
         error_log('---- image: ----' . $image. '---- enc ----' .$enc);
 
+        $dir = rtrim($dir);
+        $dir = rtrim($dir, '/');
         if (!is_writable($dir)) {
-            error_log($dir . ' - закрыта для записи');
+            error_log(' dir  ------'. $dir . ' - closed си');
             throw new Exception('папка закрыта для записи');
         }
         $name = $this->nameFromArt;
