@@ -50,7 +50,7 @@ class ProductMainImage extends BaseImage
         $image     = $this->optimizer->read($from);
         $image     = $image->scaleDown(width: $this->maxWidth);
         $extension = strtolower($this->file->getClientOriginalExtension());
-//        error_log($this->absDestinationPath);
+        error_log($this->absDestinationPath);
 
         switch ($extension) {
             case 'jpg':
