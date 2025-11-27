@@ -32,8 +32,8 @@ class ProductMainImage extends BaseImage
         parent::__construct();
 
         $this->optimizer       = new ImageManager(new Driver());
+        $this->nameFromArt     = $this->getNameFromArt();
         $this->fileNameFromArt = $this->getFileName();
-        $this->nameFromArt = $this->getNameFromArt();
     }
 
     /**
@@ -50,7 +50,7 @@ class ProductMainImage extends BaseImage
         $image     = $this->optimizer->read($from);
         $image     = $image->scaleDown(width: $this->maxWidth);
         $extension = strtolower($this->file->getClientOriginalExtension());
-        error_log($this->absDestinationPath);
+//        error_log($this->absDestinationPath);
 
         switch ($extension) {
             case 'jpg':
@@ -75,7 +75,7 @@ class ProductMainImage extends BaseImage
 
     }
 
-    public function getImageFileName()
+    public function getImageFileName(): string
     {
         return $this->fileNameFromArt;
     }
@@ -101,22 +101,21 @@ class ProductMainImage extends BaseImage
 
     public function getNameFromArt(): string
     {
-        setlocale(LC_ALL, 'ru_RU.UTF-8', 'ru_RU', 'rus');
         $art = str_replace(['/', '//', '\\', '\\\\', '.', '{', '}', '$'], '_', $this->product['art']);
-        $art =  $this->product['art'];
+//        $art =  $this->product['art'];
 //       мб такая строка "/var/www/vitexopt/data/www/vitexopt.ru/storage/app/pic/product/\xd0\x9f\xd0\x9d\xd0\x94-8_19_2\xd1\x80-\xd0\x91-\xd0\xa1_450.jpg"
 
-        $enc =  mb_detect_encoding($art);
+        $enc = mb_detect_encoding($art);
 //        $artName = escapeshellarg($art);
-        $art =  trim(strip_tags(mb_convert_encoding($art, 'UTF-8')));
+        $art     = trim(strip_tags(mb_convert_encoding($art, 'UTF-8')));
         $artName = $art;
-        error_log('**** $artName ******** '. $artName . ' ***********');
+        error_log('**** $artName ******** ' . $artName . ' ***********');
 
-        $art =  trim(strip_tags(mb_convert_encoding($art, 'ASCII')));
-        error_log('************ '. $art . ' ***********');
+//        $art =  trim(strip_tags(mb_convert_encoding($art, 'ASCII')));
+//        error_log('************ '. $art . ' ***********');
 
-        $enc =  mb_detect_encoding($art);
-        error_log('**** enc1 ******** '. $enc . ' ***********');
+//        $enc =  mb_detect_encoding($art);
+//        error_log('**** enc1 ******** '. $enc . ' ***********');
 
         return $art;
     }
@@ -172,16 +171,12 @@ class ProductMainImage extends BaseImage
      */
     public function deletePreviousFile(): void
     {
-        $dir  = $this->getAbsProductMainImageDir();
-        $name = $this->nameFromArt;
+        $dir      = $this->getAbsProductMainImageDir();
+        $fileName = $this->product['own_properties']['main_image'];
 
-        foreach ($this->acceptedTypes as $ext) {
-            $path = "$dir$name.$ext";
-            if (file_exists($path)) {
-                unlink($path);
-                break;
-            }
+        $path = "$dir$fileName";
+        if (file_exists($path)) {
+            unlink($path);
         }
     }
-
 }
