@@ -122,7 +122,7 @@
 
     </div>
 
-    @include('main.brands')
+{{--    @include('main.brands')--}}
 
 @endsection
 
