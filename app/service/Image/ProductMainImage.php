@@ -52,6 +52,8 @@ class ProductMainImage extends BaseImage
         $extension = strtolower($this->file->getClientOriginalExtension());
         error_log('abs dest path ----- '.$this->absDestinationPath);
 
+        $who = shell_exec('whoami');
+        error_log('********* who  ******'.$who);
         switch ($extension) {
             case 'jpg':
             case 'jpeg':
