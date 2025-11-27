@@ -159,8 +159,11 @@ class ProductMainImage extends BaseImage
     public function getAbsoluteDestinationPath(): string
     {
         $dir = FS::resolve(ROOT, $this->basePath . $this->productImageDir);
+        $who = shell_exec('whoami');
+        error_log(' - whoami: -' . $who);
+
         if (!is_writable($dir)) {
-            error_log($dir. ' - закрыта для записи');
+            error_log($dir . ' - закрыта для записи');
             throw new Exception('папка закрыта для записи');
         }
         $name = $this->nameFromArt;
@@ -177,6 +180,8 @@ class ProductMainImage extends BaseImage
     {
         $dir      = $this->getAbsProductMainImageDir();
         $fileName = $this->product['own_properties']['main_image'];
+        $image = $this->product['own_properties']['image'];
+        error_log('---- image: ----' . $image);
 
         $path = "$dir$fileName";
         if (file_exists($path)) {

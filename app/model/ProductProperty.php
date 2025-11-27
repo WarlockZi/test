@@ -10,6 +10,7 @@ class ProductProperty extends Model
 {
     public $timestamps = true;
     protected $fillable = [
+        'image',
         'main_image',
         'dop_images',
         'pack_images',
