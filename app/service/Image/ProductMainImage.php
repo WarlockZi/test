@@ -158,14 +158,14 @@ class ProductMainImage extends BaseImage
 
     public function getAbsoluteDestinationPath(): string
     {
-        $dir = FS::resolve($this->basePath . $this->productImageDir);
+        $dir = FS::resolve(ROOT, $this->basePath . $this->productImageDir);
         if (!is_writable($dir)) {
             error_log($dir. ' - закрыта для записи');
             throw new Exception('папка закрыта для записи');
         }
         $name = $this->nameFromArt;
         $type = $this->getType();
-        $path = ROOT . "$dir$name.$type";
+        $path = "$dir$name.$type";
         return $path;
     }
 
