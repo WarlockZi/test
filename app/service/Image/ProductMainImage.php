@@ -159,10 +159,15 @@ class ProductMainImage extends BaseImage
     public function getAbsoluteDestinationPath(): string
     {
         $dir = FS::resolve(ROOT, $this->basePath . $this->productImageDir);
-        $who = shell_exec('whoami');
-        error_log(' - whoami: -' . $who);
+
+        $art = 'выфа.jpg';
+        $enc = mb_detect_encoding($art);
+
+        error_log(' ---- $art: -----' . $art.' --- enc ----' .$enc);
+
         $image = $this->product['own_properties']['image'];
-        error_log('---- image: ----' . $image);
+        $enc = mb_detect_encoding($image);
+        error_log('---- image: ----' . $image. '---- enc ----' .$enc);
 
         if (!is_writable($dir)) {
             error_log($dir . ' - закрыта для записи');
