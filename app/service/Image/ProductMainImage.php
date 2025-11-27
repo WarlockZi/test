@@ -160,20 +160,13 @@ class ProductMainImage extends BaseImage
     {
         $dir = FS::resolve(ROOT, $this->basePath . $this->productImageDir);
 
-        $art = 'выфа.jpg';
-        $enc = mb_detect_encoding($art);
-
-        error_log(' ---- $art: -----' . $art.' --- enc ----' .$enc);
-
-        $image = $this->product['own_properties']['image'];
-        $enc = mb_detect_encoding($image);
-        error_log('---- image: ----' . $image. '---- enc ----' .$enc);
-
         $dir = rtrim($dir);
         $dir = rtrim($dir, '/');
+        if (!is_dir($dir)) {
+            error_log(' dir  ------'. $dir . ' - is not dir');
+        }
         if (!is_writable($dir)) {
-            error_log(' dir  ------'. $dir . ' - closed си');
-            throw new Exception('папка закрыта для записи');
+            error_log(' dir  ------'. $dir . ' - not writable');
         }
         $name = $this->nameFromArt;
         $type = $this->getType();
