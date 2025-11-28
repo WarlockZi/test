@@ -58,4 +58,5 @@ class BaseImage
         if (empty($this->file->getMimeType())) throw new \Exception('Файл основной картинки товара не найдена');
         return $this->types[$this->file->getMimeType()];
     }
+
 }

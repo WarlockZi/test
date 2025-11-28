@@ -48,19 +48,6 @@ class ProductAction
         return $result;
     }
 
-//    public static function changeBaseIsShippable(IRequest $req): void
-//    {
-//        $pu              = ProductUnit::query()
-//            ->where('product_1s_id', $req['product_1s_id'])
-//            ->where('is_base', 1)
-//            ->where('multiplier', 1)
-//            ->first();
-//        $pu->isBase      = 1;
-//        $pu->isShippable = (int)$req['base_is_shippable'];
-//        $pu->save();
-//        response()->json(['popup' => 'ok']);
-//    }
-
     public function changeUnit(IRequest $req): void
     {
         $productId   = $req['pivot']['product_id'];

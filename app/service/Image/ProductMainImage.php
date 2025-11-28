@@ -10,6 +10,7 @@ use Exception;
 use Intervention\Image\Drivers\Imagick\Driver;
 use Intervention\Image\Encoders\PngEncoder;
 use Intervention\Image\ImageManager;
+use Throwable;
 
 class ProductMainImage extends BaseImage
 {
@@ -41,38 +42,43 @@ class ProductMainImage extends BaseImage
      */
     public function save(): self
     {
-        $from = $this->file->getRealPath();
+        try {
+            $from = $this->file->getRealPath();
 
-        $this->absDestinationPath = $this->getAbsoluteDestinationPath();
-        $this->destinationPath    = $this->getRelativeDestinationPath();
+            $this->absDestinationPath = $this->getAbsoluteDestinationPath();
+            $this->destinationPath    = $this->getRelativeDestinationPath();
 
-        $this->deletePreviousFile();
-        $image     = $this->optimizer->read($from);
-        $image     = $image->scaleDown(width: $this->maxWidth);
-        $extension = strtolower($this->file->getClientOriginalExtension());
+            $this->deletePreviousFile();
+            $image     = $this->optimizer->read($from);
+            $image     = $image->scaleDown(width: $this->maxWidth);
+            $extension = strtolower($this->file->getClientOriginalExtension());
 
-        switch ($extension) {
-            case 'jpg':
-            case 'jpeg':
-                $image->toJpeg($this->quality)->save($this->absDestinationPath);
-                break;
+            switch ($extension) {
+                case 'jpg':
+                case 'jpeg':
+                    $image->toJpeg($this->quality)->save($this->absDestinationPath);
+                    break;
 
-            case 'png':
-                // PNG uses compression level (0-9) instead of quality
-                $compression = round(9 - ($this->quality / 100 * 9));
-                $encoder     = new PngEncoder($compression);
-                $image->encode($encoder, true)->save($this->absDestinationPath);
-                break;
+                case 'png':
+                    // PNG uses compression level (0-9) instead of quality
+                    $compression = round(9 - ($this->quality / 100 * 9));
+                    $encoder     = new PngEncoder($compression);
+                    $image->encode($encoder, true)->save($this->absDestinationPath);
+                    break;
 
-            case 'webp':
-                $image->toWebp($this->quality)->save($this->absDestinationPath);
-                break;
+                case 'webp':
+                    $image->toWebp($this->quality)->save($this->absDestinationPath);
+                    break;
 
-            default:
-                $image->save($this->absDestinationPath, quality: $this->quality);
+                default:
+                    $image->save($this->absDestinationPath, quality: $this->quality);
+            }
+            return $this;
+        } catch (Throwable $exception) {
+            $message = $exception->getMessage();
+            error_log('ProductMainImageException **** ' . $message);
         }
         return $this;
-
     }
 
     public function getImageFileName(): string
