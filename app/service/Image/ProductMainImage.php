@@ -10,7 +10,6 @@ use Exception;
 use Intervention\Image\Drivers\Imagick\Driver;
 use Intervention\Image\Encoders\PngEncoder;
 use Intervention\Image\ImageManager;
-use Throwable;
 
 class ProductMainImage extends BaseImage
 {
@@ -52,10 +51,6 @@ class ProductMainImage extends BaseImage
         $image     = $image->scaleDown(width: $this->maxWidth);
         $extension = strtolower($this->file->getClientOriginalExtension());
 
-//        error_log('abs dest path ----- '.$this->absDestinationPath);
-//        $who = shell_exec('whoami');
-//        error_log('********* who  ******'.$who);
-
         switch ($extension) {
             case 'jpg':
             case 'jpeg':
@@ -65,7 +60,7 @@ class ProductMainImage extends BaseImage
             case 'png':
                 // PNG uses compression level (0-9) instead of quality
                 $compression = round(9 - ($this->quality / 100 * 9));
-                $encoder = new PngEncoder($compression);
+                $encoder     = new PngEncoder($compression);
                 $image->encode($encoder, true)->save($this->absDestinationPath);
                 break;
 
@@ -91,12 +86,8 @@ class ProductMainImage extends BaseImage
     private function getAbsProductMainImageDir(): string
     {
         $dir = FS::resolve(ROOT . $this->basePath . $this->productImageDir);
-        try {
-            is_readable($dir);
-            return $dir;
-        } catch (Throwable $exception) {
-            throw new Exception("Директория основной картинки продукта не существует. -" . $exception);
-        }
+        if (!is_readable($dir)) throw new Exception("Директория основной картинки продукта не существует.");
+        return $dir;
     }
 
     public function makeThumb(int $quality = 0, int $sideWidth = 0): self
@@ -108,7 +99,7 @@ class ProductMainImage extends BaseImage
     {
         $art = str_replace(['/', '//', '\\', '\\\\', '.', '{', '}', '$'], '_', $this->product['art']);
 //       мб такая строка "/var/www/vitexopt/data/www/vitexopt.ru/storage/app/pic/product/\xd0\x9f\xd0\x9d\xd0\x94-8_19_2\xd1\x80-\xd0\x91-\xd0\xa1_450.jpg"
-        $art     = trim(strip_tags($art));
+        $art = trim(strip_tags($art));
         return $art;
     }
 
@@ -153,10 +144,10 @@ class ProductMainImage extends BaseImage
         $dir = FS::resolve(ROOT, $this->basePath . $this->productImageDir);
 
         if (!is_dir($dir)) {
-            error_log(' dir  ------'. $dir . ' ----- is not dir');
+            error_log(' dir  ------' . $dir . ' ----- is not dir');
         }
         if (!is_writable($dir)) {
-            error_log(' dir  ------'. $dir . ' ----- not writable');
+            error_log(' dir  ------' . $dir . ' ----- not writable');
         }
         $name = $this->nameFromArt;
         $type = $this->getType();

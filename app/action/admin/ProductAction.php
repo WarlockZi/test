@@ -16,7 +16,7 @@ use Throwable;
 class ProductAction
 {
     public function __construct(
-        private NewBread           $breadcrumbs,
+        private NewBread $breadcrumbs,
     )
     {
     }
@@ -36,14 +36,16 @@ class ProductAction
     public function saveMainImage(array $validated): string
     {
         $product = Product::with('ownProperties')->find($validated['productId']);
-        $file = $validated['file'];
+        $file    = $validated['file'];
 
-        $productMainImage = (new ProductMainImage($product?->toArray(), $file))
-        ->save();
+        $productMainImage                   = (new ProductMainImage($product?->toArray(), $file))
+            ->save();
         $product->ownProperties->main_image = $productMainImage->getImageFileName();
         $product->ownProperties->save();
 
-        return $productMainImage->destinationPath;
+        $result = $productMainImage->destinationPath;
+        $result = '/storage/app/pic/product/'.$product->ownProperties->main_image;
+        return $result;
     }
 
 //    public static function changeBaseIsShippable(IRequest $req): void
@@ -86,9 +88,9 @@ class ProductAction
         $product = Product::find($req['id']);
         try {
             $product->units()
-            ->where('unit_id', $req['relation']['id'])
-            ->first()->pivot->update([
-                'price' => $req['relation']['pivot']['price']]);
+                ->where('unit_id', $req['relation']['id'])
+                ->first()->pivot->update([
+                    'price' => $req['relation']['pivot']['price']]);
             response()->json(['popup' => 'Изменен']);
         } catch (Throwable $exception) {
             response()->json(['popup' => 'цена единицы не поменялась. Ошибка']);
