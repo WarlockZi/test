@@ -8,6 +8,7 @@ use app\model\Product;
 use app\service\Fs\FS;
 use Exception;
 use Intervention\Image\Drivers\Imagick\Driver;
+use Intervention\Image\Encoders\PngEncoder;
 use Intervention\Image\ImageManager;
 use Throwable;
 
@@ -17,7 +18,7 @@ class ProductMainImage extends BaseImage
     protected int $quality = 70;
     protected int $maxWidth = 550;
     protected int $maxHeight = 550;
-    protected string $destinationPath = '';
+    public string $destinationPath = '';
     protected string $absDestinationPath;
 
     public function __construct(
@@ -50,10 +51,12 @@ class ProductMainImage extends BaseImage
         $image     = $this->optimizer->read($from);
         $image     = $image->scaleDown(width: $this->maxWidth);
         $extension = strtolower($this->file->getClientOriginalExtension());
-        error_log('abs dest path ----- '.$this->absDestinationPath);
 
-        $who = shell_exec('whoami');
-        error_log('********* who  ******'.$who);
+//        error_log('abs dest path ----- '.$this->absDestinationPath);
+
+//        $who = shell_exec('whoami');
+//        error_log('********* who  ******'.$who);
+
         switch ($extension) {
             case 'jpg':
             case 'jpeg':
@@ -63,7 +66,8 @@ class ProductMainImage extends BaseImage
             case 'png':
                 // PNG uses compression level (0-9) instead of quality
                 $compression = round(9 - ($this->quality / 100 * 9));
-                $image->toPng($compression)->save($this->absDestinationPath);
+                $encoder = new PngEncoder($compression);
+                $image->encode($encoder, true)->save($this->absDestinationPath);
                 break;
 
             case 'webp':
@@ -149,8 +153,6 @@ class ProductMainImage extends BaseImage
     {
         $dir = FS::resolve(ROOT, $this->basePath . $this->productImageDir);
 
-//        $dir = rtrim($dir);
-//        $dir = rtrim($dir, '/');
         if (!is_dir($dir)) {
             error_log(' dir  ------'. $dir . ' ----- is not dir');
         }
@@ -171,7 +173,6 @@ class ProductMainImage extends BaseImage
     {
         $dir      = $this->getAbsProductMainImageDir();
         $fileName = $this->product['own_properties']['main_image'];
-
 
         $path = "$dir$fileName";
         if (file_exists($path)) {

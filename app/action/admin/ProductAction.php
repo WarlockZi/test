@@ -43,7 +43,7 @@ class ProductAction
         $product->ownProperties->main_image = $productMainImage->getImageFileName();
         $product->ownProperties->save();
 
-        return $productMainImage->getRelativeDestinationPath();
+        return $productMainImage->destinationPath;
     }
 
 //    public static function changeBaseIsShippable(IRequest $req): void
