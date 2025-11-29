@@ -50,8 +50,11 @@ class ProductMainImage extends BaseImage
         $this->destinationPath    = $this->getRelativeDestinationPath();
 
         $this->deletePreviousFile();
+        error_log('******* try to read'.$from );
         $image     = $this->optimizer->read($from);
+        error_log('******* read'.$from );
         $image     = $image->scaleDown(width: $this->maxWidth);
+        error_log('******* scaled down'.$from );
 
         $extension = strtolower($this->file->getClientOriginalExtension());
 
