@@ -9,6 +9,7 @@ use app\service\Fs\FS;
 use Exception;
 use Intervention\Image\Drivers\Imagick\Driver;
 use Intervention\Image\Encoders\PngEncoder;
+use Intervention\Image\Encoders\WebpEncoder;
 use Intervention\Image\ImageManager;
 use Throwable;
 
@@ -69,12 +70,8 @@ class ProductMainImage extends BaseImage
 
             case 'webp':
                 try {
-                    if (function_exists('imagewebp')) {
-                        error_log("WebP support is available in GD");
-                    } else {
-                        error_log("WebP support is NOT available in GD");
-                     }
-                    $image->save($this->absDestinationPath, $this->quality);
+                    $encoder     = new WebpEncoder($this->quality);
+                    $image->encode($encoder)->save($this->absDestinationPath);
                 } catch (Throwable $exception) {
                     $exc = $exception;
                     error_log($exc->getMessage());
