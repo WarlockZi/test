@@ -11,7 +11,6 @@ use Intervention\Image\Drivers\Imagick\Driver;
 use Intervention\Image\Encoders\PngEncoder;
 use Intervention\Image\Encoders\WebpEncoder;
 use Intervention\Image\ImageManager;
-use Throwable;
 
 class ProductMainImage extends BaseImage
 {
@@ -43,7 +42,6 @@ class ProductMainImage extends BaseImage
      */
     public function save(): self
     {
-
         $from = $this->file->getRealPath();
 
         $this->absDestinationPath = $this->getAbsoluteDestinationPath();
@@ -51,44 +49,43 @@ class ProductMainImage extends BaseImage
 
         $this->deletePreviousFile();
 
-        $result = $this->optimizer->driver()->supports('webp');
-        $result ? error_log('******* can read webp *******')
-            : error_log('******* can not read webp ************');
+//        $result = $this->optimizer->driver()->supports('webp');
+//        $result ? error_log('******* can read webp *******')
+//            : error_log('******* can not read webp ************');
 
-        $image = $this->optimizer->read($from);
 
-        error_log('******* read' . $from);
-        $image = $image->scaleDown(width: $this->maxWidth);
-        error_log('******* scaled down' . $from);
+//        error_log('******* scaled down' . $from);
 
         $extension = strtolower($this->file->getClientOriginalExtension());
 
         switch ($extension) {
             case 'jpg':
             case 'jpeg':
+                $image = $this->optimizer->read($from);
+                $image = $image->scaleDown(width: $this->maxWidth);
                 $image->toJpeg($this->quality)->save($this->absDestinationPath);
                 break;
 
             case 'png':
-                // PNG uses compression level (0-9) instead of quality
+                $image       = $this->optimizer->read($from);
+                $image       = $image->scaleDown(width: $this->maxWidth);
                 $compression = round(9 - ($this->quality / 100 * 9));
                 $encoder     = new PngEncoder($compression);
                 $image->encode($encoder)->save($this->absDestinationPath);
                 break;
 
             case 'webp':
-                try {
-                    $encoder = new WebpEncoder($this->quality);
-                    $image->encode($encoder)->save($this->absDestinationPath);
-                    error_log('********* saved webp' . $from);
-                } catch (Throwable $exception) {
-                    $exc = $exception;
-                    error_log($exc->getMessage());
-                }
+                error_log('********** try to read  ********');
+                $webpBinary = file_get_contents($from);
+                $image   = $this->optimizer->read($webpBinary);
+                error_log('********** read ********');
+                $image   = $image->scaleDown(width: $this->maxWidth);
+                $encoder = new WebpEncoder($this->quality);
+                $image->encode($encoder)->save($this->absDestinationPath);
+                error_log('********* saved webp' . $from);
+
                 break;
 
-            default:
-                $image->save($this->absDestinationPath, quality: $this->quality);
         }
         return $this;
 
