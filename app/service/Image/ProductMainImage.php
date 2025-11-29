@@ -51,12 +51,16 @@ class ProductMainImage extends BaseImage
 
         $this->deletePreviousFile();
         $result = $this->optimizer->driver()->supports('webp');
-        error_log('******* can read webp'.$result );
-        $image     = $this->optimizer->read($from);
+        if ($result) {
+            error_log('******* can read webp');
+        } else {
+            error_log('******* can not read webp');
+        }
+        $image = $this->optimizer->read($from);
 
-        error_log('******* read'.$from );
-        $image     = $image->scaleDown(width: $this->maxWidth);
-        error_log('******* scaled down'.$from );
+        error_log('******* read' . $from);
+        $image = $image->scaleDown(width: $this->maxWidth);
+        error_log('******* scaled down' . $from);
 
         $extension = strtolower($this->file->getClientOriginalExtension());
 
@@ -75,9 +79,9 @@ class ProductMainImage extends BaseImage
 
             case 'webp':
                 try {
-                    $encoder     = new WebpEncoder($this->quality);
+                    $encoder = new WebpEncoder($this->quality);
                     $image->encode($encoder)->save($this->absDestinationPath);
-                    error_log('********* saved webp'.$from );
+                    error_log('********* saved webp' . $from);
                 } catch (Throwable $exception) {
                     $exc = $exception;
                     error_log($exc->getMessage());
