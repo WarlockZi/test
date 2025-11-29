@@ -42,43 +42,50 @@ class ProductMainImage extends BaseImage
      */
     public function save(): self
     {
-        try {
-            $from = $this->file->getRealPath();
 
-            $this->absDestinationPath = $this->getAbsoluteDestinationPath();
-            $this->destinationPath    = $this->getRelativeDestinationPath();
+        $from = $this->file->getRealPath();
 
-            $this->deletePreviousFile();
-            $image     = $this->optimizer->read($from);
-            $image     = $image->scaleDown(width: $this->maxWidth);
-            $extension = strtolower($this->file->getClientOriginalExtension());
+        $this->absDestinationPath = $this->getAbsoluteDestinationPath();
+        $this->destinationPath    = $this->getRelativeDestinationPath();
 
-            switch ($extension) {
-                case 'jpg':
-                case 'jpeg':
-                    $image->toJpeg($this->quality)->save($this->absDestinationPath);
-                    break;
+        $this->deletePreviousFile();
+        $image     = $this->optimizer->read($from);
+        $image     = $image->scaleDown(width: $this->maxWidth);
 
-                case 'png':
-                    // PNG uses compression level (0-9) instead of quality
-                    $compression = round(9 - ($this->quality / 100 * 9));
-                    $encoder     = new PngEncoder($compression);
-                    $image->encode($encoder, true)->save($this->absDestinationPath);
-                    break;
+        $extension = strtolower($this->file->getClientOriginalExtension());
 
-                case 'webp':
-                    $image->toWebp($this->quality)->save($this->absDestinationPath);
-                    break;
+        switch ($extension) {
+            case 'jpg':
+            case 'jpeg':
+                $image->toJpeg($this->quality)->save($this->absDestinationPath);
+                break;
 
-                default:
-                    $image->save($this->absDestinationPath, quality: $this->quality);
-            }
-            return $this;
-        } catch (Throwable $exception) {
-            $message = $exception->getMessage();
-            error_log('ProductMainImageException **** ' . $message);
+            case 'png':
+                // PNG uses compression level (0-9) instead of quality
+                $compression = round(9 - ($this->quality / 100 * 9));
+                $encoder     = new PngEncoder($compression);
+                $image->encode($encoder)->save($this->absDestinationPath);
+                break;
+
+            case 'webp':
+                try {
+                    if (function_exists('imagewebp')) {
+                        error_log("WebP support is available in GD");
+                    } else {
+                        error_log("WebP support is NOT available in GD");
+                     }
+                    $image->save($this->absDestinationPath, $this->quality);
+                } catch (Throwable $exception) {
+                    $exc = $exception;
+                    error_log($exc->getMessage());
+                }
+                break;
+
+            default:
+                $image->save($this->absDestinationPath, quality: $this->quality);
         }
         return $this;
+
     }
 
     public function getImageFileName(): string
