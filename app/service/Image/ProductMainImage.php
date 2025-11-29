@@ -7,6 +7,7 @@ namespace app\service\Image;
 use app\model\Product;
 use app\service\Fs\FS;
 use Exception;
+use Intervention\Image\Drivers\Gd\Decoders\BinaryImageDecoder;
 use Intervention\Image\Drivers\Imagick\Driver;
 use Intervention\Image\Encoders\PngEncoder;
 use Intervention\Image\Encoders\WebpEncoder;
@@ -77,7 +78,11 @@ class ProductMainImage extends BaseImage
             case 'webp':
                 error_log('********** try to read  ********');
                 $webpBinary = file_get_contents($from);
-                $image   = $this->optimizer->read($webpBinary);
+
+                $decoder = new BinaryImageDecoder();
+                $image = $decoder->decode($webpBinary);
+
+//                $image   = $this->optimizer->read($webpBinary);
                 error_log('********** read ********');
                 $image   = $image->scaleDown(width: $this->maxWidth);
                 $encoder = new WebpEncoder($this->quality);
