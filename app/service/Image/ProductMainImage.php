@@ -50,8 +50,10 @@ class ProductMainImage extends BaseImage
         $this->destinationPath    = $this->getRelativeDestinationPath();
 
         $this->deletePreviousFile();
-        error_log('******* try to read'.$from );
+        $result = $this->optimizer->driver()->supports('webp');
+        error_log('******* can read webp'.$result );
         $image     = $this->optimizer->read($from);
+
         error_log('******* read'.$from );
         $image     = $image->scaleDown(width: $this->maxWidth);
         error_log('******* scaled down'.$from );
@@ -75,6 +77,7 @@ class ProductMainImage extends BaseImage
                 try {
                     $encoder     = new WebpEncoder($this->quality);
                     $image->encode($encoder)->save($this->absDestinationPath);
+                    error_log('********* saved webp'.$from );
                 } catch (Throwable $exception) {
                     $exc = $exception;
                     error_log($exc->getMessage());
