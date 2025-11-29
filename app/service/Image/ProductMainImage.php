@@ -50,12 +50,11 @@ class ProductMainImage extends BaseImage
         $this->destinationPath    = $this->getRelativeDestinationPath();
 
         $this->deletePreviousFile();
+
         $result = $this->optimizer->driver()->supports('webp');
-        if ($result) {
-            error_log('******* can read webp');
-        } else {
-            error_log('******* can not read webp');
-        }
+        $result ? error_log('******* can read webp *******')
+            : error_log('******* can not read webp ************');
+
         $image = $this->optimizer->read($from);
 
         error_log('******* read' . $from);
