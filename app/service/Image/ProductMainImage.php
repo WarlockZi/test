@@ -79,7 +79,7 @@ class ProductMainImage extends BaseImage
                 error_log('********** try to read  ********');
                 $webpBinary = file_get_contents($from);
 
-                $decoder = new BinaryImageDecoder();
+                $decoder = new \Intervention\Image\Drivers\Imagick\Decoders\BinaryImageDecoder();
                 $image = $decoder->decode($webpBinary);
 
 //                $image   = $this->optimizer->read($webpBinary);
