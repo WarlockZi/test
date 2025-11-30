@@ -7,9 +7,7 @@ namespace app\service\Image;
 use app\model\Product;
 use app\service\Fs\FS;
 use Exception;
-use Imagick;
-use Intervention\Image\Drivers\Imagick\Driver;
-use Intervention\Image\Encoders\PngEncoder;
+use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
 
 class ProductMainImage extends BaseImage
@@ -42,13 +40,6 @@ class ProductMainImage extends BaseImage
      */
     public function save(): self
     {
-        $from = $this->file->getRealPath();
-
-        $this->absDestinationPath = $this->getAbsoluteDestinationPath();
-        $this->destinationPath    = $this->getRelativeDestinationPath();
-
-        $this->deletePreviousFile();
-
         if (!extension_loaded('imagick')) {
             response()->json(['popup' => 'ext not loaded']);
         }
@@ -57,6 +48,13 @@ class ProductMainImage extends BaseImage
         if (!class_exists($class)) {
             response()->json(['popup' => 'no class Imagick']);
         }
+        $from = $this->file->getRealPath();
+
+        $this->absDestinationPath = $this->getAbsoluteDestinationPath();
+        $this->destinationPath    = $this->getRelativeDestinationPath();
+
+        $this->deletePreviousFile();
+
 
 //        $result = $this->optimizer->driver()->supports('webp');
 //        $result ? error_log('******* can read webp *******')
@@ -81,15 +79,16 @@ class ProductMainImage extends BaseImage
                 $image = $image->scaleDown(width: $this->maxWidth);
 
                 $compression = round(9 - ($this->quality / 100 * 9));
-                $encoder     = new PngEncoder($compression);
-                $image->encode($encoder)->save($this->absDestinationPath);
+//                $encoder     = new PngEncoder($compression);
+                $image->toPng($compression)->save($this->absDestinationPath);
                 break;
 
             case 'webp':
-                error_log('********** try to read  ********');
                 $image = $this->optimizer->read($from);
+//                error_log('********** try to read  ********');
+//                response()->json(['popup' => 'read Imagick']);
 
-                response()->json(['popup' => 'read Imagick']);
+
                 $image
                     ->toWebp(width: $this->maxWidth, quality: $this->quality)
                     ->save($this->absDestinationPath);
