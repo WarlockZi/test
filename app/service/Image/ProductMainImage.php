@@ -59,6 +59,7 @@ class ProductMainImage extends BaseImage
         if (!class_exists($class)) {
             response()->json(['popup'=>'no class Imagick']);
         }
+            response()->json(['popup'=>'class Imagick']);
 
 
 //        $result = $this->optimizer->driver()->supports('webp');
