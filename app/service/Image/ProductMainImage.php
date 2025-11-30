@@ -7,12 +7,10 @@ namespace app\service\Image;
 use app\model\Product;
 use app\service\Fs\FS;
 use Exception;
-use Intervention\Image\Drivers\Imagick\Decoders\BinaryImageDecoder;
+use Imagick;
 use Intervention\Image\Drivers\Imagick\Driver;
 use Intervention\Image\Encoders\PngEncoder;
-use Intervention\Image\Encoders\WebpEncoder;
 use Intervention\Image\ImageManager;
-use Imagick;
 
 class ProductMainImage extends BaseImage
 {
@@ -52,15 +50,13 @@ class ProductMainImage extends BaseImage
         $this->deletePreviousFile();
 
         if (!extension_loaded('imagick')) {
-            response()->json(['popup'=>'ext not loaded']);
+            response()->json(['popup' => 'ext not loaded']);
         }
 
         $class = 'Imagick';
         if (!class_exists($class)) {
-            response()->json(['popup'=>'no class Imagick']);
+            response()->json(['popup' => 'no class Imagick']);
         }
-            response()->json(['popup'=>'class Imagick']);
-
 
 //        $result = $this->optimizer->driver()->supports('webp');
 //        $result ? error_log('******* can read webp *******')
@@ -76,12 +72,14 @@ class ProductMainImage extends BaseImage
             case 'jpeg':
                 $image = $this->optimizer->read($from);
                 $image = $image->scaleDown(width: $this->maxWidth);
+
                 $image->toJpeg($this->quality)->save($this->absDestinationPath);
                 break;
 
             case 'png':
-                $image       = $this->optimizer->read($from);
-                $image       = $image->scaleDown(width: $this->maxWidth);
+                $image = $this->optimizer->read($from);
+                $image = $image->scaleDown(width: $this->maxWidth);
+
                 $compression = round(9 - ($this->quality / 100 * 9));
                 $encoder     = new PngEncoder($compression);
                 $image->encode($encoder)->save($this->absDestinationPath);
@@ -89,20 +87,14 @@ class ProductMainImage extends BaseImage
 
             case 'webp':
                 error_log('********** try to read  ********');
-                $webpBinary = file_get_contents($from);
+                $image = $this->optimizer->read($from);
 
-                $decoder = new BinaryImageDecoder();
-                $image = $decoder->decode($webpBinary);
-
-//                $image   = $this->optimizer->read($webpBinary);
-                error_log('********** read ********');
-                $image   = $image->scaleDown(width: $this->maxWidth);
-                $encoder = new WebpEncoder($this->quality);
-                $image->encode($encoder)->save($this->absDestinationPath);
-                error_log('********* saved webp' . $from);
+                response()->json(['popup' => 'read Imagick']);
+                $image
+                    ->toWebp(width: $this->maxWidth, quality: $this->quality)
+                    ->save($this->absDestinationPath);
 
                 break;
-
         }
         return $this;
 
