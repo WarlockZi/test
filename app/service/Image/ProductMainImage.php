@@ -7,11 +7,12 @@ namespace app\service\Image;
 use app\model\Product;
 use app\service\Fs\FS;
 use Exception;
-use Intervention\Image\Drivers\Gd\Decoders\BinaryImageDecoder;
+use Intervention\Image\Drivers\Imagick\Decoders\BinaryImageDecoder;
 use Intervention\Image\Drivers\Imagick\Driver;
 use Intervention\Image\Encoders\PngEncoder;
 use Intervention\Image\Encoders\WebpEncoder;
 use Intervention\Image\ImageManager;
+use Imagick;
 
 class ProductMainImage extends BaseImage
 {
@@ -50,6 +51,16 @@ class ProductMainImage extends BaseImage
 
         $this->deletePreviousFile();
 
+        if (!extension_loaded('imagick')) {
+            response()->json(['popup'=>'ext not loaded']);
+        }
+
+        $class = 'Imagick';
+        if (!class_exists($class)) {
+            response()->json(['popup'=>'no class Imagick']);
+        }
+
+
 //        $result = $this->optimizer->driver()->supports('webp');
 //        $result ? error_log('******* can read webp *******')
 //            : error_log('******* can not read webp ************');
@@ -79,7 +90,7 @@ class ProductMainImage extends BaseImage
                 error_log('********** try to read  ********');
                 $webpBinary = file_get_contents($from);
 
-                $decoder = new \Intervention\Image\Drivers\Imagick\Decoders\BinaryImageDecoder();
+                $decoder = new BinaryImageDecoder();
                 $image = $decoder->decode($webpBinary);
 
 //                $image   = $this->optimizer->read($webpBinary);
