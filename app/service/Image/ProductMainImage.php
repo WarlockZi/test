@@ -55,44 +55,29 @@ class ProductMainImage extends BaseImage
 
         $this->deletePreviousFile();
 
-
-//        $result = $this->optimizer->driver()->supports('webp');
-//        $result ? error_log('******* can read webp *******')
-//            : error_log('******* can not read webp ************');
-
-
-//        error_log('******* scaled down' . $from);
-
         $extension = strtolower($this->file->getClientOriginalExtension());
+        $image     = $this->optimizer->read($from);
+        $image     = $image->scaleDown(width: $this->maxWidth);
 
         switch ($extension) {
             case 'jpg':
             case 'jpeg':
-                $image = $this->optimizer->read($from);
-                $image = $image->scaleDown(width: $this->maxWidth);
-
                 $image->toJpeg($this->quality)->save($this->absDestinationPath);
                 break;
-
             case 'png':
-                $image = $this->optimizer->read($from);
-                $image = $image->scaleDown(width: $this->maxWidth);
-
-                $compression = round(9 - ($this->quality / 100 * 9));
-//                $encoder     = new PngEncoder($compression);
-                $image->toPng($compression)->save($this->absDestinationPath);
+                $compression = (int)round(9 - ($this->quality / 100 * 9));
+                $image->save(
+                    $this->absDestinationPath, [
+                        'interlaced' => true,
+                        'quality' => $compression,
+                    ]
+                );
                 break;
 
             case 'webp':
-                $image = $this->optimizer->read($from);
-//                error_log('********** try to read  ********');
-//                response()->json(['popup' => 'read Imagick']);
-
-
                 $image
-                    ->toWebp(width: $this->maxWidth, quality: $this->quality)
+                    ->toWebp(quality: $this->quality)
                     ->save($this->absDestinationPath);
-
                 break;
         }
         return $this;

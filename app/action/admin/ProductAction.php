@@ -43,9 +43,8 @@ class ProductAction
         $product->ownProperties->main_image = $productMainImage->getImageFileName();
         $product->ownProperties->save();
 
-        $result = $productMainImage->destinationPath;
-        $result = '/storage/app/pic/product/'.$product->ownProperties->main_image;
-        return $result;
+        return '/storage/app/pic/product/'.$product->ownProperties->main_image;
+
     }
 
     public function changeUnit(IRequest $req): void

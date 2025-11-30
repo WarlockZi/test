@@ -271,9 +271,13 @@ export default class Table {
       return usedSelect.dataset.value;
     });
 
-    [].forEach.call(select.options, (option) => {
-      if (ids.includes(option.value)) option.remove();
+    [].forEach.call(ids, (id) => {
+      if (id === "0") return;
+      [].forEach.call(select.options, (option) => {
+        if (option.value === id) option.remove();
+      });
     });
+
     return select;
   }
 
