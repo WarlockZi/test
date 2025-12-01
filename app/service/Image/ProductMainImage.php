@@ -174,7 +174,7 @@ class ProductMainImage extends BaseImage
         $fileName = $this->product['own_properties']['main_image'];
 
         $path = "$dir$fileName";
-        if (file_exists($path)) {
+        if (is_readable($path) && !is_dir($path)) {
             unlink($path);
         }
     }

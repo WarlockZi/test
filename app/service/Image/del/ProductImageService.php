@@ -40,15 +40,8 @@ class ProductImageService
 
     public function getImageRelativePath(Product $product): string
     {
-        $art = $this->getArt($product);
-        foreach ($this->extensions as $ext) {
-            $relFile = $this->relativePath . $art . ".{$ext}";
-            $file    = FS::platformSlashes(ROOT . $relFile);
-            if (file_exists($file)) {
-                return $relFile;
-            }
-        }
-        return $this->relNoImage;
+        $path = $this->relativePath.$product->ownProperties->main_image;
+        return is_readable($path)? $path:  $this->relNoImage;
     }
 
     public function getImageAbsolutePath(Product $product): string

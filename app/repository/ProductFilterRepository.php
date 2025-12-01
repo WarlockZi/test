@@ -19,10 +19,13 @@ class ProductFilterRepository
         return $userFilters ? json_decode($userFilters->name, true) : [];
     }
 
-    public function filterProducts($req):Collection
+    public function filterProducts($req): Collection
     {
         extract($req);
-        $query = Product::query()->take(10);
+        $query = Product::query()
+            ->with('ownProperties')
+//            ->take(10)
+        ;
 
         if (!empty($instore)) {
             if ($instore === '1') {
@@ -31,22 +34,7 @@ class ProductFilterRepository
                 $query->where('instore', '=', 0);
             }
         }
-        if (!empty($baseIsShippable)) {
-            if ($baseIsShippable === "1") {
-                $query->whereHas('units', function ($q) {
-                    $q->where('is_base', 1)
-                        ->where('is_shippable', 1);
-                });
-            } elseif ($baseIsShippable === "2") {
-                $query->whereHas('units', function ($q) {
-                    $q->where('is_base', 1)
-                        ->where('is_shippable', 0);
-                });
-            } elseif ($baseIsShippable === "3") {
-                $query->withCount('units')
-                    ->having('units_count', '=', 1);
-            }
-        }
+
         if (!empty($deleted)) {
             if ($deleted == "1") { //все
                 $query->withTrashed();
@@ -68,40 +56,54 @@ class ProductFilterRepository
                 $query->take(20);
             } else if ($take === "2") {
                 $query->take(40);
-            } else {
-                $query->take(80);
+            } else if ($take === "3") {
+//                $query->take(80);
+            }else{
+                $query->take(10);
             }
+        }else{
+            $query->take(10);
         }
         if (!empty($category)) {
             if ($category) {
-                $query->where('category_1s_id', $category);
+                $query->where('id', $category);
             }
         }
 
-        $p = $query
-            ->groupBy('art')
-            ->get();
 
         if (!empty($image)) {
-            $noImg = (new ProductImageService())->getNoPhoto();
-            if ($image === "1") {
-                $p = $p->filter(function ($product) use ($noImg) {
-                    if ($product->mainImage !== $noImg) {
-                        return $product;
-                    }
-                    return false;
+            if ($image === "1") { /// с картинкой
+                $query->whereHas('ownProperties', function ($q)  {
+                    $q->where('main_image', '!=', '');
                 });
-            } else if ($image === "2") {
-                $p = $p->filter(function ($product) use ($noImg) {
-                    if ($product->mainImage === $noImg) {
-                        return $product;
-                    }
-                    return false;
+
+            } else if ($image === "2") { /// без картинки
+                $query->whereHas('ownProperties', function ($q)  {
+                    $q
+                        ->where('main_image', '=', '');
                 });
             }
+            //        if (!empty($baseIsShippable)) {
+//            if ($baseIsShippable === "1") {
+//                $query->whereHas('units', function ($q) {
+//                    $q->where('is_base', 1)
+//                        ->where('is_shippable', 1);
+//                });
+//            } elseif ($baseIsShippable === "2") {
+//                $query->whereHas('units', function ($q) {
+//                    $q->where('is_base', 1)
+//                        ->where('is_shippable', 0);
+//                });
+//            } elseif ($baseIsShippable === "3") {
+//                $query->withCount('units')
+//                    ->having('units_count', '=', 1);
+//            }
+//        }
         }
-
-//        $arr = $p->toArray();
+        $p   = $query
+            ->groupBy('art')
+            ->get();
+        $arr = $p->toArray();
         return $p;
     }
 }

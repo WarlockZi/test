@@ -34,20 +34,20 @@ class ReportController extends AdminscController
             ));
     }
 
-//    #[NoReturn] public function actionUpdateFilter(ProductFilterReport $request): void
-//    {
-//        $req            = $request->validate();
-//
-//        [$toSave, $toSelect] = $this->actions->toSelectToSave($req);
-//        $this->actions->saveFilters($toSave);
-//
-//        response()->json([
-//            'initialFilters' => $this->actions->initialFilters(),
-//            'filterPanel' => $this->actions->panelHtml($toSelect, $toSave),
-//            'filterString' => $this->actions->filterStringHtml($toSelect),
-//            'productsTable' => $this->actions->tableHtml($toSelect),
-//        ]);
-//    }
+    #[NoReturn] public function actionUpdateFilter(ProductFilterReport $request): void
+    {
+        $req            = $request->validate();
+
+        [$toSave, $toSelect] = $this->actions->toSelectToSave($req);
+        $this->actions->saveFilters($toSave);
+
+        response()->json([
+            'initialFilters' => $this->actions->initialFilters(),
+            'filterPanel' => $this->actions->panelHtml($toSelect, $toSave),
+            'filterString' => $this->actions->filterStringHtml($toSelect),
+            'productsTable' => $this->actions->tableHtml($toSelect),
+        ]);
+    }
 }
 
 

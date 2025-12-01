@@ -9,7 +9,7 @@ use app\model\FilterUser;
 use app\repository\ProductFilterRepository;
 use app\service\AuthService\Auth;
 use app\service\Filters\Products\InitialFiltersService;
-use app\service\Product\ProductService;
+use app\service\Image\del\ProductImageService;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\TableBuilder\Table;
 
@@ -132,7 +132,7 @@ class ReportFilterProductsAction
 
     public function table(array $userFilters): array
     {
-        $repo = new ProductFilterRepository();
+        $repo     = new ProductFilterRepository();
         $products = $repo->filterProducts($userFilters);
         return Table::build($products)
             ->pageTitle('Фильтр')
@@ -156,7 +156,7 @@ class ReportFilterProductsAction
             ->column(
                 ColumnBuilder::build('Наименование')
                     ->callback(function ($item) {
-                        return $item->name;
+                        return "<a href='/adminsc/product/edit/{$item->id}'>$item->name</a>";
                     })
                     ->class('cell left')
                     ->search()
@@ -174,7 +174,12 @@ class ReportFilterProductsAction
             )
             ->column(
                 ColumnBuilder::build('Картинка')
-                    ->function(ProductService::class, 'productImg')
+                    ->callback(function ($product) {
+                        $productImageService = new ProductImageService();
+                        $imgPath             = $productImageService->getRelativeImage($product);
+                        return "<img src='{$imgPath}' loading='lazy'>";
+                    }
+                    )
                     ->width('50px')
                     ->class('img')
                     ->get()
@@ -188,14 +193,14 @@ class ReportFilterProductsAction
                     ->width('50px')
                     ->get()
             )
-            ->column(
-                ColumnBuilder::build('баз=отгруж')
-                    ->class('cell')
-                    ->function(ProductService::class, 'baseIsShippable')
-                    ->width('30px')
-                    ->get()
-            )
-            ->edit()
+//            ->column(
+//                ColumnBuilder::build('баз=отгруж')
+//                    ->class('cell')
+//                    ->function(ProductService::class, 'baseIsShippable')
+//                    ->width('30px')
+//                    ->get()
+//            )
+//            ->edit()
             ->del()
             ->get();
     }
