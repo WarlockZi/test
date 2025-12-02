@@ -8,14 +8,13 @@ use app\service\Fs\FS;
 class ProductImageService
 {
     private string $relativePath = "/storage/app/pic/product/";
-    private string $relNoImage = PIC_SERVICE."nophoto-min.jpg";
+    private string $relNoImage = PIC_SERVICE . "nophoto-min.jpg";
     private string $absolutePath;
     private string $absNoImage;
     private string $art;
     private array $extensions = ['jpg', 'jpeg', 'png', 'webp'];
 
-    public function __construct(
-    )
+    public function __construct()
     {
         $this->absNoImage   = FS::platformSlashes(ROOT . $this->relNoImage);
         $this->absolutePath = FS::platformSlashes(ROOT . $this->relativePath);
@@ -40,8 +39,10 @@ class ProductImageService
 
     public function getImageRelativePath(Product $product): string
     {
-        $path = $this->relativePath.$product->ownProperties->main_image;
-        return is_readable($path)? $path:  $this->relNoImage;
+        $path = $this->relativePath . $product->ownProperties->main_image;
+        return is_readable(FS::platformSlashes(ROOT . $path))
+            ? $path
+            : $this->relNoImage;
     }
 
     public function getImageAbsolutePath(Product $product): string
