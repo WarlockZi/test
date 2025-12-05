@@ -9,7 +9,7 @@ if (!function_exists('image')) {
     function image($path = ''): string
     {
         $imagePath = env("PIC_PRODUCT") . $path;
-        return is_readable(ROOT.$imagePath)
+        return is_readable(ROOT.$imagePath)&&is_file(ROOT.$imagePath)
             ? $imagePath
             : PIC_SERVICE . "nophoto-min.jpg";
     }
