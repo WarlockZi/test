@@ -2,9 +2,10 @@
 
 
     <figure class="zoom"
-            style="background-image: url('/storage/app/pic/product/{!!$product['own_properties']['main_image']!!}');background-repeat: no-repeat;">
+            style="background-image: url('{!!image($product['own_properties']['main_image'])!!}');background-repeat: no-repeat;">
+{{--        @deb--}}
         <img
-                src="/storage/app/pic/product/{!!$product['own_properties']['main_image']!!}"
+                src="{!!image($product['own_properties']['main_image'])!!}"
                 title='{!!$product['name']!!}'
                 alt='{!!$product['name']!!}'
         />

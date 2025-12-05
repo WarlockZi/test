@@ -12,20 +12,20 @@ use Intervention\Image\ImageManager;
 
 class ProductMainImage extends BaseImage
 {
-    private $optimizer;
+    private ImageManager $optimizer;
     protected int $quality = 70;
     protected int $maxWidth = 550;
     protected int $maxHeight = 550;
     public string $destinationPath = '';
     protected string $absDestinationPath;
+    protected $productImageDir = 'product';
+    protected $thumbDir = 'thumbs';
+    protected $fileNameFromArt = '';
+//    protected $nameFromArt = '';
 
     public function __construct(
         protected array $product, //иначе не видит контейнер при загрузке через DI in ProductActions
         protected       $file,
-        protected       $productImageDir = 'product',
-        protected       $thumbDir = 'thumbs',
-        protected       $fileNameFromArt = '',
-        protected       $nameFromArt = '',
     )
     {
         parent::__construct();
@@ -99,15 +99,10 @@ class ProductMainImage extends BaseImage
         return $dir;
     }
 
-    public function makeThumb(int $quality = 0, int $sideWidth = 0): self
-    {
-        return $this;
-    }
 
     public function getNameFromArt(): string
     {
         $art = str_replace(['/', '//', '\\', '\\\\', '.', '{', '}', '$'], '_', $this->product['art']);
-//       мб такая строка "/var/www/vitexopt/data/www/vitexopt.ru/storage/app/pic/product/\xd0\x9f\xd0\x9d\xd0\x94-8_19_2\xd1\x80-\xd0\x91-\xd0\xa1_450.jpg"
         $art = trim(strip_tags($art));
         return $art;
     }
@@ -118,27 +113,11 @@ class ProductMainImage extends BaseImage
         return trim(strip_tags(mb_convert_encoding($art, 'ASCII')));
     }
 
-    private function decodeBase64Filename($filename): bool
-    {
-        return json_decode('"' . $filename . '"');
-    }
-
-
     private function getFileName(): string
     {
         $name = $this->nameFromArt;
         return $name . '.' . $this->file->getClientOriginalExtension();
     }
-
-    /**
-     * @throws Exception
-     */
-    public function getUploadFileTo(): array
-    {
-        $safeUpload = (new SafeImageFileUploadService())->safeUpload($this->file, $this->productImageDir);
-        return $safeUpload;
-    }
-
 
     public function getRelativeDestinationPath(): string
     {
@@ -152,15 +131,14 @@ class ProductMainImage extends BaseImage
     {
         $dir = FS::resolve(ROOT, $this->basePath . $this->productImageDir);
 
-        if (!is_dir($dir)) {
-            error_log(' dir  ------' . $dir . ' ----- is not dir');
-        }
-        if (!is_writable($dir)) {
-            error_log(' dir  ------' . $dir . ' ----- not writable');
-        }
-        $name = $this->nameFromArt;
-        $type = $this->getType();
-        $path = "$dir$name.$type";
+        if (!is_dir($dir)) error_log(' dir  ------' . $dir . ' ----- is not dir');
+
+        if (!is_writable($dir)) error_log(' dir  ------' . $dir . ' ----- not writable');
+
+//        $name = $this->nameFromArt;
+//        $type = $this->getType();
+//        $path = "$dir$name.$type";
+        $path = $dir.$this->fileNameFromArt;
         return $path;
     }
 
@@ -178,4 +156,22 @@ class ProductMainImage extends BaseImage
             unlink($path);
         }
     }
+
+    public function makeThumb(int $quality = 0, int $sideWidth = 0): self
+    {
+        return $this;
+    }
+
+    private function decodeBase64Filename($filename): bool
+    {
+        return json_decode('"' . $filename . '"');
+    }
+    //    /**
+//     * @throws Exception
+//     */
+//    public function getUploadFileTo(): array
+//    {
+//        $safeUpload = (new SafeImageFileUploadService())->safeUpload($this->file, $this->productImageDir);
+//        return $safeUpload;
+//    }
 }

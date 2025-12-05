@@ -7,34 +7,19 @@ use app\service\Fs\FS;
 
 class ProductImageService
 {
-    private string $relativePath = "/storage/app/pic/product/";
+    private string $relativePath ='';
     private string $relNoImage = PIC_SERVICE . "nophoto-min.jpg";
     private string $absolutePath;
-    private string $absNoImage;
-    private string $art;
     private array $extensions = ['jpg', 'jpeg', 'png', 'webp'];
 
     public function __construct()
     {
-        $this->absNoImage   = FS::platformSlashes(ROOT . $this->relNoImage);
+        $this->relativePath= env("PIC_PRODUCT");
         $this->absolutePath = FS::platformSlashes(ROOT . $this->relativePath);
     }
-
-    public function getArt(Product $product): string
+    public function getRelativeImage(Product $product): string
     {
-        $art       = str_replace(['/', '//', '\\', '\\\\'], '_', $product->art);
-        $this->art = trim(strip_tags($art));
-        return $this->art;
-    }
-
-    public function getRelativePath(): string
-    {
-        return $this->relativePath;
-    }
-
-    public function getAbsolutePath(): string
-    {
-        return $this->absolutePath;
+        return $this->getImageRelativePath($product) ?? $this->relNoImage;
     }
 
     public function getImageRelativePath(Product $product): string
@@ -45,83 +30,93 @@ class ProductImageService
             : $this->relNoImage;
     }
 
-    public function getImageAbsolutePath(Product $product): string
-    {
-        $art = $this->getArt($product);
-        foreach ($this->extensions as $ext) {
-            $relFile = $this->absolutePath . $art . ".{$ext}";
-            $file    = FS::platformSlashes($relFile);
-            if (file_exists($file)) {
-                return $relFile;
-            }
-        }
-        return '';
-    }
+//    public function getImageAbsolutePath(Product $product): string
+//    {
+//        $art = $this->getArt($product);
+//        foreach ($this->extensions as $ext) {
+//            $relFile = $this->absolutePath . $art . ".{$ext}";
+//            $file    = FS::platformSlashes($relFile);
+//            if (file_exists($file)) {
+//                return $relFile;
+//            }
+//        }
+//        return '';
+//    }
+//    public function getArt(Product $product): string
+//    {
+//        $art       = str_replace(['/', '//', '\\', '\\\\'], '_', $product->art);
+//        $this->art = trim(strip_tags($art));
+//        return $this->art;
+//    }
+//
+//    public function getRelativePath(): string
+//    {
+//        return $this->relativePath;
+//    }
+//
+//    public function getAbsolutePath(): string
+//    {
+//        return $this->absolutePath;
+//    }
+//    protected function getPathWithExt($relOrAbs, $type = null): string
+//    {
+//        $type = $type ?? $this->getExtension();
+//        return $this->$relOrAbs .
+//            $this->art .
+//            '.' . $type;
+//    }
+//
+//    public function getNoPhoto(): string
+//    {
+//        return $this->relNoImage;
+//    }
 
-    public function getRelativeImage(Product $product): string
-    {
-        return $this->getImageRelativePath($product) ?? $this->relNoImage;
-    }
+//    public function getExtension(): string
+//    {
+//        if ($this->file) {
+//            preg_match('~\..{2,4}$~', $this->file['name'], $matches);
+//            return str_replace('.', '', $matches[0]);
+//        }
+//        return $this->getFromAcceptedTypes();
+//    }
 
-    public function getAbsoluteImage(Product $product): string
-    {
-        if ($this->getImageAbsolutePath($product)) {
-            return $this->getAbsoluteImage($product);
-        }
-        return $this->relNoImage;
-    }
+//    public function thumbnail(): void
+//    {
+//        $absPath = $this->getImageAbsolutePath();
+//
+//        $webpName = $this->absoluteThumbPath . $this->art . '.webp';
+//        copy($absPath, $webpName);
+//        $ima = new ImagickService($webpName);
+//        $ima->img->setImageFormat("WEBP");
+//        $ima->thumbnail(
+//            $webpName,
+//            $this->maxThumbWidth,
+//            $this->maxThumbHeight,
+//            $this->quality,
+//        );
+//
+////		$ima->img->writeImage($webpName);
+//        $ima->img->clear();
+//        $ima->img->destroy();
+//    }
 
-    protected function getPathWithExt($relOrAbs, $type = null): string
-    {
-        $type = $type ?? $this->getExtension();
-        return $this->$relOrAbs .
-            $this->art .
-            '.' . $type;
-    }
+//    protected function getFromAcceptedTypes(): string
+//    {
+//        foreach ($this->acceptedTypes as $type) {
+//            $fileName = $this->getPathWithExt('absolutePath', $type);
+//
+//            if (file_exists($fileName)) {
+//                return $this->getPathWithExt('relativePath', $type);
+//            }
+//        }
+//        return '';
+//    }
 
-    public function getNoPhoto(): string
-    {
-        return $this->relNoImage;
-    }
-
-    public function getExtension(): string
-    {
-        if ($this->file) {
-            preg_match('~\..{2,4}$~', $this->file['name'], $matches);
-            return str_replace('.', '', $matches[0]);
-        }
-        return $this->getFromAcceptedTypes();
-    }
-
-    public function thumbnail(): void
-    {
-        $absPath = $this->getImageAbsolutePath();
-
-        $webpName = $this->absoluteThumbPath . $this->art . '.webp';
-        copy($absPath, $webpName);
-        $ima = new ImagickService($webpName);
-        $ima->img->setImageFormat("WEBP");
-        $ima->thumbnail(
-            $webpName,
-            $this->maxThumbWidth,
-            $this->maxThumbHeight,
-            $this->quality,
-        );
-
-//		$ima->img->writeImage($webpName);
-        $ima->img->clear();
-        $ima->img->destroy();
-    }
-
-    protected function getFromAcceptedTypes(): string
-    {
-        foreach ($this->acceptedTypes as $type) {
-            $fileName = $this->getPathWithExt('absolutePath', $type);
-
-            if (file_exists($fileName)) {
-                return $this->getPathWithExt('relativePath', $type);
-            }
-        }
-        return '';
-    }
+//    public function getAbsoluteImage(Product $product): string
+//    {
+//        if ($this->getImageAbsolutePath($product)) {
+////            return $this->getAbsoluteImage($product);
+//        }
+//        return $this->relNoImage;
+//    }
 }

@@ -43,7 +43,7 @@ class ProductAction
         $product->ownProperties->main_image = $productMainImage->getImageFileName();
         $product->ownProperties->save();
 
-        return '/storage/app/pic/product/'.$product->ownProperties->main_image;
+        return image($product->ownProperties->main_image);
 
     }
 
