@@ -39,8 +39,7 @@ export default class Table {
 
   async getCallbacks() {
     if (!this.tableCallbacksFile) return false;
-    const path =
-      "./components/table/callbacks/" + this.tableCallbacksFile + ".js";
+    const path = "./callbacks/" + this.tableCallbacksFile + ".js";
     const { default: Callbacks } = await import(path);
     return new Callbacks();
   }
