@@ -17,11 +17,6 @@ class ProductImageService
         $this->relativePath= env("PIC_PRODUCT");
         $this->absolutePath = FS::platformSlashes(ROOT . $this->relativePath);
     }
-    public function getRelativeImage(Product $product): string
-    {
-        return $this->getImageRelativePath($product) ?? $this->relNoImage;
-    }
-
     public function getImageRelativePath(Product $product): string
     {
         $path = $this->relativePath . $product->ownProperties->main_image;

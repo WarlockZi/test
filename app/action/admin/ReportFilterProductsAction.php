@@ -175,8 +175,7 @@ class ReportFilterProductsAction
             ->column(
                 ColumnBuilder::build('Картинка')
                     ->callback(function ($product) {
-                        $productImageService = new ProductImageService();
-                        $imgPath             = $productImageService->getRelativeImage($product);
+                        $imgPath             = image($product->ownProperties->main_image);
                         return "<img src='{$imgPath}' loading='lazy'>";
                     }
                     )

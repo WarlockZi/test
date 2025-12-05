@@ -5,7 +5,15 @@ use app\blade\View;
 use app\service\Response;
 use JetBrains\PhpStorm\NoReturn;
 
-
+if (!function_exists('image')) {
+    function image($path = ''): string
+    {
+        $imagePath = env("PIC_PRODUCT") . $path;
+        return is_readable($imagePath)
+            ? $imagePath
+            : PIC_SERVICE . "nophoto-min.jpg";
+    }
+}
 if (!function_exists('response')) {
     function response($content = '', $status = 200, array $headers = []): Response
     {

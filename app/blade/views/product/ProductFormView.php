@@ -300,10 +300,8 @@ class ProductFormView
 
     public static function mainImage(Product $product): DndBuilder
     {
-        $pis          = APP->get(ProductImageService::class);
-        $img['src']   = $product->ownProperties->main_image
-            ?env('PIC_PRODUCT').$product->ownProperties->main_image
-            :$pis->getNoPhoto();
+//        $pis          = APP->get(ProductImageService::class);
+        $img['src']   = image($product->ownProperties->main_image);
         $img['alt']   = $product->name;
         $img['title'] = $product->name;
         $img['class'] = 'main-image';

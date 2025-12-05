@@ -1,3 +1,4 @@
+{{--@deb--}}
 <img
         src='{!!$img['src']??''!!}'
         class='{!!$img['class']??''!!}'
