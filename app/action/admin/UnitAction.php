@@ -9,33 +9,43 @@ use app\view\components\Builders\TableBuilder\Table;
 
 class UnitAction implements IShowTable
 {
-    public function __construct() { }
+    public function __construct()
+    {
+    }
 
     public function table(): array
     {
         return Table::build(Unit::all())
             ->pageTitle('Единицы измерения')
+            ->data(['model' => 'unit'])
             ->column(
                 ColumnBuilder::build('id')
                     ->width('50px')
                     ->get()
             )
             ->column(
-                ColumnBuilder::build('name')
-                    ->name('Краткое')
+                ColumnBuilder::build('Краткое')
+                    ->callback(function ($unit) {
+                        return $unit->name;
+                    })
+                    ->data(['field' => 'name'])
                     ->contenteditable()
                     ->get()
             )
             ->column(
-                ColumnBuilder::build('full_name')
+                ColumnBuilder::build('Полное')
+                    ->callback(function ($unit) {
+                        return $unit->full_name;
+                    })
                     ->contenteditable()
-                    ->name('Полное')
                     ->get()
             )
             ->column(
-                ColumnBuilder::build('code')
+                ColumnBuilder::build('Код')
                     ->contenteditable()
-                    ->name('Код')
+                    ->callback(function ($unit) {
+                        return $unit->code;
+                    })
                     ->get()
             )
             ->addButton()

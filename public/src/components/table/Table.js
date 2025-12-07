@@ -39,8 +39,10 @@ export default class Table {
 
   async getCallbacks() {
     if (!this.tableCallbacksFile) return false;
+    //  загружаем модули из build для production, тк dev берет из памяти, а prod из build
+    const components = import.meta.glob("./callbacks/*.js");
     const path = "./callbacks/" + this.tableCallbacksFile + ".js";
-    const { default: Callbacks } = await import(path);
+    const { default: Callbacks } = await components[path]();
     return new Callbacks();
   }
 

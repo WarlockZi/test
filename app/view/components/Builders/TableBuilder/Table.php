@@ -4,8 +4,6 @@
 namespace app\view\components\Builders\TableBuilder;
 
 
-use app\service\Fs\FS;
-use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
 use app\view\components\Icon\Icon;
 use app\view\components\Traits\CleanString;
 use Illuminate\Database\Eloquent\Collection;
@@ -26,9 +24,6 @@ class Table
     private bool $add = false;
     private string $pivot = '';
     private string $dataAttributes = '';
-//    private string $dataRelation = '';
-//    private string $dataModel = '';
-//    private string $dataRelationType = '';
     private string $html = '';
     private bool $addButton = false;
     private Collection|null $items;

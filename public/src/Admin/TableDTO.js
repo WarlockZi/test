@@ -30,7 +30,9 @@ export default class TableDTO {
     if (this.fields) {
       this.fields = {
         [target?.dataset?.field]:
-          target?.dataset?.value ?? +target?.checked ?? target?.innerText,
+          target?.dataset?.value ||
+          (target?.checked ? 1 : 0) ||
+          target?.innerText,
       };
     }
 
