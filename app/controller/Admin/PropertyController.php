@@ -35,10 +35,10 @@ class PropertyController extends AdminscController
         view('admin.property.edit', compact('catItem'));
     }
 
-    public function actionDelete(): void
+    public function actionDelete(IRequest $request): void
     {
-        Propertable::where('property_id', $this->ajax['id'])->delete();
-        parent::actionDelete();
+        Propertable::where('property_id', $request->body['id'])->delete();
+//        parent::actionDelete();
     }
 
 }

@@ -6,13 +6,13 @@ import AdminProductSeoArticle from "@src/components/quill/AdminProductSeoArticle
 export default class QuillFactory {
   constructor() {
     this.quill = new Quill();
-    debugger;
   }
 
   static create(selector, type, options) {
     if (type === QuillConst.ADMIN_PRODUCT_DESCRIPTION) {
       return new AdminProductDescrioption(selector, options);
     } else if (type === QuillConst.ADMIN_PRODUCT_SEO_ARTICLE) {
+      return new AdminProductDescrioption(selector, options);
     }
     return new AdminProductSeoArticle(selector, options);
   }

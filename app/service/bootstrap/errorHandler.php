@@ -72,7 +72,6 @@ function devShutdownHandler(): void
 
 function devErrorHandler($errno, $errstr, $errfile, $errline)
 {
-//    error_log("Dev Error [$errno]: $errstr in $errfile on line $errline");
     $error = $errstr . "<br> in " . $errfile . "<br> on line " . $errline;
 //    if (!headers_sent()) {
 //        header('HTTP/1.1 500 Internal Server Error');

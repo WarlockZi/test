@@ -13,14 +13,13 @@
     <ul class="nav-items nav-level-1">
 
         <li class="nav-item nav-expand">
-            <a class="nav-link nav-expand-link" href="#">
-                Каталог
-            </a>
+            <a class="nav-link nav-expand-link" href="#">Каталог</a>
             <ul class="nav-items nav-expand-content">
                 @include('layouts.main.header.blueRibbon.mobileCategoryMenu.mobile_category_menu')
             </ul>
         </li>
 
+{{--        @deb--}}
         @foreach(MobileMenuRepository::items() as $item)
             <li class="nav-item">
                 <a class="nav-link" href="/main/{!!$item['path']!!}">

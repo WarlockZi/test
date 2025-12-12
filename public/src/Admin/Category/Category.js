@@ -10,14 +10,14 @@ export default class Category {
   constructor(el) {
     this.el = el;
     this.id = el.dataset.id;
-    this.setCategoryId();
+    this.setSelects();
     this.setProperties();
     QuillFactory.create("#seo-article", QuillConst.ADMIN_CATEGORY_SEO_ARTICLE);
   }
 
-  setCategoryId() {
+  setSelects() {
     const el = $(`[data-field='category_id']`).first();
-    const parentSelector = new SelectNew(el);
+    if (el) new SelectNew(el);
   }
 
   setProperties() {

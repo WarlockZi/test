@@ -14,23 +14,27 @@ class PropertyAction implements IShowTable
     public function table(): array
     {
         return Table::build(Property::all())
-            ->model('property')
+//            ->model('property')
+            ->data(['model'=>'property'])
             ->column(
                 ColumnBuilder::build('id')
                     ->width('50px')
-                    ->name('Id')
                     ->get())
             ->column(
-                ColumnBuilder::build('name')
-                    ->name('Название')
+                ColumnBuilder::build('Название')
+                    ->callback(function ($prop){
+                        return $prop->name;
+                    })
                     ->search()
                     ->sort()
                     ->contenteditable()
                     ->get()
             )->column(
-                ColumnBuilder::build('show_as')
+                ColumnBuilder::build('Показывать как')
                     ->contenteditable()
-                    ->name('Показывать как')
+                    ->callback(function ($prop){
+                        return $prop->show_as;
+                    })
                     ->get()
             )
             ->edit()

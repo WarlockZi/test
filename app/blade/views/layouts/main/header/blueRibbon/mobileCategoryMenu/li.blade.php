@@ -1,10 +1,9 @@
-{{--        @php(xdebug_break())--}}
 @if(!count($child['children_recursive']))
-
+{{--@deb--}}
     <li class="nav-item">
         <a
                 class="nav-link"
-                href="{{ $child['own_properties']['path']??$child['s_id']}}"
+                href="/catalog/{!!$child['own_properties']['path']??$child['s_id']!!}"
         >
                 <?= $child['name']; ?>
         </a>

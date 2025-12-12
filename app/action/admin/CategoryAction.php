@@ -17,7 +17,7 @@ class CategoryAction
     /**
      * @throws Exception
      */
-    public function getBreadcrumbs(Category $category, bool $lastItemIsLink): NewBread
+    public function getBreadcrumbs(Category $category, bool $lastItemIsLink): array
     {
         if (!$category) throw new Exception('Breadcrumbs service has no category');
         return $this->breadcrumbs->getParents($category, $lastItemIsLink);

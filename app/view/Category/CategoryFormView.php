@@ -55,7 +55,7 @@ class CategoryFormView
             ->field(
                 ItemFieldBuilder::build('show_front', $category)
                     ->name('Показывать на главоной')
-                    ->component(
+                    ->html(
                         CheckboxBuilder::build()
                             ->checkedFn(
                                 function ($item) {
@@ -63,7 +63,7 @@ class CategoryFormView
                                 }
                             )
                             ->field('show_front')
-                            ->get()
+                            ->get()->toHtml()
                     )
                     ->get()
             )
@@ -196,12 +196,14 @@ class CategoryFormView
                             ->get()
                     )
                     ->column(
-                        ColumnBuilder::build('name')
-                            ->name("Назввание")
+                        ColumnBuilder::build('Назввание')
+                            ->callback(function ($cat) {
+                                return $cat->name;
+                            })
                             ->contenteditable()
                             ->get()
                     )
-                    ->relation('childrenNotDeleted', 'category')
+                    ->data(['relation'=>'childrenNotDeleted', 'model'=>'category'])
                     ->edit()
                     ->del()
                     ->addButton()
@@ -264,7 +266,7 @@ class CategoryFormView
     {
         return Table::build($category['products'])
             ->pageTitle('Товары категории')
-            ->relation('products', 'product')
+            ->data(['relation' => 'products', 'model' => 'product'])
             ->addButton()
             ->column(
                 ColumnBuilder::build('id')
@@ -272,13 +274,17 @@ class CategoryFormView
                     ->get()
             )
             ->column(
-                ColumnBuilder::build('name')
-                    ->name("Название")
+                ColumnBuilder::build('Название')
+                    ->callback(function ($p) {
+                        return $p->name;
+                    })
                     ->get()
             )
             ->column(
-                ColumnBuilder::build('art')
-                    ->name("Арт")
+                ColumnBuilder::build('Арт')
+                    ->callback(function ($p) {
+                        return $p->art;
+                    })
                     ->search()
                     ->width("100px")
                     ->get()
@@ -298,12 +304,14 @@ class CategoryFormView
                     ->get()
             )
             ->column(
-                ColumnBuilder::build('name')
-                    ->name("Назввание")
+                ColumnBuilder::build('Назввание')
+                    ->callback(function ($cat) {
+                        return $cat->name;
+                    })
                     ->contenteditable()
                     ->get()
             )
-            ->relation('childrenDeleted', 'category')
+            ->data(['relation'=>'childrenDeleted', 'model'=>'category'])
             ->edit()
             ->del()
             ->addButton()
@@ -314,10 +322,12 @@ class CategoryFormView
     {
         return Table::build($properties)
             ->pageTitle('Св-ва категории')
-            ->relation('properties', 'property')
+            ->data(['relation'=>'properties', 'model'=>'property'])
             ->column(
-                ColumnBuilder::build('name')
-                    ->name('Наимен')
+                ColumnBuilder::build('Наимен')
+                    ->callback(function ($prop) {
+                        return $prop->name;
+                    })
                     ->contenteditable()
                     ->get()
             )

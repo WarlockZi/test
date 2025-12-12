@@ -3,7 +3,6 @@
 namespace app\controller\Admin;
 
 use app\decorators\MeasureExecutionTime;
-use app\decorators\Time;
 use app\model\User;
 use app\service\AuthService\Auth;
 use app\service\Logger\SyncLogger;

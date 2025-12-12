@@ -26,11 +26,14 @@ class Category extends Model
         'deleted_at',
     ];
 
-    protected $appends = [
-//        'shortLink',
-//        'href'
-    ];
-
+    protected $appends = [];
+    public function childrenNotDeleted(): HasMany
+    {
+        return $this->hasMany(Category::class,
+            'category_1s_id',
+            's_id',
+        );
+    }
     public function childrenRecursive(): HasMany
     {
         return $this->childrenWithOwnProps()

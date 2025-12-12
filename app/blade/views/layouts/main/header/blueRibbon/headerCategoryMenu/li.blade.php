@@ -1,10 +1,9 @@
 <li class="h-cat_item">
 
-{{--    @php(xdebug_break())--}}
     @if(!empty($child['children_recursive']))
         <div class="wrap">
 
-            <a href="/catalog/{{$child['own_properties']['path']}}">{{$child['name']}}</a>
+            <a href="{{$child['own_properties']['path']}}">{{$child['name']}}</a>
             <span class="arrow">></span>
         </div>
         @include('layouts.main.header.blueRibbon.headerCategoryMenu.ul', compact('child'))
