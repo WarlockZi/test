@@ -8,7 +8,7 @@
 
         <div class='h-cat'>
             {{$rootCategory['name']}}
-            <a href="{{$rootCategory['own_properties']['path']}}" class='show-front-a'></a>
+            <a href="/catalog/{{$rootCategory['own_properties']['path']}}" class='show-front-a'></a>
 
             <ul class="h-cat_submenu level-{!!$level!!}">
 
