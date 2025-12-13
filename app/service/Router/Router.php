@@ -6,21 +6,20 @@ namespace app\service\Router;
 use app\exception\NoControllerException;
 use app\exception\NoMethodException;
 use app\repository\RouterRepository;
-use app\service\Logger\ErrorLogger;
 
 class Router
 {
     public function __construct(
-        protected IRequest    $request,
-        protected array       $routes = [],
-        protected string      $namespace = '',
+        protected IRequest $request,
+        protected array    $routes = [],
+        protected string   $namespace = '',
     )
     {
     }
 
     protected function matchRoute(IRequest $request): void
     {
-        $routes     = RouterRepository::getRoutes();
+        $routes = RouterRepository::getRoutes();
 
         foreach ($routes as $route) {
 
@@ -31,7 +30,7 @@ class Router
                         unset($matches[$k]);
                     }
                 }
-                $matches = array_merge($matches, $route[1]??[]);
+                $matches = array_merge($matches, $route[1] ?? []);
                 foreach ($matches as $k => $v) {
                     $request->$k = is_string($v) ? strtolower($v) : $v;
                 }
@@ -49,11 +48,12 @@ class Router
         $request = $this->request;
         $this->matchRoute($request);
         $controller = $request->controller();
-        error_log(        " **** REFERRER ****: " . $_SERVER['HTTP_REFERER'] . PHP_EOL );
-        if (!class_exists($controller)) throw new NoControllerException('Bad controller '.$controller);
+        error_log(PHP_EOL . " **** REFERRER ****: " . $_SERVER['HTTP_REFERER'] . PHP_EOL);
+        error_log(PHP_EOL . " **** REQUEST_URI ****: " . $_SERVER['REQUEST_URI'] . PHP_EOL);
+        if (!class_exists($controller)) throw new NoControllerException('Bad controller ' . $controller);
 
         $action = $request->action();
-        if (!method_exists($controller, $action)) throw new NoMethodException('Bad action '. $action);
+        if (!method_exists($controller, $action)) throw new NoMethodException('Bad action ' . $action);
 
         $this->middlwares($request, $controller, $action);
     }
