@@ -40,7 +40,8 @@ function productionExceptionHandler($exception): void
         "Production exception: " . $exception->getMessage() . PHP_EOL .
         " in file: " . $exception->getFile() . PHP_EOL .
         " on line: " . $exception->getLine() . PHP_EOL .
-        " TRACE: " . $exception->getTraceAsString() .
+        " TRACE: " . $exception->getTraceAsString() . PHP_EOL.
+        " **** REFERRER ****: " . $_SERVER['HTTP_REFERER'] . PHP_EOL .
         " REQUEST0: " . $req0
     );
 
