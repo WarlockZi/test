@@ -49,6 +49,7 @@ class Router
         $request = $this->request;
         $this->matchRoute($request);
         $controller = $request->controller();
+        error_log(        " **** REFERRER ****: " . $_SERVER['HTTP_REFERER'] . PHP_EOL );
         if (!class_exists($controller)) throw new NoControllerException('Bad controller '.$controller);
 
         $action = $request->action();
