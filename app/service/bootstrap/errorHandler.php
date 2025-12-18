@@ -33,16 +33,42 @@ function productionErrorHandler($errno, $errstr, $errfile, $errline)
     return true;
 }
 
+
+function trace()
+{
+    $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 5);
+    $trace_info = [];
+
+    foreach ($backtrace as $index => $trace) {
+        $trace_info[] = sprintf(
+            "#%d %s:%d - %s%s%s()",
+            $index,
+            $trace['file'] ?? 'internal',
+            $trace['line'] ?? 0,
+            $trace['class'] ?? '',
+            $trace['type'] ?? '',
+            $trace['function'] ?? ''
+        );
+    }
+    return json_encode($trace_info);
+}
 function productionExceptionHandler($exception): void
 {
-    $req0 = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : 'REQUEST_URI is empty';
+    $req0 = $_SERVER['REQUEST_URI'] ?? 'REQUEST_URI is empty';
     $referrer = $_SERVER['HTTP_REFERER'] ?? ' no referrer';
+//    $eol = PHP_EOL;
+//    $eol = "\r\n";
+    $eol = "<br>";
+
+//    $trace = $exception->getTraceAsString();
+    $trace = trace();
+
     error_log(
-        "Production exception: " . $exception->getMessage() . PHP_EOL .
-        " in file: " . $exception->getFile() . PHP_EOL .
-        " on line: " . $exception->getLine() . PHP_EOL .
-        " TRACE: " . $exception->getTraceAsString() . PHP_EOL.
-        " **** REFERRER ****: " . $referrer . PHP_EOL .
+        "Production exception: " . $exception->getMessage() . $eol .
+        " in file: " . $exception->getFile() . $eol .
+        " on line: " . $exception->getLine() . $eol .
+        " TRACE: " . $trace . $eol.
+        " **** REFERRER ****: " . $referrer . $eol .
         " REQUEST0: " . $req0
     );
 
