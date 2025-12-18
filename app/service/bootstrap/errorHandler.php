@@ -57,8 +57,8 @@ function productionExceptionHandler($exception): void
     $req0 = $_SERVER['REQUEST_URI'] ?? 'REQUEST_URI is empty';
     $referrer = $_SERVER['HTTP_REFERER'] ?? ' no referrer';
 //    $eol = PHP_EOL;
-//    $eol = "\r\n";
-    $eol = "<br>";
+    $eol = "\r\n";
+//    $eol = "<br>";
 
 //    $trace = $exception->getTraceAsString();
     $trace = trace();
