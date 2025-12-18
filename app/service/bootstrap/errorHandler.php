@@ -41,7 +41,7 @@ function productionExceptionHandler($exception): void
         " in file: " . $exception->getFile() . PHP_EOL .
         " on line: " . $exception->getLine() . PHP_EOL .
         " TRACE: " . $exception->getTraceAsString() . PHP_EOL.
-        " **** REFERRER ****: " . $_SERVER['HTTP_REFERER'] . PHP_EOL .
+        " **** REFERRER ****: " . $_SERVER['HTTP_REFERER']??' no referrer' . PHP_EOL .
         " REQUEST0: " . $req0
     );
 
