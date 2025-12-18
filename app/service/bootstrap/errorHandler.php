@@ -36,12 +36,13 @@ function productionErrorHandler($errno, $errstr, $errfile, $errline)
 function productionExceptionHandler($exception): void
 {
     $req0 = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : 'REQUEST_URI is empty';
+    $referrer = $_SERVER['HTTP_REFERER'] ?? ' no referrer';
     error_log(
         "Production exception: " . $exception->getMessage() . PHP_EOL .
         " in file: " . $exception->getFile() . PHP_EOL .
         " on line: " . $exception->getLine() . PHP_EOL .
         " TRACE: " . $exception->getTraceAsString() . PHP_EOL.
-        " **** REFERRER ****: " . $_SERVER['HTTP_REFERER']??' no referrer' . PHP_EOL .
+        " **** REFERRER ****: " . $referrer . PHP_EOL .
         " REQUEST0: " . $req0
     );
 
