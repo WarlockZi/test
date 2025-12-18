@@ -1,6 +1,8 @@
 <li class="nav-item nav-expand">
 
-    <a class="nav-link nav-expand-link" href="#">
+    <a class="nav-link nav-expand-link"
+       href="javascript:void(0)"
+    >
         {{$child['name']}}
     </a>
 
