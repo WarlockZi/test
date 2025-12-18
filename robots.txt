@@ -1,5 +1,17 @@
 User-agent: *
 
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: facebookexternalhit
+Disallow: /
+
+User-agent: meta-externalagent
+Disallow: /
+
+User-agent: meta-webindexer
+Disallow: /
+
 Disallow: /tmp/
 Disallow: /config/
 Disallow: /app/
