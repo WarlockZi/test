@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrderItem extends Model
@@ -14,19 +15,22 @@ class OrderItem extends Model
 
     public $table = 'orderitems';
     public $timestamps = true;
+//    public $appends = ['unit'];
 
     protected $fillable = [
         'order_product_id',
         'product_id',
-//        'unit_id',
         'product_unit_id',
         'price_id',
         'count',
-        'created_at',
-        'updated_at',
-        'deleted_at'
+//        'created_at',
+//        'updated_at',
+//        'deleted_at'
     ];
-
+//    public function getUnitAttribute()
+//    {
+//        return $this->productUnit()->first()->unit;
+//    }
     public function price(): belongsTo
     {
         return $this->belongsTo(Price::class);
@@ -43,18 +47,7 @@ class OrderItem extends Model
 //            'unit_id',
 //        );
 //    }
-    public function unit(): belongsToMany
-    {
-        return $this->belongsToMany(
-            Unit::class,
-            'product_unit',
-            'id',
-            'unit_id',
-            'product_unit_id',
-            'id',
-        )->withPivot('price')
-            ;
-    }
+
 
     public function order(): belongsTo
     {

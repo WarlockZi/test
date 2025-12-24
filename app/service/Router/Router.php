@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 namespace app\service\Router;
 
-use app\exception\NoControllerException;
-use app\exception\NoMethodException;
+use app\exception\Router\RouterException;
 use app\repository\RouterRepository;
+use Exception;
 
 class Router
 {
@@ -40,20 +40,17 @@ class Router
     }
 
     /**
-     * @throws NoControllerException
-     * @throws NoMethodException
+     * @throws Exception
      */
     public function dispatch(): void
     {
         $request = $this->request;
         $this->matchRoute($request);
         $controller = $request->controller();
-//        error_log(PHP_EOL . " **** REFERRER ****: " . ($_SERVER['HTTP_REFERER'] ?? '') . PHP_EOL);
-//        error_log(PHP_EOL . " **** REQUEST_URI ****: " . ($_SERVER['REQUEST_URI']??'') . PHP_EOL);
-        if (!class_exists($controller)) throw new NoControllerException('Bad controller ' . $controller);
+        if (!class_exists($controller)) RouterException::badController($request->controllerName());
 
         $action = $request->action();
-        if (!method_exists($controller, $action)) throw new NoMethodException('Bad action ' . $action);
+        if (!method_exists($controller, $action)) RouterException::badAction($request->actionName());
 
         $this->middlwares($request, $controller, $action);
     }

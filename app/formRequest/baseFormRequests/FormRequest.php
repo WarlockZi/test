@@ -3,6 +3,7 @@
 namespace app\formRequest\baseFormRequests;
 
 
+use app\formRequest\CartRequest;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
@@ -21,6 +22,8 @@ abstract class FormRequest extends Request
 
     public function __construct(array $input = [])
     {
+//        $c =         Request::createFromGlobals();
+//        $f= CartRequest::createFrom($c);
         $this->input = $input ?: $this->getInputFromGlobal();
         parent::__construct();
     }

@@ -1,6 +1,6 @@
 import "./main.scss";
 import "@components/header/show-front-menu1.js";
-import "../404/404.scss";
+// import "../404/404.scss";
 import "@components/hoist/hoist.js";
 import "@components/animate/animate.js";
 import { qs } from "../constants";

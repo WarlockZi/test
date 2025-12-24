@@ -17,11 +17,11 @@
         <div class="footer">
 
             @if(isset($product['baseUnitPrice']))
-
                 <p>Цена: <?= $product['instore']
                         ? $product['baseUnitPrice']
                         : "<span class='danger'>от</span> " . $product['base_unit']['pivot']['price']; ?></p>
             @endif
+
             <p>Статус: <?= $product['instore']
                     ? "<span class='success'>в наличии</span>"
                     : "<span class='danger'>под заказ</span>"; ?></p>

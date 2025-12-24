@@ -1,0 +1,63 @@
+:root{
+  --color-white: hsl(0, 0%, 100%);
+  --color-grey80: hsl(0, 0%, 80%);
+  --color-grey70: hsl(0, 0%, 70%);
+  --color-grey60: hsl(0, 0%, 60%);
+  --color-grey50: hsl(0, 0%, 50%);
+  --color-grey40: hsl(0, 0%, 40%);
+  --color-grey30: hsl(0, 0%, 30%);
+  --color-grey20: hsl(0, 0%, 20%);
+  --color-grey10: hsl(0, 0%, 10%);
+}
+:root {
+  /* below the base */
+  --font-size-2b: 0.875rem;
+  --font-size-1b: 0.9375rem;
+
+  /* the base */
+  --font-size: 1rem;
+
+  /* above the base */
+  --font-size-1: 1.0625rem;
+  --font-size-2: 1.125rem;
+  --font-size-3: 1.1875rem;
+  --font-size-4: 1.25rem;
+  --font-size-5: 1.3125rem;
+  --font-size-6: 1.4375rem;
+}
+
+/* --- Line Heights --- */
+:root {
+  /* below the base */
+  --line-height-2b: 1.5;
+  --line-height-1b: 1.6;
+
+  /* the base */
+  --line-height: 1.5;
+
+  /* above the base */
+  --line-height-1: 1.4118;
+  --line-height-2: 1.5;
+  --line-height-3: 1.4211;
+  --line-height-4: 1.35;
+  --line-height-5: 1.4286;
+  --line-height-6: 1.3043;
+}
+
+/* --- Letter Spacings --- */
+:root {
+  /* below the base */
+  --letter-space-2b: 0.0271em;
+  --letter-space-1b: 0.0233em;
+
+  /* the base */
+  --letter-space: 0.02em;
+
+  /* above the base */
+  --letter-space-1: 0.0171em;
+  --letter-space-2: 0.0144em;
+  --letter-space-3: 0.0121em;
+  --letter-space-4: 0.01em;
+  --letter-space-5: 0.0081em;
+  --letter-space-6: 0.0048em;
+}

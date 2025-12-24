@@ -3,15 +3,18 @@
     @foreach($product['shippable_units'] as $unit)
 
         @foreach($product['order_items'] as $oi)
-            @if(!empty($oi['unit'][0])&&$oi['unit'][0]['id']===$unit['id'])
+            @if(!empty($oi['product_unit']['unit']) && $oi['product_unit']['unit']['id']===$unit['id'])
                 @php($orderItem = $oi)
             @endif
         @endforeach
 
         <div class="row-sum">
             @if(isset($orderItem))
+{{--                @deb--}}
                 @php
-                    $subSum = $unit['pivot']['multiplier']*$orderItem['unit'][0]['pivot']['price']*$orderItem['count']
+                    $subSum = $unit['pivot']['multiplier']
+                    *$orderItem['product_unit']['price']
+                    *$orderItem['count']
                 @endphp
                 {!!empty($subSum)?'-':number_format($subSum, 2, '.', ' ')!!}
             @else

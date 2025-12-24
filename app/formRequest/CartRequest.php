@@ -7,6 +7,10 @@ use app\formRequest\baseFormRequests\FormRequest;
 
 class CartRequest extends FormRequest
 {
+    public function all($keys = null): array
+    {
+        return $this->input;
+    }
     protected array $allowedFields = [
         'count',
         'unit_id',
@@ -17,7 +21,7 @@ class CartRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'count' => 'required|integer',
+            'count' => 'required|string',
             'unit_id' => 'required|string',
             'product_1s_id' => 'required|string',
             'loc_storage_cart_id' => 'string',
@@ -27,7 +31,7 @@ class CartRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'count.required' => 'count is to be string',
+            'count.required' => 'count is required',
             'count.string' => 'count is to be string',
             'unit_id.required' => 'unit_id is required',
             'unit_id.string' => 'unit_id is to be string',
@@ -41,8 +45,5 @@ class CartRequest extends FormRequest
         return parent::authorize();
     }
 
-    public function all($keys = null): array
-    {
-        return parent::all();
-    }
+
 }

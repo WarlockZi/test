@@ -12,7 +12,7 @@
 
         <div class="name-price cell">
             @if (Auth::getUser())
-                <a href="/adminsc/product/edit<?= $product['id']; ?>"
+                <a href="/adminsc/product/edit/<?= $product['id']; ?>"
                    class="edit card-panel-item"
                 >
                     {!!Icon::edit()!!}

@@ -39,7 +39,8 @@
     "ext-zip": "*",
     "staudenmeir/laravel-adjacency-list": "^1.9",
     "ext-gd": "*",
-    "intervention/image": "^3.11"
+    "intervention/image": "^3.11",
+    "symfony/http-foundation": "^5.4"
   },
   "config": {
     "platform-check": false

@@ -23,7 +23,7 @@ class View implements IView
     /**
      * @throws Exception
      */
-    public function render(string $template, array $data = []): string
+    public function render(string $template, array $data = [], int|null $status = 200)
     {
         try {
             return $this->blade->run($template, $data);
@@ -44,13 +44,17 @@ class View implements IView
             return $this->productionError($e);
         }
     }
-    protected function logError( $e) {
+
+    protected function logError($e)
+    {
         $logMessage = date('Y-m-d H:i:s') . " - Blade Error: " .
             $e->getMessage() . " in " .
             $e->getFile() . ":" . $e->getLine() . PHP_EOL;
         file_put_contents('blade_errors.log', $logMessage, FILE_APPEND);
     }
-    protected function debugError( $e) {
+
+    protected function debugError($e)
+    {
         return "<div style='padding: 20px; background: #fee; border: 1px solid red;'>
                 <h3>Blade Template Error</h3>
                 <p><strong>Message:</strong> {$e->getMessage()}</p>
@@ -58,7 +62,8 @@ class View implements IView
                 </div>";
     }
 
-    protected function productionError( $e) {
+    protected function productionError($e)
+    {
         // Попытка показать страницу ошибки
         try {
             return $this->run("errors.template", ['error' => 'Template error occurred']);

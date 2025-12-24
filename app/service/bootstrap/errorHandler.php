@@ -1,5 +1,7 @@
 <?php
 
+use JetBrains\PhpStorm\NoReturn;
+
 $errorsArray = [];
 if (DEV) {
     error_reporting(E_ALL);
@@ -34,7 +36,7 @@ function productionErrorHandler($errno, $errstr, $errfile, $errline)
 }
 
 
-function trace()
+function trace(): false|string
 {
     $backtrace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 5);
     $trace_info = [];
@@ -57,11 +59,12 @@ function productionExceptionHandler($exception): void
     $req0 = $_SERVER['REQUEST_URI'] ?? 'REQUEST_URI is empty';
     $referrer = $_SERVER['HTTP_REFERER'] ?? ' no referrer';
 //    $eol = PHP_EOL;
-    $eol = "\r\n";
+    $eol = "";
+//    $eol = "\r\n";
 //    $eol = "<br>";
 
-//    $trace = $exception->getTraceAsString();
-    $trace = trace();
+    $trace = $exception->getTraceAsString();
+//    $trace = trace();
 
     error_log(
         "Production exception: " . $exception->getMessage() . $eol .
@@ -79,7 +82,7 @@ function productionExceptionHandler($exception): void
     }
 }
 
-function productionShutdownHandler($e): void
+function productionShutdownHandler(): void
 {
     $error = error_get_last();
     error_log("Production shutdownHandler: " . $error);
@@ -98,7 +101,7 @@ function devShutdownHandler(): void
     }
 }
 
-function devErrorHandler($errno, $errstr, $errfile, $errline)
+#[NoReturn] function devErrorHandler($errno, $errstr, $errfile, $errline)
 {
     $error = $errstr . "<br> in " . $errfile . "<br> on line " . $errline;
 //    if (!headers_sent()) {
@@ -108,17 +111,17 @@ function devErrorHandler($errno, $errstr, $errfile, $errline)
 //    response()->consoleLog($errstr);
     view('exceptions.error', compact('error'));
     // Don't execute PHP internal error handler
-    return true;
+//    return true;
 }
 
-function devExceptionHandler($exception): void
+#[NoReturn] function devExceptionHandler($exception): void
 {
-    $url = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : 'REQUEST_URI is empty';
+    $url = $_SERVER['REQUEST_URI'] ?? 'REQUEST_URI is empty';
 
     $trace    = $exception->getTrace();
     $traceStr = '';
 
-    foreach ($trace as $key => $value) {
+    foreach ($trace as $value) {
         $traceStr .= 'class: ' . ($value['class'] ?? 'no class name') . '<br>' .
             'function: ' . '<b>' . ($value['function'] ?? 'no function name') . '</b>' . " : " . ($value['line'] ?? 'no line number') . "<br><br>";
     }

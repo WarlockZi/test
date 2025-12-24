@@ -24,6 +24,7 @@ use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\TableBuilder\Table;
 use app\view\Property\PropertyView;
 use Illuminate\Database\Eloquent\Collection;
+use Throwable;
 
 class ProductFormView
 {
@@ -60,122 +61,123 @@ class ProductFormView
         return $shippable;
     }
 
-    public static function edit(?Product $product): array
+    public static function edit(?Product $product)
     {
         if (!$product) return [];
-        return ItemBuilderNew::build($product, 'product')
-            ->pageTitle('Товар :  ' . $product['name'])
-            ->field(
-                ItemFieldBuilder::build('slug', $product)
-                    ->name('Адрес')
-                    ->html(
-                        "<a href='/product/{$product->slug}'>{$product->slug}</a>"
-                    )
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('art', $product)
-                    ->name('Артикул')
-                    ->required()
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('name', $product)
-                    ->name('Рабочее наименование')
-                    ->required()
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('print_name', $product)
-                    ->name('Наименование для печати')
-                    ->contenteditable()
-                    ->required()
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('instore', $product)
-                    ->name('наличие')
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('main_image', $product)
-                    ->name('Основная картинка')
-                    ->dnd(self::mainImage($product))
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('description', $product)
-                    ->name('Описание')
-                    ->html(self::getDescription($product))
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('s_id', $product)
-                    ->name('Категория')
-                    ->html(CategoryFormView::selectorByField(['s_id' => $product->category['s_id']]))
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('sort', $product)
-                    ->name('Порядок')
-                    ->contenteditable()
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('deleted_at', $product)
-                    ->name('Удален')
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('manufacturer', $product)
-                    ->name('Производитель')
-                    ->html(
-                        self::getManufacturer($product)
-                    )
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('active_promotions', $product)
-                    ->name('Действующие акции')
-                    ->html(
-                        SelectBuilder::build(
-                            ArrayOptionsBuilder::build(
-                                $product->activePromotions, ['count' => 'кол-о', 'active_till' => 'до', 'new_price' => 'новая цена'])
-                                ->field('active_till')
+        try {
+            return ItemBuilderNew::build($product, 'product')
+                ->pageTitle('Товар :  ' . $product['name'])
+                ->field(
+                    ItemFieldBuilder::build('slug', $product)
+                        ->name('Адрес')
+                        ->html(
+                            "<a href='/product/{$product->slug}'>{$product->slug}</a>"
+                        )
+                        ->get()
+                )
+                ->field(
+                    ItemFieldBuilder::build('art', $product)
+                        ->name('Артикул')
+                        ->required()
+                        ->get()
+                )
+                ->field(
+                    ItemFieldBuilder::build('name', $product)
+                        ->name('Рабочее наименование')
+                        ->required()
+                        ->get()
+                )
+                ->field(
+                    ItemFieldBuilder::build('print_name', $product)
+                        ->name('Наименование для печати')
+                        ->contenteditable()
+                        ->required()
+                        ->get()
+                )
+                ->field(
+                    ItemFieldBuilder::build('instore', $product)
+                        ->name('наличие')
+                        ->get()
+                )
+                ->field(
+                    ItemFieldBuilder::build('main_image', $product)
+                        ->name('Основная картинка')
+                        ->dnd(self::mainImage($product))
+                        ->get()
+                )
+                ->field(
+                    ItemFieldBuilder::build('description', $product)
+                        ->name('Описание')
+                        ->html(self::getDescription($product))
+                        ->get()
+                )
+                ->field(
+                    ItemFieldBuilder::build('s_id', $product)
+                        ->name('Категория')
+                        ->html(CategoryFormView::selectorByField(['s_id' => $product->category['s_id']]))
+                        ->get()
+                )
+                ->field(
+                    ItemFieldBuilder::build('sort', $product)
+                        ->name('Порядок')
+                        ->contenteditable()
+                        ->get()
+                )
+                ->field(
+                    ItemFieldBuilder::build('deleted_at', $product)
+                        ->name('Удален')
+                        ->get()
+                )
+                ->field(
+                    ItemFieldBuilder::build('manufacturer', $product)
+                        ->name('Производитель')
+                        ->html(
+                            self::getManufacturer($product)
+                        )
+                        ->get()
+                )
+                ->field(
+                    ItemFieldBuilder::build('active_promotions', $product)
+                        ->name('Действующие акции')
+                        ->html(
+                            SelectBuilder::build(
+                                ArrayOptionsBuilder::build(
+                                    $product->activePromotions, ['count' => 'кол-о', 'active_till' => 'до', 'new_price' => 'новая цена'])
+                                    ->field('active_till')
+                                    ->get()
+                            )
                                 ->get()
                         )
-                            ->get()
-                    )
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('id', $product)
-                    ->name('ID')
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('1s_id', $product)
-                    ->name('1s_ID')
-                    ->get()
-            )
-            ->tab(
-                ItemTabBuilder::build('Свойства товара')
-                    ->html(
-                        self::getProperties($product)
-                    )
-            )
-            ->tab(
-                ItemTabBuilder::build('Единицы')
-                    ->table(
-                        self::units($product)
-                    )
-            )
-            ->tab(
-                ItemTabBuilder::build('Seo')
-                    ->html(
-                        self::getSeo($product)
-                    )
-            )
+                        ->get()
+                )
+                ->field(
+                    ItemFieldBuilder::build('id', $product)
+                        ->name('ID')
+                        ->get()
+                )
+                ->field(
+                    ItemFieldBuilder::build('1s_id', $product)
+                        ->name('1s_ID')
+                        ->get()
+                )
+                ->tab(
+                    ItemTabBuilder::build('Свойства товара')
+                        ->html(
+                            self::getProperties($product)
+                        )
+                )
+                ->tab(
+                    ItemTabBuilder::build('Единицы')
+                        ->table(
+                            self::units($product)
+                        )
+                )
+                ->tab(
+                    ItemTabBuilder::build('Seo')
+                        ->html(
+                            self::getSeo($product)
+                        )
+                )
 //            ->tab(
 //                ItemTabBuilder::build('Акции')
 //                    ->html(
@@ -200,7 +202,11 @@ class ProductFormView
 //                        self::getImage($product, 'bigPackImages', 'bigpack', true)
 //                    )
 //            )
-            ->get();
+                ->get();
+        } catch (Throwable $exception) {
+            $exc = $exception;
+        }
+
     }
 
     protected static function units(Product $product): array

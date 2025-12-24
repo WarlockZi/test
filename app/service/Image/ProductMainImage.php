@@ -40,14 +40,7 @@ class ProductMainImage extends BaseImage
      */
     public function save(): self
     {
-        if (!extension_loaded('imagick')) {
-            response()->json(['popup' => 'ext not loaded']);
-        }
 
-        $class = 'Imagick';
-        if (!class_exists($class)) {
-            response()->json(['popup' => 'no class Imagick']);
-        }
         $from = $this->file->getRealPath();
 
         $this->absDestinationPath = $this->getAbsoluteDestinationPath();
@@ -135,9 +128,6 @@ class ProductMainImage extends BaseImage
 
         if (!is_writable($dir)) error_log(' dir  ------' . $dir . ' ----- not writable');
 
-//        $name = $this->nameFromArt;
-//        $type = $this->getType();
-//        $path = "$dir$name.$type";
         $path = $dir.$this->fileNameFromArt;
         return $path;
     }

@@ -6,23 +6,22 @@
     <div class="green-button-wrap none">
         <button class='button green-button'>Перейти в корзину</button>
 
-        @foreach($product['units'] as $unit)
+{{--        @deb--}}
+        @foreach($product['shippable_units'] as $unit)
 
-            @if($order)
-                @foreach($order['products'] as $OrderProduct)
-{{--                    @deb--}}
-                    @if (in_array($product['1s_id'], $OrderProduct))
-                        @php($orderProduct=$OrderProduct)
-
-                        @foreach($OrderProduct['orderitems'] as $oi)
-
-                            @if ($unit['id']==$oi['unit_id'])
-                                @php($orderItem=$oi)
-                            @endif
-                        @endforeach
-
-                    @endif
-                @endforeach
+            @if($order && $order['products'])
+                @php
+                    foreach ($order['products'] as $OrderProduct){
+                        if (in_array($product['1s_id'], $OrderProduct)){
+                            $orderProduct=$OrderProduct;
+                            foreach ($OrderProduct['orderitems'] as $oi){
+                                if ($unit['id']==$oi['product_unit']['unit']['id']){
+                                    $orderItem=$oi;
+                                }
+                            }
+                        }
+                    }
+                @endphp
             @endif
 
             <div
@@ -40,7 +39,7 @@
 
                 <div class="unit-name">
                     <span class="name">{!!$unit['name']!!}</span>
-{{--                                        @deb--}}
+                    {{--                                        @deb--}}
                     {{--                           @if($shippableTable->description)--}}
                     <div class="description text-small">
                         <span class="contains">{!!$unit['pivot']['multiplier']??0!!} {!!$product['base_unit']['name']??''!!}</span>

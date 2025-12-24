@@ -70,12 +70,11 @@ export default class Product {
     const data = newObjAndFiles2FormData(obj, files[0]);
 
     const res = await post("/adminsc/product/saveMainImage", data);
-    // debugger;
     const src = res?.mainImage;
     if (src) {
+      const timestamp = new Date().getTime();
       const mainImage = target.closest(".dnd-container").querySelector("img");
-      mainImage.removeAttribute("src");
-      mainImage.setAttribute("src", src);
+      mainImage.src = `${src}?=${timestamp}`;
     }
   }
 }

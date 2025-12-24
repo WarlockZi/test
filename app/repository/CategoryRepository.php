@@ -37,9 +37,11 @@ class CategoryRepository
 //                    $o = $category->toArray();
                     $category->productsInStore->each(function (Product $product) {
                         $product->append('base_unit');
+                        $product->append('shippable_units');
                     });
                     $category->productsNotInStoreInMatrix->each(function (Product $product) {
                         $product->append('base_unit');
+                        $product->append('shippable_units');
                     });
                     return $category;
                 }

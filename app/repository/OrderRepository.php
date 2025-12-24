@@ -21,7 +21,6 @@ class OrderRepository
     public static function deleteProduct(string $order_id, string $product_1s_id): bool
     {
         try {
-
             $orderProduct = OrderProduct::where([
                 'order_id' => $order_id,
                 'product_id' => $product_1s_id
@@ -71,14 +70,13 @@ class OrderRepository
                     ->select('*')
                     ->whereHas('orderItems')
                     ->with(['orderitems' => function ($q) {
-                        $q->with('unit', 'price.currency', 'price.type');
+                        $q->with('productUnit.unit', 'price.currency', 'price.type');
                     }])
-                    ->withoutTrashed()
-                ;
+                    ->withoutTrashed();
             }])
             ->first();
 
-            return $order;
+        return $order;
     }
 
     public static function deleteOrderItem(Order $order, Product $product, string $unit_id,)
@@ -175,15 +173,27 @@ class OrderRepository
     {
         list($field, $value) = Auth::getCartFieldValue();
 //        $start = microtime(true);
+//        $order = Order::where($field, $value)
+//            ->whereNull('submitted')
+//            ->select('id')
+//            ->withCount(['products as products_count' => function ($query) {
+//                $query->where('order_product.deleted_at', NULL); // withoutTrashed() не работает
+//            }])
+//            ->first();
         $order = Order::where($field, $value)
             ->whereNull('submitted')
             ->select('id')
-            ->withCount(['products as products_count' => function ($query) {
-                $query->where('order_product.deleted_at', NULL); // withoutTrashed() не работает
-            }])
-            ->first();
-
-//        $time = (microtime(true) - $start)*1000;
-        return $order->products_count ?? 0;
+            ->with('productsWithoutAppends', function ($q) {
+                return $q
+                    ->select('products.id', 'products.1s_id','products.name')
+                    ->whereHas('orderItems', function ($q) {
+                        return $q->where('count', '>', 0)
+                            ->whereHas('productUnit.unit')
+                            ;
+                    })
+                    ;
+            })
+            ->first()->toArray();
+        return count($order['products_without_appends']) ?? 0;
     }
 }

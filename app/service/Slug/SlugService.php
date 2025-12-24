@@ -88,7 +88,6 @@ class SlugService
         $value = trim($value, '-');
 //		sometimes slugs differ by dot at the end replaced by underscore
 //		$value = trim($value, '_');
-
         return $value;
     }
 
@@ -104,12 +103,15 @@ class SlugService
             $slug = $newSlug;
         }
         return $subslugs;
-
     }
     public static function categoryLastSegment(string $slug): string
     {
         $segments = explode('/', $slug);
         return $segments[count($segments)-1];
+    }
+    public static function categorySlugSegments(string $slug): array
+    {
+        return explode('/',$slug);
     }
 }
 
