@@ -185,15 +185,17 @@ class OrderRepository
             ->select('id')
             ->with('productsWithoutAppends', function ($q) {
                 return $q
-                    ->select('products.id', 'products.1s_id','products.name')
+                    ->select('products.id', 'products.1s_id', 'products.name')
                     ->whereHas('orderItems', function ($q) {
                         return $q->where('count', '>', 0)
-                            ->whereHas('productUnit.unit')
-                            ;
-                    })
-                    ;
+                            ->whereHas('productUnit.unit');
+                    });
             })
-            ->first()->toArray();
-        return count($order['products_without_appends']) ?? 0;
+            ->first();
+        if ($order) {
+            $order = $order->toArray();
+            return count($order['products_without_appends']) ?? 0;
+        }
+        return 0;
     }
 }
