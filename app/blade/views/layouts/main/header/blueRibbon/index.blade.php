@@ -16,7 +16,7 @@
                 </li>
 
                 <li>
-                    <a href="" class="util-item catalog" title="Каталог">
+                    <a href="/catalog" class="util-item catalog" title="Каталог">
                         {!!Icon::catalog()!!}
                     </a>
                 </li>

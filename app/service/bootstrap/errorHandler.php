@@ -19,12 +19,11 @@ if (DEV) {
 
     set_error_handler('productionErrorHandler');
     set_exception_handler('productionExceptionHandler');
-    register_shutdown_function('productionShutdownHandler');
+//    register_shutdown_function('productionShutdownHandler');
 }
 
 function productionErrorHandler($errno, $errstr, $errfile, $errline)
 {
-
     error_log("Production Error [$errno]: $errstr in $errfile on line $errline");
     if (!headers_sent()) {
         header('HTTP/1.1 500 Internal Server Error');
@@ -58,10 +57,7 @@ function productionExceptionHandler($exception): void
 {
     $req0 = $_SERVER['REQUEST_URI'] ?? 'REQUEST_URI is empty';
     $referrer = $_SERVER['HTTP_REFERER'] ?? ' no referrer';
-//    $eol = PHP_EOL;
     $eol = "";
-//    $eol = "\r\n";
-//    $eol = "<br>";
 
     $trace = $exception->getTraceAsString();
 //    $trace = trace();
