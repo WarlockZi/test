@@ -18,10 +18,10 @@ class ProductMainImage extends BaseImage
     protected int $maxHeight = 550;
     public string $destinationPath = '';
     protected string $absDestinationPath;
-    protected $productImageDir = 'product';
-    protected $thumbDir = 'thumbs';
-    protected $fileNameFromArt = '';
-//    protected $nameFromArt = '';
+    protected string $productImageDir = 'product';
+    protected string $thumbDir = 'thumbs';
+    protected string $fileNameFromArt = '';
+    protected string $nameFromArt = '';
 
     public function __construct(
         protected array $product, //иначе не видит контейнер при загрузке через DI in ProductActions
