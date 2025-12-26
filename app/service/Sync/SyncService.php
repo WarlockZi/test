@@ -3,7 +3,7 @@
 namespace app\service\Sync;
 
 use app\service\Fs\FS;
-use app\service\Logger\SyncLogger;
+use app\service\Logger\ILogger;
 use app\service\Sync\Load\LoadService;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
@@ -13,13 +13,29 @@ use ZipArchive;
 
 class SyncService
 {
-    private bool $softDelete = true;
+     private string $archiveDir = '';
+    private string $importFile = '';
+    private string $offerFile = '';
+    private array $errorMsg = [
+        ZipArchive::ER_EXISTS => 'File already exists',
+        ZipArchive::ER_INCONS => 'Zip archive inconsistent',
+        ZipArchive::ER_INVAL => 'Invalid argument',
+        ZipArchive::ER_MEMORY => 'Malloc failure',
+        ZipArchive::ER_NOENT => 'No such file',
+        ZipArchive::ER_NOZIP => 'Not a zip archive',
+        ZipArchive::ER_OPEN => 'Can\'t open file',
+        ZipArchive::ER_READ => 'Read error',
+        ZipArchive::ER_SEEK => 'Seek error',
+    ];
 
     public function __construct(
         protected LoadService $loadService,
-        protected SyncLogger  $logger,
+        protected ILogger     $logger,
     )
     {
+        $this->archiveDir = ROOT . '/storage/app/sync/unzipped';
+        $this->importFile = $this->archiveDir . 'import0_1.xml';
+        $this->offerFile  = $this->archiveDir . 'offers0_1.xml';
     }
 
     /**
@@ -132,21 +148,6 @@ class SyncService
         echo $xml->asXML();
     }
 
-//    #[NoReturn] protected function checkauth(): void
-//    {
-//        $this->log('checkauth');
-//        if ($_GET['type'] == 'checkauth') {
-//            header("Content-Type: text/plain; charset=utf-8");
-//            echo "success\n";
-//            echo session_name() . "\n";
-//            echo session_id() . "\n";
-//            // Или фиксированные значения, как в вашем примере:
-//            // echo "success\nnic\n7777\n";
-//            exit;
-//        }
-////        exit("success\ninc\n777777\n55fdsa55");
-//    }
-
     /**
      * @throws Exception
      */
@@ -161,14 +162,13 @@ class SyncService
 
 //load
 
-
     /**
      * @throws Exception
      */
-    public function load(string $filePath): void
+    public function load(): void
     {
         try {
-            $this->unzip($filePath);
+            $this->unzip();
             $this->importFilesExist();
             $this->loadService->load();
         } catch (\Throwable $e) {
@@ -176,12 +176,13 @@ class SyncService
         }
     }
 
-    public function unzip(string $filePath): void
+    public function unzip(): void
     {
-        $extractTo = ROOT . '/storage/app/sync/unzipped';
+        if (!is_readable($this->archiveDir)) throw new Exception('sync unzip dir is not readable');
+
         try {
-            $this->unzipFile($filePath, $extractTo);
-            $this->cleanDir($filePath, $extractTo);
+            $this->unzipFile($this->archiveDir, $this->archiveDir);
+            $this->cleanDir();
             $this->logger->write('Extraction successful!');
         } catch (Exception $e) {
             echo 'Error: ' . $e->getMessage();
@@ -191,7 +192,7 @@ class SyncService
     public function cleanDir(): void
     {
         try {
-            FS::delFilesFromPath($this->importPath, 'zip');
+//            FS::delFilesFromPath($this->archiveDir, 'zip');
             $this->logger->write('Directory is clean');
         } catch (Exception $e) {
             echo 'Directory cleaning Error : ' . $e->getMessage();
@@ -228,22 +229,25 @@ class SyncService
                 throw new Exception("Extraction failed: " . $e->getMessage());
             }
         } else {
-            $errorMsg = [
-                ZipArchive::ER_EXISTS => 'File already exists',
-                ZipArchive::ER_INCONS => 'Zip archive inconsistent',
-                ZipArchive::ER_INVAL => 'Invalid argument',
-                ZipArchive::ER_MEMORY => 'Malloc failure',
-                ZipArchive::ER_NOENT => 'No such file',
-                ZipArchive::ER_NOZIP => 'Not a zip archive',
-                ZipArchive::ER_OPEN => 'Can\'t open file',
-                ZipArchive::ER_READ => 'Read error',
-                ZipArchive::ER_SEEK => 'Seek error',
-            ];
 
-            throw new Exception("Failed to open ZIP file: " . ($errorMsg[$res] ?? "Unknown error (code $res)"));
+
+            throw new Exception("Failed to open ZIP file: " . ($this->errorMsg[$res] ?? "Unknown error (code $res)"));
         }
     }
-
+//    #[NoReturn] protected function checkauth(): void
+//    {
+//        $this->log('checkauth');
+//        if ($_GET['type'] == 'checkauth') {
+//            header("Content-Type: text/plain; charset=utf-8");
+//            echo "success\n";
+//            echo session_name() . "\n";
+//            echo session_id() . "\n";
+//            // Или фиксированные значения, как в вашем примере:
+//            // echo "success\nnic\n7777\n";
+//            exit;
+//        }
+////        exit("success\ninc\n777777\n55fdsa55");
+//    }
 
 }
 
