@@ -12,6 +12,7 @@ use app\service\Sync\Load\LoadCategories;
 use app\service\Sync\Load\LoadPrices;
 use app\service\Sync\Load\LoadProducts;
 use app\service\Sync\Load\LoadService;
+use app\service\Sync\SyncService;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
 
@@ -20,6 +21,8 @@ class SyncController extends AdminscController
     public function __construct(
 //        protected LoadService       $loadService,
         private readonly SyncLogger $logger,
+        private readonly SyncService $service,
+
     )
     {
         Auth::setUser(User::where('email', 'vvoronik@yandex.ru')->first());
