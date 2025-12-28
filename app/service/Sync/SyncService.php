@@ -4,6 +4,7 @@ namespace app\service\Sync;
 
 use app\service\Fs\FS;
 use app\service\Logger\ILogger;
+use app\service\Logger\SyncLogger;
 use app\service\Sync\Load\LoadService;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
@@ -30,7 +31,7 @@ class SyncService
 
     public function __construct(
         protected LoadService $loadService,
-        protected ILogger     $logger,
+        protected SyncLogger     $logger,
     )
     {
         $this->archiveDir = ROOT . '/storage/app/sync/unzipped';
