@@ -20,6 +20,8 @@ class UnitAction implements IShowTable
             ->data(['model' => 'unit'])
             ->column(
                 ColumnBuilder::build('id')
+                    ->emptyRow('0')
+                    ->data(['field' => 'id'])
                     ->width('50px')
                     ->get()
             )
@@ -28,6 +30,7 @@ class UnitAction implements IShowTable
                     ->callback(function ($unit) {
                         return $unit->name;
                     })
+                    ->emptyRow('')
                     ->data(['field' => 'name'])
                     ->contenteditable()
                     ->get()
@@ -37,11 +40,15 @@ class UnitAction implements IShowTable
                     ->callback(function ($unit) {
                         return $unit->full_name;
                     })
+                    ->data(['field' => 'full_name'])
+                    ->emptyRow('')
                     ->contenteditable()
                     ->get()
             )
             ->column(
                 ColumnBuilder::build('Код')
+                    ->data(['field' => 'code'])
+                    ->emptyRow('')
                     ->contenteditable()
                     ->callback(function ($unit) {
                         return $unit->code;

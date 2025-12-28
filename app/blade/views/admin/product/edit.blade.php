@@ -2,7 +2,6 @@
 
 @section('content')
 
-{{--    @deb--}}
     @if ($catItem)
 
         @include('components.breadcrumbs.index', compact('breadcrumbs'))

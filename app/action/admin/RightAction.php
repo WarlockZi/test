@@ -16,28 +16,39 @@ class RightAction implements IShowTable
     {
         return Table::build(Right::all())
             ->pageTitle('Права')
+            ->data(['model'=>'right'])
             ->column(
-                ColumnBuilder::build('id')
-                    ->name('ID')
+                ColumnBuilder::build('ID')
+                    ->callback(function ($right){
+                        return $right->id;
+                    })
+                    ->emptyRow(0)
                     ->get())
             ->column(
-                ColumnBuilder::build('name')
-                    ->name('Право')
+                ColumnBuilder::build('Право')
+                    ->data(['field'=>'name'])
+                    ->callback(function($right){
+                        return $right->name;
+                    })
+                    ->emptyRow('')
                     ->search()
                     ->contenteditable()
                     ->sort()
                     ->width('1fr')
                     ->get())
             ->column(
-                ColumnBuilder::build('description')
-                    ->name('Описание')
-                    ->contenteditable(true)
-                    ->search(true)
+                ColumnBuilder::build('Описание')
+                    ->callback(function($right){
+                        return $right->description;
+                    })
+                    ->data(['field'=>'description'])
+                    ->emptyRow('')
+                    ->contenteditable()
+                    ->search()
                     ->width('1fr')
                     ->get()
             )
             ->addButton()
-            ->model('right')
             ->del()
             ->get();
     }

@@ -8,8 +8,6 @@
             Акции
         </h1>
 
-{{--        @php xdebug_break() @endphp--}}
-
         <h2>Активные акции</h2>
 
         @if (!isset($activePromotions))
@@ -49,7 +47,7 @@
 
         <h2>Закончившиеся акции</h2>
 
-        @if (count($inactivePromotions))
+        @if (isset($inactivePromotions) && count($inactivePromotions))
 
             @foreach ($inactivePromotions as $promotion)
                 @if ($promotion && $promotion->product)

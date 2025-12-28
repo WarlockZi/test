@@ -52,7 +52,7 @@ class Request implements IRequest
 
     private function parseUrl(): void
     {
-        $this->path = parse_url($this->url)['path'];
+        $this->path = parse_url($this->url)['path'] ?? '';
         $query      = parse_url($this->url)['query'] ?? '';
         parse_str($query, $this->params);
     }

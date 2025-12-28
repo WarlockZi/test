@@ -64,9 +64,9 @@ class AppController extends Controller
                 }
             }
         } else {
-            $destroyed = $this->model::destroy($id);
+            $destroyed = $this->model::destroy($body['id']);
             if ($destroyed) {
-                response()->json(['id' => $id, 'popup' => 'Удален']);
+                response()->json(['id' => $body['id'], 'popup' => 'Удален']);
             } else {
                 response()->json(['popup' => 'Не удален']);
             }

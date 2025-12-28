@@ -26,6 +26,7 @@ class Table
     private string $dataAttributes = '';
     private string $html = '';
     private bool $addButton = false;
+    private string $dataModel = '';
     private Collection|null $items;
 
     public static function build(Collection $items): self

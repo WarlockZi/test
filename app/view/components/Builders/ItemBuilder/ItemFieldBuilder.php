@@ -4,6 +4,7 @@
 namespace app\view\components\Builders\ItemBuilder;
 
 
+use app\blade\View;
 use app\blade\views\admin\product\DndBuilder;
 use Illuminate\Database\Eloquent\Model;
 
@@ -42,11 +43,13 @@ class ItemFieldBuilder
         $this->class = $class;
         return $this;
     }
+
     public function checkbox(array $checkbox): static
     {
         $this->checkbox = $checkbox;
         return $this;
     }
+
     public function name(string $name): static
     {
         $this->name = $name;
@@ -64,11 +67,13 @@ class ItemFieldBuilder
         $this->link = $link;
         return $this;
     }
+
     public function dnd(DndBuilder $dnd): static
     {
         $this->dnd = $dnd;
         return $this;
     }
+
     public function relation(string $relation): static
     {
         $this->relation = $relation;
@@ -117,12 +122,15 @@ class ItemFieldBuilder
         return "data-field='$this->field'";
     }
 
-    public function toHtml(string $model): string
+    public function toHtml(): string
     {
-        $field = $this;
-        ob_start();
-        include ROOT . '/app/view/components/Builders/ItemBuilder/row.php';
-        return ob_get_clean();
+        $row = APP->get(View::class)->render('admin.components.catalogItem.row',
+            ['field' => $this]);
+        return $row;
+        //        $field = $this;
+//        ob_start();
+//        include ROOT . '/app/view/components/Builders/ItemBuilder/row.php';
+//        return ob_get_clean();
     }
 
 }
