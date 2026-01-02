@@ -3,12 +3,17 @@
 @section('content')
     @php
         use app\view\components\Icon\Icon;
-    //xdebug_break();
+
     @endphp
 
     <div class="sync">
 
         <div class="container files">
+
+            <fieldset>
+                <legend>load zip archive</legend>
+                <div dnd data-action="/adminsc/sync/uploadZip"><?= Icon::plus() ?></div>
+            </fieldset>
 
             <div dnd data-path="xml"><?= Icon::plus() ?></div>
 
@@ -22,20 +27,20 @@
 
         <div class="container">
 
-                    <div class="buttons-block">
-                        <fieldset>
-                            <legend>удалить</legend>
-                            <div class="buttons-block-left">
-                                <div class="button" id="removecategories">категории</div>
-                                <div class="button" id="removeproducts">товары</div>
-                                <div class="button" id="removeprices">цены</div>
-                            </div>
-                        </fieldset>
-
-                        <div class="buttons-block-right">
-                            <div class="button" id="removeall">Удалить все</div>
-                        </div>
+            <div class="buttons-block">
+                <fieldset>
+                    <legend>удалить</legend>
+                    <div class="buttons-block-left">
+                        <div class="button" id="removecategories">категории</div>
+                        <div class="button" id="removeproducts">товары</div>
+                        <div class="button" id="removeprices">цены</div>
                     </div>
+                </fieldset>
+
+                <div class="buttons-block-right">
+                    <div class="button" id="removeall">Удалить все</div>
+                </div>
+            </div>
 
             <BR>
 

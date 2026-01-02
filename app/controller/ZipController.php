@@ -3,7 +3,9 @@
 namespace app\controller;
 
 use app\service\Fs\FS;
+use app\service\Zip\ZipException;
 use app\service\Zip\ZipService;
+use JetBrains\PhpStorm\NoReturn;
 
 class ZipController extends AppController
 {
@@ -19,7 +21,10 @@ private array $unzippedFiles =  [];
         ];
     }
 
-    public function actionDownload()
+    /**
+     * @throws ZipException
+     */
+    #[NoReturn] public function actionDownload(): void
     {
         $this->service
             ->files($this->unzippedFiles)

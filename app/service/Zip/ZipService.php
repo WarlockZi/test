@@ -4,7 +4,7 @@ namespace app\service\Zip;
 
 use app\service\Fs\FS;
 use app\service\Logger\ErrorLogger;
-use Throwable;
+use ZipArchive;
 
 class ZipService
 {
@@ -12,17 +12,13 @@ class ZipService
     private string $path;
     private string $zipname;
     private string $zippath;
-    private \ZipArchive $zip;
+    private ZipArchive $zip;
     private ErrorLogger $errorLogger;
 
     public function __construct(array $files = [])
     {
         $this->errorLogger = new ErrorLogger('errors.txt');
-        try {
-            $this->files = $files;
-        } catch (\Throwable $exception) {
-            $this->errorLogger->write('__ZipService__' . $exception->getMessage());
-        }
+        $this->files       = $files;
     }
 
     public function path(string $path): ZipService
@@ -42,32 +38,36 @@ class ZipService
         $this->zipname = $zipname;
         return $this;
     }
+    public function unzip(string $to): void
+    {
+        if (!$to) throw new ZipException('destination path is empty');
+        if (!$this->zipname) throw new ZipException('zipname is empty');
+        if (!$this->path) throw new ZipException('zippath is empty');
+        $path = $this->path . $this->zipname;
+        if (!file_exists($path)) throw new ZipException('zipfile not found');
 
-    public function createZip(): ZipService
+        $zip = new ZipArchive();
+        if ($zip->open($path) === TRUE) {
+            $zip->extractTo($this->path.'unzipped/');
+            $zip->close();
+        } else {
+            throw new ZipException('unzip fail');
+        }
+
+
+    }
+    public final function createZip(): ZipService
     {
         try {
-            $zip           = new \ZipArchive();
+            $zip           = new ZipArchive();
             $this->zippath = $this->path . $this->zipname;
-            $this->errorLogger->write(PHP_EOL . 'zip path - ' . $this->zippath);
-            $zip->open($this->zippath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
-            $this->errorLogger->write(PHP_EOL . 'new zip created and opened');
+            $zip->open($this->zippath, ZipArchive::CREATE | ZipArchive::OVERWRITE);
+
             foreach ($this->files as $file) {
                 $file = FS::platformSlashes($file);
-                $this->errorLogger->write(PHP_EOL . 'file path - ' . $file);
-                if (file_exists($file)) {
-                    try {
-                        if ($zip->addFile($file, basename($file))) {
-                            $this->errorLogger->write(PHP_EOL . ' -- basename added- ' . basename($file));
-                        } else {
-                            $this->errorLogger->write(PHP_EOL . ' -- file not added');
-                        }
-                    } catch (Throwable $exception) {
-                        $exc = $exception;
-                        $this->errorLogger->write(PHP_EOL . ' -- file not added' . $exc);
-                    }
 
-                } else {
-                    $this->errorLogger->write(PHP_EOL . $file . ' -- file not exists');
+                if (file_exists($file)) {
+                    $zip->addFile($file, basename($file));
                 }
             }
             $zip->close();
@@ -78,8 +78,11 @@ class ZipService
         return $this;
     }
 
-    public function download(): void
+    public final function download(): void
     {
+        if (!$this->zipname) throw new ZipException('zipname is empty');
+        if (!$this->zippath) throw new ZipException('zippath is empty');
+
         try {
             header('Content-Type: application/zip');
             header('Content-disposition: attachment; filename=' . $this->zipname);

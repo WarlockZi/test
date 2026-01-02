@@ -3,32 +3,45 @@
 namespace app\controller\Admin;
 
 use app\decorators\MeasureExecutionTime;
+use app\formRequest\SyncDownloadZipRequest;
 use app\model\User;
 use app\service\AuthService\Auth;
+use app\service\Fs\FS;
 use app\service\Logger\SyncLogger;
 use app\service\Response;
 use app\service\Router\IRequest;
+use app\service\Storage\SyncStorage;
 use app\service\Sync\Load\LoadCategories;
 use app\service\Sync\Load\LoadPrices;
 use app\service\Sync\Load\LoadProducts;
-use app\service\Sync\Load\LoadService;
 use app\service\Sync\SyncService;
+use app\service\Zip\ZipService;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
 
 class SyncController extends AdminscController
 {
     public function __construct(
-//        protected LoadService       $loadService,
-        private readonly SyncLogger $logger,
+        private readonly SyncLogger  $logger,
         private readonly SyncService $service,
-
+        private readonly ZipService  $zipService,
     )
     {
         Auth::setUser(User::where('email', 'vvoronik@yandex.ru')->first());
         parent::__construct();
     }
-
+    /**
+     * @throws Exception
+     */
+    #[NoReturn] public function actionLoad(): void
+    {
+        $this->logger->write('SyncController начал загрузку');
+        $this->service->load();
+        if (DEV) {
+            Response::exitWithPopup('Все перенесено');
+        }
+        exit();
+    }
     /**
      * @throws Exception
      */
@@ -37,6 +50,20 @@ class SyncController extends AdminscController
         $this->service->requestFrom1s();
     }
 
+    /**
+     * @throws Exception
+     */
+    #[NoReturn] public function actionUploadZip(SyncDownloadZipRequest $req): void
+    {
+        $file = $req->validated()['file'];
+        $name = $file->getClientOriginalName();
+        $path = SyncStorage::getPath();
+        $file->move(FS::platformSlashes(ROOT. $path),$name);
+        $this->zipService
+            ->path($path)
+            ->zipname($name)
+            ->unzip(to:ROOT.$path.$name);
+    }
 
     //remove
     #[NoReturn] public function actionRemoveall(): void
@@ -66,15 +93,8 @@ class SyncController extends AdminscController
 
 
     //load
-    #[NoReturn] public function actionLoad(): void
-    {
-        $this->logger->write('Начата ручная загрузка');
-//        $this->service->load();
-        if (DEV) {
-            Response::exitWithPopup('Все перенесено');
-        }
-        exit();
-    }
+
+
 
     #[NoReturn] public function actionLoadCategories(LoadCategories $loadCategories): void
     {

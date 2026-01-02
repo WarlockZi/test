@@ -1,12 +1,12 @@
 import { $ } from "../common.js";
 import { qs } from "../constants";
-import "../components/footer/footer.scss";
-import "../components/popup.scss";
+import "@components/popup.scss";
 import "./admin.scss";
 
 import "./cache/Cache.js";
-import "../components/accordion/accordion.js";
-import "../components/date/date.js";
+import "@components/accordion/accordion.js";
+import "@components/date/date.js";
+import "@components/adminPanel/adminPanel.js";
 
 import "./sync1c/sync1c.js";
 import "./Planning/planning.js";
@@ -14,21 +14,15 @@ import "./Settings/settings.js";
 import "./Videoinstructions/videoinstructions.js";
 import "./Category/Category.js";
 
-import "@components/adminPanel/adminPanel.js";
-
 import AdminHeader from "../components/header/header-adm.js";
 import Search from "../components/search/search.js";
-// import '../components/table/Table.js'
 import adminScroll from "@components/scroll/adminScroll.js";
 import Navigation from "./components/Navigation.js";
 
 import Pages from "@src/Admin/Pages/pages.js";
-import Users from "@src/Admin/User/users.js";
-import User from "@src/Admin/User/user.js";
 import AdminSidebar from "@src/Admin/components/AdminSidebar/AdminSidebar.js";
 import Cache from "./cache/Cache.js";
 import adminPanel from "@components/adminPanel/adminPanel.js";
-// import Promotion from "@src/Promotions/Promotion.js";
 
 $(document).ready(async function () {
   document.body.classList.remove("preload");
@@ -36,19 +30,19 @@ $(document).ready(async function () {
   const admin = window.location.pathname.includes("adminsc");
   if (!admin) return false;
 
-  const table = $("[custom-table]").first();
-  if (table) {
-    const { default: Tables } = await import("../components/table/Tables.js");
-    new Tables();
-  }
   new Cache();
   new Search(true);
   new Navigation();
   new AdminHeader();
   new adminPanel();
-  adminScroll();
-  const adminSidebar = $(".sidebar").first();
-  new AdminSidebar(adminSidebar);
+  new adminScroll();
+  new AdminSidebar();
+
+  const table = $("[custom-table]").first();
+  if (table) {
+    const { default: Tables } = await import("../components/table/Tables.js");
+    new Tables();
+  }
 
   if (window.location.pathname === "/adminsc/pages") {
     new Pages();
@@ -64,17 +58,19 @@ $(document).ready(async function () {
     const { default: ProductFilter } = await import(
       "./ProductFilter/ProductFilter.js"
     );
-    new ProductFilter($(".products-filter").first());
+    new ProductFilter();
   }
-  // else if (window.location.pathname.startsWith('/adminsc/test/do')){
-  //    new TestDo($('.test-do').first())
-  // }
+
   const promotion = $(".promotion-edit").first();
   if (promotion) {
     const { default: Promotion } = await import("@src/Promotions/Promotion.js");
     new Promotion();
   }
-
+  const dnd = $("[dnd]");
+  if (dnd) {
+    const { default: Dnds } = await import("@components/dnd/Dnds.js");
+    new Dnds();
+  }
   if (document[qs](".modal")) {
     const { default: Modal } = await import("../components/Modal/modal.js");
     new Modal();

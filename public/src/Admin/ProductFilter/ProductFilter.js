@@ -4,8 +4,10 @@ import { $, post } from "@src/common.js";
 import SelectNew from "@src/components/select/SelectNew.js";
 
 export default class ProductFilter {
-  constructor(productsFilter) {
-    if (!productsFilter) return;
+  constructor() {
+    const productsFilter = $(".products-filter").first();
+    if (!productsFilter) return false;
+
     this.wrap = productsFilter;
     this.panel = productsFilter[qs](".list-filter");
     this.url = "/adminsc/report/updateFilter";

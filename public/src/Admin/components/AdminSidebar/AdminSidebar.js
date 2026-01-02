@@ -4,7 +4,8 @@ import { ael, qs } from "../../../constants.js";
 import { document } from "postcss";
 
 export default class AdminSidebar {
-  constructor(sidebar) {
+  constructor() {
+    const sidebar = $(".sidebar").first();
     if (!sidebar) return false;
 
     this.sidebar = sidebar;

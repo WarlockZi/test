@@ -3,8 +3,8 @@
 namespace app\service\Sync;
 
 use app\service\Fs\FS;
-use app\service\Logger\ILogger;
 use app\service\Logger\SyncLogger;
+use app\service\Storage\SyncStorage;
 use app\service\Sync\Load\LoadService;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
@@ -14,9 +14,10 @@ use ZipArchive;
 
 class SyncService
 {
-     private string $archiveDir = '';
+    private string $archiveDir = '';
     private string $importFile = '';
     private string $offerFile = '';
+    private string $unzippedDir = '';
     private array $errorMsg = [
         ZipArchive::ER_EXISTS => 'File already exists',
         ZipArchive::ER_INCONS => 'Zip archive inconsistent',
@@ -29,20 +30,26 @@ class SyncService
         ZipArchive::ER_SEEK => 'Seek error',
     ];
 
+    /**
+     * @throws SyncException
+     */
     public function __construct(
         protected LoadService $loadService,
-        protected SyncLogger     $logger,
+        protected SyncLogger  $logger,
+        private SyncActions   $actions,
     )
     {
-        $this->archiveDir = ROOT . '/storage/app/sync/unzipped';
-        $this->importFile = $this->archiveDir . 'import0_1.xml';
-        $this->offerFile  = $this->archiveDir . 'offers0_1.xml';
+        $this->actions    = new SyncActions(new SyncLogger());
+        $this->archiveDir = ROOT . SyncStorage::getPath();
+        $this->unzippedDir = ROOT. SyncStorage::getUnzippedDir();
+        $this->importFile = $this->unzippedDir . 'import0_1.xml';
+        $this->offerFile  = $this->unzippedDir . 'offers0_1.xml';
     }
 
     /**
      * @throws Exception
      */
-    public function requestFrom1s(): void
+    #[NoReturn] public function requestFrom1s(): void
     {
         header("Content-Type: text/plain; charset=utf-8");
         header("Pragma: no-cache");
@@ -51,19 +58,11 @@ class SyncService
             if (isset($_GET['type']) && $_GET['type'] === 'catalog') {
 
                 if (isset($_GET['mode']) && $_GET['mode'] === 'checkauth') {
-
-                    $this->logger->write('checkauth');
-                    echo "success\n";                    /// success inc
-                    echo "sess_name **" . session_name() . "\n"; ///  777777
-                    echo session_id() . "\n"; ///   55fdsa55;
-                    exit;
+                    $this->actions->checkAuth();
                 }
 
                 if (isset($_GET['mode']) && $_GET['mode'] === 'init') {
-                    $this->logger->write('zip');
-                    echo "zip=yes\n";
-                    echo "file_limit=104857600\n"; // 100MB limit
-                    exit;
+                    $this->actions->init();
                 }
             }
         }
@@ -72,9 +71,8 @@ class SyncService
             $this->import();
         }
 
-        http_response_code(400);
-        echo "failure\n";
-        echo "Invalid request";
+        $this->actions->badRequest();
+
     }
 
     /**
@@ -85,68 +83,19 @@ class SyncService
         if (isset($_GET['mode']) && $_GET['mode'] === 'file') {
             $this->logger->write('file');
 
-            if (!isset($_GET['filename'])) {
-                http_response_code(400);
-                echo "failure\n";
-                echo "Filename not specified";
-                exit;
-            }
-
-            $filename = $_GET['filename'];
-
-            // Validate filename (basic security check)
-            if (preg_match('/\.\.|\/|\\\\/', $filename)) {
-                http_response_code(400);
-                echo "failure\n";
-                echo "Invalid filename";
-                exit;
-            }
-
-            $importDir = FS::platformSlashes(ROOT . $this->importPath);
-            if (!file_exists($importDir)) {
-                mkdir($importDir, 0755, true);
-            }
+            $filename = $this->actions->validateFilename($_GET['filename'] ?? '');
 
             $fileContent = file_get_contents('php://input');
 
-            $filePath = $importDir . basename($filename);
+            $filePath = $this->unzippedDir . $filename;
             if (file_put_contents($filePath, $fileContent) !== false) {
                 $this->load($filePath);
                 $this->logger->write('Load успех' . PHP_EOL);
-                $this->sendHTMLSuccessMessage();
+                $this->actions->sendHTMLSuccessMessage();
             } else {
-                http_response_code(500);
-                echo "failure\n";
-                exit("Failed to save file");
+                $this->actions->failure("Failed to save file");
             }
         }
-
-    }
-
-    #[NoReturn] private function sendHTMLSuccessMessage(): void
-    {
-        $date = date('Y-m-d');
-        $time = date('H:i:s');
-        echo "success\n";
-        echo $date . "\n";
-        echo $time . "\n";
-        exit();
-    }
-
-    #[NoReturn] private function sendXMLSuccessMessage(): void
-    {
-        header('Content-Type: text/xml; charset=utf-8');
-
-        $xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><КоммерческаяИнформация></КоммерческаяИнформация>');
-        $xml->addAttribute('ВерсияСхемы', '2.11');
-        $xml->addAttribute('ДатаФормирования', date('Y-m-d'));
-
-        $successNode = $xml->addChild('УспешноВыполнено');
-        $successNode->addAttribute('xmlns', 'urn:1C.ru:commerceml_3');
-
-        $successNode->addChild('Сообщение', 'Данные успешно загружены');
-
-        echo $xml->asXML();
     }
 
     /**
@@ -182,32 +131,30 @@ class SyncService
         if (!is_readable($this->archiveDir)) throw new Exception('sync unzip dir is not readable');
 
         try {
-            $this->unzipFile($this->archiveDir, $this->archiveDir);
-            $this->cleanDir();
+            $this->unzipFile($this->archiveDir, $this->unzippedDir);
+//            $this->cleanDir();
             $this->logger->write('Extraction successful!');
         } catch (Exception $e) {
-            echo 'Error: ' . $e->getMessage();
+            $this->logger->write('Extraction error!'. $e->getMessage());
         }
     }
 
     public function cleanDir(): void
     {
         try {
-//            FS::delFilesFromPath($this->archiveDir, 'zip');
+            FS::delFilesFromPath($this->archiveDir, 'zip');
             $this->logger->write('Directory is clean');
-        } catch (Exception $e) {
-            echo 'Directory cleaning Error : ' . $e->getMessage();
+        } catch (\Throwable $e) {
+            $this->logger->write('Directory cleaning Error : ' . $e->getMessage());
         }
     }
 
     /**
      * @throws Exception
      */
-    public function unzipFile($zipFile, $extractTo): bool
+    public function unzipFile(string $zipFile, string $extractTo): bool
     {
-        if (!file_exists($zipFile)) {
-            throw new Exception("ZIP file not found: $zipFile");
-        }
+        if (!file_exists($zipFile)) throw new Exception("ZIP file not found: $zipFile");
 
         if (!file_exists($extractTo)) {
             if (!mkdir($extractTo, 0777, true)) {
@@ -230,25 +177,8 @@ class SyncService
                 throw new Exception("Extraction failed: " . $e->getMessage());
             }
         } else {
-
-
             throw new Exception("Failed to open ZIP file: " . ($this->errorMsg[$res] ?? "Unknown error (code $res)"));
         }
     }
-//    #[NoReturn] protected function checkauth(): void
-//    {
-//        $this->log('checkauth');
-//        if ($_GET['type'] == 'checkauth') {
-//            header("Content-Type: text/plain; charset=utf-8");
-//            echo "success\n";
-//            echo session_name() . "\n";
-//            echo session_id() . "\n";
-//            // Или фиксированные значения, как в вашем примере:
-//            // echo "success\nnic\n7777\n";
-//            exit;
-//        }
-////        exit("success\ninc\n777777\n55fdsa55");
-//    }
-
 }
 
