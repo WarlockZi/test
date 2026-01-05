@@ -62,7 +62,7 @@ class SyncController extends AdminscController
         $this->zipService
             ->path($path)
             ->zipname($name)
-            ->unzip(to:ROOT.$path.$name);
+            ->unzip('unzipped/');
     }
 
     //remove

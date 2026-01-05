@@ -48,7 +48,7 @@ class ZipService
 
         $zip = new ZipArchive();
         if ($zip->open($path) === TRUE) {
-            $zip->extractTo($this->path.'unzipped/');
+            $zip->extractTo($this->path.$to);
             $zip->close();
         } else {
             throw new ZipException('unzip fail');

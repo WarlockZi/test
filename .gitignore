@@ -4,6 +4,7 @@ phpstorm.config.js
 .git
 refs/
 .env
+.env.development
 
 storage/framework/container/CompiledContainer.php
 storage/framework/caches/blade/*
