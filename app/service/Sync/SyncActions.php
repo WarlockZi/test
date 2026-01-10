@@ -14,24 +14,29 @@ class SyncActions
     public function __construct(private SyncLogger $logger)
     {
     }
-    #[NoReturn] public function saveFiles(string $archiveDir): void
+
+    /**
+     * @throws Exception
+     */
+    public function saveFiles(string $archiveDir): string
     {
         $this->logger->write('trying to safe file');
 
-        $filename = $this->validateFilename($_GET['filename'] ?? '');
+        $filename    = $this->validateFilename($_GET['filename'] ?? '');
         $fileContent = file_get_contents('php://input');
+        $filePath    = $archiveDir . $filename;
 
-        $filePath = $archiveDir. $filename;
         if (!file_put_contents($filePath, $fileContent)) {
             $this->failure('failed to save file');
         }
+        return $filePath;
     }
 
+    /**
+     * @throws Exception
+     */
     public function unzip(string $archiveDir, string $unzippedDir): void
     {
-        if (!is_readable($archiveDir)) throw new SyncException('sync archive dir is not readable');
-        if (!is_readable($unzippedDir)) throw new SyncException('sync unzip dir is not readable');
-
         try {
             $this->unzipFiles($archiveDir, $unzippedDir);
 //            $this->cleanDir();
@@ -42,20 +47,26 @@ class SyncActions
     }
 
 
+    public function createDirsIfNotExist(string $archiveDir, string $unzippedDir): void
+    {
+        if (!file_exists($archiveDir)) {
+            if (!mkdir($archiveDir, 0755, true)) {
+                throw new Exception("Failed to create directory: $archiveDir");
+            }
+        }
+        if (!file_exists($unzippedDir)) {
+            if (!mkdir($unzippedDir, 0755, true)) {
+                throw new Exception("Failed to create directory: $unzippedDir");
+            }
+        }
+    }
+
     /**
      * @throws Exception
      */
-    private function unzipFiles(string $zipFile, string $extractTo): void
+    private function unzipFiles(string $archiveDir, string $unzippedDir): void
     {
-        if (!file_exists($zipFile)) throw new Exception("ZIP file not found: $zipFile");
 
-        if (!file_exists($extractTo)) {
-            if (!mkdir($extractTo, 0777, true)) {
-                throw new Exception("Failed to create directory: $extractTo");
-            }
-        } elseif (!is_writable($extractTo)) {
-            throw new Exception("Destination is not writable: $extractTo");
-        }
 
         $zip = new ZipArchive;
         $res = $zip->open($zipFile);
@@ -73,17 +84,18 @@ class SyncActions
             throw new Exception("Failed open ZIP:" . $zipFile);
         }
     }
-    #[NoReturn] public function validateFilename(string $filename): string
+
+    public function validateFilename(string $filename): string
     {
         if (!$filename) {
             $this->failure('Filename not specified');
         }
-        // basic security check
         if (preg_match('/\.\.|\/|\\\\/', $filename)) {
             $this->failure('Insecure filename');
         }
         return basename($filename);
     }
+
     #[NoReturn] public function checkauth(): void
     {
         $this->logger->write('checkauth');
@@ -105,7 +117,6 @@ class SyncActions
     }
 
 
-
     #[NoReturn] public function sendHTMLSuccessMessage(): void
     {
         $date = date('Y-m-d');
@@ -115,6 +126,7 @@ class SyncActions
         echo $time . "\n";
         exit();
     }
+
     #[NoReturn] public function sendXMLSuccessMessage(): void
     {
         header('Content-Type: text/xml; charset=utf-8');
@@ -130,6 +142,7 @@ class SyncActions
 
         echo $xml->asXML();
     }
+
     #[NoReturn] public function badRequest(): void
     {
         $this->failure('Invalid request');
@@ -137,7 +150,7 @@ class SyncActions
 
     #[NoReturn] public function failure(string $message): void
     {
-        error_log($message.$_GET['type']);
+        error_log($message . $_GET['type']);
         http_response_code(400);
         echo "failure\n";
         echo "$message";

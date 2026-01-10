@@ -5,7 +5,7 @@ use JetBrains\PhpStorm\NoReturn;
 $errorsArray = [];
 if (DEV) {
     error_reporting(E_ALL);
-    ini_set('display_errors', 1);
+    ini_set('display_errors', 'On');
 
     if (function_exists('xdebug_enable')) {
         xdebug_enable();
@@ -14,12 +14,13 @@ if (DEV) {
     set_exception_handler('devExceptionHandler');
     register_shutdown_function('devShutdownHandler');
 } else {
-    error_reporting(0);
-    ini_set('display_errors', 0);
+    error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE);
+    ini_set('display_errors', 'Off');
+    ini_set('log_errors', "On");
 
     set_error_handler('productionErrorHandler');
     set_exception_handler('productionExceptionHandler');
-//    register_shutdown_function('productionShutdownHandler');
+    register_shutdown_function('productionShutdownHandler');
 }
 
 function productionErrorHandler($errno, $errstr, $errfile, $errline)

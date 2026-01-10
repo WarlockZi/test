@@ -36,11 +36,12 @@ class SyncController extends AdminscController
     #[NoReturn] public function actionLoad(): void
     {
         $this->logger->write('SyncController начал загрузку');
-        $this->service->load();
-        if (DEV) {
-            Response::exitWithPopup('Все перенесено');
-        }
-        exit();
+        $this->service->requestFrom1s();
+//        $this->service->load();
+//        if (DEV) {
+//            Response::exitWithPopup('Все перенесено');
+//        }
+//        exit();
     }
     /**
      * @throws Exception

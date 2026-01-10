@@ -9,7 +9,6 @@ use app\service\Sync\Load\LoadService;
 use app\service\Zip\ZipErrorMessages;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
-use ZipArchive;
 
 
 class SyncService
@@ -24,6 +23,7 @@ class SyncService
 
     /**
      * @throws SyncException
+     * @throws Exception
      */
     public function __construct(
         protected LoadService $loadService,
@@ -36,6 +36,7 @@ class SyncService
         $this->unzippedDir = ROOT . SyncStorage::getUnzippedDir();
         $this->importFile  = $this->unzippedDir . 'import0_1.xml';
         $this->offerFile   = $this->unzippedDir . 'offers0_1.xml';
+        $this->actions->createDirsIfNotExist($this->archiveDir, $this->unzippedDir);
     }
 
     /**
@@ -58,29 +59,27 @@ class SyncService
                 }
             }
         }
-
+        $cont = file_get_contents('php://input');
+        $json = json_decode($cont, true);
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->import();
         }
-
         $this->actions->badRequest();
-
     }
 
     /**
      * @throws Exception
      */
-    private function import(): void
+    #[NoReturn] private function import(): void
     {
-        if (isset($_GET['mode']) && $_GET['mode'] === 'file') {
-            $this->logger->write('file');
-            $this->actions->saveFiles($this->archiveDir);
-            $this->actions->unzip($this->archiveDir, $this->unzippedDir);
-            $this->load();
-            $this->logger->write('Load успех' . PHP_EOL);
-            $this->actions->sendHTMLSuccessMessage();
-
+        if (!isset($_GET['mode']) || $_GET['mode'] === 'file') {
+            $this->actions->failure('Mode is not file');
         }
+        $this->logger->write('import and load');
+        $filePath = $this->actions->saveFiles($this->archiveDir);
+        $this->actions->unzip($this->archiveDir, $this->unzippedDir, $filePath);
+        $this->load();
+
     }
 
     /**
@@ -104,12 +103,13 @@ class SyncService
     {
         try {
             $this->importFilesExist();
-            $this->loadService->load();
+            $this->loadService->run();
+            $this->logger->write('Load успех' . PHP_EOL);
+            $this->actions->sendHTMLSuccessMessage();
         } catch (\Throwable $e) {
             $this->logger->write("--- Ошибка load " . $e->getMessage());
         }
     }
-
 
 
     public function cleanDir(): void
