@@ -18,6 +18,18 @@ class SyncActions
     /**
      * @throws Exception
      */
+    public function logRequest(array $req): void
+    {
+        $this->logger->write(implode(', ', array_map(
+            fn($key, $value) => "$key: $value",
+            array_keys($req),
+            array_values($req)
+        )));
+    }
+
+    /**
+     * @throws Exception
+     */
     public function saveFiles(string $archiveDir): string
     {
         $this->logger->write('trying to safe file');
@@ -35,10 +47,10 @@ class SyncActions
     /**
      * @throws Exception
      */
-    public function unzip(string $archiveDir, string $unzippedDir): void
+    public function unzip(string $filePath, string $unzippedDir): void
     {
         try {
-            $this->unzipFiles($archiveDir, $unzippedDir);
+            $this->unzipFiles($filePath, $unzippedDir);
 //            $this->cleanDir();
             $this->logger->write('Extraction successful!');
         } catch (Exception $e) {
@@ -64,25 +76,24 @@ class SyncActions
     /**
      * @throws Exception
      */
-    private function unzipFiles(string $archiveDir, string $unzippedDir): void
+    private function unzipFiles(string $zipFile, string $unzippedDir): void
     {
-
-
         $zip = new ZipArchive;
         $res = $zip->open($zipFile);
 
-        if ($res === TRUE) {
-            try {
-                $zip->extractTo($extractTo);
-                $zip->close();
-                return;
-            } catch (Exception $e) {
-                $zip->close();
-                throw new Exception("Extraction failed: " . $e->getMessage());
-            }
-        } else {
+        if ($res !== TRUE){
             throw new Exception("Failed open ZIP:" . $zipFile);
         }
+
+        try {
+            $zip->extractTo($unzippedDir);
+            $zip->close();
+            return;
+        } catch (Exception $e) {
+            $zip->close();
+            throw new Exception("Extraction failed: " . $e->getMessage());
+        }
+
     }
 
     public function validateFilename(string $filename): string
@@ -100,8 +111,8 @@ class SyncActions
     {
         $this->logger->write('checkauth');
         echo "success\n";                               /// success inc
-        echo "sess_name **" . session_name() . "\n";    ///  777777
-        echo session_id() . "\n";                       ///   55fdsa55;
+        echo "sess_name " . session_name() . "\n";    ///  777777
+        echo 'sess_id ' . session_id() . "\n";                       ///   55fdsa55;
         exit;
     }
 
@@ -150,7 +161,7 @@ class SyncActions
 
     #[NoReturn] public function failure(string $message): void
     {
-        error_log($message . $_GET['type']);
+        error_log($message);
         http_response_code(400);
         echo "failure\n";
         echo "$message";

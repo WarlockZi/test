@@ -2,7 +2,7 @@
 
 namespace app\controller\Admin;
 
-use app\model\Test;
+use prod\app\model\Test;
 use app\repository\AnswerRepository;
 use app\repository\TestRepository;
 use app\service\Response;

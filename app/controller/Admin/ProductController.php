@@ -74,11 +74,11 @@ class ProductController extends AdminscController
 
 //    public function actionChangebaseisshippable(IRequest $request): void
 //    {
-//        $this->actions->changeBaseIsShippable($request);
+//        $this->actions.js->changeBaseIsShippable($request);
 //    }
 //    public function actionBaseIsShippable(IRequest $request): void
 //    {
-//        $this->actions->changeBaseIsShippable($request);
+//        $this->actions.js->changeBaseIsShippable($request);
 //    }
 
 }

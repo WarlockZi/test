@@ -36,6 +36,7 @@ class LoadService
     protected function setCategoriesData(): void
     {
         $file                 = ROOT . env('SYNC_PATH') . env('SYNC_IMPORT_FILE');
+
         $xml                  = simplexml_load_file($file);
         $xmlObj               = json_decode(json_encode($xml), true);
         $this->categoriesData = $xmlObj['Классификатор']['Группы']['Группа']['Группы']['Группа'];
@@ -57,7 +58,7 @@ class LoadService
      */
     public function LoadCategories(): void
     {
-        $this->setCategoriesData();
+//        $this->setCategoriesData();
         $loadCategories = new LoadCategories();
         $loadCategories->load();
 

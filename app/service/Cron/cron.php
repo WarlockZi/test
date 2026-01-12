@@ -3,7 +3,7 @@
 use app\service\Logger\SyncLogger;
 use app\service\Sync\Load\LoadService;
 use app\service\Sync\SyncActions;
-use app\service\Sync\SyncService;
+use prod\app\service\Sync\SyncService;
 
 $_SERVER["REQUEST_URI"] = '/adminsc/sync/load';
 

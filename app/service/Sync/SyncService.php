@@ -47,6 +47,8 @@ class SyncService
         header("Content-Type: text/plain; charset=utf-8");
         header("Pragma: no-cache");
 
+        $this->actions->logRequest($_SERVER);
+
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             if (isset($_GET['type']) && $_GET['type'] === 'catalog') {
 
@@ -59,8 +61,7 @@ class SyncService
                 }
             }
         }
-        $cont = file_get_contents('php://input');
-        $json = json_decode($cont, true);
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->import();
         }
@@ -72,12 +73,12 @@ class SyncService
      */
     #[NoReturn] private function import(): void
     {
-        if (!isset($_GET['mode']) || $_GET['mode'] === 'file') {
+        if (!isset($_GET['mode']) || $_GET['mode'] !== 'file') {
             $this->actions->failure('Mode is not file');
         }
         $this->logger->write('import and load');
         $filePath = $this->actions->saveFiles($this->archiveDir);
-        $this->actions->unzip($this->archiveDir, $this->unzippedDir, $filePath);
+        $this->actions->unzip($filePath, $this->unzippedDir);
         $this->load();
 
     }
@@ -102,7 +103,7 @@ class SyncService
     public function load(): void
     {
         try {
-            $this->importFilesExist();
+//            $this->importFilesExist();
             $this->loadService->run();
             $this->logger->write('Load успех' . PHP_EOL);
             $this->actions->sendHTMLSuccessMessage();

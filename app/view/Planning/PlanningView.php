@@ -4,7 +4,7 @@
 namespace app\view\Planning;
 
 
-use app\model\Todo;
+use prod\app\model\Todo;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\TableBuilder\Table;
 

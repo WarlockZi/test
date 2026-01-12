@@ -2,7 +2,7 @@
 
 namespace app\view\Test;
 
-use app\model\Test;
+use prod\app\model\Test;
 use app\repository\TestRepository;
 use app\service\Fs\FS;
 use app\view\Accordion\AccordionBuilder;

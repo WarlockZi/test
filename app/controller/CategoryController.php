@@ -53,7 +53,7 @@ class CategoryController extends AppController
 //            $category = $this->repo->indexInstore($request->slug);
 //
 //            if (!$category) {
-//                $similarCategories = $this->actions->similarCategories($request->slug);
+//                $similarCategories = $this->actions.js->similarCategories($request->slug);
 //                view('category.notFound',
 //                    compact('category', 'similarCategories'),
 //                    404);
@@ -69,7 +69,7 @@ class CategoryController extends AppController
 //            );
 //        } else {
 //            $categories = APP->get('rootCategories');
-//            $meta = $this->actions->setCategoriesMeta();
+//            $meta = $this->actions.js->setCategoriesMeta();
 //            view('category.categories', compact('meta', 'categories'));
 //        }
 //    }

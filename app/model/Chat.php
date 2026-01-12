@@ -13,7 +13,7 @@ class Chat extends Model
         'php_session'
     ];
 
-    public function messages(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function messages(): Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Message::class);
     }

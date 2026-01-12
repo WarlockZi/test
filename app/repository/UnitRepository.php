@@ -4,7 +4,7 @@
 namespace app\repository;
 
 
-use app\model\Test;
+use prod\app\model\Test;
 
 use app\model\Unit;
 use Illuminate\Database\Eloquent\Collection;

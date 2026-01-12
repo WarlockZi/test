@@ -3,7 +3,7 @@
 namespace app\model;
 
 
-class Question extends \Illuminate\Database\Eloquent\Model
+use viuse viclass Question extends \Illuminate\Database\Eloquent\Model
 {
     public $timestamps = false;
 

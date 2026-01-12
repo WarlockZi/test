@@ -5,7 +5,7 @@ namespace app\view\Question;
 
 
 use app\model\Question;
-use app\model\Test;
+use prod\app\model\Test;
 use app\repository\ImageRepository;
 use app\repository\QuestionRepository;
 use app\service\Fs\FS;

@@ -62,8 +62,7 @@
 
             <BR>
             <a class="button"
-               title="/adminsc/sync/init?type=catalog&mode=checkauth"
-               href="/adminsc/sync/load">type=catalog -- mode=checkauth</a>
+               href="/adminsc/sync/init">type=catalog -- mode=checkauth</a>
 
             <BR>
             <div class="button" id="">Фильтровать картинки</div>

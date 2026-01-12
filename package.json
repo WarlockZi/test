@@ -14,7 +14,10 @@
     "vdev": "vite --debug hmr",
     "vprev": "vite preview",
     "vbuild": "vite build",
-    "nodemon": "npx nodemon test/js/sync/server.js"
+    "nodedebug": "npx nodemon test/js/sync/server.js",
+    "sync1": "node --watch test/js/sync1/server.js",
+    "sync": "node --watch test/js/sync/server.js",
+    "nodemon": "nodemon test/js/sync/*.js"
   },
   "devDependencies": {
     "@babel/core": "^7.24.6",
@@ -31,6 +34,7 @@
     "globals": "^16.0.0",
     "mini-css-extract-plugin": "^2.9.0",
     "node-quill-converter": "^0.0.0",
+    "nodemon": "^3.1.11",
     "pre-commit": "^1.0.10",
     "prettier": "^3.3.0",
     "sass": "^1.77.4",
