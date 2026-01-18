@@ -66,15 +66,19 @@ class LoadCategories extends LoadService
      */
     protected function fillItem(array $group, string|null $parent): Category
     {
-        $item['1s_id']           = $group['Ид'];
+        $item['1s_id']          = $group['Ид'];
         $item['category_1s_id'] = $parent;
 
         $item['name']       = $group['Наименование'];
         $item['slug']       = SlugService::slug($item['name']);
         $item['deleted_at'] = NULL;
 
-        $cat = Category::withTrashed()
-            ->updateOrCreate(['s_id' => $item['s_id']], $item);
+        try {
+            $cat = Category::withTrashed()
+                ->updateOrCreate(['s_id' => $item['s_id']], $item);
+        } catch (Throwable $exception) {
+            $e = $exception;
+        }
         $this->setCategoryOwnProps($cat);
 
         if ($cat->wasRecentlyCreated) {

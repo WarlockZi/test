@@ -31,34 +31,10 @@
     "illuminate/filesystem": "^8.83",
     "staudenmeir/laravel-adjacency-list": "^1.0",
     "league/flysystem": "^3.30",
-    "php": "8.3.6",
-    "ext-curl": "*",
-    "ext-simplexml": "*",
-    "ext-pdo": "*",
     "ext-zip": "*",
-    "ext-xdebug": "*",
-    "ext-gd": "*",
-    "ext-fileinfo": "*",
-    "ext-mbstring": "*",
-    "ext-redis": "*",
-    "ext-http": "*",
-    "ext-posix": "*"
+    "ext-simplexml": "*"
   },
   "config": {
-    "platform-check": false,
-    "platform": {
-      "php": "8.3.6",
-      "ext-curl": "*",
-      "ext-simplexml": "*",
-      "ext-pdo": "*",
-      "ext-zip": "*",
-      "ext-xdebug": "*",
-      "ext-gd": "*",
-      "ext-fileinfo": "*",
-      "ext-mbstring": "*",
-      "ext-redis": "*",
-      "ext-http": "*",
-      "ext-posix": "*"
-    }
+    "platform-check": false
   }
 }

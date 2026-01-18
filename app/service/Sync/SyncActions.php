@@ -9,13 +9,11 @@ use JetBrains\PhpStorm\NoReturn;
 use SimpleXMLElement;
 use ZipArchive;
 
-
 class SyncActions
 {
     public function __construct(private SyncLogger $logger)
     {
     }
-
     /**
      * @throws Exception
      */
@@ -26,7 +24,18 @@ class SyncActions
         }
         return false;
     }
-
+    /**
+     * @throws Exception
+     */
+    public function clearUnzippedDir(string $unzippedDir): void
+    {
+        $files = glob($unzippedDir . '*');
+        foreach ($files as $file) {
+            if (is_file($file)) {
+                unlink($file);
+            }
+        }
+    }
     /**
      * @throws Exception
      */

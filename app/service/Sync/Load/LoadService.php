@@ -48,6 +48,11 @@ class LoadService
      */
     #[NoReturn] public function run(): void
     {
+        set_exception_handler([LoadErrorHandler::class,'handleException']);
+//        restore_exception_handler(); // Removes user handler
+//        $currentErrorHandler = set_error_handler(null);
+        set_error_handler([LoadErrorHandler::class,'handleError']);
+//        restore_error_handler(); // Removes user handler
         $this->LoadCategories();
         $this->LoadProducts();
         $this->LoadPrices();

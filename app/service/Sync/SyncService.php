@@ -18,6 +18,7 @@ class SyncService
     private string $unzippedDir = '';
 
     use ZipErrorMessages;
+
     /**
      * @throws SyncException
      * @throws Exception
@@ -34,7 +35,7 @@ class SyncService
         $this->importFile  = $this->unzippedDir . 'import0_1.xml';
         $this->offerFile   = $this->unzippedDir . 'offers0_1.xml';
         $this->actions->createDirIfNotExist($this->archiveDir);
-        $this->actions->createDirIfNotExist( $this->unzippedDir);
+        $this->actions->createDirIfNotExist($this->unzippedDir);
     }
 
     /**
@@ -53,6 +54,7 @@ class SyncService
                 }
 
                 if (isset($_GET['mode']) && $_GET['mode'] === 'init') {
+                    $this->actions->clearUnzippedDir($this->unzippedDir);
                     $this->actions->init();
                 }
             }
@@ -60,7 +62,7 @@ class SyncService
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->import();
         }
-        if ($this->actions->allFilesUnzipped($this->importFile, $this->offerFile)){
+        if ($this->actions->allFilesUnzipped($this->importFile, $this->offerFile)) {
             $this->load();
         }
         $this->actions->badRequest();
