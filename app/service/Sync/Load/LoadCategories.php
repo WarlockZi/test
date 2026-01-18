@@ -5,8 +5,6 @@ namespace app\service\Sync\Load;
 
 use app\model\Category;
 use app\model\CategoryProperty;
-use app\service\Logger\ILogger;
-use app\service\Logger\SyncLogger;
 use app\service\Router\UrlService;
 use app\service\ShortLink\ShortlinkService;
 use app\service\Slug\SlugService;
@@ -17,9 +15,9 @@ class LoadCategories extends LoadService
 {
 
     public function __construct(
-        public array                $deleted = [],
-        public array                $created = [],
-        private array               $existed = [],
+        public array  $deleted = [],
+        public array  $created = [],
+        private array $existed = [],
     )
     {
         parent::__construct();
@@ -27,9 +25,15 @@ class LoadCategories extends LoadService
 
     public function load(): void
     {
-        $this->setCategoriesData();
-        $this->exec($this->categoriesData);
-        $this->deleteNonexisted();
+        try {
+            $this->setCategoriesData();
+            $this->exec($this->categoriesData);
+            $this->deleteNonexisted();
+        } catch (LoadException $loadException) {
+            $loadException->log();
+        } catch (Throwable $exception) {
+            error_log($exception);
+        };
     }
 
     protected function deleteNonexisted(): void
@@ -51,7 +55,7 @@ class LoadCategories extends LoadService
             $item                         = $this->fillItem($groups, $parent);
             $this->existed[$groups['Ид']] = $groups['Ид'];
             if (isset($groups['Группы'])) {
-                $parent = $item['1s_id'];
+                $parent = $item['s_id'];
                 $this->exec($groups['Группы']['Группа'], ++$level, $parent);
             }
         }
@@ -62,7 +66,7 @@ class LoadCategories extends LoadService
      */
     protected function fillItem(array $group, string|null $parent): Category
     {
-        $item['1s_id']          = $group['Ид'];
+        $item['1s_id']           = $group['Ид'];
         $item['category_1s_id'] = $parent;
 
         $item['name']       = $group['Наименование'];
@@ -70,7 +74,7 @@ class LoadCategories extends LoadService
         $item['deleted_at'] = NULL;
 
         $cat = Category::withTrashed()
-            ->updateOrCreate(['1s_id' => $item['1s_id']], $item);
+            ->updateOrCreate(['s_id' => $item['s_id']], $item);
         $this->setCategoryOwnProps($cat);
 
         if ($cat->wasRecentlyCreated) {

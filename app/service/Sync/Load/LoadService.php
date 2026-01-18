@@ -58,7 +58,6 @@ class LoadService
      */
     public function LoadCategories(): void
     {
-//        $this->setCategoriesData();
         $loadCategories = new LoadCategories();
         $loadCategories->load();
 

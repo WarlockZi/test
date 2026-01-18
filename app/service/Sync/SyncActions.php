@@ -3,6 +3,7 @@
 namespace app\service\Sync;
 
 use app\service\Logger\SyncLogger;
+use DirectoryIterator;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
 use SimpleXMLElement;
@@ -18,13 +19,12 @@ class SyncActions
     /**
      * @throws Exception
      */
-    public function logRequest(array $req): void
+    public function allFilesUnzipped(string $importFile, string $offerFile): bool
     {
-        $this->logger->write(implode(', ', array_map(
-            fn($key, $value) => "$key: $value",
-            array_keys($req),
-            array_values($req)
-        )));
+        if (is_readable($importFile) && is_readable($offerFile)) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -51,26 +51,52 @@ class SyncActions
     {
         try {
             $this->unzipFiles($filePath, $unzippedDir);
-//            $this->cleanDir();
             $this->logger->write('Extraction successful!');
         } catch (Exception $e) {
             $this->logger->write('Extraction error!' . $e->getMessage());
         }
     }
 
-
-    public function createDirsIfNotExist(string $archiveDir, string $unzippedDir): void
+    /**
+     * @throws Exception
+     */
+    public function moveZips(string $archiveDir): void
     {
-        if (!file_exists($archiveDir)) {
-            if (!mkdir($archiveDir, 0755, true)) {
-                throw new Exception("Failed to create directory: $archiveDir");
+        $dirToMove = $this->createDirToMove($archiveDir);
+        $iterator  = new DirectoryIterator($archiveDir);
+        foreach ($iterator as $fileInfo) {
+            if ($fileInfo->getType() === 'dir') continue;
+            if ($fileInfo->isDot()) continue;
+            if ($fileInfo->getExtension() !== 'zip') continue;
+
+            $from = $fileInfo->getPathname();
+            $to   = $dirToMove . DIRECTORY_SEPARATOR . $fileInfo->getFilename();
+            rename($from, $to);
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function createDirToMove(string $archiveDir): string
+    {
+        $day     = date('d');
+        $month   = date('m');
+        $dateDir = "{$month}_{$day}";
+        return $this->createDirIfNotExist($archiveDir . $dateDir);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function createDirIfNotExist(string $dir, int $rights = 0755, bool $recururcive = true): string
+    {
+        if (!file_exists($dir)) {
+            if (!mkdir($dir, $rights, $recururcive)) {
+                throw new Exception("Failed to create directory: $dir");
             }
         }
-        if (!file_exists($unzippedDir)) {
-            if (!mkdir($unzippedDir, 0755, true)) {
-                throw new Exception("Failed to create directory: $unzippedDir");
-            }
-        }
+        return $dir;
     }
 
     /**
@@ -79,21 +105,16 @@ class SyncActions
     private function unzipFiles(string $zipFile, string $unzippedDir): void
     {
         $zip = new ZipArchive;
-        $res = $zip->open($zipFile);
-
-        if ($res !== TRUE){
-            throw new Exception("Failed open ZIP:" . $zipFile);
-        }
 
         try {
+            $zip->open($zipFile);
             $zip->extractTo($unzippedDir);
             $zip->close();
             return;
         } catch (Exception $e) {
             $zip->close();
-            throw new Exception("Extraction failed: " . $e->getMessage());
+            throw new Exception("Extraction failed path - $zipFile: " . $e->getMessage());
         }
-
     }
 
     public function validateFilename(string $filename): string
@@ -167,5 +188,17 @@ class SyncActions
         echo "$message";
         exit;
     }
+
+//    /**
+//     * @throws Exception
+//     */
+//    public function logRequest(array $req): void
+//    {
+//        $this->logger->write(implode(', ', array_map(
+//            fn($key, $value) => "$key: $value" . PHP_EOL,
+//            array_keys($req),
+//            array_values($req)
+//        )));
+//    }
 }
 

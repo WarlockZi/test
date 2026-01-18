@@ -13,6 +13,20 @@ class FS
     {
     }
 
+    /**
+     * @throws FSException
+     */
+    public static function files(string $dir, string $ext = ''): false|array
+    {
+        if (!is_dir($dir)) {
+            throw new FSException($dir . 'is not a directory');
+        }
+        if ($ext) {
+            return glob($dir . '*.' . $ext);
+        }
+        return glob($dir);
+    }
+
     public static function resolve(...$paths): string
     {
         $path = '';
@@ -21,7 +35,7 @@ class FS
                 $path .= $str . DIRECTORY_SEPARATOR;
             }
         }
-        return str_replace(['\\/', '/\\','\\', '\\\\', '/', '//', ], DIRECTORY_SEPARATOR, $path);
+        return str_replace(['\\/', '/\\', '\\', '\\\\', '/', '//',], DIRECTORY_SEPARATOR, $path);
     }
 
     public static function getFileContent(string $file, array $vars = []): string
@@ -31,10 +45,12 @@ class FS
         require FS::platformSlashes($file);
         return ob_get_clean();
     }
+
     public static function invertSlashes(string $path): string
     {
-        return strtr($path, ['\\'=> '/', '/'=> '\\']);
+        return strtr($path, ['\\' => '/', '/' => '\\']);
     }
+
     public static function delFilesFromPath(string $path, string $ext = ''): array
     {
         $ext     = $ext ?? '*';

@@ -2,7 +2,6 @@
 
 namespace app\service\Sync;
 
-use app\service\Fs\FS;
 use app\service\Logger\SyncLogger;
 use app\service\Storage\SyncStorage;
 use app\service\Sync\Load\LoadService;
@@ -18,9 +17,7 @@ class SyncService
     private string $offerFile = '';
     private string $unzippedDir = '';
 
-
     use ZipErrorMessages;
-
     /**
      * @throws SyncException
      * @throws Exception
@@ -36,7 +33,8 @@ class SyncService
         $this->unzippedDir = ROOT . SyncStorage::getUnzippedDir();
         $this->importFile  = $this->unzippedDir . 'import0_1.xml';
         $this->offerFile   = $this->unzippedDir . 'offers0_1.xml';
-        $this->actions->createDirsIfNotExist($this->archiveDir, $this->unzippedDir);
+        $this->actions->createDirIfNotExist($this->archiveDir);
+        $this->actions->createDirIfNotExist( $this->unzippedDir);
     }
 
     /**
@@ -46,8 +44,6 @@ class SyncService
     {
         header("Content-Type: text/plain; charset=utf-8");
         header("Pragma: no-cache");
-
-        $this->actions->logRequest($_SERVER);
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             if (isset($_GET['type']) && $_GET['type'] === 'catalog') {
@@ -61,9 +57,11 @@ class SyncService
                 }
             }
         }
-
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->import();
+        }
+        if ($this->actions->allFilesUnzipped($this->importFile, $this->offerFile)){
+            $this->load();
         }
         $this->actions->badRequest();
     }
@@ -79,47 +77,20 @@ class SyncService
         $this->logger->write('import and load');
         $filePath = $this->actions->saveFiles($this->archiveDir);
         $this->actions->unzip($filePath, $this->unzippedDir);
-        $this->load();
-
+        $this->actions->moveZips($this->archiveDir);
     }
 
     /**
      * @throws Exception
      */
-    private function importFilesExist(): void
-    {
-        if (!is_readable($this->importFile))
-            throw new \Exception($this->importFile . 'import file not found');
-
-        if (!is_readable($this->offerFile))
-            throw new \Exception($this->offerFile . 'import file not found');
-    }
-
-//load
-
-    /**
-     * @throws Exception
-     */
-    public function load(): void
+    #[NoReturn] public function load(): void
     {
         try {
-//            $this->importFilesExist();
             $this->loadService->run();
             $this->logger->write('Load успех' . PHP_EOL);
             $this->actions->sendHTMLSuccessMessage();
         } catch (\Throwable $e) {
             $this->logger->write("--- Ошибка load " . $e->getMessage());
-        }
-    }
-
-
-    public function cleanDir(): void
-    {
-        try {
-            FS::delFilesFromPath($this->archiveDir, 'zip');
-            $this->logger->write('Directory is clean');
-        } catch (\Throwable $e) {
-            $this->logger->write('Directory cleaning Error : ' . $e->getMessage());
         }
     }
 
