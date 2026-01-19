@@ -14,6 +14,7 @@ class SyncActions
     public function __construct(private SyncLogger $logger)
     {
     }
+
     /**
      * @throws Exception
      */
@@ -24,6 +25,7 @@ class SyncActions
         }
         return false;
     }
+
     /**
      * @throws Exception
      */
@@ -36,6 +38,7 @@ class SyncActions
             }
         }
     }
+
     /**
      * @throws Exception
      */
@@ -82,6 +85,7 @@ class SyncActions
             $to   = $dirToMove . DIRECTORY_SEPARATOR . $fileInfo->getFilename();
             rename($from, $to);
         }
+        $this->logger->write('move Zips success!');
     }
 
     /**

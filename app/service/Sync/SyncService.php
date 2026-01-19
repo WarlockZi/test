@@ -88,8 +88,9 @@ class SyncService
     #[NoReturn] public function load(): void
     {
         try {
+            $this->logger->write('Load started');
             $this->loadService->run();
-            $this->logger->write('Load успех' . PHP_EOL);
+            $this->logger->write('Load успех');
             $this->actions->sendHTMLSuccessMessage();
         } catch (\Throwable $e) {
             $this->logger->write("--- Ошибка load " . $e->getMessage());

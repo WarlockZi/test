@@ -49,10 +49,7 @@ class LoadService
     #[NoReturn] public function run(): void
     {
         set_exception_handler([LoadErrorHandler::class,'handleException']);
-//        restore_exception_handler(); // Removes user handler
-//        $currentErrorHandler = set_error_handler(null);
         set_error_handler([LoadErrorHandler::class,'handleError']);
-//        restore_error_handler(); // Removes user handler
         $this->LoadCategories();
         $this->LoadProducts();
         $this->LoadPrices();
@@ -63,6 +60,7 @@ class LoadService
      */
     public function LoadCategories(): void
     {
+        $this->logger->write('--- category  load started ---');
         $loadCategories = new LoadCategories();
         $loadCategories->load();
 
@@ -74,6 +72,7 @@ class LoadService
      */
     public function LoadProducts(): void
     {
+        $this->logger->write('--- products  load started ---');
         $this->setProductsData();
         $loadProducts = new LoadProducts();
         $loadProducts->load();
