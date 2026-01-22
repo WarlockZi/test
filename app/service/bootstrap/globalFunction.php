@@ -23,9 +23,11 @@ if (!function_exists('response')) {
 
 if (!function_exists('view')) {
     #[NoReturn]
-    function view(string $view = null, array $data = [], int $status = 200, array $headers = []): \Illuminate\Contracts\View\Factory|View
+    function view(string $view = null, array $data = [], int $status = 200, array $headers = [])
     {
-        $factory = APP->get(IView::class);
-        exit($factory->render($view, $data, $status, $headers));
+        $blade = APP->get(View::class);
+        $content= $blade->render($view, $data);
+        $response =  new Response($content, $status, $headers);
+        $response->send();
     }
 }
