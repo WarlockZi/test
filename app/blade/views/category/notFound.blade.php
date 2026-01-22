@@ -1,7 +1,7 @@
-@extends('layouts.main.main')
+@extends('layouts.main.main_with_meta')
+
 
 @section('content')
-
     @php
         if (DEV) {
             if (isset($errors) && is_array($errors)) {

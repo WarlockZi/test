@@ -26,14 +26,18 @@ class CategoryController extends AppController
 
             if (!$category) {
                 $similarCategories = $this->actions->similarCategories($request->slug);
-                view('category.notFound',
-                    compact('category', 'similarCategories'),
+                $meta              =
+                    ['title' => 'Категория не найдена',
+                        'keywords'=>'',
+                        'description' => 'К сожалению, такой категории не найдено. Возможно, она была перемещена или удалена. Воспользуйтесь поиском или перейдите на главную, чтобы найти нужный товар. | VITEX.ru'];
+               view('category.notFound',
+                    compact('category', 'similarCategories', 'meta'),
                     404);
             }
 
             $order = OrderRepository::usersOrder()?->toArray() ?: [];
 
-            $category = $category?->toArray()?:[];
+            $category = $category?->toArray() ?: [];
             view('category.category',
                 compact(
                     'category',
