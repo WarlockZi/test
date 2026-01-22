@@ -11,13 +11,16 @@ use app\service\Logger\SyncLogger;
 use app\service\Response;
 use app\service\Router\IRequest;
 use app\service\Storage\SyncStorage;
+use app\service\Sync\Load\Attributes\logger\Loggable;
 use app\service\Sync\Load\LoadCategories;
 use app\service\Sync\Load\LoadPrices;
 use app\service\Sync\Load\LoadProducts;
+use app\service\Sync\Load\LoadService;
 use app\service\Sync\SyncService;
 use app\service\Zip\ZipService;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
+use Throwable;
 
 class SyncController extends AdminscController
 {
@@ -31,20 +34,16 @@ class SyncController extends AdminscController
         parent::__construct();
     }
     /**
-     * @throws Exception
+     * @throws Exception|Throwable
      */
-    #[NoReturn] public function actionLoad(): void
+    #[NoReturn, Loggable(level:'info', message:'SyncController начал загрузку')] public function actionLoad(): void
     {
         $this->logger->write('SyncController начал загрузку');
-        $this->service->requestFrom1s();
-//        $this->service->load();
-//        if (DEV) {
-//            Response::exitWithPopup('Все перенесено');
-//        }
-//        exit();
+        $load = new LoadService();
+        $load->run();
     }
     /**
-     * @throws Exception
+     * @throws Exception|Throwable
      */
     #[NoReturn] public function actionInit(): void
     {
@@ -113,7 +112,7 @@ class SyncController extends AdminscController
 
     /**
      * @throws Exception
-     * @throws \Throwable
+     * @throws Throwable
      */
     #[MeasureExecutionTime]
     public function actionLoadPrices(LoadPrices $loadPrices): void

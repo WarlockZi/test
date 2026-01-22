@@ -15,7 +15,12 @@ class LoadErrorHandler
         $errstring = "syncLogger exception - $errstr, file - $errfile, line - $errline";
         $logger = new SyncLogger();
         $logger->write($errstring);
+        response()->json(['error' => $errstr]);
     }
+
+    /**
+     * @throws \Exception
+     */
     #[NoReturn] public static function handleException($errno, $errstr, $errfile, $errline): void
     {
         $errstring = "syncLogger error - $errstr, file - $errfile, line - $errline";

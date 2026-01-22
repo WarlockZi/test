@@ -2,12 +2,13 @@
     @php ++$level; @endphp
     @if(!empty($child['children_recursive']))
         @foreach($child['children_recursive'] as $child)
-            @php($href = "/catalog/{$child['own_properties']['path']}")
-{{--        @deb--}}
+            @php($path = $child['own_properties']['path']??'')
+            @php($href = "/catalog/{$path}")
             @include('layouts.main.header.blueRibbon.headerCategoryMenu.li', compact('level', 'child','href'))
         @endforeach
     @else
-        @php($href = "/catalog/{$child['own_properties']['path']}")
+        @php($path = $child['own_properties']['path']??'')
+        @php($href = "/catalog/{$path}")
         @include('layouts.main.header.blueRibbon.headerCategoryMenu.li', compact('level', 'child','href'))
     @endif
 

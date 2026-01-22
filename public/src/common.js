@@ -80,7 +80,7 @@ const debounce = (fn, time = 700) => {
   };
 };
 
-function IsJson(str) {
+function isJson(str) {
   try {
     JSON.parse(str);
   } catch (e) {
@@ -473,7 +473,7 @@ function handleResponse(res) {
     console.log(
       "////////////********* REQUEST ERROR ***********//////////////////////",
     );
-    if (IsJson(res.response)) {
+    if (isJson(res.response)) {
       console.log(JSON.parse(res.response));
     } else {
       console.log(res.response);
@@ -730,7 +730,7 @@ export {
   addTooltip,
   popup,
   debounce,
-  IsJson,
+  isJson,
   post,
   validate,
   $,

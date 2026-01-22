@@ -2,41 +2,50 @@
 
 namespace app\service\Sync\Load;
 
+use app\service\Fs\FS;
 use app\service\Logger\SyncLogger;
+use app\service\Sync\Load\Attributes\Measure\MeasurableTrait;
+use app\service\Sync\Load\Attributes\Measure\MeasureTime;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
 use Throwable;
 
 class LoadService
 {
+    use MeasurableTrait;
+
     public function __construct(
-        protected SyncLogger   $logger = new SyncLogger(),
-        protected array        $pricesData = [],
-        protected array        $productsData = [],
-        protected array        $categoriesData = [],
+        protected SyncLogger $logger = new SyncLogger(),
+        protected array      $pricesData = [],
+        protected array      $productsData = [],
+        protected array      $categoriesData = [],
+
     )
     {
+        $this->registerMeasuredMethod('loadCategories');
     }
 
     protected function setOfferData(): void
     {
-        $file            = ROOT . env('SYNC_PATH') . env('SYNC_OFFER_FILE');
-        $xml             = simplexml_load_file($file);
-        $xmlObj          = json_decode(json_encode($xml), true);
+        $file             = ROOT . env('SYNC_PATH') . env('SYNC_OFFER_FILE');
+        $xml              = simplexml_load_file($file);
+        $xmlObj           = json_decode(json_encode($xml), true);
         $this->pricesData = $xmlObj['ПакетПредложений']['Предложения']['Предложение'];
     }
 
     protected function setProductsData(): void
     {
-        $file                 = ROOT . env('SYNC_PATH') . env('SYNC_IMPORT_FILE');
-        $xml                  = simplexml_load_file($file);
-        $xmlObj               = json_decode(json_encode($xml), true);
-        $this->productsData   = $xmlObj['Каталог']['Товары']['Товар'];
+        $file               = ROOT . env('SYNC_PATH') . env('SYNC_IMPORT_FILE');
+        $xml                = simplexml_load_file($file);
+        $xmlObj             = json_decode(json_encode($xml), true);
+        $this->productsData = $xmlObj['Каталог']['Товары']['Товар'];
     }
+
     protected function setCategoriesData(): void
     {
-        $file                 = ROOT . env('SYNC_PATH') . env('SYNC_IMPORT_FILE');
+        $file = ROOT . env('SYNC_PATH') . env('SYNC_IMPORT_FILE');
 
+        $file = FS::platformSlashes($file);
         $xml                  = simplexml_load_file($file);
         $xmlObj               = json_decode(json_encode($xml), true);
         $this->categoriesData = $xmlObj['Классификатор']['Группы']['Группа']['Группы']['Группа'];
@@ -48,8 +57,6 @@ class LoadService
      */
     #[NoReturn] public function run(): void
     {
-        set_exception_handler([LoadErrorHandler::class,'handleException']);
-        set_error_handler([LoadErrorHandler::class,'handleError']);
         $this->LoadCategories();
         $this->LoadProducts();
         $this->LoadPrices();
@@ -58,6 +65,7 @@ class LoadService
     /**
      * @throws Exception
      */
+    #[MeasureTime('loadCategories')]
     public function LoadCategories(): void
     {
         $this->logger->write('--- category  load started ---');

@@ -1,6 +1,5 @@
 <li class="h-cat_item">
 
-{{--    @deb--}}
     @if(!empty($child['children_recursive']))
         <div class="wrap">
 

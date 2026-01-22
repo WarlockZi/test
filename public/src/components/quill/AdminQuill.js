@@ -1,4 +1,4 @@
-import { $, debounce, IsJson, post } from "@src/common.js";
+import { $, debounce, isJson, post } from "@src/common.js";
 import DTO from "@src/Admin/DTO.js";
 import Quill from "quill";
 import { ael } from "@src/constants.js";
@@ -31,7 +31,7 @@ export default class AdminQuill {
   }
 
   setContent() {
-    if (IsJson(this.el.innerText)) {
+    if (isJson(this.el.innerText)) {
       this.quill.setContents(JSON.parse(this.el.innerText + "\n"));
     } else {
       const cleanText = this.el.innerText.replace(/\n\n/gi, "\n"); // Заменяем <br> на переносы строки

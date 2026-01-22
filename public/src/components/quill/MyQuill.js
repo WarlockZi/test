@@ -1,4 +1,4 @@
-import { $, IsJson, post } from "../../common";
+import { $, isJson, post } from "../../common";
 import Quill from "quill";
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
@@ -71,7 +71,7 @@ export default class MyQuill {
 
   init() {
     this.quill = new Quill(this.selector, this.options);
-    if (IsJson(this.contents)) {
+    if (isJson(this.contents)) {
       const json = JSON.parse(this.contents + "\n");
       this.quill.setContents(json);
     } else {

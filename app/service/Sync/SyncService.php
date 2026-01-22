@@ -4,10 +4,12 @@ namespace app\service\Sync;
 
 use app\service\Logger\SyncLogger;
 use app\service\Storage\SyncStorage;
+use app\service\Sync\Load\LoadErrorHandler;
 use app\service\Sync\Load\LoadService;
 use app\service\Zip\ZipErrorMessages;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
+use Throwable;
 
 
 class SyncService
@@ -29,22 +31,28 @@ class SyncService
         private SyncActions   $actions,
     )
     {
-        $this->actions     = new SyncActions(new SyncLogger());
+        set_exception_handler([LoadErrorHandler::class, 'handleException']);
+        set_error_handler([LoadErrorHandler::class, 'handleError']);
+
+        $this->actions = new SyncActions(new SyncLogger());
+
         $this->archiveDir  = ROOT . SyncStorage::getPath();
         $this->unzippedDir = ROOT . SyncStorage::getUnzippedDir();
-        $this->importFile  = $this->unzippedDir . 'import0_1.xml';
-        $this->offerFile   = $this->unzippedDir . 'offers0_1.xml';
-        $this->actions->createDirIfNotExist($this->archiveDir);
-        $this->actions->createDirIfNotExist($this->unzippedDir);
+
+        $this->importFile = $this->unzippedDir . 'import0_1.xml';
+        $this->offerFile  = $this->unzippedDir . 'offers0_1.xml';
+
     }
 
     /**
      * @throws Exception
+     * @throws \Throwable
      */
     #[NoReturn] public function requestFrom1s(): void
     {
         header("Content-Type: text/plain; charset=utf-8");
         header("Pragma: no-cache");
+        $this->logger->write("uri - {$_SERVER['REQUEST_URI']}; method - {$_SERVER['REQUEST_METHOD']}");
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             if (isset($_GET['type']) && $_GET['type'] === 'catalog') {
@@ -60,12 +68,20 @@ class SyncService
             }
         }
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $this->actions->createDirIfNotExist($this->archiveDir);
+            $this->actions->createDirIfNotExist($this->unzippedDir);
             $this->import();
         }
         if ($this->actions->allFilesUnzipped($this->importFile, $this->offerFile)) {
-            $this->load();
+            $this->actions->moveZips($this->archiveDir);
+            $this->actions->respondAndContinue();
+            $this->logger->write('Load started');
+            try {
+                $this->loadService->run();
+            } catch (Throwable $exception) {
+                $this->logger->write('load error - ' . $exception->getMessage());
+            }
         }
-        $this->actions->badRequest();
     }
 
     /**
@@ -74,28 +90,10 @@ class SyncService
     #[NoReturn] private function import(): void
     {
         if (!isset($_GET['mode']) || $_GET['mode'] !== 'file') {
-            $this->actions->failure('Mode is not file');
+            throw new SyncException('$_GET[mode] is not file');
         }
-        $this->logger->write('import and load');
         $filePath = $this->actions->saveFiles($this->archiveDir);
         $this->actions->unzip($filePath, $this->unzippedDir);
-        $this->actions->moveZips($this->archiveDir);
     }
-
-    /**
-     * @throws Exception
-     */
-    #[NoReturn] public function load(): void
-    {
-        try {
-            $this->logger->write('Load started');
-            $this->loadService->run();
-            $this->logger->write('Load успех');
-            $this->actions->sendHTMLSuccessMessage();
-        } catch (\Throwable $e) {
-            $this->logger->write("--- Ошибка load " . $e->getMessage());
-        }
-    }
-
 }
 

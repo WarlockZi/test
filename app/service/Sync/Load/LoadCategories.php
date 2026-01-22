@@ -73,12 +73,8 @@ class LoadCategories extends LoadService
         $item['slug']       = SlugService::slug($item['name']);
         $item['deleted_at'] = NULL;
 
-        try {
-            $cat = Category::withTrashed()
-                ->updateOrCreate(['s_id' => $item['s_id']], $item);
-        } catch (Throwable $exception) {
-            $e = $exception;
-        }
+        $cat = Category::withTrashed()
+            ->updateOrCreate(['s_id' => $item['s_id']], $item);
         $this->setCategoryOwnProps($cat);
 
         if ($cat->wasRecentlyCreated) {

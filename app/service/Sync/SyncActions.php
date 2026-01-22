@@ -39,7 +39,9 @@ class SyncActions
         }
     }
 
+
     /**
+     * @throws SyncException
      * @throws Exception
      */
     public function saveFiles(string $archiveDir): string
@@ -51,7 +53,7 @@ class SyncActions
         $filePath    = $archiveDir . $filename;
 
         if (!file_put_contents($filePath, $fileContent)) {
-            $this->failure('failed to save file');
+            throw new SyncException('failed to save file');
         }
         return $filePath;
     }
@@ -61,12 +63,8 @@ class SyncActions
      */
     public function unzip(string $filePath, string $unzippedDir): void
     {
-        try {
-            $this->unzipFiles($filePath, $unzippedDir);
-            $this->logger->write('Extraction successful!');
-        } catch (Exception $e) {
-            $this->logger->write('Extraction error!' . $e->getMessage());
-        }
+        $this->unzipFiles($filePath, $unzippedDir);
+        $this->logger->write('extraction successful!');
     }
 
     /**
@@ -74,7 +72,6 @@ class SyncActions
      */
     public function moveZips(string $archiveDir): void
     {
-        $dirToMove = $this->createDirToMove($archiveDir);
         $iterator  = new DirectoryIterator($archiveDir);
         foreach ($iterator as $fileInfo) {
             if ($fileInfo->getType() === 'dir') continue;
@@ -82,7 +79,7 @@ class SyncActions
             if ($fileInfo->getExtension() !== 'zip') continue;
 
             $from = $fileInfo->getPathname();
-            $to   = $dirToMove . DIRECTORY_SEPARATOR . $fileInfo->getFilename();
+            $to   = $archiveDir . DIRECTORY_SEPARATOR . $fileInfo->getFilename();
             rename($from, $to);
         }
         $this->logger->write('move Zips success!');
@@ -102,6 +99,19 @@ class SyncActions
     /**
      * @throws Exception
      */
+    public function respondAndContinue(): void
+    {
+        ob_start();
+        echo json_encode(['status' => 'all files accepted']);
+        header('Content-Type: application/json');
+        header('Content-Length: ' . ob_get_length());
+        ob_end_flush();
+        flush(); // Send output to browser
+    }
+
+    /**
+     * @throws Exception
+     */
     public function createDirIfNotExist(string $dir, int $rights = 0755, bool $recururcive = true): string
     {
         if (!file_exists($dir)) {
@@ -112,13 +122,13 @@ class SyncActions
         return $dir;
     }
 
+
     /**
-     * @throws Exception
+     * @throws SyncException
      */
     private function unzipFiles(string $zipFile, string $unzippedDir): void
     {
         $zip = new ZipArchive;
-
         try {
             $zip->open($zipFile);
             $zip->extractTo($unzippedDir);
@@ -126,17 +136,20 @@ class SyncActions
             return;
         } catch (Exception $e) {
             $zip->close();
-            throw new Exception("Extraction failed path - $zipFile: " . $e->getMessage());
+            throw new SyncException("Extraction failed path - $zipFile: " . $e->getMessage());
         }
     }
 
+    /**
+     * @throws SyncException
+     */
     public function validateFilename(string $filename): string
     {
         if (!$filename) {
-            $this->failure('Filename not specified');
+            throw new SyncException('Filename not specified');
         }
         if (preg_match('/\.\.|\/|\\\\/', $filename)) {
-            $this->failure('Insecure filename');
+            throw new SyncException('Insecure filename');
         }
         return basename($filename);
     }

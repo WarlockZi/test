@@ -14,10 +14,7 @@
     "vdev": "vite --debug hmr",
     "vprev": "vite preview",
     "vbuild": "vite build",
-    "nodedebug": "npx nodemon test/js/sync/server.js",
-    "sync1": "node --watch test/js/sync1/server.js",
-    "sync": "node --watch test/js/sync/server.js",
-    "nodemon": "nodemon test/js/sync/*.js"
+    "sync": "node --watch-path=./test/js/sync test/js/sync/server.js"
   },
   "devDependencies": {
     "@babel/core": "^7.24.6",
