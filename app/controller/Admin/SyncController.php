@@ -33,15 +33,19 @@ class SyncController extends AdminscController
         Auth::setUser(User::where('email', 'vvoronik@yandex.ru')->first());
         parent::__construct();
     }
+
     /**
      * @throws Exception|Throwable
      */
-    #[NoReturn, Loggable(level:'info', message:'SyncController начал загрузку')] public function actionLoad(): void
+    #[NoReturn]
+    #[Loggable(level: 'info', message: 'SyncController начал загрузку')]
+    public function actionLoad(): void
     {
         $this->logger->write('SyncController начал загрузку');
         $load = new LoadService();
         $load->run();
     }
+
     /**
      * @throws Exception|Throwable
      */
@@ -58,7 +62,7 @@ class SyncController extends AdminscController
         $file = $req->validated()['file'];
         $name = $file->getClientOriginalName();
         $path = SyncStorage::getPath();
-        $file->move(FS::platformSlashes(ROOT. $path),$name);
+        $file->move(FS::platformSlashes(ROOT . $path), $name);
         $this->zipService
             ->path($path)
             ->zipname($name)
@@ -93,7 +97,6 @@ class SyncController extends AdminscController
 
 
     //load
-
 
 
     #[NoReturn] public function actionLoadCategories(LoadCategories $loadCategories): void

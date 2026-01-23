@@ -29,6 +29,7 @@ class ItemFieldBuilder
     public bool $hidden = false;
     public bool $required = false;
     public string $contenteditable = '';
+    public string $tooltip = '';
 
     public static function build(string $fieldName, Model|null $item): static
     {
@@ -53,6 +54,11 @@ class ItemFieldBuilder
     public function name(string $name): static
     {
         $this->name = $name;
+        return $this;
+    }
+    public function tooltip(string $tooltip): static
+    {
+        $this->tooltip = $tooltip;
         return $this;
     }
 

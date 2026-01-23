@@ -124,6 +124,7 @@
     }
 
     .field {
+      position: relative;
       display: flex;
       justify-content: flex-end;
       padding: 0 5px;
@@ -131,7 +132,42 @@
       font-weight: 400;
       text-align: end;
       flex: 0 0;
-
+      &[aria-label][role='tooltip']{
+        &:hover::after{
+          display: none;
+        }
+        &:after{
+          position: absolute;
+          content: "?";
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          bottom:100%;
+          right:0;
+          width: 3px;
+          height: 3px;
+          padding: 5px;
+          background-color: var.$color-gray-max;
+          color: white;
+          line-height: 10px;
+          border-radius: 50%;
+        }
+        &:hover::before{
+          position: absolute;
+          content: attr(data-tip);
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          bottom:100%;
+          right:0;
+          max-width: 100%;
+          padding: 5px;
+          background-color: var.$color-gray-max;
+          color: white;
+          font-size: 10px;
+          line-height: 10px;
+        }
+      }
     }
 
     .text:not([contenteditable]) {

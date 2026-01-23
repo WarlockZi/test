@@ -20,21 +20,11 @@ class SyncActions
      */
     public function allFilesUnzipped(string $importFile, string $offerFile): bool
     {
-        if (is_readable($importFile) && is_readable($offerFile)) {
-            return true;
-        } else {
-            sleep(5);
-            if (is_readable($importFile) && is_readable($offerFile)){
-                return true;
-            }else{
-                sleep(5);
-                if (is_readable($importFile) && is_readable($offerFile)) {
-                    return true;
-                }
-            }
+        while (!(is_readable($importFile) && is_readable($offerFile))) {
+            sleep(15);
+            $this->logger->write('спим 15 сек');
         }
-        $this->logger->write('не все файлы извлечены');
-        return false;
+        return true;
     }
 
     /**

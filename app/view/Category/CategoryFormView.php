@@ -219,43 +219,48 @@ class CategoryFormView
                 ->name('Title')
                 ->contenteditable()
                 ->relation('ownProperties')
-                ->get()->toHtml('product') .
+                ->get()->toHtml() .
             ItemFieldBuilder::build('seo_description', $categoryProperty)
                 ->name('Description')
                 ->contenteditable()
                 ->relation('ownProperties')
-                ->get()->toHtml('product') .
+                ->get()->toHtml() .
             ItemFieldBuilder::build('seo_keywords', $categoryProperty)
                 ->name('Список запросов')
+                ->tooltip('keywords для роботов')
                 ->contenteditable()
                 ->relation('ownProperties')
-                ->get()->toHtml('product') .
+                ->get()->toHtml() .
             ItemFieldBuilder::build('seo_h1', $categoryProperty)
                 ->name('H 1')
+                ->tooltip('используется в статье категории как главный заголовок')
                 ->contenteditable()
                 ->relation('ownProperties')
-                ->get()->toHtml('product') .
+                ->get()->toHtml() .
             ItemFieldBuilder::build('seo_h2', $categoryProperty)
                 ->name('H 2')
+                ->tooltip('используется в статье категории как второстепенный заголовок')
                 ->contenteditable()
                 ->relation('ownProperties')
-                ->get()->toHtml('product') .
+                ->get()->toHtml() .
             ItemFieldBuilder::build('seo_path', $categoryProperty)
                 ->name('Seo путь')
+                ->tooltip('используется в адресной строке для поиска категории')
                 ->contenteditable()
                 ->relation('ownProperties')
-                ->get()->toHtml('product') .
+                ->get()->toHtml() .
             ItemFieldBuilder::build('seo_full_name', $categoryProperty)
                 ->name('Seo наименование')
+                ->tooltip('используется в заголовке категории, например, не опудренные, а Перчатки латексные одинарной хлоринации опудренные в сео desc и keywords')
                 ->contenteditable()
                 ->relation('ownProperties')
-                ->get()->toHtml('product') .
+                ->get()->toHtml() .
             ItemFieldBuilder::build('seo_article', $categoryProperty)
                 ->name('Seo article')
                 ->html(self::getSeoArticle($categoryProperty))
                 ->id('seo-article')
                 ->relation('ownProperties')
-                ->get()->toHtml('product') .
+                ->get()->toHtml() .
             "</div>";
 
     }
