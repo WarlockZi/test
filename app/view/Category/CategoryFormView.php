@@ -245,6 +245,11 @@ class CategoryFormView
                 ->contenteditable()
                 ->relation('ownProperties')
                 ->get()->toHtml('product') .
+            ItemFieldBuilder::build('seo_full_name', $categoryProperty)
+                ->name('Seo наименование')
+                ->contenteditable()
+                ->relation('ownProperties')
+                ->get()->toHtml('product') .
             ItemFieldBuilder::build('seo_article', $categoryProperty)
                 ->name('Seo article')
                 ->html(self::getSeoArticle($categoryProperty))

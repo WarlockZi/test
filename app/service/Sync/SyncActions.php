@@ -22,7 +22,18 @@ class SyncActions
     {
         if (is_readable($importFile) && is_readable($offerFile)) {
             return true;
+        } else {
+            sleep(5);
+            if (is_readable($importFile) && is_readable($offerFile)){
+                return true;
+            }else{
+                sleep(5);
+                if (is_readable($importFile) && is_readable($offerFile)) {
+                    return true;
+                }
+            }
         }
+        $this->logger->write('не все файлы извлечены');
         return false;
     }
 
@@ -72,14 +83,15 @@ class SyncActions
      */
     public function moveZips(string $archiveDir): void
     {
-        $iterator  = new DirectoryIterator($archiveDir);
+        $iterator = new DirectoryIterator($archiveDir);
         foreach ($iterator as $fileInfo) {
             if ($fileInfo->getType() === 'dir') continue;
             if ($fileInfo->isDot()) continue;
             if ($fileInfo->getExtension() !== 'zip') continue;
 
             $from = $fileInfo->getPathname();
-            $to   = $archiveDir . DIRECTORY_SEPARATOR . $fileInfo->getFilename();
+//            $to   = $archiveDir . DIRECTORY_SEPARATOR . $fileInfo->getFilename();
+            $to = $this->createDirToMove($archiveDir) . DIRECTORY_SEPARATOR . $fileInfo->getBasename();
             rename($from, $to);
         }
         $this->logger->write('move Zips success!');
@@ -157,9 +169,10 @@ class SyncActions
     #[NoReturn] public function checkauth(): void
     {
         $this->logger->write('checkauth');
+        $sessId = '55fdsa55';
         echo "success\n";                               /// success inc
         echo "sess_name " . session_name() . "\n";    ///  777777
-        echo 'sess_id ' . session_id() . "\n";                       ///   55fdsa55;
+        echo 'sess_id ' . $sessId . "\n";             ///   55fdsa55;
         exit;
     }
 

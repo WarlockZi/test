@@ -1,16 +1,13 @@
 @extends('layouts.main.main')
-
-@section('title')
-    {!!$category['meta']['seo_title']!!}
-@endsection
+{{--@deb--}}
+@section('title', $category['meta']['seo_title'])
 
 @section('description')
-
-    {!!$category['meta']['seo_desc']!!}
+    {{    $category['meta']['seo_desc']}}
 @endsection
 
 @section('keywords')
-    {!!$category['meta']['seo_keywords']!!}
+    {{$category['meta']['seo_keywords']}}
 @endsection
 
 @section('error')
@@ -18,7 +15,6 @@
 @endsection
 
 @section('content')
-
 
     <div class="category">
 
@@ -48,8 +44,8 @@
         @else
 
             @include('components.breadcrumbs.index', ['breadcrumbs'=>$category['breadcrumbs']])
-
-            <h1>{{$category['own_properties']['seo_h1'] ?? $category->name}}</h1>
+{{--@deb--}}
+            <h1>{{$category['own_properties']['seo_h1'] ?? $category['own_properties']['seo_full_name'] ?? $category['name']}}</h1>
 
             @if (!empty($category['children_recursive']))
 

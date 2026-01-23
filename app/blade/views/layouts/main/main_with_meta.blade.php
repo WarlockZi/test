@@ -1,5 +1,5 @@
 @extends('layouts.main.main')
 
-@section('title', $meta['title'])
-@section('description', $meta['description'])
-@section('keywords', $meta['keywords'])
+@section('title', $meta['seo_title'])
+@section('description', $meta['seo_desc'])
+@section('keywords', $meta['seo_keywords'])

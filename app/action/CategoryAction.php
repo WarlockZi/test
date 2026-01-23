@@ -13,9 +13,9 @@ use app\service\Slug\SlugService;
 class CategoryAction
 {
     public function __construct(
-        private readonly CategoryMetaService $meta,
-        private readonly SlugService         $slug,
-        private readonly CategoryService     $category,
+        private CategoryMetaService $meta,
+        private SlugService         $slug,
+        private CategoryService     $category,
     )
     {
     }
@@ -60,14 +60,14 @@ class CategoryAction
             Cache::$timeLife1_000
         );
     }
-//    public function categoryMeta(Category $category): array
-//    {
-//        return $this->meta->setMeta(
-//            $category->seo_title(),
-//            $category->seo_description(),
-//            $category->seo_keywords(),
-//        );
-//    }
+    public function categoryMeta(Category $category): array
+    {
+        return $this->meta->setMeta(
+            $category->seo_title(),
+            $category->seo_description(),
+            $category->seo_keywords(),
+        );
+    }
 
     public function setCategoriesMeta(): array
     {

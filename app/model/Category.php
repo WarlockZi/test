@@ -72,7 +72,7 @@ class Category extends Model
 
     public function meta(): hasOne
     {
-        $self = $this;
+//        $self = $this;
         return $this->hasOne(
             CategoryProperty::class,
             'category_1s_id',
@@ -80,12 +80,18 @@ class Category extends Model
         )
             ->select(['seo_title', 'seo_desc', 'seo_keywords'])
             ->withDefault(function ($properties, $category) {
-                $properties->seo_title    = $properties->seo_title
-                    ?? $category->name . " - купить оптом недорого в интернет-магазине VITEX в Вологде";
-                $properties->seo_desc     = $properties->seo_desc
-                    ?? $category->name . ". Интернет-магазин медицинских перчаток, одноразового инструмента и расходников VITEX в Вологде. Оперативный ответ менеджера, быстрая доставка, доступные оптовые цены. Звоните и заказывайте прямо сейчас или на сайте онлайн";
-                $properties->seo_keywords = $properties->seo_keywords
-                    ?? $category->name;
+                $prop = $category->ownProperties;
+                $titleTail = " - купить оптом недорого в интернет-магазине VITEX в Вологде";
+                $descTail = ". Интернет-магазин медицинских перчаток, одноразового инструмента и расходников VITEX в Вологде. Оперативный ответ менеджера, быстрая доставка, доступные оптовые цены. Звоните и заказывайте прямо сейчас или на сайте онлайн";
+                $seoFullName = $prop->seo_full_name??$category->name;
+                $descHead = "Купить ".$seoFullName." оптом";
+
+                $properties->seo_title    = $prop->seo_title.$titleTail
+                    ?? $category->name . $titleTail;
+                $properties->seo_desc     = $descHead.$prop->seo_desc.$descTail
+                    ?? $descHead. $descTail;
+                $properties->seo_keywords = $prop->seo_keywords
+                    ?? $seoFullName;
             });
     }
 
