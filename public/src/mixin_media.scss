@@ -812,8 +812,8 @@
 
 @mixin info-tag {
   .info-tag {
-    color: white;
-    background-color: var.$color-main;
+    color: var(var.$color-gray-browser);
+    background-color: rgb(215.5714285714, 234.4285714286, 249.4285714286);
     padding: 10px;
     margin-bottom: 15px;
   }

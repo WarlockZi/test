@@ -26,10 +26,8 @@ class CategoryController extends AppController
 
             if (!$category) {
                 $similarCategories = $this->actions->similarCategories($request->slug);
-                $meta              =
-                    ['title' => 'Категория не найдена',
-                        'keywords'=>'',
-                        'description' => 'К сожалению, такой категории не найдено. Возможно, она была перемещена или удалена. Воспользуйтесь поиском или перейдите на главную, чтобы найти нужный товар. | VITEX.ru'];
+                $meta              = $this->actions->setMeta();
+
                view('category.notFound',
                     compact('category', 'similarCategories', 'meta'),
                     404);

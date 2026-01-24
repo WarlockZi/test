@@ -19,12 +19,16 @@ class CategoryAction
     )
     {
     }
-
+    public function setMeta(): array
+    {
+        return                     [
+            'title' => 'Категория не найдена',
+            'keywords'=>'',
+            'description' => 'К сожалению, такой категории не найдено. Возможно, она была перемещена или удалена. Воспользуйтесь поиском или перейдите на главную, чтобы найти нужный товар. | VITEX.ru'];
+    }
     public function similarCategories(string $slug): array
     {
         return $this->similarCategorySegments($slug);
-//        return $this->similarCategoryLastSegment($slug);
-
     }
 
     private function similarCategorySegments(string $slug)

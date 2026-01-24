@@ -72,7 +72,6 @@ class Category extends Model
 
     public function meta(): hasOne
     {
-//        $self = $this;
         return $this->hasOne(
             CategoryProperty::class,
             'category_1s_id',
@@ -86,12 +85,14 @@ class Category extends Model
                 $seoFullName = $prop->seo_full_name??$category->name;
                 $descHead = "Купить ".$seoFullName." оптом";
 
-                $properties->seo_title    = $prop->seo_title.$titleTail
-                    ?? $category->name . $titleTail;
-                $properties->seo_desc     = $descHead.$prop->seo_desc.$descTail
-                    ?? $descHead. $descTail;
+                $properties->seo_title    = $prop->seo_title
+                    ?$prop->seo_title.$titleTail
+                    : $category->name . $titleTail;
+                $properties->seo_desc     = $prop->seo_desc
+                    ?$descHead.$prop->seo_desc.$descTail
+                    : $descHead. $descTail;
                 $properties->seo_keywords = $prop->seo_keywords
-                    ?? $seoFullName;
+                    ?:$seoFullName;
             });
     }
 

@@ -72,16 +72,7 @@ class SyncService
             $this->actions->createDirIfNotExist($this->unzippedDir);
             $this->import();
         }
-        if ($this->actions->allFilesUnzipped($this->importFile, $this->offerFile)) {
-            $this->actions->moveZips($this->archiveDir);
-            $this->actions->respondAndContinue();
-            $this->logger->write('Load started');
-            try {
-                $this->loadService->run();
-            } catch (Throwable $exception) {
-                $this->logger->write('load error - ' . $exception->getMessage());
-            }
-        }
+
     }
 
     /**
@@ -94,6 +85,17 @@ class SyncService
         }
         $filePath = $this->actions->saveFiles($this->archiveDir);
         $this->actions->unzip($filePath, $this->unzippedDir);
+
+        if ($this->actions->allFilesUnzipped($this->importFile, $this->offerFile)) {
+            $this->actions->moveZips($this->archiveDir);
+            $this->actions->respondAndContinue();
+            $this->logger->write('Load started');
+            try {
+                $this->loadService->run();
+            } catch (Throwable $exception) {
+                $this->logger->write('load error - ' . $exception->getMessage());
+            }
+        }
     }
 }
 

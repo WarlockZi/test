@@ -38,11 +38,6 @@ class ProductAction
             ->where('1s_id', $product['1s_id']);
 
         if (!$orderProduct->count()) return null;
-
-//        $uo = $userOrder->toArray();
-//        $p  = $product->toArray();
-//        $op = $orderProduct->toArray();
-//            $ordItems = $product[0]['orderitems'];
         return $orderProduct->first()->orderitems->toArray();
     }
 
@@ -61,11 +56,6 @@ class ProductAction
     }
 
     public function similarProducts(string $slug): array
-    {
-        return [];
-    }
-
-    public function prepareIndex(Product $product): array
     {
         return [];
     }

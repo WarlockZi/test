@@ -1,7 +1,5 @@
 @extends('layouts.main.main')
 
-{{--@php xdebug_break(); @endphp--}}
-
 @section('title', $meta->title)
 @section('description', $meta->description)
 @section('keywords', $meta->keywords)
