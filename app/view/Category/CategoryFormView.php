@@ -49,7 +49,13 @@ class CategoryFormView
             ->field(
                 ItemFieldBuilder::build('name', $category)
                     ->name('Наименование в 1c')
-                    ->required()
+                    ->get()
+            )
+            ->field(
+                ItemFieldBuilder::build('breadcrumbs_name', $category)
+                    ->name('Наименование в хлебных крошках')
+                    ->contenteditable()
+                    ->relation('ownProperties')
                     ->get()
             )
             ->field(

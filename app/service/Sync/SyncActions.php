@@ -20,9 +20,13 @@ class SyncActions
      */
     public function allFilesUnzipped(string $importFile, string $offerFile): bool
     {
-        while (!(is_readable($importFile) && is_readable($offerFile))) {
-            sleep(15);
-            $this->logger->write('спим 15 сек');
+        $iteration = 0;
+        while ($iteration < 3) {
+            if (!is_readable($importFile) && !is_readable($offerFile)) {
+                sleep(60);
+                $this->logger->write('спим 60 сек');
+            }
+            $iteration++;
         }
         return true;
     }
@@ -43,19 +47,17 @@ class SyncActions
 
     /**
      * @throws SyncException
-     * @throws Exception
      */
     public function saveFiles(string $archiveDir): string
     {
-        $this->logger->write('trying to safe file');
-
         $filename    = $this->validateFilename($_GET['filename'] ?? '');
         $fileContent = file_get_contents('php://input');
         $filePath    = $archiveDir . $filename;
 
         if (!file_put_contents($filePath, $fileContent)) {
-            throw new SyncException('failed to save file');
+            $this->logger->write('failed to save file: ' . $filePath);
         }
+        $this->logger->write('file saved to filePath: ' . $filePath);
         return $filePath;
     }
 
@@ -64,8 +66,17 @@ class SyncActions
      */
     public function unzip(string $filePath, string $unzippedDir): void
     {
-        $this->unzipFiles($filePath, $unzippedDir);
-        $this->logger->write('extraction successful!');
+        $zip = new ZipArchive;
+        try {
+            $zip->open($filePath);
+            $zip->extractTo($unzippedDir);
+            $zip->close();
+            $this->logger->write('extraction successful!');
+            return;
+        } catch (Exception $e) {
+            $zip->close();
+            $this->logger->write('extraction fail!' . $e->getMessage());
+        }
     }
 
     /**
@@ -124,23 +135,6 @@ class SyncActions
         return $dir;
     }
 
-
-    /**
-     * @throws SyncException
-     */
-    private function unzipFiles(string $zipFile, string $unzippedDir): void
-    {
-        $zip = new ZipArchive;
-        try {
-            $zip->open($zipFile);
-            $zip->extractTo($unzippedDir);
-            $zip->close();
-            return;
-        } catch (Exception $e) {
-            $zip->close();
-            throw new SyncException("Extraction failed path - $zipFile: " . $e->getMessage());
-        }
-    }
 
     /**
      * @throws SyncException

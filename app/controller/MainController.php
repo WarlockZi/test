@@ -108,7 +108,7 @@ class MainController extends AppController
             'Политика конфиденциальности - Витекс',
             'Политика конфиденциальности ' . $this->titleTail,
             'Политика конфиденциальности');
-        view('main.politicaconf', compact('meta'));
+        view('main.politicaconf1', compact('meta'));
     }
 
     #[NoReturn] public function actionOferta(): void
