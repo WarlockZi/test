@@ -44,7 +44,6 @@ class SyncActions
         }
     }
 
-
     /**
      * @throws SyncException
      */
@@ -71,7 +70,10 @@ class SyncActions
             $zip->open($filePath);
             $zip->extractTo($unzippedDir);
             $zip->close();
-            $this->logger->write('extraction successful!');
+            $this->logger->write('extraction successful! file - ' . $filePath);
+            if (is_readable($filePath)) {
+                $this->logger->write('file is readable - ' . $filePath);
+            }
             return;
         } catch (Exception $e) {
             $zip->close();
@@ -135,7 +137,6 @@ class SyncActions
         return $dir;
     }
 
-
     /**
      * @throws SyncException
      */
@@ -150,7 +151,8 @@ class SyncActions
         return basename($filename);
     }
 
-    #[NoReturn] public function checkauth(): void
+    #[NoReturn]
+    public function checkauth(): void
     {
         $this->logger->write('checkauth');
         $sessId = '55fdsa55';
@@ -161,9 +163,10 @@ class SyncActions
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
-    #[NoReturn] public function init(): void
+    #[NoReturn]
+    public function init(): void
     {
         $this->logger->write('zip');
         echo "zip=yes\n";
@@ -172,7 +175,8 @@ class SyncActions
     }
 
 
-    #[NoReturn] public function sendHTMLSuccessMessage(): void
+    #[NoReturn]
+    public function sendHTMLSuccessMessage(): void
     {
         $date = date('Y-m-d');
         $time = date('H:i:s');
@@ -182,7 +186,8 @@ class SyncActions
         exit();
     }
 
-    #[NoReturn] public function sendXMLSuccessMessage(): void
+    #[NoReturn]
+    public function sendXMLSuccessMessage(): void
     {
         header('Content-Type: text/xml; charset=utf-8');
 
