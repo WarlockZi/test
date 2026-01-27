@@ -19,6 +19,7 @@
                 <a href="/zip/download">Download</a>
                 <a href="/adminsc/sync">Sync</a>
                 <a href="/adminsc/errors">Errors</a>
+                <a href="/adminsc/balcony">Балконы</a>
 
             @endif
 

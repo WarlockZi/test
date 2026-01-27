@@ -50,10 +50,9 @@ class SyncService
      */
     #[NoReturn] public function requestFrom1s(): void
     {
+        $this->logger->write("uri - {$_SERVER['REQUEST_URI']}; method - {$_SERVER['REQUEST_METHOD']}");
         header("Content-Type: text/plain; charset=utf-8");
         header("Pragma: no-cache");
-        $this->logger->write("uri - {$_SERVER['REQUEST_URI']}; method - {$_SERVER['REQUEST_METHOD']}");
-
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             if (isset($_GET['type']) && $_GET['type'] === 'catalog') {
 
@@ -62,12 +61,13 @@ class SyncService
                 }
 
                 if (isset($_GET['mode']) && $_GET['mode'] === 'init') {
-                    $this->actions->clearUnzippedDir($this->unzippedDir);
                     $this->actions->init();
                 }
             }
         }
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $this->actions->clearSyncDir($this->archiveDir);
+            $this->actions->clearUnzippedDir($this->unzippedDir);
             $this->actions->createDirIfNotExist($this->archiveDir);
             $this->actions->createDirIfNotExist($this->unzippedDir);
             $this->import();
@@ -84,10 +84,11 @@ class SyncService
             throw new SyncException('$_GET[mode] is not file');
         }
         $filePath = $this->actions->saveFiles($this->archiveDir);
-        $this->actions->unzip($filePath, $this->unzippedDir);
+        $this->actions->unzip($this);
+//        $this->actions->unzip($filePath, $this->unzippedDir);
 
         if ($this->actions->allFilesUnzipped($this->importFile, $this->offerFile)) {
-            $this->actions->moveZips($this->archiveDir);
+
             $this->actions->respondAndContinue();
             $this->logger->write('Load started');
             try {

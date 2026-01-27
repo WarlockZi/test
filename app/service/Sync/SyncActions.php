@@ -63,16 +63,17 @@ class SyncActions
     /**
      * @throws Exception
      */
-    public function unzip(string $filePath, string $unzippedDir): void
+    public function unzip(SyncService $service): void
+//    public function unzip(string $filePath, string $unzippedDir): void
     {
         $zip = new ZipArchive;
         try {
             $zip->open($filePath);
             $zip->extractTo($unzippedDir);
             $zip->close();
-            $this->logger->write('extraction successful! file - ' . $filePath);
+            $this->logger->write('extraction successful!');
             if (is_readable($filePath)) {
-                $this->logger->write('file is readable - ' . $filePath);
+                $this->logger->write('is readable - ' . $filePath);
             }
             return;
         } catch (Exception $e) {
@@ -84,7 +85,7 @@ class SyncActions
     /**
      * @throws Exception
      */
-    public function moveZips(string $archiveDir): void
+    public function clearSyncDir(string $archiveDir): void
     {
         $iterator = new DirectoryIterator($archiveDir);
         foreach ($iterator as $fileInfo) {
@@ -93,7 +94,6 @@ class SyncActions
             if ($fileInfo->getExtension() !== 'zip') continue;
 
             $from = $fileInfo->getPathname();
-//            $to   = $archiveDir . DIRECTORY_SEPARATOR . $fileInfo->getFilename();
             $to = $this->createDirToMove($archiveDir) . DIRECTORY_SEPARATOR . $fileInfo->getBasename();
             rename($from, $to);
         }
