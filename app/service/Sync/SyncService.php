@@ -54,6 +54,7 @@ class SyncService
         $this->logger->write("uri - {$_SERVER['REQUEST_URI']}; method - {$_SERVER['REQUEST_METHOD']}");
         header("Content-Type: text/plain; charset=utf-8");
         header("Pragma: no-cache");
+
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             if (isset($_GET['type']) && $_GET['type'] === 'catalog') {
 
@@ -67,8 +68,6 @@ class SyncService
             }
         }
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $this->actions->clearSyncDir($this->archiveDir);
-            $this->actions->clearUnzippedDir($this->unzippedDir);
             $this->actions->createDirIfNotExist($this->archiveDir);
             $this->actions->createDirIfNotExist($this->unzippedDir);
             $this->import();
@@ -97,6 +96,8 @@ class SyncService
             } catch (Throwable $exception) {
                 $this->logger->write('load error - ' . $exception->getMessage());
             }
+            $this->actions->clearSyncDir($this->archiveDir);
+            $this->actions->clearUnzippedDir($this->unzippedDir);
         }
     }
 }
