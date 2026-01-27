@@ -102,7 +102,7 @@ class LoadCategories extends LoadService
             $catProps->save();
             return $catProps;
         } catch (Throwable $exception) {
-            $exc = 'load category own props failed: ' . $exception->getTraceAsString();
+            $exc = 'load category own props failed: ' . $exception->getMessage();
             $this->logger->write($exc);
             throw new Exception($exc);
         }

@@ -16,13 +16,15 @@ class LoadService
 
     public function __construct(
         protected SyncLogger $logger = new SyncLogger(),
+        protected      $importData ,
         protected array      $pricesData = [],
         protected array      $productsData = [],
         protected array      $categoriesData = [],
 
     )
     {
-        $this->registerMeasuredMethod('loadCategories');
+//        $this->registerMeasuredMethod('loadCategories');
+        $this->setImportFile();
     }
 
     protected function setOfferData(): void
@@ -36,21 +38,18 @@ class LoadService
     {
         $file               = ROOT . env('SYNC_PATH') . env('SYNC_IMPORT_FILE');
         $this->logger->write("--- xml file - $file ---");
-
         $xml                = simplexml_load_file($file);
-        return json_decode(json_encode($xml), true);
+        $this->importData =  json_decode(json_encode($xml), true);
     }
 
     protected function setProductsData(): void
     {
-        $xmlObj = $this->setImportFile();
-        $this->productsData = $xmlObj['Каталог']['Товары']['Товар'];
+        $this->productsData = $this->importData['Каталог']['Товары']['Товар'];
     }
 
     protected function setCategoriesData(): void
     {
-        $xmlObj = $this->setImportFile();
-        $this->categoriesData = $xmlObj['Классификатор']['Группы']['Группа']['Группы']['Группа'];
+        $this->categoriesData = $this->importData['Классификатор']['Группы']['Группа']['Группы']['Группа'];
     }
 
     /**

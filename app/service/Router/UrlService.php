@@ -26,10 +26,10 @@ class UrlService
                 $category = $category->parent;
             }
             $str                                = implode('/', array_reverse($path)) . '/' . $localCategory->slug;
-            $propeties = $localCategory->ownProperties;
+            $propeties = $category->ownProperties;
             $propeties->path = $str;
-            $localCategory->ownProperties = $propeties;
-            $localCategory->save();
+            $category->ownProperties = $propeties;
+            $category->save();
         }
     }
 }
