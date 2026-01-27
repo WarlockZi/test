@@ -76,7 +76,7 @@ class LoadPrices extends LoadService
     {
         try {
             $this->product = Product::where('1s_id', $this->offer['1s_id'])
-                ->with(['units.price1s.type'])
+                ->with(['units.prices.type'])
                 ->first();
 
             $this->cleanDoubleUnits();
@@ -84,7 +84,7 @@ class LoadPrices extends LoadService
 
             $this->product->update(['instore' => $this->offer['instore']]);
         } catch (Throwable $exception) {
-            throw new Exception('Load prices failed to find product');
+            throw new Exception('Load prices failed to find product'.$exception->getMessage());
         }
     }
 

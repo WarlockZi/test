@@ -32,12 +32,17 @@ class LoadService
         $xmlObj           = json_decode(json_encode($xml), true);
         $this->pricesData = $xmlObj['ПакетПредложений']['Предложения']['Предложение'];
     }
-
-    protected function setProductsData(): void
+    private function setImportFile()
     {
         $file               = ROOT . env('SYNC_PATH') . env('SYNC_IMPORT_FILE');
         $xml                = simplexml_load_file($file);
         $xmlObj             = json_decode(json_encode($xml), true);
+        return $xmlObj;
+    }
+
+    protected function setProductsData(): void
+    {
+        $xmlObj =
         $this->productsData = $xmlObj['Каталог']['Товары']['Товар'];
     }
 
