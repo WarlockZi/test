@@ -14,9 +14,10 @@ class LoadService
 {
     use MeasurableTrait;
 
+        protected      $importData;
+
     public function __construct(
         protected SyncLogger $logger = new SyncLogger(),
-        protected      $importData ,
         protected array      $pricesData = [],
         protected array      $productsData = [],
         protected array      $categoriesData = [],
