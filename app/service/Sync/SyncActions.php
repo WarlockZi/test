@@ -33,6 +33,7 @@ class SyncActions
             }
             $iteration++;
         }
+
         return true;
     }
 

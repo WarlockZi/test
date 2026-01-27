@@ -45,7 +45,7 @@ class LoadService
     {
         $file = ROOT . env('SYNC_PATH') . env('SYNC_IMPORT_FILE');
 
-        $file = FS::platformSlashes($file);
+        $file                 = FS::platformSlashes($file);
         $xml                  = simplexml_load_file($file);
         $xmlObj               = json_decode(json_encode($xml), true);
         $this->categoriesData = $xmlObj['Классификатор']['Группы']['Группа']['Группы']['Группа'];
@@ -57,6 +57,14 @@ class LoadService
      */
     #[NoReturn] public function run(): void
     {
+        if (extension_loaded('simplexml')) {
+            $this->logger->write('--- "Расширение SimpleXML установлено" ---');
+            if (function_exists('simplexml_load_file')) {
+                $this->logger->write('--- " и функция доступна" ---');
+            }
+        } else {
+            $this->logger->write('--- "Расширение SimpleXML НЕ установлено" ---');
+        }
         $this->LoadCategories();
         $this->LoadProducts();
         $this->LoadPrices();
