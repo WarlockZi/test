@@ -14,6 +14,7 @@ class LoadProducts extends LoadService
 {
     private array $existing = [];
     private array $deleted = [];
+    private array $created = [];
 
     public function __construct()
     {
