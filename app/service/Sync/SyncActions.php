@@ -68,12 +68,15 @@ class SyncActions
     {
         $zip = new ZipArchive;
         try {
-            $zip->open($filePath);
-            $zip->extractTo($unzippedDir);
+            $zip->open($service->zipFileFullPath);
+            $zip->extractTo($service->unzippedDir);
             $zip->close();
             $this->logger->write('extraction successful!');
-            if (is_readable($filePath)) {
-                $this->logger->write('is readable - ' . $filePath);
+            if (is_readable($service->offerFile)) {
+                $this->logger->write('is readable - ' . $service->offerFile);
+            }
+            if (is_readable($service->importFile)) {
+                $this->logger->write('is readable - ' . $service->importFile);
             }
             return;
         } catch (Exception $e) {

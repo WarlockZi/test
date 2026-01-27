@@ -14,10 +14,11 @@ use Throwable;
 
 class SyncService
 {
-    private string $archiveDir = '';
-    private string $importFile = '';
-    private string $offerFile = '';
-    private string $unzippedDir = '';
+    public string $archiveDir = '';
+    public string $unzippedDir = '';
+    public string $importFile = '';
+    public string $offerFile = '';
+    public string $zipFileFullPath = '';
 
     use ZipErrorMessages;
 
@@ -83,7 +84,7 @@ class SyncService
         if (!isset($_GET['mode']) || $_GET['mode'] !== 'file') {
             throw new SyncException('$_GET[mode] is not file');
         }
-        $filePath = $this->actions->saveFiles($this->archiveDir);
+        $this->zipFileFullPath = $this->actions->saveFiles($this->archiveDir);
         $this->actions->unzip($this);
 //        $this->actions->unzip($filePath, $this->unzippedDir);
 
