@@ -3,7 +3,6 @@
 namespace app\service\Sync\Load;
 
 
-use app\model\Category;
 use app\model\Product;
 use app\model\ProductProperty;
 use app\service\ShortLink\ShortlinkService;
@@ -13,9 +12,10 @@ use Throwable;
 
 class LoadProducts extends LoadService
 {
+    private array $existing = [];
+    private array $deleted = [];
 
-    public function __construct(
-    )
+    public function __construct()
     {
         parent::__construct();
     }
