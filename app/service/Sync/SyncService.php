@@ -71,19 +71,18 @@ class SyncService
             $this->actions->createDirIfNotExist($this->archiveDir);
             $this->actions->createDirIfNotExist($this->unzippedDir);
             $this->import();
-            if ($this->actions->allFilesUnzipped($this->importFile, $this->offerFile)) {
-                $this->actions->respondAndContinue();
-                $this->logger->write('Load started');
-                try {
-                    $this->loadService->run();
-                } catch (Throwable $exception) {
-                    $this->logger->write('load error - ' . $exception->getMessage());
-                }
-                $this->actions->clearSyncDir($this->archiveDir);
-                $this->actions->clearUnzippedDir($this->unzippedDir);
-            }
         }
-
+        if ($this->actions->allFilesUnzipped($this->importFile, $this->offerFile)) {
+            $this->actions->respondAndContinue();
+            $this->logger->write('Load started');
+            try {
+                $this->loadService->run();
+            } catch (Throwable $exception) {
+                $this->logger->write('load error - ' . $exception->getMessage());
+            }
+            $this->actions->clearSyncDir($this->archiveDir);
+            $this->actions->clearUnzippedDir($this->unzippedDir);
+        }
     }
 
     #[NoReturn] private function import(): void
