@@ -50,9 +50,7 @@ class SyncActions
         }
     }
 
-    /**
-     * @throws SyncException
-     */
+
     public function saveFiles(string $archiveDir): string
     {
         $filename    = $this->validateFilename($_GET['filename'] ?? '');
@@ -66,9 +64,7 @@ class SyncActions
         return $filePath;
     }
 
-    /**
-     * @throws Exception
-     */
+
     public function unzip(SyncService $service): void
 //    public function unzip(string $filePath, string $unzippedDir): void
     {
@@ -152,10 +148,10 @@ class SyncActions
     public function validateFilename(string $filename): string
     {
         if (!$filename) {
-            throw new SyncException('Filename not specified');
+            $this->logger->write('Filename not specified');
         }
         if (preg_match('/\.\.|\/|\\\\/', $filename)) {
-            throw new SyncException('Insecure filename');
+            $this->logger->write('Insecure filename');
         }
         return basename($filename);
     }

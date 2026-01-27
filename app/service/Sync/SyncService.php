@@ -71,34 +71,29 @@ class SyncService
             $this->actions->createDirIfNotExist($this->archiveDir);
             $this->actions->createDirIfNotExist($this->unzippedDir);
             $this->import();
+            if ($this->actions->allFilesUnzipped($this->importFile, $this->offerFile)) {
+
+                $this->actions->respondAndContinue();
+                $this->logger->write('Load started');
+                try {
+                    $this->loadService->run();
+                } catch (Throwable $exception) {
+                    $this->logger->write('load error - ' . $exception->getMessage());
+                }
+                $this->actions->clearSyncDir($this->archiveDir);
+                $this->actions->clearUnzippedDir($this->unzippedDir);
+            }
         }
 
     }
 
-    /**
-     * @throws Exception
-     */
     #[NoReturn] private function import(): void
     {
         if (!isset($_GET['mode']) || $_GET['mode'] !== 'file') {
-            throw new SyncException('$_GET[mode] is not file');
+            $this->logger->write('$_GET[mode] is not file');
         }
         $this->zipFileFullPath = $this->actions->saveFiles($this->archiveDir);
         $this->actions->unzip($this);
-//        $this->actions->unzip($filePath, $this->unzippedDir);
-
-        if ($this->actions->allFilesUnzipped($this->importFile, $this->offerFile)) {
-
-            $this->actions->respondAndContinue();
-            $this->logger->write('Load started');
-            try {
-                $this->loadService->run();
-            } catch (Throwable $exception) {
-                $this->logger->write('load error - ' . $exception->getMessage());
-            }
-            $this->actions->clearSyncDir($this->archiveDir);
-            $this->actions->clearUnzippedDir($this->unzippedDir);
-        }
     }
 }
 
