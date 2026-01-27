@@ -35,25 +35,21 @@ class LoadService
     private function setImportFile()
     {
         $file               = ROOT . env('SYNC_PATH') . env('SYNC_IMPORT_FILE');
+        $this->logger->write("--- xml file - $file ---");
+
         $xml                = simplexml_load_file($file);
-        $xmlObj             = json_decode(json_encode($xml), true);
-        return $xmlObj;
+        return json_decode(json_encode($xml), true);
     }
 
     protected function setProductsData(): void
     {
-        $xmlObj =
+        $xmlObj = $this->setImportFile();
         $this->productsData = $xmlObj['Каталог']['Товары']['Товар'];
     }
 
     protected function setCategoriesData(): void
     {
-        $file = ROOT . env('SYNC_PATH') . env('SYNC_IMPORT_FILE');
-
-        $file = FS::platformSlashes($file);
-        $this->logger->write("--- xml file - $file ---");
-        $xml                  = simplexml_load_file($file);
-        $xmlObj               = json_decode(json_encode($xml), true);
+        $xmlObj = $this->setImportFile();
         $this->categoriesData = $xmlObj['Классификатор']['Группы']['Группа']['Группы']['Группа'];
     }
 
