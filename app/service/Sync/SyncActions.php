@@ -22,7 +22,12 @@ class SyncActions
     {
         $iteration = 0;
         while ($iteration < 3) {
-            if (!is_readable($importFile) && !is_readable($offerFile)) {
+            if (!is_readable($importFile)) {
+                $this->logger->write('importFile is not readable. sleep 60');
+                sleep(60);
+            }
+            if (!is_readable($offerFile)) {
+                $this->logger->write('offerFile is not readable. sleep 60');
                 sleep(60);
                 $this->logger->write('спим 60 сек');
             }
