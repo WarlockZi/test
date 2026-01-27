@@ -58,13 +58,11 @@ class LoadService
      */
     #[NoReturn] public function run(): void
     {
-        if (extension_loaded('simplexml')) {
-            $this->logger->write("--- Расширение SimpleXML установлено ---");
-            if (function_exists('simplexml_load_file')) {
-                $this->logger->write("---  и функция доступна ---");
-            }
-        } else {
+        if (!extension_loaded('simplexml')) {
             $this->logger->write("--- Расширение SimpleXML НЕ установлено ---");
+            if (function_exists('simplexml_load_file')) {
+                $this->logger->write("---  функция simplexml_load_file не доступна ---");
+            }
         }
         $this->LoadCategories();
         $this->LoadProducts();

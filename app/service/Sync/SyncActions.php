@@ -25,11 +25,13 @@ class SyncActions
             if (!is_readable($importFile)) {
                 $this->logger->write('importFile is not readable. sleep 60');
                 sleep(60);
+                return false;
             }
             if (!is_readable($offerFile)) {
                 $this->logger->write('offerFile is not readable. sleep 60');
                 sleep(60);
                 $this->logger->write('спим 60 сек');
+                return false;
             }
             $iteration++;
         }
