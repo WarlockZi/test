@@ -45,7 +45,8 @@ class LoadService
     {
         $file = ROOT . env('SYNC_PATH') . env('SYNC_IMPORT_FILE');
 
-        $file                 = FS::platformSlashes($file);
+        $file = FS::platformSlashes($file);
+        $this->logger->write("--- xml file - $file ---");
         $xml                  = simplexml_load_file($file);
         $xmlObj               = json_decode(json_encode($xml), true);
         $this->categoriesData = $xmlObj['Классификатор']['Группы']['Группа']['Группы']['Группа'];

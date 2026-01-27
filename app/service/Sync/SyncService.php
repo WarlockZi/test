@@ -72,7 +72,6 @@ class SyncService
             $this->actions->createDirIfNotExist($this->unzippedDir);
             $this->import();
             if ($this->actions->allFilesUnzipped($this->importFile, $this->offerFile)) {
-
                 $this->actions->respondAndContinue();
                 $this->logger->write('Load started');
                 try {

@@ -66,7 +66,6 @@ class SyncActions
 
 
     public function unzip(SyncService $service): void
-//    public function unzip(string $filePath, string $unzippedDir): void
     {
         $zip = new ZipArchive;
         try {
