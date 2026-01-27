@@ -66,7 +66,7 @@ class LoadCategories extends LoadService
      */
     protected function fillItem(array $group, string|null $parent): Category
     {
-        $item['1s_id']          = $group['Ид'];
+        $item['s_id']          = $group['Ид'];
         $item['category_1s_id'] = $parent;
 
         $item['name']       = $group['Наименование'];
