@@ -3481,9 +3481,7 @@
                                 <li class="footer-submenu__item">
                                     <a class="no-style footer-submenu__item-link" href="/company/news/">Новости</a>
                                 </li>
-                                <li class="footer-submenu__item">
-                                    <a class="no-style footer-submenu__item-link" href="/payment/">Оплата онлайн</a>
-                                </li>
+
                                 <li class="footer-submenu__item">
                                     <a class="no-style footer-submenu__item-link" href="/company/reviews/">Отзывы</a>
                                 </li>
