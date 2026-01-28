@@ -1565,7 +1565,7 @@
                         <div class="tile-advantage__card tile-card ">
                             <div class="tile-advantage__card-bg">
                                 <img class="img lazyload"
-                                     src="{{$data['images']}}advantages/6.webp">
+                                     src="{{$data['images']}}cta/1.webp">
                             </div>
                             <div class="tile-advantage__title">Гарантия на окна 3 года</div>
                         </div>
@@ -1578,7 +1578,7 @@
                 <div class="free-meas-form__block">
                     <div class="free-meas-form__bg">
                         <img class="img lazyload"
-                             src="{{$data['images']}}advantages/6.webp">
+                             src="{{$data['images']}}cta/1.webp">
                     </div>
 
                     <div class="free-meas-form__row">
@@ -2180,7 +2180,7 @@
                 <div class="free-meas-form__block">
                     <div class="free-meas-form__bg">
                         <img class="img lazyload"
-                             data-src="/new_style_files/upload/img_verstka/forms/red-square-opt-2.webp">
+                             src="{{$data['images']}}cta/1.webp">
                     </div>
 
                     <div class="free-meas-form__row">
@@ -2203,7 +2203,7 @@
                                     <div class="control free-meas-form__phone">
                                         <div class="control__group">
                                             <label class="control__label">Номер телефона</label>
-                                            <input class="control__input js-user-phone" placeholder="+7(999)888-77-66"
+                                            <input class="control__input js-user-phone" placeholder="+7(111)222-33-44"
                                                    name="phone" type="tel" autocomplete="tel">
                                         </div>
                                     </div>
@@ -3578,7 +3578,7 @@
 
                         <div class="window-decor-form__bg">
                             <img class="img lazyload"
-                                 data-src="/new_style_files/upload/img_verstka/forms/red-square-opt-2.webp" alt="">
+                                 src="{{$data['images']}}cta/1.webp" alt="">
                         </div>
 
                         <div class="window-decor-form__row">
