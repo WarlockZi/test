@@ -4,7 +4,7 @@ use app\middleware\AuthMiddleware;
 use app\middleware\CartMiddleware;
 
 
-$this->addRoute("^\/(?P<controller>balcony)\/?(?P<slug>[_a-z0-9-]+)$", ['controller' => 'Balcony']);
+//$this->addRoute("^\/(?P<controller>balcony)\/?(?P<slug>[_a-z0-9-]+)$", ['controller' => 'Balcony']);
 
 $this->addRoute("^\/(?P<controller>product)\/?(?P<slug>[_a-z0-9-]+)$", ['controller' => 'Product']);
 $this->addRoute("^\/short\/(?P<slug>.+)?\/?$", ['controller' => 'Short']);
