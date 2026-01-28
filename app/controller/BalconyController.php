@@ -16,16 +16,17 @@ class BalconyController extends AppController
             'company'=>'Балконная дверь',
             'city'=>'Вологда',
 
-            'email'=>'vvoronik@yandex.ru',
+            'email'=>'Paha12@icloud.com',
 
-            'phone'=>'+79217152464',
+            'phone'=>'+79535156799',
 
-            'tg_href'=>"https://t.me/vitex",
+            'tg_href'=>"https://t.me/PavelSelyakov",
 
             'work_from'=>'9:00',
             'work_to'=>'19:00'
         ];
         $data=[
+            'address'=>'г. Вологда, Ильюшина 6',
             'email_href'=>"mailto:{$conf['email']}",
             'phone_href'=>"tel:{$conf['phone']}",
 
