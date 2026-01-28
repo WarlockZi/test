@@ -1640,9 +1640,8 @@
                              data-text-color="">
                             <div class="stock-banner__item-bg stock-banner__item-bg--animation-scale ">
                                 <img alt="Собственное производство" width="1200" height="650" class="lazyload"
-                                     src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                                     data-src="/upload/resize_cache/webp/iblock/883/lw50c33gpv2h8i7sng9nelxapr9uc8a9.webp"
-                                     data-srcset="/upload/resize_cache/iblock/883/500_100000_1/lw50c33gpv2h8i7sng9nelxapr9uc8a9.jpg 500w, /upload/resize_cache/webp/iblock/883/lw50c33gpv2h8i7sng9nelxapr9uc8a9.webp 1920w">
+                                   src="{{$data['images']}}about/1.webp"
+                                >
                             </div>
 
                             <div class="stock-banner__item-content">
@@ -1680,9 +1679,8 @@
                              data-text-color="">
                             <div class="stock-banner__item-bg stock-banner__item-bg--animation-scale ">
                                 <img alt="Наша команда" width="1200" height="798" class="lazyload"
-                                     src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                                     data-src="/upload/resize_cache/webp/iblock/a7f/318fat6au5f87pe0zs4n2463d7bedwdq.webp"
-                                     data-srcset="/upload/resize_cache/iblock/a7f/500_100000_1/318fat6au5f87pe0zs4n2463d7bedwdq.jpg 500w, /upload/resize_cache/webp/iblock/a7f/318fat6au5f87pe0zs4n2463d7bedwdq.webp 1920w">
+                                     src="{{$data['images']}}about/2.webp"
+>
                             </div>
 
                             <div class="stock-banner__item-content">
@@ -1717,9 +1715,8 @@
                              data-text-color="">
                             <div class="stock-banner__item-bg stock-banner__item-bg--animation-scale ">
                                 <img alt="Проекты" width="4284" height="5712" class="lazyload"
-                                     src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                                     data-src="/upload/resize_cache/webp/iblock/fff/dpkx0ii0c96l7d8bytkxvp3sf1laz94r.webp"
-                                     data-srcset="/upload/resize_cache/iblock/fff/500_100000_1/dpkx0ii0c96l7d8bytkxvp3sf1laz94r.jpg 500w, /upload/resize_cache/webp/iblock/fff/dpkx0ii0c96l7d8bytkxvp3sf1laz94r.webp 1920w">
+                                     src="{{$data['images']}}examples/1/2.jpg"
+>
                             </div>
 
                             <div class="stock-banner__item-content">
@@ -1787,15 +1784,13 @@
             <div class="inner-container tile-advantage__container">
                 <h2 class="h2 section-header">Сервисные услуги</h2>
 
-
                 <div class="tile-advantage__wrap tile-advantage__col3">
-
 
                     <a href="/servis/zamena-uplotnitelya/" class="tile-advantage__item">
                         <div class="tile-advantage__card tile-card ">
                             <div class="tile-advantage__card-bg">
                                 <img class="img lazyload"
-                                     data-src="/upload/resize_cache/webp/iblock/570/a50f1qs1f0f52b3tfi6t218c25ohza5p.webp">
+                                     src="{{$data['images']}}services/1.webp">
                             </div>
 
                             <div class="tile-advantage__title">Замена уплотнителя</div>
@@ -1806,7 +1801,7 @@
                         <div class="tile-advantage__card tile-card ">
                             <div class="tile-advantage__card-bg">
                                 <img class="img lazyload"
-                                     data-src="/upload/resize_cache/webp/iblock/326/mdblwucecpswee4cd296uvxtp4qu6vks.webp">
+                                     src="{{$data['images']}}services/2.webp">
                             </div>
 
                             <div class="tile-advantage__title">Регулировка пластиковых окон</div>
@@ -1817,7 +1812,7 @@
                         <div class="tile-advantage__card tile-card ">
                             <div class="tile-advantage__card-bg">
                                 <img class="img lazyload"
-                                     data-src="/upload/resize_cache/webp/iblock/1f7/vpo7mjd74vvwo7mvv11iiagwrg96dw6q.webp">
+                                     src="{{$data['images']}}services/3.webp">
                             </div>
 
                             <div class="tile-advantage__title">Замена ручек</div>
@@ -1828,7 +1823,7 @@
                         <div class="tile-advantage__card tile-card ">
                             <div class="tile-advantage__card-bg">
                                 <img class="img lazyload"
-                                     data-src="/upload/resize_cache/webp/iblock/904/kz8pds5s7z9n1lgs196cs2u23rvtetdf.webp">
+                                     src="{{$data['images']}}services/4.webp">
                             </div>
 
                             <div class="tile-advantage__title">Замена стеклопакета</div>
@@ -1839,7 +1834,7 @@
                         <div class="tile-advantage__card tile-card ">
                             <div class="tile-advantage__card-bg">
                                 <img class="img lazyload"
-                                     data-src="/upload/resize_cache/webp/iblock/1d1/6yqn28hfivzsvr2rk37viuk20gjs6va2.webp">
+                                     src="{{$data['images']}}services/5.webp">
                             </div>
 
                             <div class="tile-advantage__title">Замена откосов</div>
@@ -1850,7 +1845,7 @@
                         <div class="tile-advantage__card tile-card ">
                             <div class="tile-advantage__card-bg">
                                 <img class="img lazyload"
-                                     data-src="/upload/resize_cache/webp/iblock/e3c/7mppxhmhg211sj3wkjp6oz9zfk25cgjb.webp">
+                                     src="{{$data['images']}}services/6.webp">
                             </div>
 
                             <div class="tile-advantage__title">Установка подоконника</div>
@@ -1861,7 +1856,7 @@
                         <div class="tile-advantage__card tile-card ">
                             <div class="tile-advantage__card-bg">
                                 <img class="img lazyload"
-                                     data-src="/upload/resize_cache/webp/iblock/101/3jp0b03k2xv2ettoz1iso3735vgxlbdj.webp">
+                                     src="{{$data['images']}}services/7.webp">
                             </div>
 
                             <div class="tile-advantage__title">Ремонт и замена фурнитуры</div>
@@ -1872,7 +1867,7 @@
                         <div class="tile-advantage__card tile-card ">
                             <div class="tile-advantage__card-bg">
                                 <img class="img lazyload"
-                                     data-src="/upload/resize_cache/webp/iblock/ceb/b64ca4v0gue6h5m3pgeiwq06bgzqt3oe.webp">
+                                     src="{{$data['images']}}services/8.webp">
                             </div>
 
                             <div class="tile-advantage__title">Наружная отделка окна: отливы и козырьки</div>
@@ -1883,7 +1878,7 @@
                         <div class="tile-advantage__card tile-card ">
                             <div class="tile-advantage__card-bg">
                                 <img class="img lazyload"
-                                     data-src="/upload/resize_cache/webp/iblock/cdc/ytbazuvk7mrzk3f8ilrhdsiictlaqcz8.webp">
+                                     src="{{$data['images']}}services/9.webp">
                             </div>
 
                             <div class="tile-advantage__title">Детская безопасность</div>
@@ -1894,7 +1889,7 @@
                         <div class="tile-advantage__card tile-card ">
                             <div class="tile-advantage__card-bg">
                                 <img class="img lazyload"
-                                     data-src="/upload/resize_cache/webp/iblock/5ee/0iqcp7h9gjyxuvt4ps6191x25y9aro7c.webp">
+                                     src="{{$data['images']}}services/10.webp">
                             </div>
 
                             <div class="tile-advantage__title">Москитные сетки от производителя</div>
@@ -2125,56 +2120,6 @@
         </section>
 
 
-        <section class="lamin-color" data-action="/ajax/?controller=laminations&action=getlist&section-id=32">
-            <div class="inner-container lamin-color__container">
-                <div class="h2 section-header">Выбор цвета ламинации</div>
-                <vue-app id="vue-lamin-color" data-type="32">
-                    <lamin-color></lamin-color>
-                </vue-app>
-            </div>
-        </section>
-
-
-        <section class="rassrochka">
-            <div class="rassrochka__container inner-container">
-                <h2 class="h2 section-header">Честная рассрочка без процентов</h2>
-
-                <div class="rassrochka__banner">
-                    <div class="rassrochka__banner-bg">
-                        <img class="img banner-desk lazyload"
-                             data-src="/new_style_files/upload/img_verstka/rassrochka/rassrochka.jpg" alt=""
-                             width="1170" height="420">
-                        <img class="img banner-mob lazyload"
-                             data-src="/new_style_files/upload/img_verstka/rassrochka/rassrochka.jpg" alt=""
-                             width="1170" height="420">
-                    </div>
-                    <div class="rassrochka__banner-items">
-                        <div class="rassrochka__item">
-                            <div class="rassrochka__item-num"><span>1</span></div>
-                            <div class="rassrochka__item-title">Оформите заявку</div>
-                            <div class="rassrochka__item-desk">Менеджер подберет для Вас комфортные условия по
-                                рассрочке.
-                            </div>
-                        </div>
-                        <div class="rassrochka__item">
-                            <div class="rassrochka__item-num"><span>2</span></div>
-                            <div class="rassrochka__item-title">Внесите предоплату</div>
-                            <div class="rassrochka__item-desk">Внесите 20% от суммы договора. Остаток суммы вносите
-                                равными долями в течение 4-х месяцев.
-                            </div>
-                        </div>
-                        <div class="rassrochka__item">
-                            <div class="rassrochka__item-num"><span>3</span></div>
-                            <div class="rassrochka__item-title">Наслаждайтесь комфортом</div>
-                            <div class="rassrochka__item-desk">Наслаждайся новыми окнами/остеклением балкона уже сейчас-
-                                плати потом!
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <section class="free-meas-form js-free-meas-form">
             <div class="inner-container free-meas-form__container">
                 <div class="free-meas-form__block">
@@ -2235,7 +2180,7 @@
                                 <div class="tile-advantage__card tile-card ">
                                     <div class="tile-advantage__card-bg">
                                         <img class="img lazyload"
-                                             data-src="/new_style_files/images/poriadok/poriadok-1.jpg">
+                                             src="{{$data['images']}}flow/1.webp">
                                     </div>
 
                                     <div class="tile-advantage__ico">
@@ -2249,7 +2194,7 @@
                                 <div class="tile-advantage__card tile-card ">
                                     <div class="tile-advantage__card-bg">
                                         <img class="img lazyload"
-                                             data-src="/new_style_files/images/poriadok/poriadok-2.png">
+                                             src="{{$data['images']}}flow/2.webp">
                                     </div>
                                     <div class="tile-advantage__ico">
                                         2
@@ -2261,7 +2206,7 @@
                                 <div class="tile-advantage__card tile-card ">
                                     <div class="tile-advantage__card-bg">
                                         <img class="img lazyload"
-                                             data-src="/new_style_files/images/poriadok/poriadok-3.jpeg">
+                                             src="{{$data['images']}}flow/3.webp">
                                     </div>
                                     <div class="tile-advantage__ico">
                                         3
@@ -2273,7 +2218,7 @@
                                 <div class="tile-advantage__card tile-card ">
                                     <div class="tile-advantage__card-bg">
                                         <img class="img lazyload"
-                                             data-src="/new_style_files/images/poriadok/poriadok-4.jpg">
+                                             src="{{$data['images']}}flow/4.webp">
                                     </div>
 
                                     <div class="tile-advantage__ico">
@@ -2286,7 +2231,7 @@
                                 <div class="tile-advantage__card tile-card ">
                                     <div class="tile-advantage__card-bg">
                                         <img class="img lazyload"
-                                             data-src="/new_style_files/images/poriadok/poriadok-5.jpeg">
+                                             src="{{$data['images']}}flow/5.webp">
                                     </div>
 
                                     <div class="tile-advantage__ico">
