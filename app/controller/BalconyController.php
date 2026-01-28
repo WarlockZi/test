@@ -3,9 +3,7 @@
 namespace app\controller;
 
 
-use app\controller\Admin\AdminscController;
-
-class BalconyController extends AdminscController
+class BalconyController extends AppController
 {
     public function __construct()
     {
