@@ -2,42 +2,43 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
 <head>
     <meta charset="utf-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta charset="UTF-8">
+    <meta name="Content-Type" content="text/html">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0">
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="robots" content="index, follow">
+    <meta name="keywords" content="{{$data['seo_keywords']}}">
+    <meta name="description"
+          content={{$data['seo_description']}}>
+    <link href="{{$data['css']}}styles.css" type="text/css" data-template-style="true" rel="stylesheet">
+    <link href="{{$data['css']}}template_styles.css" type="text/css" data-template-style="true" rel="stylesheet">
+
+
+    <title>{{$data['seo_title']}}</title>
+    <link href="{{$data['css']}}fonts.css" rel="stylesheet">
+    <link href="{{$data['css']}}vendors_hash%253D80e9fd5032e9989e9336.css" rel="stylesheet">
+    <link href="{{$data['css']}}app_hash%253D765821bf9468e6ce6185.css" rel="stylesheet">
+
+
+    <script defer="" src="/public/src/balcony/js/vendors_hash%253D3974e78eae913c6dc5aa.js"></script>
+    <script defer="" src="{{$data['js']}}scripts.js"></script>
+
+    <link rel="shortcut icon" href="/public/src/balcony/images/favicon.ico" type="image/x-icon">
+
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+
+    <link href="{{$data['css']}}styles_170722988113314.min.css" rel="stylesheet">
+
 </head>
 <body class="body-container">
 
 @include('admin.balcony.cookie')
 
-
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-<meta charset="UTF-8">
-<meta name="Content-Type" content="text/html">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=0">
-
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="robots" content="index, follow">
-<meta name="keywords" content="{{$data['seo_keywords']}}">
-<meta name="description"
-      content={{$data['seo_description']}}>
-<link href="{{$data['css']}}styles.css" type="text/css" data-template-style="true" rel="stylesheet">
-<link href="{{$data['css']}}template_styles.css" type="text/css" data-template-style="true" rel="stylesheet">
-
-
-<title>{{$data['seo_title']}}</title>
-<link href="{{$data['css']}}fonts.css" rel="stylesheet">
-<link href="{{$data['css']}}vendors_hash%253D80e9fd5032e9989e9336.css" rel="stylesheet">
-<link href="{{$data['css']}}app_hash%253D765821bf9468e6ce6185.css" rel="stylesheet">
-
-
-<script defer="" src="/public/src/balcony/js/vendors_hash%253D3974e78eae913c6dc5aa.js"></script>
-<script defer="" src="{{$data['js']}}scripts.js"></script>
-
-<link rel="shortcut icon" href="/public/src/balcony/images/favicon.ico" type="image/x-icon">
-
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="theme-color" content="#ffffff">
-
-<link href="{{$data['css']}}styles_170722988113314.min.css" rel="stylesheet">
 
 
 <script>
@@ -73,7 +74,7 @@
                 <div class="mega-menu__head">
 
                     <a class="navbar-logo" href="/">
-                        <img src="/public/src/balcony/images/logo_60x60.png" alt="" class="img-responsive" width="60"
+                        <img src="/public/src/balcony/images/logo.jpg" alt="" class="img-responsive" width="60"
                              height="60">
                         {{$conf['company']}}
                     </a>
