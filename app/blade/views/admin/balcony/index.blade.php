@@ -1518,7 +1518,7 @@
                     <div class="tile-advantage__item tile-advantage__item-s2">
                         <div class="tile-advantage__card tile-card ">
                             <div class="tile-advantage__card-bg">
-                                <img class="img lazyload" data-src="/images/55.jpg">
+                                <img class="img lazyload" src="{{$data['images']}}advantages/1.webp">
                             </div>
                             <div class="tile-advantage__title">Принимаем заявки 24/7</div>
                         </div>
@@ -1527,7 +1527,7 @@
                         <div class="tile-advantage__card tile-card ">
                             <div class="tile-advantage__card-bg">
                                 <img class="img lazyload"
-                                     data-src="/new_style_files/upload/img_verstka/why-withus/02-proizvodstvo-350.jpg">
+                                     src="{{$data['images']}}advantages/2.webp">
                             </div>
                             <div class="tile-advantage__title">Бесплатный замер</div>
                         </div>
@@ -1536,7 +1536,7 @@
                         <div class="tile-advantage__card tile-card ">
                             <div class="tile-advantage__card-bg">
                                 <img class="img lazyload"
-                                     data-src="/new_style_files/upload/img_verstka/why-withus/03-proizvodstvo-350.jpg">
+                                     src="{{$data['images']}}advantages/3.webp">
                             </div>
                             <div class="tile-advantage__title">Лучшие цены в Вологде</div>
                         </div>
@@ -1545,7 +1545,7 @@
                         <div class="tile-advantage__card tile-card ">
                             <div class="tile-advantage__card-bg">
                                 <img class="img lazyload"
-                                     data-src="/new_style_files/upload/img_verstka/why-withus/04-proizvodstvo-350.jpg">
+                                     src="{{$data['images']}}advantages/4.webp">
                             </div>
 
                             <div class="tile-advantage__title">Кратчайшие сроки</div>
@@ -1555,7 +1555,7 @@
                         <div class="tile-advantage__card tile-card ">
                             <div class="tile-advantage__card-bg">
                                 <img class="img lazyload"
-                                     data-src="/new_style_files/upload/img_verstka/why-withus/05-proizvodstvo-350.jpg">
+                                     src="{{$data['images']}}advantages/5.webp">
                             </div>
 
                             <div class="tile-advantage__title">Более 700 000м2 остекленных объектов</div>
@@ -1565,7 +1565,7 @@
                         <div class="tile-advantage__card tile-card ">
                             <div class="tile-advantage__card-bg">
                                 <img class="img lazyload"
-                                     data-src="/new_style_files/upload/img_verstka/why-withus/06-proizvodstvo-350.jpg">
+                                     src="{{$data['images']}}advantages/6.webp">
                             </div>
                             <div class="tile-advantage__title">Гарантия на окна 3 года</div>
                         </div>
@@ -1578,7 +1578,7 @@
                 <div class="free-meas-form__block">
                     <div class="free-meas-form__bg">
                         <img class="img lazyload"
-                             data-src="/new_style_files/upload/img_verstka/forms/red-square-opt-2.webp">
+                             src="{{$data['images']}}advantages/6.webp">
                     </div>
 
                     <div class="free-meas-form__row">
