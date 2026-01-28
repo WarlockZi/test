@@ -1369,7 +1369,7 @@
                         <div class="stock-banner__item-bg stock-banner__item-bg--animation-scale">
                             <img alt="Остекление балконов и лоджий со скидкой 20%* в Вологде" width="5712"
                                  height="4284"
-                                 src="{]{$data['images']}}slider/остекление.png"
+                                 src="{{$data['images']}}slider/остекление.png"
                             >
                         </div>
 
@@ -1395,9 +1395,8 @@
                          data-text-color="">
                         <div class="stock-banner__item-bg stock-banner__item-bg--animation-scale">
                             <img alt="Скидка на сервисные услуги 30%" width="1485" height="1112" class="lazyload"
-                                 src="/public/src/balcony/upload/resize_cache/webp/iblock/29d/2a7f0emvgeadtl1n0tvvqfe0tgp1kn2v.webp"
-                                 data-src="/upload/resize_cache/webp/iblock/b59/z04mhf785jzbrhbakfukw4jpjli7pf0z.webp"
-                                 data-srcset="/upload/resize_cache/iblock/b59/400_100000_1/z04mhf785jzbrhbakfukw4jpjli7pf0z.jpg 500w, /upload/resize_cache/webp/iblock/b59/z04mhf785jzbrhbakfukw4jpjli7pf0z.webp 1920w">
+                                 src="{{$data['images']}}slider/repair.jpg"
+>
                         </div>
 
                         <div class="stock-banner__item-content">
@@ -1420,9 +1419,9 @@
                          data-text-color="">
                         <div class="stock-banner__item-bg stock-banner__item-bg--animation-scale">
                             <img alt="Акция" width="5712" height="4284" class="lazyload"
-                                 src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
-                                 data-src="/upload/resize_cache/webp/iblock/83a/ouqxwg3wgjuzsa06e2d4sttgu2fveg3q.webp"
-                                 data-srcset="/upload/resize_cache/iblock/83a/400_100000_1/ouqxwg3wgjuzsa06e2d4sttgu2fveg3q.jpg 500w, /upload/resize_cache/webp/iblock/83a/ouqxwg3wgjuzsa06e2d4sttgu2fveg3q.webp 1920w">
+
+                                 src="{{$data['images']}}slider/delivery.webp"
+>
                         </div>
 
                         <div class="stock-banner__item-content">
@@ -1509,14 +1508,6 @@
            });
         </script>
 
-
-        <section class="configurator js-configurator">
-            <div class="inner-container">
-                <h1 class="h2 configurator-header section-header">Купить пластиковые окна от производителя</h1></div>
-
-            <div id="vue-configurator"></div>
-
-        </section>
 
 
         <section class="tile-advantage">
