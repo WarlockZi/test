@@ -139,7 +139,6 @@ height: 50px;
 
 background-color: #fff;
     border-radius: 10px;
-    width: -moz-fit-content;
     width: fit-content;
     margin-bottom: 50px;
     width: 100%;
@@ -718,15 +717,15 @@ display: none!important;
 }
 .whatsap4-button {
   position: fixed;
-  right: 8px;
+  right: 20px;
   bottom: 180px;
   z-index: 1000;
   animation: bounce 2s infinite;
 }
 
 .whatsap4-button img {
-  width: 90px;
-  height: 87px;
+    width: 60px;
+    height: 60px;
   transition: transform 0.3s;
 }
 

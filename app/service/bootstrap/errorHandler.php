@@ -98,17 +98,10 @@ function devShutdownHandler(): void
     }
 }
 
-#[NoReturn] function devErrorHandler($errno, $errstr, $errfile, $errline)
+#[NoReturn] function devErrorHandler($errno, $errstr, $errfile, $errline): void
 {
     $error = $errstr . "<br> in " . $errfile . "<br> on line " . $errline;
-//    if (!headers_sent()) {
-//        header('HTTP/1.1 500 Internal Server Error');
-////        include ROOT.'/app/view/404/404.php';
-//    }
-//    response()->consoleLog($errstr);
     view('exceptions.error', compact('error'));
-    // Don't execute PHP internal error handler
-//    return true;
 }
 
 #[NoReturn] function devExceptionHandler($exception): void

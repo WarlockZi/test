@@ -2,6 +2,8 @@
 
 namespace app\service\Sync;
 
+use app\attributes\time\Time;
+use app\attributes\time\TimeTrait;
 use app\service\Logger\SyncLogger;
 use DirectoryIterator;
 use Exception;
@@ -11,6 +13,7 @@ use ZipArchive;
 
 class SyncActions
 {
+    use TimeTrait;
     public function __construct(private SyncLogger $logger)
     {
     }
@@ -18,17 +21,19 @@ class SyncActions
     /**
      * @throws Exception
      */
+    #[Time('Процесс обработки данных', logResult: true)]
     public function allFilesUnzipped(string $importFile, string $offerFile): bool
     {
         $iteration = 0;
+        $delay = 10;
         while ($iteration < 3) {
             if (!is_readable($importFile)) {
-                $this->logger->write('importFile is not readable. sleep 60');
-                sleep(60);
+                $this->logger->write('importFile is not readable. sleep '.$delay);
+                sleep($delay);
             }
             if (!is_readable($offerFile)) {
-                $this->logger->write('offerFile is not readable. sleep 60');
-                sleep(60);
+                $this->logger->write('offerFile is not readable. sleep '.$delay);
+                sleep($delay);
             }
             $iteration++;
         }
@@ -127,9 +132,9 @@ class SyncActions
     public function respondAndContinue(): void
     {
         ob_start();
-        echo json_encode(['status' => 'all files accepted']);
         header('Content-Type: application/json');
         header('Content-Length: ' . ob_get_length());
+        echo json_encode(['status' => 'all files accepted']);
         ob_end_flush();
         flush(); // Send output to browser
     }

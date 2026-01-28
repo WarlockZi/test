@@ -75,11 +75,11 @@ class SyncService
         if ($this->actions->allFilesUnzipped($this->importFile, $this->offerFile)) {
             $this->actions->respondAndContinue();
             $this->logger->write('Load started');
-            try {
-                $this->loadService->run();
-            } catch (Throwable $exception) {
-                $this->logger->write('load error - ' . $exception->getMessage());
-            }
+//            try {
+//                $this->loadService->run();
+//            } catch (Throwable $exception) {
+//                $this->logger->write('load error - ' . $exception->getMessage());
+//            }
             $this->actions->clearSyncDir($this->archiveDir);
             $this->actions->clearUnzippedDir($this->unzippedDir);
         }

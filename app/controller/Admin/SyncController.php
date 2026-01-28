@@ -2,7 +2,7 @@
 
 namespace app\controller\Admin;
 
-use app\decorators\MeasureExecutionTime;
+use app\attributes\MeasureExecutionTime;
 use app\formRequest\SyncDownloadZipRequest;
 use app\model\User;
 use app\service\AuthService\Auth;
@@ -38,7 +38,7 @@ class SyncController extends AdminscController
      * @throws Exception|Throwable
      */
     #[NoReturn]
-    #[Loggable(level: 'info', message: 'SyncController начал загрузку')]
+    #[Loggable(level: 'info', message: 'Attrubute SyncController начал загрузку')]
     public function actionLoad(): void
     {
         $this->logger->write('SyncController начал загрузку');

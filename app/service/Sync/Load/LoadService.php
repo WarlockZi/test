@@ -2,6 +2,7 @@
 
 namespace app\service\Sync\Load;
 
+use app\attributes\time\Time;
 use app\service\Fs\FS;
 use app\service\Logger\SyncLogger;
 use app\service\Sync\Load\Attributes\Measure\MeasurableTrait;
@@ -25,7 +26,7 @@ class LoadService
     )
     {
 //        $this->registerMeasuredMethod('loadCategories');
-        $this->setImportFile();
+
     }
 
     protected function setOfferData(): void
@@ -35,7 +36,7 @@ class LoadService
         $xmlObj           = json_decode(json_encode($xml), true);
         $this->pricesData = $xmlObj['ПакетПредложений']['Предложения']['Предложение'];
     }
-    private function setImportFile()
+    private function setImportFile(): void
     {
         $file               = ROOT . env('SYNC_PATH') . env('SYNC_IMPORT_FILE');
         $this->logger->write("--- xml file - $file ---");
@@ -57,7 +58,9 @@ class LoadService
      * @throws Exception
      * @throws Throwable
      */
-    #[NoReturn] public function run(): void
+    #[NoReturn]
+
+    public function run(): void
     {
         if (!extension_loaded('simplexml')) {
             $this->logger->write("--- Расширение SimpleXML НЕ установлено ---");
@@ -65,6 +68,7 @@ class LoadService
                 $this->logger->write("---  функция simplexml_load_file не доступна ---");
             }
         }
+        $this->setImportFile();
         $this->LoadCategories();
         $this->LoadProducts();
         $this->LoadPrices();
