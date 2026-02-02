@@ -232,16 +232,5 @@ class SyncActions
         exit;
     }
 
-//    /**
-//     * @throws Exception
-//     */
-//    public function logRequest(array $req): void
-//    {
-//        $this->logger->write(implode(', ', array_map(
-//            fn($key, $value) => "$key: $value" . PHP_EOL,
-//            array_keys($req),
-//            array_values($req)
-//        )));
-//    }
 }
 

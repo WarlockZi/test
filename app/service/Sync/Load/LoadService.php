@@ -68,10 +68,14 @@ class LoadService
                 $this->logger->write("---  функция simplexml_load_file не доступна ---");
             }
         }
-        $this->setImportFile();
-        $this->LoadCategories();
-        $this->LoadProducts();
-        $this->LoadPrices();
+        try {
+            $this->setImportFile();
+            $this->LoadCategories();
+            $this->LoadProducts();
+            $this->LoadPrices();
+        } catch (Throwable $exception) {
+            $this->logger->write('load error - ' . $exception->getMessage());
+        }
     }
 
     /**

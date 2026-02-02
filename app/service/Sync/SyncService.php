@@ -9,7 +9,6 @@ use app\service\Sync\Load\LoadService;
 use app\service\Zip\ZipErrorMessages;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
-use Throwable;
 
 
 class SyncService
@@ -74,14 +73,12 @@ class SyncService
         }
         if ($this->actions->allFilesUnzipped($this->importFile, $this->offerFile)) {
             $this->actions->respondAndContinue();
-            $this->logger->write('Load started');
-//            try {
-//                $this->loadService->run();
-//            } catch (Throwable $exception) {
-//                $this->logger->write('load error - ' . $exception->getMessage());
-//            }
             $this->actions->clearSyncDir($this->archiveDir);
-            $this->actions->clearUnzippedDir($this->unzippedDir);
+            $this->logger->write('Load started');
+
+            $this->loadService->run();
+
+//            $this->actions->clearUnzippedDir($this->unzippedDir);
         }
     }
 
