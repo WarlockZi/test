@@ -73,11 +73,11 @@ class SyncService
         }
         if ($this->actions->allFilesUnzipped($this->importFile, $this->offerFile)) {
             $this->actions->respondAndContinue();
-            $this->actions->clearSyncDir($this->archiveDir);
             $this->logger->write('Load started');
 
             $this->loadService->run();
 
+            $this->actions->clearSyncDir($this->archiveDir);
 //            $this->actions->clearUnzippedDir($this->unzippedDir);
         }
     }
