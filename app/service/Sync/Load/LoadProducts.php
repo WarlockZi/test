@@ -19,15 +19,18 @@ class LoadProducts extends LoadService
     public function __construct()
     {
         parent::__construct();
+        $this->setImportFile();
     }
-
-    public function load(): void
+    private function setImportFile(): void
     {
-        $this->setProductsData();
-        $this->exec();
+        $file               = ROOT . env('SYNC_PATH') . env('SYNC_IMPORT_FILE');
+        $this->logger->write("--- xml file - $file ---");
+        $xml                = simplexml_load_file($file);
+        $importData =  json_decode(json_encode($xml), true);
+//        $this->categoryData = $importData['Классификатор']['Группы']['Группа']['Группы']['Группа'];
+        $this->productData = $importData['Каталог']['Товары']['Товар'];
     }
-
-    private function exec(): void
+    public function load(): void
     {
         try {
             $this->updateOrCreateProducts();
@@ -35,8 +38,8 @@ class LoadProducts extends LoadService
         } catch (Throwable $exception) {
             $exc = $exception;
         }
-
     }
+
 
     private function deleteNonexisted(): void
     {
@@ -50,7 +53,7 @@ class LoadProducts extends LoadService
 
     private function updateOrCreateProducts(): void
     {
-        foreach ($this->productsData as $good) {
+        foreach ($this->productData as $good) {
             $this->existing[$good['Ид']] = $good['Ид'];
             $product                     = Product::withTrashed()
                 ->updateOrCreate(

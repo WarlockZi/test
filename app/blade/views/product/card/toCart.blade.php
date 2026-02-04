@@ -1,9 +1,8 @@
 <div class="product-info">
 
-
-
     @include('components.card_panel.product_card_panel')
 
+{{--    @deb--}}
     <div class="art">Арт. {!!$product['art']!!} </div>
 
     <div>

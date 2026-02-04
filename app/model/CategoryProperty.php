@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class CategoryProperty extends Model
 {
-
     public $timestamps = false;
     protected $fillable = [
         'slug',
@@ -30,6 +29,7 @@ class CategoryProperty extends Model
     ];
 
     protected $attributes = [];
+    protected $table='category_properties';
 
     public function category()
     {

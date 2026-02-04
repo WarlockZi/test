@@ -78,7 +78,7 @@ class SyncService
             $this->loadService->run();
 
             $this->actions->clearSyncDir($this->archiveDir);
-//            $this->actions->clearUnzippedDir($this->unzippedDir);
+            $this->actions->clearUnzippedDir($this->unzippedDir);
         }
     }
 

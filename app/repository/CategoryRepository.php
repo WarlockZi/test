@@ -56,12 +56,14 @@ class CategoryRepository
         return Cache::remember(
             'rootCategories',
             function () {
-                return Category::withWhereHas(
-                    'ownProperties',
-                    fn($q) => $q->where('show_front', 1))
+                return Category::query()
+                    ->withWhereHas(
+                        'ownProperties',
+                        fn($q) => $q->where('show_front', 1))
                     ->with('childrenRecursive')
                     ->with('ownProperties')
-                    ->get()->toArray();
+                    ->get()
+                    ->toArray();
             },
             60);
     }

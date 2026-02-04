@@ -26,10 +26,32 @@ class LoadPrices extends LoadService
     private $priceTypeComputed;
     private $price;
     private $productUnit;
+    private $row;
 
     public function __construct()
     {
         parent::__construct();
+    }
+    private function exec(): void
+    {
+        $i = 0;
+        foreach ($this->priceData as $offer) {
+//            $i++;
+//            if ($i>3) break;
+            $this->prepareOffer($offer);
+            $this->firstOrCreateUnit();
+            $this->findProductUpdateInstore();
+
+            $this->firstOrCreatePruductUnit();
+        }
+    }
+    private function setOfferFile(): void
+    {
+        $file               = ROOT . env('SYNC_PATH') . env('SYNC_OFFER_FILE');
+        $this->logger->write("--- xml file - $file ---");
+        $xml                = simplexml_load_file($file);
+        $offerData =  json_decode(json_encode($xml), true);
+        $this->priceData = $offerData['ПакетПредложений']['Предложения']['Предложение'];
     }
 
     /**
@@ -38,11 +60,9 @@ class LoadPrices extends LoadService
     #[NoReturn]
     public function load(): void
     {
-        $this->setOfferData();
-        $this->firstOrCreatePriceType();
-        $this->firstOrCreateCurrency();
+        $this->setOfferFile();
+        $this->exec();
 
-        $this->measureTime($this, 'optimizedProcess');
         $this->logger->write('--- price     loaded ---');
     }
 
@@ -115,7 +135,7 @@ class LoadPrices extends LoadService
             ]);
     }
 
-    private function prepareOffer($data): void
+    private function prepareOffer(array $data): void
     {
         $this->offer = [
             '1s_id' => trim($data['Ид']),
@@ -129,6 +149,10 @@ class LoadPrices extends LoadService
             'international' => trim($data['БазоваяЕдиница']['@attributes']['МеждународноеСокращение'] ?? null),
             'unit' => trim($data['БазоваяЕдиница']['@attributes']['НаименованиеПолное'] ?? null),
         ];
+//        $this->firstOrCreatePriceType();
+//        $this->firstOrCreateCurrency();
+
+//        $this->measureTime($this, 'optimizedProcess');
 
     }
 

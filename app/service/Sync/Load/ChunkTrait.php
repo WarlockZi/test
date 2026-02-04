@@ -29,7 +29,7 @@ trait ChunkTrait
         $chunkSize = 100;
         $rounds    = 2;
 
-        foreach (array_chunk($this->pricesData, $chunkSize) as $i => $chunk) {
+        foreach (array_chunk($this->priceData, $chunkSize) as $i => $chunk) {
             if ($rounds && $rounds < $i) {
                 break;
             }

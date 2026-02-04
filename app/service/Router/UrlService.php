@@ -17,19 +17,24 @@ class UrlService
     {
         $path = [];
         if (!$category->parent) {
-            $category->ownProperties->path = $category->slug;
-            $category->ownProperties->save();
+            $category->ownProperties()->update(['path' => $category->slug]);
+//            $category->ownProperties->path = $category->slug;
+//            $category->ownProperties->save();
         } else {
             $localCategory = $category;
             while ($category->parent) {
                 $path[]   = $category->parent->slug;
                 $category = $category->parent;
             }
-            $str                                = implode('/', array_reverse($path)) . '/' . $localCategory->slug;
-            $propeties = $category->ownProperties;
-            $propeties->path = $str;
-            $category->ownProperties = $propeties;
-            $category->save();
+            $str = implode('/', array_reverse($path)) . '/' . $localCategory->slug;
+            $category->ownProperties()->update(['path' => $str]);
+//            $propeties->path = $str;
+//            $category->ownProperties = $propeties;
+//            $category->save();
+//            $propeties = $category->ownProperties;
+//            $propeties->path = $str;
+//            $category->ownProperties = $propeties;
+//            $category->save();
         }
     }
 }
