@@ -99,8 +99,7 @@ class LoadPrices extends LoadService
                 ->with(['units.prices.type'])
                 ->first();
 
-            $this->cleanDoubleUnits();
-//                $p = $this->product->toArray();
+//            $this->cleanDoubleUnits();
 
             $this->product->update(['instore' => $this->offer['instore']]);
         } catch (Throwable $exception) {
@@ -149,8 +148,6 @@ class LoadPrices extends LoadService
             'international' => trim($data['БазоваяЕдиница']['@attributes']['МеждународноеСокращение'] ?? null),
             'unit' => trim($data['БазоваяЕдиница']['@attributes']['НаименованиеПолное'] ?? null),
         ];
-//        $this->firstOrCreatePriceType();
-//        $this->firstOrCreateCurrency();
 
 //        $this->measureTime($this, 'optimizedProcess');
 
