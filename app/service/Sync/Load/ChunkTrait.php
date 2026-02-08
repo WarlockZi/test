@@ -51,7 +51,7 @@ trait ChunkTrait
         $this->firstOrCreateUnit();
         $this->findProductUpdateInstore();
 
-        $this->firstOrCreatePruductUnit();
+        $this->updateOrCreatePruductUnit();
 //        $this->updateOrCreatePrice();
     }
 }

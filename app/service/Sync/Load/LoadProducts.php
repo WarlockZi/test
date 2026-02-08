@@ -21,15 +21,20 @@ class LoadProducts extends LoadService
         parent::__construct();
         $this->setImportFile();
     }
+
     private function setImportFile(): void
     {
-        $file               = ROOT . env('SYNC_PATH') . env('SYNC_IMPORT_FILE');
+        $file = ROOT
+            . env('SYNC_PATH')
+            . 'loaded/'
+            . env('SYNC_IMPORT_FILE');
         $this->logger->write("--- xml file - $file ---");
-        $xml                = simplexml_load_file($file);
-        $importData =  json_decode(json_encode($xml), true);
+        $xml        = simplexml_load_file($file);
+        $importData = json_decode(json_encode($xml), true);
 //        $this->categoryData = $importData['Классификатор']['Группы']['Группа']['Группы']['Группа'];
         $this->productData = $importData['Каталог']['Товары']['Товар'];
     }
+
     public function load(): void
     {
         try {

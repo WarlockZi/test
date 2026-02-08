@@ -63,7 +63,7 @@ class Product extends Model
         )
             ->using(ProductUnit::class)
             ->orderByPivot('multiplier')
-            ->withPivot('id', 'price', 'is_shippable', 'multiplier');
+            ->withPivot('id', 'price', 'is_shippable', 'multiplier', 'is_from_1s');
     }
     public function images(): BelongsToMany
     {

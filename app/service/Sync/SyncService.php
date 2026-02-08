@@ -69,20 +69,22 @@ class SyncService
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->actions->createDirIfNotExist($this->archiveDir);
             $this->actions->createDirIfNotExist($this->unzippedDir);
-            $this->import();
+            $this->actions->createDirIfNotExist($this->unzippedDir.'loaded');
+            $this->saveUnzip();
         }
         if ($this->actions->allFilesUnzipped($this->importFile, $this->offerFile)) {
             $this->actions->respondAndContinue();
             $this->logger->write('Load started');
 
+            $this->actions->moveUnzippedToLoaded($this->unzippedDir);
             $this->loadService->run();
 
             $this->actions->clearSyncDir($this->archiveDir);
-            $this->actions->clearUnzippedDir($this->unzippedDir);
+//            $this->actions->clearUnzippedDir($this->unzippedDir);
         }
     }
 
-    #[NoReturn] private function import(): void
+    #[NoReturn] private function saveUnzip(): void
     {
         if (!isset($_GET['mode']) || $_GET['mode'] !== 'file') {
             $this->logger->write('$_GET[mode] is not file');

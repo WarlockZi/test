@@ -25,7 +25,7 @@ class SyncActions
     public function allFilesUnzipped(string $importFile, string $offerFile): bool
     {
         $iteration = 0;
-        $delay = 10;
+        $delay = 2;
         while ($iteration < 3) {
             if (!is_readable($importFile)) {
                 $this->logger->write('importFile is not readable. sleep '.$delay);
@@ -61,7 +61,19 @@ class SyncActions
         }
     }
 
-
+    /**
+     * @throws Exception
+     */
+    public function moveUnzippedToLoaded(string $unzippedDir): void
+    {
+        $files = glob($unzippedDir . '*');
+        foreach ($files as $file) {
+            if (is_file($file)) {
+                $to = $unzippedDir.'loaded/'.basename($file);
+                rename($file, $to);
+            }
+        }
+    }
     public function saveFiles(string $archiveDir): string
     {
         $filename    = $this->validateFilename($_GET['filename'] ?? '');

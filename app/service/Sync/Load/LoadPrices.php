@@ -32,6 +32,7 @@ class LoadPrices extends LoadService
     {
         parent::__construct();
     }
+
     private function exec(): void
     {
         $i = 0;
@@ -42,15 +43,19 @@ class LoadPrices extends LoadService
             $this->firstOrCreateUnit();
             $this->findProductUpdateInstore();
 
-            $this->firstOrCreatePruductUnit();
+            $this->updateOrCreatePruductUnit();
         }
     }
+
     private function setOfferFile(): void
     {
-        $file               = ROOT . env('SYNC_PATH') . env('SYNC_OFFER_FILE');
+        $file = ROOT
+            . env('SYNC_PATH')
+            . 'loaded/'
+            . env('SYNC_OFFER_FILE');
         $this->logger->write("--- xml file - $file ---");
-        $xml                = simplexml_load_file($file);
-        $offerData =  json_decode(json_encode($xml), true);
+        $xml             = simplexml_load_file($file);
+        $offerData       = json_decode(json_encode($xml), true);
         $this->priceData = $offerData['ПакетПредложений']['Предложения']['Предложение'];
     }
 
@@ -98,40 +103,26 @@ class LoadPrices extends LoadService
             $this->product = Product::where('1s_id', $this->offer['1s_id'])
                 ->with(['units'])
                 ->first();
-
 //            $this->cleanDoubleUnits();
-
             $this->product->update(['instore' => $this->offer['instore']]);
         } catch (Throwable $exception) {
-            throw new Exception('Load prices failed to find product '.$exception->getMessage());
+            throw new Exception('Load prices failed to find product ' . $exception->getMessage());
         }
     }
 
-    protected function firstOrCreatePruductUnit(): void
+    protected function updateOrCreatePruductUnit(): void
     {
-        $this->productUnit = ProductUnit::where('price', '<>', null)
-            ->firstOrCreate(
+        $this->productUnit = ProductUnit::query()
+//            ->where('is_from_1s', 1)
+            ->updateOrCreate(
                 ['product_1s_id' => $this->product['1s_id'],
                     'unit_id' => $this->unit->id,
-
                 ],
-                ['is_shippable' => null,
+                ['is_shippable' => 1,
                     'multiplier' => null,
-                    'price'=>$this->offer['price']
+                    'price' => $this->offer['price'],
+                    'is_from_1s' => 1,
                 ]);
-    }
-
-    protected function updateOrCreatePrice(): void
-    {
-        $this->price = Price::updateOrCreate(
-            [
-                'product_unit_id' => $this->productUnit->id,
-                'price-type_id' => $this->priceType1s->id,
-                'currency_id' => $this->currency1s->id,
-            ],
-            [
-                'value' => $this->offer['price'] ?? '',
-            ]);
     }
 
     private function prepareOffer(array $data): void
@@ -151,6 +142,19 @@ class LoadPrices extends LoadService
 
 //        $this->measureTime($this, 'optimizedProcess');
 
+    }
+
+    protected function updateOrCreatePrice(): void
+    {
+        $this->price = Price::updateOrCreate(
+            [
+                'product_unit_id' => $this->productUnit->id,
+                'price-type_id' => $this->priceType1s->id,
+                'currency_id' => $this->currency1s->id,
+            ],
+            [
+                'value' => $this->offer['price'] ?? '',
+            ]);
     }
 
     private function firstOrCreatePriceType(): void

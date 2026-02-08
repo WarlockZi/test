@@ -31,12 +31,7 @@ class LoadService
 
     public function run(): void
     {
-        if (!extension_loaded('simplexml')) {
-            $this->logger->write("--- Расширение SimpleXML НЕ установлено ---");
-            if (function_exists('simplexml_load_file')) {
-                $this->logger->write("---  функция simplexml_load_file не доступна ---");
-            }
-        }
+        $this->checkXMLFuncExist();
         try {
 //            $this->LoadCategories();
 //            $this->LoadProducts();
@@ -46,6 +41,14 @@ class LoadService
         }
     }
 
+    private function checkXMLFuncExist(){
+        if (!extension_loaded('simplexml')) {
+            $this->logger->write("--- Расширение SimpleXML НЕ установлено ---");
+            if (function_exists('simplexml_load_file')) {
+                $this->logger->write("---  функция simplexml_load_file не доступна ---");
+            }
+        }
+    }
     /**
      * @throws Exception
      */

@@ -4,8 +4,9 @@
 
     @if ($catItem)
 
+
         @include('components.breadcrumbs.index', compact('breadcrumbs'))
-        @include('admin.components.catalogItem.index', compact('catItem'))
+        @include('admin.components.catalogItem.index')
 
     @else
         <div>Такого товара нет</div>

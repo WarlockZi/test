@@ -248,6 +248,7 @@ class ProductFormView
                      ->emptyRow('1')
                     ->width('clamp(40px,7vw,55px)')
                     ->data(['pivot'=>'multiplier'])
+                    ->data(['jscallback'=>'changemultiplier'])
                     ->callback(function ($unit) {
                         return $unit->pivot->multiplier;
                     })
@@ -277,11 +278,21 @@ class ProductFormView
             )
             ->column(
                 ColumnBuilder::build('Цены')
-                     ->contenteditable()
+//                     ->contenteditable()
                     ->data(['pivot'=>'price'])
-                    ->data(['jscallback'=>'changeprice'])
+//                    ->data(['jscallback'=>'changeprice'])
                     ->callback(function ($unit) {
                         return $unit->pivot->price ?? '-';
+                    })
+                    ->get()
+            )
+            ->column(
+                ColumnBuilder::build('Из 1s')
+//                    ->contenteditable()
+                    ->data(['pivot'=>'from_1s'])
+//                    ->data(['jscallback'=>'changeprice'])
+                    ->callback(function ($unit) {
+                        return $unit->pivot->is_from_1s ?? '';
                     })
                     ->get()
             )

@@ -61,6 +61,9 @@ class AppController extends Controller
                 $relationId = $relation['attach'] ?? null;
                 if ($model->$relationName()->detach((int)$relationId)) {
                     response()->json(['deleted' => $relationId, 'popup' => 'Удален']);
+                }elseif ($model->$relationName()->where($relationName.'_id',(int)$relationId)->exists()){
+                    $model->$relationName()->detach($relationId);
+                    response()->json(['message' => 'Role removed']);
                 }
             }
         } else {
@@ -71,8 +74,6 @@ class AppController extends Controller
                 response()->json(['popup' => 'Не удален']);
             }
         }
-
-
     }
 
     public function actionAttach(): void

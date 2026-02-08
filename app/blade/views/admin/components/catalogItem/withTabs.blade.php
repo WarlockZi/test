@@ -27,7 +27,7 @@
         @php $n++ @endphp
     @endforeach
 
-    @include('admin.components.catalogItem.buttons')
+    @include('admin.components.catalogItem.buttons', compact('catItem'))
 
 
 </div>

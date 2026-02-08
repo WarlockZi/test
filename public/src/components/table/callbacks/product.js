@@ -9,14 +9,73 @@ export default class Callbacks {
     cellWrapper.dataset.id = selectedValue;
   }
 
+  changemultiplier(target, rows) {
+    // debugger;
+    const targetMultiplier = target.innerText;
+    const targetId = target.dataset.id;
+    const perUnitPrice = getPerUnitPrice(rows);
+    if (!perUnitPrice) return;
+
+    const unitPrice = perUnitPrice;
+    rows.forEach(
+      (row, unitId) => {
+        if (unitId === 0) return;
+        if (unitId !== +targetId) {
+          const multiplierCell = row.find(
+            (cell) => cell?.dataset?.pivot === "multiplier",
+          );
+          const priceCell = row.find(
+            (cell) => cell?.dataset?.pivot === "price",
+          );
+
+          const multiplier = multiplierCell ? multiplierCell.innerText : "";
+          if (multiplier) {
+            priceCell.innerText = multiplier * unitPrice;
+            productUnitUpdate(priceCell);
+          }
+        }
+      },
+      [unitPrice],
+    );
+
+    function productUnitUpdate(target) {
+      const dto = new TableDTO(target);
+      const res = post("/adminsc/product/changeunitprice", dto);
+    }
+
+    function getPerUnitPrice(rows) {
+      let perUnitPrice = 0;
+      for (let i = 1; i < Object.keys(rows).length; i++) {
+        let key = Object.keys(rows)[i];
+        const from1sCell = rows[key].find(
+          (cell) => cell?.dataset?.pivot === "from_1s",
+        );
+        if (!from1sCell.innerText) continue;
+        const multiplierCell = rows[key].find(
+          (cell) => cell?.dataset?.pivot === "multiplier",
+        );
+        const priceCell = rows[key].find(
+          (cell) => cell?.dataset?.pivot === "price",
+        );
+        const multiplier = multiplierCell?.innerText ?? null;
+        const price = priceCell?.innerText ?? null;
+        if (!multiplier) continue;
+        if (price) {
+          perUnitPrice = price / multiplier;
+          break;
+        }
+      }
+      return perUnitPrice;
+    }
+  }
+
   changeprice(target, rows, updateFn = null) {
     const targetPrice = target.innerText;
     const targetId = target.dataset.id;
-    const targetMultiplier = getMultiplier(targetId);
+    const targetMultiplier = getPrice(targetId);
     if (!targetMultiplier) return;
 
     const unitPrice = targetPrice / targetMultiplier;
-
     rows.forEach(
       (row, unitId) => {
         if (unitId !== +targetId) {
@@ -42,10 +101,10 @@ export default class Callbacks {
       const res = post("/adminsc/product/changeunitprice", dto);
     }
 
-    function getMultiplier(rowId) {
+    function getPrice(rowId) {
       const row = rows[rowId];
       const multiplierCell = row.find(
-        (cell) => cell?.dataset?.pivot === "multiplier",
+        (cell) => cell?.dataset?.pivot === "price",
       );
       return multiplierCell ? multiplierCell.innerText : "";
     }
