@@ -79,7 +79,7 @@ class SyncService
             $loadedFiles = $this->actions->moveUnzippedToLoaded($this->unzippedDir);
             $this->importFile = $loadedFiles['importFile'];
             $this->offerFile = $loadedFiles['offerFile'];
-//            $this->loadService->run();
+            $this->loadService->run();
 
             $this->actions->clearSyncDir($this->archiveDir);
 //            $this->actions->clearUnzippedDir($this->unzippedDir);
