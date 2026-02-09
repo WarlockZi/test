@@ -79,18 +79,6 @@ class LoadPrices extends LoadService
             ]);
     }
 
-    protected function cleanDoubleUnits(): void
-    {
-        $ids = [];
-        foreach ($this->product->units as $unit) {
-            if (in_array($unit->id, $ids)) {
-                $unit->pivot->delete();
-            } else {
-                $ids[] = $unit->id;
-            }
-        }
-    }
-
     /**
      * @throws Exception
      */
@@ -116,7 +104,7 @@ class LoadPrices extends LoadService
                     'unit_id' => $this->unit->id,
                 ],
                 ['is_shippable' => 1,
-                    'multiplier' => null,
+//                    'multiplier' => null,
                     'price' => $this->offer['price'],
                     'is_from_1s' => 1,
                 ]);
@@ -138,7 +126,17 @@ class LoadPrices extends LoadService
         ];
 
     }
-
+    protected function cleanDoubleUnits(): void
+    {
+        $ids = [];
+        foreach ($this->product->units as $unit) {
+            if (in_array($unit->id, $ids)) {
+                $unit->pivot->delete();
+            } else {
+                $ids[] = $unit->id;
+            }
+        }
+    }
     protected function updateOrCreatePrice(): void
     {
         $this->price = Price::updateOrCreate(

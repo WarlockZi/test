@@ -24,19 +24,6 @@ class SyncActions
     #[Time('Процесс обработки данных', logResult: true)]
     public function allFilesUnzipped(string $importFile, string $offerFile): bool
     {
-//        $iteration = 0;
-//        $delay = 5;
-//        while ($iteration < 3) {
-//            if (!is_readable($importFile)) {
-//                $this->logger->write($offerFile." importFile is not readable. sleep ".$delay);
-//                sleep($delay);
-//            }
-//            if (!is_readable($offerFile)) {
-//                $this->logger->write($offerFile." offerFile is not readable. sleep ".$delay);
-//                sleep($delay);
-//            }
-//            $iteration++;
-//        }
         if (!is_readable($importFile)) {
             $this->logger->write($importFile.' is not readable');
             return false;
