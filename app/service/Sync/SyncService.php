@@ -50,6 +50,7 @@ class SyncService
      */
     #[NoReturn] public function requestFrom1s(): void
     {
+        $this->logger->write("");
         $this->logger->write("uri - {$_SERVER['REQUEST_URI']}; method - {$_SERVER['REQUEST_METHOD']}");
         header("Content-Type: text/plain; charset=utf-8");
         header("Pragma: no-cache");
