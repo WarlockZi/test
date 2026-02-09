@@ -25,7 +25,7 @@ class SyncActions
     public function allFilesUnzipped(string $importFile, string $offerFile): bool
     {
         $iteration = 0;
-        $delay = 10;
+        $delay = 5;
         while ($iteration < 3) {
             if (!is_readable($importFile)) {
                 $this->logger->write($offerFile." importFile is not readable. sleep ".$delay);

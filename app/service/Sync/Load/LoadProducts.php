@@ -31,7 +31,6 @@ class LoadProducts extends LoadService
         $this->logger->write("--- xml file - $file ---");
         $xml        = simplexml_load_file($file);
         $importData = json_decode(json_encode($xml), true);
-//        $this->categoryData = $importData['Классификатор']['Группы']['Группа']['Группы']['Группа'];
         $this->productData = $importData['Каталог']['Товары']['Товар'];
     }
 

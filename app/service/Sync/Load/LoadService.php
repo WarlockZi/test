@@ -33,7 +33,7 @@ class LoadService
     {
         $this->checkXMLFuncExist();
         try {
-//            $this->LoadCategories();
+            $this->LoadCategories();
             $this->LoadProducts();
             $this->LoadPrices();
         } catch (Throwable $exception) {

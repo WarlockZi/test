@@ -35,10 +35,7 @@ class LoadPrices extends LoadService
 
     private function exec(): void
     {
-        $i = 0;
         foreach ($this->priceData as $offer) {
-//            $i++;
-//            if ($i>3) break;
             $this->prepareOffer($offer);
             $this->firstOrCreateUnit();
             $this->findProductUpdateInstore();
@@ -114,7 +111,6 @@ class LoadPrices extends LoadService
     protected function updateOrCreatePruductUnit(): void
     {
         $this->productUnit = ProductUnit::query()
-//            ->where('is_from_1s', 1)
             ->updateOrCreate(
                 ['product_1s_id' => $this->product['1s_id'],
                     'unit_id' => $this->unit->id,
@@ -140,8 +136,6 @@ class LoadPrices extends LoadService
             'international' => trim($data['БазоваяЕдиница']['@attributes']['МеждународноеСокращение'] ?? null),
             'unit' => trim($data['БазоваяЕдиница']['@attributes']['НаименованиеПолное'] ?? null),
         ];
-
-//        $this->measureTime($this, 'optimizedProcess');
 
     }
 
