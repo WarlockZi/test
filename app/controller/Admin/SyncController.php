@@ -41,7 +41,7 @@ class SyncController extends AdminscController
     #[Loggable(level: 'info', message: 'Attrubute SyncController начал загрузку')]
     public function actionLoad(): void
     {
-        $this->logger->write('SyncController начал загрузку');
+        $this->logger->write('SyncController начал загрузку без архивов');
         $load = new LoadService();
         $load->run();
     }

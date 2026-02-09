@@ -106,6 +106,7 @@ class LoadPrices extends LoadService
 //            $this->cleanDoubleUnits();
             $this->product->update(['instore' => $this->offer['instore']]);
         } catch (Throwable $exception) {
+            $this->logger->write('offer 1s id = '.$this->offer['1s_id']);
             throw new Exception('Load prices failed to find product ' . $exception->getMessage());
         }
     }

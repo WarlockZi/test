@@ -34,7 +34,7 @@ class LoadService
         $this->checkXMLFuncExist();
         try {
 //            $this->LoadCategories();
-//            $this->LoadProducts();
+            $this->LoadProducts();
             $this->LoadPrices();
         } catch (Throwable $exception) {
             $this->logger->write('load error - ' . $exception->getMessage());

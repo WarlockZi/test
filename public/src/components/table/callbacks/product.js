@@ -10,62 +10,60 @@ export default class Callbacks {
   }
 
   changemultiplier(target, rows) {
-    // debugger;
-    const targetMultiplier = target.innerText;
-    const targetId = target.dataset.id;
     const perUnitPrice = getPerUnitPrice(rows);
     if (!perUnitPrice) return;
 
-    const unitPrice = perUnitPrice;
-    rows.forEach(
-      (row, unitId) => {
-        if (unitId === 0) return;
-        if (unitId !== +targetId) {
-          const multiplierCell = row.find(
-            (cell) => cell?.dataset?.pivot === "multiplier",
-          );
-          const priceCell = row.find(
-            (cell) => cell?.dataset?.pivot === "price",
-          );
+    recalculatePrices();
 
-          const multiplier = multiplierCell ? multiplierCell.innerText : "";
+    function recalculatePrices() {
+      rows.forEach(
+        (row, unitId) => {
+          if (unitId === 0) return; //this is empty row
+
+          const from1sCell = getCell(row, "from_1s");
+          if (from1sCell.innerText) return; //this is price from 1s
+
+          const multiplierCell = getCell(row, "multiplier");
+          const priceCell = getCell(row, "price");
+
+          const multiplier = multiplierCell ? multiplierCell.innerText : null;
           if (multiplier) {
-            priceCell.innerText = multiplier * unitPrice;
+            priceCell.innerText = multiplier * perUnitPrice;
             productUnitUpdate(priceCell);
           }
-        }
-      },
-      [unitPrice],
-    );
-
-    function productUnitUpdate(target) {
-      const dto = new TableDTO(target);
-      const res = post("/adminsc/product/changeunitprice", dto);
+        },
+        [perUnitPrice],
+      );
     }
 
     function getPerUnitPrice(rows) {
       let perUnitPrice = 0;
       for (let i = 1; i < Object.keys(rows).length; i++) {
         let key = Object.keys(rows)[i];
-        const from1sCell = rows[key].find(
-          (cell) => cell?.dataset?.pivot === "from_1s",
-        );
+        const from1sCell = getCell(rows[key], "from_1s");
         if (!from1sCell.innerText) continue;
-        const multiplierCell = rows[key].find(
-          (cell) => cell?.dataset?.pivot === "multiplier",
-        );
-        const priceCell = rows[key].find(
-          (cell) => cell?.dataset?.pivot === "price",
-        );
+
+        const multiplierCell = getCell(rows[key], "multiplier");
+        const priceCell = getCell(rows[key], "price");
+
         const multiplier = multiplierCell?.innerText ?? null;
+        if (!multiplier) return;
+
         const price = priceCell?.innerText ?? null;
-        if (!multiplier) continue;
         if (price) {
           perUnitPrice = price / multiplier;
-          break;
+          return perUnitPrice;
         }
       }
-      return perUnitPrice;
+    }
+
+    function getCell(row, field) {
+      return row.find((cell) => cell?.dataset?.pivot === field);
+    }
+
+    function productUnitUpdate(target) {
+      const dto = new TableDTO(target);
+      const res = post("/adminsc/product/changeunitprice", dto);
     }
   }
 

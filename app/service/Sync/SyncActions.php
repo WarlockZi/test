@@ -25,14 +25,14 @@ class SyncActions
     public function allFilesUnzipped(string $importFile, string $offerFile): bool
     {
         $iteration = 0;
-        $delay = 2;
+        $delay = 10;
         while ($iteration < 3) {
             if (!is_readable($importFile)) {
-                $this->logger->write('importFile is not readable. sleep '.$delay);
+                $this->logger->write($offerFile." importFile is not readable. sleep ".$delay);
                 sleep($delay);
             }
             if (!is_readable($offerFile)) {
-                $this->logger->write('offerFile is not readable. sleep '.$delay);
+                $this->logger->write($offerFile." offerFile is not readable. sleep ".$delay);
                 sleep($delay);
             }
             $iteration++;
