@@ -76,8 +76,10 @@ class SyncService
             $this->actions->respondAndContinue();
             $this->logger->write('Load started');
 
-            $this->actions->moveUnzippedToLoaded($this->unzippedDir);
-            $this->loadService->run();
+            $loadedFiles = $this->actions->moveUnzippedToLoaded($this->unzippedDir);
+            $this->importFile = $loadedFiles['importFile'];
+            $this->offerFile = $loadedFiles['offerFile'];
+//            $this->loadService->run();
 
             $this->actions->clearSyncDir($this->archiveDir);
 //            $this->actions->clearUnzippedDir($this->unzippedDir);

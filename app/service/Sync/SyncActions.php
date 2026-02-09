@@ -64,15 +64,23 @@ class SyncActions
     /**
      * @throws Exception
      */
-    public function moveUnzippedToLoaded(string $unzippedDir): void
+    public function moveUnzippedToLoaded(string $unzippedDir): array
     {
         $files = glob($unzippedDir . '*');
+        $loadedFiles = [];
         foreach ($files as $file) {
             if (is_file($file)) {
                 $to = $unzippedDir.'loaded/'.basename($file);
+                if (basename($file)===env('SYNC_OFFER_FILE')){
+                    $loadedFiles['offerFile'] = $to;
+                }
+                if (basename($file)===env('SYNC_IMPORT_FILE')){
+                    $loadedFiles['importFile'] = $to;
+                }
                 rename($file, $to);
             }
         }
+        return $loadedFiles;
     }
     public function saveFiles(string $archiveDir): string
     {
