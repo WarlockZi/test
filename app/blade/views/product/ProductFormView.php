@@ -10,7 +10,6 @@ use app\model\Product;
 use app\model\Promotion;
 use app\model\Unit;
 use app\repository\ProductRepository;
-use app\service\Image\del\ProductImageService;
 use app\view\Category\CategoryFormView;
 use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
 use app\view\components\Builders\CheckboxBuilder\ProductUnitCheckboxBuilder;
@@ -30,15 +29,6 @@ class ProductFormView
 {
     public function __construct()
     {
-    }
-
-    public function baseUnitPrice(Product $product): string
-    {
-        $baseUnit = $product->baseUnit->first() ?? 'ед отсутств';
-//        $price          = (float)$product->getRelation('price')->price;
-//        $formattedPrice = $this->getFormattedPrice($price, 1);
-
-//        return "{$formattedPrice} ₽ / {$baseUnit->name}";
     }
 
     protected function getFormattedPrice($price, int $multiplier): string
@@ -214,16 +204,16 @@ class ProductFormView
         $p = $product->toArray();
         return Table::build($product->units)
             ->data([
-                'jscallbacksfile'=>'product',
-                'relation'=>'units',
-                'relationType'=>'attach',
-                ])
-//            ->relation('units', 'attach')
+                'jscallbacksfile' => 'product',
+                'jsonload' => 'product',
+                'relation' => 'units',
+                'relationType' => 'attach',
+            ])
             ->class('units')
             ->pageTitle("Единица")
             ->column(
                 ColumnBuilder::build('Единица')
-                    ->data(['jscallback'=>'changeunit'])
+                    ->data(['jscallback' => 'changeunit'])
                     ->width('clamp(100px,10vw,130px)')
                     ->emptyRow(function () {
                         return SelectBuilder::build(
@@ -234,23 +224,36 @@ class ProductFormView
                             ->get();
                     })
                     ->callback(function ($unit) {
-                        return SelectBuilder::build(
+                        $select = SelectBuilder::build(
                             PluckOptionsBuilder::build(Unit::pluck('name', 'id'))
                                 ->selected($unit->id)
                                 ->get()
-                        )
-                            ->get();
+                        );
+                        return $select->get();
                     })
                     ->get()
             )
             ->column(
-                ColumnBuilder::build('Коэфф')
-                     ->emptyRow('1')
+                ColumnBuilder::build('Пониж коэфф')
+                    ->emptyRow('1')
                     ->width('clamp(40px,7vw,55px)')
-                    ->data(['pivot'=>'multiplier'])
-                    ->data(['jscallback'=>'changemultiplier'])
+                    ->data(['pivot' => 'multiplier'])
+                    ->data(['jscallback' => 'changemultiplier'])
                     ->callback(function ($unit) {
                         return $unit->pivot->multiplier;
+                    })
+                    ->contenteditable()
+                    ->get()
+
+            )
+            ->column(
+                ColumnBuilder::build('Повыш коэфф')
+                    ->emptyRow('0')
+                    ->width('clamp(40px,7vw,55px)')
+                    ->data(['pivot' => 'multiplier_1'])
+                    ->data(['jscallback' => 'changemultiplier'])
+                    ->callback(function ($unit) {
+                        return $unit->pivot->multiplier_1;
                     })
                     ->contenteditable()
                     ->get()
@@ -278,19 +281,15 @@ class ProductFormView
             )
             ->column(
                 ColumnBuilder::build('Цены')
-//                     ->contenteditable()
-                    ->data(['pivot'=>'price'])
-//                    ->data(['jscallback'=>'changeprice'])
+                    ->data(['pivot' => 'price'])
                     ->callback(function ($unit) {
-                        return $unit->pivot->price ?? '-';
+                        return $unit->pivot->price ?? '';
                     })
                     ->get()
             )
             ->column(
                 ColumnBuilder::build('Из 1s')
-//                    ->contenteditable()
-                    ->data(['pivot'=>'from_1s'])
-//                    ->data(['jscallback'=>'changeprice'])
+                    ->data(['pivot' => 'from_1s'])
                     ->callback(function ($unit) {
                         return $unit->pivot->is_from_1s ?? '';
                     })

@@ -2,7 +2,7 @@
 
     @include('components.card_panel.product_card_panel')
 
-{{--    @deb--}}
+    @deb
     <div class="art">Арт. {!!$product['art']!!} </div>
 
     <div>
@@ -12,8 +12,8 @@
     <div class="price">
 
         <div class="new-price">
-            {{--        {!!$product['price']!!}--}}
-            {{--        {!!$product['base_unit']['name']!!}--}}
+{{--                    {{$product['price']}}--}}
+{{--                    {{$product['base_unit']['name']}}--}}
         </div>
 
     </div>

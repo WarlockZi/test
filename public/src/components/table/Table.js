@@ -9,6 +9,7 @@ export default class Table {
     this.table = table;
 
     this.tableCallbacksFile = this.table.dataset.jscallbacksfile;
+    this.onLoadFile = this.table.dataset.jsonload;
 
     this.model =
       table.dataset.model ?? table.closest("[data-model]")?.dataset.model;
@@ -35,6 +36,15 @@ export default class Table {
     this.setCheckboxes();
     this.setSelects();
     this.setSortables();
+    this.onLoad();
+  }
+  async onLoad() {
+    if (!this.onLoadFile) return false;
+    //  загружаем модули из build для production, тк dev берет из памяти, а prod из build
+    const components = import.meta.glob("./onLoad/*.js");
+    const path = "./onLoad/" + this.onLoadFile + ".js";
+    const { default: OnLoad } = await components[path]();
+    return new OnLoad(this);
   }
 
   async getCallbacks() {
@@ -195,6 +205,7 @@ export default class Table {
 
   // DELETE
   async modelDel(target) {
+    if (target.hasAttribute("disabled")) return;
     const dto = new TableDTO(target);
     if (dto?.relation?.id === "0") {
       this.removeRowCells(this.getRowCells(0));
@@ -274,7 +285,7 @@ export default class Table {
 
   removeUsedSelectOptions(select) {
     const usedSelects = this.table[qa]("[select-new]");
-    const ids = [].map.call(usedSelects, (usedSelect, i) => {
+    const ids = [].map.call(usedSelects, (usedSelect) => {
       return usedSelect.dataset.value;
     });
 

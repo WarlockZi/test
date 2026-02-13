@@ -1,7 +1,8 @@
 <div
         shippable-table
         class="shippable-table"
-             data-price='{!!$product['base_unit']['pivot']['price']!!}'
+{{--        @deb--}}
+             data-price='{{$product['base_unit']['pivot']['price']??'***'}}'
 >
 
     @foreach($product['shippable_units'] as $shippable)
@@ -38,8 +39,9 @@
                             {{$shippable['pivot']['price']}} ₽
                         </span>
 
-                    <span class="contains">({!!$shippable['pivot']['multiplier']!!}
-                        {!!$product['base_unit']['name']?? '-'!!})</span>
+{{--                    <span class="contains">({!!$shippable['pivot']['multiplier']!!}--}}
+{{--                        {!!$product['base_unit']['name']?? '-'!!})--}}
+{{--                    </span>--}}
                 </div>
 
             </div>

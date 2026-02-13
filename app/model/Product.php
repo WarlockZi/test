@@ -63,8 +63,9 @@ class Product extends Model
         )
             ->using(ProductUnit::class)
             ->orderByPivot('multiplier')
-            ->withPivot('id', 'price', 'is_shippable', 'multiplier', 'is_from_1s');
+            ->withPivot('id', 'price', 'is_shippable', 'multiplier', 'multiplier_1', 'is_from_1s');
     }
+
     public function images(): BelongsToMany
     {
         return $this->belongsToMany(
@@ -78,11 +79,33 @@ class Product extends Model
             ->using(ImageProduct::class)
             ->withPivot('name', 'type',);
     }
+
     public function getBaseUnitAttribute()
     {
-        return $this->units()->wherePivot('multiplier', 1)->first();
+        $from1s       = $this->units()->wherePivot('is_from_1s', 1)->first();
+        $withMinPrice = 10_000_000;
+        $baseUnit     = null;
+        foreach ($this->units as $unit) {
+            if ($unit->pivot->price < $withMinPrice) {
+                $withMinPrice = $unit->pivot->price;
+                $baseUnit     = $unit;
+            }
+        }
+        return $baseUnit ?? $from1s;
     }
-
+//    public function getBaseUnitPriceAttribute()
+//    {
+//        $from1s       = $this->units()->wherePivot('is_from_1s', 1)->first();
+//        $withMinPrice = 10_000_000;
+//        $baseUnit     = null;
+//        foreach ($this->units as $unit) {
+//            if ($unit->pivot->price < $withMinPrice) {
+//                $withMinPrice = $unit->pivot->price;
+//                $baseUnit     = $unit;
+//            }
+//        }
+//        return $baseUnit ?? $from1s;
+//    }
     public function getShippableUnitsAttribute()
     {
         return $this->units()->wherePivot('is_shippable', 1)->get();
@@ -149,7 +172,7 @@ class Product extends Model
     {
         list($field, $value) = Auth::getCartFieldValue();
         $order = Order::where($field, $value)->first();
-        $id = $order?->id?:null;
+        $id    = $order?->id ?: null;
         return $this->hasOne(OrderProduct::class,
             'product_id',
             '1s_id',

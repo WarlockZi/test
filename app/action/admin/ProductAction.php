@@ -71,12 +71,15 @@ class ProductAction
 
     public function changeUnitPrice(array $req): void
     {
-        $product = Product::find($req['id']);
+        $product = Product::find($req['productId']);
         try {
             $product->units()
-                ->where('unit_id', $req['relation']['id'])
+                ->where('unit_id', $req['unitId'])
                 ->first()->pivot->update([
-                    'price' => $req['relation']['pivot']['price']]);
+                    'price' => $req['price'],
+                    'multiplier' => $req['multiplier'],
+                    'multiplier_1' => $req['multiplier_1']
+                    ]);
             response()->json(['popup' => 'Изменен']);
         } catch (Throwable $exception) {
             response()->json(['popup' => 'цена единицы не поменялась. Ошибка']);

@@ -104,7 +104,6 @@ class LoadPrices extends LoadService
                     'unit_id' => $this->unit->id,
                 ],
                 ['is_shippable' => 1,
-//                    'multiplier' => null,
                     'price' => $this->offer['price'],
                     'is_from_1s' => 1,
                 ]);

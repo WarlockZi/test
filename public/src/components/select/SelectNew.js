@@ -4,7 +4,7 @@ import { $, createElement } from "../../common";
 
 export default class SelectNew {
   constructor(el) {
-    if (!el | !$(el).find("option")) return;
+    if (!el || !$(el).find("option")) return;
 
     this.ul = new createElement().tag("ul").attr("class", "options").get();
     this.label = new createElement().tag("span").get();
@@ -86,7 +86,7 @@ export default class SelectNew {
   }
 
   handleLabelClick() {
-    this.ul.classList.toggle("show");
+    if (!this.sel.hasAttribute("disabled")) this.ul.classList.toggle("show");
   }
 
   handleUlClick({ target }) {

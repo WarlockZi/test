@@ -16,9 +16,10 @@
              loading="lazy">
         <div class="footer">
 
-            @if(isset($product['baseUnitPrice']))
+            @deb
+            @if(isset($product['baseUnit']))
                 <p>Цена: <?= $product['instore']
-                        ? $product['baseUnitPrice']
+                        ? $product['baseUnit']
                         : "<span class='danger'>от</span> " . $product['base_unit']['pivot']['price']; ?></p>
             @endif
 

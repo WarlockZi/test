@@ -12,11 +12,12 @@ class ProductUnit extends Pivot
         'product_1s_id',
         'unit_id',
         'multiplier',
+        'multiplier_1',
         'is_shippable',
         'price',
         'is_from_1s',
     ];
-    protected $table = 'product_unit';
+//    protected $table = 'product_unit';
 
     public $incrementing = true;
 

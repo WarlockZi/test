@@ -41,25 +41,21 @@ class UnitFormView
                 ->column(
                     ColumnBuilder::build('коэфф')
                         ->width('50px')
-//                        ->function(Unit::class, 'multiplier')
                         ->get()
                 )
                 ->column(
                     ColumnBuilder::build('name')
-//                        ->name('Краткое')
                         ->contenteditable()
                         ->get()
                 )
                 ->column(
                     ColumnBuilder::build('full_name')
                         ->contenteditable()
-//                        ->name('Полное')
                         ->get()
                 )
                 ->column(
                     ColumnBuilder::build('code')
                         ->contenteditable()
-//                        ->name('Код')
                         ->get()
                 )
                 ->del()
