@@ -110,8 +110,12 @@
 
 .item_content {
   background-color: var.$color-gray3;
-  padding: 20px;
+  padding: 0 20px 20px 20px;
   min-width: 460px;
+
+  .share-info{
+    padding-block: 10px;
+  }
 
 
   .row {

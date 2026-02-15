@@ -38,6 +38,7 @@ export default class Table {
     this.setSortables();
     this.onLoad();
   }
+
   async onLoad() {
     if (!this.onLoadFile) return false;
     //  загружаем модули из build для production, тк dev берет из памяти, а prod из build
@@ -160,12 +161,13 @@ export default class Table {
       if (colummnJsCallback) {
         const cb = await this.getCallbacks();
         cb.callMethod(colummnJsCallback, [target, this.getRows()]);
-      }
-      const DTO = new TableDTO(target);
-      const res = await post(this.updateOrCreateUrl, DTO);
-      if (DTO.id === "0") {
-        const row = this.getRowCells(0);
-        this.rowFieldId(row).innerText = res?.id;
+      } else {
+        const DTO = new TableDTO(target);
+        const res = await post(this.updateOrCreateUrl, DTO);
+        if (DTO.id === "0") {
+          const row = this.getRowCells(0);
+          this.rowFieldId(row).innerText = res?.id;
+        }
       }
     }
   }
@@ -173,6 +175,7 @@ export default class Table {
   rowFieldId(row) {
     return [].find.call(row, (cell) => cell.dataset.field === "id");
   }
+
   getRows() {
     const cells = this.table[qa](`[data-row]`);
     let rowId = "0";

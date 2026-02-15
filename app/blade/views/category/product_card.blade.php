@@ -16,7 +16,6 @@
              loading="lazy">
         <div class="footer">
 
-            @deb
             @if(isset($product['baseUnit']))
                 <p>Цена: <?= $product['instore']
                         ? $product['baseUnit']

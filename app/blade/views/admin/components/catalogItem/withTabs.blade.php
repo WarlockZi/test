@@ -4,6 +4,16 @@
 
 <div class="item_content">
 
+    @deb
+    @if(isset($catItem['item']['own_properties']['path']))
+        <div class="share-info">
+            <span>адрес :: </span>
+            <a href="/{{$catItem['model']}}/{{$catItem['item']['own_properties']['path']}}">
+                {{$catItem['item']['name']??''}}
+            </a>
+        </div>
+    @endif
+
     <section data-tab="1" class="show">
         <!--  TABLE  -->
         @foreach ($catItem['fields'] as $field)
