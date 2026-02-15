@@ -235,7 +235,7 @@ class ProductFormView
             )
             ->column(
                 ColumnBuilder::build('Пониж коэфф')
-                    ->emptyRow('1')
+                    ->emptyRow('')
                     ->width('clamp(40px,7vw,55px)')
                     ->data(['pivot' => 'multiplier'])
                     ->data(['jscallback' => 'changemultiplier'])
@@ -248,7 +248,7 @@ class ProductFormView
             )
             ->column(
                 ColumnBuilder::build('Повыш коэфф')
-                    ->emptyRow('0')
+                    ->emptyRow('')
                     ->width('clamp(40px,7vw,55px)')
                     ->data(['pivot' => 'multiplier_1'])
                     ->data(['jscallback' => 'changemultiplier'])

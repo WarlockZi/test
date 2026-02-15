@@ -12,17 +12,6 @@ export default class Callbacks {
     cellWrapper.dataset.id = selectedValue;
   }
 
-  setMultipliers(target) {
-    const multiplier = getCell("multiplier");
-    const multiplier_1 = getCell("multiplier_1");
-    if (!multiplier.innerText && !multiplier_1.innerText) return;
-    if (multiplier.innerText) {
-      multiplier_1.innertext = "";
-    } else {
-      multiplier.innertext = "";
-    }
-  }
-
   changemultiplier(target, rows) {
     const perUnitPrice = getPerUnitPrice(rows, target);
 
@@ -64,20 +53,26 @@ export default class Callbacks {
       return null;
     }
 
+    function getProductId(target) {
+      return (
+        target?.closest(".item-wrap")?.dataset?.id ??
+        target?.dataset?.id ??
+        target?.parentNode?.dataset?.id
+      );
+    }
+
     function getPerUnitPrice(rows, target) {
       if (Object.keys(rows).length < 2) return;
       let perUnitPrice = 0;
       let from1sPrice = getPriceFrom1s(rows);
-      const productId =
-        target?.closest(".item-wrap")?.dataset?.id ??
-        target?.dataset?.id ??
-        target?.parentNode?.dataset?.id;
+      const productId = getProductId(target);
 
       for (let i = 1; i < Object.keys(rows).length; i++) {
         let key = Object.keys(rows)[i];
         const from1sCell = getCell(rows[key], "from_1s");
+        if (from1sCell.innerText) continue;
+
         const priceCell = getCell(rows[key], "price");
-        if (from1sCell.innerText) from1sPrice = priceCell.innerText;
 
         const multiplierCell = getCell(rows[key], "multiplier");
         const multiplier_1Cell = getCell(rows[key], "multiplier_1");

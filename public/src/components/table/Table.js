@@ -79,7 +79,9 @@ export default class Table {
     const dto = new TableDTO(target, detail?.prev?.value);
     const res = await post(`/adminsc/${this.model}/updateorcreate`, dto);
     if (res?.detached) {
-      const prevCells = this.table[qa](`[data-id='${detail.prev.value}']`);
+      const prevCells = this.table[qa](
+        `[data-id='${detail.prev.value}']:not([hidden])`,
+      );
       for (let prevCell of prevCells) {
         prevCell.dataset.id = detail.next.value;
       }
