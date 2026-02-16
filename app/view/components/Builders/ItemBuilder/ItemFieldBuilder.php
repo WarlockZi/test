@@ -56,6 +56,7 @@ class ItemFieldBuilder
         $this->name = $name;
         return $this;
     }
+
     public function tooltip(string $tooltip): static
     {
         $this->tooltip = $tooltip;
@@ -118,7 +119,9 @@ class ItemFieldBuilder
     public function get(): static
     {
         $this->name  = $this->name ?? $this->field;
-        $this->value = $this->html ?? $this->item[$this->field];
+        $this->value = $this->html
+            ?? $this->item[$this->field]
+        ;
 
         return $this;
     }

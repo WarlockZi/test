@@ -5,8 +5,7 @@
             {{$catItem['item']['name']??''}}
         </a>
     </div>
-@endif
-@if(isset($catItem['item']['slug']))
+@elseif(isset($catItem['item']['slug']))
     <div class="share-info">
         <span>адрес :: </span>
         <a href="/{{$catItem['model']}}/{{$catItem['item']['slug']}}">

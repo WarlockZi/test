@@ -37,15 +37,15 @@ class CategoryFormView
     public static function edit(Category $category): array
     {
         return ItemBuilderNew::build($category, 'category')
-            ->pageTitle('Категория :  ' . $category->ownProperties->seo_h1 ?? $category->name)
-            ->field(
-                ItemFieldBuilder::build('slug', $category)
-                    ->name('Адрес')
-                    ->html(
-                        "<a href='$category->href'>{$category->href}</a>"
-                    )
-                    ->get()
-            )
+            ->pageTitle('Категория :  ' . ($category->ownProperties->seo_h1 ?? $category->name))
+//            ->field(
+//                ItemFieldBuilder::build('slug', $category)
+//                    ->name('Адрес')
+//                    ->html(
+//                        "<a href='$category->href'>{$category->href}</a>"
+//                    )
+//                    ->get()
+//            )
             ->field(
                 ItemFieldBuilder::build('name', $category)
                     ->name('Наименование в 1c')
@@ -55,6 +55,7 @@ class CategoryFormView
                 ItemFieldBuilder::build('breadcrumbs_name', $category)
                     ->name('Наименование в хлебных крошках')
                     ->contenteditable()
+                    ->html($category->ownProperties->breadcrumbs_name ?? '')
                     ->relation('ownProperties')
                     ->get()
             )

@@ -57,14 +57,14 @@ class ProductFormView
         try {
             return ItemBuilderNew::build($product, 'product')
                 ->pageTitle('Товар :  ' . $product['name'])
-                ->field(
-                    ItemFieldBuilder::build('slug', $product)
-                        ->name('Адрес')
-                        ->html(
-                            "<a href='/product/{$product->slug}'>{$product->slug}</a>"
-                        )
-                        ->get()
-                )
+//                ->field(
+//                    ItemFieldBuilder::build('slug', $product)
+//                        ->name('Адрес')
+//                        ->html(
+//                            "<a href='/product/{$product->slug}'>{$product->slug}</a>"
+//                        )
+//                        ->get()
+//                )
                 ->field(
                     ItemFieldBuilder::build('art', $product)
                         ->name('Артикул')

@@ -14,7 +14,7 @@
         @endforeach
     </section>
 
-    @php $n = 2 @endphp
+    @php( $n = 2)
     @foreach ($catItem['tabs'] as $k => $tab)
         <section
                 {!!$tab->field!!}
