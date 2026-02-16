@@ -53,7 +53,7 @@ export default class Cart {
       const price = +table.dataset.price;
       const sum = [...table[qa]("[unit-row]")].reduce(
         function (acc, unitRow) {
-          const multi = +unitRow.dataset.multiplier;
+          const multi = +unitRow.dataset.divider;
           const count = +unitRow[qs]("input").value;
           const sum = multi * price * count;
           const sub_sum = unitRow[qs](".subSum");

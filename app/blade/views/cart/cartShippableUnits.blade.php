@@ -21,7 +21,7 @@
                 unit-row
                 class="unit-row"
                 data-unit_id="{!!$shippable['id']??''!!}"
-                data-multiplier="{!!$orderitem['product_unit']['multiplier']??''!!}"
+                data-divider="{!!$orderitem['product_unit']['divider']??''!!}"
         >
             <input
                     type="text"
@@ -39,7 +39,7 @@
                             {{$shippable['pivot']['price']}} ₽
                         </span>
 
-{{--                    <span class="contains">({!!$shippable['pivot']['multiplier']!!}--}}
+{{--                    <span class="contains">({!!$shippable['pivot']['divider']!!}--}}
 {{--                        {!!$product['base_unit']['name']?? '-'!!})--}}
 {{--                    </span>--}}
                 </div>

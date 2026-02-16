@@ -74,7 +74,7 @@ class HelpersService
             $prodUnit = ProductUnit::query()
                 ->where('product_1s_id', $unitable['1s_id'])
                 ->where('unit_id')
-                ->whereNull('multiplier')
+                ->whereNull('divider')
                 ->get();
             if (!$prodUnit->count()) {
                 $model = [
@@ -198,7 +198,7 @@ class HelpersService
             $model = [
                 'product_1s_id' => $pr['1s_id'],
                 'unit_id' => $pr['base_unit'],
-                'multiplier' => 1,
+                'divider' => 1,
                 'is_base' => 1,
             ];
             ProductUnit::create($model);
@@ -209,8 +209,8 @@ class HelpersService
 
     private function cleanBaseUnits()
     {
-        $duplicates = ProductUnit::select('product_1s_id', 'unit_id', 'multiplier', 'is_base')
-            ->groupBy('product_1s_id', 'unit_id', 'multiplier', 'is_base')
+        $duplicates = ProductUnit::select('product_1s_id', 'unit_id', 'divider', 'is_base')
+            ->groupBy('product_1s_id', 'unit_id', 'divider', 'is_base')
             ->havingRaw('COUNT(*) > 1')
             ->get();
 
@@ -220,7 +220,7 @@ class HelpersService
         foreach ($duplicates as $duplicate) {
             $res = ProductUnit::where('product_1s_id', $duplicate->product_1s_id)
                 ->where('unit_id', $duplicate->unit_id)
-                ->where('multiplier', $duplicate->multiplier)
+                ->where('divider', $duplicate->divider)
                 ->where('is_base', $duplicate->is_base)
                 ->orderBy('unit_id', 'asc')
                 ->skip(1)

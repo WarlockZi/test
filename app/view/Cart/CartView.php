@@ -16,8 +16,8 @@ class CartView
         $id         = $unit->id;
         $seleced    = $selecedId === $id ? "selected='selected'" : '';
         $name       = $unit->name;
-        $multiplier = $unit->pivot->multiplier ?? 1;
-        $html       = "<option data-multiplier='{$multiplier}' data-id='{$id}' {$seleced}>{$name}</option>";
+        $multiplier = $unit->pivot->divider ?? 1;
+        $html       = "<option data-divider='{$multiplier}' data-id='{$id}' {$seleced}>{$name}</option>";
 
         return $html;
     }

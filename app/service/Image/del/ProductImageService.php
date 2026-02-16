@@ -19,8 +19,9 @@ class ProductImageService
     }
     public function getImageRelativePath(Product $product): string
     {
-        $path = $this->relativePath . $product->ownProperties->main_image;
-        return is_readable(FS::platformSlashes(ROOT . $path))
+        $path =  $this->relativePath .$product->ownProperties->main_image;
+        $fullPath =  ROOT. $path;
+        return (is_file($fullPath) && is_readable($fullPath))
             ? $path
             : $this->relNoImage;
     }

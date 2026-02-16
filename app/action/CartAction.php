@@ -2,13 +2,10 @@
 
 namespace app\action;
 
-use app\model\Order;
-use app\model\OrderItem;
 use app\repository\OrderRepository;
 
 class CartAction
 {
-
     public function deleteRow(array $body): bool
     {
         $order_id   = $body['order_id'];

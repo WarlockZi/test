@@ -9,7 +9,7 @@
         <div class="num cell"><?= ++$i; ?></div>
 
         <img class="img" src="<?= $product['mainImage']; ?>" alt="<?= $product['name']; ?>">
-
+{{--@deb--}}
         <div class="name-price cell">
             @if (Auth::getUser())
                 <a href="/adminsc/product/edit/<?= $product['id']; ?>"

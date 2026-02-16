@@ -64,7 +64,7 @@ export default class Property {
     if (row) {
       pivot = {
         product_id: this.product1sId,
-        multiplier: +$(row).find("input").value ?? 0,
+        divider: +$(row).find("input").value ?? 0,
       };
     }
     return {
@@ -90,16 +90,16 @@ export default class Property {
 
   createRow(res) {
     res = {
-      multiplier: 10,
+      divider: 10,
       baseUnit: this.$baseUnit.selectedOptions[0].innerText,
     };
     let row = new createElement().tag("div").attr("class", "row").get();
     let selector = this.$selector.cloneNode(true);
 
-    let multiplier = new createElement()
+    let divider = new createElement()
       .attr("type", "number")
       .tag("input")
-      .attr("value", res.multiplier)
+      .attr("value", res.divider)
       .get();
     let baseUnit = new createElement()
       .tag("div")
@@ -113,7 +113,7 @@ export default class Property {
       .get();
 
     row.append(selector);
-    row.append(multiplier);
+    row.append(divider);
     row.append(baseUnit);
     row.append(del);
     new SelectNew(selector);

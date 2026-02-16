@@ -13,17 +13,17 @@ export default class Callbacks {
       if (!from1sCell.innerText) continue;
       if (from1sCell) {
         const selector = this.getSelectorCell(row);
+        const divider = this.getCell(row, "divider");
         const multiplier = this.getCell(row, "multiplier");
-        const multiplier_1 = this.getCell(row, "multiplier_1");
         const del = this.getDelCell(row);
         selector.setAttribute("disabled", "true");
 
-        multiplier.setAttribute("contenteditable", "false");
-        multiplier.setAttribute("disabled", "true");
-        multiplier.innerText = "";
+        divider.setAttribute("contenteditable", "false");
+        divider.setAttribute("disabled", "true");
+        divider.innerText = "";
 
-        multiplier_1.setAttribute("contenteditable", "false");
-        multiplier_1.innerText = "";
+        multiplier.setAttribute("contenteditable", "false");
+        multiplier.innerText = "";
 
         del.setAttribute("disabled", "true");
       }

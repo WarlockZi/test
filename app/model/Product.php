@@ -62,8 +62,8 @@ class Product extends Model
             'id',
         )
             ->using(ProductUnit::class)
-            ->orderByPivot('multiplier')
-            ->withPivot('id', 'price', 'is_shippable', 'multiplier', 'multiplier_1', 'is_from_1s');
+            ->orderByPivot('divider')
+            ->withPivot('id', 'price', 'is_shippable', 'divider', 'multiplier', 'is_from_1s');
     }
 
     public function images(): BelongsToMany
@@ -327,18 +327,6 @@ class Product extends Model
     {
         return $this->category()->with('parentRecursive');
     }
-//    public function baseUnit(): hasOneThrough
-//    {
-//        return $this->hasOneThrough(
-//            Unit::class,
-//            ProductUnit::class,
-//            'product_1s_id',// in productUnit
-//            'id',//in unit
-//            '1s_id',//in product
-//            'unit_id'//in productUnit
-//        )
-//            ->where('multiplier', '1');
-//    }
 }
 
 

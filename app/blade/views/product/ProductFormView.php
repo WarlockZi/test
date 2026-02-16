@@ -44,7 +44,7 @@ class ProductFormView
         $shippable = [];
         foreach ($product->shippableUnits as $unit) {
             $promotion                   = $product->activePromotions->first() ?? null;
-            $shippable['formattedPrice'] = $this->getFormattedPrice($product->price, $unit->pivot->multiplier);;
+            $shippable['formattedPrice'] = $this->getFormattedPrice($product->price, $unit->pivot->divider);;
             $shippable['promotionNewPrice'] = $promotion ? $this->getFormattedPrice($promotion->new_price, 1) : '';
             $shippable['promotion']         = $product->activePromotions->first() ?? null;
         }
@@ -237,10 +237,10 @@ class ProductFormView
                 ColumnBuilder::build('Пониж коэфф')
                     ->emptyRow('')
                     ->width('clamp(40px,7vw,55px)')
-                    ->data(['pivot' => 'multiplier'])
+                    ->data(['pivot' => 'divider'])
                     ->data(['jscallback' => 'changemultiplier'])
                     ->callback(function ($unit) {
-                        return $unit->pivot->multiplier;
+                        return $unit->pivot->divider;
                     })
                     ->contenteditable()
                     ->get()
@@ -250,10 +250,10 @@ class ProductFormView
                 ColumnBuilder::build('Повыш коэфф')
                     ->emptyRow('')
                     ->width('clamp(40px,7vw,55px)')
-                    ->data(['pivot' => 'multiplier_1'])
+                    ->data(['pivot' => 'multiplier'])
                     ->data(['jscallback' => 'changemultiplier'])
                     ->callback(function ($unit) {
-                        return $unit->pivot->multiplier_1;
+                        return $unit->pivot->multiplier;
                     })
                     ->contenteditable()
                     ->get()
@@ -404,9 +404,9 @@ class ProductFormView
     }
 
 
-    private static function multiplier($mult): string
+    private static function divider($mult): string
     {
-        return $mult ? "<input class='multiplier' type='number' value='{$mult}'>" : "<div class='multiplier'></div>";
+        return $mult ? "<input class='divider' type='number' value='{$mult}'>" : "<div class='divider'></div>";
     }
 
     protected static function getDescription($product): string
@@ -509,23 +509,5 @@ class ProductFormView
             ->addButton()
             ->get();
     }
-//    public static function unitsRow(Unit $unit, string $name, bool $deletable): string
-//    {
-//        $fs       = new FS();
-//        $selector = SelectBuilder::build(
-//            ArrayOptionsBuilder::build(
-//                $unit->pivot->is_base
-//                    ? new Collection([$unit])
-//                    : Unit::all())
-//                ->initialOption()
-//                ->selected($unit->id)
-//                ->get()
-//        )
-//            ->class('name')
-//            ->get();;
-//        $shippable  = $unit->pivot->is_shippable ? 'checked' : '';
-//        $multiplier = self::multiplier($unit->pivot->multiplier);
-//        $is_base    = $unit->pivot->is_base ? 'data-isBase' : '';
-//        return $fs->getContent('unitRow', compact('is_base', 'selector', 'name', 'shippable', 'multiplier', 'deletable'));
-//    }
+
 }

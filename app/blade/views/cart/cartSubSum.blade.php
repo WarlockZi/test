@@ -12,7 +12,7 @@
             @if(isset($orderItem))
 {{--                @deb--}}
                 @php
-                    $subSum = $unit['pivot']['multiplier']
+                    $subSum = $unit['pivot']['divider']
                     *$orderItem['product_unit']['price']
                     *$orderItem['count']
                 @endphp

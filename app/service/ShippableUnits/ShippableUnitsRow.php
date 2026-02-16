@@ -25,7 +25,7 @@ class ShippableUnitsRow
 //        $order      = $product?->order;
 //        $count      = $order ? self::getCount($unit, $product) : 0;
         $price = (float)$product->price;
-        $multiplier = $unit->pivot->multiplier ?? 1;
+        $multiplier = $unit->pivot->divider ?? 1;
         $unit_price = $multiplier * $price;
         $rowSum     = round($unit_price * $count);
 
@@ -39,7 +39,7 @@ class ShippableUnitsRow
 //            "order_item_id" => $orderItem->id ?? 0,
             "count" => 0,
 //            "count" => $orderItem->count ?? 0,
-            "multiplier" => number_format($multiplier, 0, '', ' '),
+            "divider" => number_format($multiplier, 0, '', ' '),
             "row_sum" => $rowSum,
             "formatted_row_sum" => self::format($rowSum),
         ];

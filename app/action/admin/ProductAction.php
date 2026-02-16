@@ -53,7 +53,7 @@ class ProductAction
         $unitId      = $req['morphed']['new_id'];
         $productUnit = [
             'unit_id' => $unitId,
-            'multiplier' => $req['pivot']['multiplier'],
+            'divider' => $req['pivot']['divider'],
             'is_shippable' => $req['pivot']['is_shippable'],
         ];
 
@@ -77,8 +77,8 @@ class ProductAction
                 ->where('unit_id', $req['unitId'])
                 ->first()->pivot->update([
                     'price' => $req['price'],
-                    'multiplier' => $req['multiplier'],
-                    'multiplier_1' => $req['multiplier_1']
+                    'divider' => $req['divider'],
+                    'multiplier' => $req['multiplier']
                     ]);
             response()->json(['popup' => 'Изменен']);
         } catch (Throwable $exception) {

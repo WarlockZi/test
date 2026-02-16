@@ -32,7 +32,7 @@ class UnitController extends AdminscController
         $res = $baseUnit->units()
             ->attach(
                 $new_id, [
-                    'multiplier' => $pivot['multiplier'],
+                    'divider' => $pivot['divider'],
                     'product_id' => $pivot['product_id']]
             );
         return true;

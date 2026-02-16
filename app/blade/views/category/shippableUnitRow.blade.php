@@ -3,7 +3,7 @@
         unit-row
         class="unit-row"
         data-unit_id="{{$row['unit']['id']}}"
-        data-multiplier="{{$row['multiplier']}}"
+        data-divider="{{$row['divider']}}"
 {{--        data-orderitem-id="{{$row['orderItem']?->id??''}}">--}}
 >
     <input
@@ -17,7 +17,7 @@
         <span class="name">{{$row['unit']->name}}</span>
 
         <div class="description text-small">
-            <span class="contains">{{$row['multiplier']}} {{$row['baseUnit']}}</span>
+            <span class="contains">{{$row['divider']}} {{$row['baseUnit']}}</span>
             <span class="cost" data-cost="{{$row['cost']}}">{{$row['formattedCost']}} ₽</span>
         </div>
     </div>

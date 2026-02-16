@@ -28,15 +28,6 @@ class CartRepository
     public static function order(): array
     {
         list($field, $value) = Auth::getCartFieldValue();
-//        $order = Order::where($field, $value)
-//            ->whereNull('submitted')
-//            ->with(['products' => function ($q) {
-//                return $q
-//                    ->whereHas('orderItems')
-//                    ->where('order_product.deleted_at', null)
-//                    ->with(['orderItems.unit']);
-//            }])
-//            ->first();
 
         $order = Order::where($field, $value)
             ->with('products', function ($q) {

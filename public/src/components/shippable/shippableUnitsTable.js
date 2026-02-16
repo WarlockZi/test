@@ -82,7 +82,7 @@ export default class shippableTable {
   renderSums() {
     let total = [...this.table[qa](".unit-row")].reduce((acc, row, i) => {
       const rowDto = this.rowDto(row);
-      let sub_sum = +this.price * +rowDto.multiplier * +rowDto.count;
+      let sub_sum = +this.price * +rowDto.divider * +rowDto.count;
       if (rowDto.sub_sum)
         rowDto.sub_sum.innerText = this.formatter.format(sub_sum);
       return acc + sub_sum;
@@ -133,7 +133,7 @@ export default class shippableTable {
   rowDto(row) {
     return {
       count: row[qs]("input").value,
-      multiplier: row.dataset.multiplier,
+      divider: row.dataset.divider,
       sub_sum: row[qs](".sub-sum"),
       sess_id: localStorage.getItem("SESSION"),
     };

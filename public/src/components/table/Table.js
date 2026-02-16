@@ -344,7 +344,7 @@ export default class Table {
   sortColumn(index) {
     const rows = this.fillRows();
     const direction = this.directions[index] || "asc";
-    const multiplier = direction === "asc" ? 1 : -1;
+    const divider = direction === "asc" ? 1 : -1;
     const newRows = Array.from(rows);
 
     newRows.sort(
@@ -357,9 +357,9 @@ export default class Table {
 
         switch (true) {
           case a > b:
-            return 1 * multiplier;
+            return 1 * divider;
           case a < b:
-            return -1 * multiplier;
+            return -1 * divider;
           case a === b:
             return 0;
         }

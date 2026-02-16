@@ -3,7 +3,7 @@
         class="unit-row"
         data-unitid="{!!$unit['id']!!}"
 {{--        @php(xdebug_break())--}}
-        data-multiplier="{!!$unit['pivot']['multiplier']!!}"
+        data-divider="{!!$unit['pivot']['divider']!!}"
 {{--        data-orderitem-id="{!!$orderItem['id']??''!!}"--}}
 >
     <input
@@ -18,7 +18,7 @@
 
 {{--        @if($shippableTable->description)--}}
 {{--            <div class="description text-small">--}}
-{{--                <span class="contains">{!!$unit['multiplier']!!} {!!$unit['base_unit_name']!!}</span>--}}
+{{--                <span class="contains">{!!$unit['divider']!!} {!!$unit['base_unit_name']!!}</span>--}}
 {{--                <span class="cost" data-cost="{{$unit['unit_price']}}">{{$unit['formatted_unit_price']}} ₽</span>--}}
 {{--            </div>--}}
 {{--        @endif--}}

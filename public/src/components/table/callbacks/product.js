@@ -23,16 +23,14 @@ export default class Callbacks {
           const from1sCell = getCell(row, "from_1s");
           if (from1sCell.innerText) return; //this is price from 1s
 
-          const multiplierCell = getCell(row, "multiplier");
-          const multiplier_1Cell = getCell(row, "multiplier_1");
+          const multiplierCell = getCell(row, "divider");
+          const multiplier_1Cell = getCell(row, "multiplier");
           const priceCell = getCell(row, "price");
 
-          const multiplier = multiplierCell ? multiplierCell.innerText : null;
-          const multiplier_1 = multiplier_1Cell
-            ? multiplierCell.innerText
-            : null;
-          if (multiplier || multiplier_1) {
-            priceCell.innerText = multiplier * perUnitPrice;
+          const divider = multiplierCell ? multiplierCell.innerText : null;
+          const multiplier = multiplier_1Cell ? multiplierCell.innerText : null;
+          if (divider || multiplier) {
+            priceCell.innerText = divider * perUnitPrice;
             productUnitUpdate(priceCell);
           }
         },
@@ -74,25 +72,24 @@ export default class Callbacks {
 
         const priceCell = getCell(rows[key], "price");
 
+        const dividerCell = getCell(rows[key], "divider");
         const multiplierCell = getCell(rows[key], "multiplier");
-        const multiplier_1Cell = getCell(rows[key], "multiplier_1");
 
-        const multiplier = multiplierCell?.innerText ?? null;
-        const multiplier_1 = multiplier_1Cell?.innerText ?? null;
-
-        if (multiplier && multiplier_1) {
-          if (target.dataset.pivot === "multiplier") {
-            multiplier_1Cell.innerText = "";
-          } else if (target.dataset.pivot === "multiplier_1") {
+        if (dividerCell?.innerText && multiplierCell?.innerText) {
+          if (target.dataset.pivot === "divider") {
             multiplierCell.innerText = "";
+          } else if (target.dataset.pivot === "multiplier") {
+            dividerCell.innerText = "";
           }
         }
+        const divider = dividerCell?.innerText ?? null;
+        const multiplier = multiplierCell?.innerText ?? null;
 
-        if (multiplier) {
-          perUnitPrice = from1sPrice / multiplier;
+        if (divider) {
+          perUnitPrice = from1sPrice / divider;
           priceCell.innerText = perUnitPrice;
-        } else if (multiplier_1) {
-          perUnitPrice = from1sPrice * multiplier_1;
+        } else if (multiplier) {
+          perUnitPrice = from1sPrice * multiplier;
           priceCell.innerText = perUnitPrice;
         } else {
           perUnitPrice = from1sPrice;
@@ -100,27 +97,21 @@ export default class Callbacks {
         productUnitUpdate(
           +productId,
           +key,
+          +dividerCell.innerText,
           +multiplierCell.innerText,
-          +multiplier_1Cell.innerText,
           +perUnitPrice,
         );
       }
     }
 
-    function productUnitUpdate(
-      productId,
-      unitId,
-      multiplier,
-      multiplier_1,
-      price,
-    ) {
+    function productUnitUpdate(productId, unitId, divider, multiplier, price) {
+      divider = divider ? divider : null;
       multiplier = multiplier ? multiplier : null;
-      multiplier_1 = multiplier_1 ? multiplier_1 : null;
       const dto = {
         productId,
         unitId,
+        divider,
         multiplier,
-        multiplier_1,
         price,
       };
       const res = post("/adminsc/product/changeunitprice", dto);

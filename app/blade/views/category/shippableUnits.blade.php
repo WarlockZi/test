@@ -42,7 +42,7 @@
                     {{--                                        @deb--}}
                     {{--                           @if($shippableTable->description)--}}
                     <div class="description text-small">
-                        <span class="contains">{!!$unit['pivot']['multiplier']??0!!} {!!$product['base_unit']['name']??''!!}</span>
+                        <span class="contains">{!!$unit['pivot']['divider']??0!!} {!!$product['base_unit']['name']??''!!}</span>
                         <span class="cost"
                               data-cost="{{$unit['pivot']['price']??0}}">{{$unit['pivot']['price']??0}} ₽</span>
                     </div>

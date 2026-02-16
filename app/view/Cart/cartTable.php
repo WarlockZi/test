@@ -8,7 +8,7 @@
                 <?= $shippableUnit->name ?>
                 <?php if (!$shippableUnit->pivot->is_base): ?>
                     <span class="contains">
-                        (<?= $shippableUnit->pivot->multiplier ?> <?= $order->baseUnit->name ?>)
+                        (<?= $shippableUnit->pivot->divider ?> <?= $order->baseUnit->name ?>)
                         </span>
                 <?php endif; ?>
             </div>
