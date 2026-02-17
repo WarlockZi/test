@@ -17,7 +17,6 @@ class ProductUnit extends Pivot
         'price',
         'is_from_1s',
     ];
-//    protected $table = 'product_unit';
 
     public $incrementing = true;
 

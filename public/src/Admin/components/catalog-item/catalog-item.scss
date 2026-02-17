@@ -16,8 +16,9 @@
 
 
 .item-wrap {
-  display: flex;
-  width: 400px;
+  display: grid;
+  grid-template-columns: 75px auto;
+  width: clamp(95%, 80vw, 60%);
   position: relative;
   padding: 0;
   font-size: var.$font-size;

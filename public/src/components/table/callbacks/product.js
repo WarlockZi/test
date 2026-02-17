@@ -59,10 +59,33 @@ export default class Callbacks {
       );
     }
 
+    function eatherDividerOrMultiplier(target, multiplierCell, dividerCell) {
+      if (dividerCell?.innerText && multiplierCell?.innerText) {
+        if (target.dataset.pivot === "divider") {
+          multiplierCell.innerText = "";
+        } else if (target.dataset.pivot === "multiplier") {
+          dividerCell.innerText = "";
+        }
+      }
+    }
+
+    function renderPrice(divider, multiplier, priceCell, from1sPrice) {
+      let perUnitPrice;
+      if (divider) {
+        perUnitPrice = from1sPrice / divider;
+        priceCell.innerText = perUnitPrice;
+      } else if (multiplier) {
+        perUnitPrice = from1sPrice * multiplier;
+        priceCell.innerText = perUnitPrice;
+      } else {
+        perUnitPrice = from1sPrice;
+      }
+      return perUnitPrice;
+    }
+
     function getPerUnitPrice(rows, target) {
       if (Object.keys(rows).length < 2) return;
-      let perUnitPrice = 0;
-      let from1sPrice = getPriceFrom1s(rows);
+      const from1sPrice = getPriceFrom1s(rows);
       const productId = getProductId(target);
 
       for (let i = 1; i < Object.keys(rows).length; i++) {
@@ -71,34 +94,25 @@ export default class Callbacks {
         if (from1sCell.innerText) continue;
 
         const priceCell = getCell(rows[key], "price");
-
         const dividerCell = getCell(rows[key], "divider");
         const multiplierCell = getCell(rows[key], "multiplier");
 
-        if (dividerCell?.innerText && multiplierCell?.innerText) {
-          if (target.dataset.pivot === "divider") {
-            multiplierCell.innerText = "";
-          } else if (target.dataset.pivot === "multiplier") {
-            dividerCell.innerText = "";
-          }
-        }
+        eatherDividerOrMultiplier(target, multiplierCell, dividerCell);
+
         const divider = dividerCell?.innerText ?? null;
         const multiplier = multiplierCell?.innerText ?? null;
+        const perUnitPrice = renderPrice(
+          divider,
+          multiplier,
+          priceCell,
+          from1sPrice,
+        );
 
-        if (divider) {
-          perUnitPrice = from1sPrice / divider;
-          priceCell.innerText = perUnitPrice;
-        } else if (multiplier) {
-          perUnitPrice = from1sPrice * multiplier;
-          priceCell.innerText = perUnitPrice;
-        } else {
-          perUnitPrice = from1sPrice;
-        }
         productUnitUpdate(
           +productId,
           +key,
-          +dividerCell.innerText,
-          +multiplierCell.innerText,
+          dividerCell.innerText,
+          multiplierCell.innerText,
           +perUnitPrice,
         );
       }

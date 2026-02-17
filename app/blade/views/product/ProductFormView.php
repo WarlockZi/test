@@ -240,7 +240,7 @@ class ProductFormView
                     ->data(['pivot' => 'divider'])
                     ->data(['jscallback' => 'changemultiplier'])
                     ->callback(function ($unit) {
-                        return $unit->pivot->divider;
+                        return $unit->pivot->divider??'';
                     })
                     ->contenteditable()
                     ->get()
@@ -253,7 +253,7 @@ class ProductFormView
                     ->data(['pivot' => 'multiplier'])
                     ->data(['jscallback' => 'changemultiplier'])
                     ->callback(function ($unit) {
-                        return $unit->pivot->multiplier;
+                        return $unit->pivot->multiplier??'';
                     })
                     ->contenteditable()
                     ->get()
@@ -262,7 +262,7 @@ class ProductFormView
                 ColumnBuilder::build('Отгруж ед')
                     ->emptyRow(function () {
                         return CheckboxBuilder::build()
-                            ->checked()
+//                            ->checked()
                             ->data('id', 0)
                             ->data('pivot', 'is_shippable')
                             ->get()->toHtml();

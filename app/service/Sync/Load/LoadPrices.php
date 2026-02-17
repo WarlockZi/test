@@ -41,6 +41,7 @@ class LoadPrices extends LoadService
             $this->findProductUpdateInstore();
 
             $this->updateOrCreatePruductUnit();
+            $this->updatePrices();
         }
     }
 
@@ -91,13 +92,45 @@ class LoadPrices extends LoadService
 //            $this->cleanDoubleUnits();
             $this->product->update(['instore' => $this->offer['instore']]);
         } catch (Throwable $exception) {
-            $this->logger->write('offer 1s id = '.$this->offer['1s_id']);
+            $this->logger->write('offer 1s id = ' . $this->offer['1s_id']);
             throw new Exception('Load prices failed to find product ' . $exception->getMessage());
+        }
+    }
+
+    protected function deleteProductUnitsDoubles($unit)
+    {
+        if (($unit->pivot->is_from_1s && !$unit->pivot->price)
+            || ($unit->pivot->is_from_1s && $unit->pivot->price==1)) {
+            $unit->pivot->delete();
+            return true;
+        }
+        return false;
+    }
+
+    protected function recalculatePrices($units)
+    {
+        $priceFrom1s = $this->offer['price'];
+        foreach ($units as $unit) {
+                if($this->deleteProductUnitsDoubles($unit)) continue;
+            if (!$unit->pivot->is_from_1s) {
+                $multiplier = $unit->pivot->multiplier;
+                $divider    = $unit->pivot->divider;
+                if ($multiplier) {
+                    $unit->pivot->update(['price' => $priceFrom1s]);
+                } else if ($divider) {
+                    $unit->pivot()->update(['price' => $priceFrom1s]);
+                }
+            }
         }
     }
 
     protected function updateOrCreatePruductUnit(): void
     {
+        $oldPrice = ProductUnit::query()
+            ->where(['product_1s_id' => $this->product['1s_id'],
+                'unit_id' => $this->unit->id,
+            ])->first()->price;
+
         $this->productUnit = ProductUnit::query()
             ->updateOrCreate(
                 ['product_1s_id' => $this->product['1s_id'],
@@ -107,6 +140,17 @@ class LoadPrices extends LoadService
                     'price' => $this->offer['price'],
                     'is_from_1s' => 1,
                 ]);
+        if ($oldPrice !== (float)$this->offer['price']) {
+            $this->recalculatePrices($this->product->units);
+        }
+    }
+
+    #[NoReturn]
+    public function updatePrices(): void
+    {
+        foreach ($this->product->units as $unit) {
+
+        }
     }
 
     private function prepareOffer(array $data): void
@@ -125,6 +169,7 @@ class LoadPrices extends LoadService
         ];
 
     }
+
     protected function cleanDoubleUnits(): void
     {
         $ids = [];
@@ -136,6 +181,7 @@ class LoadPrices extends LoadService
             }
         }
     }
+
     protected function updateOrCreatePrice(): void
     {
         $this->price = Price::updateOrCreate(

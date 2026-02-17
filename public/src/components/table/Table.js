@@ -3,6 +3,7 @@ import { $, debounce, post } from "../../common";
 import { ael, qa, qs } from "@src/constants.js";
 import SelectNew from "@components/select/SelectNew.js";
 import TableDTO from "@src/Admin/TableDTO.js";
+import Checkbox from "@components/checkbox/checkbox.js";
 
 export default class Table {
   constructor(table) {
@@ -28,9 +29,9 @@ export default class Table {
     this.table[ael]("paste", this.handlePaste.bind(this));
     this.table[ael]("customSelect.changed", this.selectChange.bind(this));
 
-    if (!this.relation) {
-      this.table[ael]("checkbox.changed", this.checkboxChange.bind(this));
-    }
+    // if (!this.relation) {
+    this.table[ael]("checkbox.changed", this.checkboxChange.bind(this));
+    // }
     this.columnsCallbacks = this.table.dataset.columnsCallbacks;
 
     this.setCheckboxes();
@@ -248,8 +249,12 @@ export default class Table {
     [].forEach.call(this.hidden, (cell) => {
       const cloneCell = cell.cloneNode(true);
       cloneCell.removeAttribute("hidden");
+
       if (cloneCell[qs]("select")) {
         this.addSelectInNewRow(cloneCell);
+      }
+      if (cloneCell[qs]("[my-checkbox]")) {
+        this.addCheckbox(cloneCell);
       }
       const table = this.table[qa](".custom-table")[0];
       table.append(cloneCell);
@@ -280,6 +285,10 @@ export default class Table {
         newEl.dataset["id"] = id;
       }.bind(this),
     );
+  }
+  addCheckbox(cloneCell) {
+    const el = cloneCell[qs]("[my-checkbox]");
+    new Checkbox(el);
   }
 
   addSelectInNewRow(newEl) {
