@@ -2,7 +2,7 @@
 
     @include('components.card_panel.product_card_panel')
 
-    @deb
+{{--    @deb--}}
     <div class="art">Арт. {!!$product['art']!!} </div>
 
     <div>

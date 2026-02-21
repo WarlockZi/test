@@ -17,10 +17,13 @@
                 @if($variables['orderProduct'])
                     @php($count = 0)
                     @foreach($orderProduct as $orderitem)
-{{--                        @deb--}}
-                        @if(!empty($orderitem['unit'][0]))
 
-                            @if($orderitem['unit'][0]['id']==$shippableUnit['id'])
+{{--                        @deb--}}
+
+
+                        @if(!empty($orderitem['product_unit']))
+
+                            @if($orderitem['product_unit']['unit_id']==$shippableUnit['id'])
                                 @php
                                     $count = $orderitem['count'];
                                     break;

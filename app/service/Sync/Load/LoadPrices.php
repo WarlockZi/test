@@ -99,27 +99,33 @@ class LoadPrices extends LoadService
 
     protected function deleteProductUnitsDoubles($unit)
     {
-        if (($unit->pivot->is_from_1s && !$unit->pivot->price)
-            || ($unit->pivot->is_from_1s && $unit->pivot->price==1)) {
+        $from_1s = $unit->pivot->is_from_1s;
+        $price   = $unit->pivot->price;
+        if (($from_1s && !$price)
+            || ($from_1s && $price == 1)) {
             $unit->pivot->delete();
             return true;
         }
         return false;
     }
 
-    protected function recalculatePrices($units)
+    protected function getRecalculatePrices($multiplier, $divider)
     {
-        $priceFrom1s = $this->offer['price'];
+        if ($multiplier) {
+            return $this->offer['price'] * $multiplier;
+        }
+        return $this->offer['price'] / $divider;
+    }
+
+    protected function recalculatePrices($units): void
+    {
         foreach ($units as $unit) {
-                if($this->deleteProductUnitsDoubles($unit)) continue;
+            if ($this->deleteProductUnitsDoubles($unit)) continue;// is to be deleted, need no process
             if (!$unit->pivot->is_from_1s) {
-                $multiplier = $unit->pivot->multiplier;
-                $divider    = $unit->pivot->divider;
-                if ($multiplier) {
-                    $unit->pivot->update(['price' => $priceFrom1s]);
-                } else if ($divider) {
-                    $unit->pivot()->update(['price' => $priceFrom1s]);
-                }
+                $multiplier        = $unit->pivot->multiplier;
+                $divider           = $unit->pivot->divider;
+                $recalculatedPrice = $this->getRecalculatePrices($multiplier, $divider);
+                $unit->pivot->update(['price' => $recalculatedPrice]);
             }
         }
     }

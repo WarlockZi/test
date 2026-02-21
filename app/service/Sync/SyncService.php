@@ -82,7 +82,6 @@ class SyncService
             $this->offerFile = $loadedFiles['offerFile'];
             $this->loadService->run();
 
-
             $this->actions->clearSyncDir($this->archiveDir);
 //            $this->actions->clearUnzippedDir($this->unzippedDir);
         }

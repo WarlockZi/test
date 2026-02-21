@@ -28,7 +28,7 @@ class ProductAction
         return $this->breadcrumbs->getParents($category, $lastItemIsLink);
     }
 
-    public function orderProduct(Product $product)
+    public function orderProduct(Product $product):array|null
     {
         $userOrder = OrderRepository::usersOrder();
         if (!$userOrder) return null;

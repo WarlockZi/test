@@ -4,11 +4,17 @@
           data-cost="{{$shippableUnit['pivot']['price']??'0'}}"
     >
             {{$shippableUnit['pivot']['price']??'0'}} ₽
-    /
+
         </span>
-        <span class="contains">
-            {!!$shippableUnit['pivot']['divider']??0!!} {!!$product['base_unit']['name']??'баз. ед.'!!}
-        </span>
+{{--    <span class="contains">--}}
+{{--            @if($shippableUnit['pivot']['divider'])--}}
+{{--                @php($count = $product['base_unit'])--}}
+{{--            {!!$shippableUnit['pivot']['divider']??0!!} {!!$product['base_unit']['name']??'баз. ед.'!!}--}}
+{{--        @else--}}
+{{--            {!!$shippableUnit['pivot']['divider']??0!!} {!!$product['base_unit']['name']??'баз. ед.'!!}--}}
+
+{{--        @endif--}}
+{{--        </span>--}}
 </div>
 
 

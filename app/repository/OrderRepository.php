@@ -70,7 +70,7 @@ class OrderRepository
                     ->select('*')
                     ->whereHas('orderItems')
                     ->with(['orderitems' => function ($q) {
-                        $q->with('productUnit.unit', 'price.currency', 'price.type');
+                        $q->with('productUnit.unit');
                     }])
                     ->withoutTrashed();
             }])

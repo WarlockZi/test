@@ -35,7 +35,7 @@ class ProductRepository
 //            ->orderBy('sort')
             ->with('category.properties.vals')
             ->with('values.property')
-            ->with('units.prices.type')
+            ->with('units')
             ->with('category.parentRecursive')
             ->with('category.ownProperties')
             ->with('ownProperties')
