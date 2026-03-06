@@ -17,11 +17,11 @@
         @endphp
 
 
+{{--    @deb--}}
         <div
                 unit-row
                 class="unit-row"
                 data-unit_id="{!!$shippable['id']??''!!}"
-                data-divider="{!!$orderitem['product_unit']['divider']??''!!}"
         >
             <input
                     type="text"
@@ -30,21 +30,10 @@
                     onclick="this.value??'';"
             >
 
-            <div class="unit-name">
-                <span class="name">{!!$shippable['name']!!}</span>
+            <div class="unit-name">{!!$shippable['name']!!}</div>
+            <div class="cost" data-cost="{{$shippable['pivot']['price']}}">{{number_format($shippable['pivot']['price'],2,'.',' ')}}</div>
+            <div class="currency">₽</div>
 
-                <div class="ps-2 description text-small">
-                        <span class="cost"
-                              data-cost="{{$shippable['pivot']['price']}}">
-                            {{$shippable['pivot']['price']}} ₽
-                        </span>
-
-{{--                    <span class="contains">({!!$shippable['pivot']['divider']!!}--}}
-{{--                        {!!$product['base_unit']['name']?? '-'!!})--}}
-{{--                    </span>--}}
-                </div>
-
-            </div>
 
             <div class="arrows">
                 <div class="arrow plus"></div>

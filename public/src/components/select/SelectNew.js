@@ -91,7 +91,8 @@ export default class SelectNew {
 
   handleUlClick({ target }) {
     target.classList.add("selected");
-    this.selectedOption.element.classList.remove("selected");
+
+    this.selectedOption?.element.classList.remove("selected");
 
     this.selectValue(target.dataset.value);
     this.ul.classList.remove("show");
@@ -137,16 +138,19 @@ export default class SelectNew {
   get selectedOption() {
     return this.options.find((option) => option.selected);
   }
-
+  get selectedLi() {
+    return this.options.find((option) => option.option.selected);
+  }
   get selectedOptionIndex() {
     return this.options.indexOf(this.selectedOption);
   }
 
   selectValue(value) {
+    if (!value) return false;
     const next = this.options.find((option) => {
       return option.value === value;
     });
-    const prev = this.selectedOption;
+    const prev = this.selectedLi;
 
     prev.selected = false;
     next.selected = true;

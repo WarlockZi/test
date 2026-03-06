@@ -4,19 +4,14 @@
 namespace app\controller;
 
 
-use app\repository\SettingsRepository;
-
 class Address
 {
-    public static $factAddress = '<span itemprop="addressLocality">г. Вологда,</span><span itemprop="streetAddress">ул. Залинейная 26, скл.4</span>';
+    public static $factAddress = '<span class="city" itemprop="addressLocality">г. Вологда,</span>
+<span class="address" itemprop="streetAddress">ул. Залинейная 26, скл.4</span>';
     public static $postCode = '<span itemprop="postalCode">160010</span>';
 
     public static function getFactAddress(): string
     {
-//        $settings = SettingsRepository::initial();
-//        if (isset($settings['shipAddress']['value'])) {
-//            $shipAddres = $settings['shipAddress']['value'];
-//        }
         return $shipAddres ?? self::$factAddress;
     }
 

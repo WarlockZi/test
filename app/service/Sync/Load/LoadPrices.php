@@ -41,7 +41,7 @@ class LoadPrices extends LoadService
             $this->findProductUpdateInstore();
 
             $this->updateOrCreatePruductUnit();
-            $this->updatePrices();
+//            $this->updatePrices();
         }
     }
 
@@ -90,6 +90,7 @@ class LoadPrices extends LoadService
                 ->with(['units'])
                 ->first();
 //            $this->cleanDoubleUnits();
+
             $this->product->update(['instore' => $this->offer['instore']]);
         } catch (Throwable $exception) {
             $this->logger->write('offer 1s id = ' . $this->offer['1s_id']);
@@ -111,10 +112,7 @@ class LoadPrices extends LoadService
 
     protected function getRecalculatePrices($multiplier, $divider)
     {
-        if ($multiplier) {
-            return $this->offer['price'] * $multiplier;
-        }
-        return $this->offer['price'] / $divider;
+        return $multiplier ? $this->offer['price'] * $multiplier : $this->offer['price'] / $divider;
     }
 
     protected function recalculatePrices($units): void
@@ -152,12 +150,12 @@ class LoadPrices extends LoadService
     }
 
     #[NoReturn]
-    public function updatePrices(): void
-    {
-        foreach ($this->product->units as $unit) {
-
-        }
-    }
+//    public function updatePrices(): void
+//    {
+//        foreach ($this->product->units as $unit) {
+//
+//        }
+//    }
 
     private function prepareOffer(array $data): void
     {

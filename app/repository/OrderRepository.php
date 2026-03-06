@@ -130,7 +130,7 @@ class OrderRepository
             $field => $value,
         ])
             ->first();
-        $o     = $order->toArray();
+//        $o     = $order->toArray();
         return $order;
     }
 

@@ -411,6 +411,7 @@ function prepareBody(body) {
   body.phpSession = getPhpSession();
   return JSON.stringify(body, null, 2);
 }
+
 function setBody(body) {
   return {
     method: "POST",

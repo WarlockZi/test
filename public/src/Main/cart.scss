@@ -16,7 +16,7 @@
 
       .cart-item {
         display: grid;
-        grid-template-columns: 35px 125px minmax(155px, 400px) 205px 110px 40px;
+        grid-template-columns: 35px 125px minmax(155px, 400px) 220px 110px 40px;
         grid-template-rows: auto;
         grid-template-areas:
                   'id img name shippable sum del';

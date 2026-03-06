@@ -5,12 +5,35 @@ namespace app\repository;
 
 
 use app\model\Category;
+use app\model\CategoryProperty;
 use app\model\Product;
 use app\service\Breadcrumbs\NewBread;
 use app\service\Cache\Redis\Cache;
+use Monolog\Logger;
 
 class CategoryRepository
 {
+
+    private function getSameProp($path)
+    {
+        return CategoryProperty::query()
+            ->where('path', $path)->get();
+    }
+
+    protected function cleanProps()
+    {
+        $props = CategoryProperty::all();
+        $all   = [];
+        foreach ($props as $prop) {
+            $same = $this->getSameProp($prop->path);
+            if ($same->count() > 1) {
+                foreach ($same as $item) {
+                    $all[$prop->path][$item->id] = $item->toArray();
+                }
+            }
+        }
+        response()->json($all);
+    }
 
     public function indexInstore(string $slug): object|null
     {
@@ -21,8 +44,8 @@ class CategoryRepository
                 $category = Category::query()
                     ->withWhereHas('ownProperties',
                         fn($query) => $query
-                            ->where('path', 'like', $slug)
-                            ->orWhere('seo_path', 'like', $slug)
+                            ->where('path', $slug)
+                            ->orWhere('seo_path', $slug)
                     )
                     ->with('meta')
                     ->with(['childrenRecursive' => fn($q) => $q->with('ownProperties')])
@@ -30,6 +53,8 @@ class CategoryRepository
                     ->with('productsInStore')
                     ->with('productsNotInStoreInMatrix')
                     ->first();
+                $this->cleanProps();
+
 
                 if ($category) {
                     $breadcrumbs           = new NewBread;

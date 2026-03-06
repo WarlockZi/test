@@ -364,8 +364,9 @@
 
     .unit-row {
       display: flex;
-      justify-content: space-between;
+      //justify-content: space-between;
       margin-bottom: 0;
+      gap: 2px;
 
       .input {
         text-align: center;
@@ -386,32 +387,25 @@
         margin-right: 3px;
         font-size: .7em;
         margin-bottom: 2px;
-
-        .name {
-          //width: 30px;
-          margin-bottom: 1px;
-          font-weight: 600;
-          font-size: .65rem;
-          display: flex;
-          align-self: center;
-        }
-
-        .description {
-          display: flex;
-          flex-direction: column;
-          padding-left: 5px;
-          width: 50px;
-
-          .contains {
-            font-size: .65em;
-          }
-
-          .cost {
-            font-weight: bold;
-            font-size: .75em;
-          }
-        }
+        width: 27px;
       }
+      .cost {
+        display: flex;
+        justify-content: end;
+        font-weight: bold;
+        font-size: 0.5rem;
+        width: 40px;
+      }
+      .currency {
+        display: flex;
+        justify-content: end;
+        font-size: 0.5rem;
+        width: 10px;
+      }
+      .contains {
+        font-size: .65em;
+      }
+
 
       @include arrow-block;
 
@@ -554,7 +548,7 @@
       align-items: end;
       grid-area: sum;
 
-      .row-sum{
+      .row-sum {
         min-height: 18px;
       }
     }
@@ -1077,7 +1071,6 @@ $border-color:var.$color-main
   }
 
 }
-
 
 
 @mixin modal-close {

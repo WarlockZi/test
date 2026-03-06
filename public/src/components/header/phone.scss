@@ -1,38 +1,49 @@
-@use "../../var";
-@use "../../mixin_media";
+@use "../../var.scss";
+@use "../../mixin_media.scss";
 
 /***** Всплывающие телефоны */
 @mixin phone {
+  display: grid;
+  grid-template-areas: "phone arrow" "email arrow";
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   line-height: 21px;
-  padding: 5px 25px;
   white-space: nowrap;
-  font-size: clamp(.6rem, 5vw, .8rem);
+  font-size: clamp(0.85vw, 11px, 2.1vw);
 
-  &:after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 46%;
-    display: inline-block;
-    border: 5px solid transparent;
-    border-top-color: var.$color-main;
-    margin-left: 9px;
-    @include mixin_media.m500 {
-      position: absolute;
-      top: 8px;
+  .number {
+    grid-area: phone;
+  }
+  .email {
+    grid-area: email;
+  }
+  .arrow {
+    grid-area: arrow;
+    width: 10px;
+    display: grid;
+    align-content: center;
+    align-items: center;
+    margin-left: 10px;
+
+    &:after {
+      content: '';
+      grid-area: phone;
+      border: 5px solid transparent;
+      border-top-color: var.$color-main;
+
+      @include mixin_media.m500 {
+        position: absolute;
+      }
     }
   }
+
+
   @include mixin_media.m400 {
     display: none;
   }
 
   @include mixin_media.m500 {
     font-weight: bold;
-    padding-right: 0;
+    padding-inline: 0;
   }
 
   &:hover .wrap .inner {
@@ -49,7 +60,7 @@
   .email {
     @include mixin_media.h4;
     margin: 0;
-    font-size: clamp(.6rem, 5vw, .8rem);
+    font-size: clamp(0.85vw, 11px, 2.1vw)
 
   }
 

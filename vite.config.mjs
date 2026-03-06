@@ -25,7 +25,7 @@ export default defineConfig(async ({command, mode}) => {
          server: {
             https: true,
             cors: true,
-            strictPort: true,
+            strictPort: false,
             port: env.VITE_PORT,
          },
 

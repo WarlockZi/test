@@ -91,11 +91,12 @@ export default class Cart {
       target.classList.contains("plus") ||
       target.classList.contains("minus")
     ) {
-      if (this.rowTotalCount(target.closest(".row"))) {
-        this.renderSums();
-      } else {
-        this.renderSums();
-      }
+      // debugger;
+      // if (this.rowTotalCount(target.closest(".row"))) {
+      this.renderSums();
+      // } else {
+      //   this.renderSums();
+      // }
     } else if (target.id === "cartSubmit") {
       YM("cart_submitted");
       this.submitCart();

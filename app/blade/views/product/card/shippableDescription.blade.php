@@ -3,7 +3,7 @@
     <span class="cost"
           data-cost="{{$shippableUnit['pivot']['price']??'0'}}"
     >
-            {{$shippableUnit['pivot']['price']??'0'}} ₽
+            {{number_format($shippableUnit['pivot']['price'],2, '.', ' ')??'0'}} ₽
 
         </span>
 {{--    <span class="contains">--}}
