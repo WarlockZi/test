@@ -35,13 +35,18 @@ class LoadPrices extends LoadService
 
     private function exec(): void
     {
-        foreach ($this->priceData as $offer) {
-            $this->prepareOffer($offer);
-            $this->firstOrCreateUnit();
-            $this->findProductUpdateInstore();
+        try {
 
-            $this->updateOrCreatePruductUnit();
+            foreach ($this->priceData as $offer) {
+                $this->prepareOffer($offer);
+                $this->firstOrCreateUnit();
+                $this->findProductUpdateInstore();
+
+                $this->updateOrCreatePruductUnit();
 //            $this->updatePrices();
+            }
+        } catch (Throwable $exception) {
+            $exc = $exception;
         }
     }
 
@@ -65,7 +70,6 @@ class LoadPrices extends LoadService
     {
         $this->setOfferFile();
         $this->exec();
-
         $this->logger->write('--- price     loaded ---');
     }
 
@@ -130,10 +134,14 @@ class LoadPrices extends LoadService
 
     protected function updateOrCreatePruductUnit(): void
     {
-        $oldPrice = ProductUnit::query()
+        $productUnit = ProductUnit::query()
             ->where(['product_1s_id' => $this->product['1s_id'],
                 'unit_id' => $this->unit->id,
-            ])->first()->price;
+            ])->first();
+        $oldPrice    = $productUnit?->price;
+        if (!$productUnit) {
+            $d = $oldPrice;
+        }
 
         $this->productUnit = ProductUnit::query()
             ->updateOrCreate(
@@ -149,6 +157,23 @@ class LoadPrices extends LoadService
         }
     }
 
+    private function prepareOffer(array $data): void
+    {
+        $this->offer = [
+            '1s_id' => trim($data['Ид' ?? '']),
+            'art' => trim($data['Артикул'] ?? ''),
+            'instore' => trim($data['Количество'] ?? ''),
+
+            'price' => trim($data['Цены']['Цена']['ЦенаЗаЕдиницу'] ?? ''),
+            'currency' => trim($data['Цены']['Цена']['Валюта'] ?? ''),
+
+            'unit_code' => trim($data['БазоваяЕдиница']['@attributes']['Код'] ?? ''),
+            'international' => trim($data['БазоваяЕдиница']['@attributes']['МеждународноеСокращение'] ?? ''),
+            'unit' => trim($data['БазоваяЕдиница']['@attributes']['НаименованиеПолное'] ?? ''),
+        ];
+
+    }
+
     #[NoReturn]
 //    public function updatePrices(): void
 //    {
@@ -156,24 +181,6 @@ class LoadPrices extends LoadService
 //
 //        }
 //    }
-
-    private function prepareOffer(array $data): void
-    {
-        $this->offer = [
-            '1s_id' => trim($data['Ид']),
-            'art' => trim($data['Артикул']),
-            'instore' => trim($data['Количество']),
-
-            'price' => trim($data['Цены']['Цена']['ЦенаЗаЕдиницу'] ?? ''),
-            'currency' => trim($data['Цены']['Цена']['Валюта']),
-
-            'unit_code' => trim($data['БазоваяЕдиница']['@attributes']['Код'] ?? ''),
-            'international' => trim($data['БазоваяЕдиница']['@attributes']['МеждународноеСокращение'] ?? null),
-            'unit' => trim($data['БазоваяЕдиница']['@attributes']['НаименованиеПолное'] ?? null),
-        ];
-
-    }
-
     protected function cleanDoubleUnits(): void
     {
         $ids = [];
