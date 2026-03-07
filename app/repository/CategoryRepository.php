@@ -29,10 +29,11 @@ class CategoryRepository
             if ($same->count() > 1) {
                 foreach ($same as $item) {
                     $all[$prop->path][$item->id] = $item->toArray();
+                    if ($item->seo_article===null) $item->delete();
                 }
             }
         }
-        response()->json($all);
+        response()->consoleLog($all);
     }
 
     public function indexInstore(string $slug): object|null
