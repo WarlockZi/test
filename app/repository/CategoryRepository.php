@@ -14,27 +14,27 @@ use Monolog\Logger;
 class CategoryRepository
 {
 
-    private function getSameProp($path)
-    {
-        return CategoryProperty::query()
-            ->where('path', $path)->get();
-    }
+//    private function getSameProp($path)
+//    {
+//        return CategoryProperty::query()
+//            ->where('path', $path)->get();
+//    }
 
-    protected function cleanProps()
-    {
-        $props = CategoryProperty::all();
-        $all   = [];
-        foreach ($props as $prop) {
-            $same = $this->getSameProp($prop->path);
-            if ($same->count() > 1) {
-                foreach ($same as $item) {
-                    $all[$prop->path][$item->id] = $item->toArray();
-                    if ($item->seo_article===null) $item->delete();
-                }
-            }
-        }
-        response()->consoleLog($all);
-    }
+//    protected function cleanProps()
+//    {
+//        $props = CategoryProperty::all();
+//        $all   = [];
+//        foreach ($props as $prop) {
+//            $same = $this->getSameProp($prop->path);
+//            if ($same->count() > 1) {
+//                foreach ($same as $item) {
+//                    $all[$prop->path][$item->id] = $item->toArray();
+//                    if ($item->seo_article===null) $item->delete();
+//                }
+//            }
+//        }
+////        response()->consoleLog($all);
+//    }
 
     public function indexInstore(string $slug): object|null
     {
@@ -54,7 +54,7 @@ class CategoryRepository
                     ->with('productsInStore')
                     ->with('productsNotInStoreInMatrix')
                     ->first();
-                $this->cleanProps();
+//                $this->cleanProps();
 
 
                 if ($category) {
