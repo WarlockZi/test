@@ -9,9 +9,11 @@ use app\service\Fs\FS;
 use Exception;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ProductMainImage extends BaseImage
 {
+    protected $image ;
     private ImageManager $optimizer;
     protected int $quality = 70;
     protected int $maxWidth = 550;
@@ -31,6 +33,7 @@ class ProductMainImage extends BaseImage
         parent::__construct();
 
         $this->optimizer       = new ImageManager(new Driver());
+//        $this->file = new UploadedFile($file['tmp_name'], $file['name'], $file['type']);
         $this->nameFromArt     = $this->getNameFromArt();
         $this->fileNameFromArt = $this->getFileName();
     }
@@ -40,7 +43,6 @@ class ProductMainImage extends BaseImage
      */
     public function save(): self
     {
-
         $from = $this->file->getRealPath();
 
         $this->absDestinationPath = $this->getAbsoluteDestinationPath();
@@ -74,7 +76,6 @@ class ProductMainImage extends BaseImage
                 break;
         }
         return $this;
-
     }
 
     public function getImageFileName(): string
@@ -91,7 +92,6 @@ class ProductMainImage extends BaseImage
         if (!is_readable($dir)) throw new Exception("Директория основной картинки продукта не существует.");
         return $dir;
     }
-
 
     public function getNameFromArt(): string
     {
@@ -132,7 +132,6 @@ class ProductMainImage extends BaseImage
         return $path;
     }
 
-
     /**
      * @throws Exception
      */
@@ -156,12 +155,4 @@ class ProductMainImage extends BaseImage
     {
         return json_decode('"' . $filename . '"');
     }
-    //    /**
-//     * @throws Exception
-//     */
-//    public function getUploadFileTo(): array
-//    {
-//        $safeUpload = (new SafeImageFileUploadService())->safeUpload($this->file, $this->productImageDir);
-//        return $safeUpload;
-//    }
 }

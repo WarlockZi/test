@@ -2,8 +2,15 @@
 
 namespace app\service\Validator;
 
+
 class Validator
 {
+    protected array $mimes = [
+        "image/jpg" => "jpg",
+        "image/jpeg" => "jpg",
+        "image/png" => "png",
+        "image/webp" => "webp",
+    ];
     protected array $data;
     protected array $rules;
     protected array $messages;
@@ -12,9 +19,9 @@ class Validator
 
     public function __construct(array $data, array $rules, array $messages = [], array $attributes = [])
     {
-        $this->data = $data;
-        $this->rules = $rules;
-        $this->messages = $messages;
+        $this->data       = $data;
+        $this->rules      = $rules;
+        $this->messages   = $messages;
         $this->attributes = $attributes;
     }
 
@@ -22,6 +29,7 @@ class Validator
     {
         foreach ($this->rules as $field => $rules) {
             $rules = is_array($rules) ? $rules : explode('|', $rules);
+//            $field = $this->getFieldName($field);
             $value = $this->data[$field] ?? null;
 
             foreach ($rules as $rule) {
@@ -32,11 +40,11 @@ class Validator
         return $this->errors;
     }
 
-    protected function validateRule(string $field, $value, string $rule)
+    protected function validateRule(string $field, $value, string $rule): void
     {
         $params = [];
 
-        if (strpos($rule, ':') !== false) {
+        if (str_contains($rule, ':')) {
             [$rule, $params] = explode(':', $rule, 2);
             $params = explode(',', $params);
         }
@@ -48,37 +56,67 @@ class Validator
         }
     }
 
-    protected function validateRequired(string $field, $value, array $params)
+    protected function validateImage(string $field, $value, array $params): void
+    {
+        if (!str_contains($value->getMimeType(), 'image') ) {
+            $this->addError($field, 'file.image');
+        }
+    }
+
+    protected function validateMimes(string $field, $value, array $params): void
+    {
+        $found = false;
+        foreach ($params as $param) {
+            if (str_contains($value->getMimeType(), $param,)) {
+                $found = true;
+            }
+        }
+        if (!$found) {
+            $this->addError($field, 'file.mime');
+        }
+    }
+
+    protected function validateRequired(string $field, $value, array $params): void
     {
         if (is_null($value) || $value === '' || (is_array($value) && empty($value))) {
             $this->addError($field, 'required');
         }
     }
 
-    protected function validateEmail(string $field, $value, array $params)
+    protected function validateEmail(string $field, $value, array $params): void
     {
         if (!empty($value) && !filter_var($value, FILTER_VALIDATE_EMAIL)) {
             $this->addError($field, 'email');
         }
     }
 
-    protected function validateMin(string $field, $value, array $params)
+    protected function validateMin(string $field, $value, array $params): void
     {
         if (!empty($value) && strlen($value) < $params[0]) {
             $this->addError($field, 'min', $params);
         }
     }
 
-    protected function validateMax(string $field, $value, array $params)
+    protected function validateMax(string $field, $value, array $params): void
     {
-        if (!empty($value) && strlen($value) > $params[0]) {
-            $this->addError($field, 'max', $params);
+        if (is_string($value)) {
+            if (!empty($value) && strlen($value) > $params[0]) {
+                $this->addError($field, 'max', $params);
+            }
+        } elseif (is_numeric($value)) {
+            if (!empty($value) && $value > $params[0]) {
+                $this->addError($field, 'max', $params);
+            }
+        } else {
+            if ($value->getSize() > $params[0]) {
+                $this->addError($field, 'max', $params);
+            }
         }
     }
 
-    protected function addError(string $field, string $rule, array $params = [])
+    protected function addError(string $field, string $rule, array $params = []): void
     {
-        $message = $this->messages["{$field}.{$rule}"] ?? $this->getDefaultMessage($field, $rule, $params);
+        $message                = $this->messages["{$field}.{$rule}"] ?? $this->getDefaultMessage($field, $rule, $params);
         $this->errors[$field][] = $message;
     }
 

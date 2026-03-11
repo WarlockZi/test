@@ -40,11 +40,9 @@ class ProductAction
 
         $productMainImage                   = (new ProductMainImage($product?->toArray(), $file))
             ->save();
-        $product->ownProperties->main_image = $productMainImage->getImageFileName();
-        $product->ownProperties->save();
+        $product->ownProperties->update(['main_image'=>$productMainImage->getImageFileName()]);
 
         return image($product->ownProperties->main_image);
-
     }
 
     public function changeUnit(IRequest $req): void

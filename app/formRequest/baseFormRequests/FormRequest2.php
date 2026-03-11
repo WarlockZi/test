@@ -5,25 +5,26 @@ namespace app\formRequest\baseFormRequests;
 
 use app\service\Validator\Validator;
 use RuntimeException;
+use Symfony\Component\HttpFoundation\Request;
 
-abstract class FormRequest2
+abstract class FormRequest2 extends Request
 {
     protected $input = [];
     protected $errors = [];
-    public function __construct(array $input = [])
-    {
-        $this->input = $input ?: $this->getInputFromGlobal();
-    }
-    abstract public function rules(): array;
 
-    public function messages(): array
+    public function __construct()
     {
-        return [];
-    }
+        $request = Request::createFromGlobals();
 
-    public function attributes(): array
-    {
-        return [];
+        parent::__construct(
+            $request->query->all(),
+            $request->request->all(),
+            $request->attributes->all(),
+            $request->cookies->all(),
+            $request->files->all(),
+            $request->server->all(),
+            $request->getContent()
+        );
     }
 
     protected function getInputFromGlobal(): array
@@ -36,8 +37,22 @@ abstract class FormRequest2
         } elseif (str_contains($contentType, 'application/x-www-form-urlencoded')) {
             parse_str($rawInput, $input);
             return $input;
+        } elseif (str_contains($contentType, 'multipart/form-data')) {
+            return $_POST + $_GET + $_FILES;
         }
         return $_POST + $_GET;
+    }
+
+    abstract public function rules(): array;
+
+    public function messages(): array
+    {
+        return [];
+    }
+
+    public function attributes(): array
+    {
+        return [];
     }
 
     public function authorize(): bool
@@ -60,7 +75,7 @@ abstract class FormRequest2
     protected function getValidator(): Validator
     {
         return new Validator(
-            $this->input,
+            $this->all(),
             $this->rules(),
             $this->messages(),
             $this->attributes()
@@ -74,10 +89,11 @@ abstract class FormRequest2
         }
 
         return array_intersect_key(
-            $this->input,
+            $this->all(),
             array_flip(array_keys($this->rules()))
         );
     }
+
     public function errors(): array
     {
         return $this->errors;
@@ -88,10 +104,15 @@ abstract class FormRequest2
         return $this->input[$key] ?? $default;
     }
 
-    public function all(): array
+    public function all($keys = []): array
     {
-        return $this->input;
+        return array_merge(
+            $this->query->all(),
+            $this->request->all(),
+            $this->files->all()
+        );
     }
+
     public function safe(): object
     {
         return new class($this->validated()) {

@@ -2,9 +2,10 @@
 
 namespace app\formRequest;
 
-use app\formRequest\baseFormRequests\FormRequest;
+//use app\formRequest\baseFormRequests\FormRequest;
+use app\formRequest\baseFormRequests\FormRequest2;
 
- class StoreProductMainImageRequest extends FormRequest
+class StoreProductMainImageRequest extends FormRequest2
 {
     public function __construct()
     {
@@ -15,14 +16,8 @@ use app\formRequest\baseFormRequests\FormRequest;
     {
         return [
             'productId' => 'required|string',
-//            'file'=>'required',
-            'file' => 'max:15000|image|mimes:jpeg,jpg,gif,png,webp',
+            'file' => 'max:30000|image|mimes:jpeg,jpg,gif,png,webp',
         ];
-    }
-
-    public function all($keys = null): array
-    {
-        return $this->input;
     }
 
     public function messages(): array
