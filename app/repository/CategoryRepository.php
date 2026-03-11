@@ -56,11 +56,10 @@ class CategoryRepository
                     ->first();
 //                $this->cleanProps();
 
-
                 if ($category) {
+                    $c = $category->toArray();
                     $breadcrumbs           = new NewBread;
                     $category->breadcrumbs = $breadcrumbs->getParents($category);
-//                    $o = $category->toArray();
                     $category->productsInStore->each(function (Product $product) {
                         $product->append('base_unit');
                         $product->append('shippable_units');

@@ -49,30 +49,5 @@ class CategoryController extends AppController
             view('category.categories', compact('meta', 'categories'));
         }
     }
-//    #[NoReturn] public function actionShort(IRequest $request): void
-//    {
-//        if ($request->slug) {
-//            $category = $this->repo->indexInstore($request->slug);
-//
-//            if (!$category) {
-//                $similarCategories = $this->actions.js->similarCategories($request->slug);
-//                view('category.notFound',
-//                    compact('category', 'similarCategories'),
-//                    404);
-//            }
-////            $order          = OrderRepository::usersOrder()->toArray();
-//            $category = $category->toArray();
-//
-//            view('category.category',
-//                compact(
-//                    'category',
-//                    'order',
-//                )
-//            );
-//        } else {
-//            $categories = APP->get('rootCategories');
-//            $meta = $this->actions.js->setCategoriesMeta();
-//            view('category.categories', compact('meta', 'categories'));
-//        }
-//    }
+
 }

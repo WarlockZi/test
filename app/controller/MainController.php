@@ -4,8 +4,8 @@ namespace app\controller;
 
 
 use app\action\MainAction;
+use app\model\CategoryProperty;
 use app\repository\PromotionRepository;
-use app\service\HelpersService;
 use JetBrains\PhpStorm\NoReturn;
 
 class MainController extends AppController
@@ -17,6 +17,22 @@ class MainController extends AppController
     )
     {
         parent::__construct();
+    }
+
+    #[NoReturn] public function actionProps(): void
+    {
+//        $cats = CategoryProperty::select('*')
+//            ->groupBy('path')
+//            ->havingRaw('count(*)>1')
+//            ->get();
+        $cats = CategoryProperty::whereIn('path', function ($query) {
+            $query->select('path')
+                ->from('category_properties')
+                ->groupBy('path')
+                ->havingRaw('count(*)>1');
+        })->with('category')->get();
+        $cats = $cats->toArray();
+        response()->json($cats);
     }
 
     #[NoReturn]
