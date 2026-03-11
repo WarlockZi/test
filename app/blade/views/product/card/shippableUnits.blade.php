@@ -2,8 +2,8 @@
      data-price='{{$product['price']}}'
      data-1sid='{{$product['1s_id']}}'
 >
-    <button class='button blue-button'>Добавить</button>
-    <div class="green-button-wrap none">
+
+    <div class="green-button-wrap">
         <button class='button green-button'>Перейти в корзину</button>
 
         @foreach($product['shippable_units'] as $shippableUnit)
@@ -17,9 +17,6 @@
                 @if($variables['orderProduct'])
                     @php($count = 0)
                     @foreach($orderProduct as $orderitem)
-
-{{--                        @deb--}}
-
 
                         @if(!empty($orderitem['product_unit']))
 
@@ -40,22 +37,21 @@
                         onclick="this.value??'';"
                 >
 
-                <div class="unit-name">
-                    <span class="name">{!!$shippableUnit['name']??'ед.'!!}</span>
-
-                    {{--                                @deb--}}
-                    @include('product.card.shippableDescription',compact('shippableUnit'))
-
+                <div class="unit-name">{!!$shippableUnit['name']??'ед.'!!}</div>
+                <div class="cost" data-cost="{{$shippableUnit['pivot']['price']??'0'}}">
+                    {{number_format($shippableUnit['pivot']['price'],2, '.', ' ')??'0'}}
                 </div>
+                <div class="currency">₽</div>
 
-                <div class="arrows">
-                    <div class="arrow plus"></div>
-                    <div class="arrow minus"></div>
-                </div>
 
+            <div class="arrows">
+                <div class="arrow plus"></div>
+                <div class="arrow minus"></div>
             </div>
 
-        @endforeach
-
     </div>
+
+    @endforeach
+
+</div>
 </div>

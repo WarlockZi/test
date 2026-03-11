@@ -19,21 +19,7 @@ class MainController extends AppController
         parent::__construct();
     }
 
-    #[NoReturn] public function actionProps(): void
-    {
-//        $cats = CategoryProperty::select('*')
-//            ->groupBy('path')
-//            ->havingRaw('count(*)>1')
-//            ->get();
-        $cats = CategoryProperty::whereIn('path', function ($query) {
-            $query->select('path')
-                ->from('category_properties')
-                ->groupBy('path')
-                ->havingRaw('count(*)>1');
-        })->with('category')->get();
-        $cats = $cats->toArray();
-        response()->json($cats);
-    }
+//
 
     #[NoReturn]
     public function actionIndex(): void
@@ -204,5 +190,15 @@ class MainController extends AppController
             $slug);
         view('main.faq', compact('meta'));
     }
-
+//    #[NoReturn] public function actionProps(): void
+//    {
+//        $cats = CategoryProperty::whereIn('path', function ($query) {
+//            $query->select('path')
+//                ->from('category_properties')
+//                ->groupBy('path')
+//                ->havingRaw('count(*)>1');
+//        })->with('category')->get();
+//        $cats = $cats->toArray();
+//        response()->json($cats);
+//    }
 }

@@ -2,8 +2,8 @@
      data-price='{{$product->price}}'
      data-product_1s_id='{{$product['1s_id']}}'
 >
-    <button class='button blue-button'>Добавить</button>
-    <div class="green-button-wrap none">
+{{--    <button class='button blue-button'>Добавить</button>--}}
+    <div class="green-button-wrap">
         <button class='button green-button'>Перейти в корзину</button>
 
 {{--        @deb--}}
@@ -37,17 +37,15 @@
                         onclick="this.value??'';"
                 >
 
-                <div class="unit-name">
-                    <span class="name">{!!$unit['name']!!}</span>
-                    {{--                                        @deb--}}
-                    {{--                           @if($shippableTable->description)--}}
-                    <div class="description text-small">
-                        <span class="contains">{!!$unit['pivot']['divider']??0!!} {!!$product['base_unit']['name']??''!!}</span>
-                        <span class="cost"
-                              data-cost="{{$unit['pivot']['price']??0}}">{{$unit['pivot']['price']??0}} ₽</span>
-                    </div>
+                <div class="unit-name">{!!$unit['name']!!}</div>
 
-                </div>
+{{--                        <span class="contains">{!!$unit['pivot']['divider']??0!!} {!!$product['base_unit']['name']??''!!}</span>--}}
+                        <div class="cost" data-cost="{{$unit['pivot']['price']??0}}">{{$unit['pivot']['price']??0}}</div>
+                        <div class="currency"> ₽</div>
+{{--                    <div class="description text-small"></div>--}}
+
+
+
 
                 <div class="arrows">
                     <div class="arrow plus"></div>

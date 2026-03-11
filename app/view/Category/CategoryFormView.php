@@ -74,17 +74,22 @@ class CategoryFormView
                     )
                     ->get()
             )
-            ->field(
-                ItemFieldBuilder::build('category_1s_id', $category)
-                    ->name('Принадлежит')
-                    ->html(
-                        self::selectorByField(['category_1s_id' => $category['category_1s_id']])
-                    )
-                    ->get()
-            )
+//            ->field(
+//                ItemFieldBuilder::build('category_1s_id', $category)
+//                    ->name('Принадлежит')
+//                    ->html(
+//                        self::selectorByField(['category_1s_id' => $category['category_1s_id']])
+//                    )
+//                    ->get()
+//            )
             ->field(
                 ItemFieldBuilder::build('id', $category)
                     ->name('ID')
+                    ->get()
+            )
+            ->field(
+                ItemFieldBuilder::build('s_id', $category)
+                    ->name('SID')
                     ->get()
             )
 //            ->tab(
