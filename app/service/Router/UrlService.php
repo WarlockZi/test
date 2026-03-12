@@ -17,7 +17,7 @@ class UrlService
     {
         $path = [];
         if (!$category->parent) {
-            $category->ownProperties()->update(['path' => $category->slug]);
+            $res = $category->ownProperties->update(['path' => $category->slug]);
         } else {
             $localCategory = $category;
             while ($category->parent) {
@@ -25,7 +25,7 @@ class UrlService
                 $category = $category->parent;
             }
             $str = implode('/', array_reverse($path)) . '/' . $localCategory->slug;
-            $category->ownProperties()->update(['path' => $str]);
+            $localCategory->ownProperties->update(['path' => $str]);
         }
     }
 }

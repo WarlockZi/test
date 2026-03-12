@@ -201,15 +201,15 @@ class MainController extends AppController
         response()->json($cats);
     }
 
-//    #[NoReturn] public function actionProps(): void
-//    {
-//        $cats = CategoryProperty::whereIn('path', function ($query) {
-//            $query->select('path')
-//                ->from('category_properties')
-//                ->groupBy('path')
-//                ->havingRaw('count(*)>1');
-//        })->with('category')->get();
-//        $cats = $cats->toArray();
-//        response()->json($cats);
-//    }
+    #[NoReturn] public function actionProps(): void
+    {
+        $cats = CategoryProperty::whereIn('path', function ($query) {
+            $query->select('path')
+                ->from('category_properties')
+                ->groupBy('path')
+                ->havingRaw('count(*)>1');
+        })->with('category')->get();
+        $cats = $cats->toArray();
+        response()->json($cats);
+    }
 }
