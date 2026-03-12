@@ -16,7 +16,7 @@ class StoreProductMainImageRequest extends FormRequest2
     {
         return [
             'productId' => 'required|string',
-            'file' => 'max:30000|image|mimes:jpeg,jpg,gif,png,webp',
+            'file' => 'max:1000000|image|mimes:jpeg,jpg,gif,png,webp',
         ];
     }
 
@@ -26,7 +26,7 @@ class StoreProductMainImageRequest extends FormRequest2
             'productId.required' => 'отсутствует поле productId',
             'productId.string' => 'поле productId должно быть строкой',
 
-            'file.max' => 'размер файла больше 12',
+            'file.max' => 'размер файла больше 1mb',
             'file.mimes' => 'тип файла не тот',
             'file.image' => 'кто сказал, что это картинка!...',
         ];
