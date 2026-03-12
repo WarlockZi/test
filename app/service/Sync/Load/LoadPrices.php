@@ -96,7 +96,6 @@ class LoadPrices extends LoadService
                 error_log($this->offer['1s_id']);
                 error_log('data instore - '.$this->offer['instore']);
                 error_log('product instore - '.$this->product->instore);
-
             }
         } catch (Throwable $exception) {
             $this->logger->write('offer 1s id = ' . $this->offer['1s_id']);
@@ -151,7 +150,7 @@ class LoadPrices extends LoadService
                     'unit_id' => $this->unit->id,
                 ],
                 ['is_shippable' => 1,
-                    'price' => $this->offer['price'],
+                    'price' => (float)$this->offer['price'],
                     'is_from_1s' => 1,
                 ]);
         if ($oldPrice !== (float)$this->offer['price']) {

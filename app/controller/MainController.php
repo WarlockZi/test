@@ -5,7 +5,9 @@ namespace app\controller;
 
 use app\action\MainAction;
 use app\model\CategoryProperty;
+use app\repository\CategoryRepository;
 use app\repository\PromotionRepository;
+use app\service\Router\IRequest;
 use JetBrains\PhpStorm\NoReturn;
 
 class MainController extends AppController
@@ -190,6 +192,15 @@ class MainController extends AppController
             $slug);
         view('main.faq', compact('meta'));
     }
+        #[NoReturn] public function actionInstore(IRequest $request): void
+    {
+        $slug = "perchatki/perchatki_nitrilovye/nesterilnye/neopudrennye";
+        $repo = new CategoryRepository;
+        $category = $repo->indexInstore($slug);
+        $cats = $category->toArray();
+        response()->json($cats);
+    }
+
 //    #[NoReturn] public function actionProps(): void
 //    {
 //        $cats = CategoryProperty::whereIn('path', function ($query) {
