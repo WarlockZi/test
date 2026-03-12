@@ -20,7 +20,7 @@ if (DEV) {
 
     set_error_handler('productionErrorHandler');
     set_exception_handler('productionExceptionHandler');
-    register_shutdown_function('productionShutdownHandler');
+//    register_shutdown_function('productionShutdownHandler');
 }
 
 function productionErrorHandler($errno, $errstr, $errfile, $errline)

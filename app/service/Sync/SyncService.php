@@ -39,8 +39,8 @@ class SyncService
         $this->archiveDir  = ROOT . SyncStorage::getPath();
         $this->unzippedDir = ROOT . SyncStorage::getUnzippedDir();
 
-        $this->importFile = $this->unzippedDir . 'import0_1.xml';
-        $this->offerFile  = $this->unzippedDir . 'offers0_1.xml';
+        $this->importFile = $this->unzippedDir . env("SYNC_IMPORT_FILE");
+        $this->offerFile  = $this->unzippedDir . env("SYNC_OFFER_FILE");
 
     }
 

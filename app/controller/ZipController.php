@@ -16,8 +16,8 @@ private array $unzippedFiles =  [];
     {
         parent::__construct();
         $this->unzippedFiles = [
-            'import' => FS::platformSlashes(ROOT . '/storage/app/import/import0_1.xml'),
-            'offer' => FS::platformSlashes(ROOT . '/storage/app/import/offers0_1.xml'),
+            'import' => FS::platformSlashes(ROOT . '/storage/app/import/'.env("SYNC_IMPORT_FILE")),
+            'offer' => FS::platformSlashes(ROOT . '/storage/app/import/'.env('SYNC_OFFER_FILE')),
         ];
     }
 
