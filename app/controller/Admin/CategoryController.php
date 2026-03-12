@@ -28,7 +28,7 @@ class CategoryController extends AdminscController
     #[NoReturn] public function actionEdit(IRequest $route): void
     {
         $category     = CategoryRepository::edit($route->id);
-        $breadcrumbs  = $this->actions->getBreadcrumbs($category, false);
+        $breadcrumbs  = $this->actions->getBreadcrumbs($category, true);
         $catItem = CategoryFormView::edit($category);
         view('admin.category.edit',
             compact('category',
