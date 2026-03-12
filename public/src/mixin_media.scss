@@ -364,7 +364,7 @@
 
     .unit-row {
       display: flex;
-      //justify-content: space-between;
+      align-items: center;
       margin-bottom: 0;
       gap: 2px;
 
@@ -385,7 +385,7 @@
         align-items: start;
         justify-content: start;
         margin-right: 3px;
-        font-size: .7em;
+        //font-size: .7em;
         margin-bottom: 2px;
         width: 27px;
       }
@@ -393,13 +393,13 @@
         display: flex;
         justify-content: end;
         font-weight: bold;
-        font-size: 0.5rem;
-        width: 40px;
+        font-size: 0.8em;
+        width: 50px;
       }
       .currency {
         display: flex;
         justify-content: end;
-        font-size: 0.5rem;
+        //font-size: 0.5rem;
         width: 10px;
       }
       .contains {

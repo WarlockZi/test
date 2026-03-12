@@ -72,7 +72,7 @@ class Validator
             }
         }
         if (!$found) {
-            $this->addError($field, 'file.mime');
+            $this->addError($field, 'file.mimes');
         }
     }
 
@@ -116,7 +116,7 @@ class Validator
 
     protected function addError(string $field, string $rule, array $params = []): void
     {
-        $message                = $this->messages["{$field}.{$rule}"] ?? $this->getDefaultMessage($field, $rule, $params);
+        $message                = $this->messages["$rule"] ?? $this->getDefaultMessage($field, $rule, $params);
         $this->errors[$field][] = $message;
     }
 

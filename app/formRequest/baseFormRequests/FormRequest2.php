@@ -85,7 +85,9 @@ abstract class FormRequest2 extends Request
     public function validated(): array
     {
         if (!$this->validate()) {
-            throw new RuntimeException('Validation failed.');
+            $errors = $this->errors['file']??$this->errors;
+            response()->json(['popup'=>$errors[0]]);
+//            throw new RuntimeException('Validation failed.');
         }
 
         return array_intersect_key(
