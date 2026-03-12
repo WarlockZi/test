@@ -28,7 +28,12 @@
                     <span>Почта:</span> <a href="mailto:10@vitexopt.ru">10@vitexopt.ru</a>
                 </div>
                 <div>
-                    <span>Адрес:</span> 160010, г. Вологда,ул. Залинейная 26, скл.4
+                    <span>Адрес:</span>
+                    @deb
+                    {!!env('STREET_ZIP')!!},
+                    {!!env('STREET_CITY')!!},
+                    {!!env('STREET_STREET')!!},
+                    {!!env('STREET_HOUSE')!!},
                 </div>
             </div>
 

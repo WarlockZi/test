@@ -8,7 +8,7 @@
         : ''; ?>
     <a
             href="/product/<?= $product['slug']; ?>" class="product">
-
+{{--@deb--}}
         <h3 class="name"><?= $product['print_name']; ?></h3>
 
         <img src="{!!image($product['own_properties']['main_image'])!!}"

@@ -10,6 +10,6 @@
 >
 
     <?= Icon::mapPin('feather'); ?>
-    <?= Address::getFactAddress(); ?>
+    {!!Address::getFactAddress()!!}
 
 </div>

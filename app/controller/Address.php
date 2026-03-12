@@ -12,7 +12,12 @@ class Address
 
     public static function getFactAddress(): string
     {
-        return $shipAddres ?? self::$factAddress;
+        $city = env('ADDRESS_CITY');
+        $street = env('ADDRESS_STREET');
+        $house = env('ADDRESS_HOUSE');
+        $factAddress = "<span class='city' itemprop='addressLocality'>$city,</span>
+<span class='address' itemprop='streetAddress'>$street, $house</span>";
+        return $factAddress;
     }
 
 
