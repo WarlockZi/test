@@ -86,7 +86,7 @@ class LoadPrices extends LoadService
     protected function findProductUpdateInstore(): void
     {
         try {
-            $this->product = Product::where('1s_id', )
+            $this->product = Product::where('1s_id',$this->offer['1s_id'] )
                 ->with(['units'])
                 ->first();
 //            $this->cleanDoubleUnits();
@@ -140,7 +140,8 @@ class LoadPrices extends LoadService
                 'unit_id' => $this->unit->id,
             ])->first();
         $oldPrice    = $productUnit?->price;
-        if (!$productUnit) {
+        //SELECT * FROM `product_unit` WHERE `product_1s_id`="d7d360da-8cb1-11f0-9c3c-d85ed383f0b6"
+        if ($this->product['1s_id']=="d7d360da-8cb1-11f0-9c3c-d85ed383f0b6") {
             $d = $oldPrice;
         }
 
