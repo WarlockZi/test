@@ -283,7 +283,7 @@ class ProductFormView
                 ColumnBuilder::build('Цены')
                     ->data(['pivot' => 'price'])
                     ->callback(function ($unit) {
-                        return $unit->pivot->price ?? '';
+                        return (float)$unit->pivot->price ?? '';
                     })
                     ->get()
             )
