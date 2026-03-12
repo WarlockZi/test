@@ -16,7 +16,7 @@ class StoreProductMainImageRequest extends FormRequest2
     {
         return [
             'productId' => 'required|string',
-            'file' => 'max:1000000|image|mimes:jpeg,jpg,gif,png,webp',
+            'file' => 'max:3000000|image|mimes:jpeg,jpg,gif,png,webp',
         ];
     }
 
