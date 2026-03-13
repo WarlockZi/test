@@ -24,7 +24,7 @@ class LikeController extends AppController
     {
         $likes   = LikeRepository::all();
         $content = LikeView::all($likes);
-        Response::view('pages.likes', compact('content'));
+        Response::view('pages.likes', compact('content','likes'));
     }
 
     #[NoReturn] public function actionDel(LikeRequest $request): void
