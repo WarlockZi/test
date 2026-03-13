@@ -8,7 +8,7 @@
   position: relative;
   line-height: 21px;
   white-space: nowrap;
-  font-size: clamp(0.85vw, 11px, 2.1vw);
+  font-size: clamp(11px, 1.2vw, 16px);
 
   .number {
     grid-area: phone;
@@ -60,7 +60,7 @@
   .email {
     @include mixin_media.h4;
     margin: 0;
-    font-size: clamp(0.85vw, 11px, 2.1vw)
+    font-size: clamp(11px, 1.2vw, 16px)
 
   }
 

@@ -15,7 +15,7 @@ export const formatter = new Intl.NumberFormat("ru", {
 
 export function objAndFiles2FormData(obj, files, formData = new FormData()) {
   self.formData = formData;
-  if (typeof files === "FileList") {
+  if (files instanceof "FileList") {
     for (let i = 0; i < files.length; i++) {
       self.formData.append(i, files[i]);
     }

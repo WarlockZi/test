@@ -34,7 +34,7 @@
 
             <div class="row">
                 <div class="num"><?= $order->id ?></div>
-                <div class="name-price">
+                <div class="product-name">
                     <a href="/adminsc/product/edit/<?= $order->product->id ?>"
                        class="name"><?= $order->product->name ?></a>
                     <div class="price"></div>

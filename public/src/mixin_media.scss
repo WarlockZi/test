@@ -277,9 +277,9 @@
       border-radius: 2px;
       background-repeat: no-repeat;
       background-position: center;
-      background-color: var.$color-main-green;
+      background-color: color.adjust(var.$color-main, $lightness: 15%);
       padding: 0 9px;
-      color: color.adjust(var.$color-main-green, $lightness: 35%);
+      color: color.adjust(var.$color-main, $lightness: 35%);
 
       svg {
         pointer-events: none;
@@ -287,7 +287,7 @@
       }
 
       &:hover {
-        background-color: color.adjust(var.$color-main-green, $lightness: -10%);
+        background-color: color.adjust(var.$color-main, $lightness: 25%);
       }
 
       &.plus {
@@ -352,13 +352,13 @@
     }
 
     .green-button {
-      background-color: var.$color-main-green;
+      background-color: var.$color-main;
       margin-bottom: 10px;
       justify-content: center;
       font-size: 1em;
 
       &:hover {
-        background-color: color.adjust(var.$color-main-green, $lightness: -10%);
+        background-color: color.adjust(var.$color-main, $lightness: -10%);
       }
     }
 
@@ -385,22 +385,21 @@
         align-items: start;
         justify-content: start;
         margin-right: 3px;
-        //font-size: .7em;
-        margin-bottom: 2px;
+        font-size: 14px;
         width: 27px;
       }
       .cost {
         display: flex;
         justify-content: end;
-        font-weight: bold;
-        font-size: 0.8em;
+        margin-right: 3px;
+        font-size: 14px;
         width: 50px;
       }
       .currency {
         display: flex;
         justify-content: end;
-        //font-size: 0.5rem;
         width: 10px;
+        font-size: 11px;
       }
       .contains {
         font-size: .65em;
@@ -515,7 +514,7 @@
       grid-area: shippable;
     }
 
-    .name-price {
+    .product-name {
       grid-area: name;
       display: flex;
       flex: 1;
@@ -550,6 +549,7 @@
 
       .row-sum {
         min-height: 18px;
+        line-height: 22px;
       }
     }
 
@@ -605,7 +605,8 @@
     .column {
       position: relative;
       background-color: white;
-      width: 180px;
+      width: 190px;
+      margin-bottom: 25px;
 
       .txt {
         flex: 2;
@@ -665,7 +666,6 @@
       .name {
         font-size: clamp(.7rem, 4vw, 1rem);
         font-weight: initial;
-        padding: 10px;
         word-wrap: break-word;
       }
 
@@ -674,7 +674,7 @@
         font-size: 12px;
 
         p {
-          margin-bottom: clamp(1px, 2vw, 15px);
+          margin-bottom: clamp(1px, 2vw, 5px);
         }
 
         .old-price {

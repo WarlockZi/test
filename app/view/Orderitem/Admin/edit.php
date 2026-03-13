@@ -13,7 +13,7 @@
 
         <div class="row">
             <div class="num"><?= $order->id ?></div>
-            <div class="name-price">
+            <div class="product-name">
                 <div class="name"><?= $order->product->name ?></div>
                 <div class="price"><?= $order->product->price ?></div>
                 <!--		  <div class="id">--><? //= $order->user->email ?><!--</div>-->

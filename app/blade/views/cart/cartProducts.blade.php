@@ -6,22 +6,18 @@
 @foreach ($order['products'] as $i => $product)
 
     <div class="row cart-item" data-product-id="{!!$product['1s_id']!!} ">
+
         <div class="num cell"><?= ++$i; ?></div>
 
-        <img class="img" src="<?= $product['mainImage']; ?>" alt="<?= $product['name']; ?>">
-{{--@deb--}}
-        <div class="name-price cell">
+        <a href="/product/<?= $product['slug']; ?>" class="name">
+            <img class="img" src="<?= $product['mainImage']; ?>" alt="<?= $product['name']; ?>">
+        </a>
+
+        <div class="product-name cell">
             @if (Auth::getUser())
-                <a href="/adminsc/product/edit/<?= $product['id']; ?>"
-                   class="edit card-panel-item"
-                >
-                    {!!Icon::edit()!!}
-                </a>
+                <a href="/adminsc/product/edit/<?= $product['id']; ?>" class="edit card-panel-item">{!!Icon::edit()!!}</a>
             @endif
-            <a href="/product/<?= $product['slug']; ?>"
-               class="name">
-                    <?= $product['name']; ?>
-            </a>
+            <a href="/product/<?= $product['slug']; ?>" class="name"><?= $product['name']; ?></a>
         </div>
 
         <div class="cart-shippable-table cell">

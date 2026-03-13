@@ -50,20 +50,27 @@ export default class Cart {
   renderSums() {
     const shTables = this.container[qa]("[shippable-table]");
     const total = [...shTables].reduce((acc, table) => {
-      const price = +table.dataset.price;
-      const sum = [...table[qa]("[unit-row]")].reduce(
-        function (acc, unitRow) {
-          const multi = +unitRow.dataset.divider;
-          const count = +unitRow[qs]("input").value;
-          const sum = multi * price * count;
-          const sub_sum = unitRow[qs](".subSum");
-          if (sub_sum) sub_sum[it] = formatter.format(sum);
-          return acc + sum;
-        }.bind(price),
-        0,
-      );
-      const tableSum = table.closest(".row")[qs](".sub-sum");
-      tableSum[it] = formatter.format(sum);
+      // const price = +table.dataset.price;
+      const sum = [...table[qa]("[unit-row]")].reduce(function (
+        acc,
+        unitRow,
+        i,
+      ) {
+        const price = +unitRow[qs]("input").value;
+        const count = +unitRow[qs]("[data-cost]").dataset.cost;
+        const sum = price * count;
+        // const sub_sum = unitRow[qs](".subSum");
+        const productRow = unitRow.closest("[data-product-id]");
+        const subSumEl = productRow[qs](".sub-sum");
+        const rowSums = subSumEl[qa](".row-sum");
+        const currentRowSum = rowSums[i];
+
+        currentRowSum.innerText = sum ? formatter.format(sum) : "";
+
+        return acc + sum;
+      }, 0);
+      // const tableSum = table.closest(".row")[qs](".sub-sum");
+      // tableSum[it] = formatter.format(sum);
       return acc + sum;
     }, 0);
     this.total[it] = formatter.format(total);

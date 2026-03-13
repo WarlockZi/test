@@ -161,7 +161,7 @@
       grid-template-areas: "location city" "location address";
       align-items: start;
       justify-content: center;
-      font-size: clamp(0.85vw, 11px, 1.1vw);
+      font-size: clamp(11px, 1.1vw, 13px);
       max-width: 105px;
       position: relative;
       flex: 1;
@@ -169,13 +169,6 @@
 
       @include mixin_media.m800 {
         display: none;
-      }
-
-      .city {
-
-      }
-
-      .address {
       }
 
       svg {
