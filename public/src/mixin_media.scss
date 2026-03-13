@@ -264,13 +264,13 @@
 @mixin arrow-block {
   .arrows {
     display: flex;
-    width: 72px;
+    //width: 72px;
     margin-right: 2px;
     gap: 1px;
 
     .arrow {
       display: block;
-      width: 16px;
+      width: 5px;
       height: 16px;
       cursor: pointer;
       border: 1px solid transparent;
@@ -386,7 +386,7 @@
         justify-content: start;
         margin-right: 3px;
         font-size: 14px;
-        width: 27px;
+        //width: 27px;
       }
       .cost {
         display: flex;
@@ -394,6 +394,7 @@
         margin-right: 3px;
         font-size: 14px;
         width: 50px;
+        flex: 1;
       }
       .currency {
         display: flex;

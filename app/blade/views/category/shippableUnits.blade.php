@@ -40,11 +40,10 @@
                 <div class="unit-name">{!!$unit['name']!!}</div>
 
 {{--                        <span class="contains">{!!$unit['pivot']['divider']??0!!} {!!$product['base_unit']['name']??''!!}</span>--}}
-                        <div class="cost" data-cost="{{$unit['pivot']['price']??0}}">{{$unit['pivot']['price']??0}}</div>
+                        <div class="cost" data-cost="{{$unit['pivot']['price']??0}}">
+                            {{number_format($unit['pivot']['price'],2,'.',' ')??0}}
+                        </div>
                         <div class="currency"> ₽</div>
-{{--                    <div class="description text-small"></div>--}}
-
-
 
 
                 <div class="arrows">
