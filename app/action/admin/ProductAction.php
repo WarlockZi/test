@@ -35,12 +35,12 @@ class ProductAction
      */
     public function saveMainImage(array $validated): string
     {
-        $product = Product::with('ownProperties')->find($validated['productId']);
+        $product = Product::with('ownProperties')->where('1s_id',$validated['productSId'])->first();
         $file    = $validated['file'];
 
-        $productMainImage                   = (new ProductMainImage($product?->toArray(), $file))
+        $productMainImage = (new ProductMainImage($product?->toArray(), $file))
             ->save();
-        $product->ownProperties->update(['main_image'=>$productMainImage->getImageFileName()]);
+        $product->ownProperties->update(['main_image' => $productMainImage->getImageFileName()]);
 
         return image($product->ownProperties->main_image);
     }
@@ -77,7 +77,7 @@ class ProductAction
                     'price' => $req['price'],
                     'divider' => $req['divider'],
                     'multiplier' => $req['multiplier']
-                    ]);
+                ]);
             response()->json(['popup' => 'Изменен']);
         } catch (Throwable $exception) {
             response()->json(['popup' => 'цена единицы не поменялась. Ошибка']);

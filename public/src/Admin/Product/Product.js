@@ -7,7 +7,7 @@ import {
   post,
 } from "../../common.js";
 import "./Props.js";
-import { qs } from "../../constants";
+import { qa, qs } from "../../constants";
 import SelectNew from "@src/components/select/SelectNew.js";
 import QuillFactory from "@src/components/quill/QuillFactory.js";
 import { QuillConst } from "@src/components/quill/QuillConstans.js";
@@ -66,7 +66,12 @@ export default class Product {
   }
 
   async addMainImage(files, target) {
-    const obj = { productId: target.closest(".item-wrap").dataset.id };
+    const obj = {
+      productSId: target
+        .closest(".item-wrap")
+        [qs](`[data-field="1s_id"]`)
+        .innerText.trim(),
+    };
     const data = newObjAndFiles2FormData(obj, files[0]);
 
     const res = await post("/adminsc/product/saveMainImage", data);

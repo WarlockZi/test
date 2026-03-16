@@ -25,12 +25,6 @@ class StorageProduct
         return ROOT . $this->getImagePath() . $file['name'];
     }
 
-//	public function saveMainImage(array $file, string $art): void
-//	{
-//		$path = $this->getMainImagePath($file);
-//		$this->saveFile($path, $file);
-//	}
-
     public function saveFile(string $path, array $file)
     {
         if ($file['size'] > 2000000)

@@ -1,17 +1,45 @@
 import { ael, qa, qs } from "../constants";
 import shippableTable from "@components/shippable/shippableUnitsTable";
 import MyQuill from "../components/quill/MyQuill.js";
-import { post } from "@src/common.js";
+import { getCookie, newObjAndFiles2FormData, post } from "@src/common.js";
 import DTO from "@src/Admin/DTO.js";
+import Dnd from "@components/dnd/dnd.js";
 
 export default class Category {
   constructor() {
     this.category = document[qs](".category");
     if (!this.category) return false;
 
+    this.products = this.category[qa](".column");
+
     this.setCardPanel().then();
     this.mapShippableTables();
+    this.setMyQuill();
+    this.setDnds();
+  }
 
+  setDnds() {
+    this.products.forEach((product) => {
+      new Dnd(product, this.saveMainImage.bind(this));
+    });
+  }
+
+  async saveMainImage(files, target) {
+    const authed = getCookie("loc_storage_cart_id");
+    if (!authed) return false;
+
+    const obj = { productSId: target.closest("[data-1sid]").dataset["1sid"] };
+    const data = newObjAndFiles2FormData(obj, files[0]);
+
+    const res = await post("/adminsc/product/saveMainImage", data);
+    const src = res?.mainImage;
+    if (src) {
+      const timestamp = new Date().getTime();
+      target.src = `${src}?=${timestamp}`;
+    }
+  }
+
+  setMyQuill() {
     new MyQuill("#seo_article");
     this.category[ael]("click", this.handleClick.bind(this));
   }

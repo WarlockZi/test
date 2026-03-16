@@ -200,7 +200,12 @@ class MainController extends AppController
         $cats = $category->toArray();
         response()->json($cats);
     }
+    #[NoReturn] public function actionImage(): void
+    {
+        $files = glob(ROOT . '/storage/app/pic/product/*');
 
+
+    }
     #[NoReturn] public function actionProps(): void
     {
         $cats = CategoryProperty::whereIn('path', function ($query) {

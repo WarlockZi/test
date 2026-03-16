@@ -198,13 +198,11 @@ export default class cartLogin {
       res = await post("/auth/login", dto);
 
     if (res?.error) {
-      // popup.show(res?.error);
       content.innerHTML = res?.error;
       return;
     }
 
     content.innerHTML = "Вход выполнен";
-    const i = 1;
 
     const id = res.id ?? null;
     localStorage.setItem("id", id);

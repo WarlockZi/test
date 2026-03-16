@@ -4,6 +4,7 @@ namespace app\formRequest;
 
 //use app\formRequest\baseFormRequests\FormRequest;
 use app\formRequest\baseFormRequests\FormRequest2;
+use app\service\AuthService\Auth;
 
 class StoreProductMainImageRequest extends FormRequest2
 {
@@ -11,11 +12,16 @@ class StoreProductMainImageRequest extends FormRequest2
     {
         parent::__construct();
     }
+    public function authorize(): bool
+    {
+        $user = Auth::getUser();
+        return Auth::getUser();
+    }
 
     public function rules(): array
     {
         return [
-            'productId' => 'required|string',
+            'productSId' => 'required|string',
             'file' => 'max:3000000|image|mimes:jpeg,jpg,gif,png,webp',
         ];
     }
@@ -23,8 +29,8 @@ class StoreProductMainImageRequest extends FormRequest2
     public function messages(): array
     {
         return [
-            'productId.required' => 'отсутствует поле productId',
-            'productId.string' => 'поле productId должно быть строкой',
+            'productSId.required' => 'отсутствует поле productId',
+            'productSId.string' => 'поле productId должно быть строкой',
 
             'file.max' => 'размер файла больше 1mb',
             'file.mimes' => 'тип файла не тот',
