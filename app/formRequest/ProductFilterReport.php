@@ -3,16 +3,29 @@
 namespace app\formRequest;
 
 use app\formRequest\baseFormRequests\FormRequest;
+use app\formRequest\baseFormRequests\FormRequest2;
+use app\service\AuthService\Auth;
 
-class ProductFilterReport extends FormRequest
+class ProductFilterReport extends FormRequest2
 {
-    public function all($keys = null): array
-    {
-        $data = parent::all($keys);
-        $data = array_merge($data, $this->json()->all());
 
-        return $data;
+    public function __construct()
+    {
+        parent::__construct();
     }
+    public function authorize(): bool
+    {
+        $user = Auth::getUser();
+        return !!$user;
+    }
+//    public function all($keys = null): array
+//    {
+//        $data = parent::all($keys);
+////        $data = array_merge($data, $this->json()->all());
+//        $content = json_decode($this->getContent());
+//
+//        return $content;
+//    }
 
     public function rules(): array
     {

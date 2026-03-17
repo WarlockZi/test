@@ -23,8 +23,7 @@ abstract class FormRequest2 extends Request
             $request->cookies->all(),
             $request->files->all(),
             $request->server->all(),
-            $request->getContent()
-        );
+            $request->getContent());
     }
 
     protected function getInputFromGlobal(): array
@@ -85,8 +84,8 @@ abstract class FormRequest2 extends Request
     public function validated(): array
     {
         if (!$this->validate()) {
-            $errors = $this->errors['file']??$this->errors;
-            response()->json(['popup'=>$errors[0]]);
+            $errors = $this->errors['file'] ?? $this->errors;
+            response()->json(['popup' => $errors[0]]);
 //            throw new RuntimeException('Validation failed.');
         }
 
@@ -111,7 +110,8 @@ abstract class FormRequest2 extends Request
         return array_merge(
             $this->query->all(),
             $this->request->all(),
-            $this->files->all()
+            $this->files->all(),
+            json_decode($this->getContent(), true)
         );
     }
 

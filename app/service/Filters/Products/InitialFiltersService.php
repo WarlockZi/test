@@ -20,7 +20,7 @@ class InitialFiltersService
                 ->map(function ($q) {
                     return $q;
                 })
-                ->keyBy('id')
+                ->keyBy('s_id')
                 ->toArray();
 
             $i = 0;
@@ -28,7 +28,7 @@ class InitialFiltersService
                 array_keys($categories),
                 array_map(function ($v) use (&$CategoryFlatNestedArray, &$i) {
                     $tab = str_repeat('&nbsp;', $i);
-                    $CategoryFlatNestedArray[$v['id']] = $tab.$v['name'];
+                    $CategoryFlatNestedArray[$v['s_id']] = $tab.$v['name'];
                     ++$i;
                 }, $categories)
             );
@@ -49,16 +49,15 @@ class InitialFiltersService
                     ],
                 ],
 
-//                "baseIsShippable" => [
-//                    "title" => "баз = отгруж",
-//                    "options" => [
-//                        0 => '',
-//                        1 => 'баз=отгруж',
-//                        2 => 'баз<>отгруж',
-//                        3 => 'имеет только баз',
-//                        4 => 'без единиц',
-//                    ],
-//                ],
+                "shippable" => [
+                    "title" => "отгруж",
+                    "options" => [
+                        0 => '',
+                        1 => 'без отгруж',
+                        2 => 'имеет только ед из 1c',
+                        3 => 'без единиц',
+                    ],
+                ],
 
                 "deleted" => [
                     "title" => "вкл удалленные",

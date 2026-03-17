@@ -62,7 +62,7 @@ class Product extends Model
             'id',
         )
             ->using(ProductUnit::class)
-            ->orderByPivot('divider')
+            ->orderByPivot('price')
             ->withPivot('id', 'price', 'is_shippable', 'divider', 'multiplier', 'is_from_1s');
     }
 

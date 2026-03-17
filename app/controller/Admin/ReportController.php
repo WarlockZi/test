@@ -36,7 +36,7 @@ class ReportController extends AdminscController
 
     #[NoReturn] public function actionUpdateFilter(ProductFilterReport $request): void
     {
-        $req            = $request->validate();
+        $req            = $request->validated();
 
         [$toSave, $toSelect] = $this->actions->toSelectToSave($req);
         $this->actions->saveFilters($toSave);

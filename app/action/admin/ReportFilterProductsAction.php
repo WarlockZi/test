@@ -27,23 +27,23 @@ class ReportFilterProductsAction
         return $this->initialFilters;
     }
 
-    public function filtersFromReq(array $req = []): array
-    {
-        if (!count($req)) return [];
-        $toSelect = [];
-        $toSave   = [];
-        foreach ($req as $string => $value) {
-            if (str_ends_with($string, '-filter')) {
-                $key          = str_replace('-filter', '', $string);
-                $value        = $req[$key];
-                $toSave[$key] = $value;
-            } else {
-                $toSelect[$string] = $value;
-            }
-        }
-        $arr = [0 => $toSelect, 1 => $toSave];
-        return $arr;
-    }
+//    public function filtersFromReq(array $req = []): array
+//    {
+//        if (!count($req)) return [];
+//        $toSelect = [];
+//        $toSave   = [];
+//        foreach ($req as $string => $value) {
+//            if (str_ends_with($string, '-filter')) {
+//                $key          = str_replace('-filter', '', $string);
+//                $value        = $req[$key];
+//                $toSave[$key] = $value;
+//            } else {
+//                $toSelect[$string] = $value;
+//            }
+//        }
+//        $arr = [0 => $toSelect, 1 => $toSave];
+//        return $arr;
+//    }
 
     public function saveFilters(array $prparedToSave): void
     {
@@ -93,12 +93,12 @@ class ReportFilterProductsAction
     {
         $toSave   = [];
         $toSelect = [];
-        foreach ($req as $filterName => $data) {
-            if ($data['checked'] && $data['value']) {
-                $toSave[$filterName] = $data['value'];
+        foreach ($req['changedFilters'] as $filterName => $filter) {
+            if ($filter['checked'] && $filter['value']) {
+                $toSave[$filterName] = $filter['value'];
             }
-            if ($data['value']) {
-                $toSelect[$filterName] = $data['value'];
+            if ($filter['value']) {
+                $toSelect[$filterName] = $filter['value'];
             }
         }
         return [$toSave, $toSelect];

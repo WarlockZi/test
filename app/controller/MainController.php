@@ -192,14 +192,15 @@ class MainController extends AppController
             $slug);
         view('main.faq', compact('meta'));
     }
-        #[NoReturn] public function actionInstore(IRequest $request): void
-    {
-        $slug = "perchatki/perchatki_nitrilovye/nesterilnye/neopudrennye";
-        $repo = new CategoryRepository;
-        $category = $repo->indexInstore($slug);
-        $cats = $category->toArray();
-        response()->json($cats);
-    }
+
+//        #[NoReturn] public function actionInstore(IRequest $request): void
+//    {
+//        $slug = "perchatki/perchatki_nitrilovye/nesterilnye/neopudrennye";
+//        $repo = new CategoryRepository;
+//        $category = $repo->indexInstore($slug);
+//        $cats = $category->toArray();
+//        response()->json($cats);
+//    }
     #[NoReturn] public function actionImage(): void
     {
         $files = glob(ROOT . '/storage/app/pic/product/*');

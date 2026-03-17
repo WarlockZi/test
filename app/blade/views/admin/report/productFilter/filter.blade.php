@@ -1,13 +1,13 @@
 <div class="filter">
     <div class="title">{!!$filter->title ?? ''!!}</div>
 
-{{--@deb--}}
     <select {!!$filter->name ?? ''!!} select-new>
         {!!$filter->emptyOption ?? ''!!}
         @foreach ($filter->options as $key => $value)
             @if(key_exists($filter->filterName, $filter->toFilter))
+{{--                @deb--}}
                 @php
-                    $selected = ($key === (int)$filter->toFilter[$filter->filterName]
+                    $selected = ($key == $filter->toFilter[$filter->filterName]
                 && !empty($filter->toFilter[$filter->filterName]))
                 ? 'selected': '';
                 @endphp

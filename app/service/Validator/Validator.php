@@ -52,10 +52,15 @@ class Validator
         $method = 'validate' . ucfirst($rule);
 
         if (method_exists($this, $method)) {
-            $this->$method($field, $value, $params);
+            $this->$method($field, $value, $params, $rule);
         }
     }
-
+    protected function validateArray(string $field, $value, array $params, string $rule): void
+    {
+        if (!is_array($value)) {
+            $this->addError($field, "{$field}{$rule}");
+        }
+    }
     protected function validateImage(string $field, $value, array $params): void
     {
         if (!str_contains($value->getMimeType(), 'image') ) {

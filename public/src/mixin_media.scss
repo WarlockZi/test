@@ -609,6 +609,7 @@
       background-color: white;
       width: 195px;
       margin-bottom: 25px;
+
       &.hover{
         background-color: color.adjust(var.$color-main, $lightness:50%);
       }

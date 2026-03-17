@@ -57,7 +57,7 @@ class CategoryRepository
 //                $this->cleanProps();
 
                 if ($category) {
-                    $c = $category->toArray();
+//                    $c = $category->toArray();
                     $breadcrumbs           = new NewBread;
                     $category->breadcrumbs = $breadcrumbs->getParents($category);
                     $category->productsInStore->each(function (Product $product) {
