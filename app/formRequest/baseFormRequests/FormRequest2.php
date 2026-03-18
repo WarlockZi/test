@@ -111,7 +111,7 @@ abstract class FormRequest2 extends Request
             $this->query->all(),
             $this->request->all(),
             $this->files->all(),
-            json_decode($this->getContent(), true)
+            json_decode($this->getContent(), true)??[]
         );
     }
 

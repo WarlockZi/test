@@ -14,8 +14,8 @@ class StoreProductMainImageRequest extends FormRequest2
     }
     public function authorize(): bool
     {
-        $user = Auth::getUser();
-        return Auth::getUser();
+        $user = Auth::userIsAdmin();
+        return (bool)$user;
     }
 
     public function rules(): array
