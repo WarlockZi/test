@@ -94,7 +94,12 @@ class Validator
             $this->addError($field, 'email');
         }
     }
-
+    protected function validateString(string $field, $value, array $params, string $rule): void
+    {
+        if (!is_string($value)) {
+            $this->addError($field, $rule, $params);
+        }
+    }
     protected function validateMin(string $field, $value, array $params): void
     {
         if (!empty($value) && strlen($value) < $params[0]) {
