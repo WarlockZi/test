@@ -2,7 +2,6 @@
 
 namespace app\formRequest;
 
-//use app\formRequest\baseFormRequests\FormRequest;
 use app\formRequest\baseFormRequests\FormRequest2;
 use app\service\AuthService\Auth;
 

@@ -5,7 +5,7 @@
 
 @foreach ($order['products'] as $i => $product)
 
-    <div class="row cart-item" data-product-id="{!!$product['1s_id']!!} ">
+    <div class="row cart-item" data-product_1s_id="{!!$product['1s_id']!!} ">
 
         <div class="num cell"><?= ++$i; ?></div>
 

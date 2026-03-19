@@ -8,16 +8,20 @@ use app\formRequest\baseFormRequests\FormRequest2;
 
 class CartRequest extends FormRequest2
 {
-    public function all($keys = null): array
+    public function __construct()
     {
-        return $this->input;
+        parent::__construct();
     }
-    protected array $allowedFields = [
-        'count',
-        'unit_id',
-        'product_1s_id',
-        'loc_storage_cart_id',
-    ];
+//    public function all($keys = null): array
+//    {
+//        return $this->input;
+//    }
+//    protected array $allowedFields = [
+//        'count',
+//        'unit_id',
+//        'product_1s_id',
+//        'loc_storage_cart_id',
+//    ];
 
     public function rules(): array
     {
