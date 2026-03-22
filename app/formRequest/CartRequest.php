@@ -12,16 +12,6 @@ class CartRequest extends FormRequest2
     {
         parent::__construct();
     }
-//    public function all($keys = null): array
-//    {
-//        return $this->input;
-//    }
-//    protected array $allowedFields = [
-//        'count',
-//        'unit_id',
-//        'product_1s_id',
-//        'loc_storage_cart_id',
-//    ];
 
     public function rules(): array
     {
@@ -44,11 +34,5 @@ class CartRequest extends FormRequest2
             'product_1s_id.string' => 'product_1s_id is to be string',
         ];
     }
-
-    public function authorize(): bool
-    {
-        return parent::authorize();
-    }
-
 
 }

@@ -3,11 +3,12 @@
 namespace app\formRequest\baseFormRequests;
 
 
+use app\service\Router\IRequest;
 use app\service\Validator\Validator;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\Request;
 
-abstract class FormRequest2 extends Request
+abstract class FormRequest2 extends Request implements IRequest
 {
     protected $input = [];
     protected $errors = [];

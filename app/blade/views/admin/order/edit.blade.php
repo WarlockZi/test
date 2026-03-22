@@ -1,7 +1,7 @@
 @extends('layouts.admin.admin')
 
 @section('content')
-
-    @include('admin.components.table.table',['data'=>$table])
+{{--@deb--}}
+    @include('admin.components.table.tableStandAlone',['data'=>$table])
 
 @endsection

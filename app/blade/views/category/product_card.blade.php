@@ -29,7 +29,7 @@
         </div>
     </a>
 {{--@deb--}}
-    @include('category.shippableUnits', $product)
+    @include('category.shippableUnits')
 
     @include('components.card_panel.product_card_panel', compact('product'))
 

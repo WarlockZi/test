@@ -16,20 +16,20 @@ export default class shippableTable {
     this.total = this.table[qs]("[data-total]");
     this.updateOrCreateUrl = this.table[qs]("[data-total]");
     this.setFormatter();
-    this.showButtons();
+    // this.showButtons();
     this.renderSums();
   }
 
-  showButtons() {
-    if (!this.blueButton || !this.greenButtonWrap) return false;
-    if (this.getTotalCount()) {
-      this.blueButton.classList.toggle("none");
-      this.greenButtonWrap.classList.toggle("none");
-    } else {
-      this.blueButton.classList.remove("none");
-      this.greenButtonWrap.classList.add("none");
-    }
-  }
+  // showButtons() {
+  //   if (!this.blueButton || !this.greenButtonWrap) return false;
+  //   if (this.getTotalCount()) {
+  //     this.blueButton.classList.toggle("none");
+  //     this.greenButtonWrap.classList.toggle("none");
+  //   } else {
+  //     this.blueButton.classList.remove("none");
+  //     this.greenButtonWrap.classList.add("none");
+  //   }
+  // }
 
   handleClick({ target }) {
     const targ = target ?? this.table;

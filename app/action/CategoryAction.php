@@ -31,7 +31,17 @@ class CategoryAction
         return $this->similarCategorySegments($slug);
     }
 
-    private function similarCategorySegments(string $slug)
+    public function noCategory(Category $category, string $slug): void
+    {
+        $similarCategories = $this->actions->similarCategories($slug);
+        $meta              = $this->actions->setMeta();
+
+        view('category.notFound',
+            compact('category', 'similarCategories', 'meta'),
+            404);
+    }
+
+    private function similarCategorySegments(string $slug): object|array|string|null
     {
         $slugSegments = $this->slug::categorySlugSegments($slug);
         return Cache::remember('similarCategories_segments' . $slug,

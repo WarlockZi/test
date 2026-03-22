@@ -1,13 +1,12 @@
 <div
         shippable-table
         class="shippable-table"
-{{--        @deb--}}
              data-price='{{$product['base_unit']['pivot']['price']??'***'}}'
 >
 
     @foreach($product['shippable_units'] as $shippable)
         @php
-            foreach($product['order_items'] as $orderitem){
+            foreach($product['orderitems'] as $orderitem){
                 if(isset($orderitem['product_unit']['unit'])
                 && $orderitem['product_unit']['unit']['id']==$shippable['id']){
                     $count = $orderitem['count'];
@@ -16,8 +15,6 @@
         }
         @endphp
 
-
-{{--    @deb--}}
         <div
                 unit-row
                 class="unit-row"
@@ -43,4 +40,5 @@
         </div>
 
     @endforeach
+
 </div>

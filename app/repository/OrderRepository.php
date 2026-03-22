@@ -45,38 +45,87 @@ class OrderRepository
     public static function submitted(): Collection
     {
         return Order::whereNotNull('submitted')
-            ->with('products.orderItems.unit')
-            ->get();
-    }
-
-    public static function unsubmitted(): Collection
-    {
-        list($field, $value) = Auth::getCartFieldValue();
-        $order = Order::where($field, $value)
-            ->whereNull('submitted')
-            ->with('products.orderItems.unit')
-            ->get();
-        return $order;
-    }
-
-    public static function usersOrder()
-    {
-        list($field, $value) = Auth::getCartFieldValue();
-
-        $order = Order::where($field, $value)
-            ->whereNull('submitted')
-            ->with(['products' => function ($q) {
-                $q
-                    ->select('*')
-                    ->whereHas('orderItems')
+            ->with('user')
+            ->with('products', function ($query) {
+                $query->whereHas('orderItems')
                     ->with(['orderitems' => function ($q) {
                         $q->with('productUnit.unit');
-                    }])
-                    ->withoutTrashed();
-            }])
-            ->first();
+                    }]);
+            })
+            ->get();
+    }
 
+    public static function orders(bool $submitted = true): Collection
+    {
+        $query = Order::query();
+        if ($submitted) {
+            $query->whereNotNull('submitted');
+        } else {
+            $query->whereNull('submitted');
+        };
+
+        $orders = $query->with('user')
+            ->with('products', function ($query) {
+                $query->whereHas('orderItems')
+                    ->with(['orderitems' => function ($q) {
+                        $q->with('productUnit.unit');
+                    }]);
+            })
+            ->get();
+        return $orders;
+    }
+
+    public static function usersOrder(int $id = null, string $onlyField = null, bool $currentUser = null, bool $submitted = null): Order|string|null
+    {
+        $order = Order::query();
+
+        if ($currentUser) {
+            list($field, $value) = Auth::getCartFieldValue();
+            $order->where($field, $value);
+        }
+        if ($id) {
+            $order->where('id', $id);
+        }
+        if (!$submitted && $submitted!==null) {
+            $order->whereNotNull('submitted');
+        } elseif ($submitted && $submitted!==null) {
+            $order->whereNull('submitted');
+        }
+        if ($onlyField) {
+            $o = $order->select($onlyField)->first();
+            return $o?->toArray()[$onlyField] ?? '';
+        }
+
+        $order = $order->with(['products' => function ($q) {
+            $q->select('*')
+                ->whereHas('orderItems')
+                ->with(['orderitems' => function ($query) {
+                    $query->with('productUnit.unit');
+                }])
+                ->withoutTrashed();
+        }])
+            ->first();
+        $order?->products->each(function (Product $product) {
+            $product->append('base_unit');
+            $product->append('shippable_units');
+        });
         return $order;
+    }
+
+    public static function edit(IRequest $request): Model|Collection|Builder|array|null
+    {
+        $orders = Order::query()
+            ->with('user',
+                'products.activePromotions',
+                'products.inactivePromotions')
+            ->with('products', function ($query) {
+                $query->whereHas('orderItems')
+                    ->with(['orderitems' => function ($q) {
+                        $q->with('productUnit.unit');
+                    }]);
+            })
+            ->find($request->id);
+        return $orders;
     }
 
     public static function deleteOrderItem(Order $order, Product $product, string $unit_id,)
@@ -122,18 +171,6 @@ class OrderRepository
         }
     }
 
-    public static function userOrder(): ?Order
-    {
-        list($field, $value) = Auth::getCartFieldValue();
-        $order = Order::where([
-            'submitted' => null,
-            $field => $value,
-        ])
-            ->first();
-//        $o     = $order->toArray();
-        return $order;
-    }
-
     public static function detachItems(string $product_id, array $unitIds): bool
     {
         $order = OrderRepository::usersOrder();
@@ -158,28 +195,10 @@ class OrderRepository
         return $orderItems;
     }
 
-    public static function edit(IRequest $request): Model|Collection|Builder|array|null
-    {
-        $orders = Order::
-        with('user',
-            'products.orderItems.unit',
-            'products.activePromotions',
-            'products.inactivePromotions')
-            ->find($request->id);
-        return $orders;
-    }
 
     public static function productsCount(): int
     {
         list($field, $value) = Auth::getCartFieldValue();
-//        $start = microtime(true);
-//        $order = Order::where($field, $value)
-//            ->whereNull('submitted')
-//            ->select('id')
-//            ->withCount(['products as products_count' => function ($query) {
-//                $query->where('order_product.deleted_at', NULL); // withoutTrashed() не работает
-//            }])
-//            ->first();
         $order = Order::where($field, $value)
             ->whereNull('submitted')
             ->select('id')

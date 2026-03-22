@@ -11,15 +11,12 @@
 
     <div class="price">
 
-        <div class="new-price">
-{{--                    {{$product['price']}}--}}
-{{--                    {{$product['base_unit']['name']}}--}}
-        </div>
+        <div class="new-price"></div>
 
     </div>
     <div class="price-units ">
 
-        @include('product.card.shippableUnits', ['shippableUnits'=>$product['shippable_units']])
+        @include('product.card.shippableUnits')
     </div>
     @include( 'product.card.promotion')
 

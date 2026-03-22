@@ -10,7 +10,7 @@
     <div class="cart">
 
         <h1>Корзина</h1>
-
+{{--@deb--}}
         @if (empty($order) || !isset($order['products']))
 
             <div class="empty-cart">

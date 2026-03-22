@@ -1,18 +1,17 @@
 <div class="sub-sum sum cell">
 
-    @foreach($product['shippable_units'] as $unit)
+    @foreach($product['shippable_units'] as $shippableUnit)
 
-        @foreach($product['order_items'] as $oi)
-            @if(!empty($oi['product_unit']['unit']) && $oi['product_unit']['unit']['id']===$unit['id'])
+        @foreach($product['orderitems'] as $oi)
+            @if(!empty($oi['product_unit']['unit']) && $oi['product_unit']['unit']['id']===$shippableUnit['id'])
                 @php($orderItem = $oi)
             @endif
         @endforeach
 
         <div class="row-sum">
             @if(isset($orderItem))
-{{--                @deb--}}
                 @php
-                    $subSum = $unit['pivot']['divider']
+                    $subSum = $shippableUnit['pivot']['divider']
                     *$orderItem['product_unit']['price']
                     *$orderItem['count']
                 @endphp

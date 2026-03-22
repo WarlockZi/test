@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use app\action\CategoryAction;
+use app\model\Category;
 use app\repository\CategoryRepository;
 use app\repository\OrderRepository;
 use app\service\Router\IRequest;
@@ -25,15 +26,10 @@ class CategoryController extends AppController
             $category = $this->repo->indexInstore($request->slug);
 
             if (!$category) {
-                $similarCategories = $this->actions->similarCategories($request->slug);
-                $meta              = $this->actions->setMeta();
-
-               view('category.notFound',
-                    compact('category', 'similarCategories', 'meta'),
-                    404);
+                $this->actions->noCategory($category, $request->slug);
             }
 
-            $order = OrderRepository::usersOrder()?->toArray() ?: [];
+            $order = OrderRepository::usersOrder(currentUser: true, submitted: true)?->toArray();
 
             $category = $category?->toArray() ?: [];
             view('category.category',

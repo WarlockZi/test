@@ -5,7 +5,7 @@ namespace app\view\Order;
 
 
 use app\model\Order;
-use app\model\OrderItem;
+use app\model\Product;
 use app\model\User;
 use app\view\components\Builders\SelectBuilder\optionBuilders\ArrayOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
@@ -71,23 +71,27 @@ class OrderView
     public static function table($items): array
     {
         $table = Table::build($items)
-            ->model('order')
+            ->data(['model' => 'order'])
             ->column(
                 ColumnBuilder::build('id')
-                    ->name('ID')
                     ->get())
             ->column(
-                ColumnBuilder::build('user')
+                ColumnBuilder::build('Клиент')
                     ->class('left')
-                    ->function(OrderItem::class, 'leadData')
-                    ->name('Клиент')
+                    ->callback(function ($order) {
+                        return
+                            ($order->user?->surName ?? '') . ' - ' .
+                            ($order->user?->name ?? '') . ' - ' .
+                            ($order->user?->middleName ?? '');
+                    })
+//                    ->data(user)
                     ->search()
                     ->width('1fr')
                     ->get())
             ->column(
-                ColumnBuilder::build('created_at')
+                ColumnBuilder::build('Дата')
                     ->class('left')
-                    ->name('Дата')
+//                    ->name('created_at')
                     ->search()
                     ->width('150px')
                     ->get())
@@ -116,6 +120,16 @@ class OrderView
                     ->get()
             )
             ->column(
+                ColumnBuilder::build('Единицы')
+                    ->class('left')
+                    ->callback(function ($product) {
+                        return self::getUnits($product);
+                    }
+                    )
+                    ->width("200px")
+                    ->get()
+            )
+            ->column(
                 ColumnBuilder::build('Картинка')
                     ->class('left img')
                     ->callback(fn($product) => "<img class='img' src='{$product->mainImage}' alt=''{$product->name}'>")
@@ -128,15 +142,20 @@ class OrderView
                     ->width("60px")
                     ->get()
             )
-            ->header(
-                TableHeader::build()
-                    ->add('Клиент', $order->user->fi() ?? 'отсутствует')
-                    ->add('Email', $order->user->email ?? 'отсутствует')
-                    ->add('Дата', $order->created_at ?? 'отсутствует')
-                    ->get()
-            )
+
             ->get();
 
     }
 
+    private static function getUnits(Product $product): string
+    {
+        $str = '<div>';
+        foreach ($product->orderItems as $orderItem) {
+            $count     = $orderItem->count??0;
+            $unitName  = $orderItem->productUnit->unit->name??'';
+            $unitPrice = $orderItem->productUnit->price??"-";
+            $str       .= "<div>$count $unitName $unitPrice</div>";
+        }
+        return $str.'</div>';
+    }
 }

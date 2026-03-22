@@ -8,6 +8,7 @@ use app\formRequest\CartRequest;
 use app\model\Order;
 use app\model\OrderItem;
 use app\repository\CartRepository;
+use app\repository\OrderRepository;
 use app\service\Response;
 use app\service\Router\IRequest;
 use Illuminate\Validation\ValidationException;
@@ -25,7 +26,7 @@ class CartController extends AppController
 
     #[NoReturn] public function actionIndex(): void
     {
-        $order = $this->repository::order();
+        $order = OrderRepository::usersOrder(currentUser: true,submitted: true)?->toArray();
         view('cart.cart', compact('order'));
     }
 

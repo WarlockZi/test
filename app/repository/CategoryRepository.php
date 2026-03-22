@@ -54,7 +54,6 @@ class CategoryRepository
                     ->with('productsInStore')
                     ->with('productsNotInStoreInMatrix')
                     ->first();
-//                $this->cleanProps();
 
                 if ($category) {
 //                    $c = $category->toArray();

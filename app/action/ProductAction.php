@@ -30,7 +30,7 @@ class ProductAction
 
     public function orderProduct(Product $product):array|null
     {
-        $userOrder = OrderRepository::usersOrder();
+        $userOrder = OrderRepository::usersOrder(currentUser: true, submitted: true);
         if (!$userOrder) return null;
 
         $orderProduct = $userOrder

@@ -15,7 +15,6 @@ class OrderItem extends Model
 
     public $table = 'orderitems';
     public $timestamps = true;
-//    public $appends = ['unit'];
 
     protected $fillable = [
         'order_product_id',
@@ -27,27 +26,11 @@ class OrderItem extends Model
 //        'updated_at',
 //        'deleted_at'
     ];
-//    public function getUnitAttribute()
-//    {
-//        return $this->productUnit()->first()->unit;
-//    }
+
     public function price(): belongsTo
     {
         return $this->belongsTo(Price::class);
     }
-
-//    public function unit(): hasOneThrough
-//    {
-//        return $this->hasOneThrough(
-//            Unit::class,
-//            ProductUnit::class,
-//            'id',
-//            'id',
-//            'product_unit_id',
-//            'unit_id',
-//        );
-//    }
-
 
     public function order(): belongsTo
     {

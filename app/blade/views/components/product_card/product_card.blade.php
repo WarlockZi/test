@@ -28,7 +28,7 @@
 
 {{--    @php xdebug_break(); @endphp--}}
 
-    @include('components.shippableUnits.shippableUnits', compact('product'))
+    @include('components.shippableUnitsNew.shippableUnits')
 
     @include('components.card_panel.product_card_panel', compact('product'))
 

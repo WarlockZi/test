@@ -2,6 +2,7 @@
 
 namespace app\controller\Admin;
 
+use app\formRequest\OrderRequest;
 use app\model\Order;
 use app\model\OrderItem;
 use app\repository\OrderRepository;
@@ -22,8 +23,8 @@ class OrderController extends AdminscController
 
     #[NoReturn] public function actionIndex(): void
     {
-        $submitted   = OrderRepository::submitted();
-        $unsubmitted = OrderRepository::unsubmitted();
+        $submitted   = OrderRepository::orders(false);
+        $unsubmitted = OrderRepository::orders();
 
         $submittedTable   = OrderView::table($submitted);
         $unsubmittedTable = OrderView::table($unsubmitted);
@@ -34,9 +35,9 @@ class OrderController extends AdminscController
 
     }
 
-    public function actionEdit(IRequest $request): void
+    #[NoReturn] public function actionEdit(IRequest $request): void
     {
-        $order      = OrderRepository::edit($request);
+        $order      = OrderRepository::usersOrder(id:$request->id);
         $table      = OrderView::editOrder($order);
         view('admin.order.edit',
             compact('table'));
@@ -69,7 +70,7 @@ class OrderController extends AdminscController
         response()->json(['popup' => 'не записано', 'error' => "не записано"]);
     }
 
-    public function actionDelete(): void
+    public function actionDelete(OrderRequest|IRequest $request): void
     {
         $req = $this->ajax;
         try {

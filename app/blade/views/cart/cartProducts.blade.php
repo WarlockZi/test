@@ -2,7 +2,6 @@
     use app\service\AuthService\Auth;use app\view\components\Icon\Icon;
 
 @endphp
-
 @foreach ($order['products'] as $i => $product)
 
     <div class="row cart-item" data-product_1s_id="{!!$product['1s_id']!!} ">
@@ -24,12 +23,12 @@
             @if(!$product)
                 <div>продукт не определен</div>
             @else
+{{--@deb--}}
                 @include('cart.cartShippableUnits', compact('product'))
             @endif
         </div>
-
+{{--        @deb--}}
         @include('cart.cartSubSum')
-
 
         <div class="del cell"><?= Icon::trashWhite(); ?></div>
     </div>
