@@ -3,6 +3,8 @@
 namespace app\action;
 
 use app\model\Category;
+use app\model\Order;
+use app\model\OrderProduct;
 use app\model\Product;
 use app\repository\OrderRepository;
 use app\service\Breadcrumbs\NewBread;
@@ -28,17 +30,15 @@ class ProductAction
         return $this->breadcrumbs->getParents($category, $lastItemIsLink);
     }
 
-    public function orderProduct(Product $product):array|null
+    public function orderProduct(Product $product):?Order
     {
-        $userOrder = OrderRepository::usersOrder(currentUser: true, submitted: true);
-        if (!$userOrder) return null;
+        $order = OrderRepository::usersOrder(currentUser: true);
+        if (!$order) return null;
 
-        $orderProduct = $userOrder
-            ->products
+        $orderProduct = $order->products
             ->where('1s_id', $product['1s_id']);
-
-        if (!$orderProduct->count()) return null;
-        return $orderProduct->first()->orderitems->toArray();
+        $order->setRelation('products', $orderProduct);
+        return $order;
     }
 
     public function setMeta(Product $product): array

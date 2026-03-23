@@ -8,7 +8,7 @@ use app\service\Validator\Validator;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\Request;
 
-abstract class FormRequest2 extends Request implements IRequest
+abstract class FormRequest2 extends Request
 {
     protected $input = [];
     protected $errors = [];

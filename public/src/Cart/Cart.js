@@ -48,7 +48,7 @@ export default class Cart {
   }
 
   renderSums() {
-    const shTables = this.container[qa]("[shippable-table]");
+    const shTables = this.container[qa](".shippable-table");
     const total = [...shTables].reduce((acc, table) => {
       // const price = +table.dataset.price;
       const sum = [...table[qa]("[unit-row]")].reduce(function (

@@ -28,8 +28,9 @@
             <p>Артикул: <?= $product['art'] ?? ''; ?></p>
         </div>
     </a>
-{{--@deb--}}
-    @include('category.shippableUnits')
+
+    @include('product.card.shippableUnits')
+{{--    @include('category.shippableUnits')--}}
 
     @include('components.card_panel.product_card_panel', compact('product'))
 

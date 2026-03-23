@@ -97,18 +97,19 @@ class OrderRepository
         }
 
         $order = $order->with(['products' => function ($q) {
-            $q->select('*')
-                ->whereHas('orderItems')
+            $q->whereHas('orderItems')
                 ->with(['orderitems' => function ($query) {
                     $query->with('productUnit.unit');
                 }])
                 ->withoutTrashed();
         }])
             ->first();
+
         $order?->products->each(function (Product $product) {
             $product->append('base_unit');
             $product->append('shippable_units');
         });
+        $o = $order?->toArray();
         return $order;
     }
 

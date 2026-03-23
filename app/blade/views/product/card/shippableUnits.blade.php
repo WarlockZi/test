@@ -1,57 +1,64 @@
 <div class="shippable-table"
-     data-price='{{$product['price']}}'
-     data-1sid='{{$product['1s_id']}}'
+     data-product_1s_id='{{$product['1s_id']}}'
 >
 
-    <div class="green-button-wrap">
-        <button class='button green-button'>Перейти в корзину</button>
+    @if(!isset($orderPage))
+        <div class="green-button-wrap">
+            <button class='button green-button'>Перейти в корзину</button>
+            @endif
 
-        @foreach($product['shippable_units'] as $shippableUnit)
+            @foreach($product['shippable_units'] as $shippable)
 
-            <div
-                    unit-row
-                    class="unit-row"
-                    data-product_1s_id="{!!$product['1s_id']??''!!}"
-                    data-unit_id="{!!$shippableUnit['id']??''!!}"
-            >
-                @if($variables['orderProduct'])
-                    @php($count = 0)
-                    @foreach($orderProduct as $orderitem)
+                @php
+                    $count =0;
+                if(isset($order['products']) ){
+                    foreach($order['products'] as $orderProduct){
 
-                        @if(!empty($orderitem['product_unit']))
+                        if ($orderProduct['1s_id']!==$product['1s_id']) continue;
 
-                            @if($orderitem['product_unit']['unit_id']==$shippableUnit['id'])
-                                @php
+                        foreach($orderProduct['orderitems'] as $orderitem){
+                            if(!empty($orderitem['product_unit'])) {
+                                if($orderitem['product_unit']['unit_id']==$shippable['id']){
                                     $count = $orderitem['count'];
                                     break;
-                                @endphp
-                            @endif
-                        @endif
-                    @endforeach
-                @endif
+                                }
+                            }
+                            }
+                        }
+                }
+                @endphp
 
-                <input
-                        type="text"
-                        class="input"
-                        value="{!!$count??"0"!!}"
-                        onclick="this.value??'';"
+
+                <div
+                        unit-row
+                        class="unit-row"
+                        data-unit_id="{!!$shippable['id']??''!!}"
                 >
+                    <input
+                            type="text"
+                            class="input"
+                            value="{!!$count??"0"!!}"
+                            onclick="this.value??'';"
+                    >
 
-                <div class="unit-name">{!!$shippableUnit['name']??'ед.'!!}</div>
-                <div class="cost" data-cost="{{$shippableUnit['pivot']['price']??'0'}}">
-                    {{number_format($shippableUnit['pivot']['price'],2, '.', ' ')??'0'}}
+                    <div class="unit-name">{!!$shippable['name']??'ед.'!!}</div>
+
+                    <div class="cost"
+                         data-cost="{{$shippable['pivot']['price']??'0'}}">
+                        {{number_format($shippable['pivot']['price'],2, '.', ' ')??'0'}}
+                    </div>
+                    <div class="currency">₽</div>
+
+
+                    <div class="arrows">
+                        <div class="arrow plus"></div>
+                        <div class="arrow minus"></div>
+                    </div>
+
                 </div>
-                <div class="currency">₽</div>
+            @endforeach
+            @if(!isset($orderPage))
+        </div>
+    @endif
 
-
-            <div class="arrows">
-                <div class="arrow plus"></div>
-                <div class="arrow minus"></div>
-            </div>
-
-    </div>
-
-    @endforeach
-
-</div>
 </div>

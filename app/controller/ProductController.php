@@ -3,6 +3,7 @@
 namespace app\controller;
 
 use app\action\ProductAction;
+use app\repository\OrderRepository;
 use app\repository\ProductRepository;
 use app\service\Router\IRequest;
 use JetBrains\PhpStorm\NoReturn;
@@ -34,7 +35,8 @@ class ProductController extends AppController
         }
 
         $meta         = $this->actions->setMeta($product);
-        $orderProduct = $this->actions->orderProduct($product);
+        $order = $this->actions->orderProduct($product)?->toArray();
+
         $breadcrumbs  = $this->actions->getBreadcrumbs($product['category'], true);
 
         $product = $product->toArray();
@@ -42,7 +44,7 @@ class ProductController extends AppController
             'meta',
             'breadcrumbs',
             'product',
-            'orderProduct',
+            'order',
         ));
     }
 

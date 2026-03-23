@@ -13,6 +13,7 @@
         </a>
 
         <div class="product-name cell">
+
             @if (Auth::getUser())
                 <a href="/adminsc/product/edit/<?= $product['id']; ?>" class="edit card-panel-item">{!!Icon::edit()!!}</a>
             @endif
@@ -24,10 +25,11 @@
                 <div>продукт не определен</div>
             @else
 {{--@deb--}}
-                @include('cart.cartShippableUnits', compact('product'))
+                @include('product.card.shippableUnits', compact('product'))
+{{--                @include('cart.cartShippableUnits', compact('product'))--}}
             @endif
         </div>
-{{--        @deb--}}
+
         @include('cart.cartSubSum')
 
         <div class="del cell"><?= Icon::trashWhite(); ?></div>
