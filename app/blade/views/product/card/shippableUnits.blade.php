@@ -44,7 +44,7 @@
 
             <div class="cost"
                  data-cost="{{$shippable['pivot']['price']??'0'}}">
-                {{number_format($shippable['pivot']['price'],2, '.', ' ')??'0'}}
+                {{$shippable['pivot']['price']?number_format($shippable['pivot']['price'],2,'.',' '):0}}
             </div>
             <div class="currency">₽</div>
 
