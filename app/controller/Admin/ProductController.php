@@ -7,8 +7,10 @@ use app\action\admin\ProductAction;
 use app\blade\views\product\ProductFormView;
 use app\formRequest\StoreProductMainImageRequest;
 use app\model\Product;
+use app\model\ProductUnit;
 use app\repository\ProductFilterRepository;
 use app\repository\ProductRepository;
+use app\service\AuthService\Auth;
 use app\service\Router\IRequest;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
@@ -58,7 +60,25 @@ class ProductController extends AdminscController
     {
         $this->actions->deleteUnit($request);
     }
+    public function actionDelete(IRequest $request): void
+    {
+        if ($request->body()['relation']['name']==='units') {
 
+            $product_id = $request->body()['id'];
+            $product_1s_id = Product::select('1s_id')->find($product_id)['1s_id'];
+            $unit_id = $request->body()['relation']['id'];
+            $productUnit = ProductUnit::where([
+                'product_1s_id' => $product_1s_id,
+                'unit_id' => $unit_id
+            ])->first();
+            $isFromS = $productUnit->is_from_1s;
+            if ($isFromS) {
+                $user = Auth::getUser();
+                if (!$user->isOlya()) return;
+            }
+        }
+        parent::actionDelete($request);
+    }
     public function actionChangeunit(IRequest $request): void
     {
         $this->actions->changeUnit($request);
@@ -71,15 +91,6 @@ class ProductController extends AdminscController
     {
         $this->actions->changePromotion($request);
     }
-
-//    public function actionChangebaseisshippable(IRequest $request): void
-//    {
-//        $this->actions.js->changeBaseIsShippable($request);
-//    }
-//    public function actionBaseIsShippable(IRequest $request): void
-//    {
-//        $this->actions.js->changeBaseIsShippable($request);
-//    }
 
 }
 

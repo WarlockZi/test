@@ -8,7 +8,6 @@ export default class shippableTable {
     this.table = table;
     this.table[ael]("click", this.handleClick.bind(this));
 
-    this.blueButton = this.table[qs](".blue-button") ?? null;
     this.greenButtonWrap = this.table[qs](".green-button-wrap") ?? null;
 
     this.price = +this.table.dataset.price;
@@ -16,26 +15,12 @@ export default class shippableTable {
     this.total = this.table[qs]("[data-total]");
     this.updateOrCreateUrl = this.table[qs]("[data-total]");
     this.setFormatter();
-    // this.showButtons();
     this.renderSums();
   }
 
-  // showButtons() {
-  //   if (!this.blueButton || !this.greenButtonWrap) return false;
-  //   if (this.getTotalCount()) {
-  //     this.blueButton.classList.toggle("none");
-  //     this.greenButtonWrap.classList.toggle("none");
-  //   } else {
-  //     this.blueButton.classList.remove("none");
-  //     this.greenButtonWrap.classList.add("none");
-  //   }
-  // }
-
   handleClick({ target }) {
     const targ = target ?? this.table;
-    if (targ.classList.contains("blue-button")) {
-      this.showGreenButton(targ);
-    } else if (targ.classList.contains("green-button")) {
+    if (targ.classList.contains("to-cart-button")) {
       window.location.href = "/cart";
     } else if (targ.classList.contains("plus")) {
       const row = targ.closest(".unit-row");
@@ -72,10 +57,10 @@ export default class shippableTable {
 
   handleChange(row) {
     const count = this.getTotalCount(row);
-    this.renderSums();
-    if (count === 0) {
-      this.showBlueButton();
+    if (count === 1) {
+      window.YM("tovar_v_korzine");
     }
+    this.renderSums();
     this.toServer(this.dto(row));
   }
 
@@ -91,27 +76,6 @@ export default class shippableTable {
     if (this.total) {
       this.total.innerText = this.formatter.format(total);
     }
-  }
-
-  showBlueButton() {
-    if (!this.blueButton) return false;
-    if (!this.getTotalCount()) {
-      this.greenButtonWrap.classList.add("none");
-      this.greenButtonWrap[qs]("input").value = "" + 0;
-      this.blueButton.classList.remove("none");
-      this.deleteOrderItems(this.tableDTO(this.table));
-    }
-  }
-
-  showGreenButton() {
-    if (!this.greenButtonWrap) return false;
-    window.YM("tovar_v_korzine");
-    this.greenButtonWrap.classList.remove("none");
-    const count = this.greenButtonWrap[qs]("input").value;
-    this.greenButtonWrap[qs]("input").value = !count ? count : "1";
-    this.renderSums();
-    this.blueButton.classList.add("none");
-    this.toServer(this.dto(this.greenButtonWrap[qs]("[unit-row]")));
   }
 
   deleteOrderItems(tableDTO) {

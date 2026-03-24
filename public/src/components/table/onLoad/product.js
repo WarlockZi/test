@@ -25,7 +25,7 @@ export default class Callbacks {
         multiplier.setAttribute("contenteditable", "false");
         multiplier.innerText = "";
 
-        del.setAttribute("disabled", "true");
+        // del.setAttribute("disabled", "true");
       }
     }
   }

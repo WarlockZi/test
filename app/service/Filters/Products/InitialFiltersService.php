@@ -85,7 +85,7 @@ class InitialFiltersService
                     ],
                 ],
                 "take" => [
-                    "title" => "получить количество",
+                    "title" => "количество строк",
                     "options" => [
                         0 => '',
                         1 => '20',

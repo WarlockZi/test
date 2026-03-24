@@ -59,8 +59,8 @@ export default class Cart {
         const price = +unitRow[qs]("input").value;
         const count = +unitRow[qs]("[data-cost]").dataset.cost;
         const sum = price * count;
-        // const sub_sum = unitRow[qs](".subSum");
-        const productRow = unitRow.closest("[data-product_1s_id]");
+
+        const productRow = unitRow.closest(".row");
         const subSumEl = productRow[qs](".sub-sum");
         const rowSums = subSumEl[qa](".row-sum");
         const currentRowSum = rowSums[i];

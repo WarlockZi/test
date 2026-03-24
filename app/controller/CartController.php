@@ -26,9 +26,9 @@ class CartController extends AppController
 
     #[NoReturn] public function actionIndex(): void
     {
-        $orderPage = true;
+        $showToCartButton = true;
         $order = OrderRepository::usersOrder(currentUser: true,submitted: true)?->toArray();
-        view('cart.cart', compact('order', 'orderPage'));
+        view('cart.cart', compact('order', 'showToCartButton'));
     }
 
     #[NoReturn] public function actionDeleteRow(IRequest $request): void
