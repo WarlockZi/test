@@ -1,4 +1,4 @@
-<div class="product-info">
+<div class="product-info" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
 
     @include('components.card_panel.product_card_panel')
 
@@ -6,7 +6,9 @@
     <div class="art">Арт. {!!$product['art']!!} </div>
 
     <div>
-        {{$product['base_unit']['pivot']['price']}} ₽ / {{$product['base_unit']['name']}}
+        <meta itemprop="priceCurrency" content="RUB">
+        <span itemprop="price">{{$product['base_unit']['pivot']['price']}}</span>
+         ₽ / {{$product['base_unit']['name']}}
     </div>
 
     <div class="price">
@@ -14,14 +16,21 @@
         <div class="new-price"></div>
 
     </div>
-    <div class="price-units ">
+    <div class="price-units">
 
         @include('product.card.shippableUnits')
     </div>
     @include( 'product.card.promotion')
 
     <div class="instore">
-        <p>Статус: в наличии</p>
+        @if($product['instore'])
+            <link itemprop="availability" href="https://schema.org/InStock">
+            <p>Статус: в наличии</p>
+        @else
+            <link itemprop="availability" href="https://schema.org/OutOfStock">
+            <p>Статус: под заказ</p>
+        @endif
+
     </div>
 
     @include( 'product.card.promotion')

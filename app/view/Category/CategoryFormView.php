@@ -38,14 +38,6 @@ class CategoryFormView
     {
         return ItemBuilderNew::build($category, 'category')
             ->pageTitle('Категория :  ' . ($category->ownProperties->seo_h1 ?? $category->name))
-//            ->field(
-//                ItemFieldBuilder::build('slug', $category)
-//                    ->name('Адрес')
-//                    ->html(
-//                        "<a href='$category->href'>{$category->href}</a>"
-//                    )
-//                    ->get()
-//            )
             ->field(
                 ItemFieldBuilder::build('name', $category)
                     ->name('Наименование в 1c')
@@ -74,14 +66,7 @@ class CategoryFormView
                     )
                     ->get()
             )
-//            ->field(
-//                ItemFieldBuilder::build('category_1s_id', $category)
-//                    ->name('Принадлежит')
-//                    ->html(
-//                        self::selectorByField(['category_1s_id' => $category['category_1s_id']])
-//                    )
-//                    ->get()
-//            )
+
             ->field(
                 ItemFieldBuilder::build('id', $category)
                     ->name('ID')
@@ -92,15 +77,6 @@ class CategoryFormView
                     ->name('SID')
                     ->get()
             )
-//            ->tab(
-//                ItemTabBuilder::build('Основная картинка')
-//                    ->html(
-//                        MorphBuilder::build($category, 'mainImages', 'main')
-//                            ->html(self::dnd())
-////                            ->html(ImageView::morphImages($category, 'mainImages'))
-//                            ->get()
-//                    )
-//            )
             ->tab(
                 ItemTabBuilder::build('Товары категории')
                     ->table(
@@ -245,7 +221,7 @@ class CategoryFormView
                 ->get()->toHtml() .
             ItemFieldBuilder::build('seo_h1', $categoryProperty)
                 ->name('H 1')
-                ->tooltip('используется в статье категории как главный заголовок')
+                ->tooltip('используется на странице категории и в статье категории как главный заголовок')
                 ->contenteditable()
                 ->relation('ownProperties')
                 ->get()->toHtml() .

@@ -10,16 +10,14 @@
 
         @php
             $count =0;
-        if(isset($order['products']) ){
-            foreach($order['products'] as $orderProduct){
-
-                if ($orderProduct['1s_id']!==$product['1s_id']) continue;
-
-                foreach($orderProduct['orderitems'] as $orderitem){
-                    if(!empty($orderitem['product_unit'])) {
-                        if($orderitem['product_unit']['unit_id']==$shippable['id']){
-                            $count = $orderitem['count'];
-                            break;
+            if(isset($order['products']) ){
+                foreach($order['products'] as $orderProduct){
+                    if ($orderProduct['1s_id']!==$product['1s_id']) continue;
+                    foreach($orderProduct['orderitems'] as $orderitem){
+                        if(!empty($orderitem['product_unit'])) {
+                            if($orderitem['product_unit']['unit_id']==$shippable['id']){
+                                $count = $orderitem['count'];
+                                break;
                         }
                     }
                 }
