@@ -105,7 +105,7 @@ export default class CallMeModal {
     e.preventDefault();
     const form = e.target.closest(".box");
     return {
-      phone: sanitizeInput(form[qs]("input#phone.blade.php")?.value) ?? null,
+      phone: sanitizeInput(form[qs]("input#phone")?.value) ?? null,
       php_session: getPhpSession() ?? null,
     };
   }

@@ -19,7 +19,7 @@ class CallmeRepository
             ]);
             return true;
         } catch (Throwable $exception) {
-            return false;
+            response()->json(['error' => $exception->getMessage()]);
         }
     }
 }

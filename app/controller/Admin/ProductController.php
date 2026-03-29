@@ -74,7 +74,8 @@ class ProductController extends AdminscController
             $isFromS = $productUnit->is_from_1s;
             if ($isFromS) {
                 $user = Auth::getUser();
-                if (!$user->isOlya()) return;
+                $olia = $user->isOlya();
+                if (!$olia) response()->json(['popup'=>'Удалять единицы из 1с может только Оля Ордина']);
             }
         }
         parent::actionDelete($request);
