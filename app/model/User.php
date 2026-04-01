@@ -119,13 +119,13 @@ class User extends Model implements IUser
     public
     function isOlya(): bool
     {
-        return $this->mail()===env('OLYA_EMAIL');
+        return $this->mail()===env('EMAIL_OLYA');
     }
 
     public
     function isSU(): bool
     {
-        return env('SU_EMAIL') === $this->mail();
+        return env('EMAIL_SU') === $this->mail();
     }
 
     public
