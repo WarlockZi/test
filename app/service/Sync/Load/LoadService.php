@@ -12,7 +12,6 @@ use Throwable;
 class LoadService
 {
     use MeasurableTrait;
-
        protected      array $categoryData;
         protected      array $productData;
         public      array $priceData;

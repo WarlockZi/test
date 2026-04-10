@@ -8,7 +8,7 @@ use app\formRequest\ReturnPassRequest;
 use app\model\User;
 use app\repository\UserRepository;
 use app\service\AuthService\Auth;
-use app\service\Mail\PHPMail;
+use app\service\Mail\PHPMailService;
 use app\service\Router\IRequest;
 use app\service\YandexAuth\YaAuthService;
 use app\view\User\UserView;
@@ -19,10 +19,8 @@ use Throwable;
 
 class AuthController extends AppController
 {
-//    protected $mailer;
-
     public function __construct(
-        protected PHPMail        $mailer,
+        protected PHPMailService $mailer,
         protected UserRepository $userRepository,
     )
     {
@@ -73,33 +71,34 @@ class AuthController extends AppController
         $_SESSION['id'] = '';
         $user           = $this->userRepository->getByEmail($req['email']);
 
-        if ($user) {
-            $newPassword    = $this->userRepository->randomPassword();
-            $hashedPassword = $this->userRepository->preparePassword($newPassword);
-            $this->userRepository->changePassword($user, $hashedPassword);
-
-            try {
-                $sent = $this->mailer->sendNewPasswordMail($user, $newPassword);
-                if ($sent) {
-                    response()->json(['success' => true,
-                        'popup' => 'Новый пароль проверьте на почте',
-                        'message' => 'Новый пароль проверьте на почте',
-                    ]);
-                }
-            } catch (\Throwable $exception) {
-                response()->json([
-                    'error' => 'not sent',
-                    'popup' => 'Ошибка отправки письма',
-                    'message' => 'Ошибка почтового сервера. Новый пароль не отправлен. 
-                    Попробуйте через несколько минут',
-                ]);
-            }
-        } else {
+        if (!$user) {
             response()->json([
                 'error' => "Пользователя с таким e-mail нет",
                 'message' => "Пользователя с таким e-mail нет",
             ]);
         }
+
+        $newPassword    = $this->userRepository->randomPassword();
+        $hashedPassword = $this->userRepository->preparePassword($newPassword);
+        $this->userRepository->changePassword($user, $hashedPassword);
+
+        try {
+            $sent = $this->mailer->sendNewPasswordMail($user, $newPassword);
+            if ($sent) {
+                response()->json(['success' => true,
+                    'popup' => 'Новый пароль проверьте на почте',
+                    'message' => 'Новый пароль проверьте на почте',
+                ]);
+            }
+        } catch (\Throwable $exception) {
+            response()->json([
+                'error' => 'not sent',
+                'popup' => 'Ошибка отправки письма',
+                'message' => 'Ошибка почтового сервера. Новый пароль не отправлен. 
+                    Попробуйте через несколько минут',
+            ]);
+        }
+
     }
 
     /**

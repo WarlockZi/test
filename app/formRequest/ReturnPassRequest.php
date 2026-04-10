@@ -3,14 +3,12 @@
 namespace app\formRequest;
 
 
-use app\formRequest\baseFormRequests\FormRequest;
+use app\formRequest\baseFormRequests\FormRequest2;
 
 
-class ReturnPassRequest extends FormRequest
+class ReturnPassRequest extends FormRequest2
 {
-    public function __construct(
-        protected $allowedFields = ['email']
-    )
+    public function __construct()
     {
         parent::__construct();
     }
@@ -21,12 +19,6 @@ class ReturnPassRequest extends FormRequest
             'email' => 'required|email',
         ];
     }
-
-    public function all($keys = null): array
-    {
-        return $this->input;
-    }
-
     public function messages(): array
     {
         return [
@@ -34,10 +26,5 @@ class ReturnPassRequest extends FormRequest
             'email.email' => 'email должен быть адресом электронной почты.',
         ];
     }
-//    public function authorize(): bool
-//    {
-//        return isset($this->phpSession)
-//            && $this->phpSession === session_id();
-//    }
 
 }

@@ -8,7 +8,6 @@ use app\service\AuthService\Auth;
 
 class ProductFilterReport extends FormRequest2
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -18,14 +17,6 @@ class ProductFilterReport extends FormRequest2
         $user = Auth::getUser();
         return !!$user;
     }
-//    public function all($keys = null): array
-//    {
-//        $data = parent::all($keys);
-////        $data = array_merge($data, $this->json()->all());
-//        $content = json_decode($this->getContent());
-//
-//        return $content;
-//    }
 
     public function rules(): array
     {

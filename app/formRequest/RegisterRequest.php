@@ -9,9 +9,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 
 class RegisterRequest extends FormRequest
 {
-    public function __construct(
-        protected $allowedFields = ['email', 'password', 'phone']
-    )
+    public function __construct( )
     {
         parent::__construct();
     }
@@ -31,7 +29,6 @@ class RegisterRequest extends FormRequest
             'email' => $this->json('email'),
             'password' => $this->json('password'),
             'phone' => $this->json('phone'),
-//            'phpSession' => $this->json('phpSession'),
         ];
     }
 

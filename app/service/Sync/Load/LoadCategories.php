@@ -98,20 +98,27 @@ class LoadCategories extends LoadService
     protected function setCategoryOwnProps(Category $category): CategoryProperty
     {
         try {
+
             $catProps = CategoryProperty::firstOrCreate(
-                ['category_1s_id' => $category['1s_id']],
-                ['category_1s_id' => $category['1s_id']],
+                ['category_1s_id' => $category['s_id']],
+                ['category_1s_id' => $category['s_id']],
             );
             if (!$catProps->short_link) {
                 $catProps->short_link = ShortlinkService::getValidShortLink();
             }
             if (!$catProps->path) {
-                UrlService::setCateoryOwnPropPath($category);
+                $catProps->path = UrlService::getCategoryOwnPropPath($category);
+//                UrlService::getCategoryOwnPropPath($category);
             }
-//            $catProps->save();
+            $catProps->save();
             return $catProps;
         } catch (Throwable $exception) {
-            $exc = 'load category own props failed: ' . $exception->getMessage();
+            $exc = 'load category own props failed: '
+                . $exception->getMessage()
+                .' ---file - '. $exception->getFile()
+                .' ---line - '. $exception->getLine()
+                .' ---trace - '. $exception->getTraceAsString()
+            ;
             $this->logger->write($exc);
             throw new Exception($exc);
         }

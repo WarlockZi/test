@@ -6,10 +6,7 @@ class MailYandexRepository
 {
     public function __construct()
     {
-
     }
-
-
     public static function forgotPassword(array $props): array
     {
         return [
@@ -17,7 +14,6 @@ class MailYandexRepository
             2 => 'VITEX|новый пароль',
             3 => 'Ваш новый пароль - ' . $props[1],
         ];
-
     }
 
     public static function registration(array $props): array
@@ -27,7 +23,6 @@ class MailYandexRepository
             2 => "VITEX|регистрация",
             3 => "Для завершения регистрации пройдите по ссылке <a href = {$props[0]->hash}>Подтвердить</a>",
         ];
-
     }
 
     protected function setHeaders(string $type): void
