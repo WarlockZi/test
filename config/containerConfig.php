@@ -4,6 +4,7 @@ declare(strict_types=1);
 use app\blade\Blade;
 use app\blade\IView;
 use app\blade\View;
+use app\model\Category;
 use app\repository\CategoryRepository;
 use app\repository\OrderRepository;
 use app\service\Cache\ICache;
@@ -95,7 +96,10 @@ return [
         $r = CategoryRepository::rootCategories();
         return $r;
     },
-
+    'rootCategoriesOrderedByName' => function () {
+        $r = Category::getSortedTree();
+        return $r;
+    },
     FS::class => function (ContainerInterface $c, $dir) {
         return new FS($dir . DIRECTORY_SEPARATOR,
             $c->get(FileLogger::class),);

@@ -3,6 +3,7 @@
 namespace app\model;
 
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -25,6 +26,24 @@ class Category extends Model
         'updated_at',
         'deleted_at',
     ];
+
+    public static function getSortedTree()
+    {
+        $all = self::orderBy('name', 'asc')->with('ownProperties')->get();
+        $grouped = $all->groupBy('category_1s_id');
+
+        return self::buildTree(null, $grouped);
+    }
+
+    private static function buildTree(?string $parentId, Collection $grouped)
+    {
+        $nodes = $grouped->get($parentId, collect());
+
+        return $nodes->map(function (self $node) use ($grouped) {
+            $node->setRelation('children', self::buildTree($node->s_id, $grouped));
+            return $node;
+        })->values(); // Сбрасываем ключи для чистоты коллекции
+    }
 
     protected $appends = [];
     public function childrenNotDeleted(): HasMany

@@ -1,8 +1,8 @@
+@deb
 @php
     $level = 1;
-    $rootCategories = APP->get('rootCategories');
+    $rootCategories = APP->get('rootCategoriesOrderedByName')->toArray();
 @endphp
-
 @if($rootCategories)
     @foreach ($rootCategories as $rootCategory)
 
@@ -12,8 +12,8 @@
 
             <ul class="h-cat_submenu level-{!!$level!!}">
 
-                @if(!empty($rootCategory['children_recursive']))
-                    @foreach($rootCategory['children_recursive'] as $child)
+                @if(!empty($rootCategory['children']))
+                    @foreach($rootCategory['children'] as $child)
                         @php($href = "/catalog/{$child['own_properties']['path']}")
                         @include('layouts.main.header.blueRibbon.headerCategoryMenu.li',compact('child','level','href'))
                     @endforeach

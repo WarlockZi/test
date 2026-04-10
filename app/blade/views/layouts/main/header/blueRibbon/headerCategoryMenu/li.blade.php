@@ -1,6 +1,6 @@
 <li class="h-cat_item">
-
-    @if(!empty($child['children_recursive']))
+{{--@deb--}}
+    @if(count($child['children']))
         <div class="wrap">
 
             <a href="{{$href}}">{{$child['name']}}</a>
