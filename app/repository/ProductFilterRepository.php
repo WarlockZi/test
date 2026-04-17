@@ -5,7 +5,6 @@ namespace app\repository;
 
 use app\model\FilterUser;
 use app\model\Product;
-use app\service\Image\del\ProductImageService;
 use Illuminate\Database\Eloquent\Collection;
 
 class ProductFilterRepository
@@ -24,8 +23,7 @@ class ProductFilterRepository
         extract($req);
         $query = Product::query()
             ->with('ownProperties')
-            ->with('units')
-        ;
+            ->with('units');
 
         if (!empty($instore)) {
             if ($instore === '1') {
@@ -61,7 +59,7 @@ class ProductFilterRepository
             } else if ($take === "3") {
 //                $query->take(40);
             }
-        }else{
+        } else {
             $query->take(10);
         }
 
@@ -74,44 +72,44 @@ class ProductFilterRepository
 
         if (!empty($image)) {
             if ($image === "1") { /// с картинкой
-                $query->whereHas('ownProperties', function ($q)  {
+                $query->whereHas('ownProperties', function ($q) {
                     $q->where('main_image', '!=', '');
                 });
 
             } else if ($image === "2") { /// без картинки
-                $query->whereHas('ownProperties', function ($q)  {
-                    $q
-                        ->whereNull('main_image')
-                        ->orWhere('main_image', '=', '')
-                    ;
+                $query->whereHas('ownProperties', function ($q) {
+                    $q->where(function ($sub) {//обязательно оборачивать, тк есть orWhere
+                        $sub->whereNull('main_image')
+                            ->orWhere('main_image', '=', '');
+                    });
                 });
             }
         }
 
         if (!empty($shippable)) {
-            if ($shippable =='1') {//'без отгруж',
-                $query->whereDoesntHave('units', function ($q){
+            if ($shippable == '1') {//'без отгруж',
+                $query->whereDoesntHave('units', function ($q) {
                     $q->where('product_unit.is_shippable', 1);
                 });
-            }elseif ($shippable =='2'){//'имеет только ед из 1c'
-                $query->whereDoesntHave('units', function ($q){
+            } elseif ($shippable == '2') {//'имеет только ед из 1c'
+                $query->whereDoesntHave('units', function ($q) {
                     $q->where('is_from_1s', null);
                 });
-            }elseif ($shippable =='3'){//без единиц'
+            } elseif ($shippable == '3') {//без единиц'
                 $query->whereDoesntHave('units');
             }
         }
 
-        $p   = $query
+        $p = $query
             ->groupBy('art')
             ->get();
 
-        $imageFiltered = $p->filter(function ($product){
-            $img = $product->ownProperties->main_image;
-            $path = ROOT.'/storage/app/pic/product/'.$img;
+        $imageFiltered = $p->filter(function ($product) {
+            $img  = $product->ownProperties->main_image;
+            $path = ROOT . '/storage/app/pic/product/' . $img;
             return is_readable($path);
         });
-        $arr = $imageFiltered->toArray();
+        $arr           = $imageFiltered->toArray();
         return $imageFiltered;
     }
 }
