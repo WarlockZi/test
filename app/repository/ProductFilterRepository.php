@@ -19,7 +19,7 @@ class ProductFilterRepository
         return $userFilters ? json_decode($userFilters->name, true) : [];
     }
 
-    public function filterProducts($req): Collection
+    public function filterProducts(array $req): Collection
     {
         extract($req);
         $query = Product::query()
@@ -52,12 +52,14 @@ class ProductFilterRepository
             }
         }
         if (!empty($take)) {
-            if ($take === "1") {
+            if ($take === "0") {
+                $query->take(10);
+            } else if ($take === "1") {
                 $query->take(20);
             } else if ($take === "2") {
                 $query->take(40);
-            } else{
-                $query->take(10);
+            } else if ($take === "3") {
+//                $query->take(40);
             }
         }else{
             $query->take(10);
