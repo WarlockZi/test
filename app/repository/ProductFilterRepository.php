@@ -82,7 +82,7 @@ class ProductFilterRepository
                 $query->whereHas('ownProperties', function ($q)  {
                     $q
                         ->where('main_image', '=', '')
-                        ->where('main_image', '=', NULL)
+                        ->orWhere('main_image', '=', NULL)
                     ;
                 });
             }
