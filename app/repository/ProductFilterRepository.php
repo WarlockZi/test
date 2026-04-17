@@ -81,8 +81,8 @@ class ProductFilterRepository
             } else if ($image === "2") { /// без картинки
                 $query->whereHas('ownProperties', function ($q)  {
                     $q
-                        ->where('main_image', '=', '')
-                        ->orWhere('main_image', '=', NULL)
+                        ->whereNull('main_image')
+                        ->orWhere('main_image', '=', '')
                     ;
                 });
             }
