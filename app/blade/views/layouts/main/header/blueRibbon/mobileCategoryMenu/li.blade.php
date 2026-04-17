@@ -1,9 +1,9 @@
-@if(!count($child['children_recursive']))
+@if(!count($child['children']))
 
     <li class="nav-item">
         <a
                 class="nav-link"
-                href="/catalog/{!!$child['own_properties']['path']??$child['s_id']!!}"
+                href="/catalog/{{$child['own_properties']['path']??$child['s_id']}}"
         >
                 <?= $child['name']; ?>
         </a>

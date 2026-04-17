@@ -7,6 +7,8 @@ import Checkbox from "@components/checkbox/checkbox.js";
 
 export default class Table {
   constructor(table) {
+    if (!table) return false;
+
     this.table = table;
 
     this.tableCallbacksFile = this.table.dataset.jscallbacksfile;
@@ -18,9 +20,11 @@ export default class Table {
       table.dataset.id ?? table.closest("[data-model]")?.dataset.id;
     this.relation = table.dataset.relation ?? null;
     this.relationType = table.dataset.relationtype ?? null;
+
     this.headers = $(".head");
     this.inputs = $("[data-search]");
     this.hidden = this.table[qa]("[hidden]");
+
     this.delUrl = `/adminsc/${this.model}/delete`;
     this.updateOrCreateUrl = `/adminsc/${this.model}/updateOrCreate`;
 
@@ -28,10 +32,8 @@ export default class Table {
     this.table[ael]("keyup", debounce(this.handleKeyup.bind(this)).bind(this));
     this.table[ael]("paste", this.handlePaste.bind(this));
     this.table[ael]("customSelect.changed", this.selectChange.bind(this));
-
-    // if (!this.relation) {
     this.table[ael]("checkbox.changed", this.checkboxChange.bind(this));
-    // }
+
     this.columnsCallbacks = this.table.dataset.columnsCallbacks;
 
     this.setCheckboxes();
@@ -235,16 +237,6 @@ export default class Table {
     });
   }
 
-  // UPDATE OR CREATE
-  // async updateOrcreate(target) {
-  //   const res = await post(this.updateOrCreateUrl, new TableDTO(target));
-  //   if (res?.arr?.success) {
-  //     this.copyEmptyRow(target);
-  //   } else {
-  //     this.newRow(res?.arr.id);
-  //   }
-  // }
-
   copyEmptyRow() {
     [].forEach.call(this.hidden, (cell) => {
       const cloneCell = cell.cloneNode(true);
@@ -261,31 +253,6 @@ export default class Table {
     });
   }
 
-  newRow(id) {
-    [].forEach.call(
-      this.hidden,
-      function (el) {
-        const newEl = el.cloneNode(true);
-        newEl.removeAttribute("hidden");
-
-        // this.addSelectInNewRow(newEl);
-        const tableContent = $(this.table).find(".custom-table");
-        tableContent.appendChild(newEl);
-
-        if (["id"].includes(newEl.dataset.field)) {
-          newEl.innerText = id;
-        } else if (
-          !(
-            ["del", "edit", "save"].includes(newEl.className) ||
-            newEl.hasChildNodes("select")
-          )
-        ) {
-          newEl.innerText = "";
-        }
-        newEl.dataset["id"] = id;
-      }.bind(this),
-    );
-  }
   addCheckbox(cloneCell) {
     const el = cloneCell[qs]("[my-checkbox]");
     new Checkbox(el);
@@ -424,4 +391,38 @@ export default class Table {
       checkbox[ael]("change", this.checkboxChange.bind(this));
     });
   }
+  // UPDATE OR CREATE
+  // async updateOrcreate(target) {
+  //   const res = await post(this.updateOrCreateUrl, new TableDTO(target));
+  //   if (res?.arr?.success) {
+  //     this.copyEmptyRow(target);
+  //   } else {
+  //     this.newRow(res?.arr.id);
+  //   }
+  // }
+  // newRow(id) {
+  //   [].forEach.call(
+  //     this.hidden,
+  //     function (el) {
+  //       const newEl = el.cloneNode(true);
+  //       newEl.removeAttribute("hidden");
+  //
+  //       // this.addSelectInNewRow(newEl);
+  //       const tableContent = $(this.table).find(".custom-table");
+  //       tableContent.appendChild(newEl);
+  //
+  //       if (["id"].includes(newEl.dataset.field)) {
+  //         newEl.innerText = id;
+  //       } else if (
+  //         !(
+  //           ["del", "edit", "save"].includes(newEl.className) ||
+  //           newEl.hasChildNodes("select")
+  //         )
+  //       ) {
+  //         newEl.innerText = "";
+  //       }
+  //       newEl.dataset["id"] = id;
+  //     }.bind(this),
+  //   );
+  // }
 }

@@ -140,7 +140,7 @@ class ReportFilterProductsAction
             ->column(
                 ColumnBuilder::build('id')
                     ->class('cell left')
-                    ->width('15px')
+                    ->width('35px')
                     ->get()
             )
             ->column(
@@ -150,7 +150,7 @@ class ReportFilterProductsAction
                     })
                     ->class('cell left')
                     ->search()
-                    ->width('minmax(30px, 70px)')
+                    ->width('minmax(30px, 75px)')
                     ->get()
             )
             ->column(
@@ -192,15 +192,6 @@ class ReportFilterProductsAction
                     ->width('50px')
                     ->get()
             )
-//            ->column(
-//                ColumnBuilder::build('баз=отгруж')
-//                    ->class('cell')
-//                    ->function(ProductService::class, 'baseIsShippable')
-//                    ->width('30px')
-//                    ->get()
-//            )
-//            ->edit()
-            ->del()
             ->get();
     }
 }

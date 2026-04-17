@@ -32,6 +32,7 @@ class ReportController extends AdminscController
                 'filterString',
                 'filterTable',
             ));
+
     }
 
     #[NoReturn] public function actionUpdateFilter(ProductFilterReport $request): void

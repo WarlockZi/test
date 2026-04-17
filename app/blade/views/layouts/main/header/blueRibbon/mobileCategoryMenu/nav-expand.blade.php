@@ -9,8 +9,8 @@
     <ul class="nav-items nav-expand-content">
 
         <li class="nav-item">
-            @if(count($child['children_recursive']))
-                @foreach($child['children_recursive'] as $child)
+            @if(count($child['children']))
+                @foreach($child['children'] as $child)
                     @include('layouts.main.header.blueRibbon.mobileCategoryMenu.li', compact('child'))
                 @endforeach
             @endif

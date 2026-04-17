@@ -27,4 +27,23 @@ class CategoryService
 
         return $collection;
     }
+    public static function setMetad(array $subslugs): array|object|string|null
+    {
+
+        $cacheSlug = implode('-', $subslugs);
+
+        $collection = Cache::remember(
+            $cacheSlug,
+            function () use ($subslugs) {
+                $collection = new Collection();
+                foreach ($subslugs as $subslug) {
+                    $c = CategoryRepository::getBySubslug($subslug);
+                    if ($c) $collection = $collection->merge($c);
+                }
+            },
+            Cache::$timeLife10_000
+        );
+
+        return $collection;
+    }
 }

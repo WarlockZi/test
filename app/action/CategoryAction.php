@@ -15,7 +15,7 @@ class CategoryAction
     public function __construct(
         private CategoryMetaService $meta,
         private SlugService         $slug,
-        private CategoryService     $category,
+        private CategoryService     $categoryService,
     )
     {
     }
@@ -31,13 +31,13 @@ class CategoryAction
         return $this->similarCategorySegments($slug);
     }
 
-    public function noCategory(Category $category, string $slug): void
+    public function noCategory(string $slug): void
     {
-        $similarCategories = $this->actions->similarCategories($slug);
-        $meta              = $this->actions->setMeta();
+        $similarCategories = $this->similarCategories($slug);
+        $meta              = $this->setMeta();
 
         view('category.notFound',
-            compact('category', 'similarCategories', 'meta'),
+            compact( 'similarCategories', 'meta'),
             404);
     }
 

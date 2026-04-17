@@ -10,30 +10,58 @@ class InitialFiltersService
 {
     protected static function categoriesSelector(): array
     {
-        $CategoryFlatNestedArray = [0 => ''];
-        $rootCats = CategoryRepository::rootCategories();
-        $reversed = array_reverse($rootCats);
 
-        foreach ($reversed as $rootCat) {
-            $categories      = Category::find($rootCat['id'])
-                ->flatSelfAndChildren
-                ->map(function ($q) {
-                    return $q;
-                })
-                ->keyBy('s_id')
-                ->toArray();
+        return Cache::remember('CategoriesNestedSelector', function (){
+            $CategoryFlatNestedArray = [0 => ''];
+            $rootCats                = CategoryRepository::rootCategories();
+            $reversed                = array_reverse($rootCats);
 
-            $i = 0;
-            array_combine(
-                array_keys($categories),
-                array_map(function ($v) use (&$CategoryFlatNestedArray, &$i) {
-                    $tab = str_repeat('&nbsp;', $i);
-                    $CategoryFlatNestedArray[$v['s_id']] = $tab.$v['name'];
-                    ++$i;
-                }, $categories)
-            );
-        }
-        return $CategoryFlatNestedArray;
+            foreach ($reversed as $rootCat) {
+                $categories = Category::find($rootCat['id'])
+                    ->flatSelfAndChildren
+                    ->map(function ($q) {
+                        return $q;
+                    })
+                    ->keyBy('s_id')
+                    ->toArray();
+
+                $i = 0;
+                array_combine(
+                    array_keys($categories),
+                    array_map(function ($v) use (&$CategoryFlatNestedArray, &$i) {
+                        $tab                                 = str_repeat('&nbsp;', $i);
+                        $CategoryFlatNestedArray[$v['s_id']] = $tab . $v['name'];
+                        ++$i;
+                    }, $categories)
+                );
+            }
+            return $CategoryFlatNestedArray;
+        }, Cache::$timeLife10_000);
+
+//        $CategoryFlatNestedArray = [0 => ''];
+//        $rootCats                = CategoryRepository::rootCategories();
+//        $reversed                = array_reverse($rootCats);
+//
+//        foreach ($reversed as $rootCat) {
+//            $categories = Category::find($rootCat['id'])
+//                ->flatSelfAndChildren
+//                ->map(function ($q) {
+//                    return $q;
+//                })
+//                ->keyBy('s_id')
+//                ->toArray();
+//
+//            $i = 0;
+//            array_combine(
+//                array_keys($categories),
+//                array_map(function ($v) use (&$CategoryFlatNestedArray, &$i) {
+//                    $tab                                 = str_repeat('&nbsp;', $i);
+//                    $CategoryFlatNestedArray[$v['s_id']] = $tab . $v['name'];
+//                    ++$i;
+//                }, $categories)
+//            );
+//        }
+//        return $CategoryFlatNestedArray;
     }
 
     public static function get(): array
@@ -90,7 +118,7 @@ class InitialFiltersService
                         0 => '',
                         1 => '20',
                         2 => '40',
-                        3=>'все'
+                        3 => 'все'
                     ],
                 ],
                 "category" => [

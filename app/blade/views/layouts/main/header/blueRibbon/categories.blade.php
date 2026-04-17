@@ -1,4 +1,4 @@
-@deb
+{{--@deb--}}
 @php
     $level = 1;
     $rootCategories = APP->get('rootCategoriesOrderedByName')->toArray();

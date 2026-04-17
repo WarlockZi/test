@@ -10,9 +10,9 @@ if (DEV) {
     if (function_exists('xdebug_enable')) {
         xdebug_enable();
     }
-    set_error_handler('devErrorHandler');
-    set_exception_handler('devExceptionHandler');
-    register_shutdown_function('devShutdownHandler');
+//    set_error_handler('devErrorHandler');
+//    set_exception_handler('devExceptionHandler');
+//    register_shutdown_function('devShutdownHandler');
 } else {
     error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE);
     ini_set('display_errors', 'Off');
@@ -113,7 +113,6 @@ function devShutdownHandler(): void
 
     $trace    = $exception->getTrace();
     $traceStr = '';
-
     foreach ($trace as $value) {
         $traceStr .= 'class: ' . ($value['class'] ?? 'no class name') . '<br>' .
             'function: ' . '<b>' . ($value['function'] ?? 'no function name') . '</b>' . " : " . ($value['line'] ?? 'no line number') . "<br><br>";

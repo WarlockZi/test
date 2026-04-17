@@ -26,7 +26,7 @@ class CategoryController extends AppController
             $category = $this->repo->indexInstore($request->slug);
 
             if (!$category) {
-                $this->actions->noCategory($category, $request->slug);
+                $this->actions->noCategory($request->slug);
             }
 
             $order = OrderRepository::usersOrder(currentUser: true, submitted: true)?->toArray();

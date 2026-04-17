@@ -28,13 +28,13 @@
   display: flex;
   position: fixed;
   top: 95px;
-  left: 100%;
+  left: 99vw;
   transition: all 200ms ease-in-out;
   transform: translate3d(0, 0, 0);
   z-index: 10;
 
   &:hover {
-    transform: translate(-100%, 0);
+    transform: translate(-97%, 0);
   }
 
   .filter-badge-title {
