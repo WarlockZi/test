@@ -12,6 +12,7 @@ use app\traits\MeasureTime;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
 use Throwable;
+use function DI\create;
 
 class LoadPrices extends LoadService
 {
@@ -49,6 +50,9 @@ class LoadPrices extends LoadService
         }
     }
 
+    /**
+     * @throws Exception
+     */
     private function setOfferFile(): void
     {
         $file = ROOT. env('SYNC_PATH'). 'loaded/'. env('SYNC_OFFER_FILE');
@@ -89,14 +93,7 @@ class LoadPrices extends LoadService
             $this->product = Product::where('1s_id',$this->offer['1s_id'] )
                 ->with(['units'])
                 ->first();
-//            $this->cleanDoubleUnits();
-
             $this->product->update(['instore' => $this->offer['instore']]);
-            if ($this->offer['1s_id']=='761f6dca-121b-11f1-9c50-d85ed383f0b6') {
-                error_log($this->offer['1s_id']);
-                error_log('data instore - '.$this->offer['instore']);
-                error_log('product instore - '.$this->product->instore);
-            }
         } catch (Throwable $exception) {
             $this->logger->write('offer 1s id = ' . $this->offer['1s_id']);
             throw new Exception('Load prices failed to find product ' . $exception->getMessage());
@@ -140,17 +137,13 @@ class LoadPrices extends LoadService
                 'unit_id' => $this->unit->id,
             ])->first();
         $oldPrice    = $productUnit?->price;
-        //SELECT * FROM `product_unit` WHERE `product_1s_id`="d7d360da-8cb1-11f0-9c3c-d85ed383f0b6"
-        if ($this->product['1s_id']=="d7d360da-8cb1-11f0-9c3c-d85ed383f0b6") {
-            $d = $oldPrice;
-        }
 
         $this->productUnit = ProductUnit::query()
             ->updateOrCreate(
                 ['product_1s_id' => $this->product['1s_id'],
                     'unit_id' => $this->unit->id,
                 ],
-                ['is_shippable' => 1,
+                [
                     'price' => (float)$this->offer['price'],
                     'is_from_1s' => 1,
                 ]);

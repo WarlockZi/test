@@ -66,7 +66,7 @@
       }
 
       &:hover > img {
-        left: -200px;
+        left: -150px;
         top: -50%;
         height: 150px;
         min-width: 150px;
@@ -105,7 +105,7 @@
       box-sizing: border-box;
       padding: 5px 3px;
       border-bottom: solid 1px var.$color-gray4;
-      font-size: var.$font-size-table;
+      //font-size: var.$font-size-table;
       min-height: .875rem;
       word-break: break-word;
     }

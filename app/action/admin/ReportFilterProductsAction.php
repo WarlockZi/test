@@ -138,7 +138,10 @@ class ReportFilterProductsAction
             ->pageTitle('Фильтр')
             ->data(['model' => 'product'])
             ->column(
-                ColumnBuilder::build('id')
+                ColumnBuilder::build('#')
+                    ->callback(function ($item) {
+                        return $item->art;
+                    })
                     ->class('cell left')
                     ->width('35px')
                     ->get()
@@ -165,11 +168,11 @@ class ReportFilterProductsAction
             )
             ->column(
                 ColumnBuilder::build('В матрице')
-                    ->class('cell font-size-1-5em')
+                    ->class('cell')
                     ->callback(function ($prod) {
                         return $prod->name ? (str_ends_with($prod->name, '*') ? '*' : '') : '';
                     })
-                    ->width('30px')
+                    ->width('77px')
                     ->get()
             )
             ->column(
@@ -189,7 +192,7 @@ class ReportFilterProductsAction
                         return $prod->instore;
                     })
                     ->class('cell')
-                    ->width('50px')
+                    ->width('77px')
                     ->get()
             )
             ->get();

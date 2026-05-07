@@ -140,13 +140,17 @@ class ColumnBuilder
             if ($column->component instanceof CheckboxBuilder) {
                 $this->handleCheckbox($column->component, $item);
             }
+
         } elseif ($column->function) {
             $func = $column->function;
             return $column->functionClass::$func($column, $item, $field);
+
         } else if ($column->select) {
             return $column->select->get($item->$field ?? 0);
+
         } else if ($column->callbackFn) {
             return $column->callCallback($item);
+
         } else {
             return $item[$field] ?? '';
         }
