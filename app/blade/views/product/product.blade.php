@@ -17,7 +17,7 @@
         @endif
 
         <div class="product-card" data-1sid="<?= $product['1s_id']; ?>">
-{{--            @deb--}}
+            {{--            @deb--}}
             @include('components.breadcrumbs.index')
 
             <h1>{!!$product['print_name']!!}</h1>
@@ -30,7 +30,7 @@
             <div class="info-wrap">
                 <div class="info-tag">Описание</div>
 
-                <article id="detail-text"><?= $product['own_properties']['txt']; ?></article>
+                <article id="detail-text">{{$product['own_properties']['txt']}}</article>
             </div>
 
 
