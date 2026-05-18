@@ -28,30 +28,7 @@
             </div>
 
             <div class="info-wrap">
-                <div class="info-tag">Информация о товаре</div>
-                <div class="properties">
-                    <h2>{!!
-                    $product['own_properties']['seo_h1'] ?? $product['name'];
-                   !!}</h2>
-
-                    <div id="seo-article">{!!
-                     $product['own_properties']['seo_article']
-                     ?? $product['own_properties']['seo_description']
-                     ?? 'Описание товара отстутствует';
-                    !!}</div>
-
-                    @if (isset($product->values) && !empty($product->values))
-                        @foreach ($product->values as $value)
-                            @include( __DIR__ . '/property.php')
-                        @endforeach
-                    @endif
-
-
-                </div>
-            </div>
-
-            <div class="info-wrap">
-                <div class="info-tag">Характеристики</div>
+                <div class="info-tag">Описание</div>
 
                 <article id="detail-text"><?= $product['own_properties']['txt']; ?></article>
             </div>

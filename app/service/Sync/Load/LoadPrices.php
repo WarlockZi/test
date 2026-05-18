@@ -100,7 +100,7 @@ class LoadPrices extends LoadService
         }
     }
 
-    protected function deleteProductUnitsDoubles($unit)
+    protected function deleteProductUnitsDoubles($unit): bool
     {
         $from_1s = $unit->pivot->is_from_1s;
         $price   = $unit->pivot->price;
@@ -112,7 +112,7 @@ class LoadPrices extends LoadService
         return false;
     }
 
-    protected function getRecalculatePrices($multiplier, $divider)
+    protected function getRecalculatePrices($multiplier, $divider): float|int
     {
         return $multiplier ? $this->offer['price'] * $multiplier : $this->offer['price'] / $divider;
     }
@@ -154,13 +154,13 @@ class LoadPrices extends LoadService
 
     private function prepareOffer(array $data): void
     {
-        if ($data['Ид']=="986dab18-afee-11ec-8246-0cc47a6d1d83") {
-            $strore = $data['Количество'];
-        }
-        if ($data['Количество']=="152") {
-            $strore = $data['Количество'];
-            $id  = $data['Ид'];
-        }
+//        if ($data['Ид']=="986dab18-afee-11ec-8246-0cc47a6d1d83") {
+//            $strore = $data['Количество'];
+//        }
+//        if ($data['Количество']=="152") {
+//            $strore = $data['Количество'];
+//            $id  = $data['Ид'];
+//        }
         $this->offer = [
             '1s_id' => trim($data['Ид' ?? '']),
             'art' => trim($data['Артикул'] ?? ''),
@@ -183,17 +183,17 @@ class LoadPrices extends LoadService
 //
 //        }
 //    }
-    protected function cleanDoubleUnits(): void
-    {
-        $ids = [];
-        foreach ($this->product->units as $unit) {
-            if (in_array($unit->id, $ids)) {
-                $unit->pivot->delete();
-            } else {
-                $ids[] = $unit->id;
-            }
-        }
-    }
+//    protected function cleanDoubleUnits(): void
+//    {
+//        $ids = [];
+//        foreach ($this->product->units as $unit) {
+//            if (in_array($unit->id, $ids)) {
+//                $unit->pivot->delete();
+//            } else {
+//                $ids[] = $unit->id;
+//            }
+//        }
+//    }
 
     protected function updateOrCreatePrice(): void
     {
@@ -208,28 +208,28 @@ class LoadPrices extends LoadService
             ]);
     }
 
-    private function firstOrCreatePriceType(): void
-    {
-        $this->priceType1s       = PriceType::firstOrCreate(
-            ['type' => '1s',],
-            ['type' => '1s',]
-        );
-        $this->priceTypeComputed = PriceType::firstOrCreate(
-            ['type' => 'Computed',],
-            ['type' => 'Computed',]
-        );
-    }
+//    private function firstOrCreatePriceType(): void
+//    {
+//        $this->priceType1s       = PriceType::firstOrCreate(
+//            ['type' => '1s',],
+//            ['type' => '1s',]
+//        );
+//        $this->priceTypeComputed = PriceType::firstOrCreate(
+//            ['type' => 'Computed',],
+//            ['type' => 'Computed',]
+//        );
+//    }
 
-    private function firstOrCreateCurrency(): void
-    {
-        $currency1sName   = $this->pricesData[0]['Цены']['Цена']['Валюта'] ?? $this->pricesData[1]['Цены']['Цена']['Валюта'];
-        $this->currency1s = Currency::firstOrCreate(
-            [
-                '1s_name' => $currency1sName],
-            [
-                '1s_name' => $currency1sName,
-                'web_name' => '₽']
-        );
-    }
+//    private function firstOrCreateCurrency(): void
+//    {
+//        $currency1sName   = $this->pricesData[0]['Цены']['Цена']['Валюта'] ?? $this->pricesData[1]['Цены']['Цена']['Валюта'];
+//        $this->currency1s = Currency::firstOrCreate(
+//            [
+//                '1s_name' => $currency1sName],
+//            [
+//                '1s_name' => $currency1sName,
+//                'web_name' => '₽']
+//        );
+//    }
 
 }

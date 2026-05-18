@@ -101,18 +101,18 @@ class LoadProducts extends LoadService
         return $g;
     }
 
-    private function fillProductProperties($good): array
-    {
-        $g['1s_id']          = $good['Ид'];
-        $g['category_1s_id'] = $good['Группы']['Ид'];
-        $g['art']            = $good['Артикул'] ? trim($good['Артикул']) : '';
-        $g['name']           = $good['Наименование'];
-        $g['print_name']     = $good['ЗначенияРеквизитов']['ЗначениеРеквизита'][3]['Значение'];
-        $g['slug']           = $this->setSlug($g);
-        $g['deleted_at']     = null;
-        $g['updated_at']     = Carbon::now()->toDateTimeString();
-        return $g;
-    }
+//    private function fillProductProperties($good): array
+//    {
+//        $g['1s_id']          = $good['Ид'];
+//        $g['category_1s_id'] = $good['Группы']['Ид'];
+//        $g['art']            = $good['Артикул'] ? trim($good['Артикул']) : '';
+//        $g['name']           = $good['Наименование'];
+//        $g['print_name']     = $good['ЗначенияРеквизитов']['ЗначениеРеквизита'][3]['Значение'];
+//        $g['slug']           = $this->setSlug($g);
+//        $g['deleted_at']     = null;
+//        $g['updated_at']     = Carbon::now()->toDateTimeString();
+//        return $g;
+//    }
 
     private function setSlug($g): string
     {

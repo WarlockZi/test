@@ -97,7 +97,7 @@ class ProductFormView
                 )
                 ->field(
                     ItemFieldBuilder::build('description', $product)
-                        ->name('Описание')
+                        ->name('Текстовое описание')
                         ->html(self::getDescription($product))
                         ->get()
                 )
