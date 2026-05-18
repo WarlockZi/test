@@ -24,10 +24,10 @@ class LoadProducts extends LoadService
 
     private function setImportFile(): void
     {
-        $file = ROOT. env('SYNC_PATH'). 'loaded/'. env('SYNC_IMPORT_FILE');
+        $file = ROOT . env('SYNC_PATH') . 'loaded/' . env('SYNC_IMPORT_FILE');
         $this->logger->write("--- xml file - $file ---");
-        $xml        = simplexml_load_file($file);
-        $importData = json_decode(json_encode($xml), true);
+        $xml               = simplexml_load_file($file);
+        $importData        = json_decode(json_encode($xml), true);
         $this->productData = $importData['Каталог']['Товары']['Товар'];
     }
 
@@ -73,19 +73,24 @@ class LoadProducts extends LoadService
     {
         $prodProps = ProductProperty::where('product_1s_id', $good['Ид'])
             ->first();
-        if (!$prodProps) {
-            $ownProps = ProductProperty::create([
+        if ($prodProps) {
+            $prodProps->update([
+                'short_link' => $prodProps['short_link'] ?? ShortlinkService::getValidShortLink(),
+                'txt' => str_replace("\n", '<br>', $good['Описание'] ?? '')
+            ]);
+        } else {
+            ProductProperty::create([
                 'product_1s_id' => $good['Ид'],
                 'short_link' => ShortlinkService::getValidShortLink(),
-                'txt' => $good['Описание']
-                    ? preg_replace('/\n/', '<br>', $good['Описание'])
-                    : '',
+                'txt' => str_replace("\n", '<br>', $good['Описание'] ?? '')
             ]);
-            if ($prodProps && !$prodProps->short_link) {
-                $prodProps->short_link = ShortlinkService::getValidShortLink();
-                $prodProps->save();
-            }
         }
+//        if (!$prodProps) {
+//            if ($prodProps && !$prodProps->short_link) {
+//                $prodProps->short_link = ShortlinkService::getValidShortLink();
+//                $prodProps->save();
+//            }
+//        }
     }
 
     private function fillProduct(array $good): array
