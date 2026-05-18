@@ -30,7 +30,7 @@
             <div class="info-wrap">
                 <div class="info-tag">Описание</div>
 
-                <article id="detail-text">{{$product['own_properties']['txt']}}</article>
+                <article id="detail-text">{!! $product['own_properties']['txt']!!}</article>
             </div>
 
 
