@@ -75,6 +75,7 @@ class LoadProducts extends LoadService
             ->first();
         if ($prodProps) {
             $prodProps->update([
+                // если нашли props нужно сохранить short_link or create new
                 'short_link' => $prodProps['short_link'] ?? ShortlinkService::getValidShortLink(),
                 'txt' => str_replace("\n", '<br>', $good['Описание'] ?? '')
             ]);
