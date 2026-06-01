@@ -18,11 +18,12 @@ class PHPMailService
         $this->mailer = ConfiguredPHPMailer::getConfigured();
     }
 
-    public function sendRegistrationMail($user): void
+    public function sendRegistrationMail(User $user): void
     {
         $this->mailer->Subject = 'VITEX|регистрация';
         $this->mailer->Body    = MailView::registration($user);
         $this->mailer->AltBody = MailView::registrationAlt($user);
+        $this->mailer->addAddress($user->email);
 
         $this->mailer->send();
     }

@@ -117,7 +117,6 @@ class AuthController extends AppController
         $user = $this->userRepository->createUser($request);
         if (!$user) response()->json(['error' => 'no user', 'popup' => "Пользователь не создан"]);
         try {
-
             $this->mailer->sendRegistrationMail($user);
             response()->json(['success' => true, 'popup' => 'Письмо с регистрацией отпрвлено на указанный Вами email']);
         } catch (Throwable $exception) {
