@@ -4,7 +4,7 @@ import "../../../components/footer/footer.scss";
 import "./test-edit-menu.scss";
 import "../test-update.js";
 
-import { $, debounce } from "../../../common.js";
+import { $, debounce } from "@src/common.js";
 
 import { _test } from "../model/test.js";
 

@@ -6,14 +6,14 @@
 {{--@deb--}}
 
 <li itemprop="itemListElement" itemscope="" itemtype="https://schema.org/ListItem">
-    @if(!$variables['breadcrumbs']['lastItemIsLink']
+    @if(!$breadcrumbs['lastItemIsLink']
         && $variables['breadcrumbs']['itemsCount']===$position)
         <div itemprop="item">
             <span itemprop="name">{!!$item['name']!!}</span>
         </div>
-    @else
 
-        <a itemprop="item" href="/category/{!!$item['ownProperties']['path']!!}">
+    @else
+        <a itemprop="item" href="/category/{{$item['ownProperties']['path']??'отсутств'}}">
             <span itemprop="name">{!!$item['name']!!}</span>
         </a>
     @endif

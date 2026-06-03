@@ -8,10 +8,10 @@
         </li>
         @php
             $position =1;
-            $lastItemIsLink = $variables['breadcrumbs']['lastItemIsLink'];
+            $lastItemIsLink = $variables['breadcrumbs']['lastItemIsLink']??'';
         @endphp
 
-        @foreach($variables['breadcrumbs']['parentsArray'] as $item)
+        @foreach($variables['breadcrumbs']['parentsArray']??[] as $item)
 
 {{--        @deb--}}
             @include('components.breadcrumbs.li',compact('item', 'position','lastItemIsLink'))

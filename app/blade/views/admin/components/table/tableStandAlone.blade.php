@@ -10,7 +10,7 @@
                 {!!$title??''!!} : {!!$html??''!!}
         </div>
     @endforeach
-
+{{--@deb--}}
     <div class="custom-table" {!!$data['grid']??''!!}>
 
         <!--  HEADER  -->
