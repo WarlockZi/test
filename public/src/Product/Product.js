@@ -1,5 +1,4 @@
 import "./product.scss";
-import { zoom } from "./zoom";
 import Card_panel from "@components/card_panel/card_panel";
 import { $ } from "../common";
 import shippableTable from "@components/shippable/shippableUnitsTable";
@@ -28,7 +27,6 @@ export default class Product {
       });
     }
 
-    zoom();
     new MyQuill("#seo-article");
     new MyQuill("#detail-text");
   }

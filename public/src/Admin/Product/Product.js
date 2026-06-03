@@ -1,14 +1,8 @@
 import "./product.scss";
 import "./units.scss";
-import {
-  $,
-  newObjAndFiles2FormData,
-  // objAndFiles2FormData,
-  post,
-} from "../../common.js";
+import { $, newObjAndFiles2FormData, post } from "../../common.js";
 import "./Props.js";
-import { qa, qs } from "../../constants";
-import SelectNew from "@src/components/select/SelectNew.js";
+import { qs } from "../../constants";
 import QuillFactory from "@src/components/quill/QuillFactory.js";
 import { QuillConst } from "@src/components/quill/QuillConstans.js";
 
@@ -27,15 +21,15 @@ export default class Product {
 
     QuillFactory.create(".txt", QuillConst.ADMIN_PRODUCT_DESCRIPTION);
     QuillFactory.create("#seo-article", QuillConst.ADMIN_PRODUCT_SEO_ARTICLE);
-    this.setUnitsCustomSelects();
+    // this.filterable();
   }
-
-  setUnitsCustomSelects() {
-    const units = $(".units [custom-select]");
-    [].forEach.call(units, (unit) => {
-      if (unit.dataset.id) new SelectNew(unit);
-    });
-  }
+  // filterable() {}
+  // setUnitsCustomSelects() {
+  //   const units = $(".units [custom-select]");
+  //   [].forEach.call(units, (unit) => {
+  //     if (unit.dataset.id) new SelectNew(unit);
+  //   });
+  // }
 
   async setDragNDrop() {
     const dragNdrop = document[qs]("[dnd]");
