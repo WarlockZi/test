@@ -9,7 +9,6 @@ use app\service\AuthService\IUser;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Model implements IUser
@@ -99,8 +98,8 @@ class User extends Model implements IUser
     function avatar(): string
     {
         return $this['sex'] === 'f'
-            ? ImageRepository::getImg(PIC_SERVICE."main/ava_female.jpg")
-            : ImageRepository::getImg(PIC_SERVICE."main/ava_male.png");
+            ? ImageRepository::getImg(PIC_SERVICE . "main/ava_female.jpg")
+            : ImageRepository::getImg(PIC_SERVICE . "main/ava_male.png");
     }
 
 
@@ -119,7 +118,7 @@ class User extends Model implements IUser
     public
     function isOlya(): bool
     {
-        return $this->mail()===env('EMAIL_OLYA');
+        return $this->mail() === env('EMAIL_OLYA');
     }
 
     public

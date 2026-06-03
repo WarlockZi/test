@@ -3,6 +3,8 @@
 namespace app\controller\Admin;
 
 use app\action\admin\UserAction;
+use app\attributes\Validate\UserDTO;
+use app\attributes\Validate\ValidationException;
 use app\model\User;
 use app\repository\UserRepository;
 use app\service\AuthService\Auth;
@@ -28,18 +30,22 @@ class UserController extends AdminscController
         $this->showTable();
     }
 
-    public function actionEdit(): void
+    public function actionEdit(IRequest $request): void
     {
-        $user    = $this->model::find($this->route->id);
-        $content = UserView::getViewByRole($user, Auth::getUser());
+        $user    = $this->model::find($request->id);
+        $catItem = UserView::getViewByRole($user, Auth::getUser());
+//        try {
+//            $dto = UserDTO::fromArray($user->toArray());
+//        } catch (ValidationException $e) {
+//            print_r($e->errors());
+//        }
+        view('admin.components.catalogItem.adminCatalogItem', compact('catItem'));
 
-        $this->setVars(compact('content'));
-
-        if ($user = $this->ajax) {
-            $user['id'] = $_SESSION['id'];
-            User::updateOrCreate($user);
-            Response::exitWithPopup('Сохранено');
-        }
+//        if ($user = $this->ajax) {
+//            $user['id'] = $_SESSION['id'];
+//            User::updateOrCreate($user);
+//            Response::exitWithPopup('Сохранено');
+//        }
     }
 
 

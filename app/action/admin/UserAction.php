@@ -25,9 +25,10 @@ class UserAction implements IShowTable
 
     public function table(): array
     {
-        return Table::build(User::with('role')->get())
+         return Table::build(User::with('role')->get())
             ->pageTitle('Пользователи')
-            ->model('userYandex')
+            ->data(['model'=>'user'])
+//            ->model('user')
             ->column(
                 ColumnBuilder::build('id')
                     ->get())
