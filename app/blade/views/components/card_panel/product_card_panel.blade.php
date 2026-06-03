@@ -10,7 +10,7 @@ use \app\view\components\Icon\Icon;
 {{--    @php(xdebug_break())--}}
     <div class="short-link card-panel-item"
          title='Скопировать короткую ссылку'
-         data-shortLink= <?= $product['own_properties']['short_link']; ?>
+         data-shortLink= {!!$product['own_properties']['short_link']!!}
     >
         <?= Icon::link(); ?>
     </div>
