@@ -11,7 +11,7 @@
 {{--@deb--}}
         <h3 class="name"><?= $product['print_name']; ?></h3>
 
-        <img src="{!!image($product['own_properties']['main_image'])!!}"
+        <img src="{!!image($product['own_properties']['main_image']??null)!!}"
              alt="<?= $product['name'] ?>"
              loading="lazy">
         <div class="footer">

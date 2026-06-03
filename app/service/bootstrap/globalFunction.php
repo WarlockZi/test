@@ -1,17 +1,19 @@
 <?php
 
-use app\blade\IView;
 use app\blade\View;
 use app\service\Response;
+use app\service\Session;
 use JetBrains\PhpStorm\NoReturn;
 
 if (!function_exists('image')) {
     function image($path = ''): string
     {
+        $nophoto = PIC_SERVICE . "nophoto-min.jpg";
+        if (!$path) return $nophoto;
         $imagePath = env("PIC_PRODUCT") . $path;
         return is_readable(ROOT.$imagePath)&&is_file(ROOT.$imagePath)
             ? $imagePath
-            : PIC_SERVICE . "nophoto-min.jpg";
+            : $nophoto;
     }
 }
 if (!function_exists('response')) {
@@ -20,7 +22,12 @@ if (!function_exists('response')) {
         return new Response($content, $status, $headers);
     }
 }
-
+if (!function_exists('session')) {
+    function session(): Session
+    {
+        return new Session();
+    }
+}
 if (!function_exists('view')) {
     #[NoReturn]
     function view(string $view = null, array $data = [], int $status = 200, array $headers = [])
