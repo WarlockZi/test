@@ -5,6 +5,7 @@ namespace app\service\Logger;
 
 
 use app\service\Fs\FS;
+use Exception;
 
 class SyncLogger implements ILogger
 {
@@ -38,21 +39,24 @@ class SyncLogger implements ILogger
         return $dir;
     }
 
+    /**
+     * @throws Exception
+     */
     public function read(): string
     {
         if (!is_readable($this->logPath)) {
-            throw new \Exception('Log file not readable');
+            throw new Exception('Log file not readable');
         }
         return file_get_contents($this->logPath);
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function write(string $content): bool
     {
         if (!is_writable($this->logPath)) {
-            throw new \Exception('Log file not writable');
+            throw new Exception('Log file not writable');
         }
 
         return file_put_contents($this->logPath,
