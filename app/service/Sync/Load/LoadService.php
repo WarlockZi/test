@@ -12,12 +12,15 @@ use Throwable;
 class LoadService
 {
     use MeasurableTrait;
-       protected      array $categoryData;
-        protected      array $productData;
-        public      array $priceData;
+    protected array $categoryData;
+    protected array $productData;
+    public array $priceData;
 
     public function __construct(
         protected SyncLogger $logger = new SyncLogger(),
+        protected LoadCategories $loadCategories,
+        protected LoadPrices $loadPrices,
+        protected LoadProducts $loadProducts,
     )
     {
     }
@@ -27,7 +30,6 @@ class LoadService
      * @throws Throwable
      */
     #[NoReturn]
-
     public function run(): void
     {
         $this->checkXMLFuncExist();
@@ -40,7 +42,8 @@ class LoadService
         }
     }
 
-    private function checkXMLFuncExist(){
+    private function checkXMLFuncExist(): void
+    {
         if (!extension_loaded('simplexml')) {
             $this->logger->write("--- Расширение SimpleXML НЕ установлено ---");
             if (function_exists('simplexml_load_file')) {
