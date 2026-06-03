@@ -43,10 +43,7 @@ class Auth
         return self::$user ?? self::auth();
     }
 
-    public static function setUser(IUser $mockuser): void
-    {
-        self::$user = $mockuser;
-    }
+
 
     private static function auth(): IUser|null
     {
@@ -65,7 +62,10 @@ class Auth
     {
         return env('EMAIL_SU') === self::$user['email'];
     }
-
+    public static function setUser(IUser $mockuser): void
+    {
+        self::$user = $mockuser;
+    }
     public static function setAuth(IUser $user): void
     {
         if ($user instanceof User) {

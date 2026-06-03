@@ -2,6 +2,7 @@
 
 namespace app\controller;
 
+use app\formRequest\ChangePasswordRequest;
 use app\formRequest\LoginRequest;
 use app\formRequest\RegisterRequest;
 use app\formRequest\ReturnPassRequest;
@@ -9,6 +10,7 @@ use app\model\User;
 use app\repository\UserRepository;
 use app\service\AuthService\Auth;
 use app\service\Mail\PHPMailService;
+use app\service\PasswordGenerator\PasswordGeneratorService;
 use app\service\Router\IRequest;
 use app\service\YandexAuth\YaAuthService;
 use app\view\User\UserView;
@@ -20,8 +22,8 @@ use Throwable;
 class AuthController extends AppController
 {
     public function __construct(
-        protected PHPMailService $mailer,
-        protected UserRepository $userRepository,
+        protected PHPMailService           $mailer,
+        protected UserRepository           $userRepository,
     )
     {
         parent::__construct();
@@ -30,7 +32,8 @@ class AuthController extends AppController
     /**
      * @throws ValidationException|Exception
      */
-    #[NoReturn] public function actionLogin(LoginRequest $request): void
+    #[NoReturn]
+    public function actionLogin(LoginRequest $request): void
     {
         $validated = $request->safe()->only('email', 'password');
 
@@ -43,7 +46,7 @@ class AuthController extends AppController
         if (!$user->confirm) response()->json([
             'error' => 'Зайдите на почту чтобы подтвердить регистрацию',
             'popup' => 'Зайдите на почту чтобы подтвердить регистрацию',]);
-        if ($user->password !== $this->userRepository->preparePassword($validated['password'])) {
+        if ($user->password !== PasswordGeneratorService::hashPassword($validated['password'])) {
             Auth::setUser($user);// Если данные правильные, запоминаем пользователя (в сессию)
             if (!$user->isSU()) {
                 response()->json(['error' => 'Не верный email или пароль']);
@@ -68,8 +71,8 @@ class AuthController extends AppController
     {
         $req = $request->validated();
 
-        $_SESSION['id'] = '';
-        $user           = $this->userRepository->getByEmail($req['email']);
+        session()->forget('id');
+        $user = $this->userRepository->getByEmail($req['email']);
 
         if (!$user) {
             response()->json([
@@ -78,9 +81,9 @@ class AuthController extends AppController
             ]);
         }
 
-        $newPassword    = $this->userRepository->randomPassword();
-        $hashedPassword = $this->userRepository->preparePassword($newPassword);
-        $this->userRepository->changePassword($user, $hashedPassword);
+
+        $newPassword = PasswordGeneratorService::generate();
+        $this->userRepository->changePassword($user, $newPassword);
 
         try {
             $sent = $this->mailer->sendNewPasswordMail($user, $newPassword);
@@ -106,7 +109,7 @@ class AuthController extends AppController
      */
     public function actionRegister(RegisterRequest $request): void
     {
-        $request = $request->validated();
+        $request = $request->safe()->only('email', 'password', 'phone');
         if (!empty($this->userRepository->getByEmail($request['email']))) {
             response()->json(['error' => 'mail exists',
                 'message' => 'Такая почта уже существует',
@@ -132,23 +135,8 @@ class AuthController extends AppController
         exit;
     }
 
-
-//    private function getUrl(): string
-//    {
-//        if (DEV) {
-//            return 'https://vi-prod/auth/yandex';
-//        }
-//        return 'https://oauth.yandex.ru/authorize?' . urldecode(http_build_query(
-//                array(
-//                    'client_id' => '1cacd478c22b49c1a22e59ac811d0fc0',
-//                    'redirect_uri' => 'https://vitexopt.ru/auth/yandex',
-//                    'response_type' => 'code',
-//                    'state' => '123'
-//                )));
-//    }
-
-
-    #[NoReturn] public function actionProfile(): void
+    #[NoReturn]
+    public function actionProfile(): void
     {
         $user = Auth::getUser();
         if (!$user) {
@@ -163,40 +151,34 @@ class AuthController extends AppController
         view('profile.profile', compact('catItem'));
     }
 
-    public function actionChangePassword(): void
+    public function actionChangePassword(ChangePasswordRequest $request): void
     {
-        $user = Auth::getUser();
-
-        if (!$user) {
+        if (!Auth::getUser()) {
             response()->withError('чтобы поменять пароль нужно войти в свой аккаунт')->redirect('/');
         }
+        $request = $request->validated();
+
+        if (!$request['old_password'] || !$request['new_password'])
+            response()->json(['error' => 'Заполните старый и новый пароль']);
+
+        $old_password = PasswordGeneratorService::hashPassword($request['old_password']);
+        $user         = $this->userRepository->getByPass($old_password);
+
+        if (!$user) response()->json(['error' => 'Не правильный старый пароль (']);
+
+        $newPassword = PasswordGeneratorService::hashPassword($request['new_password']);
+
+        User::where('id', $user['id'])->update(['password' => $newPassword])
+            ? response()->json(['success' => 'Пароль поменян'])
+            : response()->json(['msg' => 'Что-то пошло не так (']);
 
         view('auth.change-password', compact('user'));
 
 
-        if ($req = $this->ajax) {
-            if (!$req['old_password'] || !$req['new_password'])
-                response()->json(['error' => 'Заполните старый и новый пароль']);
-
-            $old_password = $this->userRepository->preparePassword($req['old_password']);
-            $user         = $this->userRepository->getByPass($old_password);
-
-            if ($user) {
-                $user        = $user[0];
-                $newPassword = $this->userRepository->preparePassword($req['new_password']);
-                $res         = User::where('id', $user['id'])->update(['password' => $newPassword]);
-                if ($res) {
-                    response()->json(['success' => 'Пароль поменeн']);
-                } else {
-                    response()->json(['msg' => 'Что-то пошло не так (']);
-                }
-            } else {
-                response()->json(['error' => 'Не правильный старый пароль (']);
-            }
-        }
     }
 
-    #[NoReturn] public function actionLogout(): void
+    #[NoReturn]
+    public function actionLogout(): void
     {
         if (isset($_COOKIE[session_name()])) {
             setcookie(session_name(), '', time() - 86400, '/');
