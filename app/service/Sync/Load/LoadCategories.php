@@ -8,28 +8,37 @@ use app\model\CategoryProperty;
 use app\service\Router\UrlService;
 use app\service\ShortLink\ShortlinkService;
 use app\service\Slug\SlugService;
+use app\service\Utils\UtilsServise;
 use Exception;
 use Throwable;
 
 class LoadCategories extends LoadService
 {
 
+    /**
+     * @throws Exception
+     */
     public function __construct(
-        public array  $deleted = [],
-        public array  $created = [],
-        private array $existed = [],
+        public array    $deleted = [],
+        public array    $created = [],
+        private array   $existed = [],
         protected array $categoryData = [],
     )
     {
         parent::__construct();
         $this->setImportFile();
     }
+
+    /**
+     * @throws Exception
+     */
     private function setImportFile(): void
     {
-        $file = ROOT. env('SYNC_PATH'). 'loaded/'. env('SYNC_IMPORT_FILE');
+        $file = ROOT . env('SYNC_PATH') . 'loaded/' . env('SYNC_IMPORT_FILE');
         $this->logger->write("--- xml file - $file ---");
-        $xml                = simplexml_load_file($file);
-        $importData =  json_decode(json_encode($xml), true);
+        $xml        = simplexml_load_file($file);
+        $importData = json_decode(json_encode($xml), true);
+        // выбрать вторые Группы, тк есть Для мед орг и Для промышл орг
         $this->categoryData = $importData['Классификатор']['Группы']['Группа']['Группы']['Группа'];
     }
 
@@ -75,7 +84,7 @@ class LoadCategories extends LoadService
      */
     protected function fillItem(array $group, string|null $parent): Category
     {
-        $item['s_id']          = $group['Ид'];
+        $item['s_id']           = $group['Ид'];
         $item['category_1s_id'] = $parent;
 
         $item['name']       = $group['Наименование'];
@@ -95,34 +104,36 @@ class LoadCategories extends LoadService
     /**
      * @throws Exception
      */
-    protected function setCategoryOwnProps(Category $category): CategoryProperty
+    protected function setCategoryOwnProps(Category $category): void
     {
         try {
-
-            $catProps = CategoryProperty::firstOrCreate(
-                ['category_1s_id' => $category['s_id']],
-                ['category_1s_id' => $category['s_id']],
-            );
-            if (!$catProps->short_link) {
-                $catProps->short_link = ShortlinkService::getValidShortLink();
-            }
-            if (!$catProps->path) {
-                $catProps->path = UrlService::getCategoryOwnPropPath($category);
-//                UrlService::getCategoryOwnPropPath($category);
-            }
-            $catProps->save();
-            return $catProps;
+            $shortLink = $category?->ownProperties->short_link ?? ShortlinkService::getValidShortLink();
+            $category->ownProperties()->updateOrCreate([
+                'category_1s_id' => $category['s_id']
+            ], [
+                'category_1s_id' => $category['s_id'],
+                'short_link' => $shortLink,
+                'path' => UrlService::getCategoryOwnPropPath($category),
+            ]);
+//            $catProps = CategoryProperty::firstOrCreate(
+//                ['category_1s_id' => $category['s_id']],
+//                [
+//                    'category_1s_id' => $category['s_id']
+//                ],
+//            );
+//            if (!$catProps->short_link) $catProps->short_link = ShortlinkService::getValidShortLink();
+//            if (!$catProps->path) $catProps->path = UrlService::getCategoryOwnPropPath($category);
+//            $catProps->save();
+//            return $catProps;
         } catch (Throwable $exception) {
             $exc = 'load category own props failed: '
                 . $exception->getMessage()
-                .' ---file - '. $exception->getFile()
-                .' ---line - '. $exception->getLine()
-                .' ---trace - '. $exception->getTraceAsString()
-            ;
+                . ' ---file - ' . $exception->getFile()
+                . ' ---line - ' . $exception->getLine()
+                . ' ---trace - ' . $exception->getTraceAsString();
             $this->logger->write($exc);
             throw new Exception($exc);
         }
-
     }
 
     protected function isAssoc(array $arr): bool

@@ -2,10 +2,26 @@
 
 namespace app\service\Utils;
 
+use app\model\Category;
 use app\model\Product;
+use app\service\Router\UrlService;
 
 class UtilsServise
 {
+    public static function changeCategoryPaths(): void
+    {
+        Category::with('ownProperties')
+            ->with('parentRecursive.ownProperties')
+            ->get()
+            ->each(function ($category) {
+                $category->ownProperties()->updateOrCreate([
+                    'category_1s_id' => $category->s_id,
+                ],[
+                    'path' => UrlService::getCategoryOwnPropPath($category)
+                ]);
+            });
+    }
+
     public static function cleanUnitsFromIs(): void
     {
         $processed = 0;
@@ -24,7 +40,7 @@ class UtilsServise
                     }
                 }
             });
-        $d         = $processed;
+        $d = $processed;
     }
 
     public static function checkExtendion(string $extendion)
