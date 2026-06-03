@@ -23,20 +23,23 @@ class PHPMailService
         $this->mailer->Subject = 'VITEX|регистрация';
         $this->mailer->Body    = MailView::registration($user);
         $this->mailer->AltBody = MailView::registrationAlt($user);
-        $this->mailer->addAddress($user->email);
-
-        $this->mailer->send();
+        try {
+            $this->mailer->addAddress($user->email);
+            $this->mailer->send();
+        } catch (Throwable $exception) {
+            $exc = $exception;
+        }
     }
 
 
     public function sendNewPasswordMail(User $user, string $newPass): bool
     {
-
         $this->mailer->Subject = 'VITEX|новый пароль';
         $this->mailer->Body    = "Ваш новый пароль: " . $newPass;;
         $this->mailer->AltBody = "Ваш новый пароль: " . $newPass;;
 
         try {
+            $this->mailer->addAddress($user->email);
             $this->mailer->send();
             return true;
         } catch (Throwable $exception) {
@@ -52,11 +55,7 @@ class PHPMailService
         $results_link       = "http://" . $_SERVER['HTTP_HOST'] . '/adminsc/testresult/result/' . $resid - 1;
         $template           = FS::getFileContent(ROOT . '/app/view/TestResult/do_email.php', ['data' => $post]);
         $this->mailer->Body = $template;
-
-        //        $data['to'] = self::getMailsToSendIfRightResults($data['to'], $post['errorCnt']);
-//        $data['altBody'] = "Ссылка на страницу с результатами: тут";
         $this->mailer->send();
     }
-
 
 }
