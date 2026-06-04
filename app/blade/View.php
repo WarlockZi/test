@@ -35,7 +35,7 @@ class View implements IView
     protected function handleError($e)
     {
         // Логирование
-//        $this->logError($e);
+        $this->logError($e);
 
         // В зависимости от режима
         if ($this->blade->getMode() === $this->blade::MODE_DEBUG) {
@@ -50,7 +50,7 @@ class View implements IView
         $logMessage = date('Y-m-d H:i:s') . " - Blade Error: " .
             $e->getMessage() . " in " .
             $e->getFile() . ":" . $e->getLine() . PHP_EOL;
-        file_put_contents('blade_errors.log', $logMessage, FILE_APPEND);
+        error_log( $logMessage, FILE_APPEND);
     }
 
     protected function debugError($e)

@@ -1,7 +1,7 @@
 <div class="value">
 {{--    @deb--}}
     <div
-        {!!$field->id!!}
+{{--        {!!$field->id!!}--}}
         {!!$field->getDatafield()!!}
         {!!$field->getDatarelation()!!}
         {!!$field->contenteditable!!}
