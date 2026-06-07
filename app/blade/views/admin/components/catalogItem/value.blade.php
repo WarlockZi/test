@@ -2,8 +2,9 @@
 {{--    @deb--}}
     <div
 {{--        {!!$field->id!!}--}}
-        {!!$field->getDatafield()!!}
-        {!!$field->getDatarelation()!!}
+{{--        {!!$field->getDatafield()!!}--}}
+{{--        {!!$field->getDatarelation()!!}--}}
+        {!!$field->getDataAttributes()!!}
         {!!$field->contenteditable!!}
         {!!$field->required!!}
     >
