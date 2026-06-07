@@ -26,12 +26,13 @@ abstract class UserView
     public static function getViewByRole(User $userToEdit, User $thisUser): array
     {
         if (!$userToEdit) return [];
+
         if ($thisUser->isEmployee()) {
-            if ($thisUser->isAdmin()) {
-                return self::admin($userToEdit);
-            }
-            return self::employee($userToEdit);
+            return $thisUser->isAdmin()
+                ? self::admin($userToEdit)
+                : self::employee($userToEdit);
         }
+
         return self::guest($userToEdit);
     }
 
