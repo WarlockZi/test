@@ -49,7 +49,7 @@ class SelectBuilder
 
     public function relation(string $relation, string $relationModel): static
     {
-        $this->relation = "data-relation='{$relation}' data-relationmodel='{$relationModel}'";
+        $this->relation = "data-relation=$relation data-relationmodel=$relationModel";
         return $this;
     }
 
