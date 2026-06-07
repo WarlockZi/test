@@ -246,7 +246,8 @@ class CategoryFormView
             ItemFieldBuilder::build('seo_article', $categoryProperty)
                 ->name('Seo article')
                 ->html(self::getSeoArticle($categoryProperty))
-                ->id('seo-article')
+                ->data(['id'=>'seo-article'])
+//                ->id('seo-article')
                 ->relation('ownProperties')
                 ->get()->toHtml() .
             "</div>";
@@ -276,6 +277,7 @@ class CategoryFormView
                     ->callback(function ($p) {
                         return $p->name;
                     })
+                    ->search()
                     ->get()
             )
             ->column(
