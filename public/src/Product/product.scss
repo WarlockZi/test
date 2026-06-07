@@ -48,16 +48,16 @@
 
       figure.zoom {
         background-position: 50% 50%;
-        overflow: hidden;
-        cursor: zoom-in;
         position: relative;
+        overflow: hidden;
         margin: 0;
         background-repeat: no-repeat;
+        cursor: zoom-in;
 
         img {
-          padding: 0;
           transition: opacity 0.5s;
           display: block;
+          padding: 0;
           width: 100%;
           height: 100%;
 
