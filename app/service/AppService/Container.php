@@ -12,7 +12,7 @@ class Container
     /**
      * @throws Exception
      */
-    public function __invoke()
+    public function __invoke(): \DI\Container
     {
         $containerCompiled = FS::platformSlashes(
             ROOT . '/storage/framework/container/CompiledContainer.php'
@@ -27,12 +27,13 @@ class Container
         }
         $container = new ContainerBuilder();
 
-        $container->addDefinitions(ROOT .'/config/containerConfig.php');
+        $container->addDefinitions(ROOT . '/config/containerConfig.php');
         $container->addDefinitions(['\app\controller\*::class' => create()]);
 
-        $container
-            ->useAutowiring(true)
-            ->enableCompilation($containerPath);
+        if (!DEV) {
+            $container->enableCompilation($containerPath);
+        }
+        $container->useAutowiring(true);
 
         return $container->build();
     }
