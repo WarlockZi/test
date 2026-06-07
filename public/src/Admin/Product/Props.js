@@ -11,9 +11,9 @@ export default class Props {
       "customSelect.changed",
       this.selectChanged.bind(this),
     );
-    this.values.forEach((value) => {
-      new SelectNew(value);
-    });
+    // this.values.forEach((value) => {
+    //   new SelectNew(value);
+    // });
   }
 
   dto() {
