@@ -4,14 +4,13 @@
 namespace app\view\components\Builders\SelectBuilder\optionBuilders;
 
 use app\exception\Router\RouterException;
-use Illuminate\Database\Eloquent\Collection;
 
 class TreeABuilder extends TreeBuilder
 {
     private string $class = '';
     private string $href = '';
 
-    public static function build(Collection $collection, string $relation, int $multiply = 1, string $tab = '&nbsp;'): TreeABuilder
+    public static function build(array $collection, string $relation, int $multiply = 1, string $tab = '&nbsp;'): TreeABuilder
     {
         $self = new self($collection, $relation, $multiply, $tab);
         return $self;
@@ -27,7 +26,7 @@ class TreeABuilder extends TreeBuilder
         return "<a data-level={$level} value={$id} {$this->class} {$href} {$selected}>{$this->localtab}{$item['name']}</a>";
     }
 
-    protected function options($items, $level, $string)
+    protected function options($items, $level, $string):string
     {
         if (!$this->href) RouterException::setError('добавить ссылку');
         foreach ($items as $item) {
