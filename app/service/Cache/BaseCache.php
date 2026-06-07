@@ -2,7 +2,6 @@
 
 namespace app\service\Cache;
 
-use Psr\SimpleCache\CacheInterface;
 
 class BaseCache
 {
