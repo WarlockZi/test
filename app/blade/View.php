@@ -53,7 +53,7 @@ class View implements IView
         error_log( $logMessage, FILE_APPEND);
     }
 
-    protected function debugError($e)
+    protected function debugError($e): string
     {
         return "<div style='padding: 20px; background: #fee; border: 1px solid red;'>
                 <h3>Blade Template Error</h3>
