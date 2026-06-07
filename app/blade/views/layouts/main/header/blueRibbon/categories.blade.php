@@ -3,6 +3,7 @@
     $level = 1;
     $rootCategories = APP->get('rootCategoriesOrderedByName')->toArray();
 @endphp
+{{--@deb--}}
 @if($rootCategories)
     @foreach ($rootCategories as $rootCategory)
 
