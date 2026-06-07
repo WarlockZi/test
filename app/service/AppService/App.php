@@ -25,7 +25,7 @@ class App
 
         define('APP', $container());
 
-        APP->get(Capsule::class);
+        $capsule = APP->get(Capsule::class);
 
         $cache = APP->get(ICache::class);
         $cache::enabled(env('CACHE'));
