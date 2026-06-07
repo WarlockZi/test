@@ -1,6 +1,6 @@
 import "./catalog-item.scss";
-import { $, debounce, post } from "../../../common.js";
-import { ael } from "../../../constants.js";
+import { $, debounce, post } from "@src/common.js";
+import { ael } from "@src/constants.js";
 import DTO from "../../../Admin/DTO.js";
 import Checkbox from "../../../components/checkbox/checkbox.js";
 import SelectNew from "../../../components/select/SelectNew.js";
@@ -14,7 +14,7 @@ export default class CatalogItem {
     this.model = catalogItem.dataset.model;
     this.id = +catalogItem.dataset.id;
     this.setCheckboxes();
-    this.setSelects();
+    // this.setSelects();
     this.setDates();
 
     catalogItem[ael]("click", this.handleClick.bind(this));
