@@ -43,8 +43,8 @@
 
         @else
 
+
             @include('components.breadcrumbs.index', ['breadcrumbs'=>$category['breadcrumbs']])
-{{--@deb--}}
             <h1>{{$category['own_properties']['seo_h1'] ?? $category['own_properties']['seo_full_name'] ?? $category['name']}}</h1>
 
             @if (!empty($category['children_recursive']))
