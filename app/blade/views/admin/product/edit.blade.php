@@ -1,9 +1,8 @@
 @extends('layouts.admin.admin')
 
 @section('content')
-
+@deb
     @if ($catItem)
-
 
         @include('components.breadcrumbs.index', compact('breadcrumbs'))
         @include('admin.components.catalogItem.index')
