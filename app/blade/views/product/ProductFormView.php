@@ -40,7 +40,7 @@ class ProductFormView
 
     public function dopUnitsPrices(Product $product, string $str = ''): array
     {
-        if (!$product->shippableUnits->count()) return '';
+        if (!$product->shippableUnits->count()) return [];
         $shippable = [];
         foreach ($product->shippableUnits as $unit) {
             $promotion                   = $product->activePromotions->first() ?? null;
@@ -104,7 +104,7 @@ class ProductFormView
                 ->field(
                     ItemFieldBuilder::build('s_id', $product)
                         ->name('Категория')
-                        ->html(CategoryFormView::selectorByField(['s_id' => $product->category['s_id']]))
+                        ->html(CategoryFormView::selectorByField(['s_id' => $product?->category?->s_id]))
                         ->get()
                 )
                 ->field(
@@ -393,7 +393,8 @@ class ProductFormView
                 ->get()->toHtml('product') .
             ItemFieldBuilder::build('seo_article', $product->ownProperties)
                 ->name('Seo article')
-                ->id('seo-article')
+                ->data(['id'=>'seo-article'])
+//                ->id('seo-article')
                 ->html(
                     self::getSeoArticle($product)
                 )
