@@ -51,6 +51,7 @@
   }
 
   .list-filter {
+    align-items: stretch;
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -58,7 +59,7 @@
     min-width: max-content;
     max-width: 95vw;
     margin-bottom: 10px;
-    align-items: start;
+    //align-items: start;
     flex-wrap: wrap;
     backdrop-filter: blur(10px);
     opacity: 0.97;
