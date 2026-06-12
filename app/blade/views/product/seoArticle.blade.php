@@ -1,3 +1,1 @@
-<?= $product->ownProperties->seo_article; ?>
-
-
+{!!$product->ownProperties->seo_article!!}
