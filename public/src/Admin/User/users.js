@@ -1,8 +1,7 @@
 import "./users.scss";
 import { $, post } from "@src/common.js";
 import SelectNew from "@src/components/select/SelectNew.js";
-import { ael } from "@src/constants.js";
-import DTO from "@src/Admin/DTO.js";
+import DTO from "@src/Admin/DTO/DTO.js";
 
 export default class Users {
   constructor() {
