@@ -4,7 +4,8 @@
 
 <div class="item-wrap"
      data-model="{!!$catItem['model']!!}"
-     data-id="{!!$catItem['item']['id']!!}"
+     data-id="{!!data_get($catItem, 'item.id')!!}"
+{{--     data-id="{!!$catItem['item']['id']!!}"--}}
 >
 {{--@deb--}}
     @if($catItem['tabs'])
