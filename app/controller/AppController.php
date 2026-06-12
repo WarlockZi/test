@@ -28,16 +28,12 @@ class AppController extends Controller
             $this->updateOrCreateRelation($req);
         }
 
-        if (!empty($req['fields'])) {
+        if (!empty($req['field'])) {
             $id    = $req['id'] ?? null;
             $model = $this->model::updateOrCreate(
                 ['id' => $id],
-                $req['fields']
+                $req['field']
             );
-        }
-
-        if (!empty($req['morph'])) {
-            $this->updateOrCreateMorph($req);
         }
 
         if ($model->wasRecentlyCreated) {
@@ -99,17 +95,6 @@ class AppController extends Controller
     }
 
 
-    protected function updateOrCreateMorph(array $req): void
-    {
-        $morph    = $req['morph'];
-        $relation = $morph['relation'];
-        $model    = $this->model::with($relation)->find($req['id']);
-        $created  = $this->model->$relation()->create();
-        $this->model->$relation()->syncWithoutDetaching($created);
-        response()->json(['popup' => 'Создан', 'id' => $created->id]);
-    }
-
-
     protected function updateOrCreateRelation(array $req): void
     {
         $modalId      = $req['id'];
@@ -118,7 +103,7 @@ class AppController extends Controller
         $attach       = $req['relation']['attach'] ?? null;
         $model        = $this->model::with($relationName)->find($modalId);
 
-        if ($relationName) {//for has many models
+        if ($relationName) {//has many models
             if ($pivot) {
                 $id                 = $req['relation']['id'];
                 $pivotField         = array_keys($pivot)[0];
@@ -145,9 +130,9 @@ class AppController extends Controller
                     response()->json(['popup' => 'Заменен', 'attach' => $attach]);
                 }
 
-            } elseif (!empty($req['relation']['fields'])) {
-                $key                        = key($req['relation']['fields']) ?? null;
-                $value                      = $req['relation']['fields'][$key] ?? null;
+            } elseif (!empty($req['relation']['field'])) {//it is hasOne rel
+                $key                        = key($req['relation']['field']) ?? null;
+                $value                      = $req['relation']['field'][$key] ?? null;
                 $model->$relationName->$key = $value;
                 $model->push();
 //            } elseif ($req['relation']['id']) {
