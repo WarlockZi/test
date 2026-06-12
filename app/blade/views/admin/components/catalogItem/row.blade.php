@@ -1,13 +1,15 @@
-<div class="row" {{$field->hidden}}>
+<div class="row" {!!$field->hidden!!}>
 {{--        @deb--}}
     <div
             class="field"
+
             @if($field->tooltip)
-                aria-label="{{$field->tooltip}}"
+                aria-label="{!!$field->tooltip!!}"
             role="tooltip"
-            data-tip="{{$field->tooltip}}"
+            data-tip="{!!$field->tooltip!!}"
             @endif
-    >{{$field->name}}</div>
+
+    >{!!$field->name!!}</div>
     :
     @include('admin.components.catalogItem.value')
 </div>
