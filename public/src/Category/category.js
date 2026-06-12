@@ -2,7 +2,7 @@ import { ael, qa, qs } from "../constants";
 import shippableTable from "@components/shippable/shippableUnitsTable";
 import MyQuill from "../components/quill/MyQuill.js";
 import { getCookie, newObjAndFiles2FormData, post } from "@src/common.js";
-import DTO from "@src/Admin/DTO.js";
+import DTO from "@src/Admin/DTO/DTO.js";
 import Dnd from "@components/dnd/dnd.js";
 
 export default class Category {
