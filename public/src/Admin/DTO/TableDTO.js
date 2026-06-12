@@ -1,4 +1,4 @@
-import CheckboxDTO from "@src/Admin/CheckboxDTO.js";
+import CheckboxDTO from "@src/Admin/DTO/CheckboxDTO.js";
 
 export default class TableDTO {
   constructor(target, prev) {
