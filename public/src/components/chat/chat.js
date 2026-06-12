@@ -21,12 +21,14 @@ export default class Chat {
   handleKeyup(e) {
     if (e.key === "Enter" || e.keyCode === 13) {
       if (e.target.dataset.userName) {
+        const d = 4;
       } else if (e.target.dataset.message) {
+        const d = 4;
       }
     }
   }
 
-  iconClickHandler({ target }) {
+  iconClickHandler() {
     this.form.classList.add("open");
     this.newChat();
   }
@@ -35,6 +37,7 @@ export default class Chat {
     if (target.classList.contains("modal-close")) {
       this.form.classList.remove("open");
     } else if (target) {
+      const d = 4;
     }
   }
 
