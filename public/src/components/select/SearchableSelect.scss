@@ -1,0 +1,111 @@
+.filterable-select {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  font-family: system-ui, -apple-system, sans-serif;
+  box-sizing: border-box;
+  padding-right: 1rem;
+
+  .fs-trigger {
+    padding: .4rem .5rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    user-select: none;
+    width: 100%;
+
+    &:hover,
+    &:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+      outline: none;
+    }
+
+    &::after {
+      content: '▼';
+      font-size: 10px;
+      color: #64748b;
+      margin-left: auto;
+    }
+
+    &.is-selected {
+      color: #0f172a;
+    }
+  }
+
+
+  .fs-dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    z-index: 100;
+    display: none;
+    padding: 8px;
+
+    &.is-open {
+      display: block;
+    }
+
+    .fs-search {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #e2e8f0;
+      border-radius: 4px;
+      margin-bottom: 6px;
+      box-sizing: border-box;
+      outline: none;
+      font-size: 14px;
+
+      &:focus {
+        border-color: #3b82f6;
+      }
+    }
+
+    .fs-options {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      max-height: 200px;
+      overflow-y: auto;
+
+      .fs-option {
+        padding: 2px 4px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background 0.15s;
+        color: dimgrey;
+        min-height: 1rem;
+
+
+        &[selected] {
+          background-color: var(--color-grey80);
+        }
+
+        &:hover {
+          background: #f1f5f9;
+        }
+      }
+
+
+    }
+
+    .fs-no-results {
+      padding: 8px 10px;
+      color: #64748b;
+      font-size: 13px;
+      text-align: center;
+      display: none;
+    }
+  }
+}
+
