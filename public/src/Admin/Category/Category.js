@@ -4,7 +4,7 @@ import PropertyTable from "./PropertyTable";
 import { $, post } from "../../common.js";
 import SelectNew from "../../components/select/SelectNew";
 import QuillFactory from "@src/components/quill/QuillFactory.js";
-import { QuillConst } from "@src/components/quill/QuillConstans.js";
+// import { QuillConst } from "@src/components/quill/QuillConstans.js";
 
 export default class Category {
   constructor(el) {
@@ -12,7 +12,7 @@ export default class Category {
     this.id = el.dataset.id;
     this.setSelects();
     this.setProperties();
-    QuillFactory.create("#seo-article", QuillConst.ADMIN_CATEGORY_SEO_ARTICLE);
+    // QuillFactory.create("#seo-article", QuillConst.ADMIN_CATEGORY_SEO_ARTICLE);
   }
 
   setSelects() {
