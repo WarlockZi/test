@@ -1,12 +1,12 @@
 export default function scroll() {
-  var prevScrollpos = window.pageYOffset;
+  let prevScrollpos = window.pageYOffset;
 
   /* Get the header element and it's position */
-  var headerDiv = document.querySelector("header");
-  var headerBottom = headerDiv.offsetTop + headerDiv.offsetHeight;
+  const headerDiv = document.querySelector("header");
+  const headerBottom = headerDiv.offsetTop + headerDiv.offsetHeight;
 
   window.onscroll = function () {
-    var currentScrollPos = window.pageYOffset;
+    const currentScrollPos = window.pageYOffset;
 
     /* if we're scrolling up, or we haven't passed the header,
          show the header at the top */
