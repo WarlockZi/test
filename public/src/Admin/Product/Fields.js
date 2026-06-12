@@ -51,10 +51,10 @@ export default class Fields {
     if (!field) return;
     let data = this.dto(obj);
     data[field] = obj.detail.next.value;
-    let res = await post("/adminsc/product/updateOrCreate", data);
+    await post("/adminsc/product/updateOrCreate", data);
   }
 
-  dto(obj) {
+  dto() {
     return {
       id: this.$product.dataset.id,
     };
