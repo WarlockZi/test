@@ -16,7 +16,7 @@ use Throwable;
 class ProductAction
 {
     public function __construct(
-        private NewBread $breadcrumbs,
+        private readonly NewBread $breadcrumbs,
     )
     {
     }
@@ -26,7 +26,7 @@ class ProductAction
      */
     public function getBreadcrumbs($category, bool $lastItemIsLink): array
     {
-        if (!$category) throw new Exception('Breadcrumbs service has no category');
+        if (!$category) return [];
         return $this->breadcrumbs->getParents($category, $lastItemIsLink);
     }
 
