@@ -3,7 +3,7 @@ import Quill from "quill";
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
-import DTO from "@src/Admin/DTO.js";
+import DTO from "@src/Admin/DTO/DTO.js";
 
 export default class MyQuill {
   constructor(
