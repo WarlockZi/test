@@ -1,27 +1,27 @@
-import { $, debounce, isJson, post } from "@src/common.js";
-import DTO from "@src/Admin/DTO.js";
+import { debounce, isJson, post } from "@src/common.js";
 import Quill from "quill";
 import { ael } from "@src/constants.js";
+import RelationDTO from "@src/Admin/DTO/RelationDTO.js";
+import FieldDTO from "@src/Admin/DTO/FieldDTO.js";
 
 export default class AdminQuill {
-  constructor(selector, options) {
-    const el = $(selector).first();
+  constructor(el, options = {}) {
     if (!el) return;
     this.el = el;
+
     this.autosave = options?.autosave || true;
     this.editable = options?.editable || true;
-    this.theme = options?.theme || "snow";
-    this.placeholder = options?.theme || "Начните писать...";
 
     this.options = this.setOptions();
-    this.quill = new Quill(selector, this.options);
-    this.dto = this.setDTO();
+    this.quill = new Quill(el, this.options);
+    this.dto = new FieldDTO(this.el);
     this.setContent();
+
     if (this.autosave) this.el[ael]("keyup", debounce(this.save.bind(this)));
   }
 
   async save() {
-    this.dto.relation.fields[this.el?.dataset?.field] = JSON.stringify(
+    this.dto.relation.field[this.el?.dataset?.field] = JSON.stringify(
       this.quill.getContents(),
     );
     const res = await post(
@@ -38,16 +38,6 @@ export default class AdminQuill {
       // const cleanText = this.el.innerText.replace(/<br\s*\/?>/gi, ""); // Заменяем <br> на переносы строки
       this.quill.setText(cleanText);
     }
-  }
-
-  setDTO() {
-    const parent = this.el.closest(`[data-model]`);
-    const model = parent?.dataset.model;
-    const id = parent.dataset.id;
-    const dto = new DTO(id);
-    dto.model = model;
-    dto.relation.name = this.el.dataset.relation;
-    return dto;
   }
 
   setToolbar() {
@@ -72,11 +62,10 @@ export default class AdminQuill {
     ];
   }
 
-  setOptions() {
+  setOptions(options) {
     return {
-      theme: this.theme,
-      // theme: 'bubble',
-      placeholder: this.placeholder,
+      theme: options?.theme || "snow", /// || "bubble";
+      placeholder: options?.placeholder || "Начните писать...",
       modules: {
         toolbar: this.setToolbar(),
       },
