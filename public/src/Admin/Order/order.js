@@ -1,4 +1,4 @@
-import SelectNew from "../../components/select/SelectNew";
+import SelectNew from "@components/select/del/SelectNew.js";
 import { $, post } from "./../../common.js";
 import "./order.scss";
 
