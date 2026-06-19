@@ -28,6 +28,11 @@ class Nonce
     }
     public static function getNonce()
     {
+        $ist = self::getInstance();
+
+        if (!$ist::$nonce) {
+            self::generate();
+        }
         return self::$nonce;
     }
 
