@@ -1,5 +1,5 @@
 import { $ } from "../common.js";
-import { qs } from "../constants";
+import { qa, qs, quillSelector } from "../constants";
 import "@components/popup.scss";
 import "./admin.scss";
 
@@ -43,7 +43,15 @@ $(document).ready(async function () {
     const { default: Tables } = await import("../components/table/Tables.js");
     new Tables();
   }
-
+  const quills = document[qa](quillSelector);
+  if (quills) {
+    const { default: QuillFactory } = await import(
+      "../components/quill/QuillFactory.js"
+    );
+    [].forEach.call(quills, (el) => {
+      new QuillFactory(el);
+    });
+  }
   if (window.location.pathname === "/adminsc/pages") {
     new Pages();
   } else if (window.location.pathname === "/adminsc/user") {
