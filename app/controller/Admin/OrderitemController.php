@@ -39,7 +39,7 @@ class OrderitemController extends AdminscController
         }
     }
 
-    public function actionDelete(): void
+    public function actionDelete(IRequest $request): void
     {
         $product_id = $this->ajax['product_id'];
         $sess       = $this->ajax['sess'];
