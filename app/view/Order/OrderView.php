@@ -142,7 +142,6 @@ class OrderView
                     ->width("60px")
                     ->get()
             )
-
             ->get();
 
     }
@@ -151,11 +150,11 @@ class OrderView
     {
         $str = '<div>';
         foreach ($product->orderItems as $orderItem) {
-            $count     = $orderItem->count??0;
-            $unitName  = $orderItem->productUnit->unit->name??'';
-            $unitPrice = $orderItem->productUnit->price??"-";
+            $count     = $orderItem->count ?? 0;
+            $unitName  = $orderItem->productUnit->unit->name ?? '';
+            $unitPrice = $orderItem->productUnit->price ?? "-";
             $str       .= "<div>$count $unitName $unitPrice</div>";
         }
-        return $str.'</div>';
+        return $str . '</div>';
     }
 }
