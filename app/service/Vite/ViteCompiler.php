@@ -43,29 +43,16 @@ class ViteCompiler
 
     public function getAssets(): string
     {
-//        $nonce = Nonce::getInstance();
         $nonce = Nonce::getNonce();
         $this->js  = "\n" . $this->jsTag($nonce)
             . "\n" . $this->jsPreloadImports($nonce);
         $this->css = "\n" . $this->cssTag($nonce);
         return $this->js . $this->css;
     }
-//    function vite_asset($entry) {
-//        if (is_dev_server_running()) {
-//            return '
-//            <script type="module" src="http://localhost:3000/@vite/client" nonce="' . generate_nonce() . '"></script>
-//            <script type="module" src="http://localhost:3000/resources/js/app.js" nonce="' . generate_nonce() . '"></script>
-//        ';
-//        }
-//    }
-//
-//    function is_dev_server_running() {
-//        return file_exists(__DIR__ . '/hot');
-//    }
     function client(string $nonce): string
     {
         return DEV
-            ? "<script nonce='$nonce' type='module' src='$this->devHost@vite/client'></script>"
+            ? "<script nonce=$nonce type='module' src='$this->devHost@vite/client'></script>"
             : "";
     }
 
