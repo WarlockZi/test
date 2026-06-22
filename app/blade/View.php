@@ -62,11 +62,11 @@ class View implements IView
                 </div>";
     }
 
-    protected function productionError($e)
+    protected function productionError($e): string
     {
         // Попытка показать страницу ошибки
         try {
-            return $this->run("errors.template", ['error' => 'Template error occurred']);
+            return $this->blade->run("errors.template", ['error' => 'Template error occurred']);
         } catch (Exception $e2) {
             return "A template error occurred. Please try again later.";
         }
