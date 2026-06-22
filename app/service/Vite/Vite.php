@@ -16,8 +16,7 @@ class Vite
     {
         $jsCss   = '';
 
-        $nonce = Nonce::getInstance();
-        $nonce = $nonce->getNonce();
+        $nonce = Nonce::getNonce();
 
         if (DEV) {
             $jsCss = $this->compiler->client($nonce);
