@@ -10,8 +10,8 @@ if (DEV) {
     if (function_exists('xdebug_enable')) {
         xdebug_enable();
     }
-//    set_error_handler('devErrorHandler');
-//    set_exception_handler('devExceptionHandler');
+    set_error_handler('devErrorHandler');
+    set_exception_handler('devExceptionHandler');
 //    register_shutdown_function('devShutdownHandler');
 } else {
     error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT & ~E_NOTICE);
@@ -119,12 +119,12 @@ function devShutdownHandler(): void
     }
 
     $lines = [
-        $exception->getMessage() . " : Dev exception<br>",
-        "file: " . $exception->getFile() . " : " . $exception->getLine(),
-        "URL: " . $url . "<br>",
-        "TRACE: <br><br>" . $traceStr,
+        "dev except message"=>$exception->getMessage(),
+        "file: " => $exception->getFile() . " : " . $exception->getLine(),
+        "URL: " => $url,
+        "TRACE:" => $traceStr,
     ];
+    response()->consoleTable($lines);
 
-    exit(implode("<br>", $lines));
 
 }
