@@ -1,5 +1,6 @@
 import { $, createElement, post } from "../../common";
-import SelectNew from "../../components/select/SelectNew.js";
+import SelectNew from "@components/select/del/SelectNew.js";
+import SearchableSelect from "@components/select/Factory/SearchableSelect.js";
 
 export default class Property {
   constructor(selectSelector) {
@@ -40,7 +41,7 @@ export default class Property {
       let row = target.closest(".row");
       let data = this.dto(row);
       let res = await post("/adminsc/unit/detachunit", data);
-      debugger;
+
       if (res?.arr?.ok) {
         row.remove();
       } else if (target.tagName === "INPUT") {
@@ -116,7 +117,7 @@ export default class Property {
     row.append(divider);
     row.append(baseUnit);
     row.append(del);
-    new SelectNew(selector);
+    new SearchableSelect(selector);
 
     this.$rows.append(row);
   }
