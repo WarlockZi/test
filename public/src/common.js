@@ -1,5 +1,30 @@
 "use strict";
 
+import SearchableSelect from "@components/select/Factory/SearchableSelect.js";
+import Table from "@components/table/Table.js";
+
+class DI {
+  constructor() {
+    this.components = new Map();
+    this.components.set("ISelect", SearchableSelect);
+    this.components.set("ITable", Table);
+  }
+
+  create(name, ...options) {
+    const Component = this.components.get(name);
+
+    if (!Component) {
+      throw new Error(`Компонент "${name}" не зарегистрирован`);
+    }
+
+    try {
+      return new Component(...options);
+    } catch (error) {
+      console.error(`Ошибка создания компонента "${name}":`, error);
+      throw error;
+    }
+  }
+}
 const scrollToTop = () => {
   const c = document.documentElement.scrollTop || document.body.scrollTop;
   if (c > 0) {
@@ -464,6 +489,9 @@ function handleResponse(res) {
     if (res?.console) {
       console.log(res?.console);
     }
+    if (res?.table) {
+      console.table(res?.table);
+    }
     if (res?.popup) {
       popup.show(res?.popup);
     } else {
@@ -713,6 +741,7 @@ function addTooltip(args) {
 }
 
 export {
+  DI,
   passwordValidator,
   // phoneValidator,
   emailValidator,
