@@ -75,7 +75,7 @@ class PropertyView
 
     }
 
-    public static function getProductSelector(Property $property, Product $product)
+    public static function getProductSelector(Property $property, Product $product): string
     {
         $intersect = $property->vals->intersect($product->values);
         $selected  = $intersect->count() ? $intersect[0]->id : 0;
@@ -85,7 +85,9 @@ class PropertyView
             ->get();
 
         $select = MorphBuilder::build($product, 'values', 'prop-' . $property->id)
-            ->html(SelectBuilder::build($options)->get())
+            ->html(
+                SelectBuilder::build($options)->get()
+            )
             ->model('val')
             ->get();
 
