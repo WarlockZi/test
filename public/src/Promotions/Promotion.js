@@ -1,6 +1,7 @@
 import "./promotion.scss";
 import { $, post } from "../common";
-import SelectNew from "../components/select/SelectNew";
+import SearchableSelect from "@components/select/Factory/SearchableSelect.js";
+// import SelectNew from "@components/select/del/SelectNew.js";
 
 export default class Promotion {
   constructor() {
@@ -11,7 +12,8 @@ export default class Promotion {
     this.$count = $(`[data-field='count']`).first();
 
     this.$unit = $("[select-new].unit").first();
-    new SelectNew(this.$unit);
+    // new SelectNew(this.$unit);
+    new SearchableSelect(this.$unit);
     $(`[data-field="unit"]`)
       .first()
       .addEventListener("customSelect.changed", this.unitChanged.bind(this));
@@ -35,8 +37,6 @@ export default class Promotion {
     let data = this.dto(this);
     data.active_till = target.value;
     let res = await post(this.updateUrl, data);
-    if (res) {
-    }
   }
 
   dto(self) {
