@@ -40,6 +40,9 @@ class ProductController extends AdminscController
     #[NoReturn] public function actionEdit(IRequest $request): void
     {
         $prod        = $this->repo->edit($request->id);
+        if (!$prod) {
+            view('admin.product.notFound');
+        }
         $breadcrumbs = $this->actions->getBreadcrumbs($prod->category, true);
         $catItem     = ProductFormView::edit($prod);
         view('admin.product.edit', compact('catItem', 'breadcrumbs'));

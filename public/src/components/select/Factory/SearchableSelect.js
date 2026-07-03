@@ -1,4 +1,4 @@
-import Select from "@components/select/Factory/Select.js";
+import { Select } from "@components/select/Factory/Select.js";
 
 export default class SearchableSelect extends Select {
   constructor(selectEl, config) {
@@ -35,12 +35,14 @@ export default class SearchableSelect extends Select {
 
     this.elements.optionElements.forEach((li) => {
       const match = li.textContent.toLowerCase().includes(query);
-      li.style.display = match ? "" : "none";
+      // li.style.display = match ? "" : "none";
+      li.classList.toggle("none", !match);
       if (match) visibleCount++;
     });
 
     this.elements.noResults.style.display =
       visibleCount === 0 ? "block" : "none";
+    this.visibleOptions();
   }
   reset() {
     super.reset();

@@ -24,16 +24,6 @@ class OrderView
     {
         $users = User::all();
         return Table::build($items)
-            ->header(
-                TableHeader::build()
-                    ->add('Менеджер',
-                        SelectBuilder::build(
-                            ArrayOptionsBuilder::build($users)
-                                ->get()
-                        )
-                            ->get())
-                    ->get()
-            )
             ->pageTitle('Заказ незарегистрированного пользователя')
             ->model('order')
             ->column(
@@ -85,14 +75,14 @@ class OrderView
                             ($order->user?->middleName ?? '');
                     })
 //                    ->data(user)
-                    ->search()
+                    ->headerSearch()
                     ->width('1fr')
                     ->get())
             ->column(
                 ColumnBuilder::build('Дата')
                     ->class('left')
 //                    ->name('created_at')
-                    ->search()
+                    ->headerSearch()
                     ->width('150px')
                     ->get())
             ->edit()

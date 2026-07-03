@@ -2,7 +2,7 @@
 
 namespace app\controller\Admin;
 
-use app\blade\views\admin\promotion\PromotionFormView;
+use app\blade\views\admin\promotion\HerocategoryFormView;
 use app\model\Promotion;
 
 class PromotionController extends AdminscController
@@ -18,14 +18,14 @@ class PromotionController extends AdminscController
     {
         $id        = $this->route->id;
         $promotion = Promotion::with('product')->firstOrCreate(['id' => $id]);
-        $promotion = PromotionFormView::edit($promotion);
+        $promotion = HerocategoryFormView::edit($promotion);
         $this->setVars(compact('promotion'));
     }
 
     public function actionIndex(): void
     {
         $promotions = Promotion::with('product', 'unit')->get();
-        $data    = PromotionFormView::adminIndex($promotions);
+        $data    = HerocategoryFormView::adminIndex($promotions);
         view('admin.promotion.promotion', compact('data'));
     }
 

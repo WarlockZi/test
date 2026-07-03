@@ -16,6 +16,7 @@ use app\view\components\Builders\SelectBuilder\optionBuilders\ArrayOptionsBuilde
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\TableBuilder\Table;
+use app\view\components\Icon\Icon;
 use app\view\Right\RightView;
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,26 +29,41 @@ class UserAction implements IShowTable
          return Table::build(User::with('role')->get())
             ->pageTitle('Пользователи')
             ->data(['model'=>'user'])
-//            ->model('user')
             ->column(
                 ColumnBuilder::build('id')
+                    ->callback(function ($user) {
+                        return $user->id ?? '';
+                    })
                     ->get())
             ->column(
-                ColumnBuilder::build('name')
-//                    ->name('Фамилия')
-                    ->search()
+                ColumnBuilder::build('surName')
+                    ->headerTitle('Фамилия')
                     ->width('1fr')
+                    ->headerSort(icon:Icon::edit())
+                    ->headerSearch()
                     ->get())
+             ->column(
+                 ColumnBuilder::build('name')
+                     ->headerTitle('Имя')
+                     ->headerSearch()
+                     ->width('1fr')
+                     ->get())
+             ->column(
+                 ColumnBuilder::build('middleName')
+                     ->headerTitle('Отчество')
+                     ->headerSearch()
+                     ->width('1fr')
+                     ->get())
             ->column(
                 ColumnBuilder::build('email')
 //                    ->name('email')
-                    ->search()
+                    ->headerSearch()
                     ->width('1fr')
                     ->get())
             ->column(
                 ColumnBuilder::build('phone')
 //                    ->name('phone')
-                    ->search()
+                    ->headerSearch()
                     ->width('1fr')
                     ->get())
 

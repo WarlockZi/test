@@ -5,6 +5,7 @@ namespace app\action;
 
 
 use app\model\Feedback;
+use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
 use app\view\components\Builders\CheckboxBuilder\FeedbackCheckboxBuilder;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\TableBuilder\Table;
@@ -21,28 +22,28 @@ class FeedbackAction
                 ColumnBuilder::build('created_at')
 //                    ->name('создан')
                     ->width('100px')
-                    ->search()
-                    ->sort()
+                    ->headerSearch()
+                    ->headerSort()
                     ->get()
             )
             ->column(
                 ColumnBuilder::build('name')
 //                    ->name('Имя')
-                    ->search()
-                    ->sort()
+                    ->headerSearch()
+                    ->headerSort()
                     ->get()
             )
             ->column(
                 ColumnBuilder::build('email')
 //                    ->name('email')
-                    ->sort()
-                    ->search()
+                    ->headerSort()
+                    ->headerSearch()
                     ->get()
             )
             ->column(
                 ColumnBuilder::build('phone')
 //                    ->name('Телефон')
-                    ->sort()
+                    ->headerSort()
                     ->get()
             )
             ->column(
@@ -52,71 +53,93 @@ class FeedbackAction
             )
             ->column(ColumnBuilder::build('done')
 //                ->name('Обработан')
-                ->component(
-                    (new FeedbackCheckboxBuilder)
-                        ->setCheckedFn(
-                            function ($item) {
-                                return boolval($item->done);
-                            }
-                        )
-                        ->setDataField('done')
-                        ->get()
-                )
+                ->callback(function ($unit) {
+                    return CheckboxBuilder::build()
+                        ->checked($unit->done)
+//                        ->data(['field'=>'show_front'])
+                        ->get()->toHtml();
+                })
+//                ->component(
+//                    (new FeedbackCheckboxBuilder)
+//                        ->setCheckedFn(
+//                            function ($item) {
+//                                return boolval($item->done);
+//                            }
+//                        )
+//                        ->setDataField('done')
+//                        ->get()
+//                )
                 ->get()
             )
             ->get();
     }
     public function UndoneTable(): array
     {
-        return Table::build(Feedback::where('done', 0)->get())
-//        return Table::build(Feedback::take(3)->get())
+        return Table::build(Feedback::whereNull('done')->get())
+
             ->model('feedback')
             ->pageTitle('Необработанные сообщения пользователей')
             ->column(
-                ColumnBuilder::build('created_at')
-//                    ->name('создан')
+                ColumnBuilder::build('создан')
+                    ->callback(function ($feedback) {
+                        return $feedback->created_at;
+                    })
                     ->width('100px')
-                    ->search()
-                    ->sort()
+                    ->headerSearch()
+                    ->headerSort()
                     ->get()
             )
             ->column(
-                ColumnBuilder::build('name')
-//                    ->name('Имя')
-                    ->search()
-                    ->sort()
+                ColumnBuilder::build('имя')
+                    ->callback(function ($feedback) {
+                        return $feedback->name;
+                    })
+                    ->headerSearch()
+                    ->headerSort()
                     ->get()
             )
             ->column(
                 ColumnBuilder::build('email')
-                    ->sort()
-                    ->search()
-//                    ->name('email')
+                    ->callback(function ($feedback) {
+                        return $feedback->email;
+                    })
+                    ->headerSort()
+                    ->headerSearch()
                     ->get()
             )
             ->column(
-                ColumnBuilder::build('phone')
-                    ->sort()
-//                    ->name('Телефон')
+                ColumnBuilder::build('Телефон')
+                    ->callback(function ($feedback) {
+                        return $feedback->phone;
+                    })
+                    ->headerSort()
                     ->get()
             )
             ->column(
-                ColumnBuilder::build('message')
-//                    ->name('Сообщение')
+                ColumnBuilder::build('Сообщение')
+                    ->callback(function ($feedback) {
+                        return $feedback->message;
+                    })
                     ->get()
             )
-            ->column(ColumnBuilder::build('done')
+            ->column(ColumnBuilder::build('Обработан')
 //                ->name('Обработан')
-                ->component(
-                    (new FeedbackCheckboxBuilder)
-                        ->setCheckedFn(
-                            function ($item) {
-                                return boolval($item->done);
-                            }
-                        )
-                        ->setDataField('done')
-                        ->get()
-                )
+                ->callback(function ($unit) {
+                    return CheckboxBuilder::build()
+                        ->checked($unit->done)
+//                        ->data(['field'=>'show_front'])
+                        ->get()->toHtml();
+                })
+//                ->component(
+//                    (new FeedbackCheckboxBuilder)
+//                        ->setCheckedFn(
+//                            function ($item) {
+//                                return boolval($item->done);
+//                            }
+//                        )
+//                        ->setDataField('done')
+//                        ->get()
+//                )
                 ->get()
             )
             ->get();

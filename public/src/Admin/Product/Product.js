@@ -3,8 +3,9 @@ import "./units.scss";
 import { $, newObjAndFiles2FormData, post } from "../../common.js";
 import "./Props.js";
 import { qs } from "../../constants";
-import QuillFactory from "@src/components/quill/QuillFactory.js";
-import { QuillConst } from "@src/components/quill/QuillConstans.js";
+// import QuillFactory from "@src/components/quill/QuillFactory.js";
+// import { QuillConst } from "@src/components/quill/QuillConstans.js";
+// import MyQuill from "@components/quill/MyQuill.js";
 
 export default class Product {
   constructor() {
@@ -12,24 +13,20 @@ export default class Product {
     if (!product) return false;
     this.product = product;
     this.model = "product";
-    this.id = $(this.product).find(`[data-field='id']`).innerText;
+    this.id = this.product.dataset.id;
+    // this.id = $(this.product).find(`[data-field='id']`).innerText;
 
     this.setProps().then();
 
     this.setDragNDrop().then();
     this.setCardPanel().then();
 
-    QuillFactory.create(".txt", QuillConst.ADMIN_PRODUCT_DESCRIPTION);
-    QuillFactory.create("#seo-article", QuillConst.ADMIN_PRODUCT_SEO_ARTICLE);
-    // this.filterable();
+    // QuillFactory.create(".txt", QuillConst.ADMIN_PRODUCT_DESCRIPTION);
+    // QuillFactory.create(
+    //   "[data-id='seo-article']",
+    //   QuillConst.ADMIN_CATEGORY_SEO_ARTICLE,
+    // );
   }
-  // filterable() {}
-  // setUnitsCustomSelects() {
-  //   const units = $(".units [custom-select]");
-  //   [].forEach.call(units, (unit) => {
-  //     if (unit.dataset.id) new SelectNew(unit);
-  //   });
-  // }
 
   async setDragNDrop() {
     const dragNdrop = document[qs]("[dnd]");

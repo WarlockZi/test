@@ -3,15 +3,16 @@
 namespace app\formRequest;
 
 
+use app\formRequest\baseFormRequests\FormRequest;
 use app\formRequest\baseFormRequests\FormRequest2;
 
 
-class ReturnPassRequest extends FormRequest2
+class ReturnPassRequest extends FormRequest
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
+//    public function __construct()
+//    {
+//        parent::__construct();
+//    }
 
     public function rules(): array
     {

@@ -2,6 +2,7 @@ import {
   catItemSelector,
   dataPivotSelector,
   dataRelationSelector,
+  tableSelector,
 } from "../../constants.js";
 
 export default class FieldDTO {
@@ -10,10 +11,18 @@ export default class FieldDTO {
 
     this.el = el;
 
-    this.model = el.closest([catItemSelector]).dataset.model;
-    this.id = el.closest([catItemSelector]).dataset.id;
-    this.relation = el.closest([dataRelationSelector])?.dataset.relation;
+    this.model =
+      el.closest([catItemSelector])?.dataset?.model ?? //catitem
+      el.closest("[" + [tableSelector] + "]").dataset.model; //table
+    this.id =
+      el.closest([catItemSelector])?.dataset?.id ?? //catitem
+      el.closest("[data-id]").dataset.id; //table
+
     this.pivot = el.closest([dataPivotSelector])?.dataset.pivot;
+    if (!this.pivot) {
+      this.relation = el.closest([dataRelationSelector])?.dataset.relation;
+    }
+    // this.field = el.closest([dataPivotSelector])?.dataset.field;
 
     const dataset = this.el?.dataset;
 

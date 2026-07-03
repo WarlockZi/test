@@ -152,7 +152,7 @@ class ImageRepository
     public static function getImg($path = "")
     {
         $file = ROOT . $path;
-        if (is_readable($file) && $path) {
+        if (is_readable($file) && $path && is_file($file)) {
             return $path;
         } else {
             return ImageView::noImageSrc();

@@ -5,6 +5,7 @@ namespace app\service\Sync\Load;
 
 use app\model\Product;
 use app\model\ProductProperty;
+use app\service\Logger\SyncLogger;
 use app\service\ShortLink\ShortlinkService;
 use app\service\Slug\SlugService;
 use Carbon\Carbon;
@@ -19,6 +20,7 @@ class LoadProducts extends LoadService
     public function __construct()
     {
         parent::__construct();
+//        $this->logger = new SyncLogger();
         $this->setImportFile();
     }
 

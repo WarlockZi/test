@@ -6,6 +6,7 @@ namespace app\controller;
 use app\action\MainAction;
 use app\model\CategoryProperty;
 use app\repository\CategoryRepository;
+use app\repository\HeroCategroyRepository;
 use app\repository\PromotionRepository;
 use app\service\Router\IRequest;
 use JetBrains\PhpStorm\NoReturn;
@@ -31,7 +32,9 @@ class MainController extends AppController
             'Доставим нитриловые, латексные перчатки, бахилы, маски, медицинские расходники по России. Оптом.',
             'нитриловые перчатки, бахилы, маски, расходные материалы, доставка, производство, по России'
         );
-        view('main.index', compact('meta'));
+        $heroCategories = HeroCategroyRepository::hero();
+        $h = $heroCategories->toArray();
+        view('main.index', compact('meta', 'heroCategories'));
     }
 
     #[NoReturn] public function actionContacts(): void

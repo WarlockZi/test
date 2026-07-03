@@ -9,41 +9,61 @@
 @endsection
 
 @section('content')
-    <a href="/catalog/perchatki_medicinskie" class="banner gloves">
-        <div class="banner__text">
-            <div class="banner__container right">
-                <h1 class="h1">Медицинские перчатки оптом «Витекс»</h1>
-                <p class="p">Нитриловые перчатки добавят комфорта
-                    в работе. Плотно облегает руку. Минимально
-                    сокращают чувствительность.
-                </p>
-            </div>
-        </div>
-    </a>
 
-    <a href="/catalog/odnorazovaya_odezhda" class="banner boot-cover">
-        <div class="banner__text">
-            <div class="banner__container left">
-                <h3 class="h3">Одноразовая одежда</h3>
-                <p class="p">Обеспечьте чистоту ваших помещений.
-                    Бахилы с двойным дном обладают
-                    повышенной износоустойчивостью
-                </p>
-            </div>
-        </div>
-    </a>
+    <div class="hero-banners">
+        @foreach($heroCategories as $i=>$heroCategory)
+            <a href="/catalog/{!!$heroCategory->category->ownProperties->path!!}" class="pile banner">
+
+                <div class="banner__container {!!$i%2!=0?'pile-end':'pile-start'!!}">
+                    <h1>{!!$heroCategory->title!!}</h1>
+                    <p>{!!$heroCategory->subtitle!!}</p>
+                </div>
+                <img
+                        class="hero-image {!!$i%2==0?'right':'left'!!}"
+                        src={!!\app\repository\ImageRepository::getImg("/storage/app/srvc/main/".$heroCategory->img)!!}
+                        alt="{!!$heroCategory->category->name!!}"
+                >
+            </a>
+
+{{--            @deb--}}
+        @endforeach
+    </div>
+
+    {{--    <a href="/catalog/perchatki_medicinskie" class="banner gloves">--}}
+    {{--        <div class="banner__text">--}}
+    {{--            <div class="banner__container right">--}}
+    {{--                <h1 class="h1">Медицинские перчатки оптом «Витекс»</h1>--}}
+    {{--                    <p class="p">Нитриловые перчатки добавят комфорта--}}
+    {{--                        в работе. Плотно облегает руку. Минимально--}}
+    {{--                        сокращают чувствительность.--}}
+    {{--                </p>--}}
+    {{--            </div>--}}
+    {{--        </div>--}}
+    {{--    </a>--}}
+
+    {{--    <a href="/catalog/odnorazovaya_odezhda" class="banner boot-cover">--}}
+    {{--        <div class="banner__text">--}}
+    {{--            <div class="banner__container left">--}}
+    {{--                <h3 class="h3">Одноразовая одежда</h3>--}}
+    {{--                    <p class="p">Обеспечьте чистоту ваших помещений.--}}
+    {{--                        Бахилы с двойным дном обладают--}}
+    {{--                        повышенной износоустойчивостью--}}
+    {{--                </p>--}}
+    {{--            </div>--}}
+    {{--        </div>--}}
+    {{--    </a>--}}
 
 
-    <a href="/catalog/stomatologicheskiy_instrument_" class="banner endosirynge">
-        <div class="banner__text">
-            <div class="banner__container right">
-                <h3 class="h3">Одноразовый инструмент</h3>
-                <p class="p">Поможет быстро и эффективно промыть
-                    зубные каналы. Прост в использовании.
-                </p>
-            </div>
-        </div>
-    </a>
+    {{--    <a href="/catalog/stomatologicheskiy_instrument_" class="banner endosirynge">--}}
+    {{--        <div class="banner__text">--}}
+    {{--            <div class="banner__container right">--}}
+    {{--                <h3 class="h3">Одноразовый инструмент</h3>--}}
+    {{--                <p class="p">Поможет быстро и эффективно промыть--}}
+    {{--                    зубные каналы. Прост в использовании.--}}
+    {{--                </p>--}}
+    {{--            </div>--}}
+    {{--        </div>--}}
+    {{--    </a>--}}
 
 
     <div class="advantages">
@@ -122,7 +142,7 @@
 
     </div>
 
-{{--    @include('main.brands')--}}
+    {{--    @include('main.brands')--}}
 
 @endsection
 

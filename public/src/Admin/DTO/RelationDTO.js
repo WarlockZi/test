@@ -1,11 +1,15 @@
+import FieldDTO from "@src/Admin/DTO/FieldDTO.js";
+
 export default class RelationDTO {
   constructor(target, prev) {
     if (!target) return;
     this.target = target;
+    const dto = new FieldDTO(target);
+
     //model
     this.id = target?.closest(".item-wrap")?.dataset?.id;
 
-    // this.fields = target?.dataset?.field ?? false
+    this.field = target?.dataset?.field ?? false;
 
     this.relation =
       target?.dataset?.relation ??
@@ -17,8 +21,8 @@ export default class RelationDTO {
     this.attach =
       !!this.target?.closest("[custom-table]")?.dataset?.relationtype;
 
-    if (this.fields) {
-      this.fields = {
+    if (this.field) {
+      this.field = {
         [target?.dataset?.field]:
           target?.dataset?.value ?? target?.checked ?? target?.innerText,
       };
@@ -45,13 +49,13 @@ export default class RelationDTO {
         this.relation.pivot[target?.dataset?.pivot] =
           target?.dataset?.value ?? target?.checked ?? target?.innerText;
       } else {
-        this.relation.fields = {};
+        this.relation.field = {};
         const fieldName = target?.dataset?.field ?? target?.dataset.pivot;
-        this.relation.fields[fieldName] =
+        this.relation.field[fieldName] =
           target?.dataset?.value ?? target?.checked ?? target?.innerText;
       }
     }
-    if (!this.fields) delete this.fields;
+    if (!this.field) delete this.field;
     if (!this.relation) delete this.relation;
     delete this.attach;
     delete this.pivot;

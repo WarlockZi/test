@@ -6,6 +6,9 @@
   box-sizing: border-box;
   padding-right: 1rem;
 
+  &[disabled] .fs-trigger{
+    background-color: #e2e2e2;
+  }
   .fs-trigger {
     padding: .4rem .5rem;
     border: 1px solid #cbd5e1;
@@ -64,7 +67,7 @@
       margin-bottom: 6px;
       box-sizing: border-box;
       outline: none;
-      font-size: 14px;
+      font-size: var(--font-size-3b);
 
       &:focus {
         border-color: #3b82f6;
@@ -85,6 +88,10 @@
         transition: background 0.15s;
         color: dimgrey;
         min-height: 1rem;
+
+        &.to-pick{
+          background-color: #0dcaf0;
+        }
 
 
         &[selected] {

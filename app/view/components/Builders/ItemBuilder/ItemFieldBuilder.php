@@ -6,6 +6,7 @@ namespace app\view\components\Builders\ItemBuilder;
 
 use app\blade\View;
 use app\blade\views\admin\product\DndBuilder;
+use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
 use Illuminate\Database\Eloquent\Model;
 
 class ItemFieldBuilder
@@ -13,25 +14,20 @@ class ItemFieldBuilder
     public string $field;
     public Model $item;
 
-    public string $relation = '';
+    public string $dataAttributes = '';
     public string $name;
-    public string $id;
+    public string $value;
 
     public string $html;
     public DndBuilder $dnd;
-    public array $checkbox;
 
-//    public string $dataModel;
-    public string $link;
-
-    public string|null $value;
     public string $class = '';
-    public bool $hidden = false;
-    public bool $required = false;
+    public string $hidden = '';
+    public string $required = '';
     public string $contenteditable = '';
     public string $tooltip = '';
 
-    public static function build(string $fieldName, Model|null $item): static
+    public static function build(string $fieldName, ?Model $item): static
     {
         $field        = new static();
         $field->field = $fieldName;
@@ -42,12 +38,6 @@ class ItemFieldBuilder
     public function class(string $class): static
     {
         $this->class = $class;
-        return $this;
-    }
-
-    public function checkbox(array $checkbox): static
-    {
-        $this->checkbox = $checkbox;
         return $this;
     }
 
@@ -63,34 +53,21 @@ class ItemFieldBuilder
         return $this;
     }
 
-    public function id($id): static
-    {
-        $this->id = "id='$id'";
-        return $this;
-    }
-
-    public function link(string $link): static
-    {
-        $this->link = $link;
-        return $this;
-    }
-
     public function dnd(DndBuilder $dnd): static
     {
         $this->dnd = $dnd;
         return $this;
     }
 
-    public function relation(string $relation): static
+    public function checkbox(string $checked = '', array $data = []): static
     {
-        $this->relation = $relation;
+        $this->html = CheckboxBuilder::build()
+            ->checked($checked)
+            ->data($data)
+            ->get()->toHtml();
         return $this;
     }
 
-    public function getDatarelation(): string
-    {
-        return "data-relation='$this->relation'";
-    }
 
     public function html(string $html): static
     {
@@ -118,28 +95,26 @@ class ItemFieldBuilder
 
     public function get(): static
     {
-        $this->name  = $this->name ?? $this->field;
         $this->value = $this->html
             ?? $this->item[$this->field]
-        ;
+            ?? '';
 
         return $this;
     }
 
-    public function getDatafield(): string
+    public function data(array $dataAttributes): self
     {
-        return "data-field='$this->field'";
+        foreach ($dataAttributes as $key => $value) {
+            $this->dataAttributes .= "data-$key='$value'";
+        }
+        return $this;
     }
+
 
     public function toHtml(): string
     {
         $row = APP->get(View::class)->render('admin.components.catalogItem.row',
             ['field' => $this]);
         return $row;
-        //        $field = $this;
-//        ob_start();
-//        include ROOT . '/app/view/components/Builders/ItemBuilder/row.php';
-//        return ob_get_clean();
     }
-
 }

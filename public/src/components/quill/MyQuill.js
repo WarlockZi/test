@@ -91,7 +91,7 @@ export default class MyQuill {
     if (this.button) {
       this.button.addEventListener("click", function () {
         const productId = $(`.item-wrap[data-model='product']`)[0].dataset.id;
-        const txt = JSON.stringify(this.quill.getContents());
+        const txt = JSON.stringify(this.quillSelector.getContents());
         post("/adminsc/product/updateOrCreate", {
           txt,
           id: productId,

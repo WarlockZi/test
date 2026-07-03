@@ -1,9 +1,10 @@
 import "./table.scss";
 import { $, debounce, post } from "../../common";
-import { ael, qa, qs } from "@src/constants.js";
-import SelectNew from "@components/select/SelectNew.js";
-import TableDTO from "@src/Admin/TableDTO.js";
+import { ael, qa, qs, searchSelector } from "@src/constants.js";
+import TableDTO from "@src/Admin/DTO/TableDTO.js";
 import Checkbox from "@components/checkbox/checkbox.js";
+import SearchableSelect from "@components/select/Factory/SearchableSelect.js";
+import FieldDTO from "@src/Admin/DTO/FieldDTO.js";
 
 export default class Table {
   constructor(table) {
@@ -11,7 +12,7 @@ export default class Table {
 
     this.table = table;
 
-    this.tableCallbacksFile = this.table.dataset.jscallbacksfile;
+    this.jscallbacksfile = this.table.dataset.jscallbacksfile;
     this.onLoadFile = this.table.dataset.jsonload;
 
     this.model =
@@ -31,10 +32,8 @@ export default class Table {
     this.table[ael]("click", this.handleClick.bind(this), true);
     this.table[ael]("keyup", debounce(this.handleKeyup.bind(this)).bind(this));
     this.table[ael]("paste", this.handlePaste.bind(this));
-    this.table[ael]("customSelect.changed", this.selectChange.bind(this));
+    this.table[ael]("searchableSelect.changed", this.selectChange.bind(this));
     this.table[ael]("checkbox.changed", this.checkboxChange.bind(this));
-
-    this.columnsCallbacks = this.table.dataset.columnsCallbacks;
 
     this.setCheckboxes();
     this.setSelects();
@@ -52,10 +51,10 @@ export default class Table {
   }
 
   async getCallbacks() {
-    if (!this.tableCallbacksFile) return false;
+    if (!this.jscallbacksfile) return false;
     //  загружаем модули из build для production, тк dev берет из памяти, а prod из build
     const components = import.meta.glob("./callbacks/*.js");
-    const path = "./callbacks/" + this.tableCallbacksFile + ".js";
+    const path = "./callbacks/" + this.jscallbacksfile + ".js";
     const { default: Callbacks } = await components[path]();
     return new Callbacks();
   }
@@ -65,13 +64,15 @@ export default class Table {
   }
 
   async checkboxChange(e) {
-    const dto = new TableDTO(e.target);
+    // const dto = new TableDTO(e.el);
+    const dto = new FieldDTO(e.currentTarget);
     await post(this.updateOrCreateUrl, dto);
   }
 
   async selectChange({ detail }) {
-    const target = detail.target;
-    const colummnJsCallback = target.closest("[data-id]").dataset.jscallback;
+    const target = detail.el;
+    const colummnJsCallback =
+      target.closest("[data-jscallback]")?.dataset?.jscallback;
     if (colummnJsCallback) {
       const cb = await this.getCallbacks();
       cb.callMethod(colummnJsCallback, [
@@ -79,7 +80,8 @@ export default class Table {
         this.getRowCells(detail.prev.value),
       ]);
     }
-    const dto = new TableDTO(target, detail?.prev?.value);
+    const dto = new FieldDTO(target);
+    // const dto = new TableDTO(target, detail?.prev?.value);
     const res = await post(`/adminsc/${this.model}/updateorcreate`, dto);
     if (res?.detached) {
       const prevCells = this.table[qa](
@@ -88,6 +90,8 @@ export default class Table {
       for (let prevCell of prevCells) {
         prevCell.dataset.id = detail.next.value;
       }
+    } else if (res.id) {
+      this.setRowCellsId(target.closest("[data-id]"), res.id);
     } else {
       const prevCells = this.table[qa](`[data-id='0']:not([hidden])`);
       for (let prevCell of prevCells) {
@@ -97,7 +101,8 @@ export default class Table {
   }
 
   async update(modelId, target) {
-    const dto = new TableDTO(target);
+    const dto = new FieldDTO(target);
+    // const dto = new TableDTO(target);
     const res = await post(`/adminsc/${this.model}/updateorcreate`, dto);
   }
 
@@ -152,9 +157,9 @@ export default class Table {
   }
 
   handlePaste(e) {
-    e.target.innerText = e.clipboardData.getData("text/plain");
-    this.handleInput(e.target);
-    e.target.innerText = "";
+    e.el.innerText = e.clipboardData.getData("text/plain");
+    this.handleInput(e.el);
+    e.el.innerText = "";
   }
 
   /// INPUT
@@ -167,16 +172,26 @@ export default class Table {
         const cb = await this.getCallbacks();
         cb.callMethod(colummnJsCallback, [target, this.getRows()]);
       } else {
-        const DTO = new TableDTO(target);
+        const DTO = new FieldDTO(target);
+        // const DTO = new TableDTO(target);
         const res = await post(this.updateOrCreateUrl, DTO);
-        if (DTO.id === "0") {
-          const row = this.getRowCells(0);
-          this.rowFieldId(row).innerText = res?.id;
+        if (DTO.id === "0" && res?.id) {
+          this.setRowCellsId(target, res?.id);
+
         }
       }
     }
   }
 
+  setRowCellsId(target, id) {
+    const rowCells = this.getRowCells(0);
+    [].forEach.call(rowCells, (row) => {
+      if (row.dataset.field === "id") {
+        row.innerText = id;
+      }
+      row.dataset.id = id;
+    });
+  }
   rowFieldId(row) {
     return [].find.call(row, (cell) => cell.dataset.field === "id");
   }
@@ -251,6 +266,13 @@ export default class Table {
       const table = this.table[qa](".custom-table")[0];
       table.append(cloneCell);
     });
+    this.noItemsDivToggle();
+  }
+  noItemsDivToggle() {
+    const noItem = $(this.table).find("[data-noitems]");
+    if (noItem) {
+      noItem.style.visibility = "hidden";
+    }
   }
 
   addCheckbox(cloneCell) {
@@ -261,11 +283,11 @@ export default class Table {
   addSelectInNewRow(newEl) {
     const select = newEl[qs]("select");
     const cleanedSelect = this.removeUsedSelectOptions(select);
-    new SelectNew(cleanedSelect);
+    new SearchableSelect(cleanedSelect);
   }
 
   removeUsedSelectOptions(select) {
-    const usedSelects = this.table[qa]("[select-new]");
+    const usedSelects = this.table[qa](`[` + searchSelector + `]`);
     const ids = [].map.call(usedSelects, (usedSelect) => {
       return usedSelect.dataset.value;
     });
@@ -379,9 +401,15 @@ export default class Table {
   }
 
   setSelects() {
-    const selects = $("[select-new]:has(option)");
+    const selects = this.table[qa](`[` + searchSelector + `]:has(option)`);
     [].forEach.call(selects, (select) => {
-      if (!select.parentNode.hasAttribute("hidden")) new SelectNew(select);
+      if (!select.parentNode.hasAttribute("hidden")) {
+        const options = Array.from(select[qa]("option"));
+        const selected = options.find((opt) => opt.hasAttribute("selected"));
+
+        new SearchableSelect(select, { selected });
+        select.remove();
+      }
     });
   }
 
@@ -391,38 +419,4 @@ export default class Table {
       checkbox[ael]("change", this.checkboxChange.bind(this));
     });
   }
-  // UPDATE OR CREATE
-  // async updateOrcreate(target) {
-  //   const res = await post(this.updateOrCreateUrl, new TableDTO(target));
-  //   if (res?.arr?.success) {
-  //     this.copyEmptyRow(target);
-  //   } else {
-  //     this.newRow(res?.arr.id);
-  //   }
-  // }
-  // newRow(id) {
-  //   [].forEach.call(
-  //     this.hidden,
-  //     function (el) {
-  //       const newEl = el.cloneNode(true);
-  //       newEl.removeAttribute("hidden");
-  //
-  //       // this.addSelectInNewRow(newEl);
-  //       const tableContent = $(this.table).find(".custom-table");
-  //       tableContent.appendChild(newEl);
-  //
-  //       if (["id"].includes(newEl.dataset.field)) {
-  //         newEl.innerText = id;
-  //       } else if (
-  //         !(
-  //           ["del", "edit", "save"].includes(newEl.className) ||
-  //           newEl.hasChildNodes("select")
-  //         )
-  //       ) {
-  //         newEl.innerText = "";
-  //       }
-  //       newEl.dataset["id"] = id;
-  //     }.bind(this),
-  //   );
-  // }
 }

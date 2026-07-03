@@ -1,19 +1,18 @@
-import Quill from "quill";
-import { QuillConst } from "@src/components/quill/QuillConstans.js";
-import AdminProductDescrioption from "@src/components/quill/AdminProductDescrioption.js";
-import AdminProductSeoArticle from "@src/components/quill/AdminProductSeoArticle.js";
+import AdminQuill from "@components/quill/AdminQuill.js";
+import MyQuill from "@components/quill/MyQuill.js";
 
 export default class QuillFactory {
-  constructor() {
-    this.quill = new Quill();
+  constructor(el) {
+    if (!el) return false;
+    this.el = el;
+    this.create();
   }
 
-  static create(selector, type, options) {
-    if (type === QuillConst.ADMIN_PRODUCT_DESCRIPTION) {
-      return new AdminProductDescrioption(selector, options);
-    } else if (type === QuillConst.ADMIN_PRODUCT_SEO_ARTICLE) {
-      return new AdminProductDescrioption(selector, options);
+  create() {
+    if (this.el?.dataset.quill === "admin") {
+      new AdminQuill(this.el);
+    } else {
+      new MyQuill(this.el);
     }
-    return new AdminProductSeoArticle(selector, options);
   }
 }

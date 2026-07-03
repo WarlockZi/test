@@ -1,3 +1,5 @@
+import { searchSelector } from "../../../constants.js";
+
 export default class Callbacks {
   constructor(table) {
     this.table = table;
@@ -10,7 +12,7 @@ export default class Callbacks {
       const key = Object.keys(rows)[i];
       const row = rows[key];
       const from1sCell = this.getCell(row, "from_1s");
-      if (!from1sCell.innerText) continue;
+      if (from1sCell && !from1sCell.innerText) continue;
       if (from1sCell) {
         this.setSelectorCell(row);
         this.setDividerCell(row);
@@ -38,8 +40,10 @@ export default class Callbacks {
   }
 
   getSelectorCell(row) {
-    const wrap = row.find((cell) => cell.querySelector("[select-new]"));
-    return wrap.querySelector("[select-new]");
+    const selectorCell = row.find((cell) =>
+      cell.querySelector(`[` + searchSelector + `]`),
+    );
+    return selectorCell.querySelector(`[` + searchSelector + `]`);
   }
 
   getDelCell(row) {

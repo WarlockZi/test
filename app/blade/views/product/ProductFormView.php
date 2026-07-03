@@ -12,7 +12,6 @@ use app\model\Unit;
 use app\repository\ProductRepository;
 use app\view\Category\CategoryFormView;
 use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
-use app\view\components\Builders\CheckboxBuilder\ProductUnitCheckboxBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilderNew;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
@@ -31,40 +30,12 @@ class ProductFormView
     {
     }
 
-    protected function getFormattedPrice($price, int $multiplier): string
-    {
-        return $price && $multiplier
-            ? number_format((float)$price * $multiplier, 2, '.', ' ')
-            : 'Цену уточняйте у менеджера';
-    }
-
-    public function dopUnitsPrices(Product $product, string $str = ''): array
-    {
-        if (!$product->shippableUnits->count()) return [];
-        $shippable = [];
-        foreach ($product->shippableUnits as $unit) {
-            $promotion                   = $product->activePromotions->first() ?? null;
-            $shippable['formattedPrice'] = $this->getFormattedPrice($product->price, $unit->pivot->divider);;
-            $shippable['promotionNewPrice'] = $promotion ? $this->getFormattedPrice($promotion->new_price, 1) : '';
-            $shippable['promotion']         = $product->activePromotions->first() ?? null;
-        }
-        return $shippable;
-    }
-
-    public static function edit(?Product $product)
+    public static function edit(?Product $product): array
     {
         if (!$product) return [];
         try {
             return ItemBuilderNew::build($product, 'product')
                 ->pageTitle('Товар :  ' . $product['name'])
-//                ->field(
-//                    ItemFieldBuilder::build('slug', $product)
-//                        ->name('Адрес')
-//                        ->html(
-//                            "<a href='/product/{$product->slug}'>{$product->slug}</a>"
-//                        )
-//                        ->get()
-//                )
                 ->field(
                     ItemFieldBuilder::build('art', $product)
                         ->name('Артикул')
@@ -168,137 +139,122 @@ class ProductFormView
                             self::getSeo($product)
                         )
                 )
-//            ->tab(
-//                ItemTabBuilder::build('Акции')
-//                    ->html(
-//                        self::promotions($product)
-//                    )
-//            )
-//            ->tab(
-//                ItemTabBuilder::build('Детальные картинки')
-//                    ->html(
-//                        self::getImage($product, 'detailImages', 'detail', true)
-//                    )
-//            )
-//            ->tab(
-//                ItemTabBuilder::build('Внутритарная упаковка')
-//                    ->html(
-//                        self::getImage($product, 'smallpackImages', 'smallpack', true)
-//                    )
-//            )
-//            ->tab(
-//                ItemTabBuilder::build('Транспортная упаковка')
-//                    ->html(
-//                        self::getImage($product, 'bigPackImages', 'bigpack', true)
-//                    )
-//            )
                 ->get();
         } catch (Throwable $exception) {
             $exc = $exception;
         }
-
+        return [];
     }
 
     protected static function units(Product $product): array
     {
-        $p = $product->toArray();
-        return Table::build($product->units)
-            ->data([
-                'jscallbacksfile' => 'product',
-                'jsonload' => 'product',
-                'relation' => 'units',
-                'relationType' => 'attach',
-            ])
-            ->class('units')
-            ->pageTitle("Единица")
-            ->column(
-                ColumnBuilder::build('Единица')
-                    ->data(['jscallback' => 'changeunit'])
-                    ->width('clamp(100px,10vw,130px)')
-                    ->emptyRow(function () {
-                        return SelectBuilder::build(
-                            PluckOptionsBuilder::build(Unit::pluck('name', 'id'))
-                                ->initialOption()
-                                ->get())
-                            ->removeSelectNewAttr()
-                            ->get();
-                    })
-                    ->callback(function ($unit) {
-                        $select = SelectBuilder::build(
-                            PluckOptionsBuilder::build(Unit::pluck('name', 'id'))
-                                ->selected($unit->id)
-                                ->get()
-                        );
-                        return $select->get();
-                    })
-                    ->get()
-            )
-            ->column(
-                ColumnBuilder::build('Пониж коэфф')
-                    ->emptyRow('')
-                    ->width('clamp(40px,7vw,55px)')
-                    ->data(['pivot' => 'divider'])
-                    ->data(['jscallback' => 'changemultiplier'])
-                    ->callback(function ($unit) {
-                        return $unit->pivot->divider??'';
-                    })
-                    ->contenteditable()
-                    ->get()
+        try {
 
-            )
-            ->column(
-                ColumnBuilder::build('Повыш коэфф')
-                    ->emptyRow('')
-                    ->width('clamp(40px,7vw,55px)')
-                    ->data(['pivot' => 'multiplier'])
-                    ->data(['jscallback' => 'changemultiplier'])
-                    ->callback(function ($unit) {
-                        return $unit->pivot->multiplier??'';
-                    })
-                    ->contenteditable()
-                    ->get()
-            )
-            ->column(
-                ColumnBuilder::build('Отгруж ед')
-                    ->emptyRow(function () {
-                        return CheckboxBuilder::build()
-//                            ->checked()
-                            ->data('id', 0)
-                            ->data('pivot', 'is_shippable')
-                            ->get()->toHtml();
-                    })
-                    ->component(
-                        (new ProductUnitCheckboxBuilder)
-                            ->setCheckedFn(
-                                function ($item) {
-                                    return boolval($item->pivot->is_shippable);
-                                }
-                            )
-                            ->setData('pivot', 'is_shippable')
-                            ->get()
-                    )
-                    ->get()
-            )
-            ->column(
-                ColumnBuilder::build('Цены')
-                    ->data(['pivot' => 'price'])
-                    ->callback(function ($unit) {
-                        return (float)$unit->pivot->price ?? '';
-                    })
-                    ->get()
-            )
-            ->column(
-                ColumnBuilder::build('Из 1s')
-                    ->data(['pivot' => 'from_1s'])
-                    ->callback(function ($unit) {
-                        return $unit->pivot->is_from_1s ?? '';
-                    })
-                    ->get()
-            )
-            ->del()
-            ->addButton()
-            ->get();
+            $p = $product->toArray();
+            return Table::build($product->units)
+                ->data([
+                    'jscallbacksfile' => 'product',
+                    'jsonload' => 'product',
+                    'relation' => 'units',
+                ])
+                ->class('units')
+                ->pageTitle("Единица")
+                ->column(
+                    ColumnBuilder::build('Единица')
+                        ->data(['jscallback' => 'changeunit'])
+                        ->width('clamp(100px,10vw,130px)')
+                        ->emptyRow(function () {
+                            return SelectBuilder::build(
+                                PluckOptionsBuilder::build(Unit::pluck('name', 'id'))
+                                    ->initialOption()
+                                    ->get())
+                                ->removeSelectNewAttr()
+                                ->get();
+                        })
+                        ->callback(function ($unit) {
+                            return SelectBuilder::build(
+                                PluckOptionsBuilder::build(Unit::pluck('name', 'id'))
+                                    ->selected($unit->id)
+                                    ->get()
+                            )->get();
+                        })
+                        ->get()
+                )
+                ->column(
+                    ColumnBuilder::build('Пониж коэфф')
+                        ->emptyRow('')
+                        ->width('clamp(40px,7vw,55px)')
+                        ->data(['pivot' => 'divider'])
+                        ->data(['jscallback' => 'changemultiplier'])
+                        ->callback(function ($unit) {
+                            return $unit->pivot->divider ?? '';
+                        })
+                        ->contenteditable()
+                        ->get()
 
+                )
+                ->column(
+                    ColumnBuilder::build('Повыш коэфф')
+                        ->emptyRow('')
+                        ->width('clamp(40px,7vw,55px)')
+                        ->data(['pivot' => 'multiplier',
+                            'jscallback' => 'changemultiplier'
+                        ])
+                        ->callback(function ($unit) {
+                            return $unit->pivot->multiplier ?? '';
+                        })
+                        ->contenteditable()
+                        ->get()
+                )
+                ->column(
+                    ColumnBuilder::build('Отгруж ед')
+                        ->emptyRow(function () {
+                            return CheckboxBuilder::build()
+                                ->checked(true)
+                                ->data(['id' => 0, 'pivot' => 'units', 'field' => 'is_shippable'])
+                                ->get()->toHtml();
+                        })
+                        ->callback(function ($unit) {
+                            return CheckboxBuilder::build()
+                                ->checked($unit->pivot->is_shippable)
+                                ->data(['id' => $unit->pivot->id, 'pivot' => 'units', 'field' => 'is_shippable'])
+                                ->get()->toHtml();
+                        })
+                        ->get()
+                )
+                ->column(
+                    ColumnBuilder::build('Цены')
+                        ->data(['pivot' => 'price'])
+                        ->callback(function ($unit) {
+                            return (float)$unit->pivot->price ?? '';
+                        })
+                        ->get()
+                )
+                ->column(
+                    ColumnBuilder::build('Из 1s')
+                        ->data([
+                            'pivot' => 'units',
+                            'field' => 'from_1s',
+                        ])
+                        ->callback(function ($unit) {
+                            return $unit->pivot->is_from_1s ?? '';
+                        })
+                        ->get()
+                )
+                ->del()
+                ->addButton()
+                ->get();
+        } catch (Throwable $exception) {
+            $exc = $exception;
+            return ['error' => 'Ошибка в таблице единиц'];
+        }
+    }
+
+    protected function getFormattedPrice($price, int $multiplier): string
+    {
+        return $price && $multiplier
+            ? number_format((float)$price * $multiplier, 2, '.', ' ')
+            : 'Цену уточняйте у менеджера';
     }
 
     public static function getManufacturer(Product $p): string
@@ -316,7 +272,6 @@ class ProductFormView
 
     public static function mainImage(Product $product): DndBuilder
     {
-//        $pis          = APP->get(ProductImageService::class);
         $img['src']   = image($product->ownProperties->main_image);
         $img['alt']   = $product->name;
         $img['title'] = $product->name;
@@ -332,20 +287,6 @@ class ProductFormView
     {
         return DndBuilder::make('', 'add-file');
     }
-
-//    protected static function getImage(Product $product, string $relation, string $slug, bool $many = false): string
-//    {
-//        $imgs = ImageView::morphImages($product, $relation);
-//
-//        $img = MorphBuilder::build($product, $relation, $slug, $many)
-//            ->detach('detach')
-//            ->html(
-//                DndBuilder::make('product') . $imgs
-//            )
-//            ->get();
-//
-//        return $img;
-//    }
 
     protected static function getSelect(Category $category, Product $product): string
     {
@@ -374,31 +315,31 @@ class ProductFormView
             ItemFieldBuilder::build('seo_description', $product->ownProperties)
                 ->name('Description')
                 ->contenteditable()
-                ->relation('ownProperties')
-                ->get()->toHtml('product') .
+                ->data(['relation' => 'ownProperties'])
+                ->get()->toHtml() .
             ItemFieldBuilder::build('seo_title', $product->ownProperties)
                 ->name('Title')
                 ->contenteditable()
-                ->relation('ownProperties')
-                ->get()->toHtml('product') .
+                ->data(['relation' => 'ownProperties'])
+                ->get()->toHtml() .
             ItemFieldBuilder::build('seo_keywords', $product->ownProperties)
                 ->name('Keywords')
                 ->contenteditable()
-                ->relation('ownProperties')
-                ->get()->toHtml('product') .
+                ->data(['relation' => 'ownProperties'])
+                ->get()->toHtml() .
             ItemFieldBuilder::build('seo_h1', $product->ownProperties)
                 ->name('H1')
                 ->contenteditable()
-                ->relation('ownProperties')
-                ->get()->toHtml('product') .
+                ->data(['relation' => 'ownProperties'])
+                ->get()->toHtml() .
             ItemFieldBuilder::build('seo_article', $product->ownProperties)
                 ->name('Seo article')
-                ->data(['id'=>'seo-article'])
-//                ->id('seo-article')
+                ->data(['id' => 'seo-article',
+                    'quill' => 'admin'])
                 ->html(
                     self::getSeoArticle($product)
                 )
-                ->relation('ownProperties')
+                ->data(['relation' => 'ownProperties'])
                 ->get()->toHtml('product') .
             "</div>"
             : 'Справочник отсутствует';
@@ -511,4 +452,16 @@ class ProductFormView
             ->get();
     }
 
+    public function dopUnitsPrices(Product $product, string $str = ''): array
+    {
+        if (!$product->shippableUnits->count()) return [];
+        $shippable = [];
+        foreach ($product->shippableUnits as $unit) {
+            $promotion                   = $product->activePromotions->first() ?? null;
+            $shippable['formattedPrice'] = $this->getFormattedPrice($product->price, $unit->pivot->divider);;
+            $shippable['promotionNewPrice'] = $promotion ? $this->getFormattedPrice($promotion->new_price, 1) : '';
+            $shippable['promotion']         = $product->activePromotions->first() ?? null;
+        }
+        return $shippable;
+    }
 }

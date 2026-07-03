@@ -5,6 +5,7 @@ namespace app\service\Sync\Load;
 
 use app\model\Category;
 use app\model\CategoryProperty;
+use app\service\Logger\SyncLogger;
 use app\service\Router\UrlService;
 use app\service\ShortLink\ShortlinkService;
 use app\service\Slug\SlugService;
@@ -23,6 +24,7 @@ class LoadCategories extends LoadService
         public array    $created = [],
         private array   $existed = [],
         protected array $categoryData = [],
+//        protected SyncLogger $logger = new SyncLogger,
     )
     {
         parent::__construct();

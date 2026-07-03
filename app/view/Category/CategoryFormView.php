@@ -20,24 +20,10 @@ use Illuminate\Database\Eloquent\Collection;
 
 class CategoryFormView
 {
-    protected static function mapCategories(array $cat, string $string = ''): string
-    {
-        foreach ($cat as $item) {
-            $string .= $cat['name'] . "<br>";
-            if ($cat['children_recursive']) {
-                self::mapCategories($cat['children_recursive'], $string);
-            } else {
-                $string .= $cat['name'] . "<br>";
-            }
-        }
-        return $string;
-    }
-
-
     public static function edit(Category $category): array
     {
         return ItemBuilderNew::build($category, 'category')
-            ->pageTitle('Категория :  ' . ($category->ownProperties->seo_h1 ?? $category->name))
+            ->pageTitle('Категория :  ' . ($category->ownProperties->page_title ?? $category->name))
             ->field(
                 ItemFieldBuilder::build('name', $category)
                     ->name('Наименование в 1c')
@@ -46,24 +32,31 @@ class CategoryFormView
             ->field(
                 ItemFieldBuilder::build('breadcrumbs_name', $category)
                     ->name('Наименование в хлебных крошках')
+                    ->data(['relation'=>'ownProperties',
+                        'field'=>'breadcrumbs_name'])
                     ->contenteditable()
                     ->html($category->ownProperties->breadcrumbs_name ?? '')
-                    ->relation('ownProperties')
+                    ->get()
+            )
+            ->field(
+                ItemFieldBuilder::build('page_title', $category)
+                    ->name('Заголовок страницы категории')
+                    ->data(['relation'=>'ownProperties',
+                        'field'=>'page_title'])
+                    ->contenteditable()
+                    ->html($category->ownProperties->page_title ?? '')
                     ->get()
             )
             ->field(
                 ItemFieldBuilder::build('show_front', $category)
                     ->name('Показывать на главоной')
-                    ->html(
-                        CheckboxBuilder::build()
-                            ->checkedFn(
-                                function ($item) {
-                                    return boolval($item->done);
-                                }
-                            )
-                            ->field('show_front')
-                            ->get()->toHtml()
-                    )
+                    ->checkbox($category->ownProperties?->show_front,['field'=>'show_front', 'relation'=>'ownProperties',] )
+//                    ->html(
+//                        CheckboxBuilder::build()
+//                            ->checked($category->ownProperties?->show_front)
+//                            ->data(['field'=>'show_front', 'relation'=>'ownProperties',])
+//                            ->get()->toHtml()
+//                    )
                     ->get()
             )
 
@@ -93,13 +86,6 @@ class CategoryFormView
                 self::getChildCategories($category)
             )
             ->tab(
-                ItemTabBuilder::build('Удаленные Подкатегории')
-                    ->table(
-                        self::deletedCategories($category)
-
-                    )
-            )
-            ->tab(
                 ItemTabBuilder::build('seo')
                     ->html(
                         self::getSeo($category->ownProperties)
@@ -123,23 +109,6 @@ class CategoryFormView
             ->get();
     }
 
-    public static function categorySelector(Category $category): string
-    {
-        $tree1 = TreeOptionsBuilder::build(
-            CategoryRepository::treeAll(),
-            'children_recursive', 2)
-            ->initialOption()
-            ->selected($category['category_1s_id'])
-            ->excluded($category->id)
-            ->get();
-
-        return SelectBuilder::build(
-            $tree1
-        )
-            ->field('category_1s_id')
-            ->get();
-
-    }
 
     public static function selectorByField(array $selected, int $excluded = -1): string
     {
@@ -157,20 +126,7 @@ class CategoryFormView
             ->get();
     }
 
-    public static function productFilterSelector(array $req): string
-    {
-        $selected = $req['category'] ?? 0;
-        return SelectBuilder::build(
-            TreeOptionsBuilder::build(CategoryRepository::treeAll(), 'children_recursive', 2)
-                ->initialOption()
-                ->selected($selected)
-                ->get()
-        )
-            ->field('category_1s_id')
-            ->name('category')
-            ->class('categories')
-            ->get();
-    }
+//
 
     public static function getChildCategories(Category $category): ItemTabBuilder
     {
@@ -206,49 +162,49 @@ class CategoryFormView
             ItemFieldBuilder::build('seo_title', $categoryProperty)
                 ->name('Title')
                 ->contenteditable()
-                ->relation('ownProperties')
+                ->data(['relation'=>'ownProperties'])
                 ->get()->toHtml() .
             ItemFieldBuilder::build('seo_description', $categoryProperty)
                 ->name('Description')
                 ->contenteditable()
-                ->relation('ownProperties')
+                ->data(['relation'=>'ownProperties'])
                 ->get()->toHtml() .
             ItemFieldBuilder::build('seo_keywords', $categoryProperty)
                 ->name('Список запросов')
                 ->tooltip('keywords для роботов')
                 ->contenteditable()
-                ->relation('ownProperties')
+                ->data(['relation'=>'ownProperties'])
                 ->get()->toHtml() .
             ItemFieldBuilder::build('seo_h1', $categoryProperty)
                 ->name('H 1')
                 ->tooltip('используется на странице категории и в статье категории как главный заголовок')
                 ->contenteditable()
-                ->relation('ownProperties')
+                ->data(['relation'=>'ownProperties'])
                 ->get()->toHtml() .
             ItemFieldBuilder::build('seo_h2', $categoryProperty)
                 ->name('H 2')
                 ->tooltip('используется в статье категории как второстепенный заголовок')
                 ->contenteditable()
-                ->relation('ownProperties')
+                ->data(['relation'=>'ownProperties'])
                 ->get()->toHtml() .
             ItemFieldBuilder::build('seo_path', $categoryProperty)
                 ->name('Seo путь')
                 ->tooltip('используется в адресной строке для поиска категории')
                 ->contenteditable()
-                ->relation('ownProperties')
+                ->data(['relation'=>'ownProperties'])
                 ->get()->toHtml() .
             ItemFieldBuilder::build('seo_full_name', $categoryProperty)
                 ->name('Seo наименование')
                 ->tooltip('используется в заголовке категории, например, не опудренные, а Перчатки латексные одинарной хлоринации опудренные в сео desc и keywords')
                 ->contenteditable()
-                ->relation('ownProperties')
+                ->data(['relation'=>'ownProperties'])
                 ->get()->toHtml() .
             ItemFieldBuilder::build('seo_article', $categoryProperty)
                 ->name('Seo article')
                 ->html(self::getSeoArticle($categoryProperty))
-                ->data(['id'=>'seo-article'])
-//                ->id('seo-article')
-                ->relation('ownProperties')
+                ->data(['id'=>'seo-article',
+                    'quill'=>'admin'])
+                ->data(['relation'=>'ownProperties'])
                 ->get()->toHtml() .
             "</div>";
 
@@ -269,6 +225,8 @@ class CategoryFormView
             ->addButton()
             ->column(
                 ColumnBuilder::build('id')
+                    ->emptyRow('0')
+                    ->callback(function ($cat) {return $cat->id;})
                     ->width("40px")
                     ->get()
             )
@@ -277,7 +235,7 @@ class CategoryFormView
                     ->callback(function ($p) {
                         return $p->name;
                     })
-                    ->search()
+                      ->headerSearch()
                     ->get()
             )
             ->column(
@@ -285,7 +243,7 @@ class CategoryFormView
                     ->callback(function ($p) {
                         return $p->art;
                     })
-                    ->search()
+                    ->headerSearch()
                     ->width("100px")
                     ->get()
             )
@@ -294,43 +252,22 @@ class CategoryFormView
             ->get();
     }
 
-    public static function deletedCategories(Category $category): array
-    {
-        return Table::build($category['childrenDeleted'])
-            ->pageTitle('Удаленные подкатегории')
-            ->column(
-                ColumnBuilder::build('id')
-                    ->width('40px')
-                    ->get()
-            )
-            ->column(
-                ColumnBuilder::build('Назввание')
-                    ->callback(function ($cat) {
-                        return $cat->name;
-                    })
-                    ->contenteditable()
-                    ->get()
-            )
-            ->data(['relation'=>'childrenDeleted', 'model'=>'category'])
-            ->edit()
-            ->del()
-            ->addButton()
-            ->get();
-    }
 
     public static function properties(Collection $properties): array
     {
         return Table::build($properties)
             ->pageTitle('Св-ва категории')
-            ->data(['relation'=>'properties', 'model'=>'property'])
+            ->data(['relation'=>'properties'])
             ->column(
                 ColumnBuilder::build('Наимен')
                     ->callback(function ($prop) {
                         return $prop->name;
                     })
+                    ->data(['field' => 'name'])
                     ->contenteditable()
                     ->get()
             )
+
             ->edit()
             ->addButton()
             ->get();
@@ -344,4 +281,5 @@ class CategoryFormView
             ->get();
         return "<ul class='category-tree'>" . $tree . "</ul>";
     }
+
 }

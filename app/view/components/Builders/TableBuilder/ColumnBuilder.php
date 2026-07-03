@@ -4,55 +4,54 @@
 namespace app\view\components\Builders\TableBuilder;
 
 
-use app\view\components\Builders\CheckboxBuilder\CheckboxBuilder;
 use app\view\components\Traits\CleanString;
 
 class ColumnBuilder
 {
     use CleanString;
 
-//    public string $field = '';
+    public string $headerSortIcon;
+    public string $headerClass;
+    public string $headerSearch;
+    public string $headerTitle;
+    public string $headerSort;
     public string $dataAttributes = '';
-    public $dataField;
     public string $class = "class='cell left'";
-    public string $classHeader;
 
     public string $name;
-//    public $type;
-    public $sort;
-    public $sortIcon;
-    public $search;
     public string $width = 'auto';
-    public $hidden;
-    public $contenteditable;
-    public $pivot;
+
+    public string $contenteditable;
     public string $attach = '';
 
     public $function;
     public $callbackFn;
-    public $component;
+//    public $component;
     public $functionClass;
 
     public bool $select = false;
     public mixed $emptyRow = '';
 
-    public static function build(string $name): self
+    public static function build(string $field): self
     {
-        $column       = new static();
-        $column->name = $name;
+        $column              = new static();
+        $column->name        = $field;
+        $column->headerTitle = $field;
         return $column;
     }
+
     public function data(array $data): self
     {
         foreach ($data as $key => $value) {
-            $this->dataAttributes.="data-$key='$value'";
+            $this->dataAttributes .= "data-$key='$value'";
         }
         return $this;
     }
+
     public function emptyRow(callable|string $emptyRow): self
     {
         if (is_callable($emptyRow)) {
-            $content        = $this->clean(call_user_func($emptyRow));
+            $content        = call_user_func($emptyRow);
             $this->emptyRow = $content;
         } else {
             $this->emptyRow = $emptyRow;
@@ -66,33 +65,7 @@ class ColumnBuilder
         return $this;
     }
 
-    public function classHeader(string $class): self
-    {
-        $this->classHeader = "class='{$class}'";
-        return $this;
-    }
-
-    public function headerIcon(string $icon): self
-    {
-        $this->name = $icon;
-        return $this;
-    }
-
-//
-    public function sort(): self
-    {
-        $this->sort     = 'data-sort';
-        $this->sortIcon = '<div class="icon"></div>';
-        return $this;
-    }
-
-    public function search(): self
-    {
-        $this->search = '<input type="text" data-search>';
-        return $this;
-    }
-
-    public function function(string $class, string $function): self
+    public function function (string $class, string $function): self
     {
         $this->functionClass = $class;
         $this->function      = $function;
@@ -122,11 +95,11 @@ class ColumnBuilder
         return $this;
     }
 
-    public function component($component): self
-    {
-        $this->component = $component;
-        return $this;
-    }
+//    public function component($component): self
+//    {
+//        $this->component = $component;
+//        return $this;
+//    }
 
     private function handleCheckbox($checkbox, $item): void
     {
@@ -136,12 +109,7 @@ class ColumnBuilder
 
     public function getData($column, $item, $field)
     {
-        if ($column->component) {
-            if ($column->component instanceof CheckboxBuilder) {
-                $this->handleCheckbox($column->component, $item);
-            }
-
-        } elseif ($column->function) {
+        if ($column->function) {
             $func = $column->function;
             return $column->functionClass::$func($column, $item, $field);
 
@@ -156,11 +124,41 @@ class ColumnBuilder
         }
     }
 
+    public function headerClass(string $class): self
+    {
+        $this->headerClass = "class='$class'";
+        return $this;
+    }
+
+    public function headerIcon(string $icon): self
+    {
+        $this->name = $icon;
+        return $this;
+    }
+
+    public function headerSort(string $dataAttr = null, string $icon = null): self
+    {
+        $this->headerSort     = $dataAttr ?? 'data-sort';
+        $this->headerSortIcon = $icon ?? '<div class="icon"></div>';
+        return $this;
+    }
+
+    public function headerSearch(): self
+    {
+        $this->headerSearch = '<input type="text" data-search>';
+        return $this;
+    }
+
+    public function headerTitle(string $title): self
+    {
+        $this->headerTitle = $title ?? $this->name;
+        return $this;
+    }
 
     public function get(): self|string
     {
         $this->class       = $this->class ?? "class='cell'";
-        $this->classHeader = $this->classHeader ?? "class='head'";
+        $this->headerClass = $this->headerClass ?? "class='head'";
         return $this;
     }
 }

@@ -13,7 +13,7 @@ use ZipArchive;
 
 class SyncActions
 {
-    use TimeTrait;
+//    use TimeTrait;
     public function __construct(private SyncLogger $logger)
     {
     }
@@ -21,7 +21,7 @@ class SyncActions
     /**
      * @throws Exception
      */
-    #[Time('Процесс обработки данных', logResult: true)]
+//    #[Time('Процесс обработки данных', logResult: true)]
     public function allFilesUnzipped(string $importFile, string $offerFile): bool
     {
         if (!is_readable($importFile)) {

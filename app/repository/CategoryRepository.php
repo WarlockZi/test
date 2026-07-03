@@ -76,17 +76,17 @@ class CategoryRepository
 
 
     public
-    static function edit(int $id): object
+    static function edit(int $id): ?object
     {
         return Category::with(
             'products',
-            'childrenNotDeleted',
-            'childrenDeleted',
-            'parentRecursive.properties',
-            'properties',
             'ownProperties',
+            'childrenNotDeleted',
+            'parentRecursive.properties',
+            'parentRecursive.ownProperties',
+            'properties',
         )
-            ->findOrNew($id);
+            ->find($id);
     }
 
     public

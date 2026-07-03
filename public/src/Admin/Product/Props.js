@@ -1,6 +1,6 @@
 import "./values.scss";
 import { $, post } from "../../common.js";
-import SelectNew from "../../components/select/SelectNew";
+// import SelectNew from "@components/select/del/SelectNew.js";
 
 export default class Props {
   constructor($product) {

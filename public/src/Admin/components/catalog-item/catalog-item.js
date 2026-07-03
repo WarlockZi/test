@@ -1,32 +1,41 @@
 import "./catalog-item.scss";
 import { $, debounce, post } from "@src/common.js";
-import { ael } from "@src/constants.js";
-import DTO from "../../../Admin/DTO.js";
+import { ael, searchSelector } from "@src/constants.js";
 import Checkbox from "../../../components/checkbox/checkbox.js";
-import SelectNew from "../../../components/select/SelectNew.js";
 import CustomDate from "../../../components/date/date.js";
-import RelationDTO from "@src/Admin/RelationDTO.js";
+import SearchableSelect from "@components/select/Factory/SearchableSelect.js";
+import FieldDTO from "@src/Admin/DTO/FieldDTO.js";
 
 export default class CatalogItem {
   constructor(catalogItem) {
     if (!catalogItem) return false;
 
+    // debugger;
     this.model = catalogItem.dataset.model;
     this.id = +catalogItem.dataset.id;
     this.setCheckboxes();
-    // this.setSelects();
+    this.setSelects();
     this.setDates();
 
     catalogItem[ael]("click", this.handleClick.bind(this));
     catalogItem[ael]("keyup", debounce(this.handleKeyup.bind(this)));
+
     catalogItem[ael]("date.changed", this.handleDateChange.bind(this));
     catalogItem[ael](
-      "customSelect.changed",
+      "searchableSelect.changed",
       this.handleSelectChange.bind(this),
     );
     if (this.model) {
       catalogItem[ael]("checkbox.changed", this.handleChexboxChange.bind(this));
     }
+  }
+  setSelects() {
+    const selects = $(`[` + searchSelector + `]:has(option)`);
+
+    [].forEach.call(selects, function (select) {
+      if (!select.parentNode.hasAttribute("hidden"))
+        new SearchableSelect(select);
+    });
   }
 
   setCheckboxes() {
@@ -43,21 +52,14 @@ export default class CatalogItem {
     });
   }
 
-  setSelects() {
-    const selects = $("[select-new]:has(option)");
-    [].forEach.call(selects, function (select) {
-      if (!select.parentNode.hasAttribute("hidden")) new SelectNew(select);
-    });
-  }
-
   handleChexboxChange({ target }) {
     if (target.closest("[custom-table]")) return;
     this.update(target);
   }
 
-  async handleSelectChange({ target }) {
-    if (target.closest("[custom-table]")) return;
-    this.update(target);
+  async handleSelectChange(target) {
+    // if (target.closest("[custom-table]")) return;
+    this.update(target.detail.container);
   }
 
   async handleDateChange({ target }) {
@@ -68,13 +70,8 @@ export default class CatalogItem {
     if (target.closest(".custom-table")) return false;
     if (!target.hasAttribute("contenteditable") || !target.dataset.field)
       return false;
-    let dto = {};
-    if (target.dataset.relation) {
-      dto = new RelationDTO(target);
-    } else {
-      dto = new DTO(this.id, target);
-    }
-    const res = await post(`/adminsc/${this.model}/updateOrCreate`, dto);
+
+    const res = this.update(target);
     if (res) {
       target.dispatchEvent(
         new CustomEvent("catalogItem.changed", {
@@ -99,8 +96,8 @@ export default class CatalogItem {
   }
 
   async update(target) {
-    if (target.closest("[custom-table]")) return;
-    const dto = new DTO(this.id, target);
-    const res = await post(`/adminsc/${this.model}/updateorcreate`, dto);
+    // const dto = new CatalogItemDTO(target);
+    const dto = new FieldDTO(target);
+    return await post(`/adminsc/${this.model}/updateorcreate`, dto);
   }
 }

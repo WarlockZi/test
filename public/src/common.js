@@ -460,8 +460,9 @@ function isPlainObject(obj) {
 async function sendPost(url, body) {
   const res = await fetch(url, body);
   if (res.status === 200) {
-    const data = await res.json();
-    return data;
+    return await res.json();
+  } else if (res.status === 201) {
+    return await res.json();
   }
   if (res.status === 500) {
     const json = await res.json();

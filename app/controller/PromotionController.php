@@ -22,7 +22,9 @@ class PromotionController extends AppController
     {
         $this->meta->setMeta("Акции", "Акции", "Акции");
 
-        $promotions = PromotionRepository::product();
-        view('promotion.promotions', ['data' => $promotions]);
+        $activePromotions = PromotionRepository::active();
+        $inactivePromotions = PromotionRepository::inactive();
+
+        view('promotion.promotions', compact('activePromotions', 'inactivePromotions'));
     }
 }

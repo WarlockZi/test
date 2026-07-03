@@ -14,6 +14,7 @@
 @use '../components/list.scss';
 @use '../components/popup.scss';
 @use "../components/breadcrumbs";
+@use "../components/hero_banners/hero_banners";
 @use "cart";
 @use "demis/demis";
 
@@ -164,65 +165,6 @@
     @include meta.load-css("../Category/category");
   }
 
-
-  .banner {
-    display: flex;
-    flex-flow: column;
-    align-items: start;
-
-    .h3, .h1 {
-      color: #ffffff;
-      font-size: clamp(1rem, 5vw, 1.8rem);
-      margin: 0 0 clamp(10px, 5vw, 35px);
-      letter-spacing: clamp(1px, .5vw, 3px);
-    }
-
-    .p {
-      margin: 0;
-      line-height: clamp(.9rem, 5vw, 25px);
-      color: white;
-    }
-
-    &.gloves {
-      background: url('/storage/app/srvc/main/site-gloves.jpg') no-repeat center right;
-      background-size: cover;
-    }
-
-    &.boot-cover {
-      background: url('/storage/app/srvc/main/site-bootcover-824.jpg') no-repeat center left;
-      //background: url(/storage/app/srvc/main.Blade.php/site-bootcover-824.jpg) no-repeat center left;
-      background-size: cover;
-      align-items: flex-end;
-    }
-
-    &.endosirynge {
-      background: url('/storage/app/srvc/main/site-syringe-gradientt.jpg') no-repeat center right;
-      background-size: cover;
-    }
-
-
-    .banner__container {
-      background: rgba(0, 0, 0, .3);
-
-      &.right, &.left {
-        padding: clamp(3%, 4vw, 5%) clamp(9px, 6vw, 40px) clamp(3%, 4vw, 5%) clamp(9px, 6vw, 40px);
-        margin-left: 0;
-        color: white;
-      }
-    }
-
-    .banner__text {
-      align-items: flex-start;
-      display: flex;
-      flex-flow: column;
-      justify-content: space-between;
-      color: var.$color-title;
-      margin-bottom: 8%;
-      margin-top: 3%;
-      max-width: clamp(35%, 70vw, 65%);
-    }
-
-  }
 }
 
 .advantages {
@@ -240,6 +182,7 @@
       margin: 65px 0;
       color: var.$color-title;
       font-size: clamp(.9rem, 7vw, 2rem);
+      line-height: clamp(0.9rem, 7vw, 2rem);
       width: clamp(155px, 86vw, 350px);
     }
 
@@ -297,6 +240,7 @@
   .workflow__title {
     margin: clamp(10px, 10vw, 50px) 0;
     font-size: clamp(.9rem, 7vw, 2rem);
+    line-height: clamp(0.9rem, 7vw, 2rem);
     width: clamp(125px, 60vw, 280px);
   }
 
@@ -306,11 +250,13 @@
     .block_work {
       flex-direction: column;
     }
+
     @media (max-width: 450px) {
       .burger .info .phone {
         display: none;
       }
     }
+
     .block_work {
       display: flex;
     }
@@ -337,7 +283,7 @@
       .block_work {
         flex-wrap: wrap;
 
-        .block_work__wrap{
+        .block_work__wrap {
 
         }
       }

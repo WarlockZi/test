@@ -18,10 +18,10 @@ class NewBread
     protected function flatParents(Category $category): void
     {
         $currentCategory      = $category;
-        $this->parentsArray[] = $currentCategory;
+        $this->parentsArray[] = $currentCategory->toArray();
         if ($currentCategory['parentRecursive']) {
             while ($currentCategory['parentRecursive']) {
-                $this->parentsArray[] = $currentCategory['parentRecursive'];
+                $this->parentsArray[] = $currentCategory['parentRecursive']->toArray();
                 $currentCategory      = $currentCategory['parentRecursive'];
             }
         }

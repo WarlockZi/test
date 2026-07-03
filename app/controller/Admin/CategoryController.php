@@ -8,6 +8,7 @@ use app\repository\CategoryRepository;
 use app\service\Router\IRequest;
 use app\view\Category\CategoryFormView;
 use JetBrains\PhpStorm\NoReturn;
+use Throwable;
 
 class CategoryController extends AdminscController
 {
@@ -16,20 +17,25 @@ class CategoryController extends AdminscController
         public string                   $model = Category::class,
     )
     {
-       parent::__construct();
+        parent::__construct();
     }
 
-    #[NoReturn] public function actionIndex(): void
+    #[NoReturn]
+    public function actionIndex(): void
     {
         $categoryTree = CategoryFormView::list();
         view('admin.category.index', ['categoryTree' => $categoryTree]);
     }
 
-    #[NoReturn] public function actionEdit(IRequest $route): void
+    #[NoReturn]
+    public function actionEdit(IRequest $route): void
     {
-        $category     = CategoryRepository::edit($route->id);
-        $breadcrumbs  = $this->actions->getBreadcrumbs($category, true);
-        $catItem = CategoryFormView::edit($category);
+        $category    = CategoryRepository::edit($route->id);
+        if (!$category) {
+            view('category.notFound');
+        }
+        $breadcrumbs = $this->actions->getBreadcrumbs($category, true);
+        $catItem     = CategoryFormView::edit($category);
         view('admin.category.edit',
             compact('category',
                 'breadcrumbs',
@@ -37,8 +43,17 @@ class CategoryController extends AdminscController
             ));
     }
 
-    public function actionChangeproperty(IRequest $request): void
-    {
-        $this->actions->changeProperty($request);
-    }
+
+//    public function actionUpdateOrCreate(IRequest $request): void
+//    {
+//        try {
+//            if ($request->body()['relation']['name'] === 'properties') {
+////                $this->actions->changeProperty();
+//                $this->actions->changeProperty($request);
+//            }
+//            response()->popup('Свойство категории обновлено');
+//        } catch (Throwable $exception) {
+//            $exc = $exception;
+//        }
+//    }
 }

@@ -7,7 +7,6 @@ namespace app\view\User;
 use app\model\Right;
 use app\model\Role;
 use app\model\User;
-use app\service\AuthService\IUser;
 use app\view\components\Builders\Date\DateBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilderNew;
@@ -23,9 +22,14 @@ use Illuminate\Database\Eloquent\Model;
 
 abstract class UserView
 {
+    static User $userToEdit;
+    static User $thisUser;
+
     public static function getViewByRole(User $userToEdit, User $thisUser): array
     {
         if (!$userToEdit) return [];
+        self::$userToEdit = $userToEdit;
+        self::$thisUser = $userToEdit;
 
         if ($thisUser->isEmployee()) {
             return $thisUser->isAdmin()
@@ -36,6 +40,14 @@ abstract class UserView
         return self::guest($userToEdit);
     }
 
+    private static function name(User $user){
+        if ($user->isEmployee()) {
+
+        }
+    }
+    private static function lastName(User $userToEdit){}
+    private static function surName(User $userToEdit){}
+    private static function email(User $userToEdit){}
     public static function admin(User $item): array
     {
         return ItemBuilderNew::build($item, 'user')
@@ -113,7 +125,133 @@ abstract class UserView
             ->get();
 
     }
+    public static function employee($item): array
+    {
+        return ItemBuilderNew::build($item, 'user')
+            ->pageTitle('Редактировать пользователя: ' . $item['surName'] . ' ' . $item['name'])
+            ->toList('adminsc/user/table', '', false)
+            ->del(false)
+            ->field(
+                ItemFieldBuilder::build('surName', $item)
+                    ->name('Фамилия')
+                    ->contenteditable()
+                    ->get()
+            )
+            ->field(
+                ItemFieldBuilder::build('name', $item)
+                    ->name('Имя')
+                    ->contenteditable()
+                    ->get()
+            )
+            ->field(
+                ItemFieldBuilder::build('middleName', $item)
+                    ->name('Отчество')
+                    ->contenteditable()
+                    ->get()
+            )
+            ->field(
+                ItemFieldBuilder::build('phone', $item)
+                    ->name('Телефон')
+                    ->contenteditable()
+                    ->get()
+            )
+            ->field(
+                ItemFieldBuilder::build('birthDate', $item)
+                    ->name('Дата рождения')
+                    ->html(
+                        self::getBirhtdate($item)
+                    )
+                    ->get()
+            )
+            ->field(
+                ItemFieldBuilder::build('sex', $item)
+                    ->name('Пол')
+                    ->html(
+                        self::getSex($item)
+                    )
+                    ->get()
+            )
+            ->field(
+                ItemFieldBuilder::build('роль', $item)
+                    ->html($item->role[0]->name)
+                    ->name('роль')
+                    ->get()
+            )
+            ->field(
+                ItemFieldBuilder::build('id', $item)
+                    ->name('ID')
+                    ->get()
+            )
+            ->field(
+                ItemFieldBuilder::build('email', $item)
+                    ->name('EMAIL')
+                    ->get()
+            )
+            ->get();
+    }
 
+    public static function guest(User $item): array
+    {
+        return ItemBuilderNew::build($item, 'user')
+            ->pageTitle('Редактировать пользователя: ' . $item->fi())
+//            ->field(
+//                ItemFieldBuilder::build('роль', $item)
+//                    ->html($item->role[0]->name)
+//                    ->name('роль')
+//                    ->get()
+//            )
+            ->field(
+                ItemFieldBuilder::build('id', $item)
+                    ->name('ID')
+                    ->get()
+            )
+            ->field(
+                ItemFieldBuilder::build('email', $item)
+                    ->name('email')
+                    ->get()
+            )
+            ->field(
+                ItemFieldBuilder::build('surName', $item)
+                    ->name('Фамилия')
+                    ->contenteditable()
+                    ->get()
+            )
+            ->field(
+                ItemFieldBuilder::build('name', $item)
+                    ->name('Имя')
+                    ->contenteditable()
+                    ->get()
+            )
+            ->field(
+                ItemFieldBuilder::build('middleName', $item)
+                    ->name('Отчество')
+                    ->contenteditable()
+                    ->get()
+            )
+            ->field(
+                ItemFieldBuilder::build('phone', $item)
+                    ->name('Телефон')
+                    ->contenteditable()
+                    ->get()
+            )
+            ->field(
+                ItemFieldBuilder::build('birthDate', $item)
+                    ->name('Дата рождения')
+                    ->html(
+                        self::getBirhtdate($item)
+                    )
+                    ->get()
+            )
+            ->field(
+                ItemFieldBuilder::build('sex', $item)
+                    ->name('Пол')
+                    ->html(
+                        self::getSex($item)
+                    )
+                    ->get()
+            )
+            ->get();
+    }
     public static function getAdminTab(Model $user): ItemTabBuilder
     {
         if (is_string($user->rights)) {
@@ -182,131 +320,7 @@ abstract class UserView
             ->get();
     }
 
-    public static function employee($item): array
-    {
-        return ItemBuilderNew::build($item, 'user')
-            ->pageTitle('Редактировать пользователя: ' . $item['surName'] . ' ' . $item['name'])
-            ->toList('adminsc/user/table', '', false)
-            ->del(false)
-            ->field(
-                ItemFieldBuilder::build('surName', $item)
-                    ->name('Фамилия')
-                    ->contenteditable()
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('name', $item)
-                    ->name('Имя')
-                    ->contenteditable()
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('middleName', $item)
-                    ->name('Отчество')
-                    ->contenteditable()
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('phone', $item)
-                    ->name('Телефон')
-                    ->contenteditable()
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('birthDate', $item)
-                    ->name('Дата рождения')
-                    ->html(
-                        self::getBirhtdate($item)
-                    )
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('sex', $item)
-                    ->name('Пол')
-                    ->html(
-                        self::getSex($item)
-                    )
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('роль', $item)
-                    ->html($item->role[0]->name)
-                    ->name('роль')
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('id', $item)
-                    ->name('ID')
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('email', $item)
-                    ->get()
-            )
-            ->get();
-    }
 
-    public static function guest(User $item): array
-    {
-        return ItemBuilderNew::build($item, 'user')
-            ->pageTitle('Редактировать пользователя: ' . $item->fi())
-//            ->field(
-//                ItemFieldBuilder::build('роль', $item)
-//                    ->html($item->role[0]->name)
-//                    ->name('роль')
-//                    ->get()
-//            )
-            ->field(
-                ItemFieldBuilder::build('id', $item)
-                    ->name('ID')
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('email', $item)
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('surName', $item)
-                    ->name('Фамилия')
-                    ->contenteditable()
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('name', $item)
-                    ->name('Имя')
-                    ->contenteditable()
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('middleName', $item)
-                    ->name('Отчество')
-                    ->contenteditable()
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('phone', $item)
-                    ->name('Телефон')
-                    ->contenteditable()
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('birthDate', $item)
-                    ->name('Дата рождения')
-                    ->html(
-                        self::getBirhtdate($item)
-                    )
-                    ->get()
-            )
-            ->field(
-                ItemFieldBuilder::build('sex', $item)
-                    ->name('Пол')
-                    ->html(
-                        self::getSex($item)
-                    )
-                    ->get()
-            )
-            ->get();
-    }
 
     public static function listAll(): array
     {

@@ -1,8 +1,8 @@
 import { $ } from "@src/common.js";
 import "../SearchableSelect.scss";
-import { searchSel } from "@src/constants.js";
+import { searchSelector } from "@src/constants.js";
 
-export default class Select {
+export class Select {
   constructor(selectEl, config = {}) {
     if (typeof selectEl !== "object") {
       console.log("Переданный в select контейнер не тип object");
@@ -15,6 +15,8 @@ export default class Select {
 
     this.selectEl = selectEl;
     this.elements = {};
+    this.currentToPick = {};
+    this._visibleOptions = [];
 
     this.options = config.options ?? $(this.selectEl).findAll("option");
     this.onSelect = config.onSelect || (() => {});
@@ -24,6 +26,22 @@ export default class Select {
     this.render();
     this.bindEvents();
   }
+
+  dispatchEvent() {
+    this.container.dispatchEvent(
+      new CustomEvent("searchableSelect.changed", {
+        bubbles: true,
+        detail: {
+          selectThis: this,
+          el: this.container,
+          prev: {
+            value: 0,
+          },
+        },
+      }),
+    );
+  }
+
   getSelectedOption() {
     const selectedOption = [].filter.call(
       this.options,
@@ -31,6 +49,7 @@ export default class Select {
     )[0];
     this.selectedValue = selectedOption ? selectedOption.value : null;
   }
+
   toggleSelectedOption(value) {
     const newOption = this.elements.optionElements.find(
       (optEl) => String(optEl.dataset.value) === String(value),
@@ -46,6 +65,7 @@ export default class Select {
       oldOption.removeAttribute("selected");
     }
   }
+
   select(value) {
     const option = [].find.call(
       this.options,
@@ -64,14 +84,7 @@ export default class Select {
     this.onSelect(option.value, option);
     this.dispatchEvent();
   }
-  dispatchEvent() {
-    this.container.dispatchEvent(
-      new CustomEvent("searchableSelect.changed", {
-        bubbles: true,
-        detail: this,
-      }),
-    );
-  }
+
   copyAttributes(source, target) {
     const attrs = source.attributes;
     for (let i = 0; i < attrs.length; i++) {
@@ -81,10 +94,11 @@ export default class Select {
         : target.setAttribute(attr.name, attr.value);
     }
   }
+
   renderContainer() {
     this.container = document.createElement("div");
 
-    this.container.setAttribute(`${searchSel}`, "");
+    this.container.setAttribute(searchSelector, "");
     this.container.classList.add("filterable-select");
     this.container.setAttribute("data-role", "select");
     this.copyAttributes(this.selectEl, this.container);
@@ -157,9 +171,13 @@ export default class Select {
       this.elements.dropdown.style.bottom = "auto";
     }
   }
+
   bindEvents() {
     window.addEventListener("resize", () => this.adjustPosition());
     window.addEventListener("scroll", () => this.adjustPosition());
+    document.addEventListener("click", (e) => {
+      if (!this.container.contains(e.target)) this.close();
+    });
 
     this.elements.trigger.addEventListener("click", () => this.toggle());
     this.elements.trigger.addEventListener("keydown", (e) => {
@@ -173,13 +191,80 @@ export default class Select {
       const option = e.target.closest(".fs-option");
       if (option) this.select(option.dataset.value);
     });
-
-    document.addEventListener("click", (e) => {
-      if (!this.container.contains(e.target)) this.close();
+    this.elements.dropdown.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowDown") {
+        this.nextPick();
+      } else if (e.key === "ArrowUp") {
+        this.previousPick();
+      } else if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        this.selectPicked();
+      }
     });
   }
+  selectPicked() {
+    this.select(this.currentToPick.dataset.value);
+    this.currentToPick.classList.toggle("to-pick");
+  }
 
+  nextPick() {
+    let curtoPick = null;
+    let nextToPick = null;
+    let foundToPick = false;
+    this._visibleOptions.forEach((option) => {
+      if (!nextToPick && foundToPick) nextToPick = option;
+      if (option.classList.contains("to-pick")) {
+        curtoPick = option;
+        foundToPick = true;
+      }
+    });
+    if (curtoPick) {
+      this.currentToPick.classList.toggle("to-pick");
+      this.currentToPick = nextToPick;
+      nextToPick.classList.toggle("to-pick");
+    } else {
+      this.currentToPick = this._visibleOptions[0];
+      this.currentToPick.classList.toggle("to-pick");
+    }
+  }
+
+  previousPick() {
+    let currentPick = null;
+    let prevToPick = null;
+    let lastOption = null; // Для отслеживания последнего элемента
+
+    this._visibleOptions.forEach((option) => {
+      if (option.classList.contains("to-pick")) {
+        currentPick = option;
+      }
+
+      lastOption = option;
+
+      if (!currentPick) {
+        prevToPick = option;
+      }
+    });
+
+    if (currentPick) {
+      this.currentToPick.classList.toggle("to-pick");
+      this.currentToPick = prevToPick || currentPick; // fallback на currentPick если prevToPick null
+      this.currentToPick.classList.toggle("to-pick");
+    } else {
+      this.currentToPick = this._visibleOptions[0];
+      this.currentToPick.classList.toggle("to-pick");
+    }
+  }
+
+  visibleOptions() {
+    this._visibleOptions = [];
+    this.elements.optionElements.filter((option, index) => {
+      if (!option.classList.contains("none")) {
+        this._visibleOptions.push(option);
+      }
+    });
+  }
   toggle() {
+    if (this.container.hasAttribute("disabled")) return false;
     this.isOpen ? this.close() : this.open();
   }
 

@@ -34,7 +34,8 @@ export default class Feedback {
         const error = new createElement()
           .tag("div")
           .attr("id", "formError")
-          .attr("style", "color:brown;padding-left:15px;padding-top:10px;")
+          .attr("calss", "form-error")
+          // .attr("style", "color:brown;padding-left:15px;padding-top:10px;")
           .text("Заполните пожалуйста Ваше имя")
           .get();
         this.button.before(error);
@@ -84,8 +85,13 @@ export default class Feedback {
     const { default: PhoneValidator } = await import(
       "@components/validator/PhoneValidator.js"
     );
-    const emailV = new EmailValidator().validate(this.email.value);
-    const phoneV = new PhoneValidator().validate(this.phone.value);
+
+    const phoneV = new PhoneValidator(
+      "required|min:2|max:15|regex:/^([0-9\\s\\-\\+\\(\\)]*)$/",
+    ).validate(this.phone.value);
+    const emailV = new EmailValidator(
+      "required|min:2|max:15|regex:/^([0-9\\s\\-\\+\\(\\)]*)$/",
+    ).validate(this.email.value);
     return [...emailV.errors, ...phoneV.errors];
   }
 

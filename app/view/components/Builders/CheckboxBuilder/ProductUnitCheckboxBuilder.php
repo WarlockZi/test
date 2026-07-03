@@ -2,7 +2,6 @@
 
 namespace app\view\components\Builders\CheckboxBuilder;
 
-use app\view\components\Builders\CheckboxBuilder\Checkbox\FeedbackCheckbox;
 use app\view\components\Builders\CheckboxBuilder\Checkbox\ProductUnitCheckbox;
 
 class ProductUnitCheckboxBuilder implements ICheckboxBuilder

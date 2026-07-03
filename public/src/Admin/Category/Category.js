@@ -2,8 +2,9 @@ import "../Product/product.scss";
 import "./category.scss";
 import PropertyTable from "./PropertyTable";
 import { $, post } from "../../common.js";
-import SelectNew from "../../components/select/SelectNew";
-import QuillFactory from "@src/components/quill/QuillFactory.js";
+// import SelectNew from "@components/select/del/SelectNew.js";
+// import QuillFactory from "@src/components/quill/QuillFactory.js";
+import SearchableSelect from "@components/select/Factory/SearchableSelect.js";
 // import { QuillConst } from "@src/components/quill/QuillConstans.js";
 
 export default class Category {
@@ -17,7 +18,7 @@ export default class Category {
 
   setSelects() {
     const el = $(`[data-field='category_id']`).first();
-    if (el) new SelectNew(el);
+    if (el) new SearchableSelect(el);
   }
 
   setProperties() {

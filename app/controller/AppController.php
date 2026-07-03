@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace app\controller;
 
 use app\repository\MorphRepository;
+use app\repository\UpdateOrCreateRepository;
 use app\service\Response;
 use app\service\Router\IRequest;
 use JetBrains\PhpStorm\NoReturn;
@@ -20,36 +21,17 @@ class AppController extends Controller
         parent::__construct();
     }
 
-    #[NoReturn] public function actionUpdateOrCreate(IRequest $request): void
+    #[NoReturn]
+    public function actionUpdateOrCreate(IRequest $request): void
     {
-        $req = $request->body();
-
-        if (!empty($req['relation']['name'])) {
-            $this->updateOrCreateRelation($req);
-        }
-
-        if (!empty($req['field'])) {
-            $id    = $req['id'] ?? null;
-            $model = $this->model::updateOrCreate(
-                ['id' => $id],
-                $req['field']
-            );
-        }
-
-        if ($model->wasRecentlyCreated) {
-            response()->json(['popup' => 'Создан', 'id' => $model->id]);
-        } elseif ($model->wasChanged()) {
-            response()->json(['popup' => 'Обновлен', 'model' => $model->toArray()]);
-        } else {
-            response()->json(['error' => 'Ошибка']);
-        }
+        UpdateOrCreateRepository::process($request->body(), $this->model);
     }
 
     public function actionDelete(IRequest $request): void
     {
         $body = $request->body();
         if (!$body['id']) response()->json(['msg' => 'No id']);
-        $model        = $this->model::find($body['id']);
+        $model    = $this->model::find($body['id']);
         $relation = $body['relation'] ?? null;
         if (!empty($relation)) {
             $relationName = $relation['name'] ?? null;
@@ -57,7 +39,7 @@ class AppController extends Controller
                 $relationId = $relation['attach'] ?? null;
                 if ($model->$relationName()->detach((int)$relationId)) {
                     response()->json(['id' => $relationId, 'popup' => 'Удален']);
-                }elseif ($model->$relationName()->where($relationName.'_id',(int)$relationId)->exists()){
+                } elseif ($model->$relationName()->where($relationName . '_id', (int)$relationId)->exists()) {
                     $model->$relationName()->detach($relationId);
                     response()->json(['message' => 'Role removed']);
                 }
@@ -92,58 +74,6 @@ class AppController extends Controller
         if (!$req) response()->json(['error' => 'Плохой запрос']);
         MorphRepository::detach($this, $req);
         Response::exitWithPopup('ok');
-    }
-
-
-    protected function updateOrCreateRelation(array $req): void
-    {
-        $modalId      = $req['id'];
-        $relationName = $req['relation']['name'] ?? null;
-        $pivot        = $req['relation']['pivot'] ?? null;
-        $attach       = $req['relation']['attach'] ?? null;
-        $model        = $this->model::with($relationName)->find($modalId);
-
-        if ($relationName) {//has many models
-            if ($pivot) {
-                $id                 = $req['relation']['id'];
-                $pivotField         = array_keys($pivot)[0];
-                $pivotValue         = $req['relation']['pivot'][$pivotField];
-                $pivot              = $model->$relationName()->find($id)->pivot;
-                $pivot->$pivotField = $pivotValue;
-                try {
-                    $pivot->save();
-                    response()->json(['popup' => 'Изменен']);
-                } catch (Throwable $exception) {
-                    response()->json(['popup' => 'Ошибка']);
-                }
-            } elseif ($attach) {
-                $detach = $req['relation']['detach'] ?? null;
-                if ($detach) {
-                    $model->$relationName()->attach($req['relation']['attach']);
-                    $model->$relationName()->detach($req['relation']['detach']);
-                    response()->json(['popup' => 'Заменен', 'attach' => $attach, 'detached' => $detach]);
-                } elseif($detach==='0') {
-                    $model->$relationName()->attach($req['relation']['attach']);
-                    response()->json(['popup' => 'Создан новый', 'attach' => $attach, 'detached' => $detach]);
-                } else {
-                    $model->$relationName()->syncWithoutDetaching($detach);
-                    response()->json(['popup' => 'Заменен', 'attach' => $attach]);
-                }
-
-            } elseif (!empty($req['relation']['field'])) {//it is hasOne rel
-                $key                        = key($req['relation']['field']) ?? null;
-                $value                      = $req['relation']['field'][$key] ?? null;
-                $model->$relationName->$key = $value;
-                $model->push();
-//            } elseif ($req['relation']['id']) {
-//                $id           = $req['relation']['id'];
-//                $withRelation = $model->$relationName()->syncWithoutDetaching([$id]);
-            }
-        }
-
-//        if ($action === 'created') Response::exitJson(['popup' => 'Создан', 'id' => $rel->id]);
-
-        response()->json(['popup' => 'Обновлен']);
     }
 
 

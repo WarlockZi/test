@@ -1,5 +1,5 @@
-import SelectNew from "../../components/select/SelectNew";
 import { $, post } from "../../common.js";
+import SearchableSelect from "@components/select/Factory/SearchableSelect.js";
 
 export default class Fields {
   constructor($product) {
@@ -25,10 +25,10 @@ export default class Fields {
       "customSelect.changed",
       this.changeFields.bind(this),
     );
-    new SelectNew(this.$category_id);
-    new SelectNew(this.$promotions);
-    new SelectNew(this.$base_unit);
-    new SelectNew(this.$manufacturer_id);
+    new SearchableSelect(this.$category_id);
+    new SearchableSelect(this.$promotions);
+    new SearchableSelect(this.$base_unit);
+    new SearchableSelect(this.$manufacturer_id);
   }
 
   changePrintName(item) {

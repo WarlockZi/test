@@ -1,7 +1,9 @@
 import "./ProductFilter.scss";
 import { ael, qa, qs } from "@src/constants.js";
 import { $, post } from "@src/common.js";
-import SelectNew from "@src/components/select/SelectNew.js";
+import ProductFilterSelects from "@src/Admin/ProductFilter/ProductFilterSelects.js";
+// import SelectNew from "@src/components/select/SelectNew.js";
+// import FilterableSelect from "@components/select/Filterable.js";
 
 export default class ProductFilter {
   constructor() {
@@ -13,18 +15,11 @@ export default class ProductFilter {
     this.url = "/adminsc/report/updateFilter";
     this.wrap[ael]("click", this.handleClick.bind(this));
 
-    this.setSelects();
-  }
-
-  setSelects() {
-    const selects = Array.from(this.wrap[qa](`[select-new]`));
-    [].map.call(selects, (select) => {
-      new SelectNew(select);
-    });
+    new ProductFilterSelects($(".filter-wrap").first());
   }
 
   async handleClick(e) {
-    const target = e.target;
+    const target = e.el;
     if (target.classList.contains("filter-button")) {
       e.preventDefault();
       const req = this.getClickedFilters();

@@ -1,20 +1,20 @@
 <?php
 
 
-namespace app\blade\views\admin\promotion;
+namespace app\blade\views\admin\feedback;
 
 
 use app\model\Promotion;
 use app\model\Unit;
 use app\service\Fs\FS;
-use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\SelectBuilder\optionBuilders\ArrayOptionsBuilder;
 use app\view\components\Builders\SelectBuilder\SelectBuilder;
-use app\view\components\Builders\SelectBuilder\SelectNewBuilder;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\TableBuilder\Table;
 use Illuminate\Database\Eloquent\Collection;
+
+// TODO: refactor with promotionFormView
 
 class PromotionFormView
 {

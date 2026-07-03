@@ -6,23 +6,25 @@ use app\service\Logger\SyncLogger;
 use app\service\Sync\Load\Attributes\Measure\MeasurableTrait;
 use app\service\Sync\Load\Attributes\Measure\MeasureTime;
 use Exception;
+use Generator;
 use JetBrains\PhpStorm\NoReturn;
 use Throwable;
 
 class LoadService
 {
-    use MeasurableTrait;
+//    use MeasurableTrait;
+
     protected array $categoryData;
     protected array $productData;
     public array $priceData;
+    protected SyncLogger $logger;
 
-    public function __construct(
-        protected SyncLogger $logger = new SyncLogger(),
-        protected LoadCategories $loadCategories,
-        protected LoadPrices $loadPrices,
-        protected LoadProducts $loadProducts,
-    )
+    protected array $attributes;
+
+
+    public function __construct()
     {
+        $this->logger = new SyncLogger();
     }
 
     /**
@@ -51,10 +53,11 @@ class LoadService
             }
         }
     }
+
     /**
      * @throws Exception
      */
-    #[MeasureTime('loadCategories')]
+//    #[MeasureTime('loadCategories')]
     public function LoadCategories(): void
     {
         $this->logger->write('--- category  load started ---');
@@ -79,7 +82,8 @@ class LoadService
     /**
      * @throws Exception|Throwable
      */
-    #[NoReturn] public function LoadPrices(): void
+    #[NoReturn]
+    public function LoadPrices(): void
     {
         $loadPrices = new LoadPrices();
         $loadPrices->load();

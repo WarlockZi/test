@@ -1,5 +1,4 @@
 import { $, post } from "../../common.js";
-import SelectNew from "../../components/select/SelectNew";
 import { ael, qa, qs } from "../../constants.js";
 
 export default class PropertyTable {
@@ -57,7 +56,9 @@ export default class PropertyTable {
 
   newRow() {
     let $clone = this.rowsWrap.querySelector(".none .row").cloneNode(true);
-    new SelectNew($($clone).find("[custom-select]"));
+    // new SelectNew($($clone).find("[custom-select]"));
+    const sel = $($clone).find("[custom-select]");
+    new SelectNew(sel);
     this.rowsWrap.append($clone);
   }
 }

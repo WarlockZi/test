@@ -2,6 +2,8 @@
 
 namespace app\formRequest;
 
+use app\formRequest\baseFormRequests\FormRequest;
+
 class LikeRequest extends FormRequest
 {
     public function __construct(

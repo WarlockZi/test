@@ -21,7 +21,7 @@ class SelectBuilder
     private string $name = '';
     private string $options;
     private string $initialOption = '';
-    private string $selectAttr = 'select-new';
+    private string $selectAttr = 'searchable-select';
 
     public static function build(string $options): static
     {
@@ -47,9 +47,9 @@ class SelectBuilder
         return $this;
     }
 
-    public function relation(string $relation, string $relationModel): static
+    public function relation(string $relation): static
     {
-        $this->relation = "data-relation=$relation data-relationmodel=$relationModel";
+        $this->relation = "data-relation=$relation";
         return $this;
     }
 
@@ -79,9 +79,7 @@ class SelectBuilder
         return APP->get(View::class)
             ->render('admin.components.select.select',
                 compact('data')
-//                ['c' => $this, 'field' => $this->field, 'content' => $data]
             );
-//        return $this->clean(FS::getFileContent(__DIR__.'/templates/SelectBuilderTemplate.php', $data));
     }
 
 }
