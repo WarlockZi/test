@@ -87,9 +87,10 @@ class Response
         ], $headers);
     }
 
-    #[NoReturn] public function json(array $data = [], int $status = 200, array $headers = []): \Symfony\Component\HttpFoundation\Response
+    #[NoReturn]
+    public function json(array $data = [], int $status = 200, array $headers = []): \Symfony\Component\HttpFoundation\Response
     {
-        $this->content = json_encode($data, JSON_UNESCAPED_UNICODE);
+        $this->content = json_encode($data,JSON_UNESCAPED_UNICODE);
         $this->status  = $status;
         $this->headers = array_merge($this->headers, [
             'Content-Type' => 'application/json; charset=UTF-8'
@@ -98,10 +99,10 @@ class Response
         $this->send();
     }
 
-    #[NoReturn] public function consoleLog(array $data = [], int $status = 200, array $headers = []): \Symfony\Component\HttpFoundation\Response
+    #[NoReturn]
+    public function popup(string $message = '', int $status = 200, array $headers = []): \Symfony\Component\HttpFoundation\Response
     {
-//        $data = ['console'=>$data];
-        $this->content = json_encode($data, JSON_UNESCAPED_UNICODE);
+        $this->content = json_encode(['popup' => $message], JSON_UNESCAPED_UNICODE);
         $this->status  = $status;
         $this->headers = array_merge($this->headers, [
             'Content-Type' => 'application/json; charset=UTF-8'
@@ -110,7 +111,19 @@ class Response
         $this->send();
     }
 
-    #[NoReturn] public function back(array $data = [], int $status = 200, array $headers = []): self
+    #[NoReturn]
+    public function consoleLog(string $data = '', int $status = 200, array $headers = []): \Symfony\Component\HttpFoundation\Response
+    {
+        $this->json(['console' => $data], $status, $headers);
+    }
+    #[NoReturn]
+    public function consoleTable(array $data = [], int $status = 200, array $headers = []): \Symfony\Component\HttpFoundation\Response
+    {
+        $this->json(['table' => $data], $status, $headers);
+    }
+
+    #[NoReturn]
+    public function back(array $data = [], int $status = 200, array $headers = []): self
     {
         $HTTP_REFERER  = $_SERVER['HTTP_REFERER'] ?? '';
         $this->status  = $status;
@@ -136,16 +149,18 @@ class Response
         return $this;
     }
 
-    #[NoReturn] public function redirect(string $url, int $status = 302): self
+    #[NoReturn]
+    public function redirect(string $url, int $status = 302): self
     {
         $this->status              = $status;
         $this->headers['Location'] = $url;
         $this->send();
     }
 
-    #[NoReturn] public function withError(string $error): self
+    #[NoReturn]
+    public function withError(string $error): self
     {
-        $this->error = $error;
+        $this->error       = $error;
         $_SESSION['error'] = $error;
         return $this;
     }
@@ -168,7 +183,8 @@ class Response
         return $this;
     }
 
-    #[NoReturn] public static function exitWithPopup(string $msg): void
+    #[NoReturn]
+    public static function exitWithPopup(string $msg): void
     {
         $self          = new self();
         $self->content = json_encode(['popup' => $msg], JSON_UNESCAPED_UNICODE);
@@ -188,8 +204,8 @@ class Response
 
         $csp = [
             "default-src 'self' https://autofill.yandex.ru",
-            "script-src 'self' https://vi-prod:5173 'nonce-$nonce' ",
-            "style-src 'self' localhost:5173 'nonce-$nonce' ",
+            "script-src 'self' https://vi-prod:5173 'nonce-$nonce'",
+            "style-src 'self' https://vi-prod:5173 'nonce-$nonce'",
 
             "style-src-elem https://fonts.googleapis.com https://vitexopt.ru 'unsafe-inline'",
             "font-src fonts.gstatic.com",
@@ -202,17 +218,46 @@ class Response
             "base-uri 'self'",
             "object-src 'none'"
         ];
+//        $csp = [
+//            "default-src 'self' https://autofill.yandex.ru",
+//            "script-src 'self' http://vi-prod:5173 'nonce-$nonce'",
+//            "style-src 'self' http://vi-prod:5173 'nonce-$nonce'",
+//            "style-src-elem https://fonts.googleapis.com https://vitexopt.ru 'nonce-$nonce'",
+//            "font-src fonts.gstatic.com",
+//            "connect-src 'self' wss://vi-prod:5173 https://vitexopt.ru",
+//            "img-src 'self' data:",
+//            "frame-ancestors 'none'",
+//            "form-action 'self'",
+//            "base-uri 'self'",
+//            "object-src 'none'",
+//            "worker-src 'self'",
+//            "manifest-src 'self'",
+//            "report-uri /csp-report"
+
+//            "default-src 'self' https://autofill.yandex.ru",
+//            "script-src 'self' https://vi-prod:5173 'nonce-$nonce'",
+//            "style-src 'self' https://vi-prod:5173 'nonce-$nonce'",
+//            "style-src-elem https://fonts.googleapis.com https://vitexopt.ru 'nonce-$nonce'",
+//            "font-src fonts.gstatic.com",
+//            "connect-src 'self' wss://localhost:5173 https://vitexopt.ru",
+////            "script-src-attr 'unsafe-inline'",
+//            "img-src 'self' data:",
+//            "frame-ancestors 'none'",
+//            "form-action 'self'",
+//            "base-uri 'self'",
+//            "object-src 'none'"
+//        ];
 
         header("Content-Security-Policy: " . implode('; ', $csp));
 
         return $nonce;
     }
 
-    #[NoReturn] public static function view(string $file, array $data = [], int $status = 200): string
+    #[NoReturn]
+    public static function view(string $file, array $data = [], int $status = 200): string
     {
         http_response_code($status);
 
-//        $nonce = base64_encode(random_bytes(16));
         $nonce = self::setCSPHeaders();
 //        header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' localhost:5173; style-src 'self' 'nonce-'$nonce; img-src 'self' data:");
         header("X-Content-Type-Options: nosniff");
@@ -227,7 +272,8 @@ class Response
         exit($view->render($file, $data));
     }
 
-    #[NoReturn] public function send(): void
+    #[NoReturn]
+    public function send(): void
     {
         http_response_code($this->status);
 

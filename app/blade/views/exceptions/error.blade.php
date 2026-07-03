@@ -1,6 +1,6 @@
 @extends('layouts.main.main')
 
 @section('exceptions')
-{{--    @deb--}}
+    @deb
     {!!$error!!}
 @endsection

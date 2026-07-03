@@ -31,9 +31,9 @@ class RightAction implements IShowTable
                         return $right->name;
                     })
                     ->emptyRow('')
-                    ->search()
+                    ->headerSearch()
                     ->contenteditable()
-                    ->sort()
+                    ->headerSort()
                     ->width('1fr')
                     ->get())
             ->column(
@@ -44,7 +44,7 @@ class RightAction implements IShowTable
                     ->data(['field'=>'description'])
                     ->emptyRow('')
                     ->contenteditable()
-                    ->search()
+                    ->headerSearch()
                     ->width('1fr')
                     ->get()
             )

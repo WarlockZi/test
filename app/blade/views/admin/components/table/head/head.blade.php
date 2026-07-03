@@ -1,3 +1,4 @@
+{{--@deb--}}
 @foreach ($data['columns'] as $c)
     <div
             {!!$c->headerClass??''!!}

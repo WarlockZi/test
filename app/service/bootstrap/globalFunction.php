@@ -30,7 +30,7 @@ if (!function_exists('session')) {
 }
 if (!function_exists('view')) {
     #[NoReturn]
-    function view(string $view = null, array $data = [], int $status = 200, array $headers = [])
+    function view(string $view = null, array $data = [], int $status = 200, array $headers = []): void
     {
         $blade = APP->get(View::class);
         $content= $blade->render($view, $data);

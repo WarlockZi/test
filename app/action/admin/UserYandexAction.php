@@ -27,19 +27,19 @@ class UserYandexAction implements IShowTable
             ->column(
                 ColumnBuilder::build('last_name')
 //                    ->name('Фамилия')
-                    ->search()
+                    ->headerSearch()
                     ->width('1fr')
                     ->get())
             ->column(
                 ColumnBuilder::build('first_name')
 //                    ->name('Имя')
-                    ->search()
+                    ->headerSearch()
                     ->width('1fr')
                     ->get())
             ->column(
                 ColumnBuilder::build('default_email')
 //                    ->name('email')
-                    ->search()
+                    ->headerSearch()
                     ->width('1fr')
                     ->get())
             ->column(
@@ -49,7 +49,7 @@ class UserYandexAction implements IShowTable
                         $obj = json_decode($userY->default_phone);
                         return $obj->number;
                     })
-                    ->search()
+                    ->headerSearch()
                     ->width('1fr')
                     ->get())
             ->column(

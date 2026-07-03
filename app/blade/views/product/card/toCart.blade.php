@@ -7,8 +7,8 @@
 
     <div>
         <meta itemprop="priceCurrency" content="RUB">
-        <span itemprop="price">{{$product['base_unit']['pivot']['price']}}</span>
-         ₽ / {{$product['base_unit']['name']}}
+        <span itemprop="price">{!!number_format($product['base_unit']['pivot']['price'], 2, '.', ' ')??'нет цены'!!}</span>
+         ₽ / {!!$product['base_unit']['name']??'единиц'!!}
     </div>
 
     <div class="price">

@@ -1,5 +1,5 @@
 <div class="row" {!!$field->hidden!!}>
-{{--        @deb--}}
+{{--    @deb--}}
     <div
             class="field"
 
@@ -9,7 +9,7 @@
             data-tip="{!!$field->tooltip!!}"
             @endif
 
-    >{!!$field->name!!}</div>
+    >{!!$field->name??'undefined'!!}</div>
     :
     @include('admin.components.catalogItem.value')
 </div>

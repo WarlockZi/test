@@ -23,7 +23,7 @@ class TagAction implements IShowTable
             )
             ->column(
                 ColumnBuilder::build('name')
-                    ->search()
+                    ->headerSearch()
                     ->contenteditable()
                     ->get()
             )

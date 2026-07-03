@@ -27,24 +27,6 @@ class ReportFilterProductsAction
         return $this->initialFilters;
     }
 
-//    public function filtersFromReq(array $req = []): array
-//    {
-//        if (!count($req)) return [];
-//        $toSelect = [];
-//        $toSave   = [];
-//        foreach ($req as $string => $value) {
-//            if (str_ends_with($string, '-filter')) {
-//                $key          = str_replace('-filter', '', $string);
-//                $value        = $req[$key];
-//                $toSave[$key] = $value;
-//            } else {
-//                $toSelect[$string] = $value;
-//            }
-//        }
-//        $arr = [0 => $toSelect, 1 => $toSave];
-//        return $arr;
-//    }
-
     public function saveFilters(array $prparedToSave): void
     {
         $json = json_encode($prparedToSave);
@@ -152,7 +134,7 @@ class ReportFilterProductsAction
                         return $item->art;
                     })
                     ->class('cell left')
-                    ->search()
+                    ->headerSearch()
                     ->width('minmax(30px, 75px)')
                     ->get()
             )
@@ -162,7 +144,7 @@ class ReportFilterProductsAction
                         return "<a href='/adminsc/product/edit/{$item->id}'>$item->name</a>";
                     })
                     ->class('cell left')
-                    ->search()
+                    ->headerSearch()
                     ->width('minmax(60px,1fr)')
                     ->get()
             )

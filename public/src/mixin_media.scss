@@ -663,6 +663,7 @@
         font-size: clamp(.7rem, 4vw, 1rem);
         font-weight: initial;
         word-wrap: break-word;
+        line-height: inherit;
       }
 
       .footer {
@@ -1102,6 +1103,7 @@ $border-color:var.$color-main
   font-weight: 600;
   color: var.$color-grey-logo;
   margin: 0 0 clamp(15px, 5vw, 25px);
+  line-height: normal;
 }
 
 @mixin h2 {
@@ -1127,7 +1129,7 @@ $border-color:var.$color-main
 
 @mixin p {
   font-size: clamp(.75rem, 3vw, .9rem);
-  line-height: clamp(1rem, 3vw, 1.2rem);
+  line-height: clamp(1rem, 3vw, 1.5rem);
   color: var.$color-grey-logo;
   margin: 0 0 15px;
 }

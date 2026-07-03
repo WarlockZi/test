@@ -1,13 +1,11 @@
-@if($catItem['pageTitle'])
-    <div class='page-name'>{!!$catItem['pageTitle']!!}</div>
-@endif
+<div class='page-name'>{!!$catItem['pageTitle']??''!!}</div>
+
 
 <div class="item-wrap"
-     data-model="{!!$catItem['model']!!}"
+     data-model="{!!$catItem['model']??''!!}"
      data-id="{!!data_get($catItem, 'item.id')!!}"
-{{--     data-id="{!!$catItem['item']['id']!!}"--}}
 >
-{{--@deb--}}
+    {{--@deb--}}
     @if($catItem['tabs'])
         @include('admin.components.catalogItem.withTabs')
     @else

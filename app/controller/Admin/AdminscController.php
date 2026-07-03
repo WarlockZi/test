@@ -5,6 +5,7 @@ namespace app\controller\Admin;
 use app\controller\AppController;
 use app\service\AuthService\Auth;
 use JetBrains\PhpStorm\NoReturn;
+use Throwable;
 
 
 class AdminscController extends AppController

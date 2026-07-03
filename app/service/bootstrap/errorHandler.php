@@ -104,7 +104,8 @@ function devShutdownHandler(): void
 #[NoReturn] function devErrorHandler($errno, $errstr, $errfile, $errline): void
 {
     $error = $errstr . "<br> in " . $errfile . "<br> on line " . $errline;
-    view('exceptions.error', compact('error'));
+    response()->consoleLog($error);
+//    view('exceptions.error', compact('error'));
 }
 
 #[NoReturn] function devExceptionHandler($exception): void

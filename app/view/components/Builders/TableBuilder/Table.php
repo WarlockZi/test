@@ -43,18 +43,6 @@ class Table
         return $this;
     }
 
-
-    public function link(string $field, string $classHeader, string $class, string $name, string $width, string $className, string $funcName): void
-    {
-        $this->columns[$field] = ColumnBuilder::build($field)
-            ->classHeader($classHeader)
-            ->class($class)
-//            ->name($name)
-            ->width($width)
-            ->function($className, $funcName)
-            ->get();
-    }
-
     public function class(string $class): static
     {
         $this->class = "class = '{$class}'";
@@ -81,12 +69,6 @@ class Table
         return $this;
     }
 
-    public function header(array $header): static
-    {
-        $this->header = $header;
-        return $this;
-    }
-
     public function column(ColumnBuilder $column): static
     {
         $this->columns[$column->name] = $column;
@@ -96,7 +78,7 @@ class Table
     public function del(): static
     {
         $this->columns['del'] = ColumnBuilder::build('del')
-            ->classHeader('head del')
+            ->headerClass('head del')
             ->headerIcon(Icon::trashIcon())
             ->class('cell del')
             ->callback(fn() => Icon::trashIcon())
@@ -109,8 +91,10 @@ class Table
     public function edit(): static
     {
         $this->columns['edit'] = ColumnBuilder::build('edit')
-            ->classHeader('head edit')
+            ->headerClass('head edit')
             ->class('cell edit')
+            ->headerIcon(Icon::edit())
+            ->emptyRow(Icon::edit())
             ->callback(fn() => Icon::edit())
             ->width('50px')
             ->get();
@@ -130,9 +114,17 @@ class Table
         foreach ($this->columns as $column) {
             $columns .= ' ' . $column->width;
         }
-        $this->grid .= "style='display: grid; grid-template-columns:{$columns}'";
+        $this->grid .= $columns;
     }
-
+    public function link(string $field, string $classHeader, string $class, string $name, string $width, string $className, string $funcName): void
+    {
+        $this->columns[$field] = ColumnBuilder::build($field)
+            ->headerClass($classHeader)
+            ->class($class)
+            ->width($width)
+            ->function($className, $funcName)
+            ->get();
+    }
     public function get(): array
     {
         $this->prepareGridHeader();

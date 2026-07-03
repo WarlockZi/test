@@ -24,7 +24,7 @@ class FilterReportAction
             )
             ->column(
                 ColumnBuilder::build('name')
-                    ->search()
+                    ->headerSearch()
                     ->contenteditable()
                     ->get()
             )

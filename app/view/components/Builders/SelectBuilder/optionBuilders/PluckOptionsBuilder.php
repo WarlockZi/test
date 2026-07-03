@@ -34,7 +34,7 @@ class PluckOptionsBuilder
         foreach ($this->collection as $id => $item) {
             if (in_array($id, $this->excluded)) continue;
             $selected = ($id == $this->selected) ? "selected" : '';
-            $string   .= "<option value = $id $selected>$item</option>";
+            $string   .= "<option value=$id $selected>$item</option>";
         }
         return $string;
     }
@@ -57,7 +57,7 @@ class PluckOptionsBuilder
         return $this;
     }
 
-    public function initialOption(int $value = 0, string $label = null): PluckOptionsBuilder
+    public function initialOption(int $value = 0, string $label = ''): PluckOptionsBuilder
     {
         $this->initialOption = "<option value=$value>$label</option>";
         return $this;

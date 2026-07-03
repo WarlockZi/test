@@ -17,9 +17,6 @@ class Container
         $containerCompiled = FS::platformSlashes(
             ROOT . '/storage/framework/container/CompiledContainer.php'
         );
-//        if (is_readable($containerCompiled)) {
-//            unlink($containerCompiled);
-//        }
 
         $containerPath = ROOT . '/storage/framework/container';
         if (!is_writable($containerPath)) {// should be 777

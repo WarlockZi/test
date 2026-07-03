@@ -1,7 +1,7 @@
 import "./users.scss";
 
 import { $ } from "../../common";
-import SelectNew from "@src/components/select/SelectNew.js";
+import SelectNew from "@components/select/del/SelectNew.js";
 
 export default class User {
   constructor() {
@@ -66,16 +66,3 @@ export default class User {
 //       tab.dataset.value = str
 //    }
 // }
-
-
-
-
-
-
-
-
-
-
-
-
-

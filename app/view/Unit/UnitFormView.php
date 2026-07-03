@@ -5,7 +5,6 @@ namespace app\view\Unit;
 
 
 use app\model\Unit;
-use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\Morph\MorphBuilder;
 use app\view\components\Builders\SelectBuilder\optionBuilders\ArrayOptionsBuilder;
@@ -29,8 +28,7 @@ class UnitFormView
 
     protected static function morphs(Collection $items)
     {
-        $list =
-            Table::build($items)
+        $list = Table::build($items)
                 ->pageTitle('Единицы измерения')
                 ->addButton()
                 ->column(

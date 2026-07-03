@@ -26,6 +26,8 @@ class CategoryProperty extends Model
         'sort',
         'category_1s_id',
         'path',
+        'breadcrumbs_name',
+        'page_title',
     ];
 
     protected $attributes = [];

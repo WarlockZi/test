@@ -25,8 +25,8 @@ class PropertyAction implements IShowTable
                     ->callback(function ($prop){
                         return $prop->name;
                     })
-                    ->search()
-                    ->sort()
+                    ->headerSearch()
+                    ->headerSort()
                     ->contenteditable()
                     ->get()
             )->column(

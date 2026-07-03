@@ -25,7 +25,7 @@ class CountryAction implements IShowTable
             )
             ->column(
                 ColumnBuilder::build('name')
-                    ->search()
+                    ->headerSearch()
                     ->contenteditable()
                     ->get()
             )

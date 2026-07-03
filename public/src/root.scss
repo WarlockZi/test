@@ -11,6 +11,8 @@
 }
 :root {
   /* below the base */
+  --font-size-4b: 0.6rem;
+  --font-size-3b: 0.7rem;
   --font-size-2b: 0.875rem;
   --font-size-1b: 0.9375rem;
 
@@ -29,19 +31,21 @@
 /* --- Line Heights --- */
 :root {
   /* below the base */
-  --line-height-2b: 1.5rem;
-  --line-height-1b: 1.6rem;
+  --line-height-4b: 0.6rem;
+  --line-height-3b: 0.7rem;
+  --line-height-2b: 0.8rem;
+  --line-height-1b: 0.9rem;
 
   /* the base */
-  --line-height: 1.5rem;
+  --line-height: 1rem;
 
   /* above the base */
-  --line-height-1: 1.4118rem;
-  --line-height-2: 1.5rem;
-  --line-height-3: 1.4211rem;
-  --line-height-4: 1.35rem;
-  --line-height-5: 1.4286rem;
-  --line-height-6: 1.3043rem;
+  --line-height-1: 1.1rem;
+  --line-height-2: 1.2rem;
+  --line-height-3: 1.3211rem;
+  --line-height-4: 1.4rem;
+  --line-height-5: 1.5rem;
+  --line-height-6: 1.6rem;
 }
 
 /* --- Letter Spacings --- */

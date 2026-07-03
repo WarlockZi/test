@@ -30,17 +30,10 @@
             <div class="info-wrap">
                 <div class="info-tag">Описание</div>
 
-                <article id="detail-text">{!! $product['own_properties']['txt']!!}</article>
+
+                <article id="detail-text">{!!data_get($product, 'own_properties.txt')??''!!}</article>
             </div>
 
-
-                <?php //include __DIR__.'/card/olsoLike.php'?>
-                <?php //include __DIR__.'/card/rating.php'?>
-
-
-                    <!--        --><?php //= Icon::star() ?>
-                    <!--		 --><?php // include __DIR__ . '/card/reviews.php' ?>
-                    <!--		 --><?php // include __DIR__ . '/card/alsoViewd.php.php' ?>
 
         </div>
 

@@ -12,8 +12,6 @@
         @endphp
 
         @foreach($variables['breadcrumbs']['parentsArray']??[] as $item)
-
-{{--        @deb--}}
             @include('components.breadcrumbs.li',compact('item', 'position','lastItemIsLink'))
             @php $position++; @endphp
         @endforeach

@@ -2,7 +2,7 @@ import "./compare.scss";
 
 import { $, post } from "@src/common.js";
 import { ael } from "@src/constants.js";
-import DTO from "@src/Admin/DTO.js";
+import DTO from "@src/Admin/DTO/DTO.js";
 
 export default class Compare {
   constructor() {

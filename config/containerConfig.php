@@ -44,6 +44,7 @@ return [
         return Cache::getInstance();
     },
 
+
     Vite::class => create(Vite::class)
         ->constructor(get(ViteCompiler::class)),
 

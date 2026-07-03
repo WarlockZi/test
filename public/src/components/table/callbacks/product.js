@@ -6,7 +6,7 @@ function getCell(row, field) {
 
 export default class Callbacks {
   changeunit(detail, rows) {
-    const select = detail.target;
+    const select = detail.el;
     const cellWrapper = select.closest("[data-id]");
     const selectedValue = select.dataset.value;
     cellWrapper.dataset.id = selectedValue;

@@ -9,8 +9,15 @@
     text-align: center;
     padding: 7px;
   }
+
   .feedback-form{
     display: none;
+
+    .form-error{
+      color:brown;
+      padding-left:15px;
+      padding-top:10px;
+    }
   }
   .footer .menu .column{
     order: 1;

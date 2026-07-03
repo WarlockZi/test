@@ -1,7 +1,7 @@
 @use "../../var";
 @use "../../mixin_media";
 @use "filter";
-@use "../select/SelectNew";
+//@use "../select/del/SelectNew";
 //import search from '@svg/search.svg';
 @use "sass:meta";
 
@@ -37,6 +37,7 @@
   }
 
   .custom-table {
+    display: grid;
     //overflow-x: auto;
 
     [contenteditable] {
@@ -71,7 +72,7 @@
         height: 150px;
         min-width: 150px;
         z-index: 1;
-        border: 1px solid hsl(90deg 20% 90%);
+        //border: 1px solid hsl(90deg 20% 90%);
       }
     }
 
@@ -159,7 +160,7 @@
       flex-flow: column;
       position: relative;
       min-height: 27px;
-
+      line-height: var(--line-height);
 
       .icon {
         position: absolute;

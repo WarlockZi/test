@@ -28,6 +28,6 @@ export default class Product {
     }
 
     new MyQuill("#seo-article");
-    new MyQuill("#detail-text");
+    new MyQuill("[data-id='seo-article']");
   }
 }

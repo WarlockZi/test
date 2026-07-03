@@ -1,7 +1,7 @@
 import { $ } from "../../common.js";
 import SearchableSelect from "../../components/select/Factory/SearchableSelect.js";
 import { qa } from "../../constants.js";
-import Select from "../../components/select/Factory/Select.js";
+import { Select } from "../../components/select/Factory/Select.js";
 
 export default class ProductFilterSelects {
   constructor(container) {

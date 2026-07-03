@@ -80,6 +80,12 @@ class AdminSidebar
                 "permissions" => ['role_admin'],
                 "children" => [
                     [
+                        "name" => "Категории главной страницы",
+                        "href" => "/adminsc/herocategory",
+                        "class" => "neon",
+                        "permissions" => [],
+                    ],
+                    [
                         "name" => "Свойства",
                         "href" => "/adminsc/property",
                         "class" => "neon",
@@ -262,39 +268,7 @@ class AdminSidebar
                     ],
                 ],
             ],
-            [
-                "name" => "Планирование",
-                "icon" => Icon::flag('admin-menu'),
-                "href" => null,
-                "class" => null,
-                "permissions" => ['role_employee'],
-                "children" => [
-                    [
-                        "name" => "Создать задачи",
-                        "href" => "/adminsc/planning/create",
-                        "class" => "neon",
-                        "permissions" => [],
-                    ],
-                    [
-                        "name" => "Посмотреть планировки",
-                        "href" => "/adminsc/planning/list",
-                        "class" => "neon",
-                        "permissions" => ['role_admin'],
-                    ],
-                    [
-                        "name" => "Спланироваться",
-                        "href" => "/adminsc/planning/plan",
-                        "class" => "neon",
-                        "permissions" => ['role_admin'],
-                    ],
-                    [
-                        "name" => "Циклограмма",
-                        "href" => "/adminsc/cicles",
-                        "class" => "neon",
-                        "permissions" => [],
-                    ],
-                ],
-            ],
+
             [
                 "name" => "Страт задачи",
                 "icon" => Icon::grid('admin-menu'),
