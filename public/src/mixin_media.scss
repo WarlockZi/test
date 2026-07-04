@@ -1099,7 +1099,7 @@ $border-color:var.$color-main
 }
 
 @mixin h1 {
-  font-size: clamp(1rem, 5vw, 2rem);
+  font-size: clamp(1rem, 3vw, 2rem);
   font-weight: 600;
   color: var.$color-grey-logo;
   margin: 0 0 clamp(15px, 5vw, 25px);
@@ -1128,7 +1128,7 @@ $border-color:var.$color-main
 }
 
 @mixin p {
-  font-size: clamp(.75rem, 3vw, .9rem);
+  font-size: clamp(0.6rem, 3vw, 0.9rem);
   line-height: clamp(1rem, 3vw, 1.5rem);
   color: var.$color-grey-logo;
   margin: 0 0 15px;
