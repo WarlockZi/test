@@ -55,7 +55,7 @@ export class Select {
       (optEl) => String(optEl.dataset.value) === String(value),
     );
     if (newOption) {
-      newOption.setAttribute("selected", "true");
+      newOption.setAttribute("selected", "");
     }
 
     const oldOption = this.elements.optionElements.find((optEl) =>
@@ -131,7 +131,7 @@ export class Select {
       li.setAttribute("role", "option");
       if (this.selectedValue === opt.value) {
         this.select(opt.value);
-        li.setAttribute("selected", "true");
+        li.setAttribute("selected", "");
       }
       this.elements.optionsList.appendChild(li);
       this.elements.optionElements.push(li);
@@ -147,7 +147,8 @@ export class Select {
     this.container.append(this.elements.trigger);
     this.container.append(this.elements.dropdown);
     this.selectEl.after(this.container);
-    this.selectEl.style.display = "none";
+    this.selectEl.remove();
+    // this.selectEl.style.display = "none";
   }
 
   adjustPosition() {

@@ -25,13 +25,7 @@ class DI {
     }
   }
 }
-const scrollToTop = () => {
-  const c = document.documentElement.scrollTop || document.body.scrollTop;
-  if (c > 0) {
-    window.requestAnimationFrame(scrollToTop);
-    window.scrollTo(0, c - c / 8);
-  }
-};
+
 export const formatter = new Intl.NumberFormat("ru", {
   style: "currency",
   currency: "RUB",
@@ -749,7 +743,7 @@ export {
   sanitizeInput,
   createElement,
   time,
-  scrollToTop,
+  // scrollToTop,
   cookieRemove,
   setCookie,
   getCookie,

@@ -2,7 +2,6 @@
 
 namespace app\formRequest;
 
-use app\formRequest\baseFormRequests\FormRequest;
 use app\formRequest\baseFormRequests\FormRequest2;
 use app\service\AuthService\Auth;
 
@@ -14,8 +13,7 @@ class ProductFilterReport extends FormRequest2
     }
     public function authorize(): bool
     {
-        $user = Auth::getUser();
-        return !!$user;
+        return !!Auth::getUser();
     }
 
     public function rules(): array
@@ -32,7 +30,7 @@ class ProductFilterReport extends FormRequest2
             'changedFilters.array' => 'changedFilters is to be array',
         ];
     }
-    public function after(): array{
-        return $this->all()['changedFilters'];
-    }
+//    public function after(): array{
+//        return $this->all()['changedFilters'];
+//    }
 }

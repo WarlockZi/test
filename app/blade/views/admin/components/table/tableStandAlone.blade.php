@@ -2,7 +2,7 @@
  $hash = mt_rand(1000,9999)
 @endphp
 
-@deb
+{{--@deb--}}
 <style nonce="{!!Nonce::getNonce()!!}">
     .grid-col-template-{!!$hash!!}  {
         grid-template-columns: {!!$data['grid']!!};

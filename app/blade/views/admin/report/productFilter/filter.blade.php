@@ -1,7 +1,7 @@
 <div class="filter">
     <div class="title">{!!$filter->title ?? ''!!}</div>
 
-    <select {!!$filter->name ?? ''!!}>
+    <select {!!$filter->name ?? ''!!} {!!$filter->searchableSelector!!}>
         {!!$filter->emptyOption ?? ''!!}
         @foreach ($filter->options as $key => $value)
             @if(key_exists($filter->filterName, $filter->toFilter))

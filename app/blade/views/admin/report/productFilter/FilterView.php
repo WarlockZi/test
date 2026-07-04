@@ -7,6 +7,8 @@ class FilterView
 {
 
     public string $id;
+    public string $searchableSelector;
+//    public string $searchableSelector=env();'searchable-select';
     public array $checked;
     public string|null $name;
     public string $filterName;
@@ -19,6 +21,7 @@ class FilterView
 
     public function __construct()
     {
+        $this->searchableSelector=env('SEARCHABLE_SELECT');
 
     }
 

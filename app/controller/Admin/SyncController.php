@@ -2,7 +2,6 @@
 
 namespace app\controller\Admin;
 
-use app\attributes\MeasureExecutionTime;
 use app\formRequest\SyncDownloadZipRequest;
 use app\model\User;
 use app\service\AuthService\Auth;
@@ -11,7 +10,6 @@ use app\service\Logger\SyncLogger;
 use app\service\Response;
 use app\service\Router\IRequest;
 use app\service\Storage\SyncStorage;
-use app\service\Sync\Load\Attributes\logger\Loggable;
 use app\service\Sync\Load\LoadCategories;
 use app\service\Sync\Load\LoadPrices;
 use app\service\Sync\Load\LoadProducts;
@@ -38,7 +36,7 @@ class SyncController extends AdminscController
      * @throws Exception|Throwable
      */
     #[NoReturn]
-    #[Loggable(level: 'info', message: 'Attrubute SyncController начал загрузку')]
+//    #[Loggable(level: 'info', message: 'Attrubute SyncController начал загрузку')]
     public function actionLoad(): void
     {
         $this->logger->write('SyncController начал загрузку без архивов');
@@ -117,7 +115,7 @@ class SyncController extends AdminscController
      * @throws Exception
      * @throws Throwable
      */
-    #[MeasureExecutionTime]
+//    #[MeasureExecutionTime]
     public function actionLoadPrices(LoadPrices $loadPrices): void
     {
         $loadPrices->load();
