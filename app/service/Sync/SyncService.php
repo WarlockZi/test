@@ -34,6 +34,7 @@ class SyncService
 //        set_exception_handler([LoadErrorHandler::class, 'handleException']);
 //        set_error_handler([LoadErrorHandler::class, 'handleError']);
 
+
         $this->actions = new SyncActions(new SyncLogger());
 
         $this->archiveDir  = ROOT . SyncStorage::getPath();
