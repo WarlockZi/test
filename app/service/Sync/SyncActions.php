@@ -2,8 +2,6 @@
 
 namespace app\service\Sync;
 
-use app\attributes\time\Time;
-use app\attributes\time\TimeTrait;
 use app\service\Logger\SyncLogger;
 use DirectoryIterator;
 use Exception;

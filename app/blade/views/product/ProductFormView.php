@@ -161,7 +161,7 @@ class ProductFormView
                 ->pageTitle("Единица")
                 ->column(
                     ColumnBuilder::build('Единица')
-                        ->data(['jscallback' => 'changeunit'])
+                        ->data(['jscallback' => 'changeunit', 'relation' => 'units', 'field' => 'unit_id'])
                         ->width('clamp(100px,10vw,130px)')
                         ->emptyRow(function () {
                             return SelectBuilder::build(
@@ -184,7 +184,7 @@ class ProductFormView
                     ColumnBuilder::build('Пониж коэфф')
                         ->emptyRow('')
                         ->width('clamp(40px,7vw,55px)')
-                        ->data(['pivot' => 'divider'])
+                        ->data(['pivot' => 'units', 'field' => 'divider'])
                         ->data(['jscallback' => 'changemultiplier'])
                         ->callback(function ($unit) {
                             return $unit->pivot->divider ?? '';
@@ -197,7 +197,8 @@ class ProductFormView
                     ColumnBuilder::build('Повыш коэфф')
                         ->emptyRow('')
                         ->width('clamp(40px,7vw,55px)')
-                        ->data(['pivot' => 'multiplier',
+                        ->data(['pivot' => 'units',
+                            'field' => 'multiplier',
                             'jscallback' => 'changemultiplier'
                         ])
                         ->callback(function ($unit) {
@@ -224,7 +225,7 @@ class ProductFormView
                 )
                 ->column(
                     ColumnBuilder::build('Цены')
-                        ->data(['pivot' => 'price'])
+                        ->data(['pivot' =>'units','field'=>'price',])
                         ->callback(function ($unit) {
                             return (float)$unit->pivot->price ?? '';
                         })

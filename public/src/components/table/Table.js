@@ -71,31 +71,26 @@ export default class Table {
 
   async selectChange({ detail }) {
     const target = detail.el;
-    const colummnJsCallback =
-      target.closest("[data-jscallback]")?.dataset?.jscallback;
-    if (colummnJsCallback) {
-      const cb = await this.getCallbacks();
-      cb.callMethod(colummnJsCallback, [
-        detail,
-        this.getRowCells(detail.prev.value),
-      ]);
-    }
-    const dto = new FieldDTO(target);
-    // const dto = new TableDTO(target, detail?.prev?.value);
-    const res = await post(`/adminsc/${this.model}/updateorcreate`, dto);
-    if (res?.detached) {
-      const prevCells = this.table[qa](
-        `[data-id='${detail.prev.value}']:not([hidden])`,
-      );
-      for (let prevCell of prevCells) {
-        prevCell.dataset.id = detail.next.value;
-      }
-    } else if (res.id) {
-      this.setRowCellsId(target.closest("[data-id]"), res.id);
-    } else {
-      const prevCells = this.table[qa](`[data-id='0']:not([hidden])`);
-      for (let prevCell of prevCells) {
-        prevCell.dataset.id = detail.next.value;
+
+    const colummnJsCallback = await this.handleCallbacks(target);
+
+    if (!colummnJsCallback) {
+      const dto = new FieldDTO(target);
+      const res = await post(`/adminsc/${this.model}/updateorcreate`, dto);
+      if (res?.detached) {
+        const prevCells = this.table[qa](
+          `[data-id='${detail.prev.value}']:not([hidden])`,
+        );
+        for (let prevCell of prevCells) {
+          prevCell.dataset.id = detail.next.value;
+        }
+      } else if (res.id) {
+        this.setRowCellsId(target.closest("[data-id]"), res.id);
+      } else {
+        const prevCells = this.table[qa](`[data-id='0']:not([hidden])`);
+        for (let prevCell of prevCells) {
+          prevCell.dataset.id = detail.next.value;
+        }
       }
     }
   }
@@ -162,22 +157,31 @@ export default class Table {
     e.el.innerText = "";
   }
 
+  async handleCallbacks(target) {
+    // const colummnJsCallback =
+    //   target.closest("[data-jscallback]")?.dataset?.jscallback;
+    const colummnJsCallback =
+      target.closest("[data-jscallback]").dataset.jscallback;
+    if (colummnJsCallback) {
+      const cb = await this.getCallbacks();
+      cb.callMethod(colummnJsCallback, [target, this]);
+      return true;
+    }
+    return false;
+  }
+
   /// INPUT
   async handleKeyup({ target }) {
     if (target.hasAttribute("data-search")) {
       this.search(target);
     } else if (target.hasAttribute("contenteditable")) {
-      const colummnJsCallback = target.closest("[data-id]").dataset.jscallback;
-      if (colummnJsCallback) {
-        const cb = await this.getCallbacks();
-        cb.callMethod(colummnJsCallback, [target, this.getRows()]);
-      } else {
+      const colummnJsCallback = this.handleCallbacks(target);
+      if (!colummnJsCallback) {
         const DTO = new FieldDTO(target);
         // const DTO = new TableDTO(target);
         const res = await post(this.updateOrCreateUrl, DTO);
         if (DTO.id === "0" && res?.id) {
           this.setRowCellsId(target, res?.id);
-
         }
       }
     }
@@ -385,7 +389,9 @@ export default class Table {
       }.bind(this),
     );
   }
-
+  getCellByDataField(row, field) {
+    return row.find((cell) => cell?.dataset?.field === field);
+  }
   transform(index, content) {
     // Преобразовать содержимое данной ячейки в заданном столбце
     if (!this.sortables[index]) return;
@@ -406,9 +412,10 @@ export default class Table {
       if (!select.parentNode.hasAttribute("hidden")) {
         const options = Array.from(select[qa]("option"));
         const selected = options.find((opt) => opt.hasAttribute("selected"));
+        // TODO: collect all selectid in this row and remove selected options
 
         new SearchableSelect(select, { selected });
-        select.remove();
+        // select.remove();
       }
     });
   }

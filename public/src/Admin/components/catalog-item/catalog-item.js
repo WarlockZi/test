@@ -59,7 +59,7 @@ export default class CatalogItem {
 
   async handleSelectChange(target) {
     // if (target.closest("[custom-table]")) return;
-    this.update(target.detail.container);
+    this.update(target.detail.el);
   }
 
   async handleDateChange({ target }) {

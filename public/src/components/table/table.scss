@@ -92,6 +92,12 @@
       &.left {
         justify-content: start;
       }
+      &[disabled]{
+        background-color: #e2e2e2;
+        &:hover{
+          //background-color: #a8a8a8;
+        }
+      }
     }
 
     input[type=checkbox] {

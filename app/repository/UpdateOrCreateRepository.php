@@ -283,6 +283,7 @@ class UpdateOrCreateRepository
             BelongsTo::class => 'belongsTo',
             BelongsToMany::class => 'belongsToMany',
             HasManyThrough::class => 'hasManyThrough',
+
             MorphTo::class => 'morphTo',
             MorphMany::class => 'morphMany',
             MorphOne::class => 'morphOne',

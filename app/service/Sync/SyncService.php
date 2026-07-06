@@ -4,8 +4,8 @@ namespace app\service\Sync;
 
 use app\service\Logger\SyncLogger;
 use app\service\Storage\SyncStorage;
-use app\service\Sync\Load\LoadErrorHandler;
 use app\service\Sync\Load\LoadService;
+use app\service\Sync\Load\SyncLog;
 use app\service\Zip\ZipErrorMessages;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
@@ -31,8 +31,8 @@ class SyncService
         private SyncActions   $actions,
     )
     {
-        set_exception_handler([LoadErrorHandler::class, 'handleException']);
-        set_error_handler([LoadErrorHandler::class, 'handleError']);
+//        set_exception_handler([LoadErrorHandler::class, 'handleException']);
+//        set_error_handler([LoadErrorHandler::class, 'handleError']);
 
         $this->actions = new SyncActions(new SyncLogger());
 
@@ -50,6 +50,7 @@ class SyncService
      */
     #[NoReturn] public function requestFrom1s(): void
     {
+        SyncLog::log('начата синхронизация !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
         $this->logger->write("");
         $this->logger->write("uri - {$_SERVER['REQUEST_URI']}; method - {$_SERVER['REQUEST_METHOD']}");
         header("Content-Type: text/plain; charset=utf-8");

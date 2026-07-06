@@ -1,18 +1,21 @@
 import { post } from "@src/common.js";
-
-function getCell(row, field) {
-  return row.find((cell) => cell?.dataset?.pivot === field);
-}
+import FieldDTO from "@src/Admin/DTO/FieldDTO.js";
 
 export default class Callbacks {
-  changeunit(detail, rows) {
-    const select = detail.el;
+  async changeunit(target, table) {
+    const select = target;
     const cellWrapper = select.closest("[data-id]");
     const selectedValue = select.dataset.value;
+    const cells = table.getRowCells(selectedValue);
+    [].forEach.call(cells, (cell) => (cell.dataset.id = selectedValue));
     cellWrapper.dataset.id = selectedValue;
+    const dto = new FieldDTO(target);
+    table.update();
+    const res = await post(`/adminsc/${this.model}/updateorcreate`, dto);
   }
 
-  changemultiplier(target, rows) {
+  changemultiplier(target, table) {
+    const rows = table.getRows();
     const perUnitPrice = getPerUnitPrice(rows, target);
 
     function recalculatePrices() {
@@ -20,12 +23,12 @@ export default class Callbacks {
         (row, unitId) => {
           if (unitId === 0) return; //this is empty row
 
-          const from1sCell = getCell(row, "from_1s");
-          if (from1sCell.innerText) return; //this is price from 1s
+          const from1sCell = table.getCellByDataField(row, "from_1s");
+          if (from1sCell.innerText) return;
 
-          const multiplierCell = getCell(row, "divider");
-          const multiplier_1Cell = getCell(row, "multiplier");
-          const priceCell = getCell(row, "price");
+          const multiplierCell = table.getCellByDataField(row, "divider");
+          const multiplier_1Cell = table.getCellByDataField(row, "multiplier");
+          const priceCell = table.getCellByDataField(row, "price");
 
           const divider = multiplierCell ? multiplierCell.innerText : null;
           const multiplier = multiplier_1Cell ? multiplierCell.innerText : null;
@@ -42,9 +45,9 @@ export default class Callbacks {
       for (let i = 1; i < Object.keys(rows).length; i++) {
         let key = Object.keys(rows)[i];
         const row = rows[key];
-        const from1sCell = getCell(row, "from_1s");
+        const from1sCell = table.getCellByDataField(row, "from_1s");
         if (from1sCell.innerText) {
-          const from1sPriceCell = getCell(row, "price");
+          const from1sPriceCell = table.getCellByDataField(row, "price");
           return +from1sPriceCell.innerText;
         }
       }
@@ -90,12 +93,15 @@ export default class Callbacks {
 
       for (let i = 1; i < Object.keys(rows).length; i++) {
         let key = Object.keys(rows)[i];
-        const from1sCell = getCell(rows[key], "from_1s");
+        const from1sCell = table.getCellByDataField(rows[key], "from_1s");
         if (from1sCell.innerText) continue;
 
-        const priceCell = getCell(rows[key], "price");
-        const dividerCell = getCell(rows[key], "divider");
-        const multiplierCell = getCell(rows[key], "multiplier");
+        const priceCell = table.getCellByDataField(rows[key], "price");
+        const dividerCell = table.getCellByDataField(rows[key], "divider");
+        const multiplierCell = table.getCellByDataField(
+          rows[key],
+          "multiplier",
+        );
 
         eatherDividerOrMultiplier(target, multiplierCell, dividerCell);
 

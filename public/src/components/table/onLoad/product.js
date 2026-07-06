@@ -1,4 +1,5 @@
-import { searchSelector } from "../../../constants.js";
+import { checkboxSelector, searchSelector } from "../../../constants.js";
+import { $ } from "@src/common.js";
 
 export default class Callbacks {
   constructor(table) {
@@ -10,47 +11,39 @@ export default class Callbacks {
     const rows = this.table.getRows();
     for (let i = 1; i < Object.keys(rows).length; i++) {
       const key = Object.keys(rows)[i];
-      const row = rows[key];
-      const from1sCell = this.getCell(row, "from_1s");
+      const cells = rows[key];
+      const from1sCell = this.getFrom1sCell(cells, "from_1s");
       if (from1sCell && !from1sCell.innerText) continue;
       if (from1sCell) {
-        this.setSelectorCell(row);
-        this.setDividerCell(row);
-        this.setMultiplierCell(row);
+        this.setFrom1sCellsDisabled(cells);
       }
     }
   }
-
-  setSelectorCell(row) {
-    const selector = this.getSelectorCell(row);
-    selector.setAttribute("disabled", "true");
+  setFrom1sCellsDisabled(cells) {
+    [].forEach.call(cells, (cell) => {
+      cell.setAttribute("disabled", "");
+      const unitSelector = cell.querySelector(`[` + searchSelector + `]`);
+      const isShippableCheckbox = $(cell).find(`[` + checkboxSelector + `]`);
+      const dividerCell = $(cell).find(`[data-pivot='divider']`);
+      const multiplierCell = $(cell).find(`[data-pivot='multiplier']`);
+      if (unitSelector) {
+        unitSelector.setAttribute("disabled", "");
+      }
+      if (isShippableCheckbox) {
+        isShippableCheckbox.setAttribute("disabled", "");
+      }
+      if (dividerCell) {
+        dividerCell.setAttribute("contenteditable", "false");
+        dividerCell.innerText = "";
+      }
+      if (multiplierCell) {
+        multiplierCell.setAttribute("contenteditable", "false");
+        multiplierCell.innerText = "";
+      }
+    });
   }
 
-  setDividerCell(row) {
-    const divider = this.getCell(row, "divider");
-    divider.setAttribute("contenteditable", "false");
-    divider.setAttribute("disabled", "true");
-    divider.innerText = "";
-  }
-
-  setMultiplierCell(row) {
-    const multiplier = this.getCell(row, "multiplier");
-    multiplier.setAttribute("contenteditable", "false");
-    multiplier.innerText = "";
-  }
-
-  getSelectorCell(row) {
-    const selectorCell = row.find((cell) =>
-      cell.querySelector(`[` + searchSelector + `]`),
-    );
-    return selectorCell.querySelector(`[` + searchSelector + `]`);
-  }
-
-  getDelCell(row) {
-    return row.find((cell) => cell.classList.contains("del"));
-  }
-
-  getCell(row, field) {
-    return row.find((cell) => cell?.dataset?.pivot === field);
+  getFrom1sCell(row, field) {
+    return row.find((cell) => cell?.dataset?.field === field);
   }
 }

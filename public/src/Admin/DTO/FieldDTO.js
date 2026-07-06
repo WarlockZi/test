@@ -47,7 +47,7 @@ export default class FieldDTO {
   }
   getField(dataset) {
     return {
-      [dataset?.field]:
+      [this.el.closest("[data-field]")?.dataset?.field]:
         dataset?.value ?? this.el?.checked ?? this.el?.innerText,
     };
   }
