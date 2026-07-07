@@ -68,20 +68,8 @@ export default defineConfig(async ({ command, mode }) => {
         },
       },
     },
-    cacheDir: ".vite-cache",
-    plugins: [
-      // {
-      //    name: 'svg-nonce',
-      //    transform(src, id) {
-      //       console.log(styleNonce);
-      //       if (id.endsWith('.svg')) {
-      //          const nonce = nonce;
-      //          // const nonce = generateNonce() // ваша функция генерации nonce
-      //          return src.replace('<svg', `<svg nonce="${nonce}"`);
-      //       }
-      //    },
-      // },
 
+    plugins: [
       {
         name: "add-nonce-to-styles",
         transformIndexHtml(html, { command }) {
