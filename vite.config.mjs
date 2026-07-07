@@ -30,7 +30,6 @@ export default defineConfig(async ({ command, mode }) => {
     optimizeDeps: {
       include: ["xss"], // Для лучшей производительности
     },
-
     build: {
       outDir: "../build",
       emptyOutDir: true,
@@ -69,6 +68,7 @@ export default defineConfig(async ({ command, mode }) => {
         },
       },
     },
+    cacheDir: ".vite-cache",
     plugins: [
       // {
       //    name: 'svg-nonce',
@@ -126,7 +126,6 @@ export default defineConfig(async ({ command, mode }) => {
         __dirname + "/.env",
       ]),
     ],
-
     css: {
       preprocessorOptions: {
         scss: {
@@ -136,7 +135,6 @@ export default defineConfig(async ({ command, mode }) => {
       },
       devSourcemap: true,
     },
-
     resolve: {
       alias: {
         path: "path-browserify", // for path externalized error fix
@@ -146,7 +144,6 @@ export default defineConfig(async ({ command, mode }) => {
         "@svg": path.resolve(__dirname, "storage", "app", "svg"),
       },
     },
-
     define: {
       env: env,
     },
