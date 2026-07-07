@@ -27,7 +27,8 @@ export default class Product {
       });
     }
 
+    new MyQuill("#detail-text");
     new MyQuill("#seo-article");
-    new MyQuill("[data-id='seo-article']");
+    // new MyQuill("[data-id='seo-article']");
   }
 }

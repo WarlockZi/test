@@ -14,6 +14,7 @@ export default class MyQuill {
     theme = "snow",
     dto = null,
   ) {
+    // debugger;
     const el = $(selector).first();
     if (!el) return false;
     this.el = el;
