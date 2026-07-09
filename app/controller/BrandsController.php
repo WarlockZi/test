@@ -14,6 +14,7 @@ class BrandsController extends AppController
         parent::__construct();
     }
 
+
     public function actionBenovy()
     {
         $brand = 'Benovy';
