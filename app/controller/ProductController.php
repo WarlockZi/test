@@ -5,6 +5,7 @@ namespace app\controller;
 use app\action\ProductAction;
 use app\repository\OrderRepository;
 use app\repository\ProductRepository;
+use app\service\Breadcrumbs\NewBreadArray;
 use app\service\Router\IRequest;
 use JetBrains\PhpStorm\NoReturn;
 
@@ -37,9 +38,9 @@ class ProductController extends AppController
         $meta         = $this->actions->setMeta($product);
         $order = $this->actions->orderProduct($product)?->toArray();
 
-        $breadcrumbs  = $this->actions->getBreadcrumbs($product['category'], true);
-
         $product = $product->toArray();
+        $breadcrumbs  = (new NewBreadArray(true))->getParents($product['category']);
+
         view('product.product', compact(
             'meta',
             'breadcrumbs',

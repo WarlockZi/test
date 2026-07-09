@@ -11,6 +11,7 @@ use app\model\ProductUnit;
 use app\repository\ProductFilterRepository;
 use app\repository\ProductRepository;
 use app\service\AuthService\Auth;
+use app\service\Breadcrumbs\NewBreadArray;
 use app\service\Router\IRequest;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
@@ -43,7 +44,7 @@ class ProductController extends AdminscController
         if (!$prod) {
             view('admin.product.notFound');
         }
-        $breadcrumbs = $this->actions->getBreadcrumbs($prod->category, true);
+        $breadcrumbs = (new NewBreadArray(true))->getParents($prod->category->toArray());
         $catItem     = ProductFormView::edit($prod);
         view('admin.product.edit', compact('catItem', 'breadcrumbs'));
     }

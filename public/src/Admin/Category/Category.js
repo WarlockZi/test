@@ -13,7 +13,6 @@ export default class Category {
     this.id = el.dataset.id;
     this.setSelects();
     this.setProperties();
-    // QuillFactory.create("#seo-article", QuillConst.ADMIN_CATEGORY_SEO_ARTICLE);
   }
 
   setSelects() {

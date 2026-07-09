@@ -2,32 +2,20 @@
 
 namespace app\action;
 
-use app\model\Category;
 use app\model\Order;
-use app\model\OrderProduct;
 use app\model\Product;
 use app\repository\OrderRepository;
-use app\service\Breadcrumbs\NewBread;
+use app\service\Breadcrumbs\NewBreadArray;
 use app\service\Meta\MetaService;
-use Exception;
 
 
 class ProductAction
 {
     public function __construct(
         private MetaService       $meta,
-        private readonly NewBread $breadcrumbs,
+        private readonly NewBreadArray $breadcrumbs,
     )
     {
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function getBreadcrumbs(Category $category, bool $lastItemIsLink = false): array
-    {
-        if (!$category) throw new Exception('Breadcrumbs service has no category');
-        return $this->breadcrumbs->getParents($category, $lastItemIsLink);
     }
 
     public function orderProduct(Product $product):?Order

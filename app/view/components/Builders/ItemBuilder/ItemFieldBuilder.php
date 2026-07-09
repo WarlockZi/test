@@ -59,7 +59,7 @@ class ItemFieldBuilder
         return $this;
     }
 
-    public function checkbox(string $checked = '', array $data = []): static
+    public function checkbox(bool $checked, array $data = []): static
     {
         $this->html = CheckboxBuilder::build()
             ->checked($checked)

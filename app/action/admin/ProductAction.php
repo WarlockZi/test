@@ -4,7 +4,6 @@ namespace app\action\admin;
 
 use app\model\Product;
 use app\model\ProductUnit;
-use app\service\Breadcrumbs\NewBread;
 use app\service\Image\ProductMainImage;
 use app\service\Response;
 use app\service\Router\IRequest;
@@ -16,18 +15,8 @@ use Throwable;
 class ProductAction
 {
     public function __construct(
-        private readonly NewBread $breadcrumbs,
     )
     {
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function getBreadcrumbs($category, bool $lastItemIsLink): array
-    {
-        if (!$category) return [];
-        return $this->breadcrumbs->getParents($category, $lastItemIsLink);
     }
 
     /**
