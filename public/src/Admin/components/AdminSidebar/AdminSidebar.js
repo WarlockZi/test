@@ -1,7 +1,6 @@
 import "./adminSidebar.scss";
 import { $ } from "@src/common.js";
-import { ael, qs } from "../../../constants.js";
-import { document } from "postcss";
+import { ael, qs } from "@src/constants.js";
 
 export default class AdminSidebar {
   constructor() {
