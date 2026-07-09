@@ -30,9 +30,9 @@ class CheckboxBuilder
         return $this;
     }
 
-    public function checked(?string $field): static
+    public function checked(?bool $checked): static
     {
-        $this->checked = (bool)$field?"checked":'';
+        $this->checked = $checked?"checked":'';
         return $this;
     }
 
