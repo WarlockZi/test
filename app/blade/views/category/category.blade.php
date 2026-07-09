@@ -44,7 +44,7 @@
         @else
 
 
-            @include('components.breadcrumbs.index', ['breadcrumbs'=>$category['breadcrumbs']])
+            @include('components.breadcrumbs.index')
             <h1>{{$category['own_properties']['seo_h1'] ?? $category['own_properties']['seo_full_name'] ?? $category['name']}}</h1>
 
             @if (!empty($category['children_recursive']))

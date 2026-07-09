@@ -5,6 +5,7 @@ namespace app\controller\Admin;
 use app\action\admin\CategoryAction;
 use app\model\Category;
 use app\repository\CategoryRepository;
+use app\service\Breadcrumbs\NewBreadArray;
 use app\service\Router\IRequest;
 use app\view\Category\CategoryFormView;
 use JetBrains\PhpStorm\NoReturn;
@@ -34,10 +35,11 @@ class CategoryController extends AdminscController
         if (!$category) {
             view('category.notFound');
         }
-        $breadcrumbs = $this->actions->getBreadcrumbs($category, true);
         $catItem     = CategoryFormView::edit($category);
+        $category = $category->toArray();
+        $breadcrumbs = (new NewBreadArray(true))->getParents($category);
         view('admin.category.edit',
-            compact('category',
+            compact(
                 'breadcrumbs',
                 'catItem'
             ));

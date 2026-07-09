@@ -6,6 +6,7 @@ use app\action\CategoryAction;
 use app\model\Category;
 use app\repository\CategoryRepository;
 use app\repository\OrderRepository;
+use app\service\Breadcrumbs\NewBreadArray;
 use app\service\Router\IRequest;
 use JetBrains\PhpStorm\NoReturn;
 
@@ -32,10 +33,12 @@ class CategoryController extends AppController
             $order = OrderRepository::usersOrder(currentUser: true, submitted: true)?->toArray();
 
             $category = $category?->toArray() ?: [];
+            $breadcrumbs = (new NewBreadArray())->getParents($category);
             view('category.category',
                 compact(
                     'category',
                     'order',
+                    'breadcrumbs'
                 )
             );
 

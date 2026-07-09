@@ -7,6 +7,7 @@ namespace app\repository;
 use app\model\Category;
 use app\model\Product;
 use app\service\Breadcrumbs\NewBread;
+use app\service\Breadcrumbs\NewBreadArray;
 use app\service\Cache\Redis\Cache;
 
 class CategoryRepository
@@ -32,9 +33,6 @@ class CategoryRepository
                     ->first();
 
                 if ($category) {
-//                    $c = $category->toArray();
-                    $breadcrumbs           = new NewBread;
-                    $category->breadcrumbs = $breadcrumbs->getParents($category);
                     $category->productsInStore->each(function (Product $product) {
                         $product->append('base_unit');
                         $product->append('shippable_units');

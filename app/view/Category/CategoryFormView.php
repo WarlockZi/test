@@ -50,7 +50,7 @@ class CategoryFormView
             ->field(
                 ItemFieldBuilder::build('show_front', $category)
                     ->name('Показывать на главоной')
-                    ->checkbox($category->ownProperties?->show_front,['field'=>'show_front', 'relation'=>'ownProperties',] )
+                    ->checkbox((bool)$category->ownProperties?->show_front,['field'=>'show_front', 'relation'=>'ownProperties',] )
 //                    ->html(
 //                        CheckboxBuilder::build()
 //                            ->checked($category->ownProperties?->show_front)
