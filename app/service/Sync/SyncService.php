@@ -57,7 +57,7 @@ class SyncService
 //        header("Pragma: no-cache");
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        SyncLog::log('начата синхронизация !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+        SyncLog::log('начата синхронизация request is get !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
             if (isset($_GET['type']) && $_GET['type'] === 'catalog') {
 
                 if (isset($_GET['mode']) && $_GET['mode'] === 'checkauth') {
