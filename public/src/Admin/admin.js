@@ -45,9 +45,8 @@ $(document).ready(async function () {
   }
   const quills = document[qa](quillSelector);
   if (quills) {
-    const { default: QuillFactory } = await import(
-      "../components/quill/QuillFactory.js"
-    );
+    const { default: QuillFactory } =
+      await import("../components/quill/QuillFactory.js");
     [].forEach.call(quills, (el) => {
       new QuillFactory(el);
     });
@@ -63,9 +62,8 @@ $(document).ready(async function () {
   } else if (window.location.pathname === "/adminsc") {
     const { default: MyChart } = await import("./chartjs/chartjs.js");
   } else if (window.location.pathname === "/adminsc/report/filter") {
-    const { default: ProductFilter } = await import(
-      "./ProductFilter/ProductFilter.js"
-    );
+    const { default: ProductFilter } =
+      await import("./ProductFilter/ProductFilter.js");
     new ProductFilter();
   }
 
@@ -86,9 +84,8 @@ $(document).ready(async function () {
 
   const cardPanel = document[qs](`.card-panel`);
   if (cardPanel) {
-    const { default: Card_panel } = await import(
-      "@components/card_panel/card_panel"
-    );
+    const { default: Card_panel } =
+      await import("@components/card_panel/card_panel");
     new Card_panel();
   }
 
@@ -104,9 +101,8 @@ $(document).ready(async function () {
   }
   const catalogItem = document[qs](".item-wrap");
   if (catalogItem) {
-    const { default: CatalogItem } = await import(
-      "./components/catalog-item/catalog-item.js"
-    );
+    const { default: CatalogItem } =
+      await import("./components/catalog-item/catalog-item.js");
     new CatalogItem(catalogItem);
   }
   const category = document[qs](`.item-wrap[data-model='category']`);
