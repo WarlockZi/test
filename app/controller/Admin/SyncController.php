@@ -50,7 +50,9 @@ class SyncController extends AdminscController
      */
     #[NoReturn] public function actionInit(SyncRequest $req): void
     {
+        error_log('before log');
         $this->logger->write('test start');
+        error_log('after log');
         $this->service->requestFrom1s($req);
     }
 
