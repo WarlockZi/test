@@ -3,6 +3,7 @@
 namespace app\controller\Admin;
 
 use app\formRequest\SyncDownloadZipRequest;
+use app\formRequest\SyncRequest;
 use app\model\User;
 use app\service\AuthService\Auth;
 use app\service\Fs\FS;
@@ -47,9 +48,10 @@ class SyncController extends AdminscController
     /**
      * @throws Exception|Throwable
      */
-    #[NoReturn] public function actionInit(): void
+    #[NoReturn] public function actionInit(SyncRequest $req): void
     {
-        $this->service->requestFrom1s();
+        $this->logger->write('test start');
+        $this->service->requestFrom1s($req);
     }
 
     /**

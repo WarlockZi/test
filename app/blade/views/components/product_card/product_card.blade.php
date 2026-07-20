@@ -1,7 +1,7 @@
 <div
         class="column"
         data-instore="<?= $product->instore ?? 0; ?>"
-        data-1sid="<?= $product['1s_id'] ?? 0; ?>"
+        data-product_1s_id="<?= $product['1s_id'] ?? 0; ?>"
 >
     <?= isset($product->activePromotions) && $product->activePromotions->count()
         ? "<div class='promotion'>Акция</div>"
@@ -26,9 +26,8 @@
     </a>
 
 
-{{--    @php xdebug_break(); @endphp--}}
-
-    @include('components.shippableUnitsNew.shippableUnits')
+    @include('product.card.shippableUnits')
+{{--    @include('components.shippableUnitsNew.shippableUnits')--}}
 
     @include('components.card_panel.product_card_panel', compact('product'))
 

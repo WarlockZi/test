@@ -12,7 +12,7 @@ use ZipArchive;
 class SyncActions
 {
 //    use TimeTrait;
-    public function __construct(private SyncLogger $logger)
+    public function __construct(private readonly SyncLogger $logger)
     {
     }
 
@@ -174,11 +174,10 @@ class SyncActions
     #[NoReturn]
     public function checkauth(): void
     {
-        $this->logger->write('checkauth');
-        $sessId = '55fdsa55';
-        echo "success\n";                               /// success inc
+        $this->logger->write('checkauth'); // $this->logger->write('checkauth');
+        echo "success\n";
         echo "sess_name " . session_name() . "\n";    ///  777777
-        echo 'sess_id ' . $sessId . "\n";             ///   55fdsa55;
+        echo 'sess_id ' . session_id() . "\n";             ///   55fdsa55;
         exit;
     }
 

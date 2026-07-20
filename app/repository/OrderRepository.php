@@ -25,13 +25,15 @@ class OrderRepository
                 'order_id' => $order_id,
                 'product_id' => $product_1s_id
             ])->first();
-
-            OrderItem::where(['order_product_id' => $orderProduct->id,])
-                ->get()
-                ->each(function ($item) use ($order_id, $product_1s_id) {
-                    $item->delete();
-                });
-
+            if (!$orderProduct) {
+                return false; // или throw new Exception(...)
+            }
+            OrderItem::where('order_product_id', $orderProduct->id)->delete();
+//            OrderItem::where(['order_product_id' => $orderProduct->id,])
+//                ->get()
+//                ->each(function ($item) use ($order_id, $product_1s_id) {
+//                    $item->delete();
+//                });
             $orderProduct->delete();
             return true;
 
@@ -109,7 +111,7 @@ class OrderRepository
             $product->append('base_unit');
             $product->append('shippable_units');
         });
-        $o = $order?->toArray();
+//        $o = $order?->toArray();
         return $order;
     }
 

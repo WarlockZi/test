@@ -13,10 +13,12 @@ export default class FieldDTO {
 
     this.model =
       el.closest([catItemSelector])?.dataset?.model ?? //catitem
-      el.closest("[" + [tableSelector] + "]").dataset.model; //table
+      el.closest("[" + [tableSelector] + "]")?.dataset?.model ?? //table
+      el.closest("[data-model]")?.dataset?.model; //main
     this.id =
       el.closest([catItemSelector])?.dataset?.id ?? //catitem
-      el.closest("[data-id]").dataset.id; //table
+      el.closest("[data-id]")?.dataset?.id ?? //table
+      el.closest("[data-id]")?.dataset?.id; //main
 
     this.pivot = el.closest([dataPivotSelector])?.dataset.pivot;
     if (!this.pivot) {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace app\controller;
 
 use app\action\CartAction;
+use app\formRequest\CartDeleteRowRequest;
 use app\formRequest\CartRequest;
 use app\model\Order;
 use app\model\OrderItem;
@@ -31,20 +32,19 @@ class CartController extends AppController
         view('cart.cart', compact('order', 'showToCartButton'));
     }
 
-    #[NoReturn] public function actionDeleteRow(IRequest $request): void
+    #[NoReturn] public function actionDeleteRow(CartDeleteRowRequest $request): void
     {
-        $trashed = $this->action->deleteRow($request->body);
-
-        $trashed
+        $req = $request->validated();
+        OrderRepository::deleteProduct($req['order_id'], $req['product_1s_id'])
             ? response()->json(['deleted' => true, 'popup' => 'Удален'])
-            : Response::exitWithPopup('Не удален');
+            : response()->popup('Не удален');
     }
 
     #[NoReturn] public function actionUpdateOrCreateCustom(CartRequest $request): void
     {
         try {
-            $validatedData = $request->safe()->only(['count', 'unit_id', 'product_1s_id','loc_storage_cart_id']);
-            $this->repository->updateOrCreate($validatedData);
+            $req = $request->safe()->only(['count', 'unit_id', 'product_1s_id','loc_storage_cart_id']);
+            $this->repository->updateOrCreate($req);
             response()->json(['ok' => true, 'popup' => 'Заказ изменен']);
         } catch (ValidationException $validator) {
             $errors = $validator->errors();

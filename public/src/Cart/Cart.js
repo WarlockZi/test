@@ -43,7 +43,7 @@ export default class Cart {
     const row = target.closest(".row");
     return {
       order_id: this.orderId,
-      product_1s_id: row.dataset.productId,
+      product_1s_id: row.dataset.product_1s_id,
     };
   }
 

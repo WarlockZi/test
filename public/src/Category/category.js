@@ -2,7 +2,6 @@ import { ael, qa, qs } from "../constants";
 import shippableTable from "@components/shippable/shippableUnitsTable";
 import MyQuill from "../components/quill/MyQuill.js";
 import { getCookie, newObjAndFiles2FormData, post } from "@src/common.js";
-import DTO from "@src/Admin/DTO/DTO.js";
 import Dnd from "@components/dnd/dnd.js";
 
 export default class Category {
@@ -47,9 +46,8 @@ export default class Category {
   async setCardPanel() {
     const cardPanel = document[qs](`.card-panel`);
     if (cardPanel) {
-      const { default: Card_panel } = await import(
-        "@components/card_panel/card_panel"
-      );
+      const { default: Card_panel } =
+        await import("@components/card_panel/card_panel");
       this.cardPanel = new Card_panel();
     }
   }
@@ -65,16 +63,16 @@ export default class Category {
   }
 
   async handleCompare(target) {
-    if (!target.dataset.compare) {
-      target.dataset.compare = false;
+    if (target.dataset.compare === "true") {
       const res = await post("/compare/del", this.productDTO(target));
-      if (res?.arr?.discompared) target.classList.toggle("green");
+      target.dataset.compare = false;
+      if (res?.discompared) target.classList.toggle("green");
     } else {
-      target.dataset.compare = true;
       const res = await post(
         "/compare/updateOrCreateCustom",
         this.productDTO(target),
       );
+      target.dataset.compare = true;
       if (res?.compared) target.classList.toggle("green");
     }
   }
@@ -95,11 +93,11 @@ export default class Category {
   }
 
   productDTO(target) {
-    const dto = new DTO(target);
-    dto.fields = {
-      product_id: target.closest(`[data-1sid]`).dataset["1sid"],
+    return {
+      fields: {
+        product_id: target.closest(`[data-1sid]`).dataset["1sid"],
+      },
     };
-    return dto;
   }
 
   mapShippableTables() {

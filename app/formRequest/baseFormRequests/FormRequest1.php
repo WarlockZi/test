@@ -2,16 +2,16 @@
 
 namespace app\formRequest\baseFormRequests;
 
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Translation\ArrayLoader;
 use Illuminate\Translation\Translator;
 use Illuminate\Validation\Factory;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Validation\Validator;
 
 abstract class FormRequest1 extends Request
 {
-    protected $validator;
+    protected Validator $validator;
     public function __construct(array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], $content = null)
     {
         $req = Request::createFromGlobals();
@@ -24,40 +24,8 @@ abstract class FormRequest1 extends Request
             $req->server->all(),
             $req->getContent());
     }
-
-    public function authorize()
-    {
-        return true;
-    }
-    abstract public function rules();
-
-    public function messages()
-    {
-        return [];
-    }
-
-    public function attributes()
-    {
-        return [];
-    }
-    protected function prepareForValidation()
-    {
-    }
-
-    protected function passedValidation()
-    {
-    }
-    public function setContainer(Container $container)
-    {
-        $this->container = $container;
-    }
-
     protected function getValidator()
     {
-        if ($this->validator) {
-            return $this->validator;
-        }
-
         $factory = new Factory(
             new Translator(
                 new ArrayLoader(), 'ru'
@@ -74,7 +42,7 @@ abstract class FormRequest1 extends Request
         return $this->validator = $validator;
     }
 
-    public function validate()
+    public function validate(): void
     {
         $this->prepareForValidation();
 
@@ -97,6 +65,76 @@ abstract class FormRequest1 extends Request
      */
     public function validated()
     {
-        return $this->getValidator()->validated();
+        $this->authorize();
+        $this->prepareForValidation();
+        $validator = $this->getValidator();
+
+        if (isset($this->input['phpSession'])) {
+            unset($this->input['phpSession']);
+        }
+
+        if ($validator->fails()) {
+            $errors = $validator->errors()->all();
+            response()->json(['popup'=>$errors]);
+        }
+
+        return $validator->validated();
     }
+    public function safe(): object
+    {
+        return new class($this->validated()) {
+            private $data;
+
+            public function __construct($data)
+            {
+                $this->data = $data;
+            }
+
+            public function __get($name)
+            {
+                return $this->data[$name] ?? null;
+            }
+
+            public function all()
+            {
+                return $this->data;
+            }
+
+            public function only($keys): array
+            {
+                $keys = is_array($keys) ? $keys : func_get_args();
+                return array_intersect_key($this->data, array_flip($keys));
+            }
+
+            public function except($keys): array
+            {
+                $keys = is_array($keys) ? $keys : func_get_args();
+                return array_diff_key($this->data, array_flip($keys));
+            }
+        };
+    }
+    public function authorize():bool
+    {
+        return true;
+    }
+    abstract public function rules();
+
+    public function messages(): array
+    {
+        return [];
+    }
+
+    public function attributes(): array
+    {
+        return [];
+    }
+    protected function prepareForValidation()
+    {
+    }
+
+    protected function passedValidation()
+    {
+    }
+
+
 }

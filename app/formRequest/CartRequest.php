@@ -3,9 +3,10 @@
 namespace app\formRequest;
 
 
+use app\formRequest\baseFormRequests\FormRequest1;
 use app\formRequest\baseFormRequests\FormRequest2;
 
-class CartRequest extends FormRequest2
+class CartRequest extends FormRequest1
 {
     public function __construct()
     {

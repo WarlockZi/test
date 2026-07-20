@@ -1,9 +1,11 @@
-<div class="shippable-table"
-     data-product_1s_id='{{$product['1s_id']}}'
->
+<div class="shippable-table">
 
     @if(!isset($showToCartButton))
-        <button class='button to-cart-button'>Перейти в корзину</button>
+        <a href="/cart" class='button to-cart-button'>
+            Перейти в корзину
+        </a>
+{{--        <button >--}}
+{{--        </button>--}}
     @endif
 
     @foreach($product['shippable_units'] as $shippable)
@@ -24,7 +26,6 @@
             }
         }
         @endphp
-
 
         <div
                 unit-row

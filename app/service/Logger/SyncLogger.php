@@ -11,18 +11,18 @@ class SyncLogger implements ILogger
 {
     protected string $logPath;
     protected string $logDir = '/sync';
-    protected string $logName = 'log.txt';
+    protected string $logFileName = 'log.txt';
 
     public function __construct()
     {
-        $this->setFile($this->logName);
+        $this->setFile($this->logFileName);
     }
 
     public function setFile(string $fileName): ILogger
     {
         $dir = $this->setPath();
 
-        $fullPath = $dir . $this->logName;
+        $fullPath = $dir . $this->logFileName;
         if (!is_readable($fullPath)) {
             touch($fullPath);
         }

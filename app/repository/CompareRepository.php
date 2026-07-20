@@ -3,17 +3,20 @@
 
 namespace app\repository;
 
+use app\formRequest\CompareRequest;
 use app\model\Compare;
 use app\service\AuthService\Auth;
+use Illuminate\Database\Eloquent\Collection;
+use LaravelIdea\Helper\app\model\_IH_Compare_C;
 use Throwable;
 
 class CompareRepository
 {
-    public static function all()
+    public static function all(): Collection|_IH_Compare_C|array
     {
         list($field, $value) = Auth::getCartFieldValue();
         $compares = Compare::where($field, $value)
-            ->with('product.shippableUnits')
+            ->with('product.units')
             ->get();
         return $compares;
     }

@@ -1,13 +1,13 @@
 @extends('layouts.main.main')
-{{--@deb--}}
+
 @section('title', $category['meta']['seo_title'])
 
 @section('description')
-    {{    $category['meta']['seo_desc']}}
+    {!!$category['meta']['seo_desc']!!}
 @endsection
 
 @section('keywords')
-    {{$category['meta']['seo_keywords']}}
+    {!!$category['meta']['seo_keywords']!!}
 @endsection
 
 @section('error')
@@ -43,53 +43,17 @@
 
         @else
 
-
             @include('components.breadcrumbs.index')
-            <h1>{{$category['own_properties']['seo_h1'] ?? $category['own_properties']['seo_full_name'] ?? $category['name']}}</h1>
+            <h1>{!!$category['own_properties']['page_title'] ?? $category['own_properties']['seo_h1'] ?? $category['own_properties']['seo_full_name'] ?? $category['name']!!}</h1>
+
 
             @if (!empty($category['children_recursive']))
-
-                <div class="category-child-wrap">
-                    @foreach ($category['children_recursive'] as $child)
-                        @include('category.category_card', compact('child'))
-                    @endforeach
-                </div>
+                {{-- если это родительская категория, покажем детей--}}
+                @include('category.category_children')
+            @else
+                @include('category.category_products')
             @endif
-
-            @if (!empty($category['products_in_store']))
-                <div class="products-header">
-                    <h2>Товары в наличии</h2>
-                </div>
-
-                <div class="product-wrap">
-
-                    @foreach($category['products_in_store'] as $product)
-                        @include('category.product_card', compact('product'))
-                    @endforeach
-                </div>
-
-            @endif
-
-
-            @if (!empty($category['products_not_in_store_in_matrix']))
-                <div class="products-header">
-                    <h2>Товары под заказ</h2>
-                </div>
-                <div class="product-wrap">
-                    @foreach ($category['products_not_in_store_in_matrix'] as $product)
-                        @if (str_ends_with($product['name'], '*'))
-                            @include('category.product_card', compact('product'))
-                        @endif
-                    @endforeach
-                </div>
-            @endif
-
-            <div id="seo_article">
-                    <?= $category['own_properties']['seo_article'] ?>
-            </div>
-
         @endif
-
 
     </div>
 @endsection

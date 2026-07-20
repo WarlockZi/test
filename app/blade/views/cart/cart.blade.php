@@ -10,24 +10,21 @@
     <div class="cart">
 
         <h1>Корзина</h1>
-{{--@deb--}}
+        {{--@deb--}}
         @if (empty($order) || !isset($order['products']))
-
-            <div class="empty-cart">
-                Корзина пуста
-            </div>
-
-        @else
 
             <div class="content">
 
-                <div class="table" data-order-id="<?= $order['id']; ?>">
+                <div class="table" data-order-id="{!!$order['id']!!}">
                     @include('cart.cartProducts')
                 </div>
 
             </div>
-
     </div>
     @endif
+
+    <div class="empty-cart {!!(empty($order) || !isset($order['products']))?'none':''!!}">
+        Корзина пуста
+    </div>
 
 @endsection

@@ -5,7 +5,6 @@ namespace app\service\Sync;
 use app\service\Logger\SyncLogger;
 use app\service\Storage\SyncStorage;
 use app\service\Sync\Load\LoadService;
-use app\service\Sync\Load\SyncLog;
 use app\service\Zip\ZipErrorMessages;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
@@ -31,33 +30,34 @@ class SyncService
         private SyncActions   $actions,
     )
     {
-//        set_exception_handler([LoadErrorHandler::class, 'handleException']);
-//        set_error_handler([LoadErrorHandler::class, 'handleError']);
-
-
-        $this->actions = new SyncActions(new SyncLogger());
+        $this->actions = new SyncActions($this->logger);
 
         $this->archiveDir  = ROOT . SyncStorage::getPath();
         $this->unzippedDir = ROOT . SyncStorage::getUnzippedDir();
 
         $this->importFile = $this->unzippedDir . env("SYNC_IMPORT_FILE");
         $this->offerFile  = $this->unzippedDir . env("SYNC_OFFER_FILE");
-
     }
 
     /**
      * @throws Exception
      * @throws \Throwable
      */
-    #[NoReturn] public function requestFrom1s(): void
+    #[NoReturn]
+    public function requestFrom1s($req): void
     {
 //        $this->logger->write("");
 //        $this->logger->write("uri - {$_SERVER['REQUEST_URI']}; method - {$_SERVER['REQUEST_METHOD']}");
 //        header("Content-Type: text/plain; charset=utf-8");
 //        header("Pragma: no-cache");
 
+// Разрешаем CORS если нужно
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+        header('Access-Control-Allow-Headers: Content-Type');
+
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        SyncLog::log('начата синхронизация request is get !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+            $this->logger->write('начата синхронизация request is get !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
             if (isset($_GET['type']) && $_GET['type'] === 'catalog') {
 
                 if (isset($_GET['mode']) && $_GET['mode'] === 'checkauth') {
@@ -69,19 +69,20 @@ class SyncService
                 }
             }
         }
+        $input = file_get_contents('php://input');
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->actions->createDirIfNotExist($this->archiveDir);
             $this->actions->createDirIfNotExist($this->unzippedDir);
-            $this->actions->createDirIfNotExist($this->unzippedDir.'loaded');
+            $this->actions->createDirIfNotExist($this->unzippedDir . 'loaded');
             $this->saveUnzip();
         }
         if ($this->actions->allFilesUnzipped($this->importFile, $this->offerFile)) {
             $this->actions->respondAndContinue();
             $this->logger->write('Load started');
 
-            $loadedFiles = $this->actions->moveUnzippedToLoaded($this->unzippedDir);
+            $loadedFiles      = $this->actions->moveUnzippedToLoaded($this->unzippedDir);
             $this->importFile = $loadedFiles['importFile'];
-            $this->offerFile = $loadedFiles['offerFile'];
+            $this->offerFile  = $loadedFiles['offerFile'];
             $this->loadService->run();
 
             $this->actions->clearSyncDir($this->archiveDir);
@@ -89,7 +90,8 @@ class SyncService
         }
     }
 
-    #[NoReturn] private function saveUnzip(): void
+    #[NoReturn]
+    private function saveUnzip(): void
     {
         if (!isset($_GET['mode']) || $_GET['mode'] !== 'file') {
             $this->logger->write('$_GET[mode] is not file');

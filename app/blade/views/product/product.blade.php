@@ -16,7 +16,7 @@
             </div>
         @endif
 
-        <div class="product-card" data-1sid="<?= $product['1s_id']; ?>">
+        <div class="product-card" data-product_1s_id="<?= $product['1s_id']; ?>">
             {{--            @deb--}}
             @include('components.breadcrumbs.index')
 

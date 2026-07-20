@@ -159,18 +159,15 @@ class UpdateOrCreateRepository
             $result = $this->model::find($this->modelId)
                 ->{$this->relationName}()
                 ->update($this->relationField);
-            return response()->popup('Обновлена зависимая модель');
-//            $model = $modelClass::with([$this->relationName => function ($query) use ($modelClass) {
-//                return $query->whereId($this->relationId);
-//            }])->find($this->modelId);
+            return response()->popup('Обновлена зависимая модель', 200);
         } else {
-            $model = $this->model::with($this->relationName)->find($this->modelId);
-            return response()->popup(['Не обновлена зависимая модель']);
-
+//            $model = $this->model::with($this->relationName)->find($this->modelId);
+            $result = $this->model::find($this->modelId)
+                ->{$this->relationName}()
+                ->update($this->relationField);
+            return response()->popup('Обновлена '.$this->relationName, 200);
         }
-
-
-        return response()->json(['error' => 'Неизвестный тип операции с отношением'], 400);
+        return response()->json(['error' => 'Неизвестный тип операции с отношением'], 500);
     }
 
     private static function updatePivot(Model $model, string $relationName, array $data): Response

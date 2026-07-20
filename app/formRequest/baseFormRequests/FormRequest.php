@@ -19,15 +19,6 @@ abstract class FormRequest extends Request
     protected $input = [];
     protected $errors = [];
 
-//    public function __construct(array $input = [])
-//    {
-////        $c =         Request::createFromGlobals();
-//        $dc =         self::createFromGlobals();
-////        $f= CartRequest::createFrom($c);
-//        $this->input = $input ?: $this->getInputFromGlobal();
-//        parent::__construct();
-//    }
-
     protected function getInputFromGlobal(): array
     {
         $contentType = $_SERVER['CONTENT_TYPE'] ?? '';

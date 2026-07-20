@@ -2,10 +2,11 @@
 
 namespace app\formRequest;
 
-class CompareRequest extends FormRequest
+use app\formRequest\baseFormRequests\FormRequest1;
+
+class CompareRequest extends FormRequest1
 {
     public function __construct(
-        protected $allowedFields = ['attach', 'fields', 'relation', 'id','phpSession']
     )
     {
         parent::__construct();
@@ -15,27 +16,20 @@ class CompareRequest extends FormRequest
     {
         return [
             'fields' => 'required',
-            'relation' => 'required',
             'phpSession' => 'required|string',
-        ];
-    }
-
-    public function all($keys = null): array
-    {
-        return [
-            'attach' => $this->json('attach'),
-            'fields' => $this->json('fields'),
-            'id' => $this->json('id'),
-            'relation' => $this->json('relation'),
-            'phpSession' => $this->json('phpSession'),
         ];
     }
 
     public function messages(): array
     {
         return [
-
+            'fields.required' => 'Требуется поле fields',
+            'phpSession.required' => 'Требуется поле phpSession',
+            'phpSession.string' => 'phpSession должно быть строкой',
         ];
     }
-
+    public function authorize(): bool
+    {
+        return !empty($this->json('phpSession'));
+    }
 }

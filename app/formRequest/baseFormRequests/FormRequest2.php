@@ -87,7 +87,6 @@ abstract class FormRequest2 extends Request
         if (!$this->validate()) {
             $errors = $this->errors['file'] ?? $this->errors;
             response()->json(['popup' => $errors[0]]);
-//            throw new RuntimeException('Validation failed.');
         }
 
         return array_intersect_key(
@@ -136,13 +135,13 @@ abstract class FormRequest2 extends Request
                 return $this->data;
             }
 
-            public function only($keys)
+            public function only($keys): array
             {
                 $keys = is_array($keys) ? $keys : func_get_args();
                 return array_intersect_key($this->data, array_flip($keys));
             }
 
-            public function except($keys)
+            public function except($keys): array
             {
                 $keys = is_array($keys) ? $keys : func_get_args();
                 return array_diff_key($this->data, array_flip($keys));

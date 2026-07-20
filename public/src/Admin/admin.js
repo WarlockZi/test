@@ -58,7 +58,7 @@ $(document).ready(async function () {
   } else if (window.location.pathname.startsWith("/adminsc/user/edit")) {
     // new User
     // } else if (window.location.href.includes("/test")) {
-    //   const { default: Test } = await import("./Test/index.js");
+    //   const { default: Test } = await import("./Test/nodeApi.js");
   } else if (window.location.pathname === "/adminsc") {
     const { default: MyChart } = await import("./chartjs/chartjs.js");
   } else if (window.location.pathname === "/adminsc/report/filter") {
