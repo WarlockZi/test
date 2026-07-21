@@ -8,6 +8,7 @@ use app\service\Sync\Load\LoadService;
 use app\service\Zip\ZipErrorMessages;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
+use Throwable;
 
 
 class SyncService
@@ -41,7 +42,7 @@ class SyncService
 
     /**
      * @throws Exception
-     * @throws \Throwable
+     * @throws Throwable
      */
     #[NoReturn]
     public function requestFrom1s($req): void

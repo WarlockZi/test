@@ -37,7 +37,6 @@ class SyncController extends AdminscController
      * @throws Exception|Throwable
      */
     #[NoReturn]
-//    #[Loggable(level: 'info', message: 'Attrubute SyncController начал загрузку')]
     public function actionLoad(): void
     {
         $this->logger->write('SyncController начал загрузку без архивов');
@@ -119,7 +118,6 @@ class SyncController extends AdminscController
      * @throws Exception
      * @throws Throwable
      */
-//    #[MeasureExecutionTime]
     public function actionLoadPrices(LoadPrices $loadPrices): void
     {
         $loadPrices->load();
