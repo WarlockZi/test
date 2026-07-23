@@ -7,6 +7,7 @@ use app\service\Storage\SyncStorage;
 use app\service\Sync\Load\LoadService;
 use app\service\Zip\ZipErrorMessages;
 use Exception;
+use Illuminate\Http\Request;
 use JetBrains\PhpStorm\NoReturn;
 use Throwable;
 
@@ -40,6 +41,20 @@ class SyncService
         $this->offerFile  = $this->unzippedDir . env("SYNC_OFFER_FILE");
     }
 
+    private function checkJson(): void
+    {
+        $input = json_decode(file_get_contents('php://input'), true);
+
+        if ($input && isset($input['m'])) {
+            $m = $input['m'];
+            // Ваша логика здесь
+            echo json_encode(['result' => 'success', 'm' => $m]);
+        } else {
+            http_response_code(400);
+            echo json_encode(['error' => 'php://input is empty']);
+        }
+    }
+
     /**
      * @throws Exception
      * @throws Throwable
@@ -54,8 +69,11 @@ class SyncService
 
 // Разрешаем CORS если нужно
         header('Access-Control-Allow-Origin: *');
-        header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
+        header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
         header('Access-Control-Allow-Headers: Content-Type');
+        header('Content-Type: application/json');
+        $input = json_decode(file_get_contents('php://input'), true);
+        $this->checkJson();
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $this->logger->write('начата синхронизация request is get !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
@@ -70,7 +88,7 @@ class SyncService
                 }
             }
         }
-        $input = file_get_contents('php://input');
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $this->actions->createDirIfNotExist($this->archiveDir);
             $this->actions->createDirIfNotExist($this->unzippedDir);
