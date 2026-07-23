@@ -6,7 +6,7 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
 $app = new App();
 
-error_log(implodeServer());
+//error_log(implodeServer());
 
 function implodeServer(): string
 {
