@@ -60,7 +60,7 @@ class SyncService
      * @throws Throwable
      */
     #[NoReturn]
-    public function requestFrom1s($req): void
+    public function requestFrom1s(): void
     {
 //        $this->logger->write("");
 //        $this->logger->write("uri - {$_SERVER['REQUEST_URI']}; method - {$_SERVER['REQUEST_METHOD']}");
