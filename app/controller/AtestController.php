@@ -5,14 +5,16 @@ namespace app\controller;
 
 use app\formRequest\SyncRequest;
 use app\service\Logger\SyncLogger;
+use app\service\Sync\Load\LoadService;
+use app\service\Sync\SyncActions;
 use app\service\Sync\SyncService;
 use Throwable;
 
 class AtestController extends AppController
 {
     public function __construct(
-        private SyncLogger  $logger,
-        private SyncService $service,
+//        private SyncLogger  $logger,
+//        private SyncService $service,
     )
     {
         parent::__construct();
@@ -22,10 +24,12 @@ class AtestController extends AppController
     public function actionIndex(SyncRequest $req): void
     {
         try {
-            error_log('atest');
-            $this->logger->write('test start');
-            error_log('after log');
-            $this->service->requestFrom1s($req);
+            error_log('atest start');
+//            $this->logger->write('test start');
+//            error_log('after log');
+            $services = new SyncService(new LoadService(), new SyncLogger(), new SyncActions(new SyncLogger()));
+            error_log('atest new serv ');
+            $services->requestFrom1s($req);
         } catch (Throwable $exception) {
             error_log('atest'.$exception);
         }
