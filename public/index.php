@@ -8,6 +8,7 @@ $app = new App();
 
     error_log('public atest');
     error_log('REFERRER -'.$_SERVER['REFERRER']);
+    error_log('uri -'.$_SERVER['REQUEST_URI']);
 if (str_contains($_SERVER['REQUEST_URI'], '/adminsc/sync/init')) {
     error_log(' пришел запрос init---------------++---');
 //error_log(implodeServer());
