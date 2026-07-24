@@ -21,6 +21,7 @@ class AppController extends Controller
         parent::__construct();
     }
 
+
     #[NoReturn]
     public function actionUpdateOrCreate(IRequest $request): void
     {
