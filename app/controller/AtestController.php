@@ -13,8 +13,6 @@ use Throwable;
 class AtestController extends AppController
 {
     public function __construct(
-//        private SyncLogger  $logger,
-//        private SyncService $service,
     )
     {
         parent::__construct();
@@ -27,9 +25,10 @@ class AtestController extends AppController
             error_log('atest start');
 //            $this->logger->write('test start');
 //            error_log('after log');
-            $services = new SyncService(new LoadService(), new SyncLogger(), new SyncActions(new SyncLogger()));
+//            $services = new SyncService(new LoadService(), new SyncLogger(), new SyncActions(new SyncLogger()));
+//            $logger = new SyncLogger();
             error_log('atest new serv ');
-            $services->requestFrom1s();
+//            $services->requestFrom1s();
         } catch (Throwable $exception) {
             error_log('atest'.$exception);
         }
