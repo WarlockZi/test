@@ -21,7 +21,7 @@ class AtestController extends AppController
     }
 
 
-    public function actionIndex(SyncRequest $req): void
+    public function actionIndex(): void
     {
         try {
             error_log('atest start');
@@ -29,7 +29,7 @@ class AtestController extends AppController
 //            error_log('after log');
             $services = new SyncService(new LoadService(), new SyncLogger(), new SyncActions(new SyncLogger()));
             error_log('atest new serv ');
-            $services->requestFrom1s($req);
+            $services->requestFrom1s();
         } catch (Throwable $exception) {
             error_log('atest'.$exception);
         }
