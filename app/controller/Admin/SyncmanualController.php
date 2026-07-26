@@ -12,7 +12,7 @@ use app\service\Zip\ZipService;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
 
-class SyncManualController extends AdminscController
+class SyncmanualController extends AdminscController
 {
     public function __construct(
         private readonly SyncLogger  $logger,
