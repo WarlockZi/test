@@ -3,6 +3,7 @@
 namespace app\repository;
 
 use app\model\Pages;
+use Illuminate\Database\Eloquent\Collection;
 
 class PagesRepository
 {
@@ -13,7 +14,7 @@ class PagesRepository
         $this->model = new Pages;
     }
 
-    public function menu(): \Illuminate\Database\Eloquent\Collection|array
+    public function menu(): Collection|array
     {
         return $this->model->all();
 

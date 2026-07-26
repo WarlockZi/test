@@ -38,6 +38,7 @@ class ZipService
         $this->zipname = $zipname;
         return $this;
     }
+
     public function unzip(string $to): void
     {
         if (!$to) throw new ZipException('destination path is empty');
@@ -47,15 +48,50 @@ class ZipService
         if (!file_exists($path)) throw new ZipException('zipfile not found');
 
         $zip = new ZipArchive();
-        if ($zip->open($path) === TRUE) {
-            $zip->extractTo($this->path.$to);
+
+        $this->safeOpen($zip, $path);
+
+        try {
+            $destinationPath = rtrim($this->path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . ltrim($to, DIRECTORY_SEPARATOR);
+
+            if (!is_dir($destinationPath)) {
+                if (!mkdir($destinationPath, 0755, true)) {
+                    throw new ZipException('Cannot create destination directory: ' . $destinationPath);
+                }
+            }
+
+            if ($zip->extractTo($destinationPath) === false) {
+                throw new ZipException('Failed to extract files from zip archive');
+            }
+        } finally {
             $zip->close();
-        } else {
-            throw new ZipException('unzip fail');
         }
-
-
     }
+
+    private function safeOpen(ZipArchive $zip, string $path): void
+    {
+        $isOpened = $zip->open($path);
+
+        if ($isOpened !== true) {
+            $errorMessages = [
+                ZipArchive::ER_EXISTS => 'File already exists',
+                ZipArchive::ER_INCONS => 'Zip archive inconsistent',
+                ZipArchive::ER_INVAL => 'Invalid argument',
+                ZipArchive::ER_MEMORY => 'Malloc failure',
+                ZipArchive::ER_NOENT => 'No such file',
+                ZipArchive::ER_NOZIP => 'Not a zip archive',
+                ZipArchive::ER_OPEN => 'Can\'t open file',
+                ZipArchive::ER_READ => 'Read error',
+                ZipArchive::ER_SEEK => 'Seek error',
+            ];
+
+            $message = $errorMessages[$isOpened]
+                ?? 'Failed to open zip file (code: ' . $isOpened . ')';
+
+            throw new ZipException($message . '. Path: ' . $path);
+        }
+    }
+
     public final function createZip(): ZipService
     {
         try {

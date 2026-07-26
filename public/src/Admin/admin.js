@@ -23,6 +23,7 @@ import Pages from "@src/Admin/Pages/pages.js";
 import AdminSidebar from "@src/Admin/components/AdminSidebar/AdminSidebar.js";
 import Cache from "./cache/Cache.js";
 import adminPanel from "@components/adminPanel/adminPanel.js";
+import fs from "fs";
 
 $(document).ready(async function () {
   document.body.classList.remove("preload");
@@ -51,8 +52,10 @@ $(document).ready(async function () {
       new QuillFactory(el);
     });
   }
-  if (window.location.pathname === "/adminsc/pages") {
+  if (window.location.pathname.includes("/adminsc/pages")) {
     new Pages();
+  } else if (window.location.pathname.includes("/adminsc")) {
+    setPageScripts(window.location.pathname);
   } else if (window.location.pathname === "/adminsc/user") {
     // new Users
   } else if (window.location.pathname.startsWith("/adminsc/user/edit")) {
@@ -66,7 +69,13 @@ $(document).ready(async function () {
       await import("./ProductFilter/ProductFilter.js");
     new ProductFilter();
   }
-
+  async function setPageScripts(path) {
+    const moduleName = path.replace("/adminsc/", "");
+    const { default: module } = await import(
+      `@src/Admin/Pages/${moduleName}.js`
+    );
+    new module();
+  }
   const promotion = $(".promotion-edit").first();
   if (promotion) {
     const { default: Promotion } = await import("@src/Promotions/Promotion.js");

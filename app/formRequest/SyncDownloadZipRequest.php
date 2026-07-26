@@ -18,7 +18,7 @@ class SyncDownloadZipRequest extends FormRequest1
         return [
             'file.required' => 'file is required',
             'file.string' => 'file is to be string',
-            'file.mime' => 'file is not zip',
+            'file.mimes' => 'file is not zip',
         ];
     }
 
