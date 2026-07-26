@@ -41,8 +41,8 @@ class SyncmanualController extends AdminscController
                 ->unzip('unzipped/');
         } elseif ($file->getClientOriginalExtension() === 'rar') {
             $f =  1;
-            (new RarService())->archiveFilePath($path)
-                ->toPath($path)
+            (new RarService())->archiveFilePath(ROOT.$path.$name)
+                ->toPath(ROOT.$path.'unzipped/')
                 ->extract();
         };
 

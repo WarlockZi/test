@@ -14,62 +14,51 @@ class RarService
         $this->archiveFilePath = $archiveFilePath;
         return $this;
     }
+
     public function toPath(string $toPath): self
     {
         $this->toPath = $toPath;
         return $this;
     }
 
-    public function extract()
+    public function extract(): void
     {
         $this->checkFromTo();
-        $commands = [
-            'unrar x -o+ "' . escapeshellarg($this->archiveFilePath) . '" "' . escapeshellarg($this->toPath) . '"',
-//            '7z x "' . escapeshellarg($this->archiveFilePath) . '" -o"' . escapeshellarg($this->toPath) . '" -y',
-        ];
 
         $extracted = false;
-        $lastError = '';
+        $command = sprintf(
+            'unrar x -o+ -ep %s %s 2>&1',
+            escapeshellarg($this->archiveFilePath),
+            escapeshellarg($this->toPath)
+        );
 
-        foreach ($commands as $command) {
-            $command = sprintf(
-                'unrar x -o+ %s %s 2>&1',
-                escapeshellarg($this->archiveFilePath),
-                escapeshellarg($this->toPath)
-            );
+        $output     = [];
+        $returnCode = 0;
 
-            $output = [];
-            $returnCode = 0;
-
-            if (!extension_loaded('rar')) {
-                echo("❌ RAR extension not loaded!\n");
-            }
-
-            exec($command . ' 2>&1', $output, $returnCode);
-            if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-                $output = array_map(function($line) {
-                    return iconv('CP866', 'UTF-8//IGNORE', $line);
-                }, $output);
-            }
-
-            if ($returnCode === 0) {
-                $extracted = true;
-                break;
-            }
-            $lastError = implode("\n", $output);
+//        exec('pwd', $output, $returnCode);
+//        exec('cd', $output, $returnCode);
+        exec($command, $output, $returnCode);
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+            $output = array_map(function ($line) {
+                return iconv('CP866', 'UTF-8//IGNORE', $line);
+            }, $output);
         }
 
+        if ($returnCode === 0) {
+            $extracted = true;
+        }
+
+        $lastError = implode("\n", $output);
+
         if (!$extracted) {
-            throw new ZipException(
-                'Failed to extract RAR file. Make sure unrar or 7z is installed. Error: ' . $lastError
-            );
+            response()->popup($lastError);
         }
 
     }
 
     private function checkFromTo(): void
     {
-        if (!$this->toPath ) {
+        if (!$this->toPath) {
             response()->popup('Не указана целевая папка');
         }
         if (!$this->archiveFilePath) {
