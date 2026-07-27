@@ -55,7 +55,7 @@ class LoadPrices extends LoadService
      */
     private function setOfferFile(): void
     {
-        $file = ROOT. env('SYNC_PATH'). 'loaded/'. env('SYNC_OFFER_FILE');
+        $file = ROOT. env('SYNC_PATH'). 'unzipped/loaded/'. env('SYNC_OFFER_FILE');
         $this->logger->write("--- xml file - $file ---");
         $xml             = simplexml_load_file($file);
         $offerData       = json_decode(json_encode($xml), true);
@@ -154,13 +154,6 @@ class LoadPrices extends LoadService
 
     private function prepareOffer(array $data): void
     {
-//        if ($data['Ид']=="986dab18-afee-11ec-8246-0cc47a6d1d83") {
-//            $strore = $data['Количество'];
-//        }
-//        if ($data['Количество']=="152") {
-//            $strore = $data['Количество'];
-//            $id  = $data['Ид'];
-//        }
         $this->offer = [
             '1s_id' => trim($data['Ид' ?? '']),
             'art' => trim($data['Артикул'] ?? ''),

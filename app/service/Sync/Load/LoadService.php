@@ -3,16 +3,12 @@
 namespace app\service\Sync\Load;
 
 use app\service\Logger\SyncLogger;
-use app\service\Sync\Load\Attributes\Measure\MeasurableTrait;
-use app\service\Sync\Load\Attributes\Measure\MeasureTime;
 use Exception;
-use Generator;
 use JetBrains\PhpStorm\NoReturn;
 use Throwable;
 
 class LoadService
 {
-//    use MeasurableTrait;
 
     protected array $categoryData;
     protected array $productData;
@@ -37,8 +33,8 @@ class LoadService
         $this->checkXMLFuncExist();
         try {
             $this->LoadCategories();
-            $this->LoadProducts();
-            $this->LoadPrices();
+//            $this->LoadProducts();
+//            $this->LoadPrices();
         } catch (Throwable $exception) {
             $this->logger->write('load error - ' . $exception->getMessage());
         }
@@ -51,6 +47,21 @@ class LoadService
             if (function_exists('simplexml_load_file')) {
                 $this->logger->write("---  функция simplexml_load_file не доступна ---");
             }
+        }
+        $this->moveImportFile( env('SYNC_IMPORT_FILE'));
+        $this->moveImportFile( env('SYNC_OFFER_FILE'));
+    }
+    private function moveImportFile(string $file)
+    {
+        $source = ROOT . env('SYNC_PATH') . 'unzipped/' .$file;
+        if (!is_readable($source)) return false;
+
+        $destination = ROOT . env('SYNC_PATH') . 'unzipped/loaded/' . $file;
+
+        if (rename($source, $destination)) {
+            return $destination;
+        } else {
+            response()->popup('Не удалось переместить разархивированный файл');
         }
     }
 

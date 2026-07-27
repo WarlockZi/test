@@ -3,14 +3,15 @@
 namespace app\controller\Admin;
 
 use app\formRequest\SyncManualDownloadArchiviRequest;
+use app\service\Archive\ArchiveService;
 use app\service\Fs\FS;
 use app\service\Logger\SyncLogger;
-use app\service\Rar\RarService;
-use app\service\Storage\SyncStorage;
+use app\service\Sync\Load\LoadService;
 use app\service\Sync\SyncService;
 use app\service\Zip\ZipService;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
+use Throwable;
 
 class SyncmanualController extends AdminscController
 {
@@ -27,26 +28,30 @@ class SyncmanualController extends AdminscController
      * @throws Exception
      */
     #[NoReturn]
-    public function actionUploadZip(SyncManualDownloadArchiviRequest $req): void
+    public function actionUploadextract(SyncManualDownloadArchiviRequest $req): void
     {
         $file = $req->safe()->only('file')['file'];
         $name = $file->getClientOriginalName();
-        $path = SyncStorage::getPath();
+        $path = env('SYNC_PATH');
         $file->move(FS::platformSlashes(ROOT . $path), $name);
 
-        if ($file->getClientOriginalExtension() === 'zip') {
-            $this->zipService
-                ->path($path)
-                ->zipname($name)
-                ->unzip('unzipped/');
-        } elseif ($file->getClientOriginalExtension() === 'rar') {
-            $f =  1;
-            (new RarService())->archiveFilePath(ROOT.$path.$name)
-                ->toPath(ROOT.$path.'unzipped/')
-                ->extract();
-        };
+        (new ArchiveService())->archiveFilePath(ROOT . $path . $name)
+            ->toPath(ROOT . $path . 'unzipped/')
+            ->extract();
+    }
 
-
+    /**
+     * @throws Throwable
+     */
+    #[NoReturn]
+    public function actionLoad(): void
+    {
+        $loadService = new LoadService();
+        try {
+            $loadService->run();
+        } catch (Throwable $exception) {
+            response()->popup('Ошибка загрузки ' . $exception->getMessage());
+        }
     }
 
 ///// web

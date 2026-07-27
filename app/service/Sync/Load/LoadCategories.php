@@ -4,12 +4,9 @@ namespace app\service\Sync\Load;
 
 
 use app\model\Category;
-use app\model\CategoryProperty;
-use app\service\Logger\SyncLogger;
 use app\service\Router\UrlService;
 use app\service\ShortLink\ShortlinkService;
 use app\service\Slug\SlugService;
-use app\service\Utils\UtilsServise;
 use Exception;
 use Throwable;
 
@@ -36,13 +33,14 @@ class LoadCategories extends LoadService
      */
     private function setImportFile(): void
     {
-        $file = ROOT . env('SYNC_PATH') . 'loaded/' . env('SYNC_IMPORT_FILE');
+        $file = ROOT . env('SYNC_PATH') . 'unzipped/loaded/' . env('SYNC_IMPORT_FILE');
         $this->logger->write("--- xml file - $file ---");
         $xml        = simplexml_load_file($file);
         $importData = json_decode(json_encode($xml), true);
         // выбрать вторые Группы, тк есть Для мед орг и Для промышл орг
         $this->categoryData = $importData['Классификатор']['Группы']['Группа']['Группы']['Группа'];
     }
+
 
     public function load(): void
     {
@@ -90,10 +88,10 @@ class LoadCategories extends LoadService
         $item['category_1s_id'] = $parent;
 
         $item['name']       = $group['Наименование'];
-        $item['slug']       = SlugService::slug($item['name']);
+//        $item['slug']       = SlugService::slug($item['name']);
         $item['deleted_at'] = NULL;
 
-        $cat = Category::withTrashed()
+         $cat = Category::withTrashed()
             ->updateOrCreate(['s_id' => $item['s_id']], $item);
         $this->setCategoryOwnProps($cat);
 
@@ -109,24 +107,15 @@ class LoadCategories extends LoadService
     protected function setCategoryOwnProps(Category $category): void
     {
         try {
-            $shortLink = $category?->ownProperties->short_link ?? ShortlinkService::getValidShortLink();
+//            $shortLink = $category?->ownProperties->short_link ?? ShortlinkService::getValidShortLink();
             $category->ownProperties()->updateOrCreate([
                 'category_1s_id' => $category['s_id']
             ], [
                 'category_1s_id' => $category['s_id'],
-                'short_link' => $shortLink,
-                'path' => UrlService::getCategoryOwnPropPath($category),
+//                'short_link' => $shortLink,
+//                'path' => UrlService::getCategoryOwnPropPath($category),
             ]);
-//            $catProps = CategoryProperty::firstOrCreate(
-//                ['category_1s_id' => $category['s_id']],
-//                [
-//                    'category_1s_id' => $category['s_id']
-//                ],
-//            );
-//            if (!$catProps->short_link) $catProps->short_link = ShortlinkService::getValidShortLink();
-//            if (!$catProps->path) $catProps->path = UrlService::getCategoryOwnPropPath($category);
-//            $catProps->save();
-//            return $catProps;
+
         } catch (Throwable $exception) {
             $exc = 'load category own props failed: '
                 . $exception->getMessage()

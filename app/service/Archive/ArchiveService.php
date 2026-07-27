@@ -1,10 +1,8 @@
 <?php
 
-namespace app\service\Rar;
+namespace app\service\Archive;
 
-use app\service\Zip\ZipException;
-
-class RarService
+class ArchiveService
 {
     private string $archiveFilePath;
     private string $toPath;
@@ -21,39 +19,37 @@ class RarService
         return $this;
     }
 
-    public function extract(): void
+    private function transformOutput($output)
     {
-        $this->checkFromTo();
-
-        $extracted = false;
-        $command = sprintf(
-            'unrar x -o+ -ep %s %s 2>&1',
-            escapeshellarg($this->archiveFilePath),
-            escapeshellarg($this->toPath)
-        );
-
-        $output     = [];
-        $returnCode = 0;
-
-//        exec('pwd', $output, $returnCode);
-//        exec('cd', $output, $returnCode);
-        exec($command, $output, $returnCode);
+        if (!$output) return '';
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             $output = array_map(function ($line) {
                 return iconv('CP866', 'UTF-8//IGNORE', $line);
             }, $output);
         }
+        return $output;
+    }
 
-        if ($returnCode === 0) {
-            $extracted = true;
-        }
+    public function extract(): void
+    {
+        $this->checkFromTo();
 
-        $lastError = implode("\n", $output);
+        $returnCode = 0;
+        $output     = [];
 
-        if (!$extracted) {
+        $command = sprintf("7z e %s -o%s -y -aoa 2>&1",
+            escapeshellarg($this->archiveFilePath),
+            escapeshellarg($this->toPath)
+        );
+
+        exec($command, $output, $returnCode);
+        $output = $this->transformOutput($output);
+
+        if ($returnCode !== 0) {
+            $lastError = implode("\n", $output);
             response()->popup($lastError);
         }
-
+        response()->popup('Файлы разархивированы. Можно загружать.');
     }
 
     private function checkFromTo(): void

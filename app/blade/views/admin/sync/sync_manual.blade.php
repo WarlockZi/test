@@ -12,10 +12,10 @@
 
             <fieldset>
                 <legend>load zip archive</legend>
-                <div dnd data-action="/adminsc/syncmanual/uploadZip"><?= Icon::plus() ?></div>
+                <div dnd data-action="/adminsc/syncmanual/uploadextract"><?= Icon::plus() ?></div>
             </fieldset>
 
-            <div class="button" id="logshow">Загрузить обновления</div>
+            <a href='/adminsc/syncmanual/load' class="button">Загрузить обновления</a>
             <br>
 
 
