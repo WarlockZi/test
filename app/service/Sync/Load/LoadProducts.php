@@ -5,7 +5,6 @@ namespace app\service\Sync\Load;
 
 use app\model\Product;
 use app\model\ProductProperty;
-use app\service\Logger\SyncLogger;
 use app\service\ShortLink\ShortlinkService;
 use app\service\Slug\SlugService;
 use Carbon\Carbon;
@@ -20,7 +19,6 @@ class LoadProducts extends LoadService
     public function __construct()
     {
         parent::__construct();
-//        $this->logger = new SyncLogger();
         $this->setImportFile();
     }
 
@@ -75,6 +73,7 @@ class LoadProducts extends LoadService
     {
         $prodProps = ProductProperty::where('product_1s_id', $good['Ид'])
             ->first();
+        $txt = !empty($good['Описание'])?$good['Описание']:'';//почему то пустые строки становятся массивом с 0 элементами
         if ($prodProps) {
             $prodProps->update([
                 // если нашли props нужно сохранить short_link or create new
@@ -82,18 +81,15 @@ class LoadProducts extends LoadService
                 'txt' => str_replace("\n", '<br>', $good['Описание'] ?? '')
             ]);
         } else {
+            $shortLink = ShortlinkService::getValidShortLink();
+
+            $txt = str_replace("\n", '<br>', $txt);
             ProductProperty::create([
                 'product_1s_id' => $good['Ид'],
-                'short_link' => ShortlinkService::getValidShortLink(),
-                'txt' => str_replace("\n", '<br>', $good['Описание'] ?? '')
+                'short_link' => $shortLink,
+                'txt' => $txt,
             ]);
         }
-//        if (!$prodProps) {
-//            if ($prodProps && !$prodProps->short_link) {
-//                $prodProps->short_link = ShortlinkService::getValidShortLink();
-//                $prodProps->save();
-//            }
-//        }
     }
 
     private function fillProduct(array $good): array
@@ -108,19 +104,6 @@ class LoadProducts extends LoadService
         $g['updated_at']     = Carbon::now()->toDateTimeString();
         return $g;
     }
-
-//    private function fillProductProperties($good): array
-//    {
-//        $g['1s_id']          = $good['Ид'];
-//        $g['category_1s_id'] = $good['Группы']['Ид'];
-//        $g['art']            = $good['Артикул'] ? trim($good['Артикул']) : '';
-//        $g['name']           = $good['Наименование'];
-//        $g['print_name']     = $good['ЗначенияРеквизитов']['ЗначениеРеквизита'][3]['Значение'];
-//        $g['slug']           = $this->setSlug($g);
-//        $g['deleted_at']     = null;
-//        $g['updated_at']     = Carbon::now()->toDateTimeString();
-//        return $g;
-//    }
 
     private function setSlug($g): string
     {

@@ -13,7 +13,7 @@ use app\service\Router\IRequest;
 use app\service\Storage\SyncStorage;
 use app\service\Sync\Load\LoadCategories;
 use app\service\Sync\Load\LoadPrices;
-use app\service\Sync\Load\LoadProducts;
+use app\service\Sync\Load\LoadProductsBatching;
 use app\service\Sync\Load\LoadService;
 use app\service\Sync\SyncService;
 use app\service\Zip\ZipService;
@@ -106,7 +106,7 @@ class SyncController extends AdminscController
         Response::exitWithPopup('Категории загружены');
     }
 
-    public function actionLoadProducts(LoadProducts $loadProducts): void
+    public function actionLoadProducts(LoadProductsBatching $loadProducts): void
     {
         $loadProducts->load();
         if (DEV) {

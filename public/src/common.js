@@ -409,7 +409,8 @@ async function post(url, data = {}) {
 }
 
 function setHeaders(body) {
-  const headers = {};
+  const headers = { Accept: "application/json" };
+  // const headers = {      };
   if (body instanceof FormData) {
     // Заголовок Content-Type НЕ нужно указывать вручную!
     // Браузер сам установит его с правильным boundary

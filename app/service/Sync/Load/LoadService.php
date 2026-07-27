@@ -32,8 +32,17 @@ class LoadService
     {
         $this->checkXMLFuncExist();
         try {
-            $this->LoadCategories();
-//            $this->LoadProducts();
+//            $this->LoadCategories();
+            $startTime = microtime(true);
+            $this->logger->write('start'. $startTime);
+
+            $this->LoadProducts();
+
+            $finish = microtime(true);
+            $totalTime = $finish - $startTime;
+            $this->logger->write('finish'. $finish);
+            $this->logger->write('total'. $totalTime);
+            echo $totalTime ;
 //            $this->LoadPrices();
         } catch (Throwable $exception) {
             $this->logger->write('load error - ' . $exception->getMessage());
@@ -84,7 +93,8 @@ class LoadService
     public function LoadProducts(): void
     {
         $this->logger->write('--- products  load started ---');
-        $loadProducts = new LoadProducts();
+        $loadProducts = new LoadProductsBatching();
+//        $loadProducts = new LoadProducts();
         $loadProducts->load();
 
         $this->logger->write('--- products loaded  ---');

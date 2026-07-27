@@ -74,6 +74,10 @@
     @include mixin_media.colored_button();
     padding: 5px 20px;
 
+    &.disabled{
+      background-color: gray;
+    }
+
   }
 
   .container {

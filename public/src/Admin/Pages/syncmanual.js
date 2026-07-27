@@ -1,15 +1,65 @@
+import { $, newObjAndFiles2FormData, post } from "@src/common.js";
 import Dnd from "@components/dnd/dnd.js";
-import { $ } from "@src/common.js";
-import Dnds from "@components/dnd/Dnds.js";
 
 export default class syncmanual {
   constructor() {
-    new Dnds();
-    // this.setDND();
+    this.importFile = $(".sync .files-list #import").first();
+    this.offerFile = $(".sync .files-list #offer").first();
+    this.noFiles = $(".sync .files-list .no-files").first();
+    this.button = $(".sync .button").first();
+    this.setDND();
   }
   setDND() {
-    const dnd = $("[dnd]").first();
-    const cb = () => {};
-    new Dnd(dnd);
+    const dnds = Array.from($("[dndfile]"));
+
+    [].forEach.call(dnds, (dnd) => {
+      new Dnd(dnd, this.getCallback());
+    });
+  }
+
+  getCallback() {
+    return (files, dnd) => {
+      if (!files) return false;
+
+      this.render(dnd, files);
+      this.toServer(dnd, files);
+    };
+  }
+
+  render(dnd, files) {
+    const fieldset = dnd.closest("fieldset");
+    if (files[0].name === "import0_1.xml") {
+      this.show("importFile", fieldset, files[0].name);
+    }
+    if (files[0].name === "offers0_1.xml") {
+      this.show("offerFile", fieldset, files[0].name);
+    }
+  }
+  async toServer(dnd, files) {
+    if (!dnd?.dataset?.action) {
+      console.log("Data-action attr is missing on dnd element");
+      return false;
+    }
+    const url = dnd.dataset.action;
+    const obj = {};
+    const data = newObjAndFiles2FormData(obj, files[0]);
+
+    const res = await post(url, data);
+  }
+  show(type, fieldset, name) {
+    const field = this[type];
+    field.classList.toggle("none");
+    field.innerText = name;
+    fieldset.remove();
+    this.noFiles.classList.add("none");
+    this.showButton();
+  }
+  showButton() {
+    if (
+      !this.offerFile.classList.contains("none") &&
+      !this.importFile.classList.contains("none")
+    ) {
+      this.button.classList.remove("disabled");
+    }
   }
 }

@@ -63,6 +63,9 @@ class LoadCategories extends LoadService
         });
     }
 
+    /**
+     * @throws Exception
+     */
     protected function exec($groups, $level = 0, $parent = null): void
     {
         if (!$this->isAssoc($groups)) {
@@ -88,7 +91,7 @@ class LoadCategories extends LoadService
         $item['category_1s_id'] = $parent;
 
         $item['name']       = $group['Наименование'];
-//        $item['slug']       = SlugService::slug($item['name']);
+        $item['slug']       = SlugService::slug($item['name']);
         $item['deleted_at'] = NULL;
 
          $cat = Category::withTrashed()
@@ -107,13 +110,14 @@ class LoadCategories extends LoadService
     protected function setCategoryOwnProps(Category $category): void
     {
         try {
-//            $shortLink = $category?->ownProperties->short_link ?? ShortlinkService::getValidShortLink();
+            $shortLink = $category?->ownProperties->short_link ?? ShortlinkService::getValidShortLink();
+            $path = $category?->ownProperties->path ?? UrlService::getCategoryOwnPropPath($category);
             $category->ownProperties()->updateOrCreate([
                 'category_1s_id' => $category['s_id']
             ], [
                 'category_1s_id' => $category['s_id'],
-//                'short_link' => $shortLink,
-//                'path' => UrlService::getCategoryOwnPropPath($category),
+                'short_link' => $shortLink,
+                'path' => $path,
             ]);
 
         } catch (Throwable $exception) {
