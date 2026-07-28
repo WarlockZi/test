@@ -3,6 +3,7 @@ import Dnd from "@components/dnd/dnd.js";
 
 export default class syncmanual {
   constructor() {
+    debugger;
     this.importFile = $(".sync .files-list #import").first();
     this.offerFile = $(".sync .files-list #offer").first();
     this.noFiles = $(".sync .files-list .no-files").first();
