@@ -24,7 +24,7 @@ jobs:
         run: npm ci
 
       - name: Build project
-        run: npx vite build
+        run: npm run vbuild
 
       - name: Copy file via scp
         uses: appleboy/scp-action@master
