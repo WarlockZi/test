@@ -44,8 +44,9 @@
 
 .sync {
   display: flex;
+  background-color: #0dcaf0;
 
-  &.buttons-block {
+  .buttons-block {
     display: flex;
     gap: 10px;
     justify-content: space-between;
@@ -66,9 +67,9 @@
   }
 
 
-  &.container.files {
+  .container.files {
 
-    &.add-file{
+    .add-file{
       display: flex;
       align-items: center;
       justify-content: center;
