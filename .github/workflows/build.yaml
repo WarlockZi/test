@@ -35,9 +35,10 @@ jobs:
           port: ${{ secrets.SERVER_PORT }}
           source: "public/build/*"
           target: ${{ secrets.BUILD_DEST }}
-          strip_components: 1
 
-
+      - name: Remove build folder after deployment
+        if: success()  # Выполняется только если предыдущий шаг успешен
+        run: rm -rf public/build
 
   deploy-php:
     name: deploy-php
