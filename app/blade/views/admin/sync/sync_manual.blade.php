@@ -21,14 +21,12 @@
 
             <div class="no-files {!!$showNoFiles!!}">нет файлов</div>
 
-
             <p id='offer' class="file {!!$showOfferFile!!}">offers0_1.xml</p>
             <p id='import' class="file {!!$showImportFile!!}">import0_1.xml</p>
 
-
         </div>
 
-        <div class="container files">
+        <div class="sync-container files">
             @if(!array_key_exists('import', $xmlFiles))
                 <fieldset>
                     <legend>Перетащить import file</legend>
