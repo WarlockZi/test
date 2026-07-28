@@ -27,6 +27,7 @@
         </div>
 
         <div class="sync-container files">
+
             @if(!array_key_exists('import', $xmlFiles))
                 <fieldset>
                     <legend>Перетащить import file</legend>
