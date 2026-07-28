@@ -37,24 +37,19 @@ class LoadProductsBatching extends LoadService
     public function load(): void
     {
         try {
-            // Получаем соединение с БД
             $connection = Capsule::connection();
 
-            // Отключаем события модели для ускорения
             Product::unsetEventDispatcher();
             ProductProperty::unsetEventDispatcher();
 
-            // Начинаем транзакцию
             $connection->beginTransaction();
 
             $this->updateOrCreateProductsBatch();
             $this->deleteNonexisted();
 
-            // Коммитим транзакцию
             $connection->commit();
 
         } catch (Throwable $exception) {
-            // Откатываем транзакцию при ошибке
             if ($connection->inTransaction()) {
                 $connection->rollBack();
             }

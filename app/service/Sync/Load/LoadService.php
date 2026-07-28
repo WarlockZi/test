@@ -32,7 +32,7 @@ class LoadService
     {
         $this->checkXMLFuncExist();
         try {
-//            $this->LoadCategories();
+            $this->LoadCategories();
             $startTime = microtime(true);
             $this->logger->write('start'. $startTime);
 
@@ -43,7 +43,7 @@ class LoadService
             $this->logger->write('finish'. $finish);
             $this->logger->write('total'. $totalTime);
             echo $totalTime ;
-//            $this->LoadPrices();
+            $this->LoadPrices();
         } catch (Throwable $exception) {
             $this->logger->write('load error - ' . $exception->getMessage());
         }
