@@ -8,6 +8,7 @@ use app\service\Archive\ArchiveService;
 use app\service\Fs\FS;
 use app\service\Logger\SyncLogger;
 use app\service\Sync\Load\LoadService;
+use app\service\Sync\Load\SyncLog;
 use app\service\Sync\SyncService;
 use app\service\Zip\ZipService;
 use Exception;
@@ -54,6 +55,8 @@ class SyncmanualController extends AdminscController
 
     public function actionUploadoffer(SyncManualDownloadFileRequest $req): void
     {
+        response()->popup('Запрос пришел');
+
         $file = $req->safe()->only('file')['file'];
         $name = $file->getClientOriginalName();
         if ($name !== env('SYNC_OFFER_FILE')) {
@@ -66,6 +69,7 @@ class SyncmanualController extends AdminscController
 
     public function actionUploadimport(SyncManualDownloadFileRequest $req): void
     {
+        response()->popup('Запрос пришел');
         $file = $req->safe()->only('file')['file'];
         $name = $file->getClientOriginalName();
         if ($name !== env('SYNC_IMPORT_FILE')) {
