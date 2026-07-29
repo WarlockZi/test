@@ -55,10 +55,10 @@ class SyncmanualController extends AdminscController
 
     public function actionUploadoffer(SyncManualDownloadFileRequest $req): void
     {
-        response()->popup('Запрос пришел');
 
         $file = $req->safe()->only('file')['file'];
         $name = $file->getClientOriginalName();
+        response()->popup('Запрос пришел '.$name);
         if ($name !== env('SYNC_OFFER_FILE')) {
             response()->popup('Это не offer file');
         }
@@ -69,9 +69,10 @@ class SyncmanualController extends AdminscController
 
     public function actionUploadimport(SyncManualDownloadFileRequest $req): void
     {
-        response()->popup('Запрос пришел');
+
         $file = $req->safe()->only('file')['file'];
         $name = $file->getClientOriginalName();
+        response()->popup('Запрос пришел '.$name);
         if ($name !== env('SYNC_IMPORT_FILE')) {
             response()->popup('Это не import file');
         }
