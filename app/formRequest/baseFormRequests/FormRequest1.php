@@ -12,6 +12,7 @@ use Illuminate\Validation\Validator;
 abstract class FormRequest1 extends Request
 {
     protected Validator $validator;
+
     public function __construct(array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], $content = null)
     {
         $req = Request::createFromGlobals();
@@ -24,6 +25,7 @@ abstract class FormRequest1 extends Request
             $req->server->all(),
             $req->getContent());
     }
+
     protected function getValidator()
     {
         $factory = new Factory(
@@ -74,12 +76,19 @@ abstract class FormRequest1 extends Request
         }
 
         if ($validator->fails()) {
-            $errors = $validator->errors()->all();
-            response()->json(['popup'=>'form-request1 validation error - '.$errors]);
+            $errors = $validator->errors()->all('string');
+            response()->json(['popup' => $errors]);
+//            response()->json(['popup' => $this->errorsToString($errors)]);
         }
 
         return $validator->validated();
     }
+
+    private function errorsToString(array $errors):string
+    {
+        return implode(',', $errors);
+    }
+
     public function safe(): object
     {
         return new class($this->validated()) {
@@ -113,10 +122,12 @@ abstract class FormRequest1 extends Request
             }
         };
     }
-    public function authorize():bool
+
+    public function authorize(): bool
     {
         return true;
     }
+
     abstract public function rules();
 
     public function messages(): array
@@ -128,6 +139,7 @@ abstract class FormRequest1 extends Request
     {
         return [];
     }
+
     protected function prepareForValidation()
     {
     }
