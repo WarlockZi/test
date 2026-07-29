@@ -93,8 +93,8 @@ class LoadService
     public function LoadProducts(): void
     {
         $this->logger->write('--- products  load started ---');
-        $loadProducts = new LoadProductsBatching();
-//        $loadProducts = new LoadProducts();
+//        $loadProducts = new LoadProductsBatching();
+        $loadProducts = new LoadProducts();
         $loadProducts->load();
 
         $this->logger->write('--- products loaded  ---');
