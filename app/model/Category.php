@@ -236,7 +236,9 @@ class Category extends Model
         return $this->belongsTo(Category::class,
             'category_1s_id',
             's_id'
-        );
+        )
+            ->with('ownProperties')
+            ;
     }
 
     public function parentRecursive(): BelongsTo

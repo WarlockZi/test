@@ -3,8 +3,6 @@
 namespace app\service\Breadcrumbs;
 
 
-use app\model\Category;
-
 class NewBreadArray
 {
     public function __construct(
@@ -30,8 +28,6 @@ class NewBreadArray
 
     public function getParents(array $category): array
     {
-//        $this->lastItemIsLink = $lastItemIsLink;
-
         $this->flatParents($category);
         $this->parentsArray = array_reverse($this->parentsArray);
         return get_object_vars($this);

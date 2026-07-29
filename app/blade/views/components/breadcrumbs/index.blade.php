@@ -6,11 +6,6 @@
             </a>
             <meta itemprop="position" content="1">
         </li>
-{{--        @php--}}
-{{--//            $position =1;--}}
-{{--//            $lastItemIsLink = $breadcrumbs['lastItemIsLink']??'';--}}
-{{--        @endphp--}}
-{{--@deb--}}
         @foreach($breadcrumbs['parentsArray']??[] as $position=>$item)
             @include('components.breadcrumbs.li',compact('position','item'))
             @php $position++; @endphp
