@@ -70,7 +70,7 @@ class LoadPrices extends LoadService
     {
         $this->setOfferFile();
         $this->exec();
-        $this->logger->write('--- price     loaded ---');
+
     }
 
     protected function firstOrCreateUnit(): void

@@ -41,15 +41,12 @@ class SyncmanualController extends AdminscController
             ->extract();
     }
 
-    /**
-     * @throws Throwable
-     */
-    #[NoReturn]
-    public function actionLoad(): void
+    public function actionLoad()
     {
         $loadService = new LoadService();
         try {
             $loadService->run();
+            response()->popup('Успешно загружено');
         } catch (Throwable $exception) {
             response()->popup('Ошибка загрузки ' . $exception->getMessage());
         }

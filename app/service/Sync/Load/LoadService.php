@@ -23,30 +23,24 @@ class LoadService
         $this->logger = new SyncLogger();
     }
 
-    /**
-     * @throws Exception
-     * @throws Throwable
-     */
-    #[NoReturn]
-    public function run(): void
+
+    public function run()
     {
         $this->checkXMLFuncExist();
+        $this->moveFilesLoaded();
         try {
             $this->LoadCategories();
-            $startTime = microtime(true);
-            $this->logger->write('start'. $startTime);
-
             $this->LoadProducts();
-
-            $finish = microtime(true);
-            $totalTime = $finish - $startTime;
-            $this->logger->write('finish'. $finish);
-            $this->logger->write('total'. $totalTime);
-            echo $totalTime ;
             $this->LoadPrices();
         } catch (Throwable $exception) {
             $this->logger->write('load error - ' . $exception->getMessage());
         }
+    }
+
+    private function moveFilesLoaded(): void
+    {
+        $this->moveImportFile(env('SYNC_IMPORT_FILE'));
+        $this->moveImportFile(env('SYNC_OFFER_FILE'));
     }
 
     private function checkXMLFuncExist(): void
@@ -57,12 +51,11 @@ class LoadService
                 $this->logger->write("---  функция simplexml_load_file не доступна ---");
             }
         }
-        $this->moveImportFile( env('SYNC_IMPORT_FILE'));
-        $this->moveImportFile( env('SYNC_OFFER_FILE'));
     }
+
     private function moveImportFile(string $file)
     {
-        $source = ROOT . env('SYNC_PATH') . 'unzipped/' .$file;
+        $source = ROOT . env('SYNC_PATH') . 'unzipped/' . $file;
         if (!is_readable($source)) return false;
 
         $destination = ROOT . env('SYNC_PATH') . 'unzipped/loaded/' . $file;
@@ -77,10 +70,10 @@ class LoadService
     /**
      * @throws Exception
      */
-//    #[MeasureTime('loadCategories')]
     public function LoadCategories(): void
     {
         $this->logger->write('--- category  load started ---');
+
         $loadCategories = new LoadCategories();
         $loadCategories->load();
 
@@ -94,6 +87,7 @@ class LoadService
     {
         $this->logger->write('--- products  load started ---');
 //        $loadProducts = new LoadProductsBatching();
+
         $loadProducts = new LoadProducts();
         $loadProducts->load();
 
@@ -106,7 +100,11 @@ class LoadService
     #[NoReturn]
     public function LoadPrices(): void
     {
+        $this->logger->write('--- price     load started ---');
+
         $loadPrices = new LoadPrices();
         $loadPrices->load();
+
+        $this->logger->write('--- price     loaded ---');
     }
 }

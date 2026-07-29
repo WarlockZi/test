@@ -1,14 +1,30 @@
 import { $, newObjAndFiles2FormData, post } from "@src/common.js";
 import Dnd from "@components/dnd/dnd.js";
+import "./sync_manual.scss";
+import { ael } from "@src/constants.js";
 
 export default class syncmanual {
   constructor() {
-    debugger;
-    this.importFile = $(".sync .files-list #import").first();
-    this.offerFile = $(".sync .files-list #offer").first();
-    this.noFiles = $(".sync .files-list .no-files").first();
-    this.button = $(".sync .button").first();
+    this.startUrl = "/adminsc/syncmanual/load";
+    const containerSelector = ".sync-manual";
+    this.importFile = $(`${containerSelector} .files-list #import`).first();
+    this.offerFile = $(`${containerSelector} .files-list #offer`).first();
+    this.noFiles = $(`${containerSelector} .files-list .no-files`).first();
+    this.button = $(`${containerSelector} .button`).first();
     this.setDND();
+
+    this.setEvents();
+  }
+
+  setEvents() {
+    this.button[ael]("click", this.start.bind(this));
+  }
+
+  start() {
+    const res = post(this.startUrl);
+    if (res.success) {
+      alert("dd");
+    }
   }
   setDND() {
     const dnds = Array.from($("[dndfile]"));

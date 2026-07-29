@@ -8,7 +8,7 @@ import "@components/accordion/accordion.js";
 import "@components/date/date.js";
 import "@components/adminPanel/adminPanel.js";
 
-import "./sync1c/sync1c.js";
+// import "@src/Admin/Pages/sync/sync/sync.js";
 import "./Planning/planning.js";
 import "./Settings/settings.js";
 import "./Videoinstructions/videoinstructions.js";
@@ -55,7 +55,7 @@ $(document).ready(async function () {
   if (window.location.pathname.includes("/adminsc/pages")) {
     new Pages();
   } else if (window.location.pathname.includes("/adminsc")) {
-    setPageScripts(window.location.pathname);
+    await setPageModules(window.location.pathname);
   } else if (window.location.pathname === "/adminsc/user") {
     // new Users
   } else if (window.location.pathname.startsWith("/adminsc/user/edit")) {
@@ -69,13 +69,37 @@ $(document).ready(async function () {
       await import("./ProductFilter/ProductFilter.js");
     new ProductFilter();
   }
-  async function setPageScripts(path) {
-    const moduleName = path.replace("/adminsc/", "");
-    const { default: module } = await import(
-      `@src/Admin/Pages/${moduleName}.js`
-    );
-    new module();
+
+  async function setPageModules(path) {
+    const modules = import.meta.glob("@src/Admin/Pages/*/*.js", {
+      eager: true,
+    });
+    const cleanPath = path.replace("/adminsc/", "");
+    const moduleName = cleanPath.split("/")[0];
+
+    const modulePath = `/Admin/Pages/${moduleName}/${moduleName}.js`;
+    const moduleData = modules[modulePath];
+
+    if (!moduleData) {
+      console.warn(`Модуль не найден: ${modulePath}`);
+      return null;
+    }
+
+    try {
+      const { default: module } = moduleData;
+      const instance = new module();
+
+      if (instance.init) {
+        instance.init(cleanPath);
+      }
+
+      return instance;
+    } catch (error) {
+      console.error(`Ошибка инициализации модуля ${moduleName}:`, error);
+      return null;
+    }
   }
+
   const promotion = $(".promotion-edit").first();
   if (promotion) {
     const { default: Promotion } = await import("@src/Promotions/Promotion.js");

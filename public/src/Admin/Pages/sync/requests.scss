@@ -1,0 +1,45 @@
+@use "../../../var";
+@use "../../../mixin_media";
+@use "sass:color";
+
+
+.requests {
+  font-size: 10px;
+
+  .img {
+    background-color: rgba(213, 255, 109, 0.38);
+  }
+
+  .request {
+    display: flex;
+    flex-direction: column;
+    user-select: initial;
+
+    .req {
+      padding: 5px;
+      background-color: #f5ff0026;
+    }
+
+    .line {
+      display: flex;
+    }
+
+    .date {
+      background-color: #e8e8e8;
+      margin: 0 10px;
+    }
+
+    .ip {
+      background-color: rgba(0, 255, 24, 0.09);
+      margin-left: 10px;
+    }
+
+    .some {
+      background-color: #ff330017;
+      margin-right: 10px;
+      word-break: break-word;
+    }
+  }
+}
+
+

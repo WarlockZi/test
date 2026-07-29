@@ -12,7 +12,7 @@
 
     @endphp
 
-    <div class="sync">
+    <div class="sync-manual">
 
         <div class="files-list">
             <br>
@@ -46,7 +46,7 @@
 
 
             <br>
-            <a href='/adminsc/syncmanual/load' class="button {!!$buttonDisabled!!}">Загрузить обновления</a>
+                <button class="button {!!$buttonDisabled!!}">Загрузить обновление</button>
             <br>
             <br>
 

@@ -1,6 +1,6 @@
-import { $, post } from "../../common";
+import { $, post } from "../../../common.js";
 
-export class Sync {
+export class SyncClass {
   constructor($sync) {
     this.$sync = $sync;
     this.$log_content = $($sync).find("#log_content");
