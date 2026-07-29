@@ -55,7 +55,7 @@ class SyncmanualController extends AdminscController
 
     public function actionUploadoffer(SyncManualDownloadFileRequest $req): void
     {
-        $file = $req->safe()->only('file')['file'];
+        $file = $req->validated()['file'];
         response()->popup('Запрос пришел '. $file);
         $name = $file->getClientOriginalName();
 
