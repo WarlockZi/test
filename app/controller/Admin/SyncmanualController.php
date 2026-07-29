@@ -57,7 +57,7 @@ class SyncmanualController extends AdminscController
     {
 //        $file = $req->validated()['file'];
         $files = $req->allFiles();
-        var_dump($files);
+        exit(var_dump($files));
 
         $file = $req->validated()['file'];
         response()->popup('Запрос пришел '. $file);
