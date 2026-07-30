@@ -12,10 +12,10 @@
 
             <fieldset>
                 <legend>load zip archive</legend>
-                <div dnd data-action="/adminsc/sync/uploadZip"><?= Icon::plus() ?></div>
+                <div dnd class='add-file' data-action="/adminsc/sync/uploadZip"><?= Icon::plus() ?></div>
             </fieldset>
 
-            <div dnd data-path="xml"><?= Icon::plus() ?></div>
+            <div dnd class='add-file' data-path="xml"><?= Icon::plus() ?></div>
 
             <div class="button" id="logshow">Показать содержание лог файла</div>
             <div class="button" id="logclear">Очистить лог файл</div>
