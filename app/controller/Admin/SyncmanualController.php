@@ -52,19 +52,20 @@ class SyncmanualController extends AdminscController
         }
     }
 
-    public function actionUploadoffer(SyncManualDownloadFileRequest $req)
+    public function actionUploadoffer()
     {
-        $file = $req->validated()['file'];
+//        $file = $req->validated()['file'];
 
-        $name = $file->getClientOriginalName();
-        $mime = $file->getClientMimeType();
-        $size = $file->getSize();
-        $path = env('SYNC_PATH') . 'unzipped/';
+//        $name = $file->getClientOriginalName();
+//        $mime = $file->getClientMimeType();
+//        $size = $file->getSize();
+//        $path = env('SYNC_PATH') . 'unzipped/';
         $filesize =  ini_get('upload_max_filesize');
         $postmaxsize = ini_get('post_max_size');
-        error_log($file->getSize());
+//        error_log($file->getSize());
 
-        $str = "filesize $filesize   postsize $postmaxsize name $name mime $mime size $size path $path";
+        $str = "filesize $filesize   postsize $postmaxsize";
+//        $str = "filesize $filesize   postsize $postmaxsize name $name mime $mime size $size path $path";
         $file->move(FS::platformSlashes(ROOT . $path), $name);
         response()->json(['popup' => $str]);
     }
