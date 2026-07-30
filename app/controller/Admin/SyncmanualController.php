@@ -62,7 +62,7 @@ class SyncmanualController extends AdminscController
         $file = $req->validated()['file'];
         $name = $file->getClientOriginalName();
 
-        response()->json(['popup'=>'Запрос пришел '. $file, 'file'=>$file, 'name'=>$name], 422);
+        response()->json(['popup'=>'Запрос пришел '. $file, 'file'=>$file, 'name'=>$name], 200);
 
 
         if ($name !== env('SYNC_OFFER_FILE')) {
