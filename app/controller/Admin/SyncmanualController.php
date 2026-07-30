@@ -59,7 +59,7 @@ class SyncmanualController extends AdminscController
         $name = $file->getClientOriginalName();
         $mime = $file->getClientMimeType();
         $size = $file->getSize();
-        $path   = env('SYNC_PATH') . 'unzipped/';
+        $path = env('SYNC_PATH') . 'unzipped/';
 
         error_log($file->getSize());
 
@@ -71,11 +71,14 @@ class SyncmanualController extends AdminscController
     public function actionUploadimport(SyncManualDownloadFileRequest $req): void
     {
         $file = $req->validated()['file'];
+        $file = $req->file('file');
+        if ($req->hasFile('file')) response()->popup('нет файла');
+        if (!$file->isValid()) response()->popup('файла invalid --');
 
         $name = $file->getClientOriginalName();
         $mime = $file->getClientMimeType();
         $size = $file->getSize();
-        $path   = env('SYNC_PATH') . 'unzipped/';
+        $path = env('SYNC_PATH') . 'unzipped/';
 
         error_log($file->getSize());
 
