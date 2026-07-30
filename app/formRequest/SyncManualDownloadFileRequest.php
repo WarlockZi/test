@@ -9,7 +9,7 @@ class SyncManualDownloadFileRequest extends FormRequest1
     public function rules(): array
     {
         return [
-            'file' => 'required|file|mimes:xml',
+            'file' => 'required|file|mimes:xml,jpg,jpeg,bmp,png',
         ];
     }
 

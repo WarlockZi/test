@@ -60,8 +60,10 @@ class SyncmanualController extends AdminscController
 //        response()->json(['popup' => var_dump($file)]);
         $name = $file->getClientOriginalName();
 
+
         $path   = env('SYNC_PATH') . 'unzipped/';
         $moveTo = FS::platformSlashes(ROOT . $path) . $name;
+        move_uploaded_file($file, $moveTo);
 //        response()->json(['popup' => $moveTo]);
 
         $file->move(FS::platformSlashes(ROOT . $path), $name);
