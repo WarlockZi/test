@@ -9,7 +9,7 @@ class SyncManualDownloadFileRequest extends FormRequest1
     public function rules(): array
     {
         return [
-            'file' => 'required|file',
+            'file' => 'required|file|mimetypes:application/xml,text/xml',
         ];
     }
 
