@@ -54,17 +54,12 @@ class SyncmanualController extends AdminscController
 
     public function actionUploadoffer(SyncManualDownloadFileRequest $req)
     {
-//        $file = $_FILES['file'];
         $file = $req->validated()['file'];
-//        var_dump($file);
-//        response()->json(['popup' => var_dump($file)]);
         $name = $file->getClientOriginalName();
 
-
         $path   = env('SYNC_PATH') . 'unzipped/';
-        $moveTo = FS::platformSlashes(ROOT . $path) . $name;
-        move_uploaded_file($file, $moveTo);
-//        response()->json(['popup' => $moveTo]);
+//        $moveTo = FS::platformSlashes(ROOT . $path) . $name;
+//        move_uploaded_file($file, $moveTo);
 
         $file->move(FS::platformSlashes(ROOT . $path), $name);
         response()->json(['file' => $name, 'popup' => 'file загружен']);
