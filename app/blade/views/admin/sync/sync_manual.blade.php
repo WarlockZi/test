@@ -14,18 +14,6 @@
 
     <div class="sync-manual">
 
-        <div class="files-list">
-            <br>
-            <br>
-            <br>
-
-            <div class="no-files {!!$showNoFiles!!}">нет файлов</div>
-
-            <p id='offer' class="file {!!$showOfferFile!!}">offers0_1.xml</p>
-            <p id='import' class="file {!!$showImportFile!!}">import0_1.xml</p>
-
-        </div>
-
         <div class="sync-container files">
 
             @if(!array_key_exists('import', $xmlFiles))
@@ -50,8 +38,18 @@
             <br>
             <br>
 
+        </div>
 
-            <div id="log_content"></div>
+        <div class="files-list">
+            <br>
+            <br>
+            <br>
+
+            <div class="no-files {!!$showNoFiles!!}">нет файлов</div>
+
+            <p id='offer' class="file {!!$showOfferFile!!}">offers0_1.xml</p>
+            <p id='import' class="file {!!$showImportFile!!}">import0_1.xml</p>
+
         </div>
 
 @endsection

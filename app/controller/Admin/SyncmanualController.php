@@ -54,30 +54,14 @@ class SyncmanualController extends AdminscController
     }
 
 
-    public function actionUploadoffer(SyncmanualActions $actions)
+    public function actionUploadoffer(SyncManualDownloadFileRequest $files, SyncmanualActions $actions)
     {
-        [$debugString, $file, $name, $path] = $actions::vars($_FILES['file']);
-
-        try {
-            $actions::moveFile($file, $path, $name);
-            response()->json(['popup' => $debugString]);
-        } catch (Throwable $exception) {
-            $exc = $exception->getMessage();
-            response()->json(['popup' => $debugString . ' error: ' . $exc]);
-        }
+        $actions::unploadFile($files->file('file'));
     }
 
-    public function actionUploadimport(SyncmanualActions $actions): void
+    public function actionUploadimport(SyncManualDownloadFileRequest $files, SyncmanualActions $actions): void
     {
-        [$debugString, $file, $name, $path] = $actions::vars($_FILES['file']);
-
-        try {
-            $actions::moveFile($file, $path, $name);
-            response()->json(['popup' => $debugString]);
-        } catch (Throwable $exception) {
-            $exc = $exception->getMessage();
-            response()->json(['popup' => $debugString . ' error: ' . $exc]);
-        }
+        $actions::unploadFile($files->file('file'));
     }
 
     #[NoReturn]

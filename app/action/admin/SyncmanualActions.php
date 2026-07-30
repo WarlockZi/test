@@ -2,15 +2,25 @@
 
 namespace app\action\admin;
 
+use app\formRequest\SyncManualDownloadFileRequest;
 use app\service\Fs\FS;
-use app\service\Logger\SyncLogger;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Throwable;
 
 class SyncmanualActions
 {
-    public function __construct(private readonly SyncLogger $logger)
+    public static function unploadFile($files): bool
     {
+//        $files = $_FILES['file'];
+        [$debugString, $file, $name, $path] = self::vars($files);
+
+        try {
+            self::moveFile($file, $path, $name);
+            response()->json(['popup' => $debugString]);
+        } catch (Throwable $exception) {
+            $exc = $exception->getMessage();
+            response()->json(['popup' => $debugString . ' error: ' . $exc]);
+        }
     }
 
     public static function moveFile(array|UploadedFile $file, string $path, string $name): bool
@@ -47,7 +57,7 @@ class SyncmanualActions
         $name  = $file->getClientOriginalName();
         $size  = $file->getSize();
         $error = $file->getError();
-        $mime  = $file->getClientMimeType();
+        $mime  = $file->getClientOriginalExtension();
 
         $debugString = "name $name size $size mime $mime error $error filesize $filesize postmaxsize $postmaxsize";
         return [$debugString, $file, $name, $path];
