@@ -2,7 +2,7 @@
 
 .popup {
   position: fixed;
-  right: 0;
+  right: 10px;
   bottom: 80px;
   display: flex;
   flex-flow: column;
@@ -12,7 +12,7 @@
 
 @mixin item {
   position: relative;
-  width: 120px;
+  width: 15vw;
   background: var.$color-main;
   padding: 15px 5px 5px;
   color: #ffffff;

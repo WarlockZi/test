@@ -77,8 +77,8 @@ abstract class FormRequest1 extends Request
 
         if ($validator->fails()) {
             $errors = $validator->errors()->all();
-//            response()->json(['popup' => $errors]);
-            response()->json(['popup' => $this->errorsToString($errors)]);
+            response()->json(['popup' => $errors]);
+//            response()->json(['popup' => $this->errorsToString($errors)]);
         }
 
         return $validator->validated();

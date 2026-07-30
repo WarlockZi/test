@@ -55,29 +55,33 @@ class SyncmanualController extends AdminscController
     public function actionUploadoffer(SyncManualDownloadFileRequest $req)
     {
         $file = $req->validated()['file'];
+
         $name = $file->getClientOriginalName();
-
+        $mime = $file->getClientMimeType();
+        $size = $file->getSize();
         $path   = env('SYNC_PATH') . 'unzipped/';
-//        $moveTo = FS::platformSlashes(ROOT . $path) . $name;
-//        move_uploaded_file($file, $moveTo);
 
+        error_log($file->getSize());
+
+        $str = "name $name mime $mime size $size path $path";
         $file->move(FS::platformSlashes(ROOT . $path), $name);
-        response()->json(['file' => $name, 'popup' => 'file загружен']);
+        response()->json(['popup' => $str]);
     }
 
     public function actionUploadimport(SyncManualDownloadFileRequest $req): void
     {
+        $file = $req->validated()['file'];
 
-        $file = $req->safe()->only('file')['file'];
-        response()->popup('Запрос пришел ' . $file);
         $name = $file->getClientOriginalName();
+        $mime = $file->getClientMimeType();
+        $size = $file->getSize();
+        $path   = env('SYNC_PATH') . 'unzipped/';
 
-        if ($name !== env('SYNC_IMPORT_FILE')) {
-            response()->popup('Это не import file');
-        }
-        $path = env('SYNC_PATH') . 'unzipped/';
+        error_log($file->getSize());
+
+        $str = "name $name mime $mime size $size path $path";
         $file->move(FS::platformSlashes(ROOT . $path), $name);
-        response()->json(['file' => $name, 'popup' => 'file загружен']);
+        response()->json(['popup' => $str]);
     }
 
     #[NoReturn]

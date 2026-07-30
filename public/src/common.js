@@ -215,7 +215,7 @@ const popup = {
     popup.addEventListener("click", this.close, true);
     document.body.append(popup);
 
-    const hideDelay = 5000;
+    const hideDelay = 15000;
     setTimeout(() => {
       popup__item.classList.remove("popup__item");
       popup__item.classList.add("popup-hide");
