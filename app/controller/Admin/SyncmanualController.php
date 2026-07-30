@@ -2,6 +2,7 @@
 
 namespace app\controller\Admin;
 
+use app\action\admin\SyncmanualActions;
 use app\formRequest\SyncManualDownloadArchiviRequest;
 use app\formRequest\SyncManualDownloadFileRequest;
 use app\service\Archive\ArchiveService;
@@ -52,49 +53,31 @@ class SyncmanualController extends AdminscController
         }
     }
 
-    public function actionUploadoffer()
+
+    public function actionUploadoffer(SyncmanualActions $actions)
     {
-        $file = $_FILES['file'];
-        $name = $file['name'];
-        $size = $file['size'];
-        $error = $file['error'];
-//        $file = $req->validated()['file'];
+        [$debugString, $file, $name, $path] = $actions::vars($_FILES['file']);
 
-//        $name = $file->getClientOriginalName();
-//        $mime = $file->getClientMimeType();
-//        $size = $file->getSize();
-        $path = env('SYNC_PATH') . 'unzipped/';
-        $filesize =  ini_get('upload_max_filesize');
-        $postmaxsize = ini_get('post_max_size');
-
-        $str = "name $name sieze $size error $error filesize $filesize postmaxsize $postmaxsize";
-        move_uploaded_file($file['tmp_name'], ROOT . $path . $name);
-//        error_log($file->getSize());
-        response()->json(['popup' => $str]);
-
-        $str = "filesize $filesize   postsize $postmaxsize";
-//        $str = "filesize $filesize   postsize $postmaxsize name $name mime $mime size $size path $path";
-        $file->move(FS::platformSlashes(ROOT . $path), $name);
-        response()->json(['popup' => $str]);
+        try {
+            $actions::moveFile($file, $path, $name);
+            response()->json(['popup' => $debugString]);
+        } catch (Throwable $exception) {
+            $exc = $exception->getMessage();
+            response()->json(['popup' => $debugString . ' error: ' . $exc]);
+        }
     }
 
-    public function actionUploadimport(SyncManualDownloadFileRequest $req): void
+    public function actionUploadimport(SyncmanualActions $actions): void
     {
-        $file = $req->validated()['file'];
-        $file = $req->file('file');
-        if ($req->hasFile('file')) response()->popup('нет файла');
-        if (!$file->isValid()) response()->popup('файла invalid --');
+        [$debugString, $file, $name, $path] = $actions::vars($_FILES['file']);
 
-        $name = $file->getClientOriginalName();
-        $mime = $file->getClientMimeType();
-        $size = $file->getSize();
-        $path = env('SYNC_PATH') . 'unzipped/';
-
-        error_log($file->getSize());
-
-        $str = "name $name mime $mime size $size path $path";
-        $file->move(FS::platformSlashes(ROOT . $path), $name);
-        response()->json(['popup' => $str]);
+        try {
+            $actions::moveFile($file, $path, $name);
+            response()->json(['popup' => $debugString]);
+        } catch (Throwable $exception) {
+            $exc = $exception->getMessage();
+            response()->json(['popup' => $debugString . ' error: ' . $exc]);
+        }
     }
 
     #[NoReturn]
