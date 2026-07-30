@@ -56,13 +56,13 @@ class SyncmanualController extends AdminscController
     {
 //        $file = $_FILES['file'];
         $file = $req->validated()['file'];
-        var_dump($file);
-        response()->json(['popup' => var_dump($file)]);
+//        var_dump($file);
+//        response()->json(['popup' => var_dump($file)]);
         $name = $file->getClientOriginalName();
 
         $path   = env('SYNC_PATH') . 'unzipped/';
         $moveTo = FS::platformSlashes(ROOT . $path) . $name;
-        response()->json(['popup' => $moveTo]);
+//        response()->json(['popup' => $moveTo]);
 
         $file->move(FS::platformSlashes(ROOT . $path), $name);
         response()->json(['file' => $name, 'popup' => 'file загружен']);
