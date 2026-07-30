@@ -63,11 +63,12 @@ class SyncmanualController extends AdminscController
 //        $name = $file->getClientOriginalName();
 //        $mime = $file->getClientMimeType();
 //        $size = $file->getSize();
-//        $path = env('SYNC_PATH') . 'unzipped/';
+        $path = env('SYNC_PATH') . 'unzipped/';
         $filesize =  ini_get('upload_max_filesize');
         $postmaxsize = ini_get('post_max_size');
 
         $str = "name $name sieze $size error $error filesize $filesize postmaxsize $postmaxsize";
+        move_uploaded_file($file['tmp_name'], ROOT . $path . $name);
 //        error_log($file->getSize());
         response()->json(['popup' => $str]);
 
