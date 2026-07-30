@@ -66,7 +66,7 @@ class SyncmanualController extends AdminscController
 
         $str = "filesize $filesize   postsize $postmaxsize";
 //        $str = "filesize $filesize   postsize $postmaxsize name $name mime $mime size $size path $path";
-        $file->move(FS::platformSlashes(ROOT . $path), $name);
+//        $file->move(FS::platformSlashes(ROOT . $path), $name);
         response()->json(['popup' => $str]);
     }
 
