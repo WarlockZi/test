@@ -55,7 +55,7 @@ class SyncmanualController extends AdminscController
     public function actionUploadoffer()
     {
         $file = $_FILES['file'];
-        response()->json(['popup' => $file['size']]);
+        response()->json(['popup' => $file['name']]);
 //        $file = $req->validated()['file'];
 
 //        $name = $file->getClientOriginalName();
