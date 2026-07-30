@@ -24,11 +24,12 @@ class LoadService
     }
 
 
-    public function run()
+    public function run(): void
     {
         $this->checkXMLFuncExist();
         $this->moveFilesLoaded();
         try {
+            $this->logger->write('**************');
             $this->LoadCategories();
             $this->LoadProducts();
             $this->LoadPrices();

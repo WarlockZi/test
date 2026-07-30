@@ -21,16 +21,12 @@ class LoadCategories extends LoadService
         public array    $created = [],
         private array   $existed = [],
         protected array $categoryData = [],
-//        protected SyncLogger $logger = new SyncLogger,
     )
     {
         parent::__construct();
         $this->setImportFile();
     }
 
-    /**
-     * @throws Exception
-     */
     private function setImportFile(): void
     {
         $file = ROOT . env('SYNC_PATH') . 'unzipped/loaded/' . env('SYNC_IMPORT_FILE');
@@ -44,14 +40,9 @@ class LoadCategories extends LoadService
 
     public function load(): void
     {
-        try {
             $this->exec($this->categoryData);
             $this->deleteNonexisted();
-        } catch (LoadException $loadException) {
-            $loadException->log();
-        } catch (Throwable $exception) {
-            error_log($exception->getMessage());
-        };
+
     }
 
     protected function deleteNonexisted(): void
