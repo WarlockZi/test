@@ -8,7 +8,6 @@ use app\service\Archive\ArchiveService;
 use app\service\Fs\FS;
 use app\service\Logger\SyncLogger;
 use app\service\Sync\Load\LoadService;
-use app\service\Sync\Load\SyncLog;
 use app\service\Sync\SyncService;
 use app\service\Zip\ZipService;
 use Exception;
@@ -53,22 +52,15 @@ class SyncmanualController extends AdminscController
         }
     }
 
-    public function actionUploadoffer(SyncManualDownloadFileRequest $req): void
+    public function actionUploadoffer(SyncManualDownloadFileRequest $req)
     {
-        if (!$req->hasFile('file')) {
-            response()->json(['popup' => 'Файл не был отправлен'], 422);
-        }
-
         $file = $req->validated()['file'];
         $name = $file->getClientOriginalName();
 
-        response()->json(['popup'=>'Запрос пришел '. $file, 'file'=>$file, 'name'=>$name], 200);
+        $path   = env('SYNC_PATH') . 'unzipped/';
+        $moveTo = FS::platformSlashes(ROOT . $path) . $name;
+        response()->json(['popup' => $moveTo]);
 
-
-        if ($name !== env('SYNC_OFFER_FILE')) {
-            response()->popup('Это не offer file');
-        }
-        $path = env('SYNC_PATH') . 'unzipped/';
         $file->move(FS::platformSlashes(ROOT . $path), $name);
         response()->json(['file' => $name, 'popup' => 'file загружен']);
     }
@@ -77,7 +69,7 @@ class SyncmanualController extends AdminscController
     {
 
         $file = $req->safe()->only('file')['file'];
-        response()->popup('Запрос пришел '. $file);
+        response()->popup('Запрос пришел ' . $file);
         $name = $file->getClientOriginalName();
 
         if ($name !== env('SYNC_IMPORT_FILE')) {
