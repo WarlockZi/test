@@ -52,12 +52,12 @@ class SyncmanualController extends AdminscController
         }
     }
 
-    public function actionUploadoffer()
+    public function actionUploadoffer(SyncManualDownloadFileRequest $req)
     {
-        $file = $_FILES['file'];
+//        $file = $_FILES['file'];
+        $file = $req->validated()['file'];
         var_dump($file);
         response()->json(['popup' => var_dump($file)]);
-        $file = $req->validated()['file'];
         $name = $file->getClientOriginalName();
 
         $path   = env('SYNC_PATH') . 'unzipped/';
