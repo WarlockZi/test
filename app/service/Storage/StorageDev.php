@@ -6,11 +6,11 @@ namespace app\service\Storage;
 
 class StorageDev extends Storage
 {
-    protected string $path;
+    protected string $syncPath;
 
     public function __construct()
     {
         parent::__construct();
-        $this->path = $this->path . 'dev' . DIRECTORY_SEPARATOR;
+        $this->syncPath = $this->syncPath . 'dev' . DIRECTORY_SEPARATOR;
     }
 }

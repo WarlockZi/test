@@ -5,10 +5,10 @@
     @php
         use app\view\components\Icon\Icon;
 
-        $showNoFiles = count($xmlFiles)?'none':'';
-        $showImportFile = key_exists('import',$xmlFiles)?'':'none';
-        $showOfferFile = key_exists('offer',$xmlFiles)?'':'none';
-        $buttonDisabled = count($xmlFiles)===2?'':'disabled';
+        $showNoFiles = count($loadFiles)?'none':'';
+        $showImportFile = key_exists('import',$loadFiles)?'':'none';
+        $showOfferFile = key_exists('offer',$loadFiles)?'':'none';
+        $buttonDisabled = count($loadFiles)===2?'':'disabled';
 
     @endphp
 
@@ -16,7 +16,7 @@
 
         <div class="sync-container files">
 
-            @if(!array_key_exists('import', $xmlFiles))
+            @if(!array_key_exists('import', $loadFiles))
                 <fieldset>
                     <legend>Перетащить import file</legend>
                     <div dndfile class='add-file'
@@ -24,7 +24,7 @@
                 </fieldset>
             @endif
 
-            @if(!array_key_exists('offer', $xmlFiles))
+            @if(!array_key_exists('offer', $loadFiles))
                 <fieldset>
                     <legend>Перетащить offer file</legend>
                     <div dndfile class='add-file'

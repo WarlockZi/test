@@ -8,6 +8,7 @@ use app\formRequest\SyncManualDownloadFileRequest;
 use app\service\Archive\ArchiveService;
 use app\service\Fs\FS;
 use app\service\Logger\SyncLogger;
+use app\service\Storage\SyncStorage;
 use app\service\Sync\Load\LoadService;
 use app\service\Sync\SyncService;
 use app\service\Zip\ZipService;
@@ -67,23 +68,10 @@ class SyncmanualController extends AdminscController
     #[NoReturn]
     public function actionIndex(): void
     {
-        $path        = env('SYNC_PATH');
-        $unzippedDir = FS::platformSlashes(ROOT . $path . 'unzipped/');
-        $allfiles    = scandir($unzippedDir);
-        $files       = array_filter($allfiles, function ($file) {
-            return pathinfo($file, PATHINFO_EXTENSION) === 'xml';
-        });
-        $xmlFiles    = [];
+        $loadFiles['import']    = SyncStorage::getUnzippedFile(env('SYNC_IMPORT_FILE') );
+        $loadFiles['offer']    = SyncStorage::getUnzippedFile(env('SYNC_OFFER_FILE') );
 
-        foreach ($files as $file) {
-            if ($file === env('SYNC_IMPORT_FILE')) {
-                $xmlFiles['import'] = $file;
-            } elseif ($file === env('SYNC_OFFER_FILE')) {
-                $xmlFiles['offer'] = $file;
-            }
-        }
-
-        view('admin.sync.sync_manual', compact('xmlFiles'));
+        view('admin.sync.sync_manual', compact('loadFiles'));
     }
 
 }

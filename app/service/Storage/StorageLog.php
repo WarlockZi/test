@@ -8,11 +8,11 @@ use app\service\Fs\FS;
 
 class StorageLog extends Storage
 {
-    protected string $path;
+    protected string $syncPath;
 
     public function __construct()
     {
         parent::__construct();
-        $this->path = FS::platformSlashes("$this->path/logs/sync/");
+        $this->syncPath = FS::platformSlashes("$this->syncPath/logs/sync/");
     }
 }

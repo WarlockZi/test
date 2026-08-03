@@ -62,7 +62,7 @@ class SyncController extends AdminscController
     {
         $file = $req->validated()['file'];
         $name = $file->getClientOriginalName();
-        $path = SyncStorage::getPath();
+        $path = SyncStorage::getSyncPath();
         $file->move(FS::platformSlashes(ROOT . $path), $name);
         $this->zipService
             ->path($path)

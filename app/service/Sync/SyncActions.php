@@ -2,6 +2,7 @@
 
 namespace app\service\Sync;
 
+use app\service\Fs\FS;
 use app\service\Logger\SyncLogger;
 use DirectoryIterator;
 use Exception;
@@ -29,6 +30,25 @@ class SyncActions
             return false;
         }
         return true;
+    }
+    public function setCORS(): void
+    {
+        header('Access-Control-Allow-Origin: *');
+        header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
+        header('Access-Control-Allow-Headers: Content-Type');
+        header('Content-Type: application/json');
+    }
+    public function checkJson(): void
+    {
+        $input = json_decode(file_get_contents('php://input'), true);
+
+        if ($input && isset($input['m'])) {
+            $m = $input['m'];
+            echo json_encode(['result' => 'success', 'm' => $m]);
+        } else {
+            http_response_code(400);
+            echo json_encode(['error' => 'php://input is empty']);
+        }
     }
 
     /**
@@ -126,7 +146,7 @@ class SyncActions
         $day     = date('d');
         $month   = date('m');
         $dateDir = "{$month}_{$day}";
-        return $this->createDirIfNotExist($archiveDir . $dateDir);
+        return FS::createIfNotExist($archiveDir, $dateDir);
     }
 
     /**

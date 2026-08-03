@@ -95,7 +95,7 @@ class ImageRepository
 
     public static function saveToFile(Model $model, array $file, string $path): bool
     {
-        $dir  = FS::getOrCreateAbsolutePath($model->imagePath, $path);
+        $dir  = FS::createIfNotExist(0766, $model->imagePath, $path);
         $full = FS::getAbsoluteImagePath($dir, $model);
         if (!is_readable($full)) {
             move_uploaded_file($file['tmp_name'], $full);

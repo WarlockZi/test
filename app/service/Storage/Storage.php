@@ -9,7 +9,7 @@ use DirectoryIterator;
 
 class Storage
 {
-    protected string $path;
+    protected string $syncPath;
     protected string $file;
     protected string $relativePath;
     protected array|false $files;
@@ -17,25 +17,25 @@ class Storage
 
     public function __construct()
     {
-        $this->path = FS::platformSlashes(ROOT . '/storage/');
+        $this->syncPath = FS::platformSlashes(ROOT . '/storage/');
     }
 
     public static function getFile(string $file): string
     {
         $self = new static();
-        return $self->path . $file;
+        return $self->syncPath . $file;
     }
 
     public function getFiles(): false|array
     {
-        return glob("{$this->path}*.*");
+        return glob("{$this->syncPath}*.*");
     }
 
     public function getDirs()
     {
         $dirs = array();
 
-        foreach (new DirectoryIterator($this->path) as $file) {
+        foreach (new DirectoryIterator($this->syncPath) as $file) {
             if ($file->isDir() && !$file->isDot()) {
                 $dirs[] = $file->getFilename();
             }
@@ -52,22 +52,22 @@ class Storage
         return $arr;
     }
 
-    public static function getPath(): array|string
+    public static function getSyncPath(): array|string
     {
         $self = new static();
-        return $self->path;
+        return $self->syncPath;
     }
 
     public static function getFileContent(string $file): false|string
     {
         $self = new static();
-        return file_get_contents($self->path . $file);
+        return file_get_contents($self->syncPath . $file);
     }
 
 
     public function save(string $path, array $files): array
     {
-        $to   = FS::platformSlashes($this->path . $path . '/');
+        $to   = FS::platformSlashes($this->syncPath . $path . '/');
         $rel  = FS::platformSlashes($this->relativePath . $path . '/');
         $srcs = [];
         foreach ($files as $file) {

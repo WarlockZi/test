@@ -7,7 +7,6 @@ use app\service\Storage\SyncStorage;
 use app\service\Sync\Load\LoadService;
 use app\service\Zip\ZipErrorMessages;
 use Exception;
-use Illuminate\Http\Request;
 use JetBrains\PhpStorm\NoReturn;
 use Throwable;
 
@@ -22,10 +21,6 @@ class SyncService
 
     use ZipErrorMessages;
 
-    /**
-     * @throws SyncException
-     * @throws Exception
-     */
     public function __construct(
         protected LoadService $loadService,
         protected SyncLogger  $logger,
@@ -34,26 +29,14 @@ class SyncService
     {
         $this->actions = new SyncActions($this->logger);
 
-        $this->archiveDir  = ROOT . SyncStorage::getPath();
-        $this->unzippedDir = ROOT . SyncStorage::getUnzippedDir();
+        $this->archiveDir  = SyncStorage::getSyncPath();
+        $this->unzippedDir = SyncStorage::getUnzippedDir();
 
         $this->importFile = $this->unzippedDir . env("SYNC_IMPORT_FILE");
         $this->offerFile  = $this->unzippedDir . env("SYNC_OFFER_FILE");
     }
 
-    private function checkJson(): void
-    {
-        $input = json_decode(file_get_contents('php://input'), true);
 
-        if ($input && isset($input['m'])) {
-            $m = $input['m'];
-            // Ваша логика здесь
-            echo json_encode(['result' => 'success', 'm' => $m]);
-        } else {
-            http_response_code(400);
-            echo json_encode(['error' => 'php://input is empty']);
-        }
-    }
 
     /**
      * @throws Exception
@@ -62,18 +45,9 @@ class SyncService
     #[NoReturn]
     public function requestFrom1s(): void
     {
-//        $this->logger->write("");
-//        $this->logger->write("uri - {$_SERVER['REQUEST_URI']}; method - {$_SERVER['REQUEST_METHOD']}");
-//        header("Content-Type: text/plain; charset=utf-8");
-//        header("Pragma: no-cache");
+        $this->actions->setCORS();
 
-// Разрешаем CORS если нужно
-        header('Access-Control-Allow-Origin: *');
-        header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
-        header('Access-Control-Allow-Headers: Content-Type');
-        header('Content-Type: application/json');
-        $input = json_decode(file_get_contents('php://input'), true);
-        $this->checkJson();
+        $this->actions->checkJson();
 
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $this->logger->write('начата синхронизация request is get !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
@@ -105,7 +79,6 @@ class SyncService
             $this->loadService->run();
 
             $this->actions->clearSyncDir($this->archiveDir);
-//            $this->actions->clearUnzippedDir($this->unzippedDir);
         }
     }
 

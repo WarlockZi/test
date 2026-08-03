@@ -3,6 +3,10 @@
 namespace app\service\Fs;
 
 use app\service\Logger\ILogger;
+use FilesystemIterator;
+use RecursiveIteratorIterator;
+use Symfony\Component\Finder\Iterator\RecursiveDirectoryIterator;
+use Throwable;
 
 class FS
 {
@@ -25,6 +29,21 @@ class FS
             return glob($dir . '*.' . $ext);
         }
         return glob($dir);
+    }
+    public static function filesByExt(string $dir, string $ext): array
+    {
+        $xmlFiles = [];
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS)
+        );
+
+        foreach ($iterator as $file) {
+            if ($file->isFile() && $file->getExtension() === 'xml') {
+                $xmlFiles[] = $file->getPathname();
+            }
+        }
+
+        return $xmlFiles;
     }
 
     public static function resolve(...$paths): string
@@ -63,14 +82,26 @@ class FS
         return $deleted;
     }
 
-    public static function getOrCreateAbsolutePath(...$args): string
+    public static function createIfNotExist(...$args): string
     {
+        if (!empty($args) && is_array(end($args))) {
+            $options = array_pop($args) ?? [];
+        }
+
+        $permissions = $options['permissions'] ?? 0755;
+        $recursive   = $options['recursive'] ?? true;
+
         $s   = DIRECTORY_SEPARATOR;
         $dir = ROOT;
+
         foreach ($args as $arg) {
             $dir .= $s . $arg;
             if (!is_dir($dir)) {
-                $res = mkdir($dir, 0766);
+                try {
+                    mkdir($dir, $permissions, $recursive);
+                } catch (Throwable $exception) {
+                    response()->popup("Ошибка создания директории $dir ".$exception->getMessage());
+                }
             }
         }
         return self::platformSlashes($dir);
@@ -89,10 +120,9 @@ class FS
 
             require $file;
 
-            $content = ob_get_clean();
-            return $content;
+            return ob_get_clean();
         } catch (\Throwable $exception) {
-            $content = ob_get_clean();
+            ob_get_clean();
             if (DEV) {
 
                 return date('y-m-d, h:m:s') . PHP_EOL . '<br><br>' .

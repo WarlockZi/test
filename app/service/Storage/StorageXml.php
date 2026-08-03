@@ -6,11 +6,11 @@ namespace app\service\Storage;
 
 class StorageXml extends Storage
 {
-    protected string $path;
+    protected string $syncPath;
 
     public function __construct()
     {
         parent::__construct();
-        $this->path = $this->path . 'app/xml' . DIRECTORY_SEPARATOR;
+        $this->syncPath = $this->syncPath . 'app/xml' . DIRECTORY_SEPARATOR;
     }
 }

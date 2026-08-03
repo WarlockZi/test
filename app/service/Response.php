@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace app\service;
 
 use app\blade\View;
+use app\service\Logger\ILogger;
 use app\service\Nonce\Nonce;
 use JetBrains\PhpStorm\NoReturn;
 
@@ -100,15 +101,21 @@ class Response
     }
 
     #[NoReturn]
-    public function popup(string $message = '', int $status = 200, array $headers = []): \Symfony\Component\HttpFoundation\Response
+    public function popup(string $message = '', int $status = 200, array $headers = [], $logService=null): \Symfony\Component\HttpFoundation\Response
     {
         $this->content = json_encode(['popup' => $message], JSON_UNESCAPED_UNICODE);
         $this->status  = $status;
         $this->headers = array_merge($this->headers, [
             'Content-Type' => 'application/json; charset=UTF-8'
         ], $headers);
+        if ($logService instanceof ILogger) {
+            $logService->log($logService);
+        }
 
         $this->send();
+    }
+    private function log(){
+
     }
 
     #[NoReturn]

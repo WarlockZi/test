@@ -28,14 +28,12 @@ class LoadService
     {
         $this->checkXMLFuncExist();
         $this->moveFilesLoaded();
-        try {
-            $this->logger->write('**************');
-            $this->LoadCategories();
-            $this->LoadProducts();
-            $this->LoadPrices();
-        } catch (Throwable $exception) {
-            $this->logger->write('load error - ' . $exception->getMessage());
-        }
+
+        $this->logger->write('**************');
+        $this->LoadCategories();
+        $this->LoadProducts();
+        $this->LoadPrices();
+
     }
 
     private function moveFilesLoaded(): void

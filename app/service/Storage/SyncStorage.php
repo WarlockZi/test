@@ -4,57 +4,47 @@
 namespace app\service\Storage;
 
 
-use app\service\Sync\SyncException;
-use Throwable;
+use app\service\Fs\FS;
+use app\service\Logger\SyncLogger;
 
 class SyncStorage extends Storage
 {
     private string $unzippedPath;
-    private string $archivePath;
+    private string $loadedPath;
+
     public function __construct()
     {
         parent::__construct();
-        $this->path         = '/storage/app/sync/';
+        $this->syncPath     = '/storage/app/sync/';
         $this->unzippedPath = 'unzipped/';
-        $this->archivePath  = 'archive/';
+        $this->loadedPath   = 'loaded/';
     }
 
-    public static function getPath(): array|string
+    public static function getUnzippedFile(string $file): array|string
     {
         $self = new static();
-        return $self->path;
+        $file = $self::getUnzippedDir() . $file;
+        if (!is_readable($file)) {
+            return $file;
+        }
+        response()->popup(message: $file. ' не читается');
     }
 
-    /**
-     * @throws SyncException
-     */
+    public static function getSyncDir(): array|string
+    {
+        $self = new static();
+        return FS::createIfNotExist($self->syncPath);
+    }
+
     public static function getUnzippedDir(): string
     {
         $self = new static();
-        $unzippedDir = ROOT. $self->path. $self->unzippedPath;
-        if (!file_exists($unzippedDir)) {
-            try {
-                mkdir($unzippedDir, 0755, true);
-            } catch (Throwable $exception) {
-                throw new SyncException('unable to create uzipped path'. $exception->getMessage());
-            }
-        }
-        return $self->path. $self->unzippedPath;
+        return FS::createIfNotExist($self->syncPath, $self->unzippedPath);
     }
-    /**
-     * @throws SyncException
-     */
-    public static function getArchivePath(): string
+
+    public static function getLoadedDir(): string
     {
         $self = new static();
-        $archiveDir = ROOT. $self->path. $self->archivePath;
-        if (!file_exists($archiveDir)) {
-            try {
-                mkdir($archiveDir, 0755, true);
-            } catch (Throwable $exception) {
-                throw new SyncException('unable to create archive path'. $exception->getMessage());
-            }
-        }
-        return $self->path. $self->archivePath;
+        return FS::createIfNotExist($self->syncPath, $self->loadedPath);
     }
 }
