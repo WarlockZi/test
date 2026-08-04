@@ -71,12 +71,12 @@ $(document).ready(async function () {
   }
 
   async function setPageModules(path) {
+    const moduleName = $(`[data-jsmodule]`).first()?.dataset?.jsmodule;
+    if (!moduleName) return false;
+
     const modules = import.meta.glob("@src/Admin/Pages/*/*.js", {
       eager: true,
     });
-    // const cleanPath = path.replace("/adminsc/", "");
-    const moduleName = $(`[data-jsmodule]`).first().dataset.jsmodule;
-    // const moduleName = cleanPath.split("/")[0];
 
     const modulePath = `/Admin/Pages/${moduleName}/${moduleName}.js`;
     const moduleData = modules[modulePath];
