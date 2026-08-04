@@ -109,7 +109,19 @@ class ProductFilterRepository
             $path = ROOT . '/storage/app/pic/product/' . $img;
             return is_readable($path);
         });
-        $arr           = $imageFiltered->toArray();
+
+//        $this->timed(fn()=>$imageFiltered->toArray());
+//        $this->timed(fn()=>$imageFiltered->jsonSerialize());
+//        $this->timed(fn()=>$imageFiltered->map->getAttributes()->all());
+
+//        $arr           = $imageFiltered->toArray();
         return $imageFiltered;
+    }
+
+    private function timed(callable $func){
+        $start = microtime(true);
+        $f = $func();
+        $end = microtime(true);
+        echo $end - $start. ' ----/n  ';
     }
 }

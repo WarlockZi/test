@@ -1,7 +1,7 @@
 import "./ProductFilter.scss";
 import { ael, qa, qs, searchSelector } from "@src/constants.js";
 import { $, post } from "@src/common.js";
-import ProductFilterSelects from "@src/Admin/ProductFilter/ProductFilterSelects.js";
+import ProductFilterSelects from "@src/Admin/Pages/productFilter/ProductFilterSelects.js";
 
 export default class ProductFilter {
   constructor() {
@@ -51,9 +51,10 @@ export default class ProductFilter {
 
   renderDataFromResponse(res) {
     $(".used-filters").first().innerHTML = res?.filterString;
-    $(".list-filter").first().innerHTML = res?.filterPanel;
+    // $(".list-filter").first().innerHTML = res?.filterPanel;
     const table = $("[custom-table]").first();
     table.innerHTML = res?.productsTable;
-    this.setSelects();
+    // new ProductFilterSelects($(".filter-wrap").first());
+    // this.setSelects();
   }
 }

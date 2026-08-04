@@ -1,7 +1,7 @@
-import { $ } from "../../common.js";
-import SearchableSelect from "../../components/select/Factory/SearchableSelect.js";
-import { catItemSelector, qa, searchSelector } from "../../constants.js";
-import { Select } from "../../components/select/Factory/Select.js";
+import { $ } from "../../../common.js";
+import SearchableSelect from "@components/select/Factory/SearchableSelect.js";
+import { catItemSelector, qa, searchSelector } from "../../../constants.js";
+import { Select } from "@components/select/Factory/Select.js";
 
 export default class ProductFilterSelects {
   constructor(container) {

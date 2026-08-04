@@ -1,7 +1,7 @@
 @extends('layouts.admin.admin')
 
 @section('content')
-    <div class="products-filter">
+    <div class="products-filter" data-jsmodule="productFilter">
         <div class="filter-wrap">
             @include('admin.report.productFilter.panel',compact('filterPanel'))
         </div>

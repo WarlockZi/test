@@ -109,7 +109,8 @@ class Response
             'Content-Type' => 'application/json; charset=UTF-8'
         ], $headers);
         if ($logService instanceof ILogger) {
-            $logService->log($logService);
+            //TODO change Interface to psr4
+            $logService->write($message);
         }
 
         $this->send();

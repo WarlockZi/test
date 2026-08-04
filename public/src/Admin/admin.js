@@ -23,7 +23,6 @@ import Pages from "@src/Admin/Pages/pages.js";
 import AdminSidebar from "@src/Admin/components/AdminSidebar/AdminSidebar.js";
 import Cache from "./cache/Cache.js";
 import adminPanel from "@components/adminPanel/adminPanel.js";
-import fs from "fs";
 
 $(document).ready(async function () {
   document.body.classList.remove("preload");
@@ -54,8 +53,6 @@ $(document).ready(async function () {
   }
   if (window.location.pathname.includes("/adminsc/pages")) {
     new Pages();
-  } else if (window.location.pathname.includes("/adminsc")) {
-    await setPageModules(window.location.pathname);
   } else if (window.location.pathname === "/adminsc/user") {
     // new Users
   } else if (window.location.pathname.startsWith("/adminsc/user/edit")) {
@@ -66,16 +63,20 @@ $(document).ready(async function () {
     const { default: MyChart } = await import("./chartjs/chartjs.js");
   } else if (window.location.pathname === "/adminsc/report/filter") {
     const { default: ProductFilter } =
-      await import("./ProductFilter/ProductFilter.js");
+      await import("./Pages/productFilter/productFilter.js");
     new ProductFilter();
+  }
+  if (window.location.pathname.includes("/adminsc")) {
+    await setPageModules(window.location.pathname);
   }
 
   async function setPageModules(path) {
     const modules = import.meta.glob("@src/Admin/Pages/*/*.js", {
       eager: true,
     });
-    const cleanPath = path.replace("/adminsc/", "");
-    const moduleName = cleanPath.split("/")[0];
+    // const cleanPath = path.replace("/adminsc/", "");
+    const moduleName = $(`[data-jsmodule]`).first().dataset.jsmodule;
+    // const moduleName = cleanPath.split("/")[0];
 
     const modulePath = `/Admin/Pages/${moduleName}/${moduleName}.js`;
     const moduleData = modules[modulePath];

@@ -51,18 +51,18 @@ export class Select {
   }
 
   toggleSelectedOption(value) {
-    const newOption = this.elements.optionElements.find(
-      (optEl) => String(optEl.dataset.value) === String(value),
-    );
-    if (newOption) {
-      newOption.setAttribute("selected", "");
-    }
-
     const oldOption = this.elements.optionElements.find((optEl) =>
       optEl.hasAttribute("selected"),
     );
     if (oldOption) {
       oldOption.removeAttribute("selected");
+    }
+
+    const newOption = this.elements.optionElements.find(
+      (optEl) => String(optEl.dataset.value) === String(value),
+    );
+    if (newOption) {
+      newOption.setAttribute("selected", "");
     }
   }
 
