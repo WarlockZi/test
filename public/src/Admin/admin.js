@@ -53,11 +53,11 @@ $(document).ready(async function () {
 
   if (window.location.pathname.includes("/adminsc")) {
     const modules = import.meta.glob("@src/Admin/Pages/**/*.js", {
-      eager: false,
+      eager: true,
     });
     const moduleName = $(`[data-jsmodule]`).first()?.dataset?.jsmodule;
     const modulePath = `./Admin/Pages/${moduleName}/${moduleName}.js`;
-    // const moduleData = modules[modulePath];
+    const moduleData = modules[modulePath];
     //
     // if (!moduleData) {
     //   console.warn(`Модуль не найден: ${modulePath}`);
