@@ -25,7 +25,7 @@ class UserController extends AdminscController
         parent::__construct();
     }
 
-    public function actionTable(): void
+    public function actionIndex(): void
     {
         $this->showTable();
     }
@@ -34,18 +34,9 @@ class UserController extends AdminscController
     {
         $user    = $this->model::find($request->id);
         $catItem = UserView::getViewByRole($user, Auth::getUser());
-//        try {
-//            $dto = UserDTO::fromArray($user->toArray());
-//        } catch (ValidationException $e) {
-//            print_r($e->errors());
-//        }
+
         view('admin.components.catalogItem.adminCatalogItem', compact('catItem'));
 
-//        if ($user = $this->ajax) {
-//            $user['id'] = $_SESSION['id'];
-//            User::updateOrCreate($user);
-//            Response::exitWithPopup('Сохранено');
-//        }
     }
 
 

@@ -49,7 +49,7 @@ class AdminSidebar
                     ],
                     [
                         "name" => "Пользователи",
-                        "href" => "/adminsc/user",
+                        "href" => "/adminsc/user/table",
                         "class" => "neon",
                         "permissions" => [],
                     ],

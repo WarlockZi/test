@@ -2,8 +2,9 @@
 
 namespace app\controller\Admin;
 
-use app\blade\views\admin\promotion\HerocategoryFormView;
+use app\blade\views\admin\promotion\PromotionFormView;
 use app\model\Promotion;
+use app\service\Router\IRequest;
 
 class PromotionController extends AdminscController
 {
@@ -18,18 +19,18 @@ class PromotionController extends AdminscController
     {
         $id        = $this->route->id;
         $promotion = Promotion::with('product')->firstOrCreate(['id' => $id]);
-        $promotion = HerocategoryFormView::edit($promotion);
+        $promotion = PromotionFormView::edit($promotion);
         $this->setVars(compact('promotion'));
     }
 
     public function actionIndex(): void
     {
         $promotions = Promotion::with('product', 'unit')->get();
-        $data    = HerocategoryFormView::adminIndex($promotions);
+        $data    = PromotionFormView::adminIndex($promotions);
         view('admin.promotion.promotion', compact('data'));
     }
 
-    public function actionUpdateOrCreate(): void
+    public function actionUpdateOrCreate(IRequest $request): void
     {
         $req = $this->ajax;
 

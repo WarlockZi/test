@@ -76,37 +76,33 @@ class PromotionFormView
             ->model('promotion')
             ->column(
                 ColumnBuilder::build('product')
+                    ->headerTitle('Товар')
                     ->function(Promotion::class, 'productLink')
-                    ->name('Товар')
                     ->get()
             )
             ->column(
                 ColumnBuilder::build('count')
-                    ->name('От количества')
+                    ->headerTitle('От количества')
                     ->get()
             )
             ->column(
                 ColumnBuilder::build('unit')
-                    ->name('единиц')
-                    ->callback(function ($promotion) {
+                    ->headerTitle('единиц')
+                     ->callback(function ($promotion) {
                         return $promotion->unit->name ?? 'не установлена';
                     })
                     ->get()
             )
             ->column(
                 ColumnBuilder::build('active_till')
-                    ->name('Действует до')
+                    ->headerTitle('Действует до')
                     ->get()
             )
             ->column(
                 ColumnBuilder::build('new_price')
-                    ->name('Цена по акции')
+                    ->headerTitle('Цена по акции')
                     ->get()
             )
-            ->edit()
-            ->del()
             ->get();
-
     }
-
 }

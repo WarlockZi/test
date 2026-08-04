@@ -78,7 +78,8 @@ document.addEventListener("DOMContentLoaded", async function () {
     const { default: Product } = await import("../Product/Product.js");
     new Product();
   } else if (path.startsWith("/promotions")) {
-    const { default: Promotions } = await import("../Promotions/Promotion.js");
+    const { default: Promotions } =
+      await import("../Admin/Pages/promotion/promotion.js");
     new Promotions();
   }
 });

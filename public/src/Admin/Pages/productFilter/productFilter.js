@@ -3,7 +3,7 @@ import { ael, qa, qs, searchSelector } from "@src/constants.js";
 import { $, post } from "@src/common.js";
 import ProductFilterSelects from "@src/Admin/Pages/productFilter/ProductFilterSelects.js";
 
-export default class ProductFilter {
+export default class productFilter {
   constructor() {
     const productsFilter = $(".products-filter").first();
     if (!productsFilter) return false;

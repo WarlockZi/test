@@ -19,7 +19,6 @@ import Search from "../components/search/search.js";
 import adminScroll from "@components/scroll/adminScroll.js";
 import Navigation from "./components/Navigation.js";
 
-import Pages from "@src/Admin/Pages/pages.js";
 import AdminSidebar from "@src/Admin/components/AdminSidebar/AdminSidebar.js";
 import Cache from "./cache/Cache.js";
 import adminPanel from "@components/adminPanel/adminPanel.js";
@@ -51,50 +50,15 @@ $(document).ready(async function () {
       new QuillFactory(el);
     });
   }
-  if (window.location.pathname.includes("/adminsc/pages")) {
-    new Pages();
-  } else if (window.location.pathname === "/adminsc/user") {
-    // new Users
-  } else if (window.location.pathname.startsWith("/adminsc/user/edit")) {
-    // new User
-    // } else if (window.location.href.includes("/test")) {
-    //   const { default: Test } = await import("./Test/nodeApi.js");
-  } else if (window.location.pathname === "/adminsc") {
-    const { default: MyChart } = await import("./chartjs/chartjs.js");
-  } else if (window.location.pathname === "/adminsc/report/filter") {
-    const { default: ProductFilter } =
-      await import("./Pages/productFilter/productFilter.js");
-    new ProductFilter();
-  }
-  if (window.location.pathname.includes("/adminsc")) {
-    await setPageModules(window.location.pathname);
-  }
 
-  async function setPageModules(path) {
+  if (window.location.pathname.includes("/adminsc")) {
     const moduleName = $(`[data-jsmodule]`).first()?.dataset?.jsmodule;
     if (!moduleName) return false;
 
-    const modules = import.meta.glob("@src/Admin/Pages/*/*.js", {
-      eager: true,
-    });
-
     const modulePath = `/Admin/Pages/${moduleName}/${moduleName}.js`;
-    const moduleData = modules[modulePath];
-
-    if (!moduleData) {
-      console.warn(`Модуль не найден: ${modulePath}`);
-      return null;
-    }
-
     try {
-      const { default: module } = moduleData;
-      const instance = new module();
-
-      if (instance.init) {
-        instance.init(cleanPath);
-      }
-
-      return instance;
+      const { default: moduleName } = await import(modulePath);
+      return new moduleName();
     } catch (error) {
       console.error(`Ошибка инициализации модуля ${moduleName}:`, error);
       return null;
@@ -103,7 +67,8 @@ $(document).ready(async function () {
 
   const promotion = $(".promotion-edit").first();
   if (promotion) {
-    const { default: Promotion } = await import("@src/Promotions/Promotion.js");
+    const { default: Promotion } =
+      await import("@src/Admin/Pages/promotion/promotion.js");
     new Promotion();
   }
   const dnd = $("[dnd]");

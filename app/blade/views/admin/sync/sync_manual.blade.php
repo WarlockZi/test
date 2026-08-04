@@ -12,7 +12,7 @@
 
     @endphp
 
-    <div class="sync-manual">
+    <div class="sync-manual" data-jsmodule="syncmanual">
 
         <div class="sync-container files">
 
