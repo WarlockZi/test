@@ -65,6 +65,8 @@ $(document).ready(async function () {
     }
   }
 
+
+
   // const promotion = $(".promotion-edit").first();
   // if (promotion) {
   //   const { default: Promotion } =
