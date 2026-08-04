@@ -55,17 +55,20 @@ $(document).ready(async function () {
     const modules = import.meta.glob("@src/Admin/Pages/**/*.js", {
       eager: true,
     });
+
     const moduleName = $(`[data-jsmodule]`).first()?.dataset?.jsmodule;
-    const modulePath = `./Admin/Pages/${moduleName}/${moduleName}.js`;
+
+    const modulePath = `/Admin/Pages/${moduleName}/${moduleName}.js`;
     const moduleData = modules[modulePath];
-    //
-    // if (!moduleData) {
-    //   console.warn(`Модуль не найден: ${modulePath}`);
-    //   return null;
-    // }
+
+    if (!moduleData) {
+      console.warn(`Модуль не найден: ${modulePath}`);
+      return null;
+    }
+
     try {
-      const { default: module } = await import(modulePath);
-      new module();
+      const { default: module } = moduleData;
+      const instance = new module();
     } catch (error) {
       console.log(error);
     }
