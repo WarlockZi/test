@@ -55,7 +55,7 @@ $(document).ready(async function () {
     const moduleName = $(`[data-jsmodule]`).first()?.dataset?.jsmodule;
     if (!moduleName) return false;
 
-    const modulePath = `/Admin/Pages/${moduleName}/${moduleName}.js`;
+    const modulePath = `@src/Admin/Pages/${moduleName}/${moduleName}.js`;
     try {
       const { default: moduleName } = await import(modulePath);
       return new moduleName();
