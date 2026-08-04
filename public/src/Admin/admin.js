@@ -52,10 +52,13 @@ $(document).ready(async function () {
   }
 
   if (window.location.pathname.includes("/adminsc")) {
+    const modules = import.meta.glob("@src/Admin/Pages/**/*.js", {
+      eager: false,
+    }); // это для сборки vite
     const moduleName = $(`[data-jsmodule]`).first()?.dataset?.jsmodule;
     if (!moduleName) return false;
 
-    const modulePath = `./Admin/Pages/${moduleName}/${moduleName}.js`;
+    const modulePath = `@src/Admin/Pages/${moduleName}/${moduleName}.js`;
     try {
       const { default: moduleName } = await import(modulePath);
       return new moduleName();
@@ -64,8 +67,6 @@ $(document).ready(async function () {
       return null;
     }
   }
-
-
 
   // const promotion = $(".promotion-edit").first();
   // if (promotion) {
