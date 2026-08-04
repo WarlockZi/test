@@ -1,4 +1,5 @@
 <div class="value">
+{{--    @deb--}}
     <div
         {!!$field->dataAttributes!!}
         {!!$field->contenteditable!!}

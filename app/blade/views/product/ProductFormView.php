@@ -45,14 +45,12 @@ class ProductFormView
                 ->field(
                     ItemFieldBuilder::build('name', $product)
                         ->name('Рабочее наименование')
-                        ->required()
                         ->get()
                 )
                 ->field(
                     ItemFieldBuilder::build('print_name', $product)
                         ->name('Наименование для печати')
                         ->contenteditable()
-                        ->required()
                         ->get()
                 )
                 ->field(
@@ -75,7 +73,7 @@ class ProductFormView
                 ->field(
                     ItemFieldBuilder::build('s_id', $product)
                         ->name('Категория')
-                        ->html(CategoryFormView::selectorByField(['s_id' => $product?->category?->s_id]))
+                            ->html(CategoryFormView::selectorByField(['s_id' => $product?->category?->s_id]))
                         ->get()
                 )
                 ->field(
@@ -118,6 +116,7 @@ class ProductFormView
                 )
                 ->field(
                     ItemFieldBuilder::build('1s_id', $product)
+                        ->data(['field'=>'1s_id'])
                         ->name('1s_ID')
                         ->get()
                 )
