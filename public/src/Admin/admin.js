@@ -56,7 +56,7 @@ $(document).ready(async function () {
       eager: false,
     });
     const moduleName = $(`[data-jsmodule]`).first()?.dataset?.jsmodule;
-    const modulePath = `@src/Admin/Pages/${moduleName}/${moduleName}.js`;
+    const modulePath = `./Admin/Pages/${moduleName}/${moduleName}.js`;
     // const moduleData = modules[modulePath];
     //
     // if (!moduleData) {
