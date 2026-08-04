@@ -51,15 +51,14 @@ $(document).ready(async function () {
     });
   }
 
-  const loadModule = () => {
-    const modules = import.meta.glob("@src/Admin/Pages/*/*.js", {
-      eager: true,
+  if (window.location.pathname.includes("/adminsc")) {
+    const modules = import.meta.glob("@src/Admin/Pages/**/*.js", {
+      eager: false,
     });
-    // const cleanPath = path.replace("/adminsc/", "");
-    const moduleName = $(`[data-jsmodule]`).first().dataset.jsmodule;
-    // const moduleName = cleanPath.split("/")[0];
 
-    const modulePath = `/Admin/Pages/${moduleName}/${moduleName}.js`;
+    const moduleName = $(`[data-jsmodule]`).first()?.dataset?.jsmodule;
+
+    const modulePath = `@src/Admin/Pages/${moduleName}/${moduleName}.js`;
     const moduleData = modules[modulePath];
 
     if (!moduleData) {
@@ -69,27 +68,9 @@ $(document).ready(async function () {
 
     try {
       const { default: module } = moduleData;
-      const instance = new module();
+      new module();
     } catch (error) {
       console.log(error);
-    }
-  };
-
-  if (window.location.pathname.includes("/adminsc")) {
-    loadModule();
-    const modules = import.meta.glob("@src/Admin/Pages/**/*.js", {
-      eager: true,
-    }); // это для сборки vite
-    const moduleName = $(`[data-jsmodule]`).first()?.dataset?.jsmodule;
-    if (!moduleName) return false;
-
-    const modulePath = `@src/Admin/Pages/${moduleName}/${moduleName}.js`;
-    try {
-      const { default: moduleName } = await import(modulePath);
-      return new moduleName();
-    } catch (error) {
-      console.error(`Ошибка инициализации модуля ${moduleName}:`, error);
-      return null;
     }
   }
 
