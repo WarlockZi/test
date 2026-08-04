@@ -60,16 +60,10 @@ $(document).ready(async function () {
     const modulePath = `/Admin/Pages/${moduleName}/${moduleName}.js`;
     const moduleData = modules[modulePath];
 
-    if (!moduleData) {
-      console.warn(`Модуль не найден: ${modulePath}`);
-      // return null;
-    }
-
-    try {
+    if (moduleData) {
       const { default: module } = moduleData;
       new module();
-    } catch (error) {
-      console.log(error);
+      console.warn(`Модуль не найден: ${modulePath}`);
     }
   }
 
