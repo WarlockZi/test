@@ -8,7 +8,6 @@ import "@components/accordion/accordion.js";
 import "@components/date/date.js";
 import "@components/adminPanel/adminPanel.js";
 
-// import "@src/Admin/Pages/sync/sync/sync.js";
 import "./Planning/planning.js";
 import "./Settings/settings.js";
 import "./Videoinstructions/videoinstructions.js";
@@ -68,18 +67,12 @@ $(document).ready(async function () {
 
     try {
       const { default: module } = moduleData;
-      const instance = new module();
+      new module();
     } catch (error) {
       console.log(error);
     }
   }
 
-  // const promotion = $(".promotion-edit").first();
-  // if (promotion) {
-  //   const { default: Promotion } =
-  //     await import("@src/Admin/Pages/promotion/promotion.js");
-  //   new Promotion();
-  // }
   const dnd = $("[dnd]");
   if (dnd) {
     const { default: Dnds } = await import("@components/dnd/Dnds.js");

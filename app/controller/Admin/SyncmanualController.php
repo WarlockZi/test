@@ -68,7 +68,7 @@ class SyncmanualController extends AdminscController
     #[NoReturn]
     public function actionIndex(): void
     {
-        $loadFiles['import']    = SyncStorage::getUnzippedFile(env('SYNC_IMPORT_FILE') );
+        $loadFiles['import']    = SyncStorage::getUnzippedFile(env('SYNC_IMPORT_FILE'));
         $loadFiles['offer']    = SyncStorage::getUnzippedFile(env('SYNC_OFFER_FILE') );
 
         view('admin.sync.sync_manual', compact('loadFiles'));

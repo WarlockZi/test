@@ -20,14 +20,15 @@ class SyncStorage extends Storage
         $this->loadedPath   = 'loaded/';
     }
 
-    public static function getUnzippedFile(string $file): array|string
+    public static function getUnzippedFile(string $file): string
     {
         $self = new static();
         $file = $self::getUnzippedDir() . $file;
-        if (!is_readable($file)) {
+        if (is_readable($file)) {
             return $file;
         }
-        response()->popup(message: $file. ' не читается');
+        return '';
+//        response()->popup(message: $file. ' не читается');
     }
 
     public static function getSyncDir(): array|string

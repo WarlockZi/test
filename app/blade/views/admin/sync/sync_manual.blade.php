@@ -6,8 +6,8 @@
         use app\view\components\Icon\Icon;
 
         $showNoFiles = count($loadFiles)?'none':'';
-        $showImportFile = key_exists('import',$loadFiles)?'':'none';
-        $showOfferFile = key_exists('offer',$loadFiles)?'':'none';
+        $showImportFile = !empty($loadFiles['import'])?'':'none';
+        $showOfferFile = !empty($loadFiles['offer'])?'':'none';
         $buttonDisabled = count($loadFiles)===2?'':'disabled';
 
     @endphp
@@ -15,8 +15,8 @@
     <div class="sync-manual" data-jsmodule="syncmanual">
 
         <div class="sync-container files">
-
-            @if(!array_key_exists('import', $loadFiles))
+@deb
+            @if(empty($loadFiles['import']))
                 <fieldset>
                     <legend>Перетащить import file</legend>
                     <div dndfile class='add-file'
@@ -24,7 +24,7 @@
                 </fieldset>
             @endif
 
-            @if(!array_key_exists('offer', $loadFiles))
+            @if(empty($loadFiles['offer']))
                 <fieldset>
                     <legend>Перетащить offer file</legend>
                     <div dndfile class='add-file'
