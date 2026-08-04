@@ -55,7 +55,7 @@ $(document).ready(async function () {
     const moduleName = $(`[data-jsmodule]`).first()?.dataset?.jsmodule;
     if (!moduleName) return false;
 
-    const modulePath = `@src/Admin/Pages/${moduleName}/${moduleName}.js`;
+    const modulePath = `./Admin/Pages/${moduleName}/${moduleName}.js`;
     try {
       const { default: moduleName } = await import(modulePath);
       return new moduleName();
@@ -65,12 +65,12 @@ $(document).ready(async function () {
     }
   }
 
-  const promotion = $(".promotion-edit").first();
-  if (promotion) {
-    const { default: Promotion } =
-      await import("@src/Admin/Pages/promotion/promotion.js");
-    new Promotion();
-  }
+  // const promotion = $(".promotion-edit").first();
+  // if (promotion) {
+  //   const { default: Promotion } =
+  //     await import("@src/Admin/Pages/promotion/promotion.js");
+  //   new Promotion();
+  // }
   const dnd = $("[dnd]");
   if (dnd) {
     const { default: Dnds } = await import("@components/dnd/Dnds.js");
