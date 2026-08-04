@@ -15,7 +15,6 @@
     <div class="sync-manual" data-jsmodule="syncmanual">
 
         <div class="sync-container files">
-@deb
             @if(empty($loadFiles['import']))
                 <fieldset>
                     <legend>Перетащить import file</legend>

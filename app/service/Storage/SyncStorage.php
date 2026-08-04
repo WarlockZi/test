@@ -28,7 +28,6 @@ class SyncStorage extends Storage
             return $file;
         }
         return '';
-//        response()->popup(message: $file. ' не читается');
     }
 
     public static function getSyncDir(): array|string

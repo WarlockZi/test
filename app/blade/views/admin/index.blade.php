@@ -6,7 +6,7 @@
 
 @section('content')
 
-    <div class="main">
+    <div class="main" data-jsmodule="index">
 
         <div class="page-name">
             Главная

@@ -62,7 +62,7 @@ $(document).ready(async function () {
 
     if (!moduleData) {
       console.warn(`Модуль не найден: ${modulePath}`);
-      return null;
+      // return null;
     }
 
     try {

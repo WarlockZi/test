@@ -45,7 +45,6 @@ class SyncmanualController extends AdminscController
 
     public function actionLoad(LoadService $loadService)
     {
-//        $loadService = new LoadService();
         try {
             $loadService->run();
             response()->popup('Успешно загружено');
