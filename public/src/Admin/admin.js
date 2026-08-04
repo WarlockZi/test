@@ -53,7 +53,7 @@ $(document).ready(async function () {
 
   if (window.location.pathname.includes("/adminsc")) {
     const modules = import.meta.glob("@src/Admin/Pages/**/*.js", {
-      eager: false,
+      eager: true,
     }); // это для сборки vite
     const moduleName = $(`[data-jsmodule]`).first()?.dataset?.jsmodule;
     if (!moduleName) return false;
