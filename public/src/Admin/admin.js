@@ -52,6 +52,7 @@ $(document).ready(async function () {
   }
 
   if (window.location.pathname.includes("/adminsc")) {
+    loadModule();
     const modules = import.meta.glob("@src/Admin/Pages/**/*.js", {
       eager: true,
     }); // это для сборки vite
@@ -67,6 +68,29 @@ $(document).ready(async function () {
       return null;
     }
   }
+  const loadModule = () => {
+    const modules = import.meta.glob("@src/Admin/Pages/*/*.js", {
+      eager: true,
+    });
+    // const cleanPath = path.replace("/adminsc/", "");
+    const moduleName = $(`[data-jsmodule]`).first().dataset.jsmodule;
+    // const moduleName = cleanPath.split("/")[0];
+
+    const modulePath = `/Admin/Pages/${moduleName}/${moduleName}.js`;
+    const moduleData = modules[modulePath];
+
+    if (!moduleData) {
+      console.warn(`Модуль не найден: ${modulePath}`);
+      return null;
+    }
+
+    try {
+      const { default: module } = moduleData;
+      const instance = new module();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   // const promotion = $(".promotion-edit").first();
   // if (promotion) {
