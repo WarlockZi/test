@@ -33,14 +33,15 @@ export default class Callbacks {
     [].forEach.call(cells, (cell) => {
       cell.setAttribute("disabled", "");
       const unitSelector = cell.querySelector(`[` + searchSelector + `]`);
-      const isShippableCheckbox = $(cell).find(`[` + checkboxSelector + `]`);
+      // const isShippableCheckbox = $(cell).find(`[` + checkboxSelector + `]`);
       const dividerCell = $(cell).find(`[data-pivot='divider']`);
       const multiplierCell = $(cell).find(`[data-pivot='multiplier']`);
+      const delCell = cell.classList.contains(`del`);
       if (unitSelector) {
         unitSelector.setAttribute("disabled", "");
       }
-      if (isShippableCheckbox) {
-        isShippableCheckbox.setAttribute("disabled", "");
+      if (delCell) {
+        cell.removeAttribute("disabled");
       }
       if (dividerCell) {
         dividerCell.setAttribute("contenteditable", "false");

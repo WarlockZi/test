@@ -32,15 +32,17 @@ class ProductController extends AdminscController
     /**
      * @throws Exception
      */
-    #[NoReturn] public function actionSaveMainImage(StoreProductMainImageRequest $request): void
+    #[NoReturn]
+    public function actionSaveMainImage(StoreProductMainImageRequest $request): void
     {
         $mainImage = $this->actions->saveMainImage($request->validated());
         response()->json(compact('mainImage'));
     }
 
-    #[NoReturn] public function actionEdit(IRequest $request): void
+    #[NoReturn]
+    public function actionEdit(IRequest $request): void
     {
-        $prod        = $this->repo->edit($request->id);
+        $prod = $this->repo->edit($request->id);
         if (!$prod) {
             view('admin.product.notFound');
         }
@@ -49,7 +51,8 @@ class ProductController extends AdminscController
         view('admin.product.edit', compact('catItem', 'breadcrumbs'));
     }
 
-    #[NoReturn] public function actionFilter(IRequest $request): void
+    #[NoReturn]
+    public function actionFilter(IRequest $request): void
     {
         $res = $this->filterRepo->filterProducts($request);
         response()->json($res);
@@ -64,34 +67,41 @@ class ProductController extends AdminscController
     {
         $this->actions->deleteUnit($request);
     }
+
     public function actionDelete(IRequest $request): void
     {
-        if ($request->body()['relation']['name']==='units') {
+        if ($request->body()['relation']['name'] === 'units') {
 
-            $product_id = $request->body()['id'];
+            $product_id    = $request->body()['id'];
             $product_1s_id = Product::select('1s_id')->find($product_id)['1s_id'];
-            $unit_id = $request->body()['relation']['id'];
-            $productUnit = ProductUnit::where([
+            $unit_id       = $request->body()['relation']['id'];
+            $productUnit   = ProductUnit::where([
                 'product_1s_id' => $product_1s_id,
                 'unit_id' => $unit_id
             ])->first();
-            $isFromS = $productUnit->is_from_1s;
+
+            $isFromS       = $productUnit->is_from_1s;
             if ($isFromS) {
                 $user = Auth::getUser();
                 $olia = $user->isOlya();
-                if (!$olia) response()->json(['popup'=>'Удалять единицы из 1с может только Оля Ордина']);
+                if (!$olia) response()->json(['popup' => 'Удалять единицы из 1с может только Оля Ордина']);
+            } else {
+                $productUnit->delete();
+                response()->json(['id'=>$unit_id,'popup'=>'Единица удалена']);
             }
         }
-        parent::actionDelete($request);
     }
+
     public function actionChangeunit(IRequest $request): void
     {
         $this->actions->changeUnit($request->body());
     }
+
     public function actionChangeunitprice(IRequest $request): void
     {
         $this->actions->changeUnitPrice($request->body);
     }
+
     public function actionChangepromotion(IRequest $request): void
     {
         $this->actions->changePromotion($request);
