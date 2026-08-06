@@ -18,6 +18,7 @@ class SelectBuilder
     private string $title = '';
     private string $relation = '';
     private string $field = '';
+    private string $selectedId = '';
     private string $name = '';
     private string $options;
     private string $initialOption = '';
@@ -58,7 +59,11 @@ class SelectBuilder
         $this->field = "data-field='$field'";
         return $this;
     }
-
+    public function selectedId(string $id): static
+    {
+        $this->selectedId = "data-value='$id'";
+        return $this;
+    }
     public function name(string $name): static
     {
         $this->name = "name='$name'";

@@ -1,5 +1,6 @@
 {{--@deb--}}
 <select
+        {!!$data['selectedId']??''!!}
         {!!$data['selectAttr']??''!!}
         {!!$data['title']??''!!}
         {!!$data['field']??''!!}

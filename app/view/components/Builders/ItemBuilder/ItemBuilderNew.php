@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class ItemBuilderNew
 {
     private string $model;
-    private string $sid = '';
+    private string $dataAttributes = '';
     private array $item = [];
     private string $pageTitle;
     private string $class;
@@ -38,7 +38,13 @@ class ItemBuilderNew
         $this->class = $class;
         return $this;
     }
-
+    public function data(array $dataAttributes): self
+    {
+        foreach ($dataAttributes as $key => $value) {
+            $this->dataAttributes .= "data-$key='$value'";
+        }
+        return $this;
+    }
     public function pageTitle(string $pageTitle): self
     {
         $this->pageTitle = $pageTitle;

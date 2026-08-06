@@ -10,13 +10,14 @@ class ProductRepository
 {
     public function edit(int $id)
     {
+        $p = Product::with('units')->find($id)->toArray();
         $product = Product::query()
             ->withTrashed()
             ->with('category.properties.vals')
             ->with('category.parentRecursive.ownProperties')
             ->with('category.ownProperties')
             ->with('values')
-            ->with('units.prices')
+            ->with('units')
             ->with('ownProperties')
             ->with('manufacturer.country')
             ->with('promotions')

@@ -69,10 +69,12 @@ export default class Table {
     await post(this.updateOrCreateUrl, dto);
   }
 
-  async selectChange({ detail }) {
+  async selectChange(e) {
+    e.stopPropagation();
+    const detail = e.detail;
     const target = detail.el;
 
-    const colummnJsCallback = await this.handleCallbacks(target);
+    const colummnJsCallback = await this.handleCallbacks(target, this, detail);
 
     if (!colummnJsCallback) {
       const dto = new FieldDTO(target);
@@ -95,9 +97,8 @@ export default class Table {
     }
   }
 
-  async update(modelId, target) {
+  async update(target) {
     const dto = new FieldDTO(target);
-    // const dto = new TableDTO(target);
     const res = await post(`/adminsc/${this.model}/updateorcreate`, dto);
   }
 
@@ -157,14 +158,12 @@ export default class Table {
     e.el.innerText = "";
   }
 
-  async handleCallbacks(target) {
-    // const colummnJsCallback =
-    //   target.closest("[data-jscallback]")?.dataset?.jscallback;
+  async handleCallbacks(target, table, detail) {
     const colummnJsCallback =
       target.closest("[data-jscallback]").dataset.jscallback;
     if (colummnJsCallback) {
       const cb = await this.getCallbacks();
-      cb.callMethod(colummnJsCallback, [target, this]);
+      cb.callMethod(colummnJsCallback, [target, table, detail]);
       return true;
     }
     return false;
@@ -175,7 +174,7 @@ export default class Table {
     if (target.hasAttribute("data-search")) {
       this.search(target);
     } else if (target.hasAttribute("contenteditable")) {
-      const colummnJsCallback = this.handleCallbacks(target);
+      const colummnJsCallback = this.handleCallbacks(target, this);
       if (!colummnJsCallback) {
         const DTO = new FieldDTO(target);
         // const DTO = new TableDTO(target);
@@ -247,7 +246,9 @@ export default class Table {
   }
 
   getRowCells(id) {
-    return this.table[qa](`[data-id="${id}"]:not([hidden]):not([my-checkbox])`);
+    return this.table[qa](
+      `[data-row][data-id="${id}"]:not([hidden]):not([my-checkbox])`,
+    );
   }
 
   removeRowCells(sells) {

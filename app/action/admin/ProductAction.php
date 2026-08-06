@@ -34,26 +34,39 @@ class ProductAction
         return image($product->ownProperties->main_image);
     }
 
-    public function changeUnit(IRequest $req): void
+    public function changeUnit(array $req): void
     {
-        $productId   = $req['pivot']['product_id'];
-        $unitId      = $req['morphed']['new_id'];
-        $productUnit = [
-            'unit_id' => $unitId,
-            'divider' => $req['pivot']['divider'],
-            'is_shippable' => $req['pivot']['is_shippable'],
-        ];
-
-        try {
-            $unit = ProductUnit::query()
-                ->updateOrCreate(
-                    ['product_1s_id' => $productId,
-                        'unit_id' => $unitId],
-                    $productUnit);
-            Response::exitWithPopup('изменено');
-        } catch (\Throwable $exception) {
-            Response::exitWithPopup('не изменено');
+        $productId   = $req['id'];
+        $prevId      = $req['prevUnitId'];
+        $nextId      = $req['nextUnitId'];
+        $productUnit = ProductUnit::query()
+            ->where([
+                'product_1s_id'=>$productId,
+                'unit_id'=>$prevId,
+                ])
+            ->first();
+        if (!$productUnit) {
+            response()->popup('единица не найдена');
         }
+
+        if ($prevId===0) {
+            $productUnit->create([
+                'produt_1s_id'=>$productId,
+                'unit_id'=>$nextId,
+            ]);
+            response()->popup('единица добавлена');
+
+        }
+        if ($nextId===0) {
+            $productUnit->delete();
+            response()->popup('единица удалена');
+
+        }
+        if ($prevId!==0 && $nextId!==0) {
+            $productUnit->update(['unit_id'=>$nextId]);
+            response()->popup('единица изменена');
+        }
+
     }
 
     public function changeUnitPrice(array $req): void

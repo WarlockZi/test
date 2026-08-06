@@ -16,6 +16,7 @@ export class Select {
     this.selectEl = selectEl;
     this.elements = {};
     this.currentToPick = {};
+    this.prevValue = 0;
     this._visibleOptions = [];
 
     this.options = config.options ?? $(this.selectEl).findAll("option");
@@ -34,9 +35,8 @@ export class Select {
         detail: {
           selectThis: this,
           el: this.container,
-          prev: {
-            value: 0,
-          },
+          prev: this.prevValue,
+          next: this.selectedValue,
         },
       }),
     );
@@ -51,11 +51,12 @@ export class Select {
   }
 
   toggleSelectedOption(value) {
-    const oldOption = this.elements.optionElements.find((optEl) =>
+    const prevOption = this.elements.optionElements.find((optEl) =>
       optEl.hasAttribute("selected"),
     );
-    if (oldOption) {
-      oldOption.removeAttribute("selected");
+    if (prevOption) {
+      this.prevValue = prevOption.dataset.value;
+      prevOption.removeAttribute("selected");
     }
 
     const newOption = this.elements.optionElements.find(
@@ -130,7 +131,7 @@ export class Select {
       li.dataset.value = opt.value;
       li.setAttribute("role", "option");
       if (this.selectedValue === opt.value) {
-        this.select(opt.value);
+        this.elements.trigger.textContent = opt.label;
         li.setAttribute("selected", "");
       }
       this.elements.optionsList.appendChild(li);
@@ -208,6 +209,14 @@ export class Select {
     this.currentToPick.classList.toggle("to-pick");
   }
 
+  getIntoView(item) {
+    item.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "nearest",
+    });
+  }
+
   nextPick() {
     let curtoPick = null;
     let nextToPick = null;
@@ -222,11 +231,13 @@ export class Select {
     if (curtoPick) {
       this.currentToPick.classList.toggle("to-pick");
       this.currentToPick = nextToPick;
+
       nextToPick.classList.toggle("to-pick");
     } else {
       this.currentToPick = this._visibleOptions[0];
       this.currentToPick.classList.toggle("to-pick");
     }
+    this.getIntoView(this.currentToPick);
   }
 
   previousPick() {
@@ -254,6 +265,7 @@ export class Select {
       this.currentToPick = this._visibleOptions[0];
       this.currentToPick.classList.toggle("to-pick");
     }
+    this.getIntoView(this.currentToPick);
   }
 
   visibleOptions() {

@@ -2,6 +2,7 @@
 
 
 <div class="item-wrap"
+     {!!$catItem['dataAttributes']??''!!}
      data-model="{!!$catItem['model']??''!!}"
      data-id="{!!data_get($catItem, 'item.id')!!}"
 >

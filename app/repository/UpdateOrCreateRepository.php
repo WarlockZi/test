@@ -162,10 +162,10 @@ class UpdateOrCreateRepository
             return response()->popup('Обновлена зависимая модель', 200);
         } else {
 //            $model = $this->model::with($this->relationName)->find($this->modelId);
-            $result = $this->model::find($this->modelId)
-                ->{$this->relationName}()
-                ->update($this->relationField);
-            return response()->popup('Обновлена '.$this->relationName, 200);
+//            $result = $this->model::find($this->modelId)
+//                ->{$this->relationName}()
+//                ->update($this->relationField);
+//            return response()->popup('Обновлена '.$this->relationName, 200);
         }
         return response()->json(['error' => 'Неизвестный тип операции с отношением'], 500);
     }

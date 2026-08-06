@@ -86,7 +86,7 @@ class ProductController extends AdminscController
     }
     public function actionChangeunit(IRequest $request): void
     {
-        $this->actions->changeUnit($request);
+        $this->actions->changeUnit($request->body());
     }
     public function actionChangeunitprice(IRequest $request): void
     {

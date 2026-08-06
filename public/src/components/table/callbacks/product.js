@@ -1,17 +1,34 @@
-import { post } from "@src/common.js";
-import FieldDTO from "@src/Admin/DTO/FieldDTO.js";
+import { $, post } from "@src/common.js";
 
 export default class Callbacks {
-  async changeunit(target, table) {
-    const select = target;
-    const cellWrapper = select.closest("[data-id]");
-    const selectedValue = select.dataset.value;
-    const cells = table.getRowCells(selectedValue);
-    [].forEach.call(cells, (cell) => (cell.dataset.id = selectedValue));
-    cellWrapper.dataset.id = selectedValue;
-    const dto = new FieldDTO(target);
-    table.update();
-    const res = await post(`/adminsc/${this.model}/updateorcreate`, dto);
+  async changeunit(target, table, detail) {
+    const prev = detail.prev;
+    const next = detail.next;
+    const cells = table.getRowCells(prev);
+    const url = `/adminsc/${table.model}/changeunit`;
+
+    // setSelectId(next);
+    setCellsId(cells, next);
+
+    const dto = setDto(detail);
+    const res = await post(url, dto);
+
+    function setDto() {
+      const dto = {};
+      dto.id = $("[data-sid]").first()?.dataset?.sid;
+      dto.prevUnitId = detail?.prev;
+      dto.nextUnitId = detail?.next;
+      return dto;
+    }
+
+    function setSelectId(next) {
+      const cellWrapper = target.closest("[data-id]");
+      cellWrapper.dataset.id = next;
+    }
+
+    function setCellsId(cells, next) {
+      [].forEach.call(cells, (cell) => (cell.dataset.id = next));
+    }
   }
 
   changemultiplier(target, table) {

@@ -5,8 +5,18 @@ export default class Callbacks {
   constructor(table) {
     this.table = table;
     this.disableBaseUnitRow();
+    // this.deleteUsedSelects();
   }
-
+  deleteUsedSelects() {
+    const res = this.table.removeUsedSelectOptions();
+    const rows = this.table.getRows();
+    for (let i = 1; i < Object.keys(rows).length; i++) {
+      const key = Object.keys(rows)[i];
+      const cells = rows[key];
+      const unitId = this.getFrom1sCell(cells, "unit_id");
+      if (unitId) continue;
+    }
+  }
   disableBaseUnitRow() {
     const rows = this.table.getRows();
     for (let i = 1; i < Object.keys(rows).length; i++) {

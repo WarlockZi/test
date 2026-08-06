@@ -36,6 +36,7 @@ class ProductFormView
         try {
             return ItemBuilderNew::build($product, 'product')
                 ->pageTitle('Товар :  ' . $product['name'])
+                ->data(['sid'=>$product['1s_id']])
                 ->field(
                     ItemFieldBuilder::build('art', $product)
                         ->name('Артикул')
@@ -167,6 +168,7 @@ class ProductFormView
                                 PluckOptionsBuilder::build(Unit::pluck('name', 'id'))
                                     ->initialOption()
                                     ->get())
+                                ->selectedId('0')
                                 ->removeSelectNewAttr()
                                 ->get();
                         })
@@ -175,7 +177,9 @@ class ProductFormView
                                 PluckOptionsBuilder::build(Unit::pluck('name', 'id'))
                                     ->selected($unit->id)
                                     ->get()
-                            )->get();
+                            )
+                                ->selectedId($unit->id)
+                                ->get();
                         })
                         ->get()
                 )
