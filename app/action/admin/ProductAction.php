@@ -14,8 +14,7 @@ use Throwable;
 
 class ProductAction
 {
-    public function __construct(
-    )
+    public function __construct()
     {
     }
 
@@ -24,7 +23,7 @@ class ProductAction
      */
     public function saveMainImage(array $validated): string
     {
-        $product = Product::with('ownProperties')->where('1s_id',$validated['productSId'])->first();
+        $product = Product::with('ownProperties')->where('1s_id', $validated['productSId'])->first();
         $file    = $validated['file'];
 
         $productMainImage = (new ProductMainImage($product?->toArray(), $file))
@@ -41,31 +40,28 @@ class ProductAction
         $nextId      = $req['nextUnitId'];
         $productUnit = ProductUnit::query()
             ->where([
-                'product_1s_id'=>$productId,
-                'unit_id'=>$prevId,
-                ])
+                'product_1s_id' => $productId,
+                'unit_id' => $prevId,
+            ])
             ->first();
-        if (!$productUnit) {
-            response()->popup('единица не найдена');
-        }
-
-        if ($prevId===0) {
-            $productUnit->create([
-                'produt_1s_id'=>$productId,
-                'unit_id'=>$nextId,
+        if (!$productUnit && $prevId === "0") {
+            ProductUnit::create([
+                'product_1s_id' => $productId,
+                'unit_id' => $nextId,
             ]);
             response()->popup('единица добавлена');
-
         }
-        if ($nextId===0) {
+
+        if ($nextId === "0") {
             $productUnit->delete();
             response()->popup('единица удалена');
 
         }
-        if ($prevId!==0 && $nextId!==0) {
-            $productUnit->update(['unit_id'=>$nextId]);
+        if ($prevId !== "0" && $nextId !== "0") {
+            $productUnit->update(['unit_id' => $nextId]);
             response()->popup('единица изменена');
         }
+        response()->popup('единица не найдена');
 
     }
 
@@ -101,7 +97,8 @@ class ProductAction
         }
     }
 
-    #[NoReturn] public function changeVal(IRequest $req): void
+    #[NoReturn]
+    public function changeVal(IRequest $req): void
     {
         $product = Product::find($req['product_id']);
         $newVal  = $req['morphed']['new_id'];
