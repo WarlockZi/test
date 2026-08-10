@@ -48,7 +48,7 @@ class SyncmanualController extends AdminscController
     public function actionLoad(LoadService $loadService)
     {
         try {
-//            $loadService->run();
+            $loadService->run();
             response()->withLog(new SyncSuccessLogger)->popup('Синхронизация прошла успешно');
         } catch (Throwable $exception) {
             response()->popup('Ошибка загрузки ' . $exception->getMessage());
