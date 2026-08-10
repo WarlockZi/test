@@ -9,71 +9,58 @@ use DirectoryIterator;
 
 class Storage
 {
-    protected string $syncPath;
+    protected string $storagePath;
     protected string $file;
     protected string $relativePath;
     protected array|false $files;
-    protected $dirs;
+    protected array $dirs;
 
     public function __construct()
     {
-        $this->syncPath = FS::platformSlashes(ROOT . '/storage/');
+        $this->storagePath = storage_path();
     }
 
     public static function getFile(string $file): string
     {
         $self = new static();
-        return $self->syncPath . $file;
+        return $self->storagePath . $file;
     }
 
-    public function getFiles(): false|array
+    public function getFiles(string $dir = null): false|array
     {
-        return glob("{$this->syncPath}*.*");
+        return $dir
+            ? glob("$dir*.*")
+            : glob("{$this->storagePath}*.*");
     }
 
-    public function getDirs()
+    public function getDirs(): array
     {
-        $dirs = array();
-
-        foreach (new DirectoryIterator($this->syncPath) as $file) {
+        foreach (new DirectoryIterator($this->storagePath) as $file) {
             if ($file->isDir() && !$file->isDot()) {
-                $dirs[] = $file->getFilename();
+                $this->dirs[] = $file->getFilename();
             }
         }
         return $this->dirs;
     }
 
-    public function getFileNames(): array
-    {
-        $arr = [];
-        foreach ($this->files as $file) {
-            array_push($arr, basename($file, '.xml'));
-        }
-        return $arr;
-    }
-
-    public static function getSyncPath(): array|string
-    {
-        $self = new static();
-        return $self->syncPath;
-    }
 
     public static function getFileContent(string $file): false|string
     {
         $self = new static();
-        return file_get_contents($self->syncPath . $file);
+        return file_get_contents($self->storagePath . $file);
     }
 
 
     public function save(string $path, array $files): array
     {
-        $to   = FS::platformSlashes($this->syncPath . $path . '/');
+        $to   = FS::platformSlashes($this->storagePath . $path . '/');
         $rel  = FS::platformSlashes($this->relativePath . $path . '/');
         $srcs = [];
         foreach ($files as $file) {
 
-            if ($file['size'] > 2000000)
-                exit(json_encode(['error' => "file {$file['name']} - too big size {$file['size']}"]));
+            if ($file['size'] > 2_000_000)
+                response()->json(['error' => "file {$file['name']} - too big size {$file['size']}"]);
+
             $full = $to . $file['name'];
             $rel  = $rel . $file['name'];
             move_uploaded_file($file['tmp_name'], $full);

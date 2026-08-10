@@ -14,6 +14,7 @@ class Response
     protected int $status;
     protected array $headers;
     protected string $error;
+    protected ?ILogger $logger = null;
     protected array $cookies = [];
     public static $statusTexts = [
         100 => 'Continue',
@@ -88,10 +89,18 @@ class Response
         ], $headers);
     }
 
+    private function log($content): void
+    {
+        if ($this->logger) {
+            $this->logger->write($content);
+        }
+    }
+
     #[NoReturn]
     public function json(array $data = [], int $status = 200, array $headers = []): \Symfony\Component\HttpFoundation\Response
     {
         $this->content = json_encode($data,JSON_UNESCAPED_UNICODE);
+        $this->log($this->content);
         $this->status  = $status;
         $this->headers = array_merge($this->headers, [
             'Content-Type' => 'application/json; charset=UTF-8'
@@ -103,6 +112,7 @@ class Response
     #[NoReturn]
     public function popup(string $message = '', int $status = 200, array $headers = [], $logService=null): \Symfony\Component\HttpFoundation\Response
     {
+        $this->log($message);
         $this->content = json_encode(['popup' => $message], JSON_UNESCAPED_UNICODE);
         $this->status  = $status;
         $this->headers = array_merge($this->headers, [
@@ -114,9 +124,6 @@ class Response
         }
 
         $this->send();
-    }
-    private function log(){
-
     }
 
     #[NoReturn]
@@ -172,7 +179,11 @@ class Response
         $_SESSION['error'] = $error;
         return $this;
     }
-
+    public function withLog(ILogger $logger): self
+    {
+        $this->logger = $logger;
+        return $this;
+    }
     public function cookie(string $name, string $value, int $minutes = 0, string $path = '/', string $domain = null, bool $secure = false, bool $httpOnly = true): self
     {
         $this->cookies[] = compact('name', 'value', 'minutes', 'path', 'domain', 'secure', 'httpOnly');

@@ -1,53 +1,77 @@
 @extends('layouts.admin.admin')
 
 @section('content')
-{{--    @deb--}}
     @php
         use app\view\components\Icon\Icon;
 
-        $showNoFiles = count($loadFiles)?'none':'';
         $showImportFile = !empty($loadFiles['import'])?'':'none';
         $showOfferFile = !empty($loadFiles['offer'])?'':'none';
-        $buttonDisabled = count($loadFiles)===2?'':'disabled';
+
+        $showImportDnd = empty($loadFiles['import'])?'':'none';
+        $showOfferDnd = empty($loadFiles['offer'])?'':'none';
+
+        $showNoFiles = empty($loadFiles['import']) && empty($loadFiles['offer'])?'':'none';
+
+        $buttonDisabled = empty($loadFiles['import'])||empty($loadFiles['offer'])?'disabled':'';
 
     @endphp
 
+    {{--    @deb--}}
     <div class="sync-manual" data-jsmodule="syncmanual">
 
-        <div class="sync-container files">
-            @if(empty($loadFiles['import']))
-                <fieldset>
-                    <legend>Перетащить import file</legend>
-                    <div dndfile class='add-file'
-                         data-action="/adminsc/syncmanual/uploadimport"><?= Icon::plus() ?></div>
-                </fieldset>
-            @endif
+        <div class="files-dnds">
 
-            @if(empty($loadFiles['offer']))
-                <fieldset>
-                    <legend>Перетащить offer file</legend>
-                    <div dndfile class='add-file'
-                         data-action="/adminsc/syncmanual/uploadoffer"><?= Icon::plus() ?></div>
-                </fieldset>
-            @endif
+            <fieldset id="importDnd" class="{!!$showImportDnd!!}">
+                <legend>Перетащить import file</legend>
+                <div dndfile class='add-file'
+                     data-action="/adminsc/syncmanual/uploadimport"><?= Icon::plus() ?></div>
+            </fieldset>
 
 
-            <br>
-                <button class="button {!!$buttonDisabled!!}">Загрузить обновление</button>
-            <br>
-            <br>
+            <fieldset id="offerDnd" class="{!!$showOfferDnd!!}">
+                <legend>Перетащить offer file</legend>
+                <div dndfile class='add-file'
+                     data-action="/adminsc/syncmanual/uploadoffer"><?= Icon::plus() ?></div>
+            </fieldset>
+
 
         </div>
 
         <div class="files-list">
-            <br>
-            <br>
-            <br>
 
             <div class="no-files {!!$showNoFiles!!}">нет файлов</div>
 
             <p id='offer' class="file {!!$showOfferFile!!}">offers0_1.xml</p>
             <p id='import' class="file {!!$showImportFile!!}">import0_1.xml</p>
+        </div>
+
+        <div></div>
+        <div class="buttons">
+
+            <div class="buttons-group">
+                <button id="start-sync" class="button button-rounded {!!$buttonDisabled!!}">Загрузить обновление
+                </button>
+                <button id="delete-files" class="button button-rounded ">Удалить файлы</button>
+            </div>
+
+            <div class="buttons-group">
+                <button id="load-categories" class="button button-rounded ">Загрузить категории</button>
+                <button id="load-products" class="button button-rounded ">Загрузить товары</button>
+                <button id="load-prices" class="button button-rounded ">Загрузить цены и остатки</button>
+            </div>
+        </div>
+
+        <div class="loggs">
+            <div class="buttons-group">
+                <button id="clean-sync-success-log" class="button button-rounded ">Очистить логи</button>
+            </div>
+            <div class="log-strings">
+                @if($logLines)
+                    @foreach($logLines as $text)
+                        <div class="log-string">{!!$text!!}</div>
+                    @endforeach
+                @endif
+            </div>
 
         </div>
 

@@ -5,6 +5,7 @@ namespace app\service\Fs;
 use app\service\Logger\ILogger;
 use FilesystemIterator;
 use RecursiveIteratorIterator;
+use RuntimeException;
 use Symfony\Component\Finder\Iterator\RecursiveDirectoryIterator;
 use Throwable;
 
@@ -30,6 +31,7 @@ class FS
         }
         return glob($dir);
     }
+
     public static function filesByExt(string $dir, string $ext): array
     {
         $xmlFiles = [];
@@ -82,7 +84,32 @@ class FS
         return $deleted;
     }
 
-    public static function createIfNotExist(...$args): string
+    public static function createFileIfNotExist(string $path): string
+    {
+
+        $normalizedPath = self::platformSlashes($path);
+
+        if (file_exists($normalizedPath)) {
+            return $normalizedPath;
+        }
+
+        $directory = dirname($normalizedPath);
+        if (!is_dir($directory) && !mkdir($directory, 0755, true) && !is_dir($directory)) {
+            throw new RuntimeException("Не удалось создать директорию: $directory");
+        }
+
+        if (!touch($normalizedPath)) {
+            $error = error_get_last();
+            throw new RuntimeException(
+                "Не удалось создать файл $normalizedPath: " . ($error['message'] ?? 'Неизвестная ошибка')
+            );
+        }
+
+        return $normalizedPath;
+
+    }
+
+    public static function createDirIfNotExist(...$args): string
     {
         if (!empty($args) && is_array(end($args))) {
             $options = array_pop($args) ?? [];
@@ -100,7 +127,7 @@ class FS
                 try {
                     mkdir($dir, $permissions, $recursive);
                 } catch (Throwable $exception) {
-                    response()->popup("Ошибка создания директории $dir ".$exception->getMessage());
+                    response()->popup("Ошибка создания директории $dir " . $exception->getMessage());
                 }
             }
         }

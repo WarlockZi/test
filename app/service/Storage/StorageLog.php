@@ -8,11 +8,18 @@ use app\service\Fs\FS;
 
 class StorageLog extends Storage
 {
-    protected string $syncPath;
+    protected string $storagePath;
 
     public function __construct()
     {
         parent::__construct();
-        $this->syncPath = FS::platformSlashes("$this->syncPath/logs/sync/");
+        $this->storagePath = FS::platformSlashes("$this->storagePath/logs/");
+    }
+
+    public function cleanFile(string $file){
+        $file = $this->storagePath . $file;
+        if(file_exists($file)){
+            file_put_contents($file, "");
+        }
     }
 }

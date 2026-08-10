@@ -51,18 +51,7 @@ class HelpersService
             }
         }
     }
-    //    if (DEV) {
-//        \app\service\MockUserService::mockUser();
-//    }
-//    \app\service\UrlService::generateUrls();
-//    new \app\service\XLService\XLService();
-//    \app\service\SiteMapService::generateMap();
 
-//    $cli =  new \app\service\Chat_3\Cli();
-//    $handler = new \app\service\Chat_3\ServerHandler();
-//    $client = new \app\service\Chat_3\Client();
-
-    //copy from unitables to ProductUnit
     public static function copyUnits()
     {
         $unitables = Product::all();
@@ -228,12 +217,5 @@ class HelpersService
         }
         return true;
     }
-    //    public static function makeUnitsShippable()
-//    {
-//        $unitables = ProductUnit::all();
-//        foreach ($unitables as $unitable) {
-//            $unitable->is_shippable = 1;
-//            $unitable->save();
-//        }
-//    }
+
 }

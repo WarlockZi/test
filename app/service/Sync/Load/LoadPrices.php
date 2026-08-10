@@ -84,9 +84,6 @@ class LoadPrices extends LoadService
             ]);
     }
 
-    /**
-     * @throws Exception
-     */
     protected function findProductUpdateInstore(): void
     {
         try {
@@ -95,8 +92,8 @@ class LoadPrices extends LoadService
                 ->first();
             $this->product->update(['instore' => $this->offer['instore']]);
         } catch (Throwable $exception) {
-            $this->logger->write('offer 1s id = ' . $this->offer['1s_id']);
-            throw new Exception('Load prices failed to find product ' . $exception->getMessage());
+            $message = $exception->getMessage();
+            $this->logger->write($message.' ---- prices 1s id = ' . $this->offer['1s_id']);
         }
     }
 

@@ -5,7 +5,6 @@ namespace app\service\Storage;
 
 
 use app\service\Fs\FS;
-use app\service\Logger\SyncLogger;
 
 class SyncStorage extends Storage
 {
@@ -15,36 +14,34 @@ class SyncStorage extends Storage
     public function __construct()
     {
         parent::__construct();
-        $this->syncPath     = '/storage/app/sync/';
+        $this->storagePath  = '/storage/app/sync/';
         $this->unzippedPath = 'unzipped/';
         $this->loadedPath   = 'loaded/';
     }
 
-    public static function getUnzippedFile(string $file): string
+    public static function getSyncPath(): array|string
+    {
+        $self = new static();
+        return $self->storagePath;
+    }
+    public static function getUnzippedFiles(): array{
+        $loadFiles['import']    = SyncStorage::getUnzippedFile(env('SYNC_IMPORT_FILE'));
+        $loadFiles['offer']    = SyncStorage::getUnzippedFile(env('SYNC_OFFER_FILE') );
+        return $loadFiles;
+    }
+    public static function getUnzippedFile(string $file): ?string
     {
         $self = new static();
         $file = $self::getUnzippedDir() . $file;
         if (is_readable($file)) {
             return $file;
         }
-        return '';
-    }
-
-    public static function getSyncDir(): array|string
-    {
-        $self = new static();
-        return FS::createIfNotExist($self->syncPath);
+        return null;
     }
 
     public static function getUnzippedDir(): string
     {
         $self = new static();
-        return FS::createIfNotExist($self->syncPath, $self->unzippedPath);
-    }
-
-    public static function getLoadedDir(): string
-    {
-        $self = new static();
-        return FS::createIfNotExist($self->syncPath, $self->loadedPath);
+        return FS::createDirIfNotExist($self->storagePath, $self->unzippedPath);
     }
 }

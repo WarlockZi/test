@@ -5,29 +5,11 @@
 
 .sync-manual {
   display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
 
-  .buttons-block {
-    display: flex;
-    gap: 10px;
-    justify-content: space-between;
+  .files-dnds {
 
-    .buttons-block-left {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      flex: 2;
-
-    }
-
-    .buttons-block-right {
-      display: flex;
-      justify-content: center;
-
-    }
-  }
-
-
-  .sync-container.files {
     .add-file{
       display: flex;
       align-items: center;
@@ -69,10 +51,32 @@
         flex: 1;
       }
     }
-    //@include mixin_media.dnd;
 
   }
 
+
+  .files-list{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 25px;
+
+  }
+
+.log-strings{
+  margin-top: 20px;
+}
+  .buttons{
+    display: grid;
+    gap: 30px;
+
+  }
+
+  .buttons-group{
+    display: grid;
+    gap: 10px;
+
+  }
   .button {
     @include mixin_media.colored_button();
     padding: 5px 20px;
@@ -82,39 +86,13 @@
     }
 
   }
-
-  .container {
-
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 5px;
-    padding: 15px;
-
-    span.file {
-      @include mixin_media.colored_button;
-      width: 100px;
-    }
-
-    p {
-      display: flex;
-    }
-
-    input {
-      padding: 5px;
-      border-radius: 4px;
-      width: 100%;
-      box-sizing: border-box;
-      border: 1px solid mixin_media.lighter(var.$color-main, 20%);
-
-    }
-
-    button {
-      width: 100%;
-      margin: 3px 0;
-    }
-
+  .button-rounded {
+    min-width: 100%;
+    padding: 15px 25px;
+    border-radius: 5px;
   }
+
+
 
 
 }

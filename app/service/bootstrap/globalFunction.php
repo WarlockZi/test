@@ -1,6 +1,7 @@
 <?php
 
 use app\blade\View;
+use app\service\Fs\FS;
 use app\service\Response;
 use app\service\Session;
 use JetBrains\PhpStorm\NoReturn;
@@ -26,6 +27,12 @@ if (!function_exists('session')) {
     function session(): Session
     {
         return new Session();
+    }
+}
+if (!function_exists('storage_path')) {
+    function storage_path(): string
+    {
+        return FS::platformSlashes(ROOT.'/storage/');
     }
 }
 if (!function_exists('view')) {

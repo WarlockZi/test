@@ -23,9 +23,8 @@ class SyncLogger implements ILogger
         $dir = $this->setPath();
 
         $fullPath = $dir . $this->logFileName;
-        if (!is_readable($fullPath)) {
-            touch($fullPath);
-        }
+        $fullPath = FS::createFileIfNotExist($fullPath);
+
         $this->logPath = $fullPath;
         return $this;
     }
