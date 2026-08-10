@@ -10,7 +10,7 @@
 
   .files-dnds {
 
-    .add-file{
+    .add-file {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -55,7 +55,7 @@
   }
 
 
-  .files-list{
+  .files-list {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -63,36 +63,66 @@
 
   }
 
-.log-strings{
-  margin-top: 20px;
-}
-  .buttons{
+  .log-strings {
+    margin-top: 20px;
+  }
+
+  .buttons {
     display: grid;
     gap: 30px;
 
   }
 
-  .buttons-group{
+  .buttons-group {
     display: grid;
     gap: 10px;
 
   }
+
   .button {
     @include mixin_media.colored_button();
     padding: 5px 20px;
 
-    &.disabled{
+    &.disabled {
       background-color: gray;
     }
 
   }
+
   .button-rounded {
     min-width: 100%;
     padding: 15px 25px;
     border-radius: 5px;
   }
 
+  /* Стили спиннера */
+  .btn__spinner {
+    display: none; /* Скрыт по умолчанию */
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(0, 0, 0, 0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
 
+  /* Класс активного состояния загрузки */
+  .btn--loading {
+    pointer-events: none; /* Запрещаем повторные клики */
+    opacity: 0.8;
+  }
 
+  .btn--loading .btn__text {
+    visibility: hidden; /* Скрываем текст, но сохраняем место */
+  }
+
+  .btn--loading .btn__spinner {
+    display: block;
+    position: absolute; /* Центрируем поверх скрытого текста */
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
 
 }

@@ -63,6 +63,7 @@ $(document).ready(async function () {
     if (moduleData) {
       const { default: module } = moduleData;
       new module();
+    } else {
       console.warn(`Модуль не найден: ${modulePath}`);
     }
   }

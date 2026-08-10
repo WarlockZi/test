@@ -32,6 +32,7 @@ export default class syncmanual {
     this.cleanSuccessLogButton = $(
       `${containerSelector} #clean-sync-success-log`,
     ).first();
+    this.logStrings = $(".log-strings").first();
 
     this.setDND();
     this.setEvents();
@@ -48,22 +49,41 @@ export default class syncmanual {
     this.cleanSuccessLogButton[ael]("click", this.cleanSuccessLog.bind(this));
   }
   async cleanSuccessLog() {
+    this.cleanSuccessLogButton.classList.add("btn--loading");
     const res = await post(this.cleanSuccessLogUrl);
     if (res?.logLines) {
+      this.cleanSuccessLogButton.classList.remove("btn--loading");
+      this.logStrings.innerText = "";
     }
   }
   async loadCategories() {
+    this.loadCategoriesButton.classList.add("btn--loading");
     const res = await post(this.loadCategoriesUrl);
+    if (res?.popup) {
+      this.loadCategoriesButton.classList.remove("btn--loading");
+    }
   }
   async loadProducts() {
+    this.loadProductsButton.classList.add("btn--loading");
     const res = await post(this.loadProductsUrl);
+    if (res?.popup) {
+      this.loadProductsButton.classList.remove("btn--loading");
+    }
   }
   async loadPrices() {
+    this.loadPricesButton.classList.add("btn--loading");
     const res = await post(this.loadPricesUrl);
+    if (res?.popup) {
+      this.loadPricesButton.classList.remove("btn--loading");
+    }
   }
 
-  start() {
-    const res = post(this.startUrl);
+  async start() {
+    this.startSyncButton.classList.add("btn--loading");
+    const res = await post(this.startUrl);
+    if (res?.popup) {
+      this.startSyncButton.classList.remove("btn--loading");
+    }
   }
   async deleteFiles() {
     const importFile = $("#import").first();

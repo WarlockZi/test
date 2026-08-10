@@ -16,6 +16,7 @@ export class Select {
     this.selectEl = selectEl;
     this.elements = {};
     this.currentToPick = {};
+    this._selectedOption = {};
     this.prevValue = 0;
     this._visibleOptions = [];
 
@@ -42,14 +43,13 @@ export class Select {
     );
   }
 
+  get selectedOption() {
+    return [].filter.call(this.options, (opt) => opt.selected)[0];
+  }
   getSelectedOption() {
-    const selectedOption = [].filter.call(
-      this.options,
-      (opt) => opt.selected,
-    )[0];
+    const selectedOption = this.selectedOption;
     this.selectedValue = selectedOption ? selectedOption.value : null;
   }
-
   toggleSelectedOption(value) {
     const prevOption = this.elements.optionElements.find((optEl) =>
       optEl.hasAttribute("selected"),

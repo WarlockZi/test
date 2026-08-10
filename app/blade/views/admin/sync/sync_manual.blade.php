@@ -27,13 +27,11 @@
                      data-action="/adminsc/syncmanual/uploadimport"><?= Icon::plus() ?></div>
             </fieldset>
 
-
             <fieldset id="offerDnd" class="{!!$showOfferDnd!!}">
                 <legend>Перетащить offer file</legend>
                 <div dndfile class='add-file'
                      data-action="/adminsc/syncmanual/uploadoffer"><?= Icon::plus() ?></div>
             </fieldset>
-
 
         </div>
 
@@ -49,22 +47,41 @@
         <div class="buttons">
 
             <div class="buttons-group">
-                <button id="start-sync" class="button button-rounded {!!$buttonDisabled!!}">Загрузить обновление
+
+                <button id="start-sync" class="button button-rounded {!!$buttonDisabled!!}">
+                    <span class="btn__text">Загрузить обновление</span>
+                    <span class="btn__spinner"></span>
                 </button>
+
                 <button id="delete-files" class="button button-rounded ">Удалить файлы</button>
             </div>
 
             <div class="buttons-group">
-                <button id="load-categories" class="button button-rounded ">Загрузить категории</button>
-                <button id="load-products" class="button button-rounded ">Загрузить товары</button>
-                <button id="load-prices" class="button button-rounded ">Загрузить цены и остатки</button>
+                <button id="load-categories" class="button button-rounded">
+                    <span class="btn__text">Загрузить категории</span>
+                    <span class="btn__spinner"></span>
+                </button>
+
+                <button id="load-products" class="button button-rounded">
+                    <span class="btn__text">Загрузить товары</span>
+                    <span class="btn__spinner"></span>
+                </button>
+                <button id="load-prices" class="button button-rounded">
+                    <span class="btn__text">Загрузить цены и остатки</span>
+                    <span class="btn__spinner"></span>
+                </button>
             </div>
         </div>
 
         <div class="loggs">
+
             <div class="buttons-group">
-                <button id="clean-sync-success-log" class="button button-rounded ">Очистить логи</button>
+                <button id="clean-sync-success-log" class="button button-rounded">
+                    <span class="btn__text">Очистить логи</span>
+                    <span class="btn__spinner"></span>
+                </button>
             </div>
+
             <div class="log-strings">
                 @if($logLines)
                     @foreach($logLines as $text)

@@ -3,9 +3,9 @@
 
     <select {!!$filter->name ?? ''!!} {!!$filter->searchableSelector!!}>
         {!!$filter->emptyOption ?? ''!!}
+{{--                @deb--}}
         @foreach ($filter->options as $key => $value)
             @if(key_exists($filter->filterName, $filter->toFilter))
-{{--                @deb--}}
                 @php
                     $selected = ($key == $filter->toFilter[$filter->filterName]
                 && !empty($filter->toFilter[$filter->filterName]))

@@ -18,9 +18,9 @@ export default class ProductFilterSelects {
     [].forEach.call(selects, (select) => {
       const optionsCount = select[qa]("option").length;
       if (optionsCount > 5) {
-        new SearchableSelect(select, {});
+        const sel = new SearchableSelect(select, {});
       } else {
-        new Select(select, {});
+        const sel = new Select(select, {});
       }
     });
   }

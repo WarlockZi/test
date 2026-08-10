@@ -48,7 +48,7 @@ class SyncmanualController extends AdminscController
     public function actionLoad(LoadService $loadService)
     {
         try {
-            $loadService->run();
+//            $loadService->run();
             response()->withLog(new SyncSuccessLogger)->popup('Синхронизация прошла успешно');
         } catch (Throwable $exception) {
             response()->popup('Ошибка загрузки ' . $exception->getMessage());
@@ -78,40 +78,35 @@ class SyncmanualController extends AdminscController
         $storageLogger->cleanFile('sync/success.txt');
         $logs = $storageLogger::getFileContent('sync/success.txt');
         $logLines = explode("\n", trim($logs));
-        response()->json(['logLines'=>$logLines]);
+        response()->json(['popup'=>'Логи очищены', 'logLines'=>$logLines]);
     }
     public function actionDeletefiles(SyncmanualActions $actions, SyncStorage $store): void
     {
         $actions::deleteAllFiles($store);
         $loadFiles = SyncStorage::getUnzippedFiles();
         response()->json($loadFiles);
-
     }
 
-    public function actionLoadcategories(): void
+    public function actionLoadcategories(LoadService $load): void
     {
         try {
-            $load = new LoadService();
-            $load->loadCategories();
             response()->popup('категории успешно загружены');
         } catch (Throwable $exception) {
             response()->popup($exception->getMessage());
         }
     }
-    public function actionLoadprices(): void
+    public function actionLoadprices(LoadService $load): void
     {
         try {
-            $load = new LoadService();
             $load->loadPrices();
             response()->withLog(new SyncLogger())->popup('цены и остатки успешно загружены');
         } catch (Throwable $exception) {
             response()->popup($exception->getMessage());
         }
     }
-    public function actionLoadproducts(): void
+    public function actionLoadproducts(LoadService $load): void
     {
         try {
-            $load = new LoadService();
             $load->loadProducts();
             response()->withLog(new SyncLogger())->popup('товары успешно загружены');
         } catch (Throwable $exception) {
