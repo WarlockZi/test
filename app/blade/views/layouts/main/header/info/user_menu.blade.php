@@ -8,19 +8,18 @@
 @if (!$user)
 
     <menu class="guest-menu" aria-label="login">
-        @php echo Icon::user(); @endphp
+        {!!Icon::user()!!}
         <span>Вход</span>
     </menu>
 
 @else
 
-{{--    @php xdebug_break() @endphp--}}
     <div class="user-menu">
-        <img src="@php echo $user->avatar() ?? ''; @endphp" alt="">
+        <img src="{!!$user->avatar() ?? ''!!}" alt="">
 
         <div class="credits">
-            <div class="fio">@php echo $user->fi(); @endphp</div>
-            <div class="email">@php echo $user->mail();@endphp</div>
+            <div class="fio">{!!$user->fi()!!}</div>
+            <div class="email">{!!$user->mail()!!}</div>
         </div>
 
         <div class="menu">
@@ -30,7 +29,7 @@
             @endif
 
             <a href="/auth/logout" aria-label="logout" onclick="localStorage.setItem('id', null)">
-                @php echo Icon::logout2(); @endphpВыход</a>
+                {!!Icon::logout2()!!}Выход</a>
         </div>
     </div>
 

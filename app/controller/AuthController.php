@@ -129,7 +129,24 @@ class AuthController extends AppController
 
     public function actionYandex(): void
     {
-        $this->view = 'yandex';
+//        $clientSecret = env("YANDEX_APP_KEY_DEV");
+//        $tokenResponse = file_get_contents('https://oauth.yandex.ru/token', false, stream_context_create([
+//            'http' => [
+//                'method'  => 'POST',
+//                'header'  => 'Content-Type: application/x-www-form-urlencoded',
+//                'content' => http_build_query([
+//                    'grant_type'    => 'authorization_code',
+//                    'code'          => $_GET['code'],
+//                    'client_id'     => $_GET['cid'],       // или ваш сохранённый client_id
+//                    'client_secret' => $clientSecret, // из консоли разработчика
+//                ]),
+//                'ignore_errors'   => true,
+//            ],
+//        ]));
+//
+//        $tokens = json_decode($tokenResponse, true);
+
+
         $userData   = (new YaAuthService())->getUser();
         header('Location:/');
         exit;
