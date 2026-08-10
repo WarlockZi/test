@@ -11,7 +11,7 @@
     "> 1%, not dead"
   ],
   "scripts": {
-    "vdev": "vite NODE_OPTIONS=--max-old-space-size=4096 --debug hmr",
+    "vdev": "set NODE_OPTIONS=--max-old-space-size=4096 &&  vite --debug hmr",
     "vprev": "vite preview",
     "vbuild": "vite build",
     "sync": "node --watch-path=./test/js/sync test/js/sync/index.js"

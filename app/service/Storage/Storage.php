@@ -47,7 +47,13 @@ class Storage
     public static function getFileContent(string $file): false|string
     {
         $self = new static();
-        return file_get_contents($self->storagePath . $file);
+        $path = $self->storagePath . $file;
+        if (is_file($path) && is_readable($path)) {
+            return file_get_contents($path);
+        }
+        $path = FS::createFileIfNotExist($path);
+        return file_get_contents($path);
+
     }
 
 
