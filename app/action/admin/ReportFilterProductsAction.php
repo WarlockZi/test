@@ -125,7 +125,7 @@ class ReportFilterProductsAction
                         return $item->id;
                     })
                     ->class('cell left')
-                    ->width('35px')
+                    ->width('clamp(40px, 10vw, 55px)')
                     ->get()
             )
             ->column(
@@ -135,7 +135,7 @@ class ReportFilterProductsAction
                     })
                     ->class('cell left')
                     ->headerSearch()
-                    ->width('minmax(30px, 75px)')
+                    ->width('clamp(50px, 14vw, 135px)')
                     ->get()
             )
             ->column(
@@ -149,12 +149,12 @@ class ReportFilterProductsAction
                     ->get()
             )
             ->column(
-                ColumnBuilder::build('В матрице')
+                ColumnBuilder::build('В матр')
                     ->class('cell')
                     ->callback(function ($prod) {
                         return $prod->name ? (str_ends_with($prod->name, '*') ? '*' : '') : '';
                     })
-                    ->width('77px')
+                    ->width('60px')
                     ->get()
             )
             ->column(
@@ -164,17 +164,17 @@ class ReportFilterProductsAction
                         return "<img src='{$imgPath}' loading='lazy'>";
                     }
                     )
-                    ->width('50px')
+                    ->width('120px')
                     ->class('img')
                     ->get()
             )
             ->column(
-                ColumnBuilder::build('В наличии')
+                ColumnBuilder::build('В налич')
                     ->callback(function ($prod) {
                         return $prod->instore;
                     })
                     ->class('cell')
-                    ->width('77px')
+                    ->width('60px')
                     ->get()
             )
             ->get();
