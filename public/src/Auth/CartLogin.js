@@ -133,6 +133,7 @@ export default class cartLogin {
     const client_id = env.VITE_DEV
       ? "1e3a1da273c346a8802d8bcb1a13193c"
       : "1cacd478c22b49c1a22e59ac811d0fc0";
+    const scheme = env.VITE_DEV ? "http" : "https";
 
     return new createElement()
       .tag("a")
@@ -140,7 +141,7 @@ export default class cartLogin {
         "href",
         `https://oauth.yandex.ru/authorize?` +
           `client_id=${client_id}&` +
-          `redirect_uri=http://${host}/auth/yandex&` +
+          `redirect_uri=${scheme}://${host}/auth/yandex&` +
           "response_type=code&" +
           "state=132",
       )
