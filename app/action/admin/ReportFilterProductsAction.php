@@ -122,7 +122,7 @@ class ReportFilterProductsAction
             ->column(
                 ColumnBuilder::build('#')
                     ->callback(function ($item) {
-                        return $item->art;
+                        return $item->id;
                     })
                     ->class('cell left')
                     ->width('35px')
