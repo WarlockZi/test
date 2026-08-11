@@ -7,8 +7,8 @@ namespace app\view\User;
 use app\model\Right;
 use app\model\Role;
 use app\model\User;
+use app\model\UserYandex;
 use app\view\components\Builders\Date\DateBuilder;
-use app\view\components\Builders\ItemBuilder\ItemBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilderNew;
 use app\view\components\Builders\ItemBuilder\ItemFieldBuilder;
 use app\view\components\Builders\ItemBuilder\ItemTabBuilder;
@@ -40,11 +40,6 @@ abstract class UserView
         return self::guest($userToEdit);
     }
 
-    private static function name(User $user){
-        if ($user->isEmployee()) {
-
-        }
-    }
     private static function lastName(User $userToEdit){}
     private static function surName(User $userToEdit){}
     private static function email(User $userToEdit){}
@@ -173,7 +168,7 @@ abstract class UserView
             )
             ->field(
                 ItemFieldBuilder::build('роль', $item)
-                    ->html($item->role[0]->name)
+                    ->html($item?->role)
                     ->name('роль')
                     ->get()
             )
@@ -268,14 +263,14 @@ abstract class UserView
         return RightView::getCheckList($configRights, $rights, $user);
     }
 
-    public static function getBirhtdate(User $user): string
+    public static function getBirhtdate(User|UserYandex $user): string
     {
         return DateBuilder::build($user->birthDate)
             ->field('birthDate')
             ->get();
     }
 
-    public static function getSex(User $item): string
+    public static function getSex(User|UserYandex $item): string
     {
         $options = ArrayOptionsBuilder::build([
             ['id' => 'm', 'name' => 'М'],
@@ -329,8 +324,7 @@ abstract class UserView
             ->model('user')
             ->column(
                 ColumnBuilder::build('id')
-                    ->name('ID')
-                    ->get())
+                                 ->get())
             ->column(
                 ColumnBuilder::build('surName')
                     ->name('Фамилия')

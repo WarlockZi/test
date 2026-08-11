@@ -6,15 +6,13 @@ namespace app\model;
 use app\service\AuthService\IUser;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UserYandex extends Model implements IUser
 {
     use softDeletes;
-
     public $table = 'user_yandex';
-
-
     public $timestamps = true;
     protected $fillable = [
         'ya_id',
@@ -38,12 +36,11 @@ class UserYandex extends Model implements IUser
         'deleted_at',
     ];
 
-    public function role(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    public function role(): BelongsToMany
     {
         return $this->belongsToMany(Role::class)
             ->using(RoleUserYandex::class)
             ->withTimestamps();
-
     }
 
     protected function rights(): Attribute

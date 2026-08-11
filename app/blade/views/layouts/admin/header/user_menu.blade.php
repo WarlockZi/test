@@ -1,6 +1,6 @@
 @php
     use app\service\AuthService\Auth;
-use app\view\components\Icon\Icon;
+    use app\view\components\Icon\Icon;
 
     $user = Auth::getUser();
 @endphp
@@ -23,10 +23,9 @@ use app\view\components\Icon\Icon;
 
         <div class="menu">
             <a href="/auth/profile">Изменить свой профиль</a>
-            @php($user->isEmployee() || $user->isAdmin())
 
-            <a class="list__item" href="/adminsc">Admin</a>
-
+            @if($user->isEmployee() || $user->isAdmin())
+                <a class="list__item" href="/adminsc">Admin</a>
             @endif
 
             <a href="/auth/logout" aria-label="logout" onclick="localStorage.setItem('id', null)">

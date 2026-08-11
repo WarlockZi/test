@@ -80,11 +80,11 @@ class ItemBuilderNew
         return $this;
     }
 
-    public function sid(Product $product): self
-    {
-        $this->sid = "data-sid='{$product['1s_id']}'";
-        return $this;
-    }
+//    public function sid(Product $product): self
+//    {
+//        $this->sid = "data-sid='{$product['1s_id']}'";
+//        return $this;
+//    }
 
     public function softDel(): self
     {
