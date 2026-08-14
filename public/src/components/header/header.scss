@@ -98,10 +98,11 @@
 
   .info {
     display: flex;
+    flex: 1 0 auto;
     gap: 10px;
+    padding-block: 10px;
     max-width: 1310px;
     width: 100%;
-    flex: 1 0 auto;
     justify-content: space-between;
     align-items: center;
     transition: max-height 300ms ease, opacity 500ms;

@@ -1,3 +1,6 @@
+import "./auth.scss";
+import "./profile.scss";
+
 import "../components/header/Autocomplete/autocomplete";
 
 import "../components/showPassword/showPassword";
@@ -5,10 +8,7 @@ import "../components/cookie/cookie";
 import "./changepassword";
 
 import "./register";
-import "./profile";
-import "./return_pass";
 import "./edit";
-import "./auth.scss";
 
 import showPassword from "../components/showPassword/showPassword";
 import { $ } from "../common";

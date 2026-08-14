@@ -2,6 +2,7 @@
 
 namespace app\controller;
 
+use app\action\AuthActions;
 use app\formRequest\ChangePasswordRequest;
 use app\formRequest\LoginRequest;
 use app\formRequest\RegisterRequest;
@@ -12,18 +13,22 @@ use app\service\AuthService\Auth;
 use app\service\Mail\PHPMailService;
 use app\service\PasswordGenerator\PasswordGeneratorService;
 use app\service\Router\IRequest;
-use app\service\YandexAuth\YaAuthService;
 use app\view\User\UserView;
 use Exception;
 use Illuminate\Validation\ValidationException;
 use JetBrains\PhpStorm\NoReturn;
+use Psr\Log\NullLogger;
 use Throwable;
+use Tigusigalpa\YandexID\Exceptions\ApiException;
+use Tigusigalpa\YandexID\Exceptions\InvalidRequestException;
+use Tigusigalpa\YandexID\YandexIdClient;
 
 class AuthController extends AppController
 {
     public function __construct(
-        protected PHPMailService           $mailer,
-        protected UserRepository           $userRepository,
+        protected AuthActions $actions,
+        protected PHPMailService $mailer,
+        protected UserRepository $userRepository,
     )
     {
         parent::__construct();
@@ -81,7 +86,6 @@ class AuthController extends AppController
             ]);
         }
 
-
         $newPassword = PasswordGeneratorService::generate();
         $this->userRepository->changePassword($user, $newPassword);
 
@@ -127,30 +131,51 @@ class AuthController extends AppController
         }
     }
 
+    /**
+     * @throws ApiException
+     * @throws InvalidRequestException
+     */
     public function actionYandex(): void
     {
-//        $clientSecret = env("YANDEX_APP_KEY_DEV");
-//        $tokenResponse = file_get_contents('https://oauth.yandex.ru/token', false, stream_context_create([
-//            'http' => [
-//                'method'  => 'POST',
-//                'header'  => 'Content-Type: application/x-www-form-urlencoded',
-//                'content' => http_build_query([
-//                    'grant_type'    => 'authorization_code',
-//                    'code'          => $_GET['code'],
-//                    'client_id'     => $_GET['cid'],       // или ваш сохранённый client_id
-//                    'client_secret' => $clientSecret, // из консоли разработчика
-//                ]),
-//                'ignore_errors'   => true,
-//            ],
-//        ]));
-//
-//        $tokens = json_decode($tokenResponse, true);
+        $clientId     = env('YANDEX_CLIENTID_DEV');
+        $clientSecret = env('YANDEX_CLIENT_SECRET_DEV');
+        $redirectUri  = env('YANDEX_REDIRECT_URI_DEV');
+        if (!isset($_GET['code'])) {
+            $client = new YandexIdClient(
+                clientId: $clientId,
+                clientSecret: $clientSecret,
+                redirectUri: $redirectUri,
+                scope: 'login:email login:info',
+                forceConfirm: false,
+                authBase: 'https://oauth.yandex.ru',
+                userInfoEndpoint: 'https://login.yandex.ru/info',
+                userInfoAuth: 'OAuth',
+                http: null, // Используем Guzzle по умолчанию
+                logger: new NullLogger() // или ваш PSR-3 логгер
+            );
+
+            $authUrl = $client->authUrl($_SESSION['phpSession'] ?? 'random_state_123');
+            header('Location: ' . $authUrl);
+            exit;
+        }
+
+        $code = $this->actions->checkYandexResponseState();
+
+        $yandexProfile = $this->actions->exchangeCode($clientId, $clientSecret,$code);
+        $user = (new UserRepository)->getByEmail($yandexProfile['default_email'], ['*'], ['role'] );
 
 
-        $userData   = (new YaAuthService())->getUser();
-        header('Location:/');
-        exit;
+        Auth::setAuth($user);
+        response()->redirect('/');
+
+// 🔄 Обновление токена
+//        $newToken = $client->refreshToken($token->refreshToken);
+
+// 🗑️ Отзыв токена
+//        $success = $client->revokeToken($token->accessToken);
+//        echo "Token revoked: " . ($success ? 'Yes' : 'No') . "\n";
     }
+
 
     #[NoReturn]
     public function actionProfile(): void

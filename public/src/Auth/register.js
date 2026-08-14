@@ -2,38 +2,12 @@ import { $, post, trimStr, validate } from "../common";
 
 let registerForm = $("[data-auth='register']")[0];
 if (registerForm) {
-  // debugger
   $(registerForm).on("click", sendData);
 }
 
 function sendData({ target }) {
-  // if (isValid(email, password))
   parseRegisterResponse(email, password);
 }
-
-// function renderError(error) {
-//   let msg = $('.message')[0];
-//   msg.innerText = '';
-//   msg.innerText = msg.innerText + error;
-//   $(msg).removeClass('success');
-//   $(msg).addClass('error');
-// }
-
-// function isValid() {
-//    const email = trimStr($('input[type = email]')[0].value);
-//    const password = trimStr($('input[name = password]')[0].value);
-//    const error = validate.email(email);
-//    if (error) {
-//       renderError(error);
-//       return false
-//    }
-//    const error = validate.password(password);
-//    if (error) {
-//       renderError(error);
-//       return false
-//    }
-//    return true
-// }
 
 async function parseRegisterResponse(email, password) {
   const msg = $(".message")[0];

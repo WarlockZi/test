@@ -3,13 +3,13 @@ import FieldBuilder from "../components/Modal/builders/FieldBuilder.js";
 import {
   createElement,
   emailValidator,
+  getPhpSession,
   passwordValidator,
   post,
   sanitizeInput,
 } from "../common.js";
 
 import { qs } from "@src/constants.js";
-import { meta } from "@eslint/js";
 
 export default class cartLogin {
   constructor() {
@@ -133,7 +133,9 @@ export default class cartLogin {
     const client_id = env.VITE_DEV
       ? "1e3a1da273c346a8802d8bcb1a13193c"
       : "1cacd478c22b49c1a22e59ac811d0fc0";
-    const scheme = env.VITE_DEV ? "http" : "https";
+    const scheme = env.VITE_DEV ? "https" : "https";
+    const state = crypto.randomUUID();
+    document.cookie = `yandex_oauth_state=${state}; Secure; SameSite=Lax; Path=/;Max-Age=1000`;
 
     return new createElement()
       .tag("a")
@@ -143,7 +145,7 @@ export default class cartLogin {
           `client_id=${client_id}&` +
           `redirect_uri=${scheme}://${host}/auth/yandex&` +
           "response_type=code&" +
-          "state=132",
+          `state=${state}`,
       )
       .attr("class", "yandex")
       .attr("title", "Авторизация Яндекс")

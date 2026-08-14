@@ -23,11 +23,20 @@ class UserRepository
     }
 
 
-    public function getByEmail(string $email): ?User
+    public function getByEmail(string $email, array $select = [], array $withRelations = []): ?User
     {
-        return User::where('email', $email)
-            ->select('id', 'password', 'email')
-            ->first();
+        $query = User::query()->where('email', $email);
+
+        if (!empty($select)) {
+            $query->select(...$select);
+        }
+        if (!empty($withRelations)) {
+            foreach ($withRelations as $relation) {
+                $query->with($relation);
+            }
+        }
+
+        return $query->first();
     }
 
     public function changeRole(array $req): void
@@ -39,7 +48,7 @@ class UserRepository
             'role_id' => $roleId,
         ];
         RoleUser::query()
-            ->updateOrCreate(['user_id' => $userId,],$userRole);
+            ->updateOrCreate(['user_id' => $userId,], $userRole);
     }
 
     public function createUser(array $req): Model

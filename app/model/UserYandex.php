@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class UserYandex extends Model implements IUser
 {
     use softDeletes;
+
     public $table = 'user_yandex';
     public $timestamps = true;
     protected $fillable = [
@@ -45,7 +46,13 @@ class UserYandex extends Model implements IUser
 
     protected function rights(): Attribute
     {
-        return Attribute::get(fn(string $rights) => explode(',', $rights));
+
+        return Attribute::get(function (?string $rights) {
+            if (is_string($rights)) {
+                return explode(',', $rights);
+            }
+            return [];
+        });
     }
 
     public function avatar(): string
@@ -93,11 +100,11 @@ class UserYandex extends Model implements IUser
 
     public function fi(): string
     {
-        return $this->real_name;
+        return $this->real_name??'';
     }
 
     public function mail(): string
     {
-        return $this->default_email;
+        return $this->default_email??'';
     }
 }

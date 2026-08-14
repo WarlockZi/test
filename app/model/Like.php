@@ -13,7 +13,7 @@ class Like extends Pivot
     protected $table = 'likes';
 
     protected $fillable = [
-        'loc_storage_cart_id',
+        'vitex_guest_id',
         'user_id',
         'product_id',
     ];

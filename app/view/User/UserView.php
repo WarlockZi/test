@@ -18,6 +18,7 @@ use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\TableBuilder\Table;
 use app\view\Right\RightView;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Socialite\Socialite;
 
 
 abstract class UserView

@@ -14,7 +14,8 @@
 @else
 
     <div class="user-menu">
-        <img src="{!!$user->avatar() ?? ''!!}" alt="">
+{{--        @deb--}}
+        <img src="{!!$user->avatar() ?? ''!!}" alt="user avatar">
 
         <div class="credits">
             <div class="fio">{!!$user->fi()!!}</div>

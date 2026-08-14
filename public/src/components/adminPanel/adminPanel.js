@@ -1,9 +1,9 @@
 import { ael, qs } from "@src/constants.js";
-import { post } from "../../common.js";
+import { $, post } from "../../common.js";
 
 export default class adminPanel {
   constructor() {
-    this.panel = document[qs](".admin-panel");
+    this.panel = $(".admin-panel").first();
     if (!this.panel) return;
     this.panel[ael]("click", this.handleClick.bind(this));
   }

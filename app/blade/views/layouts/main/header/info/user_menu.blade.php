@@ -15,6 +15,7 @@
 @else
 
     <div class="user-menu">
+
         <img src="{!!$user->avatar() ?? ''!!}" alt="">
 
         <div class="credits">

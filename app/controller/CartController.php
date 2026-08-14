@@ -43,7 +43,7 @@ class CartController extends AppController
     #[NoReturn] public function actionUpdateOrCreateCustom(CartRequest $request): void
     {
         try {
-            $req = $request->safe()->only(['count', 'unit_id', 'product_1s_id','loc_storage_cart_id']);
+            $req = $request->safe()->only(['count', 'unit_id', 'product_1s_id','vitex_guest_id']);
             $this->repository->updateOrCreate($req);
             response()->json(['ok' => true, 'popup' => 'Заказ изменен']);
         } catch (ValidationException $validator) {

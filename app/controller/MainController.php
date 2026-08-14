@@ -9,6 +9,8 @@ use app\repository\CategoryRepository;
 use app\repository\HeroCategroyRepository;
 use app\repository\PromotionRepository;
 use app\service\Router\IRequest;
+use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Str;
 use JetBrains\PhpStorm\NoReturn;
 
 class MainController extends AppController

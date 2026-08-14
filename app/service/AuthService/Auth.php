@@ -17,7 +17,6 @@ class Auth
 
     public static function validatePphSession(array $req): bool
     {
-
         if (isConsole())  error_log('команда пришла из консоли');
         if (isConsole())  return true;
 
@@ -25,16 +24,12 @@ class Auth
             && session_id() === $req['phpSession'];
     }
 
-    public static function setCartId(string $cartId): void
-    {
-        self::$cartId = $cartId;
-    }
 
     public static function getCartFieldValue(): array
     {
         $user  = Auth::getUser();
-        $field = $user ? 'user_id' : 'loc_storage_cart_id';
-        $value = $user ? $user->id : $_COOKIE['loc_storage_cart_id'] ?? NULL;
+        $field = $user ? 'user_id' : 'vitex_guest_id';
+        $value = $user ? $user->id : $_COOKIE['vitex_guest_id'] ?? NULL;
         return [$field, $value];
     }
 
@@ -43,16 +38,14 @@ class Auth
         return self::$user ?? self::auth();
     }
 
-
-
     private static function auth(): IUser|null
     {
         if (!empty($_SESSION['id'])) {
             self::$user = User::with('role')->find($_SESSION['id']);
             return self::$user;
         }
-        if (isset($_SESSION['yandex_id']) && $_SESSION['yandex_id']) {
-            self::$user = UserYandex::with('role')->find($_SESSION['yandex_id']);
+        if (isset($_SESSION['vitex_yandex_id']) && $_SESSION['vitex_yandex_id']) {
+            self::$user = UserYandex::with('role')->find($_SESSION['vitex_yandex_id']);
             return self::$user;
         }
         return null;
@@ -71,7 +64,7 @@ class Auth
         if ($user instanceof User) {
             $_SESSION['id'] = $user->getId();
         } elseif ($user instanceof UserYandex) {
-            $_SESSION['yandex_id'] = $user->getId();
+            $_SESSION['vitex_yandex_id'] = $user->getId();
         }
     }
 
@@ -93,9 +86,6 @@ class Auth
 
         if ($user instanceof User) {
             define('SU', $user->mail() === env('EMAIL_SU'));
-            if ($user['confirm'] == 0) {
-//                $route->setError('Чтобы получить доступ, зайдите на рабочую почту, найдите письмо "Регистрация VITEX" и перейдите по ссылке в письме.');
-            }
         }
     }
 

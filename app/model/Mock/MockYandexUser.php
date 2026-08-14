@@ -10,6 +10,7 @@ class MockYandexUser
         public UserYandex $user = new UserYandex()
     )
     {
+
         $this->user->id                = 2;
         $this->user->ya_id             = '61362802';
         $this->user->login             = 'vvoronik';

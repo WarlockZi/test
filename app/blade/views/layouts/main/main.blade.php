@@ -56,14 +56,14 @@
             <div class="admin-gap"></div>
         @endif
 
-{{--@deb--}}
+        {{--@deb--}}
         @yield('error')
 
         @yield('content')
 
 
     </main>
-    <!--    <div class="chat-icon" title="Чат">-->@php //=Icon::chat2();@endphp<!--</div>-->
+    <div class="chat-icon" title="Чат">{!!Icon::chat2()!!}</div>
     <form class="chat-form" id="chatForm">
         <div class="modal-close">@php echo Icon::close() @endphp</div>
         <div class="messages"></div>
@@ -72,7 +72,7 @@
 
 
 </div>
-{{--@php xdebug_break(); @endphp--}}
+
 @include('layouts.main.footer.footer')
 
 

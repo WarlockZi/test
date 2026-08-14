@@ -14,7 +14,8 @@ class YaAuthService
     public function __construct()
     {
         if (DEV) {
-            $this->setMockYandexUser();
+            $this->setYandexUser();
+//            $this->setMockYandexUser();
         } else {
             $this->setYandexUser();
         }
@@ -27,13 +28,16 @@ class YaAuthService
 
     private function setYandexUser(): void
     {
+        $clientId=env('YANDEX_CLIENTID_DEV');
+        $clientSecret=env('YANDEX_CLIENT_SECRET_DEV');
         if (!empty($_GET['code'])) {
-            // Отправляем код для получения токена (POST-запрос).
             $params = array(
                 'grant_type' => 'authorization_code',
                 'code' => $_GET['code'],
-                'client_id' => '1cacd478c22b49c1a22e59ac811d0fc0',
-                'client_secret' => '9f08fc34758a4fa3bbc4023e574853ae',
+                'client_id' => $_GET['cid'],
+//                'client_id' => $clientId,
+                'client_secret' => $clientSecret,
+                'redirect_uri' => 'https://vi-prod/auth/yandex',
             );
 
             $ch = curl_init('https://oauth.yandex.ru/token');
@@ -53,7 +57,7 @@ class YaAuthService
                 curl_setopt($ch, CURLOPT_POSTFIELDS, array('format' => 'json'));
                 curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: OAuth ' . $data['access_token']));
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
                 curl_setopt($ch, CURLOPT_HEADER, false);
                 $info = curl_exec($ch);
                 curl_close($ch);
@@ -82,13 +86,13 @@ class YaAuthService
                 'last_name' => $this->user['last_name'] ?? null,
                 'sex' => $this->user['sex'] ?? null,
                 'default_email' => $this->user['default_email'] ?? null,
-                'emails' => implode(',', $this->user['emails']) ?? null,
-                'birthday' => $this->user['birthday'],
-                'default_avatar_id' => $this->user['default_avatar_id'],
-                'is_avatar_empty' => $this->user['is_avatar_empty'],
-                'default_phone' => $this->user['default_phone'],
-                'psuid' => $this->user['psuid'],
-                'rights' => implode(',', []),
+//                'emails' => implode(',', $this->user['emails']) ?? null,
+//                'birthday' => $this->user['birthday'],
+//                'default_avatar_id' => $this->user['default_avatar_id'],
+//                'is_avatar_empty' => $this->user['is_avatar_empty'],
+//                'default_phone' => $this->user['default_phone'],
+//                'psuid' => $this->user['psuid'],
+//                'rights' => implode(',', []),
             ]
         );
 

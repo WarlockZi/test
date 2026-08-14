@@ -24,7 +24,7 @@ export default class Category {
   }
 
   async saveMainImage(files, target) {
-    const authed = getCookie("loc_storage_cart_id");
+    const authed = localStorage.getItem("vitex_guest_id");
     if (!authed) return false;
 
     const obj = { productSId: target.closest("[data-1sid]").dataset["1sid"] };

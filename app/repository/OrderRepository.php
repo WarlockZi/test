@@ -156,7 +156,7 @@ class OrderRepository
             ]);
     }
 
-    public static function firstOrCreateOrder(string $loc_storage_cart_id)
+    public static function firstOrCreateOrder(string $vitex_guest_id)
     {
         try {
             list($field, $value) = Auth::getCartFieldValue();

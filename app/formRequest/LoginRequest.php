@@ -38,12 +38,12 @@ class LoginRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'email.required' => 'The email field is required.',
-            'email.email' => 'The email must be a valid email address.',
+            'email.required' => 'Не заполнен email',
+            'email.email' => 'email заполнен не правильно',
 
-            'password.required' => 'The password field is required.',
-            'password.string' => 'The password must be a string.',
-            'password.min' => 'The password must be at least 6 characters.',
+            'password.required' => 'Не заполнен пароль',
+            'password.string' => 'Пароль должен быть строкой',
+            'password.min' => 'Пароль содержал мало символов',
         ];
     }
     public function authorize(): bool

@@ -19,7 +19,7 @@ class CartRequest extends FormRequest1
             'count' => 'required|string',
             'unit_id' => 'required|string',
             'product_1s_id' => 'required|string',
-            'loc_storage_cart_id' => 'string',
+            'vitex_guest_id' => 'string',
         ];
     }
 

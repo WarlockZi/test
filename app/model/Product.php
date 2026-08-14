@@ -189,7 +189,7 @@ class Product extends Model
         }
 
         return $this
-            ->hasMany(Order::class, 'loc_storage_cart_id', Auth::getUser());
+            ->hasMany(Order::class, 'vitex_guest_id', Auth::getUser());
     }
 
     public function ownProperties(): HasOne

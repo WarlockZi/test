@@ -14,7 +14,7 @@ class Order extends Model
 
     protected $fillable = [
         'user_id',
-        'loc_storage_cart_id',
+        'vitex_guest_id',
         'ip',
         'submitted',
     ];

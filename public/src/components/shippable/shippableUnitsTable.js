@@ -121,7 +121,7 @@ export default class shippableTable {
       count: row[qs]("input").value,
       product_1s_id: row.closest("[data-product_1s_id]").dataset.product_1s_id,
       unit_id: row.dataset.unit_id,
-      loc_storage_cart_id: localStorage.getItem("loc_storage_cart_id"),
+      loc_storage_cart_id: localStorage.getItem("vitex_guest_id"),
     };
   }
 }

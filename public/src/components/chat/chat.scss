@@ -62,20 +62,19 @@
     border-style: solid;
 
     &:focus-visible {
-      //border-style: solid;
-      //border-color: var.$color-main.Blade.php;
       outline-color: blue;
     }
   }
 }
 
 .chat-icon {
+  display: none;
   svg {
     position: fixed;
-    bottom: 90px;
-    right: 27px;
-    width: 40px;
-    height: 40px;
+    bottom: 197px;
+    right: 30px;
+    width: 67px;
+    height: 67px;
     color: var.$color-main;
     background-repeat: no-repeat;
     background-position: center;

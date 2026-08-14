@@ -12,7 +12,7 @@ class Compare extends Pivot
     protected $table = 'compares';
 
     protected $fillable = [
-        'loc_storage_cart_id',
+        'vitex_guest_id',
         'user_id',
         'product_id',
     ];

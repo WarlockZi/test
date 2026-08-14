@@ -32,7 +32,9 @@
     "staudenmeir/laravel-adjacency-list": "^1.0",
     "league/flysystem": "^3.30",
     "ext-zip": "*",
-    "ext-simplexml": "*"
+    "ext-simplexml": "*",
+    "tigusigalpa/yandex-id-oauth-php": "^1.0",
+    "ramsey/uuid": "^4.9"
   },
   "config": {
     "platform-check": false
