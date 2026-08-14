@@ -29,7 +29,6 @@ class App
 
         $cache = APP->get(ICache::class);
         $cache::enabled(env('CACHE'));
-
     }
 
     public function handleRequest(): void

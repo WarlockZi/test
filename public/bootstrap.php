@@ -20,7 +20,7 @@ require ROOT . '/app/service/bootstrap/const.php';
 require ROOT . '/app/service/bootstrap/profiler.php';
 require ROOT . '/app/service/bootstrap/php.php';
 require ROOT . '/app/service/bootstrap/errorHandler.php';
-require ROOT . '/app/service/bootstrap/cartCookie.php';
+//require ROOT . '/app/service/bootstrap/cartCookie.php';
 
 function isConsole(): bool
 {

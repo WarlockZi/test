@@ -164,7 +164,6 @@ class AuthController extends AppController
         $yandexProfile = $this->actions->exchangeCode($clientId, $clientSecret,$code);
         $user = (new UserRepository)->getByEmail($yandexProfile['default_email'], ['*'], ['role'] );
 
-
         Auth::setAuth($user);
         response()->redirect('/');
 
