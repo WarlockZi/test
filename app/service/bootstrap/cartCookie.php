@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Str;
 
-const GUEST_COOKIE_NAME = 'vitex_guest_id';
-const GUEST_COOKIE_TTL  = 43200; // 30 дней в минутах → для setcookie() нужны СЕКУНДЫ!
+define ('GUEST_COOKIE_NAME', 'vitex_guest_id');
+define ('GUEST_COOKIE_TTL', 43200); // 30 дней в минутах → для setcookie() нужны СЕКУНДЫ!
 
 if (!isset($_COOKIE[GUEST_COOKIE_NAME])) {
     $guestId = Str::uuid()->toString();
