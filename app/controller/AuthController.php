@@ -92,9 +92,7 @@ class AuthController extends AppController
 
     }
 
-    /**
-     * @throws ValidationException
-     */
+
     public function actionRegister(RegisterRequest $request): void
     {
         $request = $request->safe()->only('email', 'password', 'phone');
@@ -115,10 +113,7 @@ class AuthController extends AppController
         }
     }
 
-    /**
-     * @throws ApiException
-     * @throws InvalidRequestException
-     */
+
     public function actionYandex(): void
     {
         [$clientId, $clientSecret, $redirectUri] = $this->actions->getYandexOptions();

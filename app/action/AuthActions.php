@@ -5,8 +5,6 @@ namespace app\action;
 use app\model\User;
 use app\service\PasswordGenerator\PasswordGeneratorService;
 use Psr\Log\NullLogger;
-use Tigusigalpa\YandexID\Exceptions\ApiException;
-use Tigusigalpa\YandexID\Exceptions\InvalidRequestException;
 use Tigusigalpa\YandexID\YandexIdClient;
 
 class AuthActions
@@ -39,10 +37,6 @@ class AuthActions
         }
     }
 
-    /**
-     * @throws ApiException
-     * @throws InvalidRequestException
-     */
     public function exchangeCode(string $clientId, string $clientSecret, string $code): array
     {
         $client = new YandexIdClient($clientId, $clientSecret);
