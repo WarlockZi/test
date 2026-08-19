@@ -5,15 +5,11 @@ namespace app\formRequest;
 
 
 use app\formRequest\baseFormRequests\FormRequest2;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use JetBrains\PhpStorm\NoReturn;
 
 
 class LoginRequest extends FormRequest2
 {
     public function __construct(
-        protected $allowedFields = ['email', 'password', 'phpSession']
     )
     {
         parent::__construct();
@@ -24,15 +20,6 @@ class LoginRequest extends FormRequest2
         return [
             'email' => 'required|email',
             'password' => 'required|string|min:6',
-        ];
-    }
-
-    public function all($keys = null): array
-    {
-        return [
-            'email' => $this->json('email'),
-            'password' => $this->json('password'),
-            'phpSession'=>$this->json('phpSession'),
         ];
     }
 
@@ -49,19 +36,9 @@ class LoginRequest extends FormRequest2
     }
     public function authorize(): bool
     {
-        return isset($this->phpSession)
-            && $this->phpSession === session_id();
-    }
-
-    #[NoReturn] protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(
-            response()->json([
-                'success' => false,
-                'message' => 'Validation errors',
-                'errors' => $validator->errors()
-            ], 422)
-        );
+        $sess = $this->all()['phpSession'];
+        return $sess
+            && $sess === session_id();
     }
 
 }
