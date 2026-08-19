@@ -146,7 +146,7 @@ class SyncActions
         $day     = date('d');
         $month   = date('m');
         $dateDir = "{$month}_{$day}";
-        return FS::createDirIfNotExist($archiveDir, $dateDir);
+        return FS::ensureDir($archiveDir, $dateDir);
     }
 
     /**

@@ -16,7 +16,7 @@
 
     @endphp
 
-    {{--    @deb--}}
+{{--        @deb--}}
     <div class="sync-manual" data-jsmodule="syncmanual">
 
         <div class="files-dnds">
@@ -39,8 +39,12 @@
 
             <div class="no-files {!!$showNoFiles!!}">нет файлов</div>
 
-            <p id='offer' class="file {!!$showOfferFile!!}">offers0_1.xml</p>
-            <p id='import' class="file {!!$showImportFile!!}">import0_1.xml</p>
+            <p id='offer' class="file {!!$showOfferFile!!}">offers0_1.xml
+            </p>
+                <sub>изменен: {!!$loadFiles['offer']['date']??''!!}</sub>
+            <p id='import' class="file {!!$showImportFile!!}">import0_1.xml
+            </p>
+                <sub>изменен: {!!$loadFiles['import']['date']??''!!}</sub>
         </div>
 
         <div></div>

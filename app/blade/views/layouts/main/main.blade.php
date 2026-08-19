@@ -1,5 +1,5 @@
 @php
-    use app\service\AuthService\Auth;
+    use app\service\AuthService\AuthService;
     use app\service\Vite\Vite;
     use app\view\components\Icon\Icon;
 @endphp
@@ -23,6 +23,8 @@
         $link = DEV ? PIC_SERVICE."logo-square-dev.svg" : PIC_SERVICE."logo-square.svg";
     @endphp
     <link rel='icon' href='{{$link}}' type='image/svg+xml'>
+
+    <link rel="prefetch" href="/main/forms" as="fetch" crossorigin>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,7 +54,7 @@
 <div class="user-content-wrap">
 
     <main class="user-content">
-        @if (Auth::userIsAdmin())
+        @if (AuthService::userIsAdmin())
             <div class="admin-gap"></div>
         @endif
 

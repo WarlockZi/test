@@ -2,9 +2,9 @@
 
 namespace app\formRequest;
 
-use app\formRequest\baseFormRequests\FormRequest;
+use app\formRequest\baseFormRequests\FormRequest2;
 
-class ChangePasswordRequest extends FormRequest
+class ChangePasswordRequest extends FormRequest2
 {
     public function __construct( )
     {

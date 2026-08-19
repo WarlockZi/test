@@ -4,5 +4,5 @@
             {!!$_SESSION['error']??''!!}
         </div>
     </div>
-    {{ $_SESSION['error']=''}}
+    {{$_SESSION['error']=''}}
 @endif

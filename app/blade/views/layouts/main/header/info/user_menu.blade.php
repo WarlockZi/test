@@ -1,7 +1,7 @@
 @php
-    use app\service\AuthService\Auth;
+    use app\service\AuthService\AuthService;
     use app\view\components\Icon\Icon;
-    $user = Auth::getUser();
+    $user = AuthService::getUser();
 
 @endphp
 

@@ -109,7 +109,7 @@ class FS
 
     }
 
-    public static function createDirIfNotExist(...$args): string
+    public static function ensureDir(...$args): string
     {
         if (!empty($args) && is_array(end($args))) {
             $options = array_pop($args) ?? [];

@@ -1,5 +1,5 @@
 @php
-    use app\service\AuthService\Auth;use app\view\components\Icon\Icon;
+    use app\service\AuthService\AuthService;use app\view\components\Icon\Icon;
 
 @endphp
 @foreach ($order['products'] as $i => $product)
@@ -14,8 +14,9 @@
 
         <div class="product-name cell">
 
-            @if (Auth::getUser())
-                <a href="/adminsc/product/edit/<?= $product['id']; ?>" class="edit card-panel-item">{!!Icon::edit()!!}</a>
+            @if (AuthService::getUser())
+                <a href="/adminsc/product/edit/<?= $product['id']; ?>"
+                   class="edit card-panel-item">{!!Icon::edit()!!}</a>
             @endif
             <a href="/product/<?= $product['slug']; ?>" class="name"><?= $product['name']; ?></a>
         </div>
@@ -24,9 +25,9 @@
             @if(!$product)
                 <div>продукт не определен</div>
             @else
-{{--@deb--}}
+                {{--@deb--}}
                 @include('product.card.shippableUnits', compact('product'))
-{{--                @include('cart.cartShippableUnits', compact('product'))--}}
+                {{--                @include('cart.cartShippableUnits', compact('product'))--}}
             @endif
         </div>
 
@@ -44,7 +45,7 @@
 </div>
 
 <div class="buttons">
-    @if (!Auth::getUser())
+    @if (!AuthService::getUser())
         <div class="button" id="cartLogin"
              title="Чтобы оформить заказ Вам &#10;необходимо зарегистрироваться &#10;или войти под своей учеткой">
             Войти

@@ -21,7 +21,7 @@
 
                         <div class="name">Прибыль</div>
                     </div>
-                    <div class="icon"><?= Icon::income() ?></div>
+                    <div class="icon">{!!Icon::income()!!}</div>
                 </div>
 
                 <div class="row">
@@ -37,7 +37,7 @@
                         <div class="digit">245</div>
                         <div class="name">Отгружено</div>
                     </div>
-                    <div class="icon"><?= Icon::shipped() ?></div>
+                    <div class="icon">{!!Icon::shipped()!!}</div>
                 </div>
 
                 <div class="row">
@@ -54,7 +54,7 @@
                         <div class="digit">4</div>
                         <div class="name">Новых клиентов</div>
                     </div>
-                    <div class="icon"><?= Icon::cart() ?></div>
+                    <div class="icon">{!!Icon::cart()!!}</div>
                 </div>
 
                 <div class="row">
@@ -70,7 +70,7 @@
                         <div class="digit">78</div>
                         <div class="name">Коэффициент</div>
                     </div>
-                    <div class="icon"><?= Icon::coefficient() ?></div>
+                    <div class="icon">{!!Icon::coefficient()!!}</div>
                 </div>
 
                 <div class="row">
@@ -87,12 +87,12 @@
             <div class="block xl-1">
 
                 <ul class="user-actions">
-                    <? if (defined('SU')): ?>
-                    <li class="user-action">
-                        <a href="/adminsc/sync">1s Sync</a>
-                    </li>
-
-                    <? endif; ?>
+                    {{--                    @deb--}}
+                    @if(\app\service\AuthService\AuthService::getUser()->isSU())
+                        <li class="user-action">
+                            <a href="/adminsc/sync">1s Sync</a>
+                        </li>
+                    @endif
 
                 </ul>
             </div>

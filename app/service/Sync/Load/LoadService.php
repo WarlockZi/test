@@ -24,6 +24,7 @@ class LoadService
     }
 
 
+
     public function run(): void
     {
         $this->checkXMLFuncExist();
@@ -93,9 +94,7 @@ class LoadService
         $this->logger->write('--- products loaded  ---');
     }
 
-    /**
-     * @throws Exception|Throwable
-     */
+
     #[NoReturn]
     public function LoadPrices(): void
     {

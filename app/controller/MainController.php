@@ -47,7 +47,13 @@ class MainController extends AppController
             'Контакты');
         view('main.contacts', compact('meta'));
     }
-
+    #[NoReturn] public function actionForms(): void
+    {
+        $forms = [];
+        header('Cache-Control: public, max-age=3600');
+        die('<div>form</div>');
+        response()->popup('form is loaded');
+    }
     #[NoReturn] public function actionNews(): void
     {
         $content = 'Следите за новостями)';

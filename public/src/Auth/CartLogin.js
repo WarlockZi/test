@@ -127,8 +127,7 @@ export default class cartLogin {
     forgotPassword.addEventListener("click", this.switch.bind(this));
     return forgotPassword;
   }
-
-  getYandexAuth() {
+  async handleYandexClick() {
     const host = env.VITE_DEV ? "vi-prod" : "vitexopt.ru";
     const client_id = env.VITE_DEV
       ? "1e3a1da273c346a8802d8bcb1a13193c"
@@ -137,19 +136,22 @@ export default class cartLogin {
     const state = crypto.randomUUID();
     document.cookie = `yandex_oauth_state=${state}; Secure; SameSite=Lax; Path=/;Max-Age=1000`;
 
-    return new createElement()
-      .tag("a")
-      .attr(
-        "href",
-        `https://oauth.yandex.ru/authorize?` +
-          `client_id=${client_id}&` +
-          `redirect_uri=${scheme}://${host}/auth/yandex&` +
-          "response_type=code&" +
-          `state=${state}`,
-      )
+    const url = new URL("https://oauth.yandex.ru/authorize");
+    url.searchParams.set("client_id", client_id);
+    url.searchParams.set("redirect_uri", `${scheme}://${host}/auth/yandex`);
+    url.searchParams.set("response_type", "code");
+    url.searchParams.set("state", state);
+    window.location.href = url.toString();
+  }
+
+  getYandexAuth() {
+    const yaButton = new createElement()
+      .tag("button")
       .attr("class", "yandex")
       .attr("title", "Авторизация Яндекс")
       .get();
+    yaButton.addEventListener("click", this.handleYandexClick);
+    return yaButton;
   }
 
   getLoginWarning() {

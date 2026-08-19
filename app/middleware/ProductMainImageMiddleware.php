@@ -2,7 +2,7 @@
 
 namespace app\middleware;
 
-use app\service\AuthService\Auth;
+use app\service\AuthService\AuthService;
 use app\service\Response;
 
 class ProductMainImageMiddleware implements IMiddleware

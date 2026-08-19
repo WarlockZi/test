@@ -2,9 +2,10 @@
 
 namespace app\formRequest;
 
-use app\formRequest\baseFormRequests\FormRequest;
 
-class ConfirmEmailRequest extends FormRequest
+use app\formRequest\baseFormRequests\FormRequest2;
+
+class ConfirmEmailRequest extends FormRequest2
 {
     public function __construct( )
     {

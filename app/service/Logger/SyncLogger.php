@@ -49,13 +49,11 @@ class SyncLogger implements ILogger
         return file_get_contents($this->logPath);
     }
 
-    /**
-     * @throws Exception
-     */
+
     public function write(string $content): bool
     {
         if (!is_writable($this->logPath)) {
-            throw new Exception('Log file not writable');
+            response()->popup('Файл логирования не доступен');
         }
 
         return file_put_contents($this->logPath,

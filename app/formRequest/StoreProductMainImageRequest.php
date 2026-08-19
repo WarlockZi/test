@@ -3,7 +3,7 @@
 namespace app\formRequest;
 
 use app\formRequest\baseFormRequests\FormRequest2;
-use app\service\AuthService\Auth;
+use app\service\AuthService\AuthService;
 
 class StoreProductMainImageRequest extends FormRequest2
 {
@@ -13,7 +13,7 @@ class StoreProductMainImageRequest extends FormRequest2
     }
     public function authorize(): bool
     {
-        $user = Auth::userIsAdmin();
+        $user = AuthService::userIsAdmin();
         return (bool)$user;
     }
 

@@ -6,7 +6,7 @@ namespace app\action\admin;
 use app\model\Right;
 use app\model\Unit;
 use app\model\User;
-use app\service\AuthService\Auth;
+use app\service\AuthService\AuthService;
 use app\service\AuthService\IUser;
 use app\view\components\Builders\Date\DateBuilder;
 use app\view\components\Builders\ItemBuilder\ItemBuilder;
@@ -74,7 +74,7 @@ class UserAction implements IShowTable
     }
     public function tableByRole($userToEdit): string
     {
-        $thisUser = Auth::getUser();
+        $thisUser = AuthService::getUser();
         if ($thisUser->isAdmin()) return $this->admin($userToEdit);
         if ($thisUser->isEmployee()) return self::employee($userToEdit);
 

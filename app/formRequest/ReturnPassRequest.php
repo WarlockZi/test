@@ -3,11 +3,11 @@
 namespace app\formRequest;
 
 
-use app\formRequest\baseFormRequests\FormRequest;
+
 use app\formRequest\baseFormRequests\FormRequest2;
 
 
-class ReturnPassRequest extends FormRequest
+class ReturnPassRequest extends FormRequest2
 {
 //    public function __construct()
 //    {

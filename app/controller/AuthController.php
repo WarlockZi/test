@@ -9,7 +9,8 @@ use app\formRequest\RegisterRequest;
 use app\formRequest\ReturnPassRequest;
 use app\model\User;
 use app\repository\UserRepository;
-use app\service\AuthService\Auth;
+use app\repository\UserYandexRepository;
+use app\service\AuthService\AuthService;
 use app\service\Mail\PHPMailService;
 use app\service\PasswordGenerator\PasswordGeneratorService;
 use app\service\Router\IRequest;
@@ -17,16 +18,14 @@ use app\view\User\UserView;
 use Exception;
 use Illuminate\Validation\ValidationException;
 use JetBrains\PhpStorm\NoReturn;
-use Psr\Log\NullLogger;
 use Throwable;
 use Tigusigalpa\YandexID\Exceptions\ApiException;
 use Tigusigalpa\YandexID\Exceptions\InvalidRequestException;
-use Tigusigalpa\YandexID\YandexIdClient;
 
 class AuthController extends AppController
 {
     public function __construct(
-        protected AuthActions $actions,
+        protected AuthActions    $actions,
         protected PHPMailService $mailer,
         protected UserRepository $userRepository,
     )
@@ -38,27 +37,12 @@ class AuthController extends AppController
      * @throws ValidationException|Exception
      */
     #[NoReturn]
-    public function actionLogin(LoginRequest $request): void
+    public function actionLogin(LoginRequest $request, AuthActions $actions): void
     {
         $validated = $request->safe()->only('email', 'password');
+        $user = $actions->checkLoginPasswordConfirm($validated);
 
-        $user = User::where('email', $validated['email'])->with('role')->first();
-
-        if (!$user) response()->json([
-            'error' => 'email не зарегистрирован',
-            'popup' => 'Пройдите регистрацию']);
-
-        if (!$user->confirm) response()->json([
-            'error' => 'Зайдите на почту чтобы подтвердить регистрацию',
-            'popup' => 'Зайдите на почту чтобы подтвердить регистрацию',]);
-        if ($user->password !== PasswordGeneratorService::hashPassword($validated['password'])) {
-            Auth::setUser($user);// Если данные правильные, запоминаем пользователя (в сессию)
-            if (!$user->isSU()) {
-                response()->json(['error' => 'Не верный email или пароль']);
-            }
-        }
-        Auth::setAuth($user);
-        Auth::setUser($user);
+        AuthService::login($user);
 
         if ($user->isEmployee()) {
             response()->json(['role' => 'employee', 'id' => $user['id']]);
@@ -137,39 +121,27 @@ class AuthController extends AppController
      */
     public function actionYandex(): void
     {
-        $clientId     = env('YANDEX_CLIENTID_DEV');
-        $clientSecret = env('YANDEX_CLIENT_SECRET_DEV');
-        $redirectUri  = env('YANDEX_REDIRECT_URI_DEV');
-        if (!isset($_GET['code'])) {
-            $client = new YandexIdClient(
-                clientId: $clientId,
-                clientSecret: $clientSecret,
-                redirectUri: $redirectUri,
-                scope: 'login:email login:info',
-                forceConfirm: false,
-                authBase: 'https://oauth.yandex.ru',
-                userInfoEndpoint: 'https://login.yandex.ru/info',
-                userInfoAuth: 'OAuth',
-                http: null, // Используем Guzzle по умолчанию
-                logger: new NullLogger() // или ваш PSR-3 логгер
-            );
+        [$clientId, $clientSecret, $redirectUri] = $this->actions->getYandexOptions();
 
-            $authUrl = $client->authUrl($_SESSION['phpSession'] ?? 'random_state_123');
-            header('Location: ' . $authUrl);
-            exit;
+        if (!isset($_GET['code'])) {
+            $this->actions->getYandexCode($clientId, $clientSecret, $redirectUri);
         }
 
-        $code = $this->actions->checkYandexResponseState();
+        $this->actions->checkYandexResponseState();
 
-        $yandexProfile = $this->actions->exchangeCode($clientId, $clientSecret,$code);
-        $user = (new UserRepository)->getByEmail($yandexProfile['default_email'], ['*'], ['role'] );
+        setcookie('yandex_oauth_state', '', time() - 3600, '/');
+        unset($_COOKIE['yandex_oauth_state']);
 
-        Auth::setAuth($user);
+        $code = $_GET['code'] ?? '';
+
+        $yandexProfile = $this->actions->exchangeCode($clientId, $clientSecret, $code);
+        $userYandex          = UserYandexRepository::getByEmail($yandexProfile['default_email'], ['*'], ['role']);
+
+        AuthService::login($userYandex);
         response()->redirect('/');
 
 // 🔄 Обновление токена
 //        $newToken = $client->refreshToken($token->refreshToken);
-
 // 🗑️ Отзыв токена
 //        $success = $client->revokeToken($token->accessToken);
 //        echo "Token revoked: " . ($success ? 'Yes' : 'No') . "\n";
@@ -179,7 +151,7 @@ class AuthController extends AppController
     #[NoReturn]
     public function actionProfile(): void
     {
-        $user = Auth::getUser();
+        $user = AuthService::getUser();
         if (!$user) {
             response()->redirect('/');
         }
@@ -194,7 +166,7 @@ class AuthController extends AppController
 
     public function actionChangePassword(ChangePasswordRequest $request): void
     {
-        if (!Auth::getUser()) {
+        if (!AuthService::getUser()) {
             response()->withError('чтобы поменять пароль нужно войти в свой аккаунт')->redirect('/');
         }
         $request = $request->validated();
@@ -221,10 +193,25 @@ class AuthController extends AppController
     #[NoReturn]
     public function actionLogout(): void
     {
-        if (isset($_COOKIE[session_name()])) {
-            setcookie(session_name(), '', time() - 86400, '/');
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
         }
-        unset($_SESSION);
+        $_SESSION = [];
+
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(
+                session_name(),
+                '',
+                time() - 42000,
+                $params["path"],
+                $params["domain"],
+                $params["secure"],
+                $params["httponly"]
+            );
+        }
+        session_destroy();
+
         response()->back();
     }
 
@@ -235,13 +222,12 @@ class AuthController extends AppController
 
         $user = User::where('hash', $request->id)->first();
         if (!$user) {
-            header('Location:/');
-            exit();
+            response()->redirect('/');
         }
 
-        Auth::setAuth($user);
+        AuthService::login($user);
         if ($user->update(['confirm' => 1])) {
-            header('Location:/');
+            response()->redirect('/');
         }
     }
 

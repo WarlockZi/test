@@ -7,7 +7,7 @@ namespace app\repository;
 use app\model\Order;
 use app\model\OrderItem;
 use app\model\OrderProduct;
-use app\service\AuthService\Auth;
+use app\service\AuthService\AuthService;
 use Illuminate\Database\Eloquent\Collection;
 
 class OrderitemRepository
@@ -26,7 +26,7 @@ class OrderitemRepository
     }
     public static function main(): Collection|array
     {
-        $user = Auth::getUser();
+        $user = AuthService::getUser();
         if ($user) {
             $oItems = Order::query()
                 ->select('*')

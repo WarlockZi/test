@@ -60,6 +60,7 @@ export default class shippableTable {
     if (count === 1) {
       window.YM("tovar_v_korzine");
     }
+    debugger;
     this.renderSums();
     this.toServer(this.dto(row));
   }
@@ -121,7 +122,7 @@ export default class shippableTable {
       count: row[qs]("input").value,
       product_1s_id: row.closest("[data-product_1s_id]").dataset.product_1s_id,
       unit_id: row.dataset.unit_id,
-      loc_storage_cart_id: localStorage.getItem("vitex_guest_id"),
+      vitex_guest_id: localStorage.getItem("vitex_guest_id"),
     };
   }
 }

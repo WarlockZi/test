@@ -2,17 +2,12 @@
 
 namespace app\formRequest;
 
-use app\formRequest\baseFormRequests\FormRequest;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use JetBrains\PhpStorm\NoReturn;
+use app\formRequest\baseFormRequests\FormRequest2;
 
 
-class SearchRequest extends FormRequest
+class SearchRequest extends FormRequest2
 {
-    public function __construct(
-        protected $allowedFields = ['text']
-    )
+        public function __construct()
     {
         parent::__construct();
     }
@@ -20,32 +15,14 @@ class SearchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'text' => 'required',
-        ];
-    }
-
-    public function all($keys = null): array
-    {
-        return [
-            'text' => $this->json('text'),
+            'text' => 'string',
         ];
     }
 
     public function messages(): array
     {
         return [
-            'text.required' => 'The search field is required.',
+            'text.string' => 'The search field is not string.',
         ];
     }
-    #[NoReturn] protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(
-            response()->json([
-                'success' => false,
-                'message' => 'Validation errors',
-                'errors' => $validator->errors()
-            ], 422)
-        );
-    }
-
 }

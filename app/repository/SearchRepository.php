@@ -5,50 +5,62 @@ namespace app\repository;
 
 
 use app\model\Product;
+use app\service\AuthService\AuthService;
+use app\service\Cache\Redis\Cache;
 use Illuminate\Database\Eloquent\Collection;
 
-/**
- * @method static index()
- */
 class SearchRepository
 {
-    public function index(string $text): array
+    public function searchProducts(string $text): array
     {
-        $queryString = '%' . stripslashes(mb_strtolower(trim($text))) . '%';
+        $queryString = $this->prepareSearchTerm($text);
+        if ($queryString === '') {
+            return [];
+        }
 
-        $admin = in_array('/adminsc', parse_url($_SERVER['HTTP_REFERER']));
+        $isAdmin = AuthService::getUser()->isAdmin();
 
-        $art  = $this->getProductsByField($this->getQuery($admin), $queryString, 'art');
-        $name = $this->getProductsByField($this->getQuery($admin), $queryString, 'name');
-        $sId  = $this->getProductsByField($this->getQuery($admin), $queryString, '1s_id');
-        $slug = $this->getProductsByField($this->getQuery($admin), $queryString, 'slug');
-
-        $collection = $art->merge($name);
-        $collection = $art->merge($slug);
-        return $collection->merge($sId)
-            ->map(function ($product) {
-                return [
-                    "name" => $product->name,
-                    "art" => $product->art,
-                    "mainImage" => $product->mainImage,
-                    "slug" => $product->slug,
-                    "id" => $product->id,
-                ];
-            })->toArray();
-    }
-
-    public function getQuery($admin)
-    {
-        return $admin
+        $query = $isAdmin
             ? Product::withTrashed()->select('name', 'slug', 'art', 'id', 'instore', 'deleted_at')
             : Product::select('name', 'slug', 'art', 'id', 'instore', '1s_id')->take(20);
+        Cache::enabled(true);
+        $products = Cache::remember("search:{$queryString}:{$isAdmin}", fn () =>$this->new($query, $queryString), 60);
+
+        return $products;
     }
 
-    private function getProductsByField($query, string $queryString, string $field): Collection
+      private function new($query, string $queryString)
     {
-        return $query
-            ->where($field, 'LIKE', $queryString)
-            ->get();
+        $like     = "%{$queryString}%";
+        $products = $query->where(function ($builder) use ($like) {
+            $builder->where('name', 'LIKE', $like)
+                ->orWhere('art', 'LIKE', $like)
+                ->orWhere('slug', 'LIKE', $like)
+                ->orWhere('1s_id', 'LIKE', $like);
+        })->get();
+
+        return $products
+            ->unique('id')
+            ->map(fn(Product $product) => [
+                'id' => $product->id,
+                'name' => $product->name,
+                'art' => $product->art,
+                'slug' => $product->slug,
+                'mainImage' => $product->mainImage,
+            ])
+            ->values()
+            ->toArray();
+    }
+
+
+    private function prepareSearchTerm(string $text): string
+    {
+        $term = trim($text);
+        if ($term === '') {
+            return '';
+        }
+        $term = addcslashes($term, '%_');
+        return mb_strtolower($term);
     }
 
 

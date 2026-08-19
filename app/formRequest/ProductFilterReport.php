@@ -3,7 +3,7 @@
 namespace app\formRequest;
 
 use app\formRequest\baseFormRequests\FormRequest2;
-use app\service\AuthService\Auth;
+use app\service\AuthService\AuthService;
 
 class ProductFilterReport extends FormRequest2
 {
@@ -13,7 +13,7 @@ class ProductFilterReport extends FormRequest2
     }
     public function authorize(): bool
     {
-        return !!Auth::getUser();
+        return !!AuthService::getUser();
     }
 
     public function rules(): array

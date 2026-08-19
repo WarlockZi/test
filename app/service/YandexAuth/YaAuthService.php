@@ -4,7 +4,7 @@ namespace app\service\YandexAuth;
 
 use app\model\Mock\MockYandexUser;
 use app\model\UserYandex;
-use app\service\AuthService\Auth;
+use app\service\AuthService\AuthService;
 use Throwable;
 
 class YaAuthService
@@ -13,59 +13,8 @@ class YaAuthService
 
     public function __construct()
     {
-        if (DEV) {
-            $this->setYandexUser();
-//            $this->setMockYandexUser();
-        } else {
-            $this->setYandexUser();
-        }
-        try {
-            $this->login();
-        } catch (Throwable $exception) {
-            echo $exception;
-        }
     }
 
-    private function setYandexUser(): void
-    {
-        $clientId=env('YANDEX_CLIENTID_DEV');
-        $clientSecret=env('YANDEX_CLIENT_SECRET_DEV');
-        if (!empty($_GET['code'])) {
-            $params = array(
-                'grant_type' => 'authorization_code',
-                'code' => $_GET['code'],
-                'client_id' => $_GET['cid'],
-//                'client_id' => $clientId,
-                'client_secret' => $clientSecret,
-                'redirect_uri' => 'https://vi-prod/auth/yandex',
-            );
-
-            $ch = curl_init('https://oauth.yandex.ru/token');
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-            curl_setopt($ch, CURLOPT_HEADER, false);
-            $data = curl_exec($ch);
-            curl_close($ch);
-
-            $data = json_decode($data, true);
-            if (!empty($data['access_token'])) {
-                // Токен получили, получаем данные пользователя.
-                $ch = curl_init('https://login.yandex.ru/info');
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, array('format' => 'json'));
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: OAuth ' . $data['access_token']));
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
-                curl_setopt($ch, CURLOPT_HEADER, false);
-                $info = curl_exec($ch);
-                curl_close($ch);
-
-                $this->user = json_decode($info, true);
-            }
-        }
-    }
 
     private function setMockYandexUser(): void
     {
@@ -86,18 +35,18 @@ class YaAuthService
                 'last_name' => $this->user['last_name'] ?? null,
                 'sex' => $this->user['sex'] ?? null,
                 'default_email' => $this->user['default_email'] ?? null,
-//                'emails' => implode(',', $this->user['emails']) ?? null,
-//                'birthday' => $this->user['birthday'],
-//                'default_avatar_id' => $this->user['default_avatar_id'],
-//                'is_avatar_empty' => $this->user['is_avatar_empty'],
-//                'default_phone' => $this->user['default_phone'],
-//                'psuid' => $this->user['psuid'],
-//                'rights' => implode(',', []),
+                'emails' => implode(',', $this->user['emails']) ?? null,
+                'birthday' => $this->user['birthday']?? null,
+                'default_avatar_id' => $this->user['default_avatar_id']?? null,
+                'is_avatar_empty' => $this->user['is_avatar_empty']?? null,
+                'default_phone' => $this->user['default_phone']?? null,
+                'psuid' => $this->user['psuid']?? null,
+                'rights' => implode(',', [])?? null,
             ]
         );
 
-        Auth::setAuth($userYandex);
-        Auth::setUser($userYandex);
+        AuthService::login($userYandex);
+        AuthService::setUser($userYandex);
     }
 
     public function getUser(): array

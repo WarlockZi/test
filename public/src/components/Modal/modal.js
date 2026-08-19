@@ -52,11 +52,13 @@ export default class Modal {
     )
       return;
     const openedBox = this.wrap[qs](".transform-in");
-    openedBox[ael]("transitionend", this.transitionHandler.bind(this));
-    openedBox?.removeEventListener("transitionend", this.transitionHandler, {
-      once: true,
-    });
-    openedBox?.classList.remove("transform-in");
+    if (openedBox) {
+      openedBox[ael]("transitionend", this.transitionHandler.bind(this));
+      openedBox.removeEventListener("transitionend", this.transitionHandler, {
+        once: true,
+      });
+      openedBox.classList.remove("transform-in");
+    }
     this.overlay.classList.remove("blur");
   }
 

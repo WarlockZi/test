@@ -169,7 +169,7 @@ abstract class UserView
             )
             ->field(
                 ItemFieldBuilder::build('роль', $item)
-                    ->html($item?->role)
+                    ->html($item?->role->first()->name)
                     ->name('роль')
                     ->get()
             )

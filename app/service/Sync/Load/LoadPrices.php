@@ -2,21 +2,15 @@
 
 namespace app\service\Sync\Load;
 
-use app\model\Currency;
 use app\model\Price;
-use app\model\PriceType;
 use app\model\Product;
 use app\model\ProductUnit;
 use app\model\Unit;
-use app\traits\MeasureTime;
-use Exception;
 use JetBrains\PhpStorm\NoReturn;
 use Throwable;
-use function DI\create;
 
 class LoadPrices extends LoadService
 {
-    use MeasureTime;
     use ChunkTrait;
 
     private array $offer;
@@ -50,9 +44,7 @@ class LoadPrices extends LoadService
         }
     }
 
-    /**
-     * @throws Exception
-     */
+
     private function setOfferFile(): void
     {
         $file = ROOT. env('SYNC_PATH'). 'unzipped/loaded/'. env('SYNC_OFFER_FILE');
@@ -62,9 +54,6 @@ class LoadPrices extends LoadService
         $this->priceData = $offerData['ПакетПредложений']['Предложения']['Предложение'];
     }
 
-    /**
-     * @throws Exception|Throwable
-     */
     #[NoReturn]
     public function load(): void
     {
@@ -166,25 +155,6 @@ class LoadPrices extends LoadService
 
     }
 
-    #[NoReturn]
-//    public function updatePrices(): void
-//    {
-//        foreach ($this->product->units as $unit) {
-//
-//        }
-//    }
-//    protected function cleanDoubleUnits(): void
-//    {
-//        $ids = [];
-//        foreach ($this->product->units as $unit) {
-//            if (in_array($unit->id, $ids)) {
-//                $unit->pivot->delete();
-//            } else {
-//                $ids[] = $unit->id;
-//            }
-//        }
-//    }
-
     protected function updateOrCreatePrice(): void
     {
         $this->price = Price::updateOrCreate(
@@ -198,28 +168,5 @@ class LoadPrices extends LoadService
             ]);
     }
 
-//    private function firstOrCreatePriceType(): void
-//    {
-//        $this->priceType1s       = PriceType::firstOrCreate(
-//            ['type' => '1s',],
-//            ['type' => '1s',]
-//        );
-//        $this->priceTypeComputed = PriceType::firstOrCreate(
-//            ['type' => 'Computed',],
-//            ['type' => 'Computed',]
-//        );
-//    }
-
-//    private function firstOrCreateCurrency(): void
-//    {
-//        $currency1sName   = $this->pricesData[0]['Цены']['Цена']['Валюта'] ?? $this->pricesData[1]['Цены']['Цена']['Валюта'];
-//        $this->currency1s = Currency::firstOrCreate(
-//            [
-//                '1s_name' => $currency1sName],
-//            [
-//                '1s_name' => $currency1sName,
-//                'web_name' => '₽']
-//        );
-//    }
 
 }

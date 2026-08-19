@@ -1,16 +1,12 @@
 <?php
 
-use Illuminate\Support\Str;
+$GUEST_COOKIE_NAME='vitex_guest_id';
 
-define ('GUEST_COOKIE_NAME', 'vitex_guest_id');
-define ('GUEST_COOKIE_TTL', 43200); // 30 дней в минутах → для setcookie() нужны СЕКУНДЫ!
-
-if (!isset($_COOKIE[GUEST_COOKIE_NAME])) {
-//    $guestId = Str::uuid()->toString()?? time().env('SALT');
-    $guestId =  time().env('SALT');
+if (!isset($_COOKIE[$GUEST_COOKIE_NAME])) {
+    $guestId =  session_id();
 
     // ⚠️ Обратите внимание: TTL в СЕКУНДАХ, а не минутах
-    setcookie(GUEST_COOKIE_NAME, $guestId, [
+    setcookie($GUEST_COOKIE_NAME, $guestId, [
         'expires'  => time() + 2592000,
         'path'     => '/',
         'domain'   => '',
@@ -19,5 +15,5 @@ if (!isset($_COOKIE[GUEST_COOKIE_NAME])) {
         'samesite' => 'Lax',      // Работает с OAuth-редиректами
     ]);
 
-    $_COOKIE[GUEST_COOKIE_NAME] = $guestId;
+    $_COOKIE[$GUEST_COOKIE_NAME] = $guestId;
 }

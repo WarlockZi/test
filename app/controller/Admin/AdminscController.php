@@ -3,7 +3,7 @@
 namespace app\controller\Admin;
 
 use app\controller\AppController;
-use app\service\AuthService\Auth;
+use app\service\AuthService\AuthService;
 use JetBrains\PhpStorm\NoReturn;
 use Throwable;
 
@@ -12,7 +12,7 @@ class AdminscController extends AppController
 {
     public function __construct()
     {
-        $user = Auth::getUser();
+        $user = AuthService::getUser();
         if (!$user || (!$user->isAdmin() && !$user->isEmployee()))
             response()->redirect("/");
 

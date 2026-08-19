@@ -1,7 +1,7 @@
 @php
     use app\service\AdminSidebar\AdminSidebar;
-    use app\service\AuthService\Auth;
-    $user = Auth::getUser();
+    use app\service\AuthService\AuthService;
+    $user = AuthService::getUser();
     $adminSidebar = (new AdminSidebar)();
 @endphp
 <div class="sidebar">
@@ -11,7 +11,7 @@
 
             @foreach ($adminSidebar as $item)
 
-{{--                @php(xdebug_break())--}}
+                {{--                @php(xdebug_break())--}}
                 @if ($item['children'])
 
                     @if ($item['permissions'] && $user->can($item['permissions']))

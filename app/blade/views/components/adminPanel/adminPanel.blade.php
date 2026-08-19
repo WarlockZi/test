@@ -1,9 +1,9 @@
 @php
-    use app\service\AuthService\Auth;
-//    xdebug_break();
-    @endphp
+    use app\service\AuthService\AuthService;
+    $user = AuthService::getUser();
+@endphp
 
-@if (Auth::getUser()?->isAdmin())
+@if ($user?->isAdmin())
 
     <div class="admin-panel">
 
@@ -15,14 +15,14 @@
             </label>
 
 
-            @if(Auth::getUser()->isSU())
+            @if($user->isSU())
                 <a href="/zip/download">Download</a>
                 <a href="/adminsc/sync">Sync</a>
                 <a href="/adminsc/errors">Errors</a>
                 <a href="/adminsc/syncmanual">sync manual</a>
             @endif
 
-            @if(Auth::getUser()->isOlya())
+            @if($user->isOlya())
                 <a href="/adminsc/syncmanual">sync manual</a>
 
             @endif

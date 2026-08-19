@@ -5,6 +5,7 @@ namespace app\service\AuthService;
 interface IUser
 {
     public function getId(): int;
+    public function saveToSession(): void;
 
     public function can(array $rights): bool;
 

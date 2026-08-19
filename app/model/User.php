@@ -4,12 +4,13 @@ namespace app\model;
 
 
 use app\repository\ImageRepository;
-use app\service\AuthService\Auth;
+use app\service\AuthService\AuthService;
 use app\service\AuthService\IUser;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class User extends Model implements IUser
 {
@@ -34,6 +35,34 @@ class User extends Model implements IUser
         'updated_at',
         'deleted_at',
     ];
+    public function saveToSession():void
+    {
+        $_SESSION['vitex_email_id'] = $this->getId();
+    }
+    public function account(): BelongsTo
+    {
+        return $this->belongsTo(Account::class);
+    }
+
+    public function ensureAccount(): Account
+    {
+        if ($this->account_id && $this->relationLoaded('account')
+            ? $this->account !== null
+            : $this->account()->exists()) {
+            return $this->account;
+        }
+
+        return DB::transaction(function () {
+            $account = Account::create([
+                'name' => $this->name . "'s Account",
+            ]);
+
+            $this->account_id = $account->id;
+            $this->save();
+
+            return $account;
+        });
+    }
 
     protected function rights(): Attribute
     {
@@ -55,8 +84,8 @@ class User extends Model implements IUser
     {
         $has     = $this->hasRights($rights);
         $hasRole = $this->hasRoles($rights);
-        $su      = Auth::isSU();
-        $admin   = Auth::userIsAdmin();
+        $su      = AuthService::isSU();
+        $admin   = AuthService::userIsAdmin();
         return ($has || $su || $admin || $hasRole);
     }
 
@@ -64,7 +93,7 @@ class User extends Model implements IUser
     {
         foreach ($rights as $right) {
             if (str_starts_with($right, 'role_')) {
-                if (!!Auth::getUser()->role->firstWhere('name', $right) === false) return false;
+                if (!!AuthService::getUser()->role->firstWhere('name', $right) === false) return false;
             }
         }
         return true;

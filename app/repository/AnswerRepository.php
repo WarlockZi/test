@@ -33,18 +33,7 @@ class AnswerRepository
     }
 
 
-    public static function cacheCorrectAnswers(Test $test): void
-    {
-//        $res = $test->questions();
-        $res                         = $test->questions->map(function ($q) {
-            return $q->answers->filter(function ($v, $k) {
-                return $v->correct_answer === 1;
-            });
-        })
-            ->flatten()
-            ->pluck('id') ?? '';
-        $_SESSION['correct_answers'] = $res->toArray();
-    }
+
 
 
 }

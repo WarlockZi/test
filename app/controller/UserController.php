@@ -30,7 +30,6 @@ class UserController extends AppController
 //		$this->setVars(compact('item'));
 //
 //		if ($user = $this->ajax) {
-//			$user['id'] = $_SESSION['id'];
 //			User::updateOrCreate($user);
 //			Response::exitWithPopup('Сохранено');
 //		}

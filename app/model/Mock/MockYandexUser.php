@@ -10,7 +10,6 @@ class MockYandexUser
         public UserYandex $user = new UserYandex()
     )
     {
-
         $this->user->id                = 2;
         $this->user->ya_id             = '61362802';
         $this->user->login             = 'vvoronik';
@@ -21,7 +20,7 @@ class MockYandexUser
         $this->user->last_name         = 'Вороник';
         $this->user->sex               = 'male';
         $this->user->default_email     = 'vvoronik@yandex.ru';
-        $this->user->emails            = ["vvoronik@yandex.ru"];
+        $this->user->emails            = '{"vvoronik@yandex.ru"}';
         $this->user->birthday          = '1979-11-04';
         $this->user->default_avatar_id = '40138/KIe4rRcAbgP60VIJYhejH12IiUU-1';
         $this->user->is_avatar_empty   = '0';
@@ -33,7 +32,5 @@ class MockYandexUser
     public function get(): UserYandex
     {
         return $this->user;
-
     }
-
 }

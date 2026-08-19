@@ -3,13 +3,14 @@
 namespace app\formRequest;
 
 
-use app\formRequest\baseFormRequests\FormRequest;
+
+use app\formRequest\baseFormRequests\FormRequest2;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use JetBrains\PhpStorm\NoReturn;
 
 
-class LoginRequest extends FormRequest
+class LoginRequest extends FormRequest2
 {
     public function __construct(
         protected $allowedFields = ['email', 'password', 'phpSession']

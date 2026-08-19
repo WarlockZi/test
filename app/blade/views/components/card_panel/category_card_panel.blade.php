@@ -1,7 +1,7 @@
 @php
-    use app\service\AuthService\Auth;
+    use app\service\AuthService\AuthService;
     use app\view\components\Icon\Icon;
-    $isAdmin = Auth::userIsAdmin();
+    $isAdmin = AuthService::userIsAdmin();
     $link = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].'/short/';
 @endphp
 

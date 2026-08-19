@@ -7,7 +7,7 @@ use app\blade\Blade;
 use app\blade\views\admin\report\productFilter\FilterView;
 use app\model\FilterUser;
 use app\repository\ProductFilterRepository;
-use app\service\AuthService\Auth;
+use app\service\AuthService\AuthService;
 use app\service\Filters\Products\InitialFiltersService;
 use app\service\Image\del\ProductImageService;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
@@ -31,10 +31,10 @@ class ReportFilterProductsAction
     {
         $json = json_encode($prparedToSave);
         FilterUser::updateOrCreate(
-            ["user_id" => Auth::getUser()['id'],
+            ["user_id" => AuthService::getUser()['id'],
                 "model" => 'product',
             ],
-            ["user_id" => Auth::getUser()['id'],
+            ["user_id" => AuthService::getUser()['id'],
                 "model" => 'product',
                 'name' => $json,
             ]);
@@ -42,7 +42,7 @@ class ReportFilterProductsAction
 
     public function getSavedFilters(): array
     {
-        return ProductFilterRepository::product(Auth::getUser()->id);
+        return ProductFilterRepository::product(AuthService::getUser()->id);
     }
 
     public function panel(array $toFilter = [], array $toSave = []): array

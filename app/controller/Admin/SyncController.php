@@ -5,7 +5,7 @@ namespace app\controller\Admin;
 use app\formRequest\SyncDownloadZipRequest;
 use app\formRequest\SyncRequest;
 use app\model\User;
-use app\service\AuthService\Auth;
+use app\service\AuthService\AuthService;
 use app\service\Fs\FS;
 use app\service\Logger\SyncLogger;
 use app\service\Response;
@@ -29,7 +29,7 @@ class SyncController extends AdminscController
         private readonly ZipService  $zipService,
     )
     {
-        Auth::setUser(User::where('email', 'vvoronik@yandex.ru')->first());
+        AuthService::setUser(User::where('email', 'vvoronik@yandex.ru')->first());
         parent::__construct();
     }
 

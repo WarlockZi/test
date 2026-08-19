@@ -56,7 +56,6 @@ class CartController extends AppController
     {
         OrderItem::query()
             ->delete();
-        if (isset($_COOKIE['cartDeadline'])) setcookie('cartDeadline', '', time() - 3600);
         response()->json(['ok' => true]);
     }
 

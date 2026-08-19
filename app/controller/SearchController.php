@@ -8,18 +8,16 @@ use JetBrains\PhpStorm\NoReturn;
 
 class SearchController extends AppController
 {
-    private SearchRepository $service;
 
     public function __construct()
     {
         parent::__construct();
-        $this->service = new SearchRepository();
     }
 
-    #[NoReturn] public function actionIndex(SearchRequest $request): void
+    #[NoReturn] public function actionIndex(SearchRequest $request, SearchRepository $repo): void
     {
-        $req = $request->validated();
-        $text = $this->service->index($req['text']);
-        response()->json(['found' => $text]);
+        $text = $request->validated()['text']??'';
+        $productsArr = $repo->searchProducts($text);
+        response()->json(['found' => $productsArr]);
     }
 }

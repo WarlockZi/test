@@ -2,12 +2,13 @@
 
 namespace app\formRequest;
 
-use app\formRequest\baseFormRequests\FormRequest;
+
+use app\formRequest\baseFormRequests\FormRequest2;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 
-class RegisterRequest extends FormRequest
+class RegisterRequest extends FormRequest2
 {
     public function __construct( )
     {

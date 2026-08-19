@@ -14,5 +14,4 @@ export const quillSelector = "[data-quill]";
 export const dataRelationSelector = "[data-relation]";
 export const dataPivotSelector = "[data-pivot]";
 
-export const cqa = document.querySelectorAll.bind(document);
 export const cqs = document.querySelector.bind(document);

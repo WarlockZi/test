@@ -4,7 +4,7 @@
 namespace app\service\Router;
 
 
-use app\service\AuthService\Auth;
+use app\service\AuthService\AuthService;
 use Exception;
 use Illuminate\Support\Str;
 
@@ -76,13 +76,22 @@ class Request implements IRequest
 
         $body = json_decode($json, true) ?? [];
         if (isset($body['phpSession'])) {
-            if (!Auth::validatePphSession($body)) {
+            if (!$this->validatePphSession($body)) {
                 error_log(' ++++++ Bad session token ++++++++ ');
                 throw new Exception('плохой ключ сессии');
             }
             unset($body['phpSession']);
         }
         $this->body = $body;
+    }
+    private function validatePphSession(array $req): bool
+    {
+        if (isConsole()) {
+            error_log('команда пришла из консоли');
+            return true;
+        }
+        return !empty($req['phpSession'])
+            && session_id() === $req['phpSession'];
     }
 
     public function setMiddlewares(array $middlewares): void

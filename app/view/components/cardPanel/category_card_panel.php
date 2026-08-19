@@ -1,12 +1,12 @@
 <?php
 
-use app\service\AuthService\Auth;
+use app\service\AuthService\AuthService;
 use app\view\components\Icon\Icon;
 
 ?>
 <? if ($forBreadcrumbs): ?>
     <div class="card-panel">
-        <?php if (Auth::userIsAdmin()): ?>
+        <?php if (AuthService::userIsAdmin()): ?>
             <a href="/adminsc/category/edit/<?= $category->id ?>" class="edit card-panel-item"><?= Icon::edit(); ?></a>
         <? endif; ?>
     </div>
@@ -19,7 +19,7 @@ use app\view\components\Icon\Icon;
         >
             <?= \app\view\components\Icon\Icon::link(); ?>
         </div>
-        <?php if (Auth::userIsAdmin()): ?>
+        <?php if (AuthService::userIsAdmin()): ?>
             <a href="/adminsc/category/edit/<?= $category->id ?>" class="edit card-panel-item"><?= Icon::edit(); ?></a>
         <? endif; ?>
     </div>

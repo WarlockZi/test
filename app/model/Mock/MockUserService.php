@@ -4,7 +4,7 @@ namespace app\model\Mock;
 
 use app\model\User;
 use app\model\UserYandex;
-use app\service\AuthService\Auth;
+use app\service\AuthService\AuthService;
 
 class MockUserService
 {
@@ -19,7 +19,7 @@ class MockUserService
         $yandexVvoronik = UserYandex::where('default_email', 'vvoronik@yandex.ru')
             ->first();
 
-        Auth::setUser($MarinaDemis);
+        AuthService::setUser($MarinaDemis);
     }
 
 }

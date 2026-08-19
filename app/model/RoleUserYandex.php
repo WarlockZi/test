@@ -11,7 +11,7 @@ class RoleUserYandex extends Pivot
 
     protected $fillable = [
         'role_id',
-        'user_yandex_id',
+        'vitex_yandex_id',
     ];
 
 }

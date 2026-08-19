@@ -7,7 +7,7 @@ use app\attributes\Validate\UserDTO;
 use app\attributes\Validate\ValidationException;
 use app\model\User;
 use app\repository\UserRepository;
-use app\service\AuthService\Auth;
+use app\service\AuthService\AuthService;
 use app\service\Response;
 use app\service\Router\IRequest;
 use app\view\User\UserView;
@@ -33,7 +33,7 @@ class UserController extends AdminscController
     public function actionEdit(IRequest $request): void
     {
         $user    = $this->model::find($request->id);
-        $catItem = UserView::getViewByRole($user, Auth::getUser());
+        $catItem = UserView::getViewByRole($user, AuthService::getUser());
 
         view('admin.components.catalogItem.adminCatalogItem', compact('catItem'));
 
@@ -43,7 +43,7 @@ class UserController extends AdminscController
     public function actionDelete(IRequest $request): void
     {
         if ($data = $this->ajax) {
-            if (!Auth::getUser()->can(['user_delete']))
+            if (!AuthService::getUser()->can(['user_delete']))
                 response()->json(['popup' => 'Не хватает прав']);
             User::find($data['id'])->delete();
             response()->json(['popup' => 'Удален']);

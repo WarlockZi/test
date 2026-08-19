@@ -8,7 +8,8 @@ use app\model\Order;
 use app\model\OrderItem;
 use app\model\OrderProduct;
 use app\model\Product;
-use app\service\AuthService\Auth;
+use app\service\AuthService\AuthService;
+use app\service\Cart\CartService;
 use app\service\Router\IRequest;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -82,7 +83,7 @@ class OrderRepository
         $order = Order::query();
 
         if ($currentUser) {
-            list($field, $value) = Auth::getCartFieldValue();
+            list($field, $value) = CartService::getCartFieldValue();
             $order->where($field, $value);
         }
         if ($id) {
@@ -159,7 +160,7 @@ class OrderRepository
     public static function firstOrCreateOrder(string $vitex_guest_id)
     {
         try {
-            list($field, $value) = Auth::getCartFieldValue();
+            list($field, $value) = CartService::getCartFieldValue();
             $order = Order::firstOrCreate([
                 $field => $value,
                 'submitted' => NULL
@@ -201,7 +202,7 @@ class OrderRepository
 
     public static function productsCount(): int
     {
-        list($field, $value) = Auth::getCartFieldValue();
+        list($field, $value) = CartService::getCartFieldValue();
         $order = Order::where($field, $value)
             ->whereNull('submitted')
             ->select('id')

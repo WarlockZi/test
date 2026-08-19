@@ -16,7 +16,7 @@ import { $ } from "@src/common.js";
 import Search from "@components/search/search.js";
 import CallMe from "@src/CallMe/CallMe.js";
 import Feedback from "@src/Feedback/Feedback.js";
-import setLocalStorageCartId from "@components/cart_id/cart_id.js";
+import setLocalStorageGuestId from "@components/cart_id/cart_id.js";
 
 import YM from "@src/Main/YM.js";
 import "./d-goals.js";
@@ -28,7 +28,6 @@ import Modal from "@components/Modal/modal.js";
 
 window.YM = YM;
 document.addEventListener("DOMContentLoaded", async function () {
-
   const admin = window.location.pathname.includes("adminsc");
   if (admin) return false;
 
@@ -45,7 +44,6 @@ document.addEventListener("DOMContentLoaded", async function () {
   const modal = document[qs](".modal");
   if (modal) {
     const { default: Modal } = await import("../components/Modal/modal.js");
-    // new Modal();
     new Modal({
       triggers: [".guest-menu", "#cartLogin"],
       boxes: new CartLogin(),
@@ -54,7 +52,7 @@ document.addEventListener("DOMContentLoaded", async function () {
   IntObserver();
   headerMenu();
   scroll();
-  setLocalStorageCartId();
+  setLocalStorageGuestId();
 
   new adminPanel();
 

@@ -2,9 +2,10 @@
 
 namespace app\formRequest;
 
-use app\formRequest\baseFormRequests\FormRequest;
 
-class LikeRequest extends FormRequest
+use app\formRequest\baseFormRequests\FormRequest2;
+
+class LikeRequest extends FormRequest2
 {
     public function __construct(
         protected $allowedFields = ['attach', 'fields', 'relation', 'id','phpSession']

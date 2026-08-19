@@ -10,7 +10,7 @@ use app\model\Product;
 use app\model\ProductUnit;
 use app\repository\ProductFilterRepository;
 use app\repository\ProductRepository;
-use app\service\AuthService\Auth;
+use app\service\AuthService\AuthService;
 use app\service\Breadcrumbs\NewBreadArray;
 use app\service\Router\IRequest;
 use Exception;
@@ -82,7 +82,7 @@ class ProductController extends AdminscController
 
             $isFromS       = $productUnit->is_from_1s;
             if ($isFromS) {
-                $user = Auth::getUser();
+                $user = AuthService::getUser();
                 $olia = $user->isOlya();
                 if (!$olia) response()->json(['popup' => 'Удалять единицы из 1с может только Оля Ордина']);
             } else {

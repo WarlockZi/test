@@ -3,7 +3,7 @@
 namespace app\controller\Admin;
 
 use prod\app\model\Todo;
-use app\service\AuthService\Auth;
+use app\service\AuthService\AuthService;
 use app\view\Planning\PlanningView;
 
 class PlanningController extends AdminscController
@@ -19,7 +19,7 @@ class PlanningController extends AdminscController
     public function actionCreate()
     {
         $items = Todo::where('type', 'день')->
-        where('user_id', Auth::getUser())->
+        where('user_id', AuthService::getUser())->
         get();
         $daily = PlanningView::listDaily($items);
         $this->setVars(compact('daily'));

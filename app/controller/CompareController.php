@@ -7,7 +7,7 @@ namespace app\controller;
 use app\formRequest\CompareRequest;
 use app\model\Compare;
 use app\repository\CompareRepository;
-use app\service\AuthService\Auth;
+use app\service\AuthService\AuthService;
 use app\view\Compare\CompareView;
 use JetBrains\PhpStorm\NoReturn;
 

@@ -23,33 +23,6 @@ class CartRepository
         return $orders;
     }
 
-//    public static function order(): array
-//    {
-//        list($field, $value) = Auth::getCartFieldValue();
-//        $order = Order::where($field, $value)
-//            ->whereNull('submitted')
-//            ->with('products', function ($q) {
-//                return $q
-//                    ->whereHas('orderItems', function ($q) {
-//                        return $q->where('count', '>', 0)
-//                            ->whereHas('productUnit')
-//                            ->whereNotNull('product_unit_id');
-//                    })
-//                    ->select('products.id', '1s_id', 'name', 'print_name', 'art', 'slug', 'instore',)
-//                    ->with(['orderItems' => function ($q) {
-//                        return $q
-//                            ->select('order_product_id', 'product_unit_id', 'count')
-//                            ->with('productUnit.unit');
-//                    }]);
-//            })
-//            ->first();
-//
-//        $o = $order?->products->each(function (Product $product) {
-//            $product->append('base_unit');
-//            $product->append('shippable_units');
-//        });
-//        return $order?->toArray() ?? [];
-//    }
 
     public function updateOrCreate(array $body): void
     {

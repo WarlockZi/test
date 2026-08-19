@@ -5,6 +5,7 @@ namespace app\service\Storage;
 
 
 use app\service\Fs\FS;
+use SplFileInfo;
 
 class SyncStorage extends Storage
 {
@@ -25,16 +26,19 @@ class SyncStorage extends Storage
         return $self->storagePath;
     }
     public static function getUnzippedFiles(): array{
-        $loadFiles['import']    = SyncStorage::getUnzippedFile(env('SYNC_IMPORT_FILE'));
-        $loadFiles['offer']    = SyncStorage::getUnzippedFile(env('SYNC_OFFER_FILE') );
+        $loadFiles['import']    = SyncStorage::getUnzippedFileInfo(env('SYNC_IMPORT_FILE'));
+        $loadFiles['offer']    = SyncStorage::getUnzippedFileInfo(env('SYNC_OFFER_FILE') );
+
         return $loadFiles;
     }
-    public static function getUnzippedFile(string $file): ?string
+    public static function getUnzippedFileInfo(string $file): ?array
     {
         $self = new static();
         $file = $self::getUnzippedDir() . $file;
         if (is_readable($file)) {
-            return $file;
+            $file = new SplFileInfo($file);
+            $readableDate = date('d.m.Y H:i:s', $file->getMTime());
+            return ['path' => $file->getRealPath(), 'date' => $readableDate];
         }
         return null;
     }
@@ -42,6 +46,6 @@ class SyncStorage extends Storage
     public static function getUnzippedDir(): string
     {
         $self = new static();
-        return FS::createDirIfNotExist($self->storagePath, $self->unzippedPath);
+        return FS::ensureDir($self->storagePath, $self->unzippedPath);
     }
 }

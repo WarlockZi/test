@@ -5,7 +5,8 @@ namespace app\repository;
 
 use app\formRequest\CompareRequest;
 use app\model\Compare;
-use app\service\AuthService\Auth;
+use app\service\AuthService\AuthService;
+use app\service\Cart\CartService;
 use Illuminate\Database\Eloquent\Collection;
 use LaravelIdea\Helper\app\model\_IH_Compare_C;
 use Throwable;
@@ -14,7 +15,7 @@ class CompareRepository
 {
     public static function all(): Collection|_IH_Compare_C|array
     {
-        list($field, $value) = Auth::getCartFieldValue();
+        list($field, $value) = CartService::getCartFieldValue();
         $compares = Compare::where($field, $value)
             ->with('product.units')
             ->get();
@@ -23,7 +24,7 @@ class CompareRepository
 
     public static function updateOrCreate($req): bool
     {
-        list($field, $value) = Auth::getCartFieldValue();
+        list($field, $value) = CartService::getCartFieldValue();
         try {
             Compare::updateOrCreate([
                 $field => $value,
@@ -40,7 +41,7 @@ class CompareRepository
 
     public static function del($req): bool
     {
-        list($field, $value) = Auth::getCartFieldValue();
+        list($field, $value) = CartService::getCartFieldValue();
         try {
             $compare = Compare::where($field, $value)
                 ->where('product_id', $req['fields']['product_id'])

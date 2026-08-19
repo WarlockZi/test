@@ -1,5 +1,5 @@
 @php
-    use app\service\AuthService\Auth;use app\view\components\Icon\Icon;
+    use app\service\AuthService\AuthService;use app\view\components\Icon\Icon;
     $name = mb_strtoupper(data_get($item,'own_properties.breadcrumbs_name')??$item['name']);
 @endphp
 
@@ -23,7 +23,7 @@
 
 
     <div class="card-panel">
-        @if (Auth::userIsAdmin())
+        @if (AuthService::userIsAdmin())
             <a
                     href="/adminsc/category/edit/<?= $item['id'] ?>"
                     class="edit card-panel-item"

@@ -46,7 +46,6 @@ class UserYandex extends Model implements IUser
 
     protected function rights(): Attribute
     {
-
         return Attribute::get(function (?string $rights) {
             if (is_string($rights)) {
                 return explode(',', $rights);
@@ -106,5 +105,10 @@ class UserYandex extends Model implements IUser
     public function mail(): string
     {
         return $this->default_email??'';
+    }
+
+    public function saveToSession():void
+    {
+        $_SESSION['vitex_yandex_id'] = $this->getId();
     }
 }

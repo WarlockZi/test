@@ -1,7 +1,7 @@
 @php
 
-use app\service\AuthService\Auth;
-use \app\view\components\Icon\Icon;
+    use app\service\AuthService\AuthService;
+    use \app\view\components\Icon\Icon;
 
 @endphp
 
@@ -13,7 +13,7 @@ use \app\view\components\Icon\Icon;
     >
         {!!Icon::link()!!}
     </div>
-{{--@deb--}}
+    {{--@deb--}}
     <div class="compare card-panel-item {!!isset($product['compare']) ? 'green' : ''!!}"
          data-compare="{!!is_null($product['compare'])?'false':'true'!!}"
          title='Добавить в сравнение'
@@ -27,7 +27,7 @@ use \app\view\components\Icon\Icon;
     >
         {!!Icon::heart()!!}
     </div>
-    @if(Auth::getUser()?->isAdmin())
+    @if(AuthService::getUser()?->isAdmin())
         <a href="/adminsc/product/edit/{!!$product['id']!!}"
            class="edit card-panel-item"
         >

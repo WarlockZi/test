@@ -2,12 +2,12 @@
 
 namespace app\middleware;
 
-use app\service\AuthService\Auth;
+use app\service\AuthService\AuthService;
 
 class AuthMiddleware implements IMiddleware {
     public function handle($request, $next) {
 
-        Auth::authorize();
+        AuthService::authorize();
         return $next($request);
     }
 }

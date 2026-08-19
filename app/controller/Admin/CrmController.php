@@ -2,7 +2,7 @@
 
 namespace app\controller\Admin;
 
-use app\service\AuthService\Auth;
+use app\service\AuthService\AuthService;
 
 
 class CrmController extends AdminscController
@@ -12,7 +12,7 @@ class CrmController extends AdminscController
     {
         parent::__construct();
 
-        if (!Auth::userIsEmployee()) {
+        if (!AuthService::userIsEmployee()) {
             header('Location:/auth/profile');
         }
     }

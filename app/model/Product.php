@@ -3,7 +3,8 @@
 namespace app\model;
 
 
-use app\service\AuthService\Auth;
+use app\service\AuthService\AuthService;
+use app\service\Cart\CartService;
 use app\service\Image\del\ProductImageService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -170,7 +171,7 @@ class Product extends Model
 
     public function order()
     {
-        list($field, $value) = Auth::getCartFieldValue();
+        list($field, $value) = CartService::getCartFieldValue();
         $order = Order::where($field, $value)->first();
         $id    = $order?->id ?: null;
         return $this->hasOne(OrderProduct::class,
@@ -181,7 +182,7 @@ class Product extends Model
 
     public function orders(): HasMany|BelongsToMany
     {
-        $user = Auth::getUser();
+        $user = AuthService::getUser();
         if ($user) {
             return $this
                 ->belongsToMany(Order::class)
@@ -189,7 +190,7 @@ class Product extends Model
         }
 
         return $this
-            ->hasMany(Order::class, 'vitex_guest_id', Auth::getUser());
+            ->hasMany(Order::class, 'vitex_guest_id', AuthService::getUser());
     }
 
     public function ownProperties(): HasOne
@@ -202,14 +203,14 @@ class Product extends Model
 
     public function like(): HasOne
     {
-        list($field, $value) = Auth::getCartFieldValue();
+        list($field, $value) = CartService::getCartFieldValue();
         return $this->hasOne(Like::class, 'product_id', '1s_id')
             ->where($field, $value);
     }
 
     public function compare(): HasOne
     {
-        list($field, $value) = Auth::getCartFieldValue();
+        list($field, $value) = CartService::getCartFieldValue();
         return $this->hasOne(Compare::class, 'product_id', '1s_id')
             ->where($field, $value);
     }
@@ -275,7 +276,7 @@ class Product extends Model
 
     public function unsubmittedOrders(): HasMany
     {
-        list($field, $value) = Auth::getCartFieldValue();
+        list($field, $value) = CartService::getCartFieldValue();
         $orders = $this
             ->hasMany(Order::class, $field, $value)
             ->where('submitted', '0');

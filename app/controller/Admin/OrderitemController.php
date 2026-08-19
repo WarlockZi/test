@@ -21,23 +21,23 @@ class OrderitemController extends AdminscController
         parent::__construct();
     }
 
-    public function actionToorder(): void
-    {
-        if ($this->ajax) {
-            $form       = $this->ajax['form'];
-            $sess       = $_SESSION['phpSession'];
-            $orderItems = OrderItem::where('sess', $sess)->get();
-            $lead       = Lead::create($form);
-            $order      = Order::create($form);
-            $order->lead()->associate($lead);
-            $order->save();
-            foreach ($orderItems as $orderItem) {
-                $orderItem->order()->associate($order);
-                $orderItem->save();
-            }
-            response()->json(['ok']);
-        }
-    }
+//    public function actionToorder(): void
+//    {
+//        if ($this->ajax) {
+//            $form       = $this->ajax['form'];
+//            $sess       = $_SESSION['phpSession'];
+//            $orderItems = OrderItem::where('sess', $sess)->get();
+//            $lead       = Lead::create($form);
+//            $order      = Order::create($form);
+//            $order->lead()->associate($lead);
+//            $order->save();
+//            foreach ($orderItems as $orderItem) {
+//                $orderItem->order()->associate($order);
+//                $orderItem->save();
+//            }
+//            response()->json(['ok']);
+//        }
+//    }
 
     public function actionDelete(IRequest $request): void
     {
