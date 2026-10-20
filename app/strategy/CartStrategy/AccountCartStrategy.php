@@ -48,12 +48,13 @@ class AccountCartStrategy implements ICartStrategy
     {
         OrderItem::updateOrCreate(
             [
+                'account_id' => AuthService::accountId(),
                 'unit_id' => $req['unit_id'],
                 'product_1s_id' => $req['product_1s_id'],
             ],
             [
-                'unit_id' => $req['unit_id'],
-                'product_1s_id' => $req['product_1s_id'],
+//                'unit_id' => $req['unit_id'],
+//                'product_1s_id' => $req['product_1s_id'],
                 'count' => $req['count'],
             ]
         );

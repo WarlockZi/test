@@ -19,9 +19,6 @@ class CsrfMiddleware implements IMiddleware
 
         $token = $_POST['csrf_token'] ?? $_SERVER['HTTP_X_CSRF_TOKEN'] ?? '';
 
-//        error_log('post - ' . $_POST['csrf_token']);
-        error_log('server - ' . $_SERVER['HTTP_X_CSRF_TOKEN']);
-
         if (!validateCsrfToken($token)) {
             response('CSRF validation failed', 403)->consoleLog('CSRF validation failed');
         }
