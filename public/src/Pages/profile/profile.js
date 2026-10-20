@@ -8,8 +8,8 @@ export default class Profile {
     this.init();
   }
   async init() {
-    const { default: CatalogItem } =
-      await import("@src/Admin/components/catalog-item/catalog_item.js");
-    if (CatalogItem) new CatalogItem(this.catalogItem);
+    // const { default: CatalogItem } =
+    //   // await import("@src/Admin/components/catalog-item/catalog_item.js");
+    // if (CatalogItem) new CatalogItem(this.catalogItem);
   }
 }
