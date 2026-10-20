@@ -3,9 +3,11 @@
 namespace app\model;
 
 
+use app\service\Account\AccountService;
 use app\service\AuthService\AuthService;
 use app\service\Cart\CartService;
 use app\service\Image\del\ProductImageService;
+use app\service\Like\LikeService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,6 +18,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use stdClass;
 
 
 class Product extends Model
@@ -36,9 +39,9 @@ class Product extends Model
         'slug',
         'image_id',
         'instore',
-        'deleted_at',
         'created_at',
         'updated_at',
+        'deleted_at',
     ];
     protected $casts = [
         'art' => 'string',
@@ -47,11 +50,168 @@ class Product extends Model
         'mainImage',
     ];
 
+    //////likes
+    public function like(): HasOne
+    {
+        $account_id = AuthService::accountId();
+        return $this->hasOne(Like::class, 'product_id', '1s_id')
+            ->where('account_id', $account_id);
+    }
+    public function getIsLikedAttribute()
+    {
+        $account_id = AuthService::accountId();
+
+        if ($account_id) {
+            return $this->relationLoaded('likes')
+                ? $this->likes->isNotEmpty()
+                : Like::where('account_id', $account_id)
+                    ->where('product_id', $this['1s_id'])
+                    ->exists();
+        }
+        return isset($_SESSION['likes']) && in_array($this['1s_id'], $_SESSION['likes']);
+    }
+    public function scopeLikeStatus($query)
+    {
+        $account_id = AuthService::accountId();
+        if ($account_id) {
+            $query->with(['like' => function($q) use ($account_id) {
+                $q->where('account_id', $account_id);
+            }]);
+        }
+        return $query;
+    }
+
+
+    //// compare
+    /**
+     * Scope для фильтрации продуктов которые в сравнении
+     */
+    public function scopeIsCompared($query)
+    {
+        $account_id = AuthService::accountId();
+        if ($account_id) {
+            return $query->whereHas('compare', function($q) use ($account_id) {
+                $q->where('account_id', $account_id)
+;
+            });
+        }
+
+        // Для гостей фильтруем по сессии
+        $sessionCompare = session()->get('compare', []);
+        $productIds = array_keys($sessionCompare);
+
+        return $query->whereIn('id', $productIds);
+    }
+    public function getIsComparedAttribute()
+    {
+        $account_id = AuthService::accountId();
+
+        if ($account_id) {
+            if ($this->relationLoaded('compare')) {
+                return $this->compare->isNotEmpty();
+            }else{
+                return Compare::where('account_id', $account_id)
+                    ->where('product_1s_id', $this['1s_id'])
+                    ->exists();
+            }
+//            return $this->relationLoaded('compare')
+//                ? $this->compare->isNotEmpty()
+//                : Compare::where('account_id', $account_id)
+//                    ->where('product_1s_id', $this['1s_id'])
+//                    ->exists();
+        }
+        return isset($_SESSION['compares']) && in_array($this['1s_id'], $_SESSION['compares']);
+    }
+    public function compare(): HasOne
+    {
+        $account_id = AuthService::accountId();
+        return $this->hasOne(Compare::class, 'product_1s_id', '1s_id')
+            ->where('account_id', $account_id);
+    }
+
+/// cart items
+    public function cartItems(): hasMany
+    {
+        return $this->hasMany(OrderItem::class, 'product_1s_id', '1s_id');
+    }
+    /**
+     * Акцессор который возвращает товар корзины
+     * Работает и для авторизованных, и для гостей
+     */
+    public function getCartItemsAttribute(): object|array
+    {
+        $account_id = AuthService::accountId();
+        if ($account_id) {
+            if ($this->relationLoaded('cartItems')) {
+                return $this->getRelation('cartItems');
+            }
+            return OrderItem::where('product_1s_id', $this['1s_id'])
+                ->where('account_id', $account_id)
+                ->get();
+        }
+
+        $sessionCart = session()->get('cart_items', []);
+        $units = $sessionCart[$this['1s_id']] ?? [];
+
+        if (empty($units)) {
+            return collect([]);
+        }
+
+        $cartItems = collect($units)->map(function ($count, $unit_id) {
+            return [
+                'unit_id' => $unit_id,
+                'product_1s_id' => $this['1s_id'],
+                'count' => $count,
+            ];
+        });
+
+        return $cartItems;
+    }
+
+    /**
+     * Scope для фильтрации продуктов которые в корзине
+     */
+    public function scopeInCart($query)
+    {
+        $account_id = AuthService::accountId();
+        if ($account_id) {
+            return $query->whereHas('cartItems', function($q) use ($account_id) {
+                $q->where('account_id', $account_id);
+            });
+        }
+
+        // Для гостей фильтруем по сессии
+        $sessionCart = session()->get('cart_items', []);
+        $productIds = array_keys($sessionCart);
+
+        return $query->whereIn('id', $productIds);
+    }
+
     public function getMainImageAttribute(): string
     {
         return APP->get(ProductImageService::class)->getImageRelativePath($this);
     }
 
+    public function productUnits(): BelongsToMany
+    {
+        return $this->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
+            ->withPivot('price');
+    }
+    public function shippableUnits(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Unit::class,
+            'product_unit',
+            'product_1s_id',
+            'unit_id',
+            '1s_id',
+            'id',
+        )
+            ->using(ProductUnit::class)
+            ->wherePivot('is_shippable', '1')
+            ->orderByPivot('price')
+            ->withPivot('id', 'price', 'is_shippable', 'divider', 'multiplier', 'is_from_1s');
+    }
     public function units(): BelongsToMany
     {
         return $this->belongsToMany(
@@ -78,7 +238,7 @@ class Product extends Model
             'id',
         )
             ->using(ImageProduct::class)
-            ->withPivot('name', 'type',);
+            ->withPivot('name', 'type');
     }
 
     public function getBaseUnitAttribute()
@@ -94,19 +254,7 @@ class Product extends Model
         }
         return $baseUnit ?? $from1s;
     }
-//    public function getBaseUnitPriceAttribute()
-//    {
-//        $from1s       = $this->units()->wherePivot('is_from_1s', 1)->first();
-//        $withMinPrice = 10_000_000;
-//        $baseUnit     = null;
-//        foreach ($this->units as $unit) {
-//            if ($unit->pivot->price < $withMinPrice) {
-//                $withMinPrice = $unit->pivot->price;
-//                $baseUnit     = $unit;
-//            }
-//        }
-//        return $baseUnit ?? $from1s;
-//    }
+
     public function getShippableUnitsAttribute()
     {
         return $this->units()->wherePivot('is_shippable', 1)->get();
@@ -136,63 +284,6 @@ class Product extends Model
         ]);
     }
 
-    public function orderItem(): hasOneThrough
-    {
-        return $this->hasOneThrough(
-            OrderItem::class, //дб order_product_id
-            OrderProduct::class,
-            'product_id',//orderitems
-            'order_product_id', //order_product for orderitems
-            '1s_id', //proudcts
-            'id', //order_product
-        );
-    }
-
-    public function orderItems(): hasManyThrough
-    {
-        return $this->hasManyThrough(
-            OrderItem::class, //дб order_product_id
-            OrderProduct::class,
-            'product_id',//orderitems
-            'order_product_id', //order_product for orderitems
-            '1s_id', //proudcts
-            'id', //in order_product
-        );
-    }
-
-    public function orderProduct(): hasOne
-    {
-        return $this->hasOne(
-            OrderProduct::class,
-            'product_id',
-            '1s_id',
-        );
-    }
-
-    public function order()
-    {
-        list($field, $value) = CartService::getCartFieldValue();
-        $order = Order::where($field, $value)->first();
-        $id    = $order?->id ?: null;
-        return $this->hasOne(OrderProduct::class,
-            'product_id',
-            '1s_id',
-        )->where('order_id', $id);
-    }
-
-    public function orders(): HasMany|BelongsToMany
-    {
-        $user = AuthService::getUser();
-        if ($user) {
-            return $this
-                ->belongsToMany(Order::class)
-                ->where('user_id', $user->id);
-        }
-
-        return $this
-            ->hasMany(Order::class, 'vitex_guest_id', AuthService::getUser());
-    }
-
     public function ownProperties(): HasOne
     {
         return $this
@@ -201,19 +292,6 @@ class Product extends Model
                 '1s_id');
     }
 
-    public function like(): HasOne
-    {
-        list($field, $value) = CartService::getCartFieldValue();
-        return $this->hasOne(Like::class, 'product_id', '1s_id')
-            ->where($field, $value);
-    }
-
-    public function compare(): HasOne
-    {
-        list($field, $value) = CartService::getCartFieldValue();
-        return $this->hasOne(Compare::class, 'product_id', '1s_id')
-            ->where($field, $value);
-    }
 
     public function scopeWithWhereHas($query, $relation, $constraint)
     {
@@ -294,16 +372,24 @@ class Product extends Model
         return $this->hasMany(Promotion::class, 'product_1s_id', '1s_id');
     }
 
+    public function scopeWithActivePromotions($query)
+    {
+        return $query->with(['promotions' => function ($q) {
+            $q->where('active_till', '>=', Carbon::today()->toDateString())
+                ->with('unit');
+        }]);
+    }
     public function activePromotions(): hasMany
     {
         return $this->promotions()
-            ->where('active_till', '>=', Carbon::today()->toDateString());
+            ->where('active_till', '>', Carbon::today()->toDateString())
+            ->with('unit');
     }
-
     public function inactivePromotions(): hasMany
     {
         return $this->promotions()
-            ->where('active_till', '<', Carbon::today()->toDateString());
+            ->where('active_till', '<', Carbon::today()->toDateString())
+            ->with('unit');
     }
 
     public function manufacturer(): BelongsTo
@@ -328,6 +414,66 @@ class Product extends Model
     {
         return $this->category()->with('parentRecursive');
     }
+    public function orderItem(): hasOneThrough
+    {
+        return $this->hasOneThrough(
+            OrderItem::class, //дб order_product_id
+            OrderProduct::class,
+            'product_id',//orderitems
+            'order_product_id', //order_product for orderitems
+            '1s_id', //proudcts
+            'id', //order_product
+        );
+    }
+
+    public function orderItems(): hasManyThrough
+    {
+        return $this->hasManyThrough(
+            OrderItem::class, //дб order_product_id
+            OrderProduct::class,
+            'product_id',//orderitems
+            'order_product_id', //order_product for orderitems
+            '1s_id', //proudcts
+            'id', //in order_product
+        );
+    }
+
+
+
+    public function orderProduct(): hasOne
+    {
+        return $this->hasOne(
+            OrderProduct::class,
+            'product_id',
+            '1s_id',
+        );
+    }
+
+    public function order()
+    {
+        list($field, $value) = CartService::getCartFieldValue();
+        $order = Order::where($field, $value)->first();
+        $id    = $order?->id ?: null;
+        return $this->hasOne(OrderProduct::class,
+            'product_id',
+            '1s_id',
+        )->where('order_id', $id);
+    }
+
+    public function orders(): HasMany|BelongsToMany
+    {
+        $user = AuthService::getUser();
+        if ($user) {
+            return $this
+                ->belongsToMany(Order::class)
+                ->where('user_id', $user->id);
+        }
+
+        return $this
+            ->hasMany(Order::class, 'vitex_guest_id', AuthService::getUser());
+    }
+
+
 }
 
 

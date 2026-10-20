@@ -2,11 +2,12 @@
 
 
 <div class="item-wrap"
+     data-catalog_item
      {!!$catItem['dataAttributes']??''!!}
      data-model="{!!$catItem['model']??''!!}"
      data-id="{!!data_get($catItem, 'item.id')!!}"
 >
-    {{--@deb--}}
+{{--    @deb--}}
     @if($catItem['tabs'])
         @include('admin.components.catalogItem.withTabs')
     @else

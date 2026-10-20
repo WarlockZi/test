@@ -1,16 +1,15 @@
 @extends('layouts.main.main')
 
 @section('content')
-    <h1 class="compare-h1">Страница сравнения товаров</h1>
+{{--                @deb--}}
+    <h1 class="compare-h1" data-jsmodule="compare">Страница сравнения товаров</h1>
     @if($compares)
         <div class='product-wrap' data-compare>
-            @foreach($compares as $compare)
+            @foreach($compares as $product)
                 @php
-                    $product = $compare->product;
-                    $txt = $product->txt;
+                    $txt = $product['own_properties']['txt'];
                 @endphp
-                {{--                @php xdebug_break() @endphp--}}
-                @include('components.product_card.product_card', ['product'=>$compare->product])
+                @include('category.product_card', compact('product'))
             @endforeach
         </div>
     @else

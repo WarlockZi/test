@@ -8,7 +8,6 @@
         : ''!!}
     <a
             href="/product/{!!$product['slug']!!}" class="product">
-{{--@deb--}}
         <h3 class="name">{!!$product['print_name']!!}</h3>
 
         <img src="{!!image($product['own_properties']['main_image']??null)!!}"
@@ -16,10 +15,12 @@
              loading="lazy">
         <div class="footer">
 
+            {{--@deb--}}
             @if(isset($product['baseUnit']))
                 <p>Цена: {!!$product['instore']
-                        ? $product['baseUnit']
-                        : "<span class='danger'>от</span> " . $product['base_unit']['pivot']['price']!!}</p>
+                        ? "{$product['base_unit']['pivot']['price']} р."
+                        : "<span class='danger'>от</span> {$product['base_unit']['pivot']['price']} р."!!}
+                </p>
             @endif
 
             <p>Статус: {!!$product['instore']
@@ -28,8 +29,15 @@
             <p>Артикул: {!!$product['art'] ?? ''!!}</p>
         </div>
     </a>
-
-    @include('product.card.shippableUnits')
+{{--    @deb--}}
+    @if(!empty($product['cart_items']))
+        @foreach($product['cart_items'] as $orderitem)
+            @include('product.card.shippableUnits', compact('orderitem'))
+        @endforeach
+    @else
+        @php($orderitem['unit_id']=null)
+        @include('product.card.shippableUnits', compact('orderitem'))
+    @endif
 
     @include('components.card_panel.product_card_panel', compact('product'))
 

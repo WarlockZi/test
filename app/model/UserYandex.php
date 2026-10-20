@@ -16,6 +16,7 @@ class UserYandex extends Model implements IUser
     public $table = 'user_yandex';
     public $timestamps = true;
     protected $fillable = [
+        'guest_id',
         'ya_id',
         'login',
         'client_id',

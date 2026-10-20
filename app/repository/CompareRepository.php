@@ -3,23 +3,34 @@
 
 namespace app\repository;
 
-use app\formRequest\CompareRequest;
 use app\model\Compare;
+use app\model\Product;
 use app\service\AuthService\AuthService;
 use app\service\Cart\CartService;
 use Illuminate\Database\Eloquent\Collection;
-use LaravelIdea\Helper\app\model\_IH_Compare_C;
 use Throwable;
 
 class CompareRepository
 {
-    public static function all(): Collection|_IH_Compare_C|array
+    public function addCompare(mixed $account_id, mixed $product_1s_id): void
     {
-        list($field, $value) = CartService::getCartFieldValue();
-        $compares = Compare::where($field, $value)
-            ->with('product.units')
-            ->get();
-        return $compares;
+        $like = Compare::updateOrCreate(
+            ['account_id' => $account_id,
+                'product_1s_id' => $product_1s_id,
+            ], []
+        );
+    }
+
+    public static function all()
+    {
+        $products = Product::query()
+            ->isCompared()
+            ->with(['shippableUnits'])
+            ->get()
+            ->append(['is_compared', 'is_liked', 'cart_items'])
+            ->toArray();
+
+        return $products;
     }
 
     public static function updateOrCreate($req): bool

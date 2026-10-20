@@ -2,7 +2,7 @@
 
 @section('content')
 
-<h1>Отзывы</h1>
+<h1 data-jsmodule="main">Отзывы</h1>
 <div class="reviews-list">
     <div class="review-item">
         <div class="review-name">Анастасия М.</div>

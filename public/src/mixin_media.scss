@@ -314,9 +314,6 @@
     flex-direction: column;
     gap: 2px;
 
-
-
-
     .button {
       display: flex;
       justify-content: center;
@@ -327,7 +324,6 @@
       border-radius: 5px;
       transition: background-color 100ms ease-in-out;
       border: none;
-      flex: 1;
       font-size: 1em;
     }
 
@@ -348,7 +344,7 @@
       background-color: var.$color-main;
       margin-bottom: 10px;
       justify-content: center;
-      font-size: 1em;
+      font-size: clamp(9px, 7vw, 1em);
 
       &:hover {
         background-color: color.adjust(var.$color-main, $lightness: -10%);
@@ -587,20 +583,18 @@
 @mixin product-card {
   .product-wrap {
     position: relative;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(170px, 100%), 1fr));
     gap: 20px;
     margin-bottom: 50px;
-    justify-content: flex-start;
-
-    @include m400 {
-      justify-content: center;
-    }
+    //justify-content: flex-start;
 
     .column {
       position: relative;
+      display: grid;
+      grid-row: span 2;
+      grid-template-rows: subgrid;
       background-color: white;
-      width: 195px;
       margin-bottom: 25px;
 
       &.hover{
@@ -633,10 +627,7 @@
       color: var.$color-gray10;
       margin-bottom: 0;
       line-height: clamp(12px, 4vw, 20px);
-
-      @include m400 {
-        width: 93%;
-      }
+      min-width: 0;
 
       img {
         width: 100%;
@@ -685,6 +676,7 @@
     }
   }
 }
+
 
 @mixin input-clear {
   input::-webkit-outer-spin-button,

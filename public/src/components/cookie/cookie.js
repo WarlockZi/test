@@ -1,4 +1,4 @@
-import "./cookie.scss";
+import "../../Modules/main/we_use_cookie_notification/cookie.scss";
 import { $, getCookie, setCookie } from "../../common";
 
 check_cookie("cn");

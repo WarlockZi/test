@@ -1,5 +1,4 @@
 import { $, createElement, post } from "../../common";
-import SelectNew from "@components/select/del/SelectNew.js";
 import SearchableSelect from "@components/select/Factory/SearchableSelect.js";
 
 export default class Property {

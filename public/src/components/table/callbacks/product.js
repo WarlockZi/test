@@ -1,4 +1,4 @@
-import { $, post } from "@src/common.js";
+import { $, formatter, post } from "@src/common.js";
 
 export default class Callbacks {
   async changeunit(target, table, detail) {
@@ -81,9 +81,9 @@ export default class Callbacks {
 
     function eatherDividerOrMultiplier(target, multiplierCell, dividerCell) {
       if (dividerCell?.innerText && multiplierCell?.innerText) {
-        if (target.dataset.pivot === "divider") {
+        if (target.dataset.field === "divider") {
           multiplierCell.innerText = "";
-        } else if (target.dataset.pivot === "multiplier") {
+        } else if (target.dataset.field === "multiplier") {
           dividerCell.innerText = "";
         }
       }
@@ -92,10 +92,10 @@ export default class Callbacks {
     function renderPrice(divider, multiplier, priceCell, from1sPrice) {
       let perUnitPrice;
       if (divider) {
-        perUnitPrice = from1sPrice / divider;
+        perUnitPrice = (from1sPrice / divider).toFixed(2);
         priceCell.innerText = perUnitPrice;
       } else if (multiplier) {
-        perUnitPrice = from1sPrice * multiplier;
+        perUnitPrice = (from1sPrice * multiplier).toFixed(2);
         priceCell.innerText = perUnitPrice;
       } else {
         perUnitPrice = from1sPrice;
@@ -156,6 +156,7 @@ export default class Callbacks {
   }
 
   callMethod(methodName, args) {
+    // debugger;
     if (typeof this[methodName] === "function") {
       this[methodName](...args);
     } else {

@@ -22,7 +22,7 @@ return [
 
     'lottery' => [2, 100],
 
-    'cookie' => env(
+    'we_use_cookie_notification' => env(
         'SESSION_COOKIE',
         Str::slug(env('APP_NAME', 'laravel'), '_').'_session'
     ),

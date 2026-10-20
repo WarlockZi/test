@@ -36,7 +36,7 @@ class ProductFormView
         try {
             return ItemBuilderNew::build($product, 'product')
                 ->pageTitle('Товар :  ' . $product['name'])
-                ->data(['sid'=>$product['1s_id']])
+                ->data(['sid'=>$product['1s_id'],'jsmodule'=>'product'])
                 ->field(
                     ItemFieldBuilder::build('art', $product)
                         ->name('Артикул')
@@ -51,6 +51,7 @@ class ProductFormView
                 ->field(
                     ItemFieldBuilder::build('print_name', $product)
                         ->name('Наименование для печати')
+                        ->data(['field'=>'print_name'])
                         ->contenteditable()
                         ->get()
                 )
@@ -289,7 +290,7 @@ class ProductFormView
 
     public static function dnd(): DndBuilder
     {
-        return DndBuilder::make('', 'add-file');
+        return DndBuilder::make('/adminsc/product/saveMainImage', 'add-file');
     }
 
     protected static function getSelect(Category $category, Product $product): string
@@ -319,27 +320,27 @@ class ProductFormView
             ItemFieldBuilder::build('seo_description', $product->ownProperties)
                 ->name('Description')
                 ->contenteditable()
-                ->data(['relation' => 'ownProperties'])
+                ->data(['relation' => 'ownProperties','field'=>'seo_description'])
                 ->get()->toHtml() .
             ItemFieldBuilder::build('seo_title', $product->ownProperties)
                 ->name('Title')
                 ->contenteditable()
-                ->data(['relation' => 'ownProperties'])
+                ->data(['relation' => 'ownProperties','field'=>'seo_title'])
                 ->get()->toHtml() .
             ItemFieldBuilder::build('seo_keywords', $product->ownProperties)
                 ->name('Keywords')
                 ->contenteditable()
-                ->data(['relation' => 'ownProperties'])
+                ->data(['relation' => 'ownProperties','field'=>'seo_keywords'])
                 ->get()->toHtml() .
             ItemFieldBuilder::build('seo_h1', $product->ownProperties)
                 ->name('H1')
                 ->contenteditable()
-                ->data(['relation' => 'ownProperties'])
+                ->data(['relation' => 'ownProperties','field'=>'seo_h1'])
                 ->get()->toHtml() .
             ItemFieldBuilder::build('seo_article', $product->ownProperties)
                 ->name('Seo article')
                 ->data(['id' => 'seo-article',
-                    'quill' => 'admin'])
+                    'quill' => 'admin','field'=>'seo_article'])
                 ->html(
                     self::getSeoArticle($product)
                 )

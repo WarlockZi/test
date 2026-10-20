@@ -4,7 +4,7 @@
         <a class="list__item" href="/auth/profile">Изменить свой профиль</a>
         <a class="list__item" href="/auth/changepassword">Сменить пароль</a>
         <? if (\app\service\AuthService\AuthService::getUser()->isAdmin()): ?>
-            <a class="list__item" href="/adminsc">Admin</a>
+            <a class="list__item" href="/adminsc/adminsc/ind">Admin</a>
         <? endif; ?>
     </div>
 </main>

@@ -9,7 +9,7 @@
 <head>
     <!--	MainLaiout.blade.php-->
     <meta charset="utf-8">
-    <meta name="phpSession" content="{!!$_SESSION['phpSession'] ?? '';!!}">
+    <meta name="CSRF" content="{!!generateCsrfToken()!!}">
     <meta http-equiv="cleartype" content="on"/>
     <meta name="MobileOptimized" content="320">
     <meta name="HandheldFriendly" content="True">
@@ -24,13 +24,6 @@
     @endphp
     <link rel='icon' href='{{$link}}' type='image/svg+xml'>
 
-    <link rel="prefetch" href="/main/forms" as="fetch" crossorigin>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-          rel="stylesheet">
-
     <title>@yield('title')</title>
     <meta name="description" content="@yield('description')">
     <meta name="keywords" content="@yield('keywords')">
@@ -43,7 +36,8 @@
     @endif
 
 
-    {!!(APP->get(Vite::class))->vite(['Auth/auth.js','Main/main.js'])!!}
+    {{--    {!!(APP->get(Vite::class))->vite(['Auth/auth.js','Main/main.js'])!!}--}}
+    {!!(APP->get(Vite::class))->vite(['Main/main.js'])!!}
 
 </head>
 
@@ -54,19 +48,19 @@
 <div class="user-content-wrap">
 
     <main class="user-content">
-        @if (AuthService::userIsAdmin())
+{{--        @deb--}}
+        @if (AuthService::getUser()?->isAdmin() ?? false)
             <div class="admin-gap"></div>
         @endif
 
-        {{--@deb--}}
         @yield('error')
 
         @yield('content')
 
 
     </main>
-    <div class="chat-icon" title="Чат">{!!Icon::chat2()!!}</div>
-    <form class="chat-form" id="chatForm">
+    <div class="chat-icon none" title="Чат">{!!Icon::chat2()!!}</div>
+    <form class="chat-form none" id="chatForm">
         <div class="modal-close">@php echo Icon::close() @endphp</div>
         <div class="messages"></div>
         <input type="text" class="chat-name-input" data-user-name placeholder="Здравствуйте, как Вас зовут?">

@@ -1,9 +1,11 @@
+@php use app\view\components\Icon\Icon; @endphp
 <li class="nav-item nav-expand">
 
     <a class="nav-link nav-expand-link"
        href="javascript:void(0)"
     >
-        {{$child['name']}}
+        {!!$child['name']!!}
+        <span class="chevron-right">{!!Icon::chevron_right()!!}</span>
     </a>
 
     <ul class="nav-items nav-expand-content">

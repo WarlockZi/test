@@ -11,16 +11,13 @@ use app\model\User;
 use app\repository\UserRepository;
 use app\repository\UserYandexRepository;
 use app\service\AuthService\AuthService;
+use app\service\AuthService\AuthYandexService;
 use app\service\Mail\PHPMailService;
 use app\service\PasswordGenerator\PasswordGeneratorService;
 use app\service\Router\IRequest;
 use app\view\User\UserView;
-use Exception;
-use Illuminate\Validation\ValidationException;
 use JetBrains\PhpStorm\NoReturn;
 use Throwable;
-use Tigusigalpa\YandexID\Exceptions\ApiException;
-use Tigusigalpa\YandexID\Exceptions\InvalidRequestException;
 
 class AuthController extends AppController
 {
@@ -28,39 +25,61 @@ class AuthController extends AppController
         protected AuthActions    $actions,
         protected PHPMailService $mailer,
         protected UserRepository $userRepository,
+
     )
     {
         parent::__construct();
     }
 
-    /**
-     * @throws ValidationException|Exception
-     */
     #[NoReturn]
     public function actionLogin(LoginRequest $request, AuthActions $actions): void
     {
         $validated = $request->safe()->only('email', 'password');
-        $user = $actions->checkLoginPasswordConfirm($validated);
-
+        $user      = $actions->checkLoginPasswordConfirm($validated);
         AuthService::login($user);
 
         if ($user->isEmployee()) {
             response()->json(['role' => 'employee', 'id' => $user['id']]);
         } else if ($user->isAdmin()) {
             response()->json(['role' => 'admin', 'id' => $user['id']]);
-        } else {
-            response()->json(['role' => 'guest', 'id' => $user['id']]);
+        }
+        response()->json(['role' => 'guest', 'id' => $user['id']]);
+    }
+
+    public function actionYandex(AuthYandexService $service): void
+    {
+        if (isset($_GET['state'])) {
+            $service->checkYandexResponseState();
+            setcookie('yandex_oauth_state', '', time() - 3600, '/');
+            $yandexProfile = $service->exchangeCode();
+            $userYandex    = UserYandexRepository::getByEmail($yandexProfile['default_email'], ['*'], ['role']);
+            AuthService::login($userYandex);
+            response()->redirect($_SESSION['yandex_oauth_back_url'] ?? '/');
+        }
+        $_SESSION['yandex_oauth_back_url'] = $_SERVER['HTTP_REFERER'];
+        $service->getYandexCode();
+    }
+
+    public function actionConfirm(IRequest $request): void
+    {
+        if (!$request->id) header('Location:/');
+
+        $user = User::where('hash', $request->id)->first();
+        if (!$user) {
+            response()->redirect('/');
+        }
+
+        if ($user->update(['confirm' => 1])) {
+            AuthService::login($user);
+            response()->redirect('/');
         }
     }
 
-    /**
-     * @throws ValidationException
-     */
     public function actionReturnpass(ReturnPassRequest $request): void
     {
         $req = $request->validated();
 
-        session()->forget('id');
+        session()->nullify('id');
         $user = $this->userRepository->getByEmail($req['email']);
 
         if (!$user) {
@@ -114,35 +133,6 @@ class AuthController extends AppController
     }
 
 
-    public function actionYandex(): void
-    {
-        [$clientId, $clientSecret, $redirectUri] = $this->actions->getYandexOptions();
-
-        if (!isset($_GET['code'])) {
-            $this->actions->getYandexCode($clientId, $clientSecret, $redirectUri);
-        }
-
-        $this->actions->checkYandexResponseState();
-
-        setcookie('yandex_oauth_state', '', time() - 3600, '/');
-        unset($_COOKIE['yandex_oauth_state']);
-
-        $code = $_GET['code'] ?? '';
-
-        $yandexProfile = $this->actions->exchangeCode($clientId, $clientSecret, $code);
-        $userYandex          = UserYandexRepository::getByEmail($yandexProfile['default_email'], ['*'], ['role']);
-
-        AuthService::login($userYandex);
-        response()->redirect('/');
-
-// 🔄 Обновление токена
-//        $newToken = $client->refreshToken($token->refreshToken);
-// 🗑️ Отзыв токена
-//        $success = $client->revokeToken($token->accessToken);
-//        echo "Token revoked: " . ($success ? 'Yes' : 'No') . "\n";
-    }
-
-
     #[NoReturn]
     public function actionProfile(): void
     {
@@ -161,9 +151,11 @@ class AuthController extends AppController
 
     public function actionChangePassword(ChangePasswordRequest $request): void
     {
-        if (!AuthService::getUser()) {
-            response()->withError('чтобы поменять пароль нужно войти в свой аккаунт')->redirect('/');
+        if (!isset($request->all()['old_password'])) {
+            $user = AuthService::getUser();
+            view('auth.change-password', compact('user'));
         }
+
         $request = $request->validated();
 
         if (!$request['old_password'] || !$request['new_password'])
@@ -180,51 +172,16 @@ class AuthController extends AppController
             ? response()->json(['success' => 'Пароль поменян'])
             : response()->json(['msg' => 'Что-то пошло не так (']);
 
-        view('auth.change-password', compact('user'));
-
 
     }
 
     #[NoReturn]
     public function actionLogout(): void
     {
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-        $_SESSION = [];
-
-        if (ini_get("session.use_cookies")) {
-            $params = session_get_cookie_params();
-            setcookie(
-                session_name(),
-                '',
-                time() - 42000,
-                $params["path"],
-                $params["domain"],
-                $params["secure"],
-                $params["httponly"]
-            );
-        }
-        session_destroy();
-
+        AuthService::logout();
         response()->back();
     }
 
-
-    public function actionConfirm(IRequest $request): void
-    {
-        if (!$request->id) header('Location:/');
-
-        $user = User::where('hash', $request->id)->first();
-        if (!$user) {
-            response()->redirect('/');
-        }
-
-        AuthService::login($user);
-        if ($user->update(['confirm' => 1])) {
-            response()->redirect('/');
-        }
-    }
 
     public function actionUnautherized(): void
     {

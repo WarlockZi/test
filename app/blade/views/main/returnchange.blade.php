@@ -1,7 +1,7 @@
 @extends('layouts.main.main_with_meta')
 
 @section('content')
-    <main>
+    <main data-jsmodule="main">
 
 
         <h1>Возврат и Обмен</h1>

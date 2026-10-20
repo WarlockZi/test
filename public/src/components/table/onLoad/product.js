@@ -1,4 +1,4 @@
-import { checkboxSelector, searchSelector } from "../../../constants.js";
+import { searchSelector } from "@src/constants.js";
 import { $ } from "@src/common.js";
 
 export default class Callbacks {
@@ -23,7 +23,7 @@ export default class Callbacks {
       const key = Object.keys(rows)[i];
       const cells = rows[key];
       const from1sCell = this.getFrom1sCell(cells, "from_1s");
-      if (from1sCell && !from1sCell.innerText) continue;
+      if (from1sCell && !from1sCell.innerText.trim()) continue;
       if (from1sCell) {
         this.setFrom1sCellsDisabled(cells);
       }

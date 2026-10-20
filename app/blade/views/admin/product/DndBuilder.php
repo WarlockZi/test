@@ -19,7 +19,7 @@ class DndBuilder
     ): self
     {
         $dnd          = new static();
-        $dnd->path    = "data-path='{$path}'";
+        $dnd->path    = "data-action='{$path}'";
         $dnd->class   = "class ='{$class}'";
         $dnd->tooltip = $tooltip;
         $dnd->img     = $img;

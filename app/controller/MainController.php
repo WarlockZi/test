@@ -8,6 +8,7 @@ use app\model\CategoryProperty;
 use app\repository\CategoryRepository;
 use app\repository\HeroCategroyRepository;
 use app\repository\PromotionRepository;
+use app\service\Promotion\PromotionService;
 use app\service\Router\IRequest;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Str;
@@ -50,7 +51,7 @@ class MainController extends AppController
     #[NoReturn] public function actionForms(): void
     {
         $forms = [];
-        header('Cache-Control: public, max-age=3600');
+        header('Clear_cache-Control: public, max-age=3600');
         die('<div>form</div>');
         response()->popup('form is loaded');
     }
@@ -74,15 +75,17 @@ class MainController extends AppController
         view('main.about', compact('meta'));
     }
 
-    #[NoReturn] public function actionPromotions(): void
+    #[NoReturn] public function actionPromotions(PromotionRepository $repo, PromotionService $service): void
     {
         $meta = $this->actions->setMeta(
             'Акции',
             'Акции' . $this->titleTail,
             'Акции');
 
-        $activePromotions   = PromotionRepository::active()->toArray();
-        $inactivePromotions = PromotionRepository::inactive()->toArray();
+
+        $activePromotions   = $service->getActivePromotions($repo);
+
+        $inactivePromotions = $service->getInactivePromotions($repo);
         view('promotion.promotions',
             compact(
                 'meta',

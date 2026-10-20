@@ -1,0 +1,6 @@
+@use "../../mixin_media";
+
+.likes-page{
+  @include mixin_media.product-card;
+  @include mixin_media.shippable;
+}

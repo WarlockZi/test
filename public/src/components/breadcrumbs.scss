@@ -207,6 +207,7 @@ nav.breadcrumbs-5 {
     flex-wrap: wrap;
     row-gap: 10px;
     margin-bottom: 10px;
+    font-size: clamp(8px, 7vw, 0.8rem);
   }
 
   li {
@@ -215,7 +216,7 @@ nav.breadcrumbs-5 {
     margin: 0 5px 0 -17px;
     padding: 0 20px;
     position: relative;
-    font-size: 13px;
+    //font-size: 13px;
     font-family: Verdana, sans-serif;
   }
 
@@ -224,7 +225,7 @@ nav.breadcrumbs-5 {
     border-right: 3px solid #BFE2FF;
     content: '';
     display: block;
-    height: 27%;
+    height: 6px;
     position: absolute;
     right: 0;
     top: 5px;

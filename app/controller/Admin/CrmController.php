@@ -12,17 +12,10 @@ class CrmController extends AdminscController
     {
         parent::__construct();
 
-        if (!AuthService::userIsEmployee()) {
+        if (!AuthService::getUser()->isEmployee()) {
             header('Location:/auth/profile');
         }
     }
-
-//    public function actionClearCache(): void
-//    {
-//        $path = ROOT . "/tmp/cache/*.txt";
-//        array_map("unlink", glob($path));
-//        exit('Успешно');
-//    }
 
     public function actionSiteMap(): void
     {

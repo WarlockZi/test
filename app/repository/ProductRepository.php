@@ -10,7 +10,6 @@ class ProductRepository
 {
     public function edit(int $id)
     {
-        $p = Product::with('units')->find($id)->toArray();
         $product = Product::query()
             ->withTrashed()
             ->with('category.properties.vals')
@@ -20,9 +19,10 @@ class ProductRepository
             ->with('units')
             ->with('ownProperties')
             ->with('manufacturer.country')
-            ->with('promotions')
+//            ->with('promotions')
+//            ->withActivePromotions()
             ->with('activePromotions')
-            ->with('inactivePromotions')
+//            ->with('inactivePromotions')
             ->find($id);
         if ($product) {
             $product->append('mainImage');
@@ -33,32 +33,21 @@ class ProductRepository
     public function index(string $slug): ?Product
     {
         $prod = Product::query()
+            ->where('slug', $slug)
             ->withTrashed()
-//            ->orderBy('sort')
             ->with('category.properties.vals')
             ->with('category.parentRecursive.ownProperties')
             ->with('category.ownProperties')
             ->with('values.property')
-            ->with('units')
             ->with('ownProperties')
             ->with('manufacturer.country')
-            ->with('activepromotions.unit')
-            ->with('order')
-            ->with('like')
-            ->with('compare')
-            ->where('slug', $slug)
+            ->withActivePromotions()
             ->first()
-        ;
+            ->append(['mainImage', 'base_unit', 'shippable_units', 'is_liked', 'cart_items', 'is_compared']);
+//        $p    = $prod->toArray();
 
-        if ($prod) {
-//            $p = $prod->toArray();
-            $prod->append('mainImage');
-            $prod->append('base_unit');
-            $prod->append('shippable_units');
-        }
         return $prod;
     }
-
 
     public static function similarProducts(string $subslug1, string $subslug2): Collection
     {
@@ -70,7 +59,19 @@ class ProductRepository
         }
         return $q->get();
     }
+    public function updatePrintName(array $validated): string
+    {
+        try {
+            $firstKey = array_key_first($validated['field']);
+            $field = $validated['field'][$firstKey];
+            $id =   $validated['id'];
+            Product::where('id', $id)->update([$firstKey => $field]);
+            return 'Поле обновлено';
+        }catch (\Exception $exception){
+            return $exception->getMessage();
+        }
 
+    }
     private static function defaultFilter()
     {
         return Product::query()

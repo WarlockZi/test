@@ -1,7 +1,9 @@
-import { $ } from "../../common.js";
+import { $ } from "@src/common.js";
 
 $(document).ready(async () => {
   const heroImage = document.querySelectorAll(".hero-image");
+  if (!heroImage) return false;
+
   const evenHeroImages = [];
   const oddHeroImages = [];
 
@@ -18,9 +20,7 @@ $(document).ready(async () => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add("translateX0");
-          // entry.target.style.tranform = "translateX(0)";
           entry.target.classList.add("opacity1");
-          // observer.unobserve(entry.target);// Optional: Stop observing once animated
         }
       });
     },

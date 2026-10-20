@@ -19,7 +19,7 @@ class ProductMainImageMiddleware implements IMiddleware
     {
         $allowed = 30;
         $message = "File size must be less than {$allowed} mb";
-        if ($size > $allowed * 1024 * 1024) Response::exitWithPopup($message);
+        if ($size > $allowed * 1024 * 1024) response()->popup($message);
     }
 
     private function validateType(string $type): void
@@ -32,7 +32,7 @@ class ProductMainImageMiddleware implements IMiddleware
         },$allowed);
 
         $message = "Тип файла должен быть {$allowedStirng}";
-        if (in_array($type, $allowedArray)) Response::exitWithPopup($message);
+        if (in_array($type, $allowedArray)) response()->popup($message);
 
     }
 }

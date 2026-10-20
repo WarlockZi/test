@@ -11,10 +11,11 @@ class StoreProductMainImageRequest extends FormRequest2
     {
         parent::__construct();
     }
+
     public function authorize(): bool
     {
-        $user = AuthService::userIsAdmin();
-        return (bool)$user;
+        $isAdmin = AuthService::getUser()?->isAdmin() ?? false;
+        return (bool)$isAdmin;
     }
 
     public function rules(): array

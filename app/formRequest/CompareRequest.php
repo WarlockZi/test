@@ -15,21 +15,16 @@ class CompareRequest extends FormRequest1
     public function rules(): array
     {
         return [
-            'fields' => 'required',
-            'phpSession' => 'required|string',
+            'product_1s_id' => 'required|string',
         ];
     }
+
 
     public function messages(): array
     {
         return [
-            'fields.required' => 'Требуется поле fields',
-            'phpSession.required' => 'Требуется поле phpSession',
-            'phpSession.string' => 'phpSession должно быть строкой',
+            'product_1s_id.required' => 'Отсутствует product 1s id',
+            'product_1s_id.string' => 'product 1s id должен быть строкой',
         ];
-    }
-    public function authorize(): bool
-    {
-        return !empty($this->json('phpSession'));
     }
 }

@@ -41,8 +41,8 @@ class ImageController extends AdminscController
 
     public function actionAttachMany()
     {
-        if (!$_POST) Response::exitWithPopup('нет данных');
-        if (!$_FILES) Response::exitWithPopup('нет файлов');
+        if (!$_POST) response()->popup('нет данных');
+        if (!$_FILES) response()->popup('нет файлов');
         $morphed = $_POST['morphed'];
         $morph   = $_POST['morph'];
         $images  = [];
@@ -61,17 +61,17 @@ class ImageController extends AdminscController
         if ($srcs) {
             response()->json($srcs);
         }
-        Response::exitWithPopup("Уже есть");
+        response()->popup("Уже есть");
     }
 
     public function attachOne()
     {
-        if (!$_POST) Response::exitWithPopup('нет данных');
-        if (!$_FILES) Response::exitWithPopup('нет файлов');
+        if (!$_POST) response()->popup('нет данных');
+        if (!$_FILES) response()->popup('нет файлов');
         $morphed = $_POST['morphed'];
         $morph   = $_POST['morph'];
 
-        if (count($_FILES) > 1) Response::exitWithPopup('Можно только один файл');
+        if (count($_FILES) > 1) response()->popup('Можно только один файл');
         $file = $_FILES[0];
 
         ImageRepository::validateSize($file);
@@ -86,7 +86,7 @@ class ImageController extends AdminscController
         if ($res) {
             response()->json($res);
         }
-        Response::exitWithPopup("Уже есть такая картинка");
+        response()->popup("Уже есть такая картинка");
 
     }
 }

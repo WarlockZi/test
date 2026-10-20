@@ -2,24 +2,12 @@
 
 namespace app\service\YandexAuth;
 
-use app\model\Mock\MockYandexUser;
 use app\model\UserYandex;
 use app\service\AuthService\AuthService;
-use Throwable;
 
 class YaAuthService
 {
     private array $user = [];
-
-    public function __construct()
-    {
-    }
-
-
-    private function setMockYandexUser(): void
-    {
-        $this->user = (new MockYandexUser())->get()->attributesToArray();
-    }
 
     private function login(): void
     {
@@ -48,10 +36,4 @@ class YaAuthService
         AuthService::login($userYandex);
         AuthService::setUser($userYandex);
     }
-
-    public function getUser(): array
-    {
-        return $this->user;
-    }
-
 }

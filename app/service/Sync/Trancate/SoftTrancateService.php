@@ -24,14 +24,14 @@ class SoftTrancateService implements ITrancateService
             $this->softDelete($model);
         }
         $this->log('--- products  soft deleted ---');
-        Response::exitWithPopup('товары удалены');
+        response()->popup('товары удалены');
     }
 
     public function removePrices(): void
     {
         Price::truncate();
         $this->log('--- price  soft deleted ---');
-        Response::exitWithPopup('цены удалены');
+        response()->popup('цены удалены');
 
     }
 
@@ -41,6 +41,6 @@ class SoftTrancateService implements ITrancateService
             $this->softDelete($model);
         }
         $this->log('--- category  soft deleted ---');
-        Response::exitWithPopup('категории удалены');
+        response()->popup('категории удалены');
     }
 }

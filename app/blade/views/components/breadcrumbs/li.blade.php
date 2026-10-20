@@ -23,7 +23,7 @@
 
 
     <div class="card-panel">
-        @if (AuthService::userIsAdmin())
+        @if (AuthService::getUser()?->isAdmin()??false)
             <a
                     href="/adminsc/category/edit/<?= $item['id'] ?>"
                     class="edit card-panel-item"

@@ -1,7 +1,7 @@
 @extends('layouts.main.main_with_meta')
 
 @section('content')
-    <main class="about">
+    <main class="about" data-jsmodule="main">
 
         <h1>О Компании</h1>
 

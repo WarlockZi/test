@@ -2,7 +2,7 @@
 
 namespace app\model;
 
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class ProductUnit extends Pivot
@@ -20,11 +20,13 @@ class ProductUnit extends Pivot
 
     public $incrementing = true;
 
-    public function unit():hasOne
+    public function unit():belongsTo
     {
-        return $this->hasOne(Unit::class, 'id', 'unit_id');
-
+        return $this->belongsTo(Unit::class);
     }
-
+    public function product():belongsTo
+    {
+        return $this->belongsTo(Product::class, 'product_1s_id', '1s_id');
+    }
 
 }

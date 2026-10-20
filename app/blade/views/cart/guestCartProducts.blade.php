@@ -1,0 +1,59 @@
+@php
+    use app\service\AuthService\AuthService;
+    use app\view\components\Icon\Icon;
+$index = 1;
+@endphp
+@foreach ($order['products'] as $i => $product)
+
+
+    <div class="row cart-item" data-product_1s_id="{!!$product['1s_id']!!} ">
+
+        <div class="num cell">{!!$index++!!}</div>
+
+        <a href="/product/{!!$product['slug']!!}" class="name">
+            <img class="img" src="{!!$product['mainImage']!!}" alt="{!!$product['name']!!}">
+        </a>
+
+        <div class="product-name cell">
+
+            @if (AuthService::getUser())
+{{--@deb--}}
+                <a href="/adminsc/product/edit/{!!$product['id']??null!!}"
+                   class="edit card-panel-item">{!!Icon::edit()!!}</a>
+            @endif
+            <a href="/product/{!!$product['slug']!!}" class="name">{!!$product['name']!!}</a>
+        </div>
+
+        <div class="cart-shippable-table cell">
+            @if(!$product)
+                <div>продукт не определен</div>
+            @else
+{{--                @deb--}}
+                @include('product.card.shippableUnits', compact('product'))
+
+            @endif
+        </div>
+
+        @include('cart.cartSubSum')
+
+        <div class="del cell">{!!Icon::trashWhite()!!}</div>
+    </div>
+
+@endforeach
+
+
+<div class="total">
+    <div class="title">Всего -&nbsp;&nbsp;</div>
+    <span></span>
+</div>
+
+<div class="buttons">
+    @if (!AuthService::getUser())
+        <div class="button" id="cartLogin"
+             title="Чтобы оформить заказ Вам &#10;необходимо зарегистрироваться &#10;или войти под своей учеткой">
+            Войти
+        </div>
+    @else
+        <div class="button" id="cartSubmit">Оформить заказ</div>
+    @endif
+</div>

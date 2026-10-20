@@ -10,7 +10,7 @@
 
 @section('content')
 
-    <div class="hero-banners">
+    <div class="hero-banners" data-jsmodule="main">
         @foreach($heroCategories as $i=>$heroCategory)
             <a href="/catalog/{!!$heroCategory->category->ownProperties->path!!}" class="pile banner">
 

@@ -1,7 +1,7 @@
 @extends('layouts.main.main_with_meta')
 
 @section('content')
-<div class="main">
+<div class="main" data-jsmodule="main">
 
     <h1 class="title_catalog"> Политика конфиденциальности </h1>
     <p>

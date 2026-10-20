@@ -1,7 +1,7 @@
 @extends('layouts.main.main_with_meta')
 
 @section('content')
-<main class="statii">
+<main class="statii" data-jsmodule="main">
 
     <h1>Статьи</h1>
     <ul>

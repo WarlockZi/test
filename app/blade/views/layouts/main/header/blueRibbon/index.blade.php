@@ -30,7 +30,7 @@
 
                 <li>
                     <a href="/cart" class="util-item cart-link" title="Корзина">
-
+{{--@deb--}}
                         @if (APP->get('orderItemsCount'))
                             <div class="count show">{!!APP->get('orderItemsCount')!!}</div>
                         @endif
@@ -41,12 +41,12 @@
 
 
                 <li>
-                    <a href="/compare/page" class="util-item compare" title="Сравнить товары">
+                    <a href="/compare" class="util-item compare" title="Сравнить товары">
                         {!!Icon::chart()!!}
                     </a>
                 </li>
                 <li>
-                    <a href="/like/page" class="util-item like" title="Избранное">
+                    <a href="/like" class="util-item like" title="Избранное">
                         {!!Icon::heart()!!}
                     </a>
                 </li>

@@ -2,6 +2,9 @@
 
 namespace app\repository;
 
+use app\middleware\AuthMiddleware;
+use app\middleware\CartMiddleware;
+
 class RouterRepository
 {
     public static function getRoutes(): array
@@ -17,7 +20,6 @@ class RouterRepository
 
             ["^\/(?P<controller>promotion)\/?(?P<slug>[_a-zA-Z0-9-]+)?$", ['controller' => 'Promotion']],
             ["^\/(?P<controller>main)\/(?P<action>[a-zA-Z0-9]+)$"],
-            ["^\/(?P<controller>logistic)\/(?P<action>[a-zA-Z0-9]+)$"],
             ["^\/(?P<controller>auth)\/(?<action>[a-z0-9]+)?\/?(?<id>[0-9a-zA-z]+)?"],
             ["^\/.?search.?", ['controller' => 'search', 'action' => 'index']],
             ["^\/cart\/?(?P<action>[a-zA-Z]+)?$", ['controller' => 'Cart'], [CartMiddleware::class, AuthMiddleware::class]],

@@ -7,7 +7,7 @@
 
 <!--ADMIN-LAYOUT-->
 <head>
-    <meta name="phpSession" content="<?= $_SESSION['phpSession'] ?? ''; ?>">
+    <meta name="CSRF" content="{!!generateCsrfToken()!!}">
     <meta name="robots" content="noindex,nofollow"/>
     <meta charset="utf-8">
     <link rel='icon' href='{{DEV ? PIC_SERVICE."logo-square-dev.svg" : PIC_SERVICE."logo-square.svg"}}'

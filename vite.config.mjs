@@ -3,7 +3,8 @@ import liveReload from "vite-plugin-live-reload";
 import mkcert from "vite-plugin-mkcert";
 import path from "node:path";
 import { NodePackageImporter } from "sass-embedded";
-import * as bcrypt from "crypto";
+import { randomUUID } from "node:crypto";
+import process from "node:process";
 
 let styleNonce = "";
 export default defineConfig(async ({ command, mode }) => {
@@ -11,14 +12,14 @@ export default defineConfig(async ({ command, mode }) => {
 
   // Generate nonce only once
   if (!styleNonce) {
-    styleNonce = Buffer.from(bcrypt.randomUUID()).toString("base64");
+    styleNonce = Buffer.from(randomUUID()).toString("base64");
   }
 
-  const base = env.VITE_DEV ? "./" : "/public/build/"; // nb no dot before slash for production
+  const outputDir = env.VITE_DEV ? "./" : "/public/build/"; // nb no dot before slash for production
 
   return {
     root: "public/src",
-    base,
+    base: outputDir,
 
     server: {
       https: true,
@@ -33,38 +34,29 @@ export default defineConfig(async ({ command, mode }) => {
     build: {
       outDir: "../build",
       emptyOutDir: true,
-      el: "esnext",
+      target: "esnext",
       manifest: true,
       sourcemap: true,
-      analyze: true,
 
       rollupOptions: {
-        output: {
-          manualChunks: {
-            chartjs: ["chart.js"],
-            quill: ["quill"],
-            lodashes: ["lodash-es"],
-          },
-        },
-
-        external: [
-          "/storage/app/svg/search.svg",
-          "/storage/app/svg/yandex.svg",
-          "/storage/app/svg/arrowUp.svg",
-          "/storage/app/svg/view.svg",
-          "/storage/app/svg/no-view.svg",
-          "/storage/app/svg/upDown.svg",
-          "/storage/app/srvc/main/header-big.png",
-          "/storage/app/srvc/404_bg_pages.webp",
-          "/storage/app/srvc/full-logo.jpg",
-          "/storage/app/srvc/main/site-gloves.jpg",
-          "/storage/app/srvc/main/site-bootcover-824.jpg",
-          "/storage/app/srvc/main/site-syringe-gradientt.jpg",
-        ],
+        treeshake: true,
         input: {
           auth: path.resolve(__dirname, "public/src/Auth/auth.js"),
           admin: path.resolve(__dirname, "public/src/Admin/admin.js"),
           main: path.resolve(__dirname, "public/src/Main/main.js"),
+        },
+        output: {
+          manualChunks(id) {
+            if (!id.includes("node_modules")) return undefined;
+
+            // Тяжелые библиотеки → отдельные чанки
+            if (id.includes("/chart.js/")) return "chartjs";
+            if (id.includes("/quill/")) return "quill";
+            if (id.includes("/lodash-es/")) return "lodash-es";
+
+            // Всё остальное → ОДИН общий vendor-чанк
+            return "vendor";
+          },
         },
       },
     },
@@ -74,8 +66,6 @@ export default defineConfig(async ({ command, mode }) => {
         name: "add-nonce-to-styles",
         transformIndexHtml(html, { command }) {
           if (command === "serve") {
-            // Only in dev mode
-            // console.log('trns html', command);
             return html.replace(
               /(<style[^>]*)(>)/g,
               `$1 nonce="${styleNonce}"$2`,
@@ -87,28 +77,15 @@ export default defineConfig(async ({ command, mode }) => {
           server.middlewares.use((req, res, next) => {
             res.setHeader(
               "Content-Security-Policy",
-              `style-src 'self' 'nonce-${styleNonce}'`,
+              `default-src 'self'; style-src 'self' 'nonce-${styleNonce}'; script-src 'self'`,
             );
             next();
           });
         },
-        // transform(code, id) {
-        //    if (command === 'serve' && id.endsWith('.scss')) {
-        //       console.log(',,,', command);
-        //       return {
-        //          code: code.replace(
-        //             /<style[^>]*>/,
-        //             `<style nonce="${styleNonce}">`,
-        //          ),
-        //          map: null,
-        //       };
-        //    }
-        // },
       },
 
       mkcert(),
       liveReload([
-        // __dirname + '/(app|config|views)/**/*.php',
         __dirname + "/public/**/*.php",
         __dirname + "/app/**/*.php",
         __dirname + "/.env",
@@ -125,15 +102,11 @@ export default defineConfig(async ({ command, mode }) => {
     },
     resolve: {
       alias: {
-        path: "path-browserify", // for path externalized error fix
         "@src": path.resolve(__dirname, "public", "src"),
         "@components": path.resolve(__dirname, "public", "src", "components"),
-        "@srvc": path.resolve(__dirname, "storage", "app", "srvc"),
-        "@svg": path.resolve(__dirname, "storage", "app", "svg"),
+        "@pages": path.resolve(__dirname, "public", "src", "Pages"),
+        "@modules": path.resolve(__dirname, "public", "src", "Modules"),
       },
-    },
-    define: {
-      env: env,
     },
   };
 });

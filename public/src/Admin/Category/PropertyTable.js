@@ -1,11 +1,9 @@
 import { $, post } from "../../common.js";
-import { ael, qa, qs } from "../../constants.js";
+import { ael, qs } from "../../constants.js";
 
 export default class PropertyTable {
   constructor(el) {
     this.el = el;
-    // this.rowsWrap = this.el[qs]('.rows');
-    // this.rows = this.el[qa]('.rows>.row');
     this.$addBtn = this.el[qs](".add-property");
 
     if (this.$addBtn) this.$addBtn[ael]("click", this.newRow.bind(this));

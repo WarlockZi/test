@@ -2,15 +2,22 @@
 
 namespace app\service\Category;
 
+use app\action\CategoryAction;
 use app\repository\CategoryRepository;
 use app\service\Cache\Redis\Cache;
 use Illuminate\Database\Eloquent\Collection;
 
 class CategoryService
 {
+    public static function notFound(CategoryAction $actions)
+    {
+        $categories = APP->get('rootCategories');
+        $meta       = $actions->setCategoriesMeta();
+        view('category.categories', compact('meta', 'categories'));
+
+    }
     public static function similarCategories(array $subslugs): array|object|string|null
     {
-
         $cacheSlug = implode('-', $subslugs);
 
         $collection = Cache::remember(

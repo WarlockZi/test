@@ -41,7 +41,7 @@ class UseryandexController extends AdminscController
         if ($user = $this->ajax) {
             $user['id'] = AuthService::getUser()->id;
             User::updateOrCreate($user);
-            Response::exitWithPopup('Сохранено');
+            response()->popup('Сохранено');
         }
     }
 
@@ -60,9 +60,9 @@ class UseryandexController extends AdminscController
     {
         try {
             $this->repo->changeRole($this->ajax);
-            Response::exitWithPopup('изменено');
+            response()->popup('изменено');
         } catch (Throwable $exception) {
-            Response::exitWithPopup('не изменено');
+            response()->popup('не изменено');
         }
     }
 }

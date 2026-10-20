@@ -2,6 +2,7 @@
 
 namespace app\model;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -11,12 +12,19 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 class Order extends Model
 {
     public $timestamps = true;
+    protected $dateFormat = 'Y-m-d H:i:s';
+
+    // Или переопределить сериализацию даты
+    public function serializeDate(DateTimeInterface $date): string
+    {
+        return $date->format('Y-m-d H:i');
+    }
 
     protected $fillable = [
         'user_id',
         'vitex_guest_id',
         'ip',
-        'submitted',
+        'in_process',
     ];
     public function productsWithoutAppends(): belongsToMany
     {

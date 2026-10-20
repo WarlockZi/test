@@ -2,12 +2,17 @@
 
 namespace app\controller\Admin;
 
+use app\formRequest\OrderInProcessRequest;
 use app\formRequest\OrderRequest;
+use app\model\Account;
 use app\model\Order;
 use app\model\OrderItem;
 use app\repository\OrderRepository;
+use app\service\Admin\AdminOrderService;
+use app\service\AuthService\AuthService;
 use app\service\Response;
 use app\service\Router\IRequest;
+use app\strategy\CartStrategy\AccountCartStrategy;
 use app\view\Order\OrderView;
 use Carbon\Carbon;
 use JetBrains\PhpStorm\NoReturn;
@@ -21,18 +26,28 @@ class OrderController extends AdminscController
         parent::__construct();
     }
 
-    #[NoReturn] public function actionIndex(): void
+    #[NoReturn] public function actionIndex(AdminOrderService $service)
     {
-        $submitted   = OrderRepository::orders(false);
-        $unsubmitted = OrderRepository::orders();
-
-        $submittedTable   = OrderView::table($submitted);
-        $unsubmittedTable = OrderView::table($unsubmitted);
-
+        $accounts = $service->accountsUsersOrders();
+//        $a = [];
+//        foreach (Account::all() as $acc) {
+//            $a[$acc->id] = OrderRepository::accountOrders($acc->id)->toArray();
+//        }
+//        $orde = OrderRepository::accountOrders(AuthService::accountId())->toArray();
+//        $orders = $servie->accountsOrders();
+        $showToCartButton  = false;
         view('admin.order.index',
-            compact('unsubmittedTable',
-                'submittedTable'));
+            compact(
+                'accounts',
+//                'orders',
+                'showToCartButton'
+            ));
 
+    }
+    #[NoReturn] public function actionInprocess(OrderInProcessRequest $request, OrderRepository $repository)
+    {
+        $validated = $request->validated();
+        response()->popup($repository->inProcess($validated));
     }
 
     #[NoReturn] public function actionEdit(IRequest $request): void

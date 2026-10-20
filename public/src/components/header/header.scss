@@ -1,13 +1,13 @@
 @use "sass:color";
-@use "mobile-menu.scss";
+@use "../../Modules/main/mobile_menu/mobile_menu.scss";
 @use "phone.scss";
 @use "user_menu.scss";
 @use "../../mixin_media.scss";
 @use "../../var.scss";
 
-@include mobile-menu.nav-drill;
+@include mobile_menu.nav-drill;
 .burger {
-  top: 0 !important;
+  //top: 0 !important;
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
@@ -341,17 +341,17 @@
   .h-cat {
     position: relative;
     text-transform: lowercase;
-    transition: .3s background-color;
+    transition: 0.3s background-color;
     display: flex;
     align-items: center;
     justify-content: center;
     flex: 1;
     color: white;
     font-weight: 600;
-    line-height: 14px;
-    font-size: 14px;
+    line-height: 1.3rem;
+    font-size: 1rem;
     text-align: center;
-    padding: 5px;
+    padding: 12px 5px;
     letter-spacing: 1px;
     cursor: pointer;
 

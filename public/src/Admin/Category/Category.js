@@ -1,11 +1,6 @@
-import "../Product/product.scss";
-import "./category.scss";
-import PropertyTable from "./PropertyTable";
+import PropertyTable from "./PropertyTable.js";
 import { $, post } from "../../common.js";
-// import SelectNew from "@components/select/del/SelectNew.js";
-// import QuillFactory from "@src/components/quill/QuillFactory.js";
 import SearchableSelect from "@components/select/Factory/SearchableSelect.js";
-// import { QuillConst } from "@src/components/quill/QuillConstans.js";
 
 export default class Category {
   constructor(el) {

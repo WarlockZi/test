@@ -22,8 +22,8 @@ class ShippableUnitsRow
                 $count = $orderItem->first()->count??0;
             }
         }
-//        $order      = $product?->order;
-//        $count      = $order ? self::getCount($unit, $product) : 0;
+//        $orders      = $product?->orders;
+//        $count      = $orders ? self::getCount($unit, $product) : 0;
         $price = (float)$product->price;
         $multiplier = $unit->pivot->divider ?? 1;
         $unit_price = $multiplier * $price;

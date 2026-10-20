@@ -20,6 +20,7 @@
                 <a href="/adminsc/sync">Sync</a>
                 <a href="/adminsc/errors">Errors</a>
                 <a href="/adminsc/syncmanual">sync manual</a>
+                <a href="/adminsc/order">order</a>
             @endif
 
             @if($user->isOlya())

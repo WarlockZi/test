@@ -16,11 +16,11 @@
             <div class="product-name">
                 <div class="name"><?= $order->product->name ?></div>
                 <div class="price"><?= $order->product->price ?></div>
-                <!--		  <div class="id">--><? //= $order->user->email ?><!--</div>-->
+                <!--		  <div class="id">--><? //= $orders->user->email ?><!--</div>-->
             </div>
-            <!--		  --><? //$oI = $order->toArray();?>
+            <!--		  --><? //$oI = $orders->toArray();?>
             <div class="count"><?= $order->count ?></div>
-            <!--		  <div class="count">--><? //= $order->total_count ?><!--</div>-->
+            <!--		  <div class="count">--><? //= $orders->total_count ?><!--</div>-->
         </div>
 
     <? endforeach; ?>

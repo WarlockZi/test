@@ -13,15 +13,15 @@ class Compare extends Pivot
 
     protected $fillable = [
         'vitex_guest_id',
-        'user_id',
-        'product_id',
+        'account_id',
+        'product_1s_id',
     ];
 
     public function product(): HasOne
     {
         return $this->hasOne(Product::class,
             '1s_id',
-            'product_id');
+            'product_1s_id');
     }
 
 }

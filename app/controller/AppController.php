@@ -66,7 +66,7 @@ class AppController extends Controller
             MorphRepository::attach($req);
         }
 
-        Response::exitWithPopup('ok');
+        response()->popup('ok');
     }
 
     public function actionDetach(): void
@@ -74,7 +74,7 @@ class AppController extends Controller
         $req = $this->ajax;
         if (!$req) response()->json(['error' => 'Плохой запрос']);
         MorphRepository::detach($this, $req);
-        Response::exitWithPopup('ok');
+        response()->popup('ok');
     }
 
 

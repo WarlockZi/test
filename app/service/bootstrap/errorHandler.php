@@ -114,16 +114,19 @@ function devShutdownHandler(): void
 
     $trace    = $exception->getTrace();
     $traceStr = '';
+    $arr = [];
     foreach ($trace as $value) {
-        $traceStr .= 'class: ' . ($value['class'] ?? 'no class name') . '<br>' .
-            'function: ' . '<b>' . ($value['function'] ?? 'no function name') . '</b>' . " : " . ($value['line'] ?? 'no line number') . "<br><br>";
+        $arr['class: ' . ($value['class'] ?? 'no class name')] = ($value['function'] ?? 'no function name') ." on line " . ($value['line'] ?? 'no line number');
+//        $traceStr .= 'class: ' . ($value['class'] ?? 'no class name') . '<br>' .
+//            'function: ' . '<b>' . ($value['function'] ?? 'no function name') . '</b>' . " : " . ($value['line'] ?? 'no line number') . "<br><br>";
     }
 
     $lines = [
         "dev except message"=>$exception->getMessage(),
         "file: " => $exception->getFile() . " : " . $exception->getLine(),
         "URL: " => $url,
-        "TRACE:" => $traceStr,
+        "TRACE:" => $arr,
+//        "TRACE:" => $traceStr,
     ];
     response()->consoleTable($lines);
 

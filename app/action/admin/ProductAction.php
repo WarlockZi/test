@@ -93,7 +93,7 @@ class ProductAction
                 ->delete();
             response()->json(['popup' => 'удален', 'ok' => 'ok']);
         } catch (\Throwable $exception) {
-            Response::exitWithPopup('не удален');
+            response()->popup('не удален');
         }
     }
 

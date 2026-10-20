@@ -3,6 +3,9 @@
 @use '../common.scss';
 @use '../normalize.scss';
 
+@use "@components/popup.scss";
+@use "@modules/share/admin_panel/admin_panel.scss";
+@use "@src/Admin/layout/header-adm.scss";
 @include mixin_media.chips;
 
 @include mixin_media.error;

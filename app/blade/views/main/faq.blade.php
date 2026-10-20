@@ -1,7 +1,7 @@
 @extends('layouts.main.main_with_meta')
 
 @section('content')
-<h1>FAQ</h1>
+<h1 data-jsmodule="main">FAQ</h1>
 <div class="faqs-list">
     <div class="faq-item">
         <div class="faq-name">1. Как стать партнером компании Vitex?</div>

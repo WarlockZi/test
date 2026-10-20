@@ -54,9 +54,9 @@ class UserController extends AdminscController
     {
         try {
             $this->repo->changeRole($this->ajax);
-            Response::exitWithPopup('изменено');
+            response()->popup('изменено');
         } catch (Throwable $exception) {
-            Response::exitWithPopup('не изменено');
+            response()->popup('не изменено');
         }
     }
 }

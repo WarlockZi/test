@@ -1,0 +1,61 @@
+@use "@src/var";
+@use "@src/mixin_media";
+
+//*{
+// border: 1px solid red;
+//}
+
+
+//.orders.content {
+
+#order.table {
+
+  .users-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 300px);
+    gap: 11px;
+
+    .header{
+      font-weight: bold;
+    }
+  }
+
+  #cartSubmit {
+    display: none;
+  }
+
+  .row.cart-item {
+    .del.cell {
+      visibility: hidden;
+    }
+
+    .cart-shippable-table .shippable-table .unit-row .arrows {
+      display: none;
+    }
+
+
+
+    @include mixin_media.m700 {
+      grid-template-columns: 20px 100px 1fr 1fr 125px;
+      grid-template-areas:
+"id name name name del"
+"img img img img img"
+"shippable shippable shippable shippable sum";
+    }
+    @include mixin_media.m400 {
+      grid-template-rows: 2rem 1fr max-content;
+      grid-template-areas:
+                  "id id id id id"
+                  "img img name name name"
+                  "shippable shippable shippable sum sum";
+      grid-template-columns: 20px 100px 1fr 1fr 50px;
+    }
+
+  }
+
+
+  .del.cell {
+    display: none;
+  }
+
+}

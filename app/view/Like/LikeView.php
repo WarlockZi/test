@@ -8,26 +8,26 @@ use Illuminate\Database\Eloquent\Collection;
 
 class LikeView
 {
-    public static function all(Collection $likes)
+    public static function all(Collection|array $likes)
     {
+        if (!$likes) return [];
+
         return Table::build($likes)
             ->model('like')
             ->class('likes')
-            ->pageTitle('Понравившиеся товары')
+//            ->pageTitle('Понравившиеся товары')
             ->column(
                 ColumnBuilder::build('Название')
-//                    ->name('Название')
-                    ->callback(function ($like) {
-                        return $like->product->print_name;
+                    ->callback(function ($product) {
+                        return $product['print_name'];
                     })
                     ->get()
             )
             ->column(
                 ColumnBuilder::build('Картинка')
-//                    ->name('Картинка')
                     ->class('img')
-                    ->callback(function ($like) {
-                        return "<img src='{$like->product->mainImage}'>";
+                    ->callback(function ($product) {
+                        return "<img src='{$product['mainImage']}'>";
                     })
                     ->get()
             )

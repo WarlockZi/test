@@ -1,4 +1,5 @@
 "use strict";
+
 export const d = "document";
 export const qs = "querySelector";
 export const qa = "querySelectorAll";
@@ -13,5 +14,5 @@ export const tableSelector = "custom-table";
 export const quillSelector = "[data-quill]";
 export const dataRelationSelector = "[data-relation]";
 export const dataPivotSelector = "[data-pivot]";
-
-export const cqs = document.querySelector.bind(document);
+export const dataCatalogItemSelector = "[data-catalog_item]";
+export const localStorageWeUseCookies = "we_use_cookie_notification";

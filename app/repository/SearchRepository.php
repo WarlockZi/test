@@ -18,12 +18,12 @@ class SearchRepository
             return [];
         }
 
-        $isAdmin = AuthService::getUser()->isAdmin();
+        $isAdmin = AuthService::getUser()?->isAdmin();
 
         $query = $isAdmin
-            ? Product::withTrashed()->select('name', 'slug', 'art', 'id', 'instore', 'deleted_at')
+            ? Product::withTrashed()->select('id','1s_id', 'name', 'slug', 'art',  'instore', 'deleted_at')->take(40)
             : Product::select('name', 'slug', 'art', 'id', 'instore', '1s_id')->take(20);
-        Cache::enabled(true);
+//        Clear_cache::enabled(true);
         $products = Cache::remember("search:{$queryString}:{$isAdmin}", fn () =>$this->new($query, $queryString), 60);
 
         return $products;
@@ -37,7 +37,7 @@ class SearchRepository
                 ->orWhere('art', 'LIKE', $like)
                 ->orWhere('slug', 'LIKE', $like)
                 ->orWhere('1s_id', 'LIKE', $like);
-        })->get();
+        })->with('ownProperties')->get();
 
         return $products
             ->unique('id')
@@ -46,7 +46,7 @@ class SearchRepository
                 'name' => $product->name,
                 'art' => $product->art,
                 'slug' => $product->slug,
-                'mainImage' => $product->mainImage,
+                'mainImage' => image($product?->ownProperties?->main_image),
             ])
             ->values()
             ->toArray();

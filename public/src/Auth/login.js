@@ -1,62 +1,108 @@
-import { $, post, validate } from "../common";
+import { $, popup, post, validate } from "../common";
 
 export default class Login {
   constructor() {
     this.loginForm = $("[data-auth='login']").first();
-    if (!this.loginForm) return false;
-    this.loginForm.addEventListener("click", this.sendData.bind(this));
-    this.email = $("input[type = email]")[0];
-    this.pass = $("input[name= password]")[0];
-    this.msg = $(".message")[0];
+    if (!this.loginForm) return;
+
+    this.email = $("input[type = email]").first();
+    this.pass = $("input[name= password]").first();
+    this.msg = $(".message").first();
+
+    if (!this.email || !this.pass || !this.msg) {
+      console.error("Не найдены необходимые элементы формы");
+      return;
+    }
+
+    this.loginForm.addEventListener("click", this.handleSubmit.bind(this));
   }
 
-  async sendData({ target }) {
-    if (target.classList.contains("submit__button")) {
-      let data = {
-        email: this.email.value,
-        password: this.pass.value,
-      };
+  async handleSubmit(e) {
+    e.preventDefault();
+
+    const submitButton = e.target;
+    const isSubmitButton = submitButton.contains("submit__button");
+    if (!isSubmitButton) return;
+
+    submitButton.disabled = true;
+
+    try {
       if (this.validateData()) {
-        const res = await this.send(data);
+        const res = await post("/auth/login", this.loginDto());
         await this.parseLoginResponse(res);
       }
+    } catch (error) {
+      this.showError("Произошла ошибка при подключении к серверу");
+      console.error("Login error:", error);
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = "Войти";
     }
+  }
+
+  loginDto() {
+    const email = this.email.value.trim();
+    const password = this.pass.value;
+
+    if (!email || !password) {
+      popup.show("Email и пароль обязательны");
+      return false;
+    }
+
+    return {
+      email,
+      password,
+    };
+  }
+
+  showError(error) {
+    this.msg.innerText = "";
+    this.msg.innerText = error;
+    $(this.msg).addClass("error");
   }
 
   validateData() {
     let error = validate.email(this.email.value);
     if (error) {
-      this.msg.innerText = "";
-      this.msg.innerText = error;
-      $(this.msg).addClass("error");
+      this.showError(error);
       return false;
     }
-    const suemail = env?.EMAIL_VITE_SU;
-    const su = suemail === this.email.value;
-    if (!su) {
+
+    if (env?.EMAIL_VITE_SU !== this.email.value) {
       error = validate.password(this.pass.value);
       if (error) {
-        this.msg.innerText = "";
-        this.msg.innerText = error;
-        $(this.msg).addClass("error");
+        this.showError(error);
         return false;
       }
     }
     return true;
   }
 
-  async send(data) {
-    return await post("/auth/login", data);
+  async parseLoginResponse(res) {
+    if (!res || typeof res !== "object" || res?.arr?.error) {
+      popup.show("ошибка при входе");
+      return;
+    }
+    if (!res.arr?.id) {
+      popup.show("Отсутствует ID пользователя в ответе");
+    }
+
+    this.loginRedirect(res?.arr?.role);
   }
 
-  async parseLoginResponse(res) {
-    const id = res?.arr?.id;
-    localStorage.setItem("id", id);
-    if (res?.arr?.role === "employee") {
-      window.location = "/adminsc";
-    } else if (res?.arr?.role === "user") {
-      window.location = "/auth/profile";
-    } else if (res?.error) {
+  loginRedirect(role) {
+    const redirectPaths = {
+      employee: "/adminsc",
+      user: "/auth/profile",
+    };
+
+    const path = redirectPaths[role];
+
+    if (path) {
+      window.location.href = path; // используем href вместо location
+    } else {
+      console.warn(`Неизвестная роль: ${role}`);
+      this.showError("Не удалось определить тип пользователя");
     }
   }
 }

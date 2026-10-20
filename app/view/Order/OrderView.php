@@ -7,11 +7,8 @@ namespace app\view\Order;
 use app\model\Order;
 use app\model\Product;
 use app\model\User;
-use app\view\components\Builders\SelectBuilder\optionBuilders\ArrayOptionsBuilder;
-use app\view\components\Builders\SelectBuilder\SelectBuilder;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\TableBuilder\Table;
-use app\view\components\Builders\TableBuilder\TableHeader\TableHeader;
 use Illuminate\Database\Eloquent\Collection;
 
 
@@ -25,7 +22,7 @@ class OrderView
         $users = User::all();
         return Table::build($items)
             ->pageTitle('Заказ незарегистрированного пользователя')
-            ->model('order')
+            ->model('orders')
             ->column(
                 ColumnBuilder::build('id')
                     ->name('ID')
@@ -58,10 +55,12 @@ class OrderView
     }
 
 
-    public static function table($items): array
+    public static function table(Collection $items, string $tableTitle): array
     {
+        $items = $items->reverse();
         $table = Table::build($items)
-            ->data(['model' => 'order'])
+            ->pageTitle($tableTitle)
+            ->data(['model' => 'orders'])
             ->column(
                 ColumnBuilder::build('id')
                     ->get())
@@ -74,14 +73,15 @@ class OrderView
                             ($order->user?->name ?? '') . ' - ' .
                             ($order->user?->middleName ?? '');
                     })
-//                    ->data(user)
                     ->headerSearch()
                     ->width('1fr')
                     ->get())
             ->column(
                 ColumnBuilder::build('Дата')
                     ->class('left')
-//                    ->name('created_at')
+                    ->callback(function ($order) {
+                        return $order->created_at ?? '';
+                    })
                     ->headerSearch()
                     ->width('150px')
                     ->get())
@@ -94,7 +94,7 @@ class OrderView
     public static function editOrder(Order $order): array
     {
         return Table::build($order->products)
-            ->model('order')
+            ->model('orders')
             ->pageTitle('Заказ')
             ->column(
                 ColumnBuilder::build('id')

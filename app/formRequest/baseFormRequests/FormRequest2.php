@@ -3,7 +3,6 @@
 namespace app\formRequest\baseFormRequests;
 
 
-use app\service\Router\IRequest;
 use app\service\Validator\Validator;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,21 +26,21 @@ abstract class FormRequest2 extends Request
             $request->getContent());
     }
 
-    protected function getInputFromGlobal(): array
-    {
-        $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
-        $rawInput    = file_get_contents('php://input');
-
-        if (str_contains($contentType, 'application/json')) {
-            return json_decode($rawInput, true) ?? [];
-        } elseif (str_contains($contentType, 'application/x-www-form-urlencoded')) {
-            parse_str($rawInput, $input);
-            return $input;
-        } elseif (str_contains($contentType, 'multipart/form-data')) {
-            return $_POST + $_GET + $_FILES;
-        }
-        return $_POST + $_GET;
-    }
+//    protected function getInputFromGlobal(): array
+//    {
+//        $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
+//        $rawInput    = file_get_contents('php://input');
+//
+//        if (str_contains($contentType, 'application/json')) {
+//            return json_decode($rawInput, true) ?? [];
+//        } elseif (str_contains($contentType, 'application/x-www-form-urlencoded')) {
+//            parse_str($rawInput, $input);
+//            return $input;
+//        } elseif (str_contains($contentType, 'multipart/form-data')) {
+//            return $_POST + $_GET + $_FILES;
+//        }
+//        return $_POST + $_GET;
+//    }
 
     abstract public function rules(): array;
 
@@ -85,8 +84,10 @@ abstract class FormRequest2 extends Request
     public function validated(): array
     {
         if (!$this->validate()) {
-            $errors = $this->errors['file'] ?? $this->errors;
-            response()->json(['popup' => $errors[0]]);
+            $errors       = $this->errors['file'] ?? $this->errors;
+            $errorsString = $this->errorsToString($errors);
+
+            response()->json(['popup' => $errorsString]);
         }
 
         return array_intersect_key(
@@ -94,6 +95,18 @@ abstract class FormRequest2 extends Request
             array_flip(array_keys($this->rules()))
         );
     }
+
+    protected function errorsToString(array $errors): string
+    {
+        $errorsString = '';
+        foreach ($errors as $name=>$error) {
+            $errorsString .= $name;
+            $errorsString .= '<br>';
+            $errorsString .= implode('<br>', $error);
+        }
+        return $errorsString;
+    }
+
 
     public function errors(): array
     {
@@ -111,7 +124,7 @@ abstract class FormRequest2 extends Request
             $this->query->all(),
             $this->request->all(),
             $this->files->all(),
-            json_decode($this->getContent(), true)??[]
+            json_decode($this->getContent(), true) ?? []
         );
     }
 

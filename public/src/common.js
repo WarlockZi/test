@@ -1,31 +1,5 @@
 "use strict";
 
-import SearchableSelect from "@components/select/Factory/SearchableSelect.js";
-import Table from "@components/table/Table.js";
-
-class DI {
-  constructor() {
-    this.components = new Map();
-    this.components.set("ISelect", SearchableSelect);
-    this.components.set("ITable", Table);
-  }
-
-  create(name, ...options) {
-    const Component = this.components.get(name);
-
-    if (!Component) {
-      throw new Error(`Компонент "${name}" не зарегистрирован`);
-    }
-
-    try {
-      return new Component(...options);
-    } catch (error) {
-      console.error(`Ошибка создания компонента "${name}":`, error);
-      throw error;
-    }
-  }
-}
-
 export const formatter = new Intl.NumberFormat("ru", {
   style: "currency",
   currency: "RUB",
@@ -183,6 +157,8 @@ const validate = {
   },
   email: (email) => {
     if (!email) return false;
+    email = email.trim();
+
     const text = "Неправильный формат почты";
     const re =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -238,11 +214,8 @@ const popup = {
   },
 };
 
-function getPhpSession() {
-  return (
-    document.querySelector('meta[name="phpSession"]').getAttribute("content") ??
-    null
-  );
+function getCsrf() {
+  return document.querySelector('meta[name="CSRF"]').content ?? null;
 }
 
 function sanitizeInput(input) {
@@ -409,7 +382,10 @@ async function post(url, data = {}) {
 }
 
 function setHeaders(body) {
-  const headers = { Accept: "application/json" };
+  const headers = {
+    Accept: "application/json",
+    "X-CSRF-Token": getCsrf(),
+  };
   // const headers = {      };
   if (body instanceof FormData) {
     // Заголовок Content-Type НЕ нужно указывать вручную!
@@ -425,10 +401,10 @@ function setHeaders(body) {
 
 function prepareBody(body) {
   if (body instanceof FormData) {
-    body.append("phpSession", getPhpSession());
+    body.append("csrf", getCsrf());
     return body;
   }
-  body.phpSession = getPhpSession();
+  body.csrf = getCsrf();
   return JSON.stringify(body, null, 2);
 }
 
@@ -489,6 +465,7 @@ function showMessage(res) {
 }
 
 function handleResponse(res) {
+  document.querySelector(`meta[name='CSRF']`).content = res?.csrf;
   try {
     if (res?.console) {
       console.log(res?.console);
@@ -745,7 +722,6 @@ function addTooltip(args) {
 }
 
 export {
-  DI,
   passwordValidator,
   // phoneValidator,
   emailValidator,
@@ -757,7 +733,7 @@ export {
   setCookie,
   getCookie,
   createEl,
-  getPhpSession,
+  getCsrf,
   slider,
   cachePage,
   trimStr,

@@ -19,16 +19,14 @@ class User extends Model implements IUser
     public $timestamps = true;
     protected $fillable = [
         'email', 'password',
+        'guest_id',
         'name',
         'surName',
         'middleName',
-        'hash',
         'confirm',
         'rights',
         'post_id',
         'birthDate',
-        'hired',
-        'fired',
         'sex',
         'phone',
         'created_at',
@@ -84,8 +82,8 @@ class User extends Model implements IUser
     {
         $has     = $this->hasRights($rights);
         $hasRole = $this->hasRoles($rights);
-        $su      = AuthService::isSU();
-        $admin   = AuthService::userIsAdmin();
+        $su      = $this->isSU();
+        $admin   = $this->isAdmin();
         return ($has || $su || $admin || $hasRole);
     }
 

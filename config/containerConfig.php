@@ -6,7 +6,6 @@ use app\blade\IView;
 use app\blade\View;
 use app\model\Category;
 use app\repository\CategoryRepository;
-use app\repository\OrderRepository;
 use app\service\Cache\ICache;
 use app\service\Cache\Redis\Cache;
 use app\service\Fs\FS;
@@ -91,8 +90,9 @@ return [
         return $validatorFactory;
     },
     'orderItemsCount' => function () {
-        return OrderRepository::productsCount();
+        return \app\service\Cart\CartService::cartCount();
     },
+
     'rootCategories' => function () {
         $r = CategoryRepository::rootCategories();
         return $r;

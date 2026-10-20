@@ -19,11 +19,10 @@ class AdminscController extends AppController
         parent::__construct();
     }
 
-    #[NoReturn] public function actionIndex(): void
+    #[NoReturn] public function actionInd()
     {
         view('admin.index');
     }
-
 
     public function actionSiteMap(): void
     {

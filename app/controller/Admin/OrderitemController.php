@@ -28,11 +28,11 @@ class OrderitemController extends AdminscController
 //            $sess       = $_SESSION['phpSession'];
 //            $orderItems = OrderItem::where('sess', $sess)->get();
 //            $lead       = Lead::create($form);
-//            $order      = Order::create($form);
-//            $order->lead()->associate($lead);
-//            $order->save();
+//            $orders      = orders::create($form);
+//            $orders->lead()->associate($lead);
+//            $orders->save();
 //            foreach ($orderItems as $orderItem) {
-//                $orderItem->order()->associate($order);
+//                $orderItem->orders()->associate($orders);
 //                $orderItem->save();
 //            }
 //            response()->json(['ok']);
@@ -50,7 +50,7 @@ class OrderitemController extends AdminscController
         if ($trashed) {
             response()->json(['ok' => true, 'popup' => 'Удален']);
         }
-        Response::exitWithPopup('Не удален');
+        response()->popup('Не удален');
 
     }
 

@@ -3,36 +3,65 @@ declare(strict_types=1);
 
 namespace app\controller;
 
-use app\action\CartAction;
+use app\attributes\Validate\ValidationException;
+use app\factory\CartStorageFactory;
+use app\formRequest\CartAddRequest;
 use app\formRequest\CartDeleteRowRequest;
 use app\formRequest\CartRequest;
+use app\formRequest\CartSubmitRequest;
 use app\model\Order;
 use app\model\OrderItem;
 use app\repository\CartRepository;
+use app\repository\OrderitemRepository;
 use app\repository\OrderRepository;
+use app\service\AuthService\AuthService;
+use app\service\Cart\CartService;
 use app\service\Response;
-use app\service\Router\IRequest;
-use Illuminate\Validation\ValidationException;
+use app\strategy\CartStrategy\GuestCartStrategy;
+use app\strategy\CartStrategy\AccountCartStrategy;
 use JetBrains\PhpStorm\NoReturn;
 
 class CartController extends AppController
 {
+    protected CartRepository $repository;
+
     public function __construct(
-        protected CartRepository $repository,
-        protected CartAction     $action,
+        private CartService $cartService,
     )
     {
         parent::__construct();
+        $this->cartService = new CartService();
     }
 
-    #[NoReturn] public function actionIndex(): void
+    #[NoReturn]
+    public function actionIndex(): void
     {
-        $showToCartButton = true;
-        $order = OrderRepository::usersOrder(currentUser: true,submitted: true)?->toArray();
+        $showToCartButton  = true;
+        $order['products'] = $this->cartService->getCart(AuthService::accountId());
         view('cart.cart', compact('order', 'showToCartButton'));
     }
 
-    #[NoReturn] public function actionDeleteRow(CartDeleteRowRequest $request): void
+    #[NoReturn]
+    public function actionSubmit(): void
+    {
+        $this->cartService->submit();
+
+        response()->json(['ok' => true]);
+    }
+
+    public function actionAdd(CartAddRequest $request): Response
+    {
+        $validated = $request->validated();
+        $this->cartService->updateOrCreate($validated);
+        response()->json([
+            'ok' => true,
+            'popup' => 'Корзина обновлена',
+            'cart_count'=>CartService::cartCount()
+        ]);
+    }
+
+    #[NoReturn]
+    public function actionDeleteRow(CartDeleteRowRequest $request): void
     {
         $req = $request->validated();
         OrderRepository::deleteProduct($req['order_id'], $req['product_1s_id'])
@@ -40,33 +69,18 @@ class CartController extends AppController
             : response()->popup('Не удален');
     }
 
-    #[NoReturn] public function actionUpdateOrCreateCustom(CartRequest $request): void
+    #[NoReturn]
+    public function actionUpdateOrCreateOrderItem(CartRequest $request, OrderitemRepository $repo): void
     {
         try {
-            $req = $request->safe()->only(['count', 'unit_id', 'product_1s_id','vitex_guest_id']);
-            $this->repository->updateOrCreate($req);
+            $req      = $request->safe()->only(['count', 'unit_id', 'product_1s_id', 'vitex_guest_id']);
+            $strategy = AuthService::getUser() ? new AccountCartStrategy() : new GuestCartStrategy();
+            $repo->updateOrCreate($req, $strategy);
             response()->json(['ok' => true, 'popup' => 'Заказ изменен']);
         } catch (ValidationException $validator) {
             $errors = $validator->errors();
             response()->json(['console' => $errors, 'popup' => 'Ошибка обновления заказа']);
         }
     }
-
-    #[NoReturn] public function actionDrop(): void
-    {
-        OrderItem::query()
-            ->delete();
-        response()->json(['ok' => true]);
-    }
-
-    #[NoReturn] public function actionSubmit(): void
-    {
-        $orderId = $this->ajax['orderId'];
-        if (empty($orderId)) exit('No cart order id');
-        Order::find($orderId)->update(['submitted' => 1]);
-        response()->json(['ok' => true]);
-    }
-
-
 }
 

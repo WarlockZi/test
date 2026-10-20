@@ -1,8 +1,9 @@
-@if (count($product['activepromotions']))
+{{--@deb--}}
+@if (count($product['promotions']))
 
     <div class="promotions">
         <div class="promotion">Акция</div>
-        @foreach ($product['activepromotions'] as $promotion)
+        @foreach ($product['promotions'] as $promotion)
             <div class="conditions">При покупке от
                 <?= $promotion['count'] ?? '<b style="color:red;">неустановленного количества</b>'; ?>&nbsp;
                 <?= $promotion['unit']['name']

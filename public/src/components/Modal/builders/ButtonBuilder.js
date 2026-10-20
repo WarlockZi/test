@@ -2,7 +2,7 @@ export default class ButtonBuilder {
   constructor(props) {
     this._id = props.id;
     this._callback = props.callback;
-    this._text = props.text;
+    this._text = props.queryInput;
   }
 
   id(id) {

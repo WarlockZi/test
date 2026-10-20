@@ -2,23 +2,30 @@
 
     @include('components.card_panel.product_card_panel')
 
-{{--    @deb--}}
+    {{--    @deb--}}
     <div class="art">Арт. {!!$product['art']!!} </div>
 
     <div>
         <meta itemprop="priceCurrency" content="RUB">
         <span itemprop="price">{!!number_format(data_get($product,'base_unit.pivot.price')??0, 2, '.', ' ')??'нет цены'!!}</span>
-         ₽ / {!!$product['base_unit']['name']??'единиц'!!}
+        ₽ / {!!$product['base_unit']['name']??'единиц'!!}
     </div>
 
     <div class="price">
-
         <div class="new-price"></div>
-
     </div>
-    <div class="price-units">
 
-        @include('product.card.shippableUnits')
+    <div class="price-units">
+{{--        @deb--}}
+        @if(empty($product['cart_items']))
+            @php($orderitem['unit_id'] = null)
+            @include('product.card.shippableUnits', compact('orderitem'))
+        @else
+            @foreach($product['cart_items'] as $orderitem)
+                @include('product.card.shippableUnits', compact('orderitem'))
+            @endforeach
+        @endif
+
     </div>
     @include( 'product.card.promotion')
 

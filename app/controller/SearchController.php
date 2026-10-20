@@ -8,12 +8,10 @@ use JetBrains\PhpStorm\NoReturn;
 
 class SearchController extends AppController
 {
-
     public function __construct()
     {
         parent::__construct();
     }
-
     #[NoReturn] public function actionIndex(SearchRequest $request, SearchRepository $repo): void
     {
         $text = $request->validated()['text']??'';

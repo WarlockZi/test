@@ -7,24 +7,30 @@
 
 @section('content')
 
-    <div class="cart">
+    <div class="cart" data-jsmodule="cart">
 
         <h1>Корзина</h1>
-        {{--@deb--}}
-        @if (empty($order) || !isset($order['products']))
+
+        <a href="/order">Заказы</a>
+{{--                @deb--}}
+        @if(empty($order['products']) && empty($_SESSION['cart_items']))
+            <div class="empty-cart {!!(empty($order) || !isset($order['products']))?'none':''!!}">
+                Корзина пуста
+            </div>
+        @else
 
             <div class="content">
-
-                <div class="table" data-order-id="{!!$order['id']!!}">
-                    @include('cart.cartProducts')
+                <div class="table">
+{{--                    @deb--}}
+                    @if (\app\service\AuthService\AuthService::accountId())
+                        @include('cart.cartProducts')
+                    @else
+                        @include('cart.guestCartProducts')
+                    @endif
                 </div>
 
             </div>
-    </div>
-    @endif
+        @endif
 
-    <div class="empty-cart {!!(empty($order) || !isset($order['products']))?'none':''!!}">
-        Корзина пуста
     </div>
-
 @endsection

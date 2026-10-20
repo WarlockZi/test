@@ -5,7 +5,7 @@
 
 
 @section('content')
-    <main class="contacts">
+    <main class="contacts" data-jsmodule="main">
 
 
         <h1>Контактная информация</h1>

@@ -16,7 +16,7 @@
 
 @section('content')
 
-    <div class="category">
+    <div class="category" data-jsmodule="category">
 
         @if (empty($category))
             <div class="no-categories">
@@ -48,7 +48,6 @@
 
 
             @if (!empty($category['children_recursive']))
-                {{-- если это родительская категория, покажем детей--}}
                 @include('category.category_children')
             @else
                 @include('category.category_products')

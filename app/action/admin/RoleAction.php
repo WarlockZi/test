@@ -4,13 +4,14 @@ namespace app\action\admin;
 
 
 use app\model\Role;
-use app\model\Tag;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\TableBuilder\Table;
 
 class RoleAction implements IShowTable
 {
-    public function __construct() { }
+    public function __construct()
+    {
+    }
 
     public function table(): array
     {
@@ -18,21 +19,21 @@ class RoleAction implements IShowTable
             ->pageTitle('Роли')
             ->column(
                 ColumnBuilder::build('id')
-                    ->name('ID')
+                    ->headerTitle('ID')
                     ->get())
             ->column(
                 ColumnBuilder::build('name')
-                    ->name('Роль')
-                    ->search()
+                    ->headerTitle('Роль')
+                    ->headerSearch()()
                     ->contenteditable()
-                    ->sort()
+                    ->headerSort()
                     ->width('1fr')
                     ->get())
             ->column(
                 ColumnBuilder::build('description')
-                    ->name('Описание')
+                    ->headerTitle('Описание')
                     ->contenteditable(true)
-                    ->search(true)
+                    ->headerSearch()(true)
                     ->width('1fr')
                     ->get()
             )

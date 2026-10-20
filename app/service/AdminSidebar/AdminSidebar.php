@@ -17,7 +17,7 @@ class AdminSidebar
             [
                 "name" => "Галвная",
                 "icon" => Icon::house('admin-menu'),
-                "href" => "/adminsc",
+                "href" => "/adminsc/adminsc/ind",
                 "class" => "house neon",
                 "permissions" => [],
                 "children" => null,
@@ -49,7 +49,7 @@ class AdminSidebar
                     ],
                     [
                         "name" => "Пользователи",
-                        "href" => "/adminsc/user/table",
+                        "href" => "/adminsc/user",
                         "class" => "neon",
                         "permissions" => [],
                     ],
@@ -332,12 +332,6 @@ class AdminSidebar
                 "class" => null,
                 "permissions" => ['su'],
                 "children" => [
-                    [
-                        "name" => "Логистика",
-                        "href" => "/adminsc/logistic",
-                        "class" => "neon",
-                        "permissions" => [],
-                    ],
                     [
                         "name" => "Настройки",
                         "href" => "/adminsc/settings/list",

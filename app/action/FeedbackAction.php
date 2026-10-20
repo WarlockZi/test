@@ -15,7 +15,7 @@ class FeedbackAction
     public function DoneTable(): array
     {
         return Table::build(Feedback::where('done', 1)->get())
-//        return Table::build(Feedback::take(3)->get())
+//        return Table::build(Feed_back::take(3)->get())
             ->model('feedback')
             ->pageTitle('Обработанные сообщения пользователей')
             ->column(

@@ -2,7 +2,17 @@
 
 use app\service\AppService\App;
 
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
+$bootstrap = implode(DIRECTORY_SEPARATOR,
+    [
+        dirname(__DIR__),
+        'app',
+        'service',
+        'bootstrap',
+        'bootstrap.php'
+    ]);
+
+
+require_once $bootstrap;
 
 $app = new App();
 

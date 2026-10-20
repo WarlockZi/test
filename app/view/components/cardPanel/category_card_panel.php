@@ -6,7 +6,7 @@ use app\view\components\Icon\Icon;
 ?>
 <? if ($forBreadcrumbs): ?>
     <div class="card-panel">
-        <?php if (AuthService::userIsAdmin()): ?>
+        <?php if (AuthService::getUser()?->isAdmin() ?? false): ?>
             <a href="/adminsc/category/edit/<?= $category->id ?>" class="edit card-panel-item"><?= Icon::edit(); ?></a>
         <? endif; ?>
     </div>
@@ -17,9 +17,9 @@ use app\view\components\Icon\Icon;
              title='Скопировать короткую ссылку'
              data-shortLink= <?= $category->shortLink; ?>
         >
-            <?= \app\view\components\Icon\Icon::link(); ?>
+            <?= Icon::link(); ?>
         </div>
-        <?php if (AuthService::userIsAdmin()): ?>
+        <?php if (AuthService::getUser()?->isAdmin() ?? false): ?>
             <a href="/adminsc/category/edit/<?= $category->id ?>" class="edit card-panel-item"><?= Icon::edit(); ?></a>
         <? endif; ?>
     </div>

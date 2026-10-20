@@ -21,8 +21,7 @@
                         Как выбрать качественные медицинские перчатки для различных сфер деятельности? </span>
                 </div>
                 <meta itemprop="position" content="2">
-                <div class="card-panel">
-                </div>
+
             </li>
         </ul>
     </nav>

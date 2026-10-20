@@ -1,8 +1,13 @@
-import "./edit.scss";
-import { post, $ } from "../common";
+import { $, post } from "../common";
 import getSex from "./getSex";
+import { ael } from "@src/constants.js";
 
-$("#save").on("click", async function (e) {
+const saveButton = $("#save").first();
+if (saveButton) {
+  saveButton[ael]("click", request.bind(this));
+}
+
+async function request(e) {
   e.preventDefault();
 
   let data = {
@@ -15,4 +20,4 @@ $("#save").on("click", async function (e) {
   };
 
   let res = await post("/user/edit", data);
-});
+}

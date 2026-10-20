@@ -2,7 +2,7 @@
 
 @section('content')
 
-<main>
+<main data-jsmodule="main">
 
     <h1>Доставка</h1>
 

@@ -34,11 +34,11 @@ class LoginRequest extends FormRequest2
             'password.min' => 'Пароль содержал мало символов',
         ];
     }
-    public function authorize(): bool
-    {
-        $sess = $this->all()['phpSession'];
-        return $sess
-            && $sess === session_id();
-    }
+//    public function authorize(): bool
+//    {
+//        $sess = $this->all()['phpSession'];
+//        return $sess
+//            && $sess === session_id();
+//    }
 
 }

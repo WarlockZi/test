@@ -6,23 +6,29 @@ namespace app\repository;
 
 use app\formRequest\LikeRequest;
 use app\model\Like;
+use app\model\Product;
 use app\service\AuthService\AuthService;
 use app\service\Cart\CartService;
 use Throwable;
 
 class LikeRepository
 {
-    public static function all()
+    public function addLikes(mixed $account_id, mixed $product_id): void
     {
-        list($field, $value) = CartService::getCartFieldValue();
-        $likes = Like::where($field, $value)
-            ->with('product')
-            ->get();
-        return $likes;
+        $like = Like::updateOrCreate(
+            [
+                'account_id' => $account_id,
+                'product_id' => $product_id,
+            ],
+            [
+            ]
+        );
     }
 
-    public static function updateOrCreate(LikeRequest $req): bool
+   public static function updateOrCreate(array $req): bool
     {
+        $account_id = AuthService::accountId();
+
         list($field, $value) = CartService::getCartFieldValue();
         try {
             $like = Like::updateOrCreate([

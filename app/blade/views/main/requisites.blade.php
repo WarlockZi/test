@@ -1,7 +1,7 @@
 @extends('layouts.main.main_with_meta')
 
 @section('content')
-    <main>
+    <main data-jsmodule="main">
         <div class="column">
             <h1>Наши реквизиты</h1>
 

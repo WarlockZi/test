@@ -1,0 +1,56 @@
+@use "../../../var";
+@use "sass:color";
+
+
+.fixed {
+  --ratio:clamp(40px, 6vw, 65px);
+
+  position: fixed;
+  right: 20px;
+  display: flex;
+  border-radius: 50%;
+  border: 1px solid var.$color-main;
+  color: var.$color-main;
+  background-color:  transparent;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  width: var(--ratio);
+  height: var(--ratio);
+  filter: blur(1);
+  opacity: .6;
+
+  &.hoist {
+    bottom: 20px;
+
+    & svg{
+      transform:scale(1.2);
+    }
+  }
+
+
+
+  &.call-me {
+    bottom: clamp(70px, 10vw, 103px);
+
+    &svg path {
+      fill: #fff;
+    }
+
+    &svg {
+      box-sizing: border-box;
+      fill: currentcolor;
+      border: none;
+      background: #1a72b8;
+    }
+
+  }
+
+  &:hover {
+    opacity: 1;
+    color: color.adjust(var.$color-main, $lightness: 10%);
+    padding: 5px;
+    border: 1px solid color.adjust(var.$color-main, $saturation: 70%, $lightness: 30%);
+    border-radius: 50%;
+  }
+}

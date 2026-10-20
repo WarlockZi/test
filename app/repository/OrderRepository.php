@@ -4,21 +4,38 @@
 namespace app\repository;
 
 
+use app\model\Account;
 use app\model\Order;
 use app\model\OrderItem;
 use app\model\OrderProduct;
 use app\model\Product;
-use app\service\AuthService\AuthService;
 use app\service\Cart\CartService;
 use app\service\Router\IRequest;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 use Throwable;
 
 
 class OrderRepository
 {
+
+    public function accountsUsersCartitemsOrders(): array
+    {
+        $accounts = Account::query()
+            ->with('users')
+            ->with('yandex_users')
+            ->get()->toArray();
+
+        foreach ($accounts as &$account) {
+//            $account['cart_items'] = (new AccountCartStrategy())->getCart($account['id']);;
+            $account['cart_items'] = self::accountCartsOrders($account['id'], false);
+            $account['orders']     = self::accountCartsOrders($account['id'], true);
+        }
+        return $accounts;
+    }
+
     public static function deleteProduct(string $order_id, string $product_1s_id): bool
     {
         try {
@@ -30,11 +47,6 @@ class OrderRepository
                 return false; // или throw new Exception(...)
             }
             OrderItem::where('order_product_id', $orderProduct->id)->delete();
-//            OrderItem::where(['order_product_id' => $orderProduct->id,])
-//                ->get()
-//                ->each(function ($item) use ($order_id, $product_1s_id) {
-//                    $item->delete();
-//                });
             $orderProduct->delete();
             return true;
 
@@ -43,19 +55,6 @@ class OrderRepository
             return false;
         }
 
-    }
-
-    public static function submitted(): Collection
-    {
-        return Order::whereNotNull('submitted')
-            ->with('user')
-            ->with('products', function ($query) {
-                $query->whereHas('orderItems')
-                    ->with(['orderitems' => function ($q) {
-                        $q->with('productUnit.unit');
-                    }]);
-            })
-            ->get();
     }
 
     public static function orders(bool $submitted = true): Collection
@@ -78,8 +77,69 @@ class OrderRepository
         return $orders;
     }
 
-    public static function usersOrder(int $id = null, string $onlyField = null, bool $currentUser = null, bool $submitted = null): Order|string|null
+    public static function accountCartsOrders(int $account_id, bool $order = true): array
     {
+        $with_order       = $order;
+        $where_order_null = !$order;
+        $group_by_order   = $order;
+
+        $query = OrderItem::query()
+            ->where('account_id', $account_id)
+            ->leftJoin('product_unit', function ($join) {
+                $join->on('orderitems.product_1s_id', '=', 'product_unit.product_1s_id')
+                    ->on('orderitems.unit_id', '=', 'product_unit.unit_id');
+            })
+            ->select('orderitems.*', 'product_unit.price', 'product_unit.divider', 'product_unit.multiplier')
+            ->with(['product' => function ($q) {
+                return $q->with('shippableUnits');
+            }])
+            ->with([
+                'unit']);
+
+        if ($with_order) {
+            $query->with('order:id,created_at,in_process');
+        }
+
+        $where_order_null
+            ? $query->whereNull('order_id')
+            : $query->whereNotNull('order_id');
+
+        $group_by_order = $group_by_order
+            ? ['order_id', 'product_1s_id']
+            : ['product_1s_id'];
+
+        $order_items = $query->get();
+
+        if ($order) {
+            $order = $order_items->groupBy($group_by_order)->toArray();
+            return $order;
+        } else {
+            $cart = $order_items->groupBy($group_by_order)->toArray();
+            return $cart;
+        }
+
+
+//        $orders = OrderItem::where('account_id', $account_id)
+//            ->leftJoin('product_unit', function ($join) {
+//                $join->on('orderitems.product_1s_id', '=', 'product_unit.product_1s_id')
+//                    ->on('orderitems.unit_id', '=', 'product_unit.unit_id');
+//            })
+//            ->select('orderitems.*', 'product_unit.price', 'product_unit.divider', 'product_unit.multiplier')
+//            ->with(['product',
+//                'order_unit',
+//                'unit',
+//                'order:id,created_at',
+//            ])
+//            ->get()
+//            ->groupBy(['order_id', 'product_1s_id']);
+//        return $order_items;
+    }
+
+    public static function usersOrder(int $id = null, string $onlyField = null, bool $currentUser = null, bool $submitted = null): Model|array|null
+    {
+        if (isset($_SESSION['cart_items'])) {
+            return $_SESSION['cart_items'];
+        }
         $order = Order::query();
 
         if ($currentUser) {
@@ -89,9 +149,9 @@ class OrderRepository
         if ($id) {
             $order->where('id', $id);
         }
-        if (!$submitted && $submitted!==null) {
+        if (!$submitted && $submitted !== null) {
             $order->whereNotNull('submitted');
-        } elseif ($submitted && $submitted!==null) {
+        } elseif ($submitted && $submitted !== null) {
             $order->whereNull('submitted');
         }
         if ($onlyField) {
@@ -101,9 +161,6 @@ class OrderRepository
 
         $order = $order->with(['products' => function ($q) {
             $q->whereHas('orderItems')
-                ->with(['orderitems' => function ($query) {
-                    $query->with('productUnit.unit');
-                }])
                 ->withoutTrashed();
         }])
             ->first();
@@ -112,8 +169,25 @@ class OrderRepository
             $product->append('base_unit');
             $product->append('shippable_units');
         });
-//        $o = $order?->toArray();
         return $order;
+    }
+
+    public static function inProcess(array $request): string
+    {
+        try {
+            if ($request['in_process']) {
+                Order::find($request['order_id'])
+                    ->update(['in_process' => Carbon::now()->toDateString()]);
+                return 'Заказ взят в работу';
+            } else {
+                Order::find($request['order_id'])->update(['in_process' => null]);
+                return 'Заказ не обработан';
+            }
+        } catch (Throwable $exception) {
+            $msg = $exception->getMessage();
+            error_log($msg);
+            return 'Ошибка изменения статуса заказа';
+        }
     }
 
     public static function edit(IRequest $request): Model|Collection|Builder|array|null
@@ -132,93 +206,4 @@ class OrderRepository
         return $orders;
     }
 
-    public static function deleteOrderItem(Order $order, Product $product, string $unit_id,)
-    {
-        return OrderItem::where([
-            'order_id' => $order->id,
-            'product_id' => $product['1s_id'],
-            'unit_id' => $unit_id,
-        ])
-            ->delete();
-    }
-
-    public static function updateOrCreateOrderItem(Order $order, Product $product, string $unit_id, $count)
-    {
-        return OrderItem::updateOrCreate([
-            'order_id' => $order->id,
-            'product_id' => $product['1s_id'],
-            'unit_id' => $unit_id,
-        ],
-            [
-                'order_id' => $order->id,
-                'product_id' => $product['1s_id'],
-                'unit_id' => $unit_id,
-                'count' => $count,
-            ]);
-    }
-
-    public static function firstOrCreateOrder(string $vitex_guest_id)
-    {
-        try {
-            list($field, $value) = CartService::getCartFieldValue();
-            $order = Order::firstOrCreate([
-                $field => $value,
-                'submitted' => NULL
-            ], [
-                $field => $value,
-                'ip' => $_SERVER['SERVER_ADDR'],
-            ]);
-
-            return $order;
-        } catch (Throwable $exception) {
-            return null;
-        }
-    }
-
-    public static function detachItems(string $product_id, array $unitIds): bool
-    {
-        $order = OrderRepository::usersOrder();
-        try {
-            foreach ($unitIds as $unitId => $count) {
-                $product = $order->products->where('1s_id', $product_id)->first();
-                $a       = $product->toArray();
-            }
-            $order->products()->detach($product->id);
-            return true;
-        } catch (\Throwable $exception) {
-            $exc = $exception;
-            return false;
-        }
-    }
-
-    private static function q2()
-    {
-        $orderItems = OrderItem::with('product')
-            ->groupBy('sess')
-            ->get('*');
-        return $orderItems;
-    }
-
-
-    public static function productsCount(): int
-    {
-        list($field, $value) = CartService::getCartFieldValue();
-        $order = Order::where($field, $value)
-            ->whereNull('submitted')
-            ->select('id')
-            ->with('productsWithoutAppends', function ($q) {
-                return $q
-                    ->select('products.id', 'products.1s_id', 'products.name')
-                    ->whereHas('orderItems', function ($q) {
-                        return $q->where('count', '>', 0)
-                            ->whereHas('productUnit.unit');
-                    });
-            })
-            ->first();
-        if ($order) {
-            $order = $order->toArray();
-            return count($order['products_without_appends']) ?? 0;
-        }
-        return 0;
-    }
 }

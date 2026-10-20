@@ -2,7 +2,6 @@
 @use "../../mixin_media";
 @use "filter";
 //@use "../select/del/SelectNew";
-//import search from '@svg/search.svg';
 @use "sass:meta";
 
 [custom-table] {
@@ -180,7 +179,6 @@
         position: relative;
         margin: 0;
         width: 1px;
-        //background-image: meta.url(@svg/search.svg);
         background-image: url(#{var.$svg_path}search.svg);
         background-repeat: no-repeat;
         background-position: 3px 3px, center;

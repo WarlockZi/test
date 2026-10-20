@@ -14,4 +14,9 @@ class ProductService
     )
     {
     }
+    public function notFound($product):void{
+        response()->view('product.notFound',
+            compact('product'),
+            404);
+    }
 }

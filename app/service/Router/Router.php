@@ -4,8 +4,10 @@ declare(strict_types=1);
 namespace app\service\Router;
 
 use app\exception\Router\RouterException;
+use app\middleware\CsrfMiddleware;
 use app\repository\RouterRepository;
 use Exception;
+use Illuminate\Http\Request;
 
 class Router
 {
@@ -13,14 +15,18 @@ class Router
         protected IRequest $request,
         protected array    $routes = [],
         protected string   $namespace = '',
+        protected array    $globalMiddlewares = [],
     )
     {
+        $this->globalMiddlewares = [
+            CSRFMiddleware::class,
+        ];
+
     }
 
     protected function matchRoute(IRequest $request): void
     {
         $routes = RouterRepository::getRoutes();
-
         foreach ($routes as $route) {
 
             if (preg_match("#$route[0]#i", $request->path(), $matches)) {
@@ -34,6 +40,7 @@ class Router
                 foreach ($matches as $k => $v) {
                     $request->$k = is_string($v) ? strtolower($v) : $v;
                 }
+                $request->middlewares = [...$this->globalMiddlewares, ...$route[2] ?? [],];
                 break;
             }
         }

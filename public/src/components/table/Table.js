@@ -160,7 +160,7 @@ export default class Table {
 
   async handleCallbacks(target, table, detail) {
     const colummnJsCallback =
-      target.closest("[data-jscallback]").dataset.jscallback;
+      target.closest("[data-jscallback]")?.dataset.jscallback;
     if (colummnJsCallback) {
       const cb = await this.getCallbacks();
       cb.callMethod(colummnJsCallback, [target, table, detail]);

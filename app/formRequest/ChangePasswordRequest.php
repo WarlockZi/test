@@ -3,10 +3,11 @@
 namespace app\formRequest;
 
 use app\formRequest\baseFormRequests\FormRequest2;
+use app\service\AuthService\AuthService;
 
 class ChangePasswordRequest extends FormRequest2
 {
-    public function __construct( )
+    public function __construct()
     {
         parent::__construct();
     }
@@ -16,7 +17,7 @@ class ChangePasswordRequest extends FormRequest2
         return [
             'old_password' => 'required|string|min:6',
             'new_password' => 'required|string|min:6',
-         ];
+        ];
     }
 
 
@@ -31,5 +32,13 @@ class ChangePasswordRequest extends FormRequest2
             'new_password.string' => 'The new_password must be a string.',
             'new_password.min' => 'The new_password must be at least 6 characters.',
         ];
+    }
+
+    public function authorize(): bool
+    {
+        if (!AuthService::getUser()) {
+            response()->withError('чтобы поменять пароль нужно войти в свой аккаунт')->redirect('/');
+        }
+        return true;
     }
 }

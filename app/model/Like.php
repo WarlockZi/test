@@ -14,7 +14,7 @@ class Like extends Pivot
 
     protected $fillable = [
         'vitex_guest_id',
-        'user_id',
+        'account_id',
         'product_id',
     ];
 

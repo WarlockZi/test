@@ -5,9 +5,6 @@ namespace app\repository;
 
 
 use app\model\Category;
-use app\model\Product;
-use app\service\Breadcrumbs\NewBread;
-use app\service\Breadcrumbs\NewBreadArray;
 use app\service\Cache\Redis\Cache;
 
 class CategoryRepository
@@ -22,29 +19,26 @@ class CategoryRepository
                 $category = Category::query()
                     ->withWhereHas('ownProperties',
                         fn($query) => $query
-                            ->where( 'path', $slug)
+                            ->where('path', $slug)
                             ->orWhere('seo_path', $slug)
                     )
-                    ->with('meta')
-                    ->with('ownProperties')
-                    ->with('childrenRecursive')
-                    ->with('parentRecursive')
-                    ->with('productsInStore')
-                    ->with('productsNotInStoreInMatrix')
+                    ->with(['meta',
+                        'ownProperties',
+                        'childrenRecursive',
+                        'parentRecursive',
+                        'productsInStore',
+                        'productsNotInStoreInMatrix',
+                    ])
                     ->first();
-
-                if ($category) {
-                    $category->productsInStore->each(function (Product $product) {
-                        $product->append('base_unit');
-                        $product->append('shippable_units');
-                    });
-                    $category->productsNotInStoreInMatrix->each(function (Product $product) {
-                        $product->append('base_unit');
-                        $product->append('shippable_units');
-                    });
-                    return $category;
+                if (!$category) {
+                    return null;
                 }
-                return null;
+                $allProducts = $category->productsInStore
+                    ->merge($category->productsNotInStoreInMatrix);
+                $allProducts->each(fn($product) => $product
+                    ->append(['cart_items','base_unit', 'shippable_units', 'is_liked', 'is_compared']));
+
+                return $category;
             },
             Cache::$timeLife1_000);
     }

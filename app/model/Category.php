@@ -47,6 +47,36 @@ class Category extends Model
     }
 
     protected $appends = [];
+    public function productsInStore(): hasMany
+    {
+        $product =  $this->hasMany(Product::class,
+            'category_1s_id',
+            's_id',
+        )
+            ->where('instore', '<>', 0)
+            ->withActivepromotions()
+            ->with('ownProperties')
+            ->orderBy('name')
+        ;
+
+        return $product;
+    }
+
+    public function productsNotInStoreInMatrix(): HasMany
+    {
+        $product=  $this->hasMany(Product::class,
+            'category_1s_id',
+            's_id',
+        )
+            ->where('instore', 0)
+            ->where('name', 'regexp', '\\s?\\*\\s?$')
+            ->withActivepromotions()
+            ->with('ownProperties')
+            ->orderBy('name');
+
+        return $product;
+    }
+
     public function childrenNotDeleted(): HasMany
     {
         return $this->hasMany(Category::class,
@@ -126,45 +156,6 @@ class Category extends Model
         return 's_id';
     }
 
-    public function productsInStore(): hasMany
-    {
-        $product =  $this->hasMany(Product::class,
-            'category_1s_id',
-            's_id',
-        )
-            ->where('instore', '<>', 0)
-            ->with('inactivepromotions')
-            ->with('activepromotions')
-            ->with('compare')
-            ->with('like')
-            ->with('units')
-            ->with('ownProperties')
-            ->orderBy('name')
-            ;
-
-        return $product;
-    }
-
-    public function productsNotInStoreInMatrix(): HasMany
-    {
-        $product=  $this->hasMany(Product::class,
-            'category_1s_id',
-            's_id',
-        )
-            ->where('instore', 0)
-            ->where('name', 'regexp', '\\s?\\*\\s?$')
-            ->with('inactivepromotions')
-            ->with(['activepromotions' => function ($q) {
-                $q->whereNull('active_till');
-            }])
-            ->with('compare')
-            ->with('like')
-            ->with('units')
-            ->with('ownProperties')
-             ->orderBy('name');
-
-        return $product;
-    }
 
     public function InactivePromotions()
     {
@@ -245,13 +236,4 @@ class Category extends Model
     {
         return $this->parent()->with('parentRecursive');
     }
-
-    public function childrenDeleted()
-    {
-        return $this->hasMany(Category::class,
-            'category_1s_id',
-            's_id')
-            ->whereNotNull('deleted_at');
-    }
-
 }

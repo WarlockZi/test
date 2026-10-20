@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
 
-//	public $model = 'post';
-
     protected $fillable = [
         'name',
         'full_name',
         'post_id',
+        'hired',
+        'fired',
     ];
 
     public function chief()

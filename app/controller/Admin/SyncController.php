@@ -103,14 +103,14 @@ class SyncController extends AdminscController
     #[NoReturn] public function actionLoadCategories(LoadCategories $loadCategories): void
     {
         $loadCategories->load();
-        Response::exitWithPopup('Категории загружены');
+        response()->popup('Категории загружены');
     }
 
     public function actionLoadProducts(LoadProductsBatching $loadProducts): void
     {
         $loadProducts->load();
         if (DEV) {
-            Response::exitWithPopup('Products loaded');
+            response()->popup('Products loaded');
         }
     }
 

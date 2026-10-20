@@ -5,6 +5,7 @@ namespace app\controller\Admin;
 use app\action\admin\PostAction;
 use app\model\Post;
 use app\service\Response;
+use app\service\Router\IRequest;
 use app\view\Post\PostView;
 use JetBrains\PhpStorm\NoReturn;
 
@@ -29,7 +30,7 @@ class PostController extends AdminscController
     {
         if ($this->ajax) {
             $this->model::update($this->ajax);
-            Response::exitWithPopup('ok');
+            response()->popup('ok');
         }
         $id = $this->route['id'];
 
@@ -53,12 +54,12 @@ class PostController extends AdminscController
     }
 
 
-    public function actionDelete(): void
+    public function actionDelete(IRequest $request): void
     {
         $id = $this->ajax['id'] ?? $_POST['id'];
 
         if ($this->model::delete($id)) {
-            Response::exitWithPopup("ok");
+            response()->popup("ok");
         }
 
         header('Location:/adminsc/post/table');

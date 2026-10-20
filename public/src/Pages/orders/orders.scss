@@ -1,0 +1,44 @@
+.orders {
+
+  .order {
+
+    .order-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-bottom: 20px;
+
+    }
+
+    .product {
+      display: grid;
+      grid-template-areas:
+              "img name item"
+              "img name item";
+      grid-template-columns: 80px 1fr 1fr;
+      font-size: 1rem;
+
+
+      .product-name {
+        grid-area: name;
+      }
+
+      .product-image {
+        grid-area: img;
+
+        img {
+          object-fit: contain;
+          max-width: 100%;
+        }
+      }
+
+      .order-items {
+        grid-area: item;
+
+        .order-item {
+          display: grid;
+          grid-template-columns: 64px 43px 100px;
+        }
+      }
+    }
+  }
+}

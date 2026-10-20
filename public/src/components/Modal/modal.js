@@ -1,12 +1,13 @@
 import "./modal.scss";
 import { $ } from "../../common";
-import { ael, cqs, qa, qs } from "../../constants.js";
+import { ael, qa, qs } from "../../constants.js";
 
 export default class Modal {
   constructor(props) {
     this.modal = $(`[data-modal='default']`).first();
 
     if (!props?.triggers || !props?.boxes || !this.modal) return;
+
     this.triggers = props.triggers;
     this.boxes = props.boxes;
 
@@ -17,7 +18,8 @@ export default class Modal {
     this.closeEl = $(this.modal).find(".modal-close");
 
     this.triggers.forEach((trigger) => {
-      if (cqs(trigger)) cqs(trigger)[ael]("click", this.show.bind(this));
+      const el = $(trigger).first();
+      if (el) el[ael]("click", this.show.bind(this));
     });
 
     this.overlay[ael]("click", this.close.bind(this));

@@ -8,6 +8,7 @@ use app\formRequest\CompareRequest;
 use app\model\Compare;
 use app\repository\CompareRepository;
 use app\service\AuthService\AuthService;
+use app\service\Compare\CompareService;
 use app\view\Compare\CompareView;
 use JetBrains\PhpStorm\NoReturn;
 
@@ -20,11 +21,18 @@ class CompareController extends AppController
     {
         parent::__construct();
     }
+    #[NoReturn]
+    public function actionToggle(CompareRequest $request, CompareService $service): void
+    {
+        $request = $request->validated();
 
-    #[NoReturn] public function actionPage(): void
+        $compared = $service->toggle($request);
+
+        response()->json(['compared' => $compared]);
+    }
+    #[NoReturn] public function actionIndex(): void
     {
         $compares = CompareRepository::all();
-//        $content  = CompareView::all($compares);
         view('pages.compares', compact('compares'));
     }
 

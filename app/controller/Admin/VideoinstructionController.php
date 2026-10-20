@@ -22,12 +22,11 @@ class VideoinstructionController extends AdminscController
     {
 
         $this->showTable();
-//        $this->setVars(compact('videos'));
     }
 
-    public function actionEdit()
+    public function actionEdit(): void
     {
         $VideoinstructionsView = VideoinstructionView::listAll();
-        $this->setVars(compact('VideoinstructionsView'));
+
     }
 }

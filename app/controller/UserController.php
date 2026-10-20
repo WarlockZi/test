@@ -31,7 +31,7 @@ class UserController extends AppController
 //
 //		if ($user = $this->ajax) {
 //			User::updateOrCreate($user);
-//			Response::exitWithPopup('Сохранено');
+//			response()->popup('Сохранено');
 //		}
 //	}
 
@@ -41,9 +41,9 @@ class UserController extends AppController
 //		if ($data = $this->ajax) {
 //			if ($user->can(['user_delete'])) {
 //				User::delete($data['id']);
-//				Response::exitWithPopup('ok');
+//				response()->popup('ok');
 //			} else {
-//				Response::exitWithPopup('Не хватает прав');
+//				response()->popup('Не хватает прав');
 //			}
 //		}
 //	}

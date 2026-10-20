@@ -69,13 +69,13 @@ class UpdateOrCreateRepository
         $self->model   = $modelClass ?? '';
         $self->modelId = $req['id'] ?? '';
 
-        $self->relationName = $req['relation']['name'] ?? '';
-        $self->relationId   = $req['relation']['id'] ?? '';
-        $self->relationField   = $req['relation']['field'] ?? [];
+        $self->relationName  = $req['relation']['name'] ?? '';
+        $self->relationId    = $req['relation']['id'] ?? '';
+        $self->relationField = $req['relation']['field'] ?? [];
 
-        $self->pivotName = $req['pivot']['name'] ?? '';
-        $self->pivotId   = $req['pivot']['id'] ?? '';
-        $self->pivotField   = $req['pivot']['field'] ?? [];
+        $self->pivotName  = $req['pivot']['name'] ?? '';
+        $self->pivotId    = $req['pivot']['id'] ?? '';
+        $self->pivotField = $req['pivot']['field'] ?? [];
 
         $self->field = $req['field'] ?? [];
         return $self;
@@ -155,19 +155,17 @@ class UpdateOrCreateRepository
 
     private function handleRelation(): Response
     {
-        if ($this->relationId) {
-            $result = $this->model::find($this->modelId)
-                ->{$this->relationName}()
-                ->update($this->relationField);
-            return response()->popup('Обновлена зависимая модель', 200);
-        } else {
-//            $model = $this->model::with($this->relationName)->find($this->modelId);
-//            $result = $this->model::find($this->modelId)
-//                ->{$this->relationName}()
-//                ->update($this->relationField);
-//            return response()->popup('Обновлена '.$this->relationName, 200);
+        $fieldName = array_key_first($this->relationField);
+        $fieldValue = $this->relationField[$fieldName];
+
+        $result = $this->model::find($this->modelId)
+            ->{$this->relationName}()
+            ->update([$fieldName=>$fieldValue]);
+        if ($result) {
+            return response()->popup("Обновлена $this->relationName", 200);
         }
-        return response()->json(['error' => 'Неизвестный тип операции с отношением'], 500);
+
+        return response()->json(['popup' => 'ошибка обновления', 'error' => 'Неизвестный тип операции с отношением'], 500);
     }
 
     private static function updatePivot(Model $model, string $relationName, array $data): Response

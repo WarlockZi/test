@@ -1,10 +1,16 @@
 @php
     use app\service\AuthService\AuthService;use app\view\components\Icon\Icon;
-
+    $i = 0;
 @endphp
-@foreach ($order['products'] as $i => $product)
 
-    <div class="row cart-item" data-product_1s_id="{!!$product['1s_id']!!} ">
+
+@foreach ($order['products'] as $product_is_id => $orderitems)
+    @php
+        $orderitem = $orderitems[0];
+        $product = $orderitem['product'];
+    @endphp
+
+    <div class="row cart-item" data-product_1s_id="{!!$product_is_id!!}">
 
         <div class="num cell"><?= ++$i; ?></div>
 
@@ -22,13 +28,10 @@
         </div>
 
         <div class="cart-shippable-table cell">
-            @if(!$product)
-                <div>продукт не определен</div>
-            @else
-                {{--@deb--}}
-                @include('product.card.shippableUnits', compact('product'))
-                {{--                @include('cart.cartShippableUnits', compact('product'))--}}
-            @endif
+
+{{--    @deb--}}
+            @include('product.card.shippableUnits', compact('product', 'orderitem'))
+
         </div>
 
         @include('cart.cartSubSum')

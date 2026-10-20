@@ -76,7 +76,7 @@ class HelpersService
                 $f = 1;
             }
         }
-        Response::exitWithPopup('конец');
+        response()->popup('конец');
     }
 
     public static function clean()
@@ -99,7 +99,7 @@ class HelpersService
                 }
             }
         }
-        Response::exitWithPopup('конец');
+        response()->popup('конец');
     }
 
     public static function cleanBase()
@@ -122,7 +122,7 @@ class HelpersService
                 }
             }
         }
-        Response::exitWithPopup('конец');
+        response()->popup('конец');
     }
 
     public static function makeBaseUnitsShippable()
@@ -143,7 +143,7 @@ class HelpersService
                 }
             }
         }
-        Response::exitWithPopup('конец');
+        response()->popup('конец');
     }
 
 

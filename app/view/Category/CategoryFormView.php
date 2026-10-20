@@ -257,7 +257,10 @@ class CategoryFormView
     {
         return Table::build($properties)
             ->pageTitle('Св-ва категории')
-            ->data(['relation'=>'properties'])
+            ->data([
+                'relation'=>'properties',
+                'jscallback'=>'properties',
+            ])
             ->column(
                 ColumnBuilder::build('Наимен')
                     ->callback(function ($prop) {

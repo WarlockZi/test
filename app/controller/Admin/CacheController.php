@@ -26,7 +26,7 @@ class CacheController extends AdminscController
         $this->clearBladeCache();
         $this->clearContanerCache();
         $this->clearPredis();
-        Response::exitWithPopup('Кэш очищен');
+        response()->popup('Кэш очищен');
     }
 
     private function clearPredis(): void

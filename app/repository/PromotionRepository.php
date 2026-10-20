@@ -24,14 +24,14 @@ class PromotionRepository
     {
         return Promotion::query()
             ->where('active_till', '>', Carbon::today()->toDateString())
-            ->with('product.units.prices')
+            ->with('product.units')
             ->get();
     }
     public static function inactive(): Collection
     {
         return Promotion::query()
             ->where('active_till', '<', Carbon::today()->toDateString())
-            ->with('product.units.prices')
+            ->with('product.units')
             ->get();
     }
 }

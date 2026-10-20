@@ -23,15 +23,15 @@ class ManufacturerAction implements IShowTable
             )
             ->column(
                 ColumnBuilder::build('name')
-                    ->name('Наименование')
-                    ->search()
+                    ->headerTitle('Наименование')
+                    ->headerSearch()
                     ->contenteditable()
                     ->get()
             )
             ->column(
                 ColumnBuilder::build('country_id')
                     ->function(Manufacturer::class, 'countrySelect')
-                    ->name('Страна')
+                    ->headerTitle('Страна')
                     ->get()
             )
             ->del()

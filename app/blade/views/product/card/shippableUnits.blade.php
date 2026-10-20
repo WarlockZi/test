@@ -4,27 +4,16 @@
         <a href="/cart" class='button to-cart-button'>
             Перейти в корзину
         </a>
-{{--        <button >--}}
-{{--        </button>--}}
     @endif
 
     @foreach($product['shippable_units'] as $shippable)
 
+{{--        @deb--}}
         @php
-            $count =0;
-            if(isset($order['products']) ){
-                foreach($order['products'] as $orderProduct){
-                    if ($orderProduct['1s_id']!==$product['1s_id']) continue;
-                    foreach($orderProduct['orderitems'] as $orderitem){
-                        if(!empty($orderitem['product_unit'])) {
-                            if($orderitem['product_unit']['unit_id']==$shippable['id']){
-                                $count = $orderitem['count'];
-                                break;
-                        }
-                    }
-                }
+            $count = 0;
+            if ($shippable['id']===$orderitem['unit_id']) {
+                $count = $orderitem['count'];
             }
-        }
         @endphp
 
         <div
@@ -39,11 +28,14 @@
                     onclick="this.value??'';"
             >
 
-            <div class="unit-name">{!!$shippable['name']??'ед.'!!}</div>
+            {{--                        @deb--}}
+            <div class="unit-name">{!!data_get($shippable,['name'], 'ед.')!!}</div>
 
             <div class="cost"
-                 data-cost="{{$shippable['pivot']['price']??'0'}}">
-                {{$shippable['pivot']['price']?number_format($shippable['pivot']['price'],2,'.',' '):0}}
+                 @php $price = $shippable['pivot']['price']??'0'; @endphp
+
+                 data-cost="{{$price}}">
+                {{$price?number_format($price,2,'.',' '):0}}
             </div>
             <div class="currency">₽</div>
 
@@ -54,6 +46,7 @@
             </div>
 
         </div>
+
     @endforeach
 
 </div>

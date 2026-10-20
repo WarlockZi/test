@@ -24,7 +24,7 @@ trait LoggerTrait
         $this->logDate();
         $this->logger->write('- error -' . $msg . PHP_EOL . $e);
         if (DEV) {
-            Response::exitWithPopup($msg);
+            response()->popup($msg);
         }
         exit();
     }

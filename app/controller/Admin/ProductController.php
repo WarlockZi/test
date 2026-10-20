@@ -5,11 +5,13 @@ namespace app\controller\Admin;
 
 use app\action\admin\ProductAction;
 use app\blade\views\product\ProductFormView;
+use app\formRequest\ContentableRequest;
 use app\formRequest\StoreProductMainImageRequest;
 use app\model\Product;
 use app\model\ProductUnit;
 use app\repository\ProductFilterRepository;
 use app\repository\ProductRepository;
+use app\repository\UpdateOrCreateRepository;
 use app\service\AuthService\AuthService;
 use app\service\Breadcrumbs\NewBreadArray;
 use app\service\Router\IRequest;
@@ -49,6 +51,13 @@ class ProductController extends AdminscController
         $breadcrumbs = (new NewBreadArray(true))->getParents($prod->category->toArray());
         $catItem     = ProductFormView::edit($prod);
         view('admin.product.edit', compact('catItem', 'breadcrumbs'));
+    }
+    #[NoReturn]
+    public function actionContenteditable(ContentableRequest $request): void
+    {
+        $validated = $request->validated();
+        $message =         UpdateOrCreateRepository::process($validated, $this->model);
+        response()->popup($message);
     }
 
     #[NoReturn]

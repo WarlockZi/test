@@ -19,12 +19,12 @@ class PostAction implements IShowTable
             ->pageTitle('Должности')
             ->column(
                 ColumnBuilder::build('id')
-                    ->name('ID')
+                    ->headerTitle('ID')
                     ->get()
             )
             ->column(
                 ColumnBuilder::build('name')
-                    ->name('Краткое наим')
+                    ->headerTitle('Краткое наим')
                     ->contenteditable()
                     ->class('left')
                     ->width('100px')
@@ -32,7 +32,7 @@ class PostAction implements IShowTable
             )
             ->column(
                 ColumnBuilder::build('full_name')
-                    ->name('Полное наим')
+                    ->headerTitle('Полное наим')
                     ->contenteditable()
                     ->class('left')
                     ->width('250px')
@@ -42,7 +42,7 @@ class PostAction implements IShowTable
                 ColumnBuilder::build('chief')
                     ->callback(fn($post) => $post->chief->name ?? '')
                     ->class('left')
-                    ->name('Подчиняется')
+                    ->headerTitle('Подчиняется')
                     ->width('1fr')
                     ->get()
             )

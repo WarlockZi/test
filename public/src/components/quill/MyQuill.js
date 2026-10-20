@@ -3,7 +3,7 @@ import Quill from "quill";
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
-import DTO from "@src/Admin/DTO/DTO.js";
+// import DTO from "@src/Admin/DTO/DTO.js";
 
 export default class MyQuill {
   constructor(
@@ -29,6 +29,7 @@ export default class MyQuill {
     this.contents = $(selector).first().innerText ?? "\\n";
 
     this.toolbar = toolbar ? this.setToolbar() : false;
+    this.theme = theme;
     this.options = this.setOptions();
     this.init();
   }
@@ -57,7 +58,7 @@ export default class MyQuill {
 
   setOptions() {
     return {
-      theme: "snow",
+      theme: this.theme,
       // theme: 'bubble',
       // placeholder: "Начните писать...",
       modules: {
@@ -66,7 +67,8 @@ export default class MyQuill {
     };
   }
 
-  dto() {
+  async dto() {
+    const { default: DTO } = await import("@src/Admin/DTO/DTO.js");
     return new DTO(this.id, this.el);
   }
 
@@ -82,8 +84,7 @@ export default class MyQuill {
     if (this.autosave) {
       this.quill.on(
         "text-change",
-        function (delta) {
-          // const content = JSON.stringify(quill.getContents())
+        function () {
           post(`/adminsc/${this.model}/updateOrCreate`, this.dto());
         }.bind(this),
       );

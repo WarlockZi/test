@@ -10,8 +10,24 @@
   cursor: pointer;
   z-index: 1;
 
+  .like {
+    &[data-like="true"] {
+      svg {
+        stroke: var.$color-red;
+        stroke-width: 2px;
+      }
+    }
+  }
+
   .compare {
     stroke-width: 2px;
+
+    &[data-compare="true"] {
+      svg {
+        color: var.$color-main-green;
+        stroke-width: 3px;
+      }
+    }
   }
 
   .card-panel-item {

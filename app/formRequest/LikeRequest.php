@@ -8,7 +8,6 @@ use app\formRequest\baseFormRequests\FormRequest2;
 class LikeRequest extends FormRequest2
 {
     public function __construct(
-        protected $allowedFields = ['attach', 'fields', 'relation', 'id','phpSession']
     )
     {
         parent::__construct();
@@ -17,27 +16,16 @@ class LikeRequest extends FormRequest2
     public function rules(): array
     {
         return [
-            'fields' => 'required',
-            'relation' => 'required',
-            'phpSession' => 'required|string',
+            'product_1s_id' => 'required|string',
         ];
     }
 
-    public function all($keys = null): array
-    {
-        return [
-            'attach' => $this->json('attach'),
-            'fields' => $this->json('fields'),
-            'id' => $this->json('id'),
-            'relation' => $this->json('relation'),
-            'phpSession' => $this->json('phpSession'),
-        ];
-    }
 
     public function messages(): array
     {
         return [
-
+            'product_1s_id.required' => 'Отсутствует product 1s id',
+            'product_1s_id.string' => 'product 1s id должен быть строкой',
         ];
     }
 

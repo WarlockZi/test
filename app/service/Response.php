@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace app\service;
 
 use app\blade\View;
+use app\enum\HttpStatusCode;
 use app\service\Logger\ILogger;
 use app\service\Nonce\Nonce;
 use JetBrains\PhpStorm\NoReturn;
@@ -16,69 +17,8 @@ class Response
     protected string $error;
     protected ?ILogger $logger = null;
     protected array $cookies = [];
-    public static $statusTexts = [
-        100 => 'Continue',
-        101 => 'Switching Protocols',
-        102 => 'Processing',
-        200 => 'OK',
-        201 => 'Created',
-        202 => 'Accepted',
-        203 => 'Non-Authoritative Information',
-        204 => 'No Content',
-        205 => 'Reset Content',
-        206 => 'Partial Content',
-        207 => 'Multi-Status',
-        208 => 'Already Reported',
-        226 => 'IM Used',
-        300 => 'Multiple Choices',
-        301 => 'Moved Permanently',
-        302 => 'Found',
-        303 => 'See Other',
-        304 => 'Not Modified',
-        305 => 'Use Proxy',
-        307 => 'Temporary Redirect',
-        308 => 'Permanent Redirect',
-        400 => 'Bad Request',
-        401 => 'Unauthorized',
-        402 => 'Payment Required',
-        403 => 'Forbidden',
-        404 => 'Not Found',
-        405 => 'Method Not Allowed',
-        406 => 'Not Acceptable',
-        407 => 'Proxy Authentication Required',
-        408 => 'Request Timeout',
-        409 => 'Conflict',
-        410 => 'Gone',
-        411 => 'Length Required',
-        412 => 'Precondition Failed',
-        413 => 'Payload Too Large',
-        414 => 'URI Too Long',
-        415 => 'Unsupported Media Type',
-        416 => 'Range Not Satisfiable',
-        417 => 'Expectation Failed',
-        418 => 'I\'m a teapot',
-        421 => 'Misdirected Request',
-        422 => 'Unprocessable Entity',
-        423 => 'Locked',
-        424 => 'Failed Dependency',
-        425 => 'Too Early',
-        426 => 'Upgrade Required',
-        428 => 'Precondition Required',
-        429 => 'Too Many Requests',
-        431 => 'Request Header Fields Too Large',
-        451 => 'Unavailable For Legal Reasons',
-        500 => 'Internal Server Error',
-        501 => 'Not Implemented',
-        502 => 'Bad Gateway',
-        503 => 'Service Unavailable',
-        504 => 'Gateway Timeout',
-        505 => 'HTTP Version Not Supported',
-        506 => 'Variant Also Negotiates',
-        507 => 'Insufficient Storage',
-        508 => 'Loop Detected',
-        510 => 'Not Extended',
-        511 => 'Network Authentication Required',
-    ];
+
+    public static $statusTexts = HttpStatusCode::class;
 
     public function __construct($content = '', int $status = 200, array $headers = [])
     {
@@ -89,18 +29,12 @@ class Response
         ], $headers);
     }
 
-    private function log($content): void
-    {
-        if ($this->logger) {
-            $this->logger->write($content);
-        }
-    }
-
     #[NoReturn]
     public function json(array $data = [], int $status = 200, array $headers = []): \Symfony\Component\HttpFoundation\Response
     {
+        $data['csrf'] = $_SESSION['csrf_token']??null;
+
         $this->content = json_encode($data,JSON_UNESCAPED_UNICODE);
-        $this->log($this->content);
         $this->status  = $status;
         $this->headers = array_merge($this->headers, [
             'Content-Type' => 'application/json; charset=UTF-8'
@@ -110,18 +44,14 @@ class Response
     }
 
     #[NoReturn]
-    public function popup(string $message = '', int $status = 200, array $headers = [], $logService=null): \Symfony\Component\HttpFoundation\Response
+    public function popup(string $message = '', int $status = 200, array $headers = []): \Symfony\Component\HttpFoundation\Response
     {
-        $this->log($message);
         $this->content = json_encode(['popup' => $message], JSON_UNESCAPED_UNICODE);
+
         $this->status  = $status;
         $this->headers = array_merge($this->headers, [
             'Content-Type' => 'application/json; charset=UTF-8'
         ], $headers);
-        if ($logService instanceof ILogger) {
-            //TODO change Interface to psr4
-            $logService->write($message);
-        }
 
         $this->send();
     }
@@ -202,20 +132,6 @@ class Response
         return $this;
     }
 
-    #[NoReturn]
-    public static function exitWithPopup(string $msg): void
-    {
-        $self          = new self();
-        $self->content = json_encode(['popup' => $msg], JSON_UNESCAPED_UNICODE);
-        $self->status  = 200;
-        $self->headers = array_merge($self->headers, [
-            'Content-Type' => 'application/json; charset=UTF-8'
-        ]);
-
-        $self->send();
-
-    }
-
     private static function setCSPHeaders()
     {
         $nonce = Nonce::getInstance();
@@ -237,35 +153,6 @@ class Response
             "base-uri 'self'",
             "object-src 'none'"
         ];
-//        $csp = [
-//            "default-src 'self' https://autofill.yandex.ru",
-//            "script-src 'self' http://vi-prod:5173 'nonce-$nonce'",
-//            "style-src 'self' http://vi-prod:5173 'nonce-$nonce'",
-//            "style-src-elem https://fonts.googleapis.com https://vitexopt.ru 'nonce-$nonce'",
-//            "font-src fonts.gstatic.com",
-//            "connect-src 'self' wss://vi-prod:5173 https://vitexopt.ru",
-//            "img-src 'self' data:",
-//            "frame-ancestors 'none'",
-//            "form-action 'self'",
-//            "base-uri 'self'",
-//            "object-src 'none'",
-//            "worker-src 'self'",
-//            "manifest-src 'self'",
-//            "report-uri /csp-report"
-
-//            "default-src 'self' https://autofill.yandex.ru",
-//            "script-src 'self' https://vi-prod:5173 'nonce-$nonce'",
-//            "style-src 'self' https://vi-prod:5173 'nonce-$nonce'",
-//            "style-src-elem https://fonts.googleapis.com https://vitexopt.ru 'nonce-$nonce'",
-//            "font-src fonts.gstatic.com",
-//            "connect-src 'self' wss://localhost:5173 https://vitexopt.ru",
-////            "script-src-attr 'unsafe-inline'",
-//            "img-src 'self' data:",
-//            "frame-ancestors 'none'",
-//            "form-action 'self'",
-//            "base-uri 'self'",
-//            "object-src 'none'"
-//        ];
 
         header("Content-Security-Policy: " . implode('; ', $csp));
 

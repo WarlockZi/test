@@ -31,20 +31,20 @@ class TrancateService implements ITrancateService
     {
         Price::truncate();
         $this->log('--- price  deleted ---');
-        Response::exitWithPopup('цены удалены');
+        response()->popup('цены удалены');
     }
 
     #[NoReturn] public function removeProducts(): void
     {
         Product::truncate();
         $this->log('--- products  deleted ---');
-        Response::exitWithPopup('товары удалены');
+        response()->popup('товары удалены');
     }
 
     #[NoReturn] public function removeCategories(): void
     {
         Category::truncate();
         $this->log('--- category  deleted ---');
-        Response::exitWithPopup('категории удалены');
+        response()->popup('категории удалены');
     }
 }

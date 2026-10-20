@@ -2,7 +2,6 @@
 
 namespace app\action;
 
-use app\model\Order;
 use app\model\Product;
 use app\repository\OrderRepository;
 use app\service\Breadcrumbs\NewBreadArray;
@@ -12,24 +11,32 @@ use app\service\Meta\MetaService;
 class ProductAction
 {
     public function __construct(
-        private MetaService       $meta,
+        private MetaService            $meta,
         private readonly NewBreadArray $breadcrumbs,
     )
     {
     }
 
-    public function orderProduct(Product $product):?Order
+    public function prepareCartItems()
     {
+        return $_SESSION['cart_items'];
+    }
+
+    public function orderProduct(Product $product): ?array
+    {
+        if ($_SESSION['cart_items']) {
+            return $this->prepareCartItems();
+        }
         $order = OrderRepository::usersOrder(currentUser: true);
         if (!$order) return null;
 
         $orderProduct = $order->products
             ->where('1s_id', $product['1s_id']);
         $order->setRelation('products', $orderProduct);
-        return $order;
+        return $order->toArray();
     }
 
-    public function setMeta(Product $product): array
+    public function setMeta(array $product): array
     {
         return $this->meta->setMeta(
             $product['ownProperties']['seo_title']

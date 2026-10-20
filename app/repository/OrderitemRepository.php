@@ -12,17 +12,10 @@ use Illuminate\Database\Eloquent\Collection;
 
 class OrderitemRepository
 {
-    public static function updateOrCreate(array $req)
+    public static function updateOrCreate(array $req, $strategy)
     {
-        return OrderItem::updateOrCreate(
-            [
-                'id' => $req['id'],
-            ],
-            [
-                'id' => $req['id'],
-                'count' => $req['count'],
-            ]
-        );
+        $strategy->updateOrCreate($req);
+
     }
     public static function main(): Collection|array
     {
@@ -34,7 +27,6 @@ class OrderitemRepository
                 ->where('user_id', $user['id'])
                 ->with('product.price')
                 ->groupBy('product_id')
-//				->selectRaw('SUM(count) as count_total')
                 ->get();
         } else {
             $oItems = OrderItem::query()
@@ -46,7 +38,7 @@ class OrderitemRepository
     }
 
 
-    public function deleteItem(string $sess, string $product_id, string $unitId)
+    public function deleteItem(string $sess, string $product_id, string $unitId): void
     {
         $oItem = OrderItem::query()
             ->where('sess', $sess)
@@ -56,22 +48,4 @@ class OrderitemRepository
         if ($oItem) $oItem::query()->forceDelete();
     }
 
-    public static function deleteItems(string $sess, string $product_id, array $unitIds)
-    {
-        try {
-            foreach ($unitIds as $unitId) {
-                $oItem = OrderItem::query()
-                    ->where('sess', $sess)
-                    ->where('product_id', $product_id)
-                    ->where('unit_id', $unitId)
-                    ->first();
-                if ($oItem) $oItem::query()->forceDelete();
-            }
-            return true;
-        } catch (\Throwable $exception) {
-            $exc = $exception;
-            return false;
-        }
-
-    }
 }

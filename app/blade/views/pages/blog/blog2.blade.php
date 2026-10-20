@@ -23,8 +23,7 @@
                         Медицинские принадлежности, которые должны быть в каждом кабинете врача </span>
                 </div>
                 <meta itemprop="position" content="2">
-                <div class="card-panel">
-                </div>
+
             </li>
         </ul>
     </nav>

@@ -1,8 +1,8 @@
 @extends('layouts.main.main')
 
 @section('content')
-
-{{--    @php xdebug_break(); @endphp--}}
-    @include('admin.components.catalogItem.index', compact('catItem'))
+    <div data-jsmodule="profile">
+        @include('admin.components.catalogItem.index', compact('catItem'))
+    </div>
 
 @endsection

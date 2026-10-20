@@ -13,16 +13,17 @@
     >
         {!!Icon::link()!!}
     </div>
-    {{--@deb--}}
-    <div class="compare card-panel-item {!!isset($product['compare']) ? 'green' : ''!!}"
-         data-compare="{!!is_null($product['compare'])?'false':'true'!!}"
+{{--    @deb--}}
+    <div class="compare card-panel-item"
+         data-compare="{{$product['is_compared'] ? 'true' : 'false'}}"
          title='Добавить в сравнение'
     >
         {!!Icon::chart()!!}
     </div>
 
-    <div class="like card-panel-item {!! isset($product['like'])? 'red' : '' !!}"
-         data-like="false"
+{{--@deb--}}
+    <div class="like card-panel-item"
+         data-like="{{$product['is_liked'] ? 'true' : 'false'}}"
          title='Добавить в избранное'
     >
         {!!Icon::heart()!!}
