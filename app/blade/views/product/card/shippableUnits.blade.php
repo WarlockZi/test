@@ -8,9 +8,10 @@
 
     @foreach($product['shippable_units'] as $shippable)
 
-{{--        @deb--}}
+        @deb
         @php
             $count = 0;
+            foreach ($orderitems as $orderitem)
             if ($shippable['id']===$orderitem['unit_id']) {
                 $count = $orderitem['count'];
             }

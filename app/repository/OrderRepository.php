@@ -104,7 +104,7 @@ class OrderRepository
             : $query->whereNotNull('order_id');
 
         $group_by_order = $group_by_order
-            ? ['order_id', 'product_1s_id']
+            ? ['product_1s_id','order_id']
             : ['product_1s_id'];
 
         $order_items = $query->get();
