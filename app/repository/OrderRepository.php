@@ -29,7 +29,6 @@ class OrderRepository
             ->get()->toArray();
 
         foreach ($accounts as &$account) {
-//            $account['cart_items'] = (new AccountCartStrategy())->getCart($account['id']);;
             $account['cart_items'] = self::accountCartsOrders($account['id'], false);
             $account['orders']     = self::accountCartsOrders($account['id'], true);
         }
