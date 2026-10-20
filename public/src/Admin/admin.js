@@ -39,7 +39,7 @@ $(document).ready(async function () {
   }
 
   // if (document[qs](".orders-edit")) {
-  const { default: Order } = await import("@src/Admin/Pages/Order/order.js");
-  //   new orders();
-  // }
+  // const { default: Order } = await import("@src/Admin/Pages/Order/order.js");
+  // //   new orders();
+  // // }
 });
