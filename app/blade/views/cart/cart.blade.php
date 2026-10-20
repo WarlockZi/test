@@ -12,7 +12,6 @@
         <h1>Корзина</h1>
 
         <a href="/order">Заказы</a>
-{{--                @deb--}}
         @if(empty($order['products']) && empty($_SESSION['cart_items']))
             <div class="empty-cart {!!(empty($order) || !isset($order['products']))?'none':''!!}">
                 Корзина пуста
@@ -21,7 +20,6 @@
 
             <div class="content">
                 <div class="table">
-{{--                    @deb--}}
                     @if (\app\service\AuthService\AuthService::accountId())
                         @include('cart.cartProducts')
                     @else

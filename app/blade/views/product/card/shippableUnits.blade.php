@@ -8,7 +8,6 @@
 
     @foreach($product['shippable_units'] as $shippable)
 
-        @deb
         @php
             $count = 0;
             foreach ($orderitems as $orderitem)
@@ -29,7 +28,6 @@
                     onclick="this.value??'';"
             >
 
-            {{--                        @deb--}}
             <div class="unit-name">{!!data_get($shippable,['name'], 'ед.')!!}</div>
 
             <div class="cost"

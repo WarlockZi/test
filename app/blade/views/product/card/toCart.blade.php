@@ -16,14 +16,12 @@
     </div>
 
     <div class="price-units">
-{{--        @deb--}}
         @if(empty($product['cart_items']))
-            @php($orderitem['unit_id'] = null)
-            @include('product.card.shippableUnits', compact('orderitem'))
+            @php($orderitems = [])
+            @include('product.card.shippableUnits', compact('orderitems'))
         @else
-            @foreach($product['cart_items'] as $orderitem)
-                @include('product.card.shippableUnits', compact('orderitem'))
-            @endforeach
+            @php($orderitems = $product['cart_items'])
+            @include('product.card.shippableUnits', compact('orderitems'))
         @endif
 
     </div>

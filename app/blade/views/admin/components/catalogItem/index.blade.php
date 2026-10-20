@@ -7,7 +7,6 @@
      data-model="{!!$catItem['model']??''!!}"
      data-id="{!!data_get($catItem, 'item.id')!!}"
 >
-{{--    @deb--}}
     @if($catItem['tabs'])
         @include('admin.components.catalogItem.withTabs')
     @else

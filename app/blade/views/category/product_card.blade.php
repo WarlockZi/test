@@ -29,14 +29,13 @@
             <p>Артикул: {!!$product['art'] ?? ''!!}</p>
         </div>
     </a>
-{{--    @deb--}}
+
     @if(!empty($product['cart_items']))
-        @foreach($product['cart_items'] as $orderitem)
-            @include('product.card.shippableUnits', compact('orderitem'))
-        @endforeach
+        @php($orderitems = $product['cart_items'])
+        @include('product.card.shippableUnits', compact('orderitems'))
     @else
-        @php($orderitem['unit_id']=null)
-        @include('product.card.shippableUnits', compact('orderitem'))
+        @php($orderitems = [])
+        @include('product.card.shippableUnits', compact('orderitems'))
     @endif
 
     @include('components.card_panel.product_card_panel', compact('product'))
