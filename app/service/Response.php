@@ -32,9 +32,9 @@ class Response
     #[NoReturn]
     public function json(array $data = [], int $status = 200, array $headers = []): \Symfony\Component\HttpFoundation\Response
     {
-        $data['csrf'] = $_SESSION['csrf_token']??null;
+        $data['csrf'] = $_SESSION['csrf_token'] ?? null;
 
-        $this->content = json_encode($data,JSON_UNESCAPED_UNICODE);
+        $this->content = json_encode($data, JSON_UNESCAPED_UNICODE);
         $this->status  = $status;
         $this->headers = array_merge($this->headers, [
             'Content-Type' => 'application/json; charset=UTF-8'
@@ -46,7 +46,7 @@ class Response
     #[NoReturn]
     public function popup(string $message = '', int $status = 200, array $headers = []): \Symfony\Component\HttpFoundation\Response
     {
-        $this->content = json_encode(['popup' => $message], JSON_UNESCAPED_UNICODE);
+        $this->content = json_encode(['popup' => $message, 'csrf' => $_SESSION['csrf_token'] ?? null], JSON_UNESCAPED_UNICODE);
 
         $this->status  = $status;
         $this->headers = array_merge($this->headers, [
@@ -61,6 +61,7 @@ class Response
     {
         $this->json(['console' => $data], $status, $headers);
     }
+
     #[NoReturn]
     public function consoleTable(array $data = [], int $status = 200, array $headers = []): \Symfony\Component\HttpFoundation\Response
     {
@@ -109,11 +110,13 @@ class Response
         $_SESSION['error'] = $error;
         return $this;
     }
+
     public function withLog(ILogger $logger): self
     {
         $this->logger = $logger;
         return $this;
     }
+
     public function cookie(string $name, string $value, int $minutes = 0, string $path = '/', string $domain = null, bool $secure = false, bool $httpOnly = true): self
     {
         $this->cookies[] = compact('name', 'value', 'minutes', 'path', 'domain', 'secure', 'httpOnly');

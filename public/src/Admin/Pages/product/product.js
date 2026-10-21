@@ -6,7 +6,7 @@ import MyQuills from "@src/components/quill/MyQuills.js";
 export default class product {
   constructor() {
     new Dnd($("[dnd]").first(), this.addMainImage.bind(this));
-    debugger;
+    // debugger;
     new MyQuills();
 
     // const el = $(".item-wrap").first();
