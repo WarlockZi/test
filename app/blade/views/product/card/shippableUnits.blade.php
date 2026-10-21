@@ -1,5 +1,5 @@
 <div class="shippable-table">
-
+@deb
     @if(!isset($showToCartButton))
         <a href="/cart" class='button to-cart-button'>
             Перейти в корзину
@@ -11,9 +11,9 @@
         @php
             $count = 0;
             foreach ($orderitems as $orderitem)
-            if ($shippable['id']===$orderitem['unit_id']) {
-                $count = $orderitem['count'];
-            }
+                if ($shippable['id']===$orderitem['unit_id']) {
+                    $count = $orderitem['count'];
+                }
         @endphp
 
         <div

@@ -3,11 +3,9 @@
     $i = 0;
 @endphp
 
-
 @foreach ($order['products'] as $product_is_id => $orderitems)
-    @php
-        $product = $orderitems[0]['product'];
-    @endphp
+    @php($product = $orderitems[0]['product'])
+
 
     <div class="row cart-item" data-product_1s_id="{!!$product_is_id!!}">
 

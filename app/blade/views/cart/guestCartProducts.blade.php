@@ -1,10 +1,13 @@
 @php
-    use app\service\AuthService\AuthService;
-    use app\view\components\Icon\Icon;
-$index = 1;
+    use app\service\AuthService\AuthService;use app\view\components\Icon\Icon;
+    $index = 1;
 @endphp
-@foreach ($order['products'] as $i => $product)
 
+@foreach ($order['products'] as $i => $product)
+    @deb
+    @php
+//        $product = $orderitems[0]['product']
+    @endphp
 
     <div class="row cart-item" data-product_1s_id="{!!$product['1s_id']!!} ">
 
@@ -17,7 +20,7 @@ $index = 1;
         <div class="product-name cell">
 
             @if (AuthService::getUser())
-{{--@deb--}}
+
                 <a href="/adminsc/product/edit/{!!$product['id']??null!!}"
                    class="edit card-panel-item">{!!Icon::edit()!!}</a>
             @endif
@@ -28,8 +31,8 @@ $index = 1;
             @if(!$product)
                 <div>продукт не определен</div>
             @else
-{{--                @deb--}}
-                @include('product.card.shippableUnits', compact('product'))
+                {{--                @deb--}}
+                @include('product.card.shippableUnits', ['product'=>$product??[],'orderitems' => $product['cart_items']??[]])
 
             @endif
         </div>
