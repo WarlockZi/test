@@ -12,6 +12,8 @@
         <h1>Корзина</h1>
 
         <a href="/order">Заказы</a>
+
+
         @if(empty($order['products']) && empty($_SESSION['cart_items']))
             <div class="empty-cart {!!(empty($order) || !isset($order['products']))?'none':''!!}">
                 Корзина пуста

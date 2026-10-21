@@ -29,7 +29,7 @@ class CategoryAction
 
     public function similarCategories(string $slug): void
     {
-        $similarCategories = $this->$this->similarCategorySegments($slug);
+        $similarCategories = $this->similarCategorySegments($slug);
         $meta              = $this->setMeta();
 
         view('category.notFound',
