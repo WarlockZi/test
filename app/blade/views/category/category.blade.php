@@ -17,7 +17,6 @@
 @section('content')
 
     <div class="category" data-jsmodule="category">
-
         @if (empty($category))
             <div class="no-categories">
                 <H1>Внимание! Приносим свои извинения,
@@ -44,10 +43,16 @@
         @else
 
             @include('components.breadcrumbs.index')
-            <h1>{!!$category['own_properties']['page_title'] ?? $category['own_properties']['seo_h1'] ?? $category['own_properties']['seo_full_name'] ?? $category['name']!!}</h1>
-
-
-            @if (!empty($category['children_recursive']))
+            @php
+                $page_title =
+                $category?->ownProperties?->page_title
+                ?? $category?->ownProperties?->seo_h1
+                ?? $category?->ownProperties?->seo_full_name
+                ?? $category->name;
+            @endphp
+            <h1>{!!$page_title!!}</h1>
+{{--@deb--}}
+            @if ($category->childrenRecursive->count())
                 @include('category.category_children')
             @else
                 @include('category.category_products')

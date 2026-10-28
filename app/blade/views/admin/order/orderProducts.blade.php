@@ -10,12 +10,13 @@
     $checked= empty($order['in_process'])?'':'checked';
 @endphp
 
-<details>
+<details class="order-details">
 
-
-    <summary >Заказ # {!!$order['id']!!} от {!!$order['created_at']!!}
-        <label>{!!$order['in_process']!!}
-        <input type="checkbox" data-order_id="{!!$order['id']!!}" {!!$checked!!}>
+    <summary>Заказ #
+        <span class="order-id">{!!$order['id']!!}</span> от
+        <span class="order-created">{!!$order['created_at']!!}</span>
+        <label class="in_process">{!!$order['in_process']!!}
+            <input type="checkbox" data-order_id="{!!$order['id']!!}" {!!$checked!!}>
         </label>
     </summary>
 
@@ -46,13 +47,17 @@
             <div class="cart-shippable-table cell">
 
                 {{--            @deb--}}
-                @include('admin.order.shippableUnits', compact('product', 'orderitem'))
+                @php
+                    $plus_minus_buttons = false;
+                    $showToCartButton = false;
+                @endphp
+                @include('admin.order.shippableUnits', compact('product', 'orderitem', 'plus_minus_buttons', 'showToCartButton'))
 
             </div>
 
             @include('cart.cartSubSum')
 
-            <div class="del cell">{!!Icon::trashWhite()!!}</div>
+{{--            <div class="del cell">{!!Icon::trashWhite()!!}</div>--}}
         </div>
 
     @endforeach

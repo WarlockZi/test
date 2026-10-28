@@ -1,8 +1,7 @@
-@use "../../var";
-@use "../../mixin_media";
+@use "@src/var";
+@use "@src/mixin_media";
 
 .cart {
-  //padding: 0 10px;
 
   .content {
 
@@ -15,7 +14,7 @@
 
       .cart-item {
         display: grid;
-        grid-template-columns: 35px 125px minmax(155px, 400px) 225px 110px 40px;
+        grid-template-columns: 35px 125px minmax(155px, 400px) minmax(210px, 220px) 110px 40px;
         grid-template-rows: auto;
         grid-template-areas:
                   'id img name shippable sum del';

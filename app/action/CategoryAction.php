@@ -4,9 +4,7 @@ namespace app\action;
 
 use app\model\Category;
 use app\service\Cache\Redis\Cache;
-use app\service\Category\CategoryService;
 use app\service\Meta\CategoryMetaService;
-use app\service\ShippableUnits\ShippableUnitsService;
 use app\service\Slug\SlugService;
 
 
@@ -15,7 +13,6 @@ class CategoryAction
     public function __construct(
         private CategoryMetaService $meta,
         private SlugService         $slug,
-        private CategoryService     $categoryService,
     )
     {
     }
@@ -27,17 +24,9 @@ class CategoryAction
             'description' => 'К сожалению, такой категории не найдено. Возможно, она была перемещена или удалена. Воспользуйтесь поиском или перейдите на главную, чтобы найти нужный товар. | VITEX.ru'];
     }
 
-    public function similarCategories(string $slug): void
-    {
-        $similarCategories = $this->similarCategorySegments($slug);
-        $meta              = $this->setMeta();
 
-        view('category.notFound',
-            compact( 'similarCategories', 'meta'),
-            404);
-    }
 
-    private function similarCategorySegments(string $slug): object|array|string|null
+    public function similarCategorySegments(string $slug): object|array|string|null
     {
         $slugSegments = $this->slug::categorySlugSegments($slug);
         return Cache::remember('similarCategories_segments' . $slug,
@@ -47,7 +36,7 @@ class CategoryAction
                     $c = Category::whereHas('ownProperties',
                         function ($query) use ($slugSegment) {
                             $query->where('path','LIKE', "%{$slugSegment}%");
-                        })->with('ownProperties')->get();
+                        })->get();
                     if ($c) {
                         $cats[$slugSegment] = $c->toArray();
                     }
@@ -88,8 +77,4 @@ class CategoryAction
         );
     }
 
-    public function shippableTable(Category $category): ShippableUnitsService
-    {
-        return new ShippableUnitsService('category', $category);
-    }
 }

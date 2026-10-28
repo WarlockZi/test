@@ -15,7 +15,7 @@ class HelpersService
 
     public static function setMainImages(): void
     {
-        $products = Product::with('ownProperties')->get();
+        $products = Product::all();
         foreach ($products as $product) {
             $name      = ProductMainImage::getFileNameFromArt($product);
 

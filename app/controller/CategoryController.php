@@ -2,9 +2,10 @@
 
 namespace app\controller;
 
-use app\action\CategoryAction;
 use app\repository\CategoryRepository;
-use app\service\Breadcrumbs\NewBreadArray;
+use app\service\Breadcrumbs\BreadcrumbsService;
+use app\service\Cache\Redis\Cache;
+use app\service\Cart\CartService;
 use app\service\Category\CategoryService;
 use app\service\Router\IRequest;
 use JetBrains\PhpStorm\NoReturn;
@@ -12,29 +13,39 @@ use JetBrains\PhpStorm\NoReturn;
 class CategoryController extends AppController
 {
     public function __construct(
-        protected CategoryRepository    $repo,
-        private readonly CategoryAction $actions,
+        protected CategoryRepository     $repo,
+//        private readonly CategoryAction  $actions,
+        private readonly CategoryService $service,
     )
     {
         parent::__construct();
     }
 
     #[NoReturn]
-    public function actionIndex(IRequest $request, CategoryService $service): void
+    public function actionIndex(IRequest    $request,
+                                CartService $cartService,
+    ): void
     {
+        $start = microtime(true);
         if (!$request->slug) {
-            $service->notFound($this->actions);
+            $this->service->notFound();
         }
-        $category = $this->repo->indexInstore($request->slug);
+        $category = $this->service->index($request->slug);
+
         if (!$category) {
-            $this->actions->similarCategories($request->slug);
+            $this->service->similarCategories($request->slug);
         }
-        $category    = $category?->toArray() ?: [];
-        $breadcrumbs = (new NewBreadArray())->getParents($category);
+
+        $cart = $cartService->getProductsInCart();
+
+        $breadcrumbs = BreadcrumbsService::generate($category);
+
+        $total = microtime(true) - $start;
         view('category.category',
             compact(
                 'category',
-                'breadcrumbs'
+                'breadcrumbs',
+                'cart',
             )
         );
     }

@@ -16,13 +16,15 @@
     </div>
 
     <div class="price-units">
-        @if(empty($product['cart_items']))
-            @php($orderitems = [])
-            @include('product.card.shippableUnits', compact('orderitems'))
-        @else
-            @php($orderitems = $product['cart_items'])
-            @include('product.card.shippableUnits', compact('orderitems'))
-        @endif
+
+        @php
+            $showToCartButton = true;
+            $plus_minus_buttons = true;
+            $orderitems = $cart[$product['1s_id']]['cart_items']??[];
+        @endphp
+
+        @include('components.shippable_units.shippableUnits', compact('product', 'orderitems', 'showToCartButton', 'plus_minus_buttons'))
+
 
     </div>
     @include( 'product.card.promotion')

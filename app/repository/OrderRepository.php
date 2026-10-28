@@ -21,6 +21,7 @@ use Throwable;
 class OrderRepository
 {
 
+
     public function accountsUsersCartitemsOrders(): array
     {
         $accounts = Account::query()
@@ -92,8 +93,7 @@ class OrderRepository
             ->with(['product' => function ($q) {
                 return $q->with('shippableUnits');
             }])
-            ->with([
-                'unit']);
+            ->with(['unit']);
 
         if ($with_order) {
             $query->with('order:id,created_at,in_process');
@@ -104,7 +104,7 @@ class OrderRepository
             : $query->whereNotNull('order_id');
 
         $group_by_order = $group_by_order
-            ? ['product_1s_id','order_id']
+            ? ['order_id', 'product_1s_id',]
             : ['product_1s_id'];
 
         $order_items = $query->get();
@@ -116,22 +116,6 @@ class OrderRepository
             $cart = $order_items->groupBy($group_by_order)->toArray();
             return $cart;
         }
-
-
-//        $orders = OrderItem::where('account_id', $account_id)
-//            ->leftJoin('product_unit', function ($join) {
-//                $join->on('orderitems.product_1s_id', '=', 'product_unit.product_1s_id')
-//                    ->on('orderitems.unit_id', '=', 'product_unit.unit_id');
-//            })
-//            ->select('orderitems.*', 'product_unit.price', 'product_unit.divider', 'product_unit.multiplier')
-//            ->with(['product',
-//                'order_unit',
-//                'unit',
-//                'order:id,created_at',
-//            ])
-//            ->get()
-//            ->groupBy(['order_id', 'product_1s_id']);
-//        return $order_items;
     }
 
     public static function usersOrder(int $id = null, string $onlyField = null, bool $currentUser = null, bool $submitted = null): Model|array|null

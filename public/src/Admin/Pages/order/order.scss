@@ -1,61 +1,69 @@
 @use "@src/var";
 @use "@src/mixin_media";
 
-//*{
-// border: 1px solid red;
-//}
+#order {
+  .in_process {
+    background-color: #eaf6f9;
+  }
 
+  .order-details {
+    .order-id {
+      background-color: #fff3dd;
+    }
 
-//.orders.content {
-
-#order.table {
-
-  .users-grid{
-    display: grid;
-    grid-template-columns: repeat(3, 300px);
-    gap: 11px;
-
-    .header{
-      font-weight: bold;
+    .order-created {
+      background-color: #fcf0ec;
     }
   }
 
-  #cartSubmit {
-    display: none;
-  }
+  .table {
 
-  .row.cart-item {
-    .del.cell {
-      visibility: hidden;
+    .users-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 300px);
+      gap: 11px;
+
+      .header {
+        font-weight: bold;
+      }
     }
 
-    .cart-shippable-table .shippable-table .unit-row .arrows {
+    #cartSubmit {
       display: none;
     }
 
+    .row.cart-item {
+      .del.cell {
+        visibility: hidden;
+      }
+
+      .cart-shippable-table .shippable-table .unit-row .arrows {
+        display: none;
+      }
 
 
-    @include mixin_media.m700 {
-      grid-template-columns: 20px 100px 1fr 1fr 125px;
-      grid-template-areas:
-"id name name name del"
-"img img img img img"
-"shippable shippable shippable shippable sum";
-    }
-    @include mixin_media.m400 {
-      grid-template-rows: 2rem 1fr max-content;
-      grid-template-areas:
+      @include mixin_media.m700 {
+        grid-template-columns: 20px 100px 1fr 1fr 125px;
+        grid-template-areas:
+                "id name name name del"
+                "img img img img img"
+                "shippable shippable shippable shippable sum";
+      }
+      @include mixin_media.m400 {
+        grid-template-rows: 2rem 1fr max-content;
+        grid-template-areas:
                   "id id id id id"
                   "img img name name name"
                   "shippable shippable shippable sum sum";
-      grid-template-columns: 20px 100px 1fr 1fr 50px;
+        grid-template-columns: 20px 100px 1fr 1fr 50px;
+      }
+
+    }
+
+
+    .del.cell {
+      display: none;
     }
 
   }
-
-
-  .del.cell {
-    display: none;
-  }
-
 }

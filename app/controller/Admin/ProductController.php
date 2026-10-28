@@ -4,16 +4,16 @@ namespace app\controller\Admin;
 
 
 use app\action\admin\ProductAction;
-use app\blade\views\product\ProductFormView;
 use app\formRequest\ContentableRequest;
 use app\formRequest\StoreProductMainImageRequest;
+use app\formView\ProductFormView;
 use app\model\Product;
 use app\model\ProductUnit;
 use app\repository\ProductFilterRepository;
 use app\repository\ProductRepository;
 use app\repository\UpdateOrCreateRepository;
 use app\service\AuthService\AuthService;
-use app\service\Breadcrumbs\NewBreadArray;
+use app\service\Breadcrumbs\BreadcrumbsArray;
 use app\service\Router\IRequest;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
@@ -48,7 +48,7 @@ class ProductController extends AdminscController
         if (!$prod) {
             view('admin.product.notFound');
         }
-        $breadcrumbs = (new NewBreadArray(true))->getParents($prod->category->toArray());
+        $breadcrumbs = (new BreadcrumbsArray(true))->generate($prod->category->toArray());
         $catItem     = ProductFormView::edit($prod);
         view('admin.product.edit', compact('catItem', 'breadcrumbs'));
     }

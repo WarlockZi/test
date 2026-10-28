@@ -46,6 +46,9 @@ class Response
     #[NoReturn]
     public function popup(string $message = '', int $status = 200, array $headers = []): \Symfony\Component\HttpFoundation\Response
     {
+        if ($this->logger && $this->logger instanceof ILogger) {
+            $this->logger->write($message);
+        }
         $this->content = json_encode(['popup' => $message, 'csrf' => $_SESSION['csrf_token'] ?? null], JSON_UNESCAPED_UNICODE);
 
         $this->status  = $status;

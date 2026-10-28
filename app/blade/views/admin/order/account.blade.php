@@ -44,7 +44,6 @@
 @if(!empty($account['orders']))
 
     @foreach($account['orders'] as $order)
-        {{--        @deb--}}
         @php($orderitems = $order)
         @include('admin.order.orderProducts', compact('orderitems'))
     @endforeach
@@ -52,6 +51,7 @@
 
 @if(!empty($account['cart_items']))
     <details>
+                @deb
         <summary>Неоформленный заказ</summary>
         @include('admin.order.cart')
     </details>

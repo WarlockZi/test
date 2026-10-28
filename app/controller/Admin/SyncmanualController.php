@@ -29,9 +29,6 @@ class SyncmanualController extends AdminscController
         parent::__construct();
     }
 
-    /**
-     * @throws Exception
-     */
     #[NoReturn]
     public function actionUploadextract(SyncManualDownloadArchiviRequest $req): void
     {
@@ -48,7 +45,7 @@ class SyncmanualController extends AdminscController
     public function actionLoad(LoadService $loadService)
     {
         try {
-            $loadService->run();
+//            $loadService->run();
             response()->withLog(new SyncSuccessLogger)->popup('Синхронизация прошла успешно');
         } catch (Throwable $exception) {
             response()->popup('Ошибка загрузки ' . $exception->getMessage());
@@ -59,12 +56,10 @@ class SyncmanualController extends AdminscController
     {
         $actions::unploadFile($files->file('file'));
     }
-
     public function actionUploadimport(SyncManualDownloadFileRequest $files, SyncmanualActions $actions): void
     {
         $actions::unploadFile($files->file('file'));
     }
-
     #[NoReturn]
     public function actionIndex(): void
     {
@@ -86,7 +81,6 @@ class SyncmanualController extends AdminscController
         $loadFiles = SyncStorage::getUnzippedFiles();
         response()->json($loadFiles);
     }
-
     public function actionLoadcategories(LoadService $load): void
     {
         try {

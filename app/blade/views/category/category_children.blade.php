@@ -1,5 +1,5 @@
 <div class="category-child-wrap">
-    @foreach ($category['children_recursive'] as $child)
+    @foreach ($category->childrenRecursive as $child)
         @include('category.category_card', compact('child'))
     @endforeach
 </div>

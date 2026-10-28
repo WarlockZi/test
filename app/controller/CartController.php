@@ -4,22 +4,19 @@ declare(strict_types=1);
 namespace app\controller;
 
 use app\attributes\Validate\ValidationException;
-use app\factory\CartStorageFactory;
 use app\formRequest\CartAddRequest;
 use app\formRequest\CartDeleteRowRequest;
 use app\formRequest\CartRequest;
-use app\formRequest\CartSubmitRequest;
-use app\model\Order;
-use app\model\OrderItem;
 use app\repository\CartRepository;
 use app\repository\OrderitemRepository;
 use app\repository\OrderRepository;
 use app\service\AuthService\AuthService;
 use app\service\Cart\CartService;
 use app\service\Response;
-use app\strategy\CartStrategy\GuestCartStrategy;
 use app\strategy\CartStrategy\AccountCartStrategy;
+use app\strategy\CartStrategy\GuestCartStrategy;
 use JetBrains\PhpStorm\NoReturn;
+use Throwable;
 
 class CartController extends AppController
 {
@@ -36,15 +33,19 @@ class CartController extends AppController
     #[NoReturn]
     public function actionIndex(): void
     {
-        $showToCartButton  = true;
         $order['products'] = $this->cartService->getCart(AuthService::accountId());
-        view('cart.cart', compact('order', 'showToCartButton'));
+        view('cart.cart', compact('order'));
     }
 
     #[NoReturn]
     public function actionSubmit(): void
     {
-        $this->cartService->submit();
+        try {
+            $this->cartService->submit();
+        } catch (Throwable $exception) {
+            error_log($exception->getMessage());
+            response()->json(['ok' => false, 'popup' => 'Ошибка']);
+        }
 
         response()->json(['ok' => true]);
     }
@@ -56,7 +57,7 @@ class CartController extends AppController
         response()->json([
             'ok' => true,
             'popup' => 'Корзина обновлена',
-            'cart_count'=>CartService::cartCount()
+            'cart_count' => CartService::cartCount()
         ]);
     }
 
@@ -64,9 +65,13 @@ class CartController extends AppController
     public function actionDeleteRow(CartDeleteRowRequest $request): void
     {
         $req = $request->validated();
-        OrderRepository::deleteProduct($req['order_id'], $req['product_1s_id'])
-            ? response()->json(['deleted' => true, 'popup' => 'Удален'])
-            : response()->popup('Не удален');
+        try {
+            OrderRepository::deleteProduct($req['order_id'], $req['product_1s_id']);
+            response()->json(['deleted' => true, 'popup' => 'Удален']);
+        } catch (Throwable $exception) {
+            error_log($exception->getMessage());
+            response()->popup('Не удален');
+        }
     }
 
     #[NoReturn]

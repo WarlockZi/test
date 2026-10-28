@@ -43,6 +43,7 @@ class Product extends Model
         'updated_at',
         'deleted_at',
     ];
+    protected $with = ['ownProperties'];
     protected $casts = [
         'art' => 'string',
     ];
@@ -81,11 +82,7 @@ class Product extends Model
         return $query;
     }
 
-
     //// compare
-    /**
-     * Scope для фильтрации продуктов которые в сравнении
-     */
     public function scopeIsCompared($query)
     {
         $account_id = AuthService::accountId();
@@ -114,11 +111,6 @@ class Product extends Model
                     ->where('product_1s_id', $this['1s_id'])
                     ->exists();
             }
-//            return $this->relationLoaded('compare')
-//                ? $this->compare->isNotEmpty()
-//                : Compare::where('account_id', $account_id)
-//                    ->where('product_1s_id', $this['1s_id'])
-//                    ->exists();
         }
         return isset($_SESSION['compares']) && in_array($this['1s_id'], $_SESSION['compares']);
     }
@@ -134,10 +126,7 @@ class Product extends Model
     {
         return $this->hasMany(OrderItem::class, 'product_1s_id', '1s_id');
     }
-    /**
-     * Акцессор который возвращает товар корзины
-     * Работает и для авторизованных, и для гостей
-     */
+
     public function getCartItemsAttribute(): object|array
     {
         $account_id = AuthService::accountId();
@@ -168,16 +157,23 @@ class Product extends Model
         return $cartItems;
     }
 
-    /**
-     * Scope для фильтрации продуктов которые в корзине
-     */
-    public function scopeInCart($query)
+    public function scopeInCart($query, $onlyNotOrdered, array $productSelect=null, array $orderitemSelect=null)
     {
         $account_id = AuthService::accountId();
         if ($account_id) {
-            return $query->whereHas('cartItems', function($q) use ($account_id) {
+            return $query
+                ->select($productSelect??'*')
+                ->whereHas('cartItems', function($q) use ($account_id, $onlyNotOrdered) {
                 $q->where('account_id', $account_id);
-            });
+                if ($onlyNotOrdered) {
+                    $q->whereNull('order_id');
+                }
+            })->with(['cartItems'=>function($q) use ($onlyNotOrdered, $orderitemSelect) {
+                $q->select($orderitemSelect??'*');
+                if ($onlyNotOrdered) {
+                    $q->whereNull('order_id');
+                }
+            }]);
         }
 
         // Для гостей фильтруем по сессии

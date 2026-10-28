@@ -31,6 +31,23 @@ class GuestCartStrategy implements ICartStrategy
         return $productsArray;
     }
 
+    public function getProductsInCart(): array
+    {
+        $cart     = $_SESSION['cart_items']??[];
+        $ids      = array_keys($cart);
+        $products = Product::query()
+            ->whereIn('1s_id', $ids)
+            ->get()
+            ->append('shippable_units');
+        $productsArray = $products->keyBy('1s_id')->toArray();
+        foreach ($cart as $product_id => $units) {
+            foreach ($units as $unit_id => $count) {
+                $cart_item                             = ['unit_id' => $unit_id, 'count' => $count];
+                $productsArray[$product_id]['cart_items'][] = $cart_item;
+            }
+        }
+        return $productsArray;
+    }
     public function updateOrCreate(array $req): void
     {
         $_SESSION[$this->sessionKey][$req['product_1s_id']][$req['unit_id']] = $req['count'];

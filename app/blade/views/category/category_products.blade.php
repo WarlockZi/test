@@ -1,12 +1,11 @@
 <div class="products" data-model="product">
-
-    @if (!empty($category['products_in_store']))
+    @if (!empty($category->productsInStore))
         <div class="products-header">
             <h2>Товары в наличии</h2>
         </div>
 
         <div class="product-wrap">
-            @foreach($category['products_in_store'] as $product)
+            @foreach($category->productsInStore as $product)
                 @include('category.product_card', compact('product'))
             @endforeach
         </div>
@@ -14,13 +13,13 @@
     @endif
 
 
-    @if (!empty($category['products_not_in_store_in_matrix']))
+    @if (!empty($category->productsNotInStoreInMatrix))
         <div class="products-header">
             <h2>Товары под заказ</h2>
         </div>
 
         <div class="product-wrap">
-            @foreach ($category['products_not_in_store_in_matrix'] as $product)
+            @foreach ($category->productsNotInStoreInMatrix as $product)
                 @if (str_ends_with($product['name'], '*'))
                     @include('category.product_card', compact('product'))
                 @endif
@@ -30,5 +29,5 @@
 </div>
 
 <div id="seo_article">
-    <?= $category['own_properties']['seo_article'] ?>
+    {!!$category->ownProperties->seo_article!!}
 </div>

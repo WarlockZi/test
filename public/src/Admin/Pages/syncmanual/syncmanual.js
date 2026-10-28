@@ -81,6 +81,7 @@ export default class syncmanual {
   async start() {
     this.startSyncButton.classList.add("btn--loading");
     const res = await post(this.startUrl);
+    debugger;
     if (res?.popup) {
       this.startSyncButton.classList.remove("btn--loading");
     }

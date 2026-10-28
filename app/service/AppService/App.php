@@ -23,12 +23,14 @@ class App
     {
         $container = new Container();
 
-        define('APP', $container());
+        define('APP', $container);
 
         $capsule = APP->get(Capsule::class);
 
         $cache = APP->get(ICache::class);
-        $cache::enabled(env('CACHE'));
+        if (env('CACHE')) {
+            $cache::enable();
+        }
     }
 
     public function handleRequest(): void

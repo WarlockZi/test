@@ -21,9 +21,9 @@ class BaseCache
     {
         return self::$enabled;
     }
-    public static function enabled(bool $enabled = false): void
+    public static function enable(): void
     {
-        self::$enabled = $enabled;
+        self::$enabled = true;
     }
     public static function disable(): void
     {

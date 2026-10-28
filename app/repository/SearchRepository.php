@@ -37,7 +37,9 @@ class SearchRepository
                 ->orWhere('art', 'LIKE', $like)
                 ->orWhere('slug', 'LIKE', $like)
                 ->orWhere('1s_id', 'LIKE', $like);
-        })->with('ownProperties')->get();
+        })
+//            ->with('ownProperties')
+            ->get();
 
         return $products
             ->unique('id')

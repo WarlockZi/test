@@ -22,6 +22,7 @@
 
             <div class="content">
                 <div class="table">
+
                     @if (\app\service\AuthService\AuthService::accountId())
                         @include('cart.cartProducts')
                     @else

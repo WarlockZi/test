@@ -22,7 +22,7 @@ class ProductFilterRepository
     {
         extract($req);
         $query = Product::query()
-            ->with('ownProperties')
+//            ->with('ownProperties')
             ->with('units');
 
         if (!empty($instore)) {

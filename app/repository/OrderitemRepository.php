@@ -7,11 +7,24 @@ namespace app\repository;
 use app\model\Order;
 use app\model\OrderItem;
 use app\model\OrderProduct;
+use app\model\Product;
 use app\service\AuthService\AuthService;
 use Illuminate\Database\Eloquent\Collection;
 
 class OrderitemRepository
 {
+
+    public static function getProductsInCart(?int $account_id = null)
+    {
+        $productSelect = ['id', '1s_id','name'];
+        $orderitemSelect = ['id', 'account_id','order_id', 'product_1s_id', 'unit_id','count'];
+//        $productSelect = null;
+//        $orderitemSelect = null;
+        $products = Product::query()
+            ->inCart(onlyNotOrdered:true, productSelect:$productSelect, orderitemSelect:$orderitemSelect)
+            ->get();
+        return $products;
+    }
     public static function updateOrCreate(array $req, $strategy)
     {
         $strategy->updateOrCreate($req);

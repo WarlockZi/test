@@ -24,21 +24,22 @@ class CartService
         $this->repository = new CartRepository();
     }
 
-    public function getCart(int $account_id=null): Collection|array
+    public function getCart(int $account_id = null): Collection|array
     {
         return $this->strategy->getCart($account_id);
     }
-
+    public function getProductsInCart(int $account_id = null): Collection|array
+    {
+        return $this->strategy->getProductsInCart($account_id);
+    }
     public function submit()
     {
         $orderId = Order::create()->id;
-        $cart    = $this->getCart();
-        foreach ($cart as $product) {
-            if ($product['cart_items']) {
-                foreach ($product['cart_items'] as $cart_item) {
-                    OrderItem::whereIn('id', [$cart_item['id']])
-                        ->update(['order_id' => $orderId]);
-                }
+        $cart    = $this->getCart(AuthService::accountId());
+        foreach ($cart as $product_1s_id => $orderitems) {
+            foreach ($orderitems as $orderitem) {
+                OrderItem::whereIn('id', [$orderitem['id']])
+                    ->update(['order_id' => $orderId]);
             }
         }
     }

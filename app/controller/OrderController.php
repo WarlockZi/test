@@ -16,8 +16,6 @@ class OrderController extends AppController
     public function actionIndex(): void
     {
         $orders = OrderRepository::accountCartsOrders(AuthService::accountId());
-
         view('order.order', compact('orders'));
-
     }
 }

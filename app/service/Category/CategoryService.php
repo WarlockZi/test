@@ -5,52 +5,39 @@ namespace app\service\Category;
 use app\action\CategoryAction;
 use app\repository\CategoryRepository;
 use app\service\Cache\Redis\Cache;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Str;
 
 class CategoryService
 {
-    public static function notFound(CategoryAction $actions)
+    public function __construct(
+        private CategoryRepository $categoryRepository,
+        private CategoryAction $categoryAction,
+    )
+    {
+    }
+    public function similarCategories(string $slug): void
+    {
+        $similarCategories = $this->categoryAction->similarCategorySegments($slug);
+        $meta              = $this->categoryAction->setMeta();
+
+        view('category.notFound',
+            compact( 'similarCategories', 'meta'),
+            404);
+    }
+
+    public function index(string $slug): object|array|string|null
+    {
+        $category = Cache::remember('category_'.Str::slug($slug), function ()use ($slug) {
+            return $this->categoryRepository->indexInstore($slug);
+        }, 20);
+        return $category;
+    }
+
+    public function notFound()
     {
         $categories = APP->get('rootCategories');
-        $meta       = $actions->setCategoriesMeta();
+        $meta       = $this->categoryAction->setCategoriesMeta();
         view('category.categories', compact('meta', 'categories'));
 
-    }
-    public static function similarCategories(array $subslugs): array|object|string|null
-    {
-        $cacheSlug = implode('-', $subslugs);
-
-        $collection = Cache::remember(
-            $cacheSlug,
-            function () use ($subslugs) {
-                $collection = new Collection();
-                foreach ($subslugs as $subslug) {
-                    $c = CategoryRepository::getBySubslug($subslug);
-                    if ($c) $collection = $collection->merge($c);
-                }
-            },
-            Cache::$timeLife10_000
-        );
-
-        return $collection;
-    }
-    public static function setMetad(array $subslugs): array|object|string|null
-    {
-
-        $cacheSlug = implode('-', $subslugs);
-
-        $collection = Cache::remember(
-            $cacheSlug,
-            function () use ($subslugs) {
-                $collection = new Collection();
-                foreach ($subslugs as $subslug) {
-                    $c = CategoryRepository::getBySubslug($subslug);
-                    if ($c) $collection = $collection->merge($c);
-                }
-            },
-            Cache::$timeLife10_000
-        );
-
-        return $collection;
     }
 }

@@ -29,19 +29,7 @@ class OrderController extends AdminscController
     #[NoReturn] public function actionIndex(AdminOrderService $service)
     {
         $accounts = $service->accountsUsersOrders();
-//        $a = [];
-//        foreach (Account::all() as $acc) {
-//            $a[$acc->id] = OrderRepository::accountOrders($acc->id)->toArray();
-//        }
-//        $orde = OrderRepository::accountOrders(AuthService::accountId())->toArray();
-//        $orders = $servie->accountsOrders();
-        $showToCartButton  = false;
-        view('admin.order.index',
-            compact(
-                'accounts',
-//                'orders',
-                'showToCartButton'
-            ));
+        view('admin.order.index', compact('accounts',));
 
     }
     #[NoReturn] public function actionInprocess(OrderInProcessRequest $request, OrderRepository $repository)
@@ -64,15 +52,15 @@ class OrderController extends AdminscController
 
         $order = OrderItem::updateOrCreate(
             [
-                'product_id' => $req['product_id'],
+                'product_1s_id' => $req['product_id'],
                 'unit_id' => (int)$req['unit_id'],
                 'deleted_at' => null,
             ],
             [
-                'product_id' => $req['product_id'],
+                'product_1s_id' => $req['product_id'],
                 'unit_id' => (int)$req['unit_id'],
                 'count' => (int)$req['count'],
-                'ip' => $_SERVER['REMOTE_ADDR'],
+//                'ip' => $_SERVER['REMOTE_ADDR'],
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]
         );

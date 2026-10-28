@@ -16,11 +16,26 @@ export default class Order {
         this.orderInProcess.bind(this),
       );
     }
+    this._renderSums();
+  }
+  _renderSums(){
+    const orders = $(".order .order-details");
+    [].forEach.call(orders, order=>{
 
-    renderSums({
-      shippable_tables: $(this.$order).findAll(".shippable-table"),
-      total: $(".total span").first(),
+      renderSums({
+        shippable_tables: $(order).findAll(".shippable-table"),
+        total: $(order).find(".total span"),
+      });
+
     });
+
+
+
+    // renderSums({
+    //   shippable_tables: $(this.$order).findAll(".shippable-table"),
+    //   total: $(".total span").first(),
+    // });
+
   }
   async orderInProcess({ target }) {
     const data = {

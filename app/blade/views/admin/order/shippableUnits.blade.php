@@ -1,20 +1,19 @@
 <div class="shippable-table">
 
-{{--    @if(!isset($showToCartButton))--}}
-{{--        <a href="/cart" class='button to-cart-button'>--}}
-{{--            Перейти в корзину--}}
-{{--        </a>--}}
-{{--    @endif--}}
+    @if($showToCartButton)
+        @include('components.shippable_units.to_cart_button')
+    @endif
 
     @foreach($product['shippable_units'] as $shippable)
 
-{{--    @deb--}}
+{{--        @deb--}}
         @php
             $count = 0;
-
+            foreach ($orderitems as $orderitem){
+            $orderitem = $orderitem[0]??$orderitem;
                 if ($shippable['id']===$orderitem['unit_id']) {
                     $count = $orderitem['count'];
-                    break;
+                }
             }
         @endphp
 
@@ -30,7 +29,6 @@
                     onclick="this.value??'';"
             >
 
-            {{--                        @deb--}}
             <div class="unit-name">{!!data_get($shippable,['name'], 'ед.')!!}</div>
 
             <div class="cost"
@@ -41,8 +39,12 @@
             </div>
             <div class="currency">₽</div>
 
+            @if($plus_minus_buttons)
+                @include('components.shippable_units.plus_minus_buttons')
+            @endif
 
         </div>
+
     @endforeach
 
 </div>

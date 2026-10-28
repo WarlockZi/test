@@ -5,9 +5,7 @@
 
 @foreach ($order['products'] as $i => $product)
     @deb
-    @php
-//        $product = $orderitems[0]['product']
-    @endphp
+
 
     <div class="row cart-item" data-product_1s_id="{!!$product['1s_id']!!} ">
 
@@ -20,7 +18,6 @@
         <div class="product-name cell">
 
             @if (AuthService::getUser())
-
                 <a href="/adminsc/product/edit/{!!$product['id']??null!!}"
                    class="edit card-panel-item">{!!Icon::edit()!!}</a>
             @endif
@@ -28,13 +25,16 @@
         </div>
 
         <div class="cart-shippable-table cell">
-            @if(!$product)
-                <div>продукт не определен</div>
-            @else
-                {{--                @deb--}}
-                @include('product.card.shippableUnits', ['product'=>$product??[],'orderitems' => $product['cart_items']??[]])
+            @php
+                $showToCartButton = false;
+                $plus_minus_buttons = false;
+                $orderitems = $product['cart_items'];
+            @endphp
 
-            @endif
+            @include('components.shippable_units.shippableUnits', compact('product', 'orderitems', 'showToCartButton', 'plus_minus_buttons'))
+
+{{--            @include('components.shippable_units.shippableUnits', ['product'=>$product??[],'orderitems' => $product['cart_items']??[], 'showToCartButton'])--}}
+
         </div>
 
         @include('cart.cartSubSum')
@@ -45,18 +45,4 @@
 @endforeach
 
 
-<div class="total">
-    <div class="title">Всего -&nbsp;&nbsp;</div>
-    <span></span>
-</div>
-
-<div class="buttons">
-    @if (!AuthService::getUser())
-        <div class="button" id="cartLogin"
-             title="Чтобы оформить заказ Вам &#10;необходимо зарегистрироваться &#10;или войти под своей учеткой">
-            Войти
-        </div>
-    @else
-        <div class="button" id="cartSubmit">Оформить заказ</div>
-    @endif
-</div>
+@include('cart.total')

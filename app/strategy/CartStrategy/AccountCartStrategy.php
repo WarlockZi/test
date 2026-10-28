@@ -3,7 +3,7 @@
 namespace app\strategy\CartStrategy;
 
 use app\model\OrderItem;
-use app\model\Product;
+use app\repository\OrderitemRepository;
 use app\repository\OrderRepository;
 use app\service\AuthService\AuthService;
 
@@ -18,9 +18,17 @@ class AccountCartStrategy implements ICartStrategy
 
     public function getCart(int $account_id = null): array
     {
-        $cart = (new OrderRepository)->accountCartsOrders($account_id, false);
+        $cart = (new OrderRepository)->accountCartsOrders($account_id ?? $this->account_id, false);
         return $cart;
-   }
+    }
+
+    public function getProductsInCart(int $account_id = null)
+    {
+        $cart = (new OrderitemRepository())
+            ->getProductsInCart($account_id ?? $this->account_id)
+            ->keyBy('1s_id');
+        return $cart;
+    }
 
     public function updateOrCreate($req): void
     {

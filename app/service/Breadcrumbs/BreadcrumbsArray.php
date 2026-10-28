@@ -3,9 +3,10 @@
 namespace app\service\Breadcrumbs;
 
 
-class NewBreadArray
+class BreadcrumbsArray  implements IBreadcrumbsStrategy
 {
     public function __construct(
+        private array $category,
         public bool  $lastItemIsLink= false,
         public int   $itemsCount = 0,
         public array $parentsArray = [],
@@ -26,10 +27,11 @@ class NewBreadArray
         $this->itemsCount = count($this->parentsArray);
     }
 
-    public function getParents(array $category): array
+    public function generate(): array
     {
-        $this->flatParents($category);
+        $this->flatParents($this->category);
         $this->parentsArray = array_reverse($this->parentsArray);
+        unset($this->category);
         return get_object_vars($this);
     }
 }

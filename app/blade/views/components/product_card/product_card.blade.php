@@ -25,9 +25,15 @@
         </div>
     </a>
 
+    @php
+        $showToCartButton = false;
+        $plus_minus_buttons = false;
+    @endphp
 
-    @include('product.card.shippableUnits')
-{{--    @include('components.shippableUnitsNew.shippableUnits')--}}
+    @include('components.shippable_units.shippableUnits', compact('product', 'orderitems', 'showToCartButton', 'plus_minus_buttons'))
+
+{{--    @include('components.shippable_units.shippableUnits')--}}
+    {{--    @include('components.shippableUnitsNew.shippableUnits')--}}
 
     @include('components.card_panel.product_card_panel', compact('product'))
 

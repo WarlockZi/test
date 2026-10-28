@@ -9,10 +9,11 @@ use function DI\create;
 
 class Container
 {
+    private \DI\Container $container;
     /**
      * @throws Exception
      */
-    public function __invoke(): \DI\Container
+    public function __construct()
     {
         $containerCompiled = FS::platformSlashes(
             ROOT . '/storage/framework/container/CompiledContainer.php'
@@ -22,16 +23,23 @@ class Container
         if (!is_writable($containerPath)) {// should be 777
             throw new Exception("Container path is not writable");
         }
-        $container = new ContainerBuilder();
+        $builder = new ContainerBuilder();
 
-        $container->addDefinitions(ROOT . '/config/containerConfig.php');
-        $container->addDefinitions(['\app\controller\*::class' => create()]);
+        $builder->addDefinitions(ROOT . '/config/containerConfig.php');
+        $builder->addDefinitions(['\app\controller\*::class' => create()]);
 
         if (!DEV) {
-            $container->enableCompilation($containerPath);
+            $builder->enableCompilation($containerPath);
         }
-        $container->useAutowiring(true);
+        $builder->useAutowiring(true);
 
-        return $container->build();
+        $this->container =  $builder->build();
+    }
+
+    public function get(string $name){
+        return $this->container->get($name);
+    }
+    public function call(array $callable, array $parameters=[] ){
+        return $this->container->call($callable, $parameters);
     }
 }

@@ -32,7 +32,7 @@ class SafeImageFileUploadService
     public function safeUpload(UploadedFile $uploadedFile, string $storagePath): array
     {
 
-//        $safeFilename = $this->generateSafeFilename($extension);
+        $safeFilename = $this->generateSafeFilename($uploadedFile->clientExtension());
         $storagePath = $this->PIC_BASE_PATH . $storagePath.'/';
 
         $path = FS::platformSlashes(ROOT.$storagePath. $safeFilename);

@@ -69,4 +69,8 @@ class Cache extends BaseCache implements ICache
     }
 
 
+    public static function enable(): void
+    {
+        parent::enable();
+    }
 }

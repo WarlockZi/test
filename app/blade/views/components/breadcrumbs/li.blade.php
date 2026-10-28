@@ -12,7 +12,8 @@
         </div>
 
     @else
-        <a itemprop="item" href="/category/{!!$item['own_properties']['path']??'отсутств'!!}">
+
+        <a itemprop="item" href="/category/{!!$item->ownProperties->path??'отсутств'!!}">
             <span itemprop="name">
                 {!!$name!!}
             </span>

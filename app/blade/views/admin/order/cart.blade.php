@@ -31,8 +31,12 @@
             </div>
 
             <div class="cart-shippable-table cell">
+                @php
+                    $plus_minus_buttons = false;
+                    $showToCartButton = false;
+                @endphp
 
-                @include('admin.order.shippableUnits', compact('product', 'orderitem'))
+                @include('admin.order.shippableUnits', compact('product', 'orderitems', 'plus_minus_buttons', 'showToCartButton'))
 
             </div>
 
@@ -45,19 +49,19 @@
 
 @endforeach
 
+@include('cart.total')
+{{--<div class="total">--}}
+{{--    <div class="title">Всего -&nbsp;&nbsp;</div>--}}
+{{--    <span></span>--}}
+{{--</div>--}}
 
-<div class="total">
-    <div class="title">Всего -&nbsp;&nbsp;</div>
-    <span></span>
-</div>
-
-<div class="buttons">
-    @if (!AuthService::getUser())
-        <div class="button" id="cartLogin"
-             title="Чтобы оформить заказ Вам &#10;необходимо зарегистрироваться &#10;или войти под своей учеткой">
-            Войти
-        </div>
-    @else
-        <div class="button" id="cartSubmit">Оформить заказ</div>
-    @endif
-</div>
+{{--<div class="buttons">--}}
+{{--    @if (!AuthService::getUser())--}}
+{{--        <div class="button" id="cartLogin"--}}
+{{--             title="Чтобы оформить заказ Вам &#10;необходимо зарегистрироваться &#10;или войти под своей учеткой">--}}
+{{--            Войти--}}
+{{--        </div>--}}
+{{--    @else--}}
+{{--        <div class="button" id="cartSubmit">Оформить заказ</div>--}}
+{{--    @endif--}}
+{{--</div>--}}

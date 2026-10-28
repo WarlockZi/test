@@ -10,7 +10,6 @@ class ProductImageService
     private string $relativePath ='';
     private string $relNoImage = PIC_SERVICE . "nophoto-min.jpg";
     private string $absolutePath;
-    private array $extensions = ['jpg', 'jpeg', 'png', 'webp'];
 
     public function __construct()
     {

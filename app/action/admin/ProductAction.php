@@ -23,7 +23,7 @@ class ProductAction
      */
     public function saveMainImage(array $validated): string
     {
-        $product = Product::with('ownProperties')->where('1s_id', $validated['productSId'])->first();
+        $product = Product::where('1s_id', $validated['productSId'])->first();
         $file    = $validated['file'];
 
         $productMainImage = (new ProductMainImage($product?->toArray(), $file))

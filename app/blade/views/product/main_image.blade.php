@@ -3,10 +3,10 @@
 
     <figure class="zoom"
             onmousemove="zoom(event)"
-            style="background-image: url('{!!image($product['own_properties']['main_image'])!!}');background-repeat: no-repeat;">
+            style="background-image: url('{!!image($product->ownProperties->main_image)!!}');background-repeat: no-repeat;">
 
         <img
-                src="{!!image($product['own_properties']['main_image'])!!}"
+                src="{!!image($product->ownProperties->main_image)!!}"
                 title='{!!$product['name']!!}'
                 alt='{!!$product['name']!!}'
         />
