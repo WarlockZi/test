@@ -3,7 +3,7 @@
 namespace app\strategy\CartStrategy;
 
 use app\model\Product;
-use Illuminate\Database\Eloquent\Collection;
+
 
 class GuestCartStrategy implements ICartStrategy
 {
@@ -31,7 +31,7 @@ class GuestCartStrategy implements ICartStrategy
         return $productsArray;
     }
 
-    public function getProductsInCart(): array
+    public function getProductsInCart()
     {
         $cart     = $_SESSION['cart_items']??[];
         $ids      = array_keys($cart);
@@ -46,7 +46,7 @@ class GuestCartStrategy implements ICartStrategy
                 $productsArray[$product_id]['cart_items'][] = $cart_item;
             }
         }
-        return $productsArray;
+        return collect($productsArray);
     }
     public function updateOrCreate(array $req): void
     {

@@ -9,7 +9,7 @@ use app\service\AuthService\AuthService;
 use app\strategy\CartStrategy\AccountCartStrategy;
 use app\strategy\CartStrategy\GuestCartStrategy;
 use app\strategy\CartStrategy\ICartStrategy;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 
 class CartService
 {
@@ -24,11 +24,11 @@ class CartService
         $this->repository = new CartRepository();
     }
 
-    public function getCart(int $account_id = null): Collection|array
+    public function getCart(int $account_id = null): Collection
     {
         return $this->strategy->getCart($account_id);
     }
-    public function getProductsInCart(int $account_id = null): Collection|array
+    public function getProductsInCart(int $account_id = null): Collection
     {
         return $this->strategy->getProductsInCart($account_id);
     }
