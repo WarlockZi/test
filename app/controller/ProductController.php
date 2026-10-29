@@ -42,7 +42,7 @@ class ProductController extends AppController
 //        $cart =         $cart = $cartService->getProductsInCart()->filter(function ($p)use($product){
 //            return $p['1s_id']===$product['1s_id'];
 //        })->toArray();
-        $cart =         $cart = $cartService->getProductsInCart()->toArray();
+        $cart =         $cart = $cartService->getProductsInCart();
 
         $breadcrumbs = BreadcrumbsService::generate($product['category'], true);
 
