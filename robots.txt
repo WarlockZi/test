@@ -1,22 +1,6 @@
 User-agent: *
 
-User-agent: SemrushBot
-Disallow: /
-
-User-agent: FacebookBot
-Disallow: /
-
-User-agent: facebookexternalhit
-Disallow: /
-
-User-agent: FacebookExternalHit
-Disallow: /
-
-User-agent: meta-externalagent
-Disallow: /
-
-User-agent: meta-webindexer
-Disallow: /
+Allow: /
 
 Disallow: /tmp/
 Disallow: /config/
@@ -36,7 +20,9 @@ Disallow: /auth/returnpass
 Disallow: /cart
 Disallow: /404
 
-Disallow: /?*
+Disallow: /*?sort=
+Disallow: /*?order=
+Disallow: /*?search=
 
 Disallow: /admin
 Disallow: /like
@@ -44,6 +30,24 @@ Disallow: /offer
 Disallow: /manager
 Disallow: /compare
 Disallow: /auth
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: facebookexternalhit
+Disallow: /
+
+User-agent: FacebookExternalHit
+Disallow: /
+
+User-agent: meta-externalagent
+Disallow: /
+
+User-agent: meta-webindexer
+Disallow: /
 
 Sitemap: https://vitexopt.ru/sitemap.xml
 
