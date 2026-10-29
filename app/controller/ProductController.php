@@ -39,9 +39,10 @@ class ProductController extends AppController
         }
 //        $similarProducts = $this->actions->similarProducts($request->slug);
         $meta            = $this->actions->setMeta($product);
-        $cart =         $cart = $cartService->getProductsInCart()->filter(function ($p)use($product){
-            return $p['1s_id']===$product['1s_id'];
-        })->toArray();
+//        $cart =         $cart = $cartService->getProductsInCart()->filter(function ($p)use($product){
+//            return $p['1s_id']===$product['1s_id'];
+//        })->toArray();
+        $cart =         $cart = $cartService->getProductsInCart()->toArray();
 
         $breadcrumbs = BreadcrumbsService::generate($product['category'], true);
 
