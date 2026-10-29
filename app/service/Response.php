@@ -32,6 +32,9 @@ class Response
     #[NoReturn]
     public function json(array $data = [], int $status = 200, array $headers = []): \Symfony\Component\HttpFoundation\Response
     {
+        if ($this->logger && $this->logger instanceof ILogger) {
+            $this->logger->write(implode(' - ', $data));
+        }
         $data['csrf'] = $_SESSION['csrf_token'] ?? null;
 
         $this->content = json_encode($data, JSON_UNESCAPED_UNICODE);

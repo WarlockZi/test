@@ -27,7 +27,7 @@
         </div>
     @endif
 </div>
-@deb
+{{--@deb--}}
 <div id="seo_article">
     {!!$category->ownProperties->seo_article!!}
 </div>
