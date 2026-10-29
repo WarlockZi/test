@@ -32,22 +32,20 @@ class ProductController extends AppController
     public function actionIndex(IRequest $request, CartService $cartService): void
     {
         if (!$request->slug) response()->redirect('Location:/category');
-
+        $start = microtime(true);
         $product = $this->repo->index($request->slug);
         if (!$product) {
             $this->service->notFound($product);
         }
 //        $similarProducts = $this->actions->similarProducts($request->slug);
         $meta            = $this->actions->setMeta($product);
-//        $cart =         $cart = $cartService->getProductsInCart()->filter(function ($p)use($product){
-//            return $p['1s_id']===$product['1s_id'];
-//        })->toArray();
         $cart =         $cart = $cartService->getProductsInCart()->filter(function ($p)use($product){
             return $p['1s_id']===$product['1s_id'];
         })->toArray();
 
         $breadcrumbs = BreadcrumbsService::generate($product['category'], true);
 
+        $total = microtime(true) - $start;
         view('product.product', compact(
             'meta',
             'breadcrumbs',

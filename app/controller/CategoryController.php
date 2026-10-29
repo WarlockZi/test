@@ -26,7 +26,7 @@ class CategoryController extends AppController
                                 CartService $cartService,
     ): void
     {
-        $start = microtime(true);
+
         if (!$request->slug) {
             $this->service->notFound();
         }
@@ -40,7 +40,6 @@ class CategoryController extends AppController
 
         $breadcrumbs = BreadcrumbsService::generate($category);
 
-        $total = microtime(true) - $start;
         view('category.category',
             compact(
                 'category',
