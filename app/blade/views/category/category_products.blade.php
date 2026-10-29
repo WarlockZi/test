@@ -29,5 +29,5 @@
 </div>
 @deb
 <div id="seo_article">
-{{--    {!!$category->ownProperties->seo_article!!}--}}
+    {!!$category->ownProperties->seo_article!!}
 </div>
