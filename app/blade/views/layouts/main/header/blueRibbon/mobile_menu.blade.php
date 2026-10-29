@@ -13,9 +13,9 @@
     <ul class="nav-items nav-level-1">
 
         <li class="nav-item nav-expand">
-            <a class="nav-link nav-expand-link"
-               href="javascript:void(0)"
-            >Каталог</a>
+            <div class="nav-link nav-expand-link"
+{{--               href="javascript:void(0)"--}}
+            >Каталог</div>
             <ul class="nav-items nav-expand-content">
                 @include('layouts.main.header.blueRibbon.mobileCategoryMenu.mobile_category_menu')
             </ul>

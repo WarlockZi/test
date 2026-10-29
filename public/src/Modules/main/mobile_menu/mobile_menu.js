@@ -6,12 +6,15 @@ export default class Mobile_menu {
     this.HTMLElement = HTMLElement;
     this.backLink = `<li class="nav-item">
 
-	<a class="nav-link nav-back-link" href="javascript:;">
+	<div 
+	class="nav-link nav-back-link" 
+
+	>
 	<span class="chevron-left">
 	<svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#FFFFFF"><path d="M522-480 333-669l51-51 240 240-240 240-51-51 189-189Z"/></svg>
 	</span>
 		Назад
-	</a>
+	</div>
 </li>`;
 
     this.navExpand.forEach((item) => {
