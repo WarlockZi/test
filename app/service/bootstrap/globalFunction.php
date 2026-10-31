@@ -12,7 +12,8 @@ if (!function_exists('image')) {
     {
         $nophoto = PIC_SERVICE . "nophoto-min.jpg";
         if (!$path) return $nophoto;
-        $imagePath = env("PIC_PRODUCT") . $path;
+
+        $imagePath = $path;
         return is_readable(ROOT . $imagePath) && is_file(ROOT . $imagePath)
             ? $imagePath
             : $nophoto;

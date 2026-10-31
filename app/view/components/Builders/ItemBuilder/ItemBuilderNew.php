@@ -9,9 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class ItemBuilderNew
 {
-    private string $model;
+//    private string $model;
     private string $dataAttributes = '';
-    private array $item = [];
+//    private array $item = [];
     private string $pageTitle;
     private string $class;
     private bool $del = false;
@@ -27,8 +27,8 @@ class ItemBuilderNew
     public static function build(?Model $item, string $model): self
     {
         $view        = new static();
-        $view->model = $model;
-        $view->item  = $item->toArray();
+//        $view->model = $model;
+//        $view->item  = $item->toArray();
 
         return $view;
     }

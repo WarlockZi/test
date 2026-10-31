@@ -9,13 +9,11 @@
     <a
             href="/product/{!!$product['slug']!!}" class="product">
         <h3 class="name">{!!$product['print_name']!!}</h3>
-
-        <img src="{!!image($product['ownProperties']['main_image']??null)!!}"
+        <img src="{!!$product['main_image']!!}"
              alt="{!!$product['name']!!}"
              loading="lazy">
         <div class="footer">
 
-            {{--@deb--}}
             @if(isset($product['baseUnit']))
                 <p>Цена: {!!$product['instore']
                         ? "{$product['base_unit']['pivot']['price']} р."
@@ -30,30 +28,14 @@
         </div>
     </a>
 
+    @php
+        $showToCartButton = true;
+        $plus_minus_buttons = true;
+        $orderitems = $cart[$product['1s_id']]['cart_items']??[];
+    @endphp
 
-    @if(!empty($product['cart_items']))
-{{--        @deb--}}
-        @php
-            $showToCartButton = true;
-            $plus_minus_buttons = true;
-            $orderitems = $cart[$product['1s_id']]['cart_items']??[];
-        @endphp
+    @include('components.shippable_units.shippableUnits', compact('product', 'orderitems', 'showToCartButton', 'plus_minus_buttons'))
 
-        @include('components.shippable_units.shippableUnits', compact('product', 'orderitems', 'showToCartButton', 'plus_minus_buttons'))
-
-        {{--        @include('components.shippable_units.shippableUnits', compact('orderitems', 'showToCartButton'))--}}
-    @else
-        @php
-            $showToCartButton = true;
-            $plus_minus_buttons = true;
-            $orderitems = [];
-        @endphp
-
-        @include('components.shippable_units.shippableUnits', compact('product', 'orderitems', 'showToCartButton', 'plus_minus_buttons'))
-
-        {{--        @php($orderitems = [])--}}
-        {{--        @include('components.shippable_units.shippableUnits', compact('orderitems', 'showToCartButton'))--}}
-    @endif
 
     @include('components.card_panel.product_card_panel', compact('product'))
 

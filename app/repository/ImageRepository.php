@@ -30,69 +30,6 @@ class ImageRepository
     ];
 
 
-    public static function getSrc(ItemFieldBuilder $field): string
-    {
-        if ($field) {
-            $slug  = " data-slug='{$field->slug}'" ?? '';
-            $morph = $field->morph;
-            $field = $field->item->$morph() ?? 0;
-            $src   = ImageRepository::getImg($field->getFullPath() ?? '');
-            return "<img src='{$src}'{$slug}>";
-        }
-        return ImageRepository::getImg($field->getFullPath());
-    }
-
-    public static function getProductMainImageSrc(Product $product): string
-    {
-        return $product->mainImagePath;
-    }
-
-    public static function getProductMainImage(Product $product): string
-    {
-        $src  = ImageRepository::getProductMainImageSrc($product);
-        $name = $product->name ?? "";
-
-        return "<img src = '{$src}' title = '{$name}' alt = '{$name}'/>";
-    }
-
-    public static function getSrcMorph(Model $image): array
-    {
-        $imageArr['src'] = $image->getFullPath();
-        $imageArr['id']  = $image->id;
-        return $imageArr;
-    }
-
-    public static function getMorphOneImage(Model $model, $relation): string
-    {
-        $items = $model->$relation;
-        if ($items->count()) {
-            $del = "<div data-detach='' data-id={$items[0]->id}>x</div>";
-            $im  = "<div class='item'><img src='{$items[0]->getFullPath()}' alt=''>{$del}</div>";
-            return "<div class='wrap'>{$im}</div>";
-        }
-        return '';
-    }
-
-    public static function getMorphManyImages(Model $image): string
-    {
-        $del = "<div data-detach='' class='detach' data-id={$image->id}>x</div>";
-        return "<div class='item'><img src='{$image->getFullPath()}' alt=''>{$del}</div>";
-    }
-
-    public static function getImagePath(int $id): string
-    {
-        if ($image = Image::find($id)) {
-            return $image->getPath();
-        }
-        return self::getImg();
-    }
-
-    public static function existsInPath(string $path, string $hash, string $ext): bool
-    {
-        $file = self::$picPath . $path . DIRECTORY_SEPARATOR . $hash . '.' . $ext;
-        return is_readable($file);
-    }
-
     public static function saveToFile(Model $model, array $file, string $path): bool
     {
         $dir  = FS::ensureDir(0766, $model->imagePath, $path);
@@ -104,50 +41,11 @@ class ImageRepository
         return false;
     }
 
-    public static function firstOrCreate(array $file, string $path)
-    {
-        $hash = hash_file('md5', $file['tmp_name']);
-        return
-            Image::firstOrCreate([
-                'hash' => $hash,
-                'path' => $path,
-                'size' => $file['size'],
-            ], [
-                'hash' => $hash,
-                'path' => $path,
-                'name' => $file['name'],
-                'type' => ImageRepository::getFileExt($file['type']),
-            ]);
-    }
-
-    public static function validate(array $file): void
-    {
-        self::validateSize($file);
-        self::validateType($file);
-    }
-
-    public static function validateSize(array $file)
-    {
-        $validSize = self::$size;
-        if ($file['size'] > $validSize)
-            exit(json_encode(['popup' => "Файл {$file['name']} больше {$validSize}"]));
-    }
-
-    public static function validateType(array $file)
-    {
-        $ext   = self::getFileExt($file['type']);
-        $types = implode(',', self::$acceptedTypes);
-        if (!$ext) exit(json_encode(['popup' => "Файл {$file} должен быть {$types}"]));
-    }
 
 
-    public static function delAll()
-    {
-        $im = Image::all();
-        $im->map(function ($im) {
-            $im->delete();
-        });
-    }
+
+
+
 
     public static function getImg($path = "")
     {
@@ -159,30 +57,6 @@ class ImageRepository
         }
     }
 
-    public static function getImgByHash(ColumnBuilder $list, Image $image, string $field)
-    {
-        $picPath = "/Pic/{$image['path']}/{$image['hash']}";
-        foreach (self::$acceptedTypes as $acceptedType) {
-            $file = "{$picPath}.{$acceptedType}";
-            if (is_readable(ROOT . $file)) {
-                return "<div style='width: 30px;height: 30px;'><img src='{$file}' style='width: 100%;height: 100%;object-fit: contain'></div>";
-            }
-        }
-    }
-
-
-    public static function getImgTags(ColumnBuilder $list, Image $image, string $field)
-    {
-        $image = Image::find($image['id']);
-        $names = $image->tags
-            ->pluck('name')
-            ->map(function ($name) {
-                return "<div class='chip'>{$name}</div>";
-            })
-            ->toArray();
-        $f     = implode('', $names);
-        return "<div class='chip-wrap'>{$f}</div>";
-    }
 
     public static function getFileExt($type)
     {

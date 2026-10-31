@@ -4,6 +4,7 @@ namespace app\service\Filters\Products;
 
 use app\model\Category;
 use app\repository\CategoryRepository;
+use app\service\AppService\App;
 use app\service\Cache\Redis\Cache;
 
 class InitialFiltersService
@@ -13,7 +14,10 @@ class InitialFiltersService
 
         return Cache::remember('CategoriesNestedSelector', function (){
             $CategoryFlatNestedArray = [0 => ''];
-            $rootCats                = CategoryRepository::rootCategories();
+
+//            $rootCats                = CategoryRepository::rootCategories();
+            $rootCats                = APP->get('rootCategories');
+
             $reversed                = array_reverse($rootCats);
 
             foreach ($reversed as $rootCat) {

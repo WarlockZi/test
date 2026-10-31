@@ -54,7 +54,6 @@ class CategoryRepository
                         'ownProperties',
                         fn($q) => $q->where('show_front', 1))
                     ->with('childrenRecursive')
-                    ->with('ownProperties')
                     ->get()
                     ->toArray();
             },

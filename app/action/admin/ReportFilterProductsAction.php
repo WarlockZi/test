@@ -9,7 +9,6 @@ use app\model\FilterUser;
 use app\repository\ProductFilterRepository;
 use app\service\AuthService\AuthService;
 use app\service\Filters\Products\InitialFiltersService;
-use app\service\Image\del\ProductImageService;
 use app\view\components\Builders\TableBuilder\ColumnBuilder;
 use app\view\components\Builders\TableBuilder\Table;
 

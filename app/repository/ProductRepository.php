@@ -17,16 +17,13 @@ class ProductRepository
             ->with('category.ownProperties')
             ->with('values')
             ->with('units')
-//            ->with('ownProperties')
             ->with('manufacturer.country')
-//            ->with('promotions')
-//            ->withActivePromotions()
             ->with('activePromotions')
 //            ->with('inactivePromotions')
             ->find($id);
-        if ($product) {
-            $product->append('mainImage');
-        }
+//        if ($product) {
+//            $product->append('mainImage');
+//        }
         return $product;
     }
 

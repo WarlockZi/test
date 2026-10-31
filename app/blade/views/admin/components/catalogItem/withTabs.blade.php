@@ -20,6 +20,7 @@
                 {!!$tab->field!!}
                 data-tab={!!$n!!}
         >
+            @deb
             @if($tab->html)
                 {!!$tab->html!!}
             @elseif($tab->tableData)

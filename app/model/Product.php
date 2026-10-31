@@ -3,11 +3,9 @@
 namespace app\model;
 
 
-use app\service\Account\AccountService;
 use app\service\AuthService\AuthService;
 use app\service\Cart\CartService;
-use app\service\Image\del\ProductImageService;
-use app\service\Like\LikeService;
+
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -18,7 +16,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use stdClass;
 
 
 class Product extends Model
@@ -51,6 +48,14 @@ class Product extends Model
         'mainImage',
     ];
 
+////// image
+    public function getMainImageAttribute(): string
+    {
+        $i = image(env("PIC_PRODUCT").$this?->ownProperties?->main_image ?? '');
+        return $i;
+    }
+
+
     //////likes
     public function like(): HasOne
     {
@@ -58,6 +63,7 @@ class Product extends Model
         return $this->hasOne(Like::class, 'product_id', '1s_id')
             ->where('account_id', $account_id);
     }
+
     public function getIsLikedAttribute()
     {
         $account_id = AuthService::accountId();
@@ -71,11 +77,12 @@ class Product extends Model
         }
         return isset($_SESSION['likes']) && in_array($this['1s_id'], $_SESSION['likes']);
     }
+
     public function scopeLikeStatus($query)
     {
         $account_id = AuthService::accountId();
         if ($account_id) {
-            $query->with(['like' => function($q) use ($account_id) {
+            $query->with(['like' => function ($q) use ($account_id) {
                 $q->where('account_id', $account_id);
             }]);
         }
@@ -87,18 +94,18 @@ class Product extends Model
     {
         $account_id = AuthService::accountId();
         if ($account_id) {
-            return $query->whereHas('compare', function($q) use ($account_id) {
-                $q->where('account_id', $account_id)
-;
+            return $query->whereHas('compare', function ($q) use ($account_id) {
+                $q->where('account_id', $account_id);
             });
         }
 
         // Для гостей фильтруем по сессии
         $sessionCompare = session()->get('compare', []);
-        $productIds = array_keys($sessionCompare);
+        $productIds     = array_keys($sessionCompare);
 
         return $query->whereIn('id', $productIds);
     }
+
     public function getIsComparedAttribute()
     {
         $account_id = AuthService::accountId();
@@ -106,7 +113,7 @@ class Product extends Model
         if ($account_id) {
             if ($this->relationLoaded('compare')) {
                 return $this->compare->isNotEmpty();
-            }else{
+            } else {
                 return Compare::where('account_id', $account_id)
                     ->where('product_1s_id', $this['1s_id'])
                     ->exists();
@@ -114,6 +121,7 @@ class Product extends Model
         }
         return isset($_SESSION['compares']) && in_array($this['1s_id'], $_SESSION['compares']);
     }
+
     public function compare(): HasOne
     {
         $account_id = AuthService::accountId();
@@ -140,7 +148,7 @@ class Product extends Model
         }
 
         $sessionCart = session()->get('cart_items', []);
-        $units = $sessionCart[$this['1s_id']] ?? [];
+        $units       = $sessionCart[$this['1s_id']] ?? [];
 
         if (empty($units)) {
             return collect([]);
@@ -157,35 +165,45 @@ class Product extends Model
         return $cartItems;
     }
 
-    public function scopeInCart($query, $onlyNotOrdered, array $productSelect=null, array $orderitemSelect=null)
+    public function scopeInCart($query, $onlyNotOrdered, array $productSelect = null, array $orderitemSelect = null)
     {
         $account_id = AuthService::accountId();
         if ($account_id) {
             return $query
-                ->select($productSelect??'*')
-                ->whereHas('cartItems', function($q) use ($account_id, $onlyNotOrdered) {
-                $q->where('account_id', $account_id);
-                if ($onlyNotOrdered) {
-                    $q->whereNull('order_id');
-                }
-            })->with(['cartItems'=>function($q) use ($onlyNotOrdered, $orderitemSelect) {
-                $q->select($orderitemSelect??'*');
-                if ($onlyNotOrdered) {
-                    $q->whereNull('order_id');
-                }
-            }]);
+                ->select($productSelect ?? '*')
+                ->whereHas('cartItems', function ($q) use ($account_id, $onlyNotOrdered) {
+                    $q->where('account_id', $account_id);
+                    if ($onlyNotOrdered) {
+                        $q->whereNull('order_id');
+                    }
+                })->with(['cartItems' => function ($q) use ($onlyNotOrdered, $orderitemSelect) {
+                    $q->select($orderitemSelect ?? '*');
+                    if ($onlyNotOrdered) {
+                        $q->whereNull('order_id');
+                    }
+                }]);
         }
 
         // Для гостей фильтруем по сессии
         $sessionCart = session()->get('cart_items', []);
-        $productIds = array_keys($sessionCart);
+        $productIds  = array_keys($sessionCart);
 
         return $query->whereIn('id', $productIds);
     }
 
-    public function getMainImageAttribute(): string
+
+    public function images(): BelongsToMany
     {
-        return APP->get(ProductImageService::class)->getImageRelativePath($this);
+        return $this->belongsToMany(
+            ImageProduct::class,
+            'image_product',
+            'image_id',
+            'product_id',
+            'id',
+            'id',
+        )
+            ->using(ImageProduct::class)
+            ->withPivot('name', 'type');
     }
 
     public function productUnits(): BelongsToMany
@@ -193,6 +211,7 @@ class Product extends Model
         return $this->belongsToMany(Unit::class, 'product_unit', 'product_1s_id', 'unit_id', '1s_id', 'id')
             ->withPivot('price');
     }
+
     public function shippableUnits(): BelongsToMany
     {
         return $this->belongsToMany(
@@ -208,6 +227,7 @@ class Product extends Model
             ->orderByPivot('price')
             ->withPivot('id', 'price', 'is_shippable', 'divider', 'multiplier', 'is_from_1s');
     }
+
     public function units(): BelongsToMany
     {
         return $this->belongsToMany(
@@ -221,20 +241,6 @@ class Product extends Model
             ->using(ProductUnit::class)
             ->orderByPivot('price')
             ->withPivot('id', 'price', 'is_shippable', 'divider', 'multiplier', 'is_from_1s');
-    }
-
-    public function images(): BelongsToMany
-    {
-        return $this->belongsToMany(
-            ImageProduct::class,
-            'image_product',
-            'image_id',
-            'product_id',
-            'id',
-            'id',
-        )
-            ->using(ImageProduct::class)
-            ->withPivot('name', 'type');
     }
 
     public function getBaseUnitAttribute()
@@ -311,13 +317,6 @@ class Product extends Model
         return parent::castAttribute($key, $value);
     }
 
-    protected function getMainImagePathAttribute(): string
-    {
-        $pis = APP->get(ProductImageService::class);
-        return $pis->getImageRelativePath($this);
-    }
-
-
     ///price
     public function getFormattedPriceAttribute(): string
     {
@@ -348,16 +347,6 @@ class Product extends Model
         return $query->whereHas('mainImages');
     }
 
-    public function unsubmittedOrders(): HasMany
-    {
-        list($field, $value) = CartService::getCartFieldValue();
-        $orders = $this
-            ->hasMany(Order::class, $field, $value)
-            ->where('submitted', '0');
-
-        return $orders;
-    }
-
     public function values(): MorphToMany
     {
         return $this->morphToMany(Val::class, 'valuable');
@@ -375,12 +364,14 @@ class Product extends Model
                 ->with('unit');
         }]);
     }
+
     public function activePromotions(): hasMany
     {
         return $this->promotions()
             ->where('active_till', '>', Carbon::today()->toDateString())
             ->with('unit');
     }
+
     public function inactivePromotions(): hasMany
     {
         return $this->promotions()
@@ -410,6 +401,7 @@ class Product extends Model
     {
         return $this->category()->with('parentRecursive');
     }
+
     public function orderItem(): hasOneThrough
     {
         return $this->hasOneThrough(
@@ -433,7 +425,6 @@ class Product extends Model
             'id', //in order_product
         );
     }
-
 
 
     public function orderProduct(): hasOne

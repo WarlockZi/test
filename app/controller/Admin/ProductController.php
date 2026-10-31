@@ -14,6 +14,7 @@ use app\repository\ProductRepository;
 use app\repository\UpdateOrCreateRepository;
 use app\service\AuthService\AuthService;
 use app\service\Breadcrumbs\BreadcrumbsArray;
+use app\service\Breadcrumbs\BreadcrumbsService;
 use app\service\Router\IRequest;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
@@ -48,8 +49,10 @@ class ProductController extends AdminscController
         if (!$prod) {
             view('admin.product.notFound');
         }
-        $breadcrumbs = (new BreadcrumbsArray(true))->generate($prod->category->toArray());
+        $breadcrumbs =  BreadcrumbsService::generate($prod->category, true);
+        $start = microtime(true);
         $catItem     = ProductFormView::edit($prod);
+        $total = microtime(true) - $start;
         view('admin.product.edit', compact('catItem', 'breadcrumbs'));
     }
     #[NoReturn]

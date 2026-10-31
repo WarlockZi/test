@@ -28,9 +28,14 @@ class ProductAction
 
         $productMainImage = (new ProductMainImage($product?->toArray(), $file))
             ->save();
+
+        $path = env('PIC_PRODUCT').$product->ownProperties->main_image;
+        $imageName = image($path);
+
         $product->ownProperties->update(['main_image' => $productMainImage->getImageFileName()]);
 
-        return image($product->ownProperties->main_image);
+        return $imageName;
+
     }
 
     public function changeUnit(array $req): void

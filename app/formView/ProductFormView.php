@@ -277,7 +277,7 @@ class ProductFormView
 
     public static function mainImage(Product $product): DndBuilder
     {
-        $img['src']   = image($product->ownProperties->main_image);
+        $img['src']   = image(env('PIC_PRODUCT').$product->ownProperties->main_image);
         $img['alt']   = $product->name;
         $img['title'] = $product->name;
         $img['class'] = 'main-image';
@@ -410,52 +410,7 @@ class ProductFormView
         return $customList->get();
     }
 
-    public static function trashed(Collection $items): array
-    {
-        return Table::build($items)
-            ->pageTitle('Товары')
-            ->column(
-                ColumnBuilder::build('id')
-                    ->name('ID')
-                    ->get()
-            )
-            ->column(
-                ColumnBuilder::build('name')
-                    ->name('Наименование')
-                    ->contenteditable()
-                    ->search()
-                    ->width('1fr')
-                    ->get()
-            )
-            ->column(
-                ColumnBuilder::build('art')
-                    ->name('Артикул')
-                    ->contenteditable()
-                    ->search()
-                    ->width('100px')
-                    ->get()
-            )
-            ->column(
-                ColumnBuilder::build('sort')
-                    ->name('Порядок')
-                    ->contenteditable()
-                    ->search()
-                    ->width('50px')
-                    ->get()
-            )
-            ->column(
-                ColumnBuilder::build('price')
-                    ->name('Цена')
-                    ->contenteditable()
-                    ->width('70px')
-                    ->function(ProductRepository::class, 'priceStatic')
-                    ->get()
-            )
-            ->edit()
-            ->del()
-            ->addButton()
-            ->get();
-    }
+
 
     public function dopUnitsPrices(Product $product, string $str = ''): array
     {
