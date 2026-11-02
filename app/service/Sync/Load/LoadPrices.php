@@ -28,23 +28,6 @@ class LoadPrices extends LoadService
         parent::__construct();
     }
 
-    private function exec(): void
-    {
-        try {
-            foreach ($this->priceData as $offer) {
-                $this->prepareOffer($offer);
-                $this->firstOrCreateUnit();
-                $this->findProductUpdateInstore();
-
-                $this->updateOrCreatePruductUnit();
-//            $this->updatePrices();
-            }
-        } catch (Throwable $exception) {
-            $exc = $exception;
-        }
-    }
-
-
     private function setOfferFile(): void
     {
         $file = ROOT. env('SYNC_PATH'). 'unzipped/loaded/'. env('SYNC_OFFER_FILE');
@@ -54,14 +37,25 @@ class LoadPrices extends LoadService
         $this->priceData = $offerData['ПакетПредложений']['Предложения']['Предложение'];
     }
 
-    #[NoReturn]
     public function load(): void
     {
         $this->setOfferFile();
         $this->exec();
-
     }
+    private function exec(): void
+    {
+        try {
+            foreach ($this->priceData as $offer) {
+                $this->prepareOffer($offer);
+                $this->firstOrCreateUnit();
+                $this->findProductUpdateInstore();
 
+                $this->updateOrCreatePruductUnit();
+            }
+        } catch (Throwable $exception) {
+            $exc = $exception;
+        }
+    }
     protected function firstOrCreateUnit(): void
     {
         $this->unit = Unit::firstOrCreate(

@@ -24,7 +24,9 @@ class LoadService
     }
 
 
-
+    /**
+     * @throws Exception
+     */
     public function run(): void
     {
         $this->checkXMLFuncExist();
