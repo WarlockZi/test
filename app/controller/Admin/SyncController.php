@@ -40,8 +40,8 @@ class SyncController extends AdminscController
     public function actionLoad(): void
     {
         $this->logger->write('SyncController начал загрузку без архивов');
-        $load = new LoadService();
-        $load->run();
+        $service = new LoadService();
+        $service->run();
     }
 
     /**

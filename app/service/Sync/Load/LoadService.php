@@ -13,7 +13,7 @@ class LoadService
     protected array $categoryData;
     protected array $productData;
     public array $priceData;
-    protected SyncLogger $logger;
+    public SyncLogger $logger;
 
     protected array $attributes;
 
@@ -34,18 +34,18 @@ class LoadService
 
         $this->logger->write('**************');
         $this->LoadCategories();
-        $this->LoadProducts();
-        $this->LoadPrices();
+//        $this->LoadProducts();
+//        $this->LoadPrices();
 
     }
 
-    private function moveFilesLoaded(): void
+    public function moveFilesLoaded(): void
     {
         $this->moveImportFile(env('SYNC_IMPORT_FILE'));
         $this->moveImportFile(env('SYNC_OFFER_FILE'));
     }
 
-    private function checkXMLFuncExist(): void
+    public function checkXMLFuncExist(): void
     {
         if (!extension_loaded('simplexml')) {
             $this->logger->write("--- Расширение SimpleXML НЕ установлено ---");

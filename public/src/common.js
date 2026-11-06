@@ -478,6 +478,9 @@ function handleResponse(res) {
     } else {
       showMessage(res);
     }
+    if (res?.bottom) {
+      bottom_panel.add(res?.bottom);
+    }
     return res;
   } catch (e) {
     console.log(
@@ -492,6 +495,16 @@ function handleResponse(res) {
   }
 }
 
+class bottom_panel {
+  static add(line) {
+    const box = document.querySelector(".bottom-panel .messages");
+    if (!box) return;
+
+    const paragraph = document.createElement("p");
+    paragraph.textContent = line;
+    box.append(paragraph);
+  }
+}
 class ElementCollection extends Array {
   on(event, cbOrSelector, cb) {
     if (typeof cbOrSelector === "function") {

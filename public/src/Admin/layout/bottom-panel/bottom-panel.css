@@ -1,0 +1,111 @@
+.bottom-panel-wrapper {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: translateY(150px);
+    transition: transform 0.3s ease-in-out;
+    /*animation: popping ease-in-out 10s infinite;*/
+
+    &.active {
+        transform: translateY(0px);
+        animation: none;
+    }
+
+    .hover-trigger {
+        height: 10px;
+        width: 100%;
+        cursor: pointer;
+        z-index: 1001;
+        background: #2c3e50;
+        animation: blinking ease-in-out 5s infinite;
+    }
+
+    .bottom-panel {
+        width: 100%;
+        height: 150px; /* Высота панели */
+        background-color: #2c3e50;
+        color: white;
+        box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.2);
+        display: flex;
+        justify-content: space-evenly;
+        font-size: 1.2rem;
+        overflow-y: auto;
+
+        .messages {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 10;
+
+            p {
+                color: #cee3f8;
+            }
+        }
+
+        #pin {
+            display: none;
+
+            &:checked+label {
+                background: #1a72b8;
+            }
+        }
+        label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+            margin-right: 10px;
+            max-width: 30px;
+            height: 30px;
+            flex: 1;
+            background: #2c3e50;
+            border: 1px solid #5d7ca2;
+            border-radius: 5px;
+        }
+    }
+}
+
+@keyframes blinking {
+    0% {
+        background: #f4d38d;
+    }
+    40% {
+        background: #74d8f6;
+        opacity: 0.5;
+    }
+    80% {
+        background: #56ff56;
+        opacity: 0.5;
+    }
+    100% {
+        background: #f4d38d;
+        opacity: 1;
+    }
+}
+
+@keyframes popping {
+    0% {
+        transform: translateY(150px);
+    }
+    2% {
+        transform: translateY(130px);
+    }
+    4% {
+        transform: translateY(150px);
+    }
+    6% {
+        transform: translateY(130px);
+    }
+    8% {
+        transform: translateY(140px);
+    }
+    100% {
+        transform: translateY(150px);
+    }
+}
+

@@ -15,7 +15,7 @@ class SyncmanualActions
 
         try {
             self::moveFile($file, $path, $name);
-            response()->json(['popup' => 'Файл загружен успешно']);
+            response()->json(['popup' => 'Файл загружен успешно','bottom'=>'файл загружен']);
         } catch (Throwable $exception) {
             $exc = $exception->getMessage();
             response()->json(['popup' => $debugString . ' error: ' . $exc]);

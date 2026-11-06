@@ -11,8 +11,8 @@ export default class syncmanual {
     this.deleteFilesUrl = "/adminsc/syncmanual/deletefiles";
 
     this.loadCategoriesUrl = "/adminsc/syncmanual/loadCategories";
-    this.loadProductsUrl = "/adminsc/syncmanual/loadProducts";
-    this.loadPricesUrl = "/adminsc/syncmanual/loadPrices";
+    this.loadProductsUrl = "/adminsc/syncmanual/loadproducts";
+    this.loadPricesUrl = "/adminsc/syncmanual/loadprices";
 
     this.cleanSuccessLogUrl = "/adminsc/syncmanual/cleanSuccessLog";
 
@@ -81,11 +81,26 @@ export default class syncmanual {
   async start() {
     this.startSyncButton.classList.add("btn--loading");
     const res = await post(this.startUrl);
-    debugger;
-    if (res?.popup) {
-      this.startSyncButton.classList.remove("btn--loading");
+
+    if (res?.loaded === "category") {
+      const res = await post(this.loadProductsUrl);
+
+      if (res?.loaded === "product") {
+        const res = await post(this.loadPricesUrl);
+
+        if (res?.loaded === "price") {
+          const message = res?.message;
+          const messageDiv = document.createElement("div");
+          messageDiv.classList.add("log-string");
+          messageDiv.innerText = message;
+          this.logStrings.append(messageDiv);
+
+          this.startSyncButton.classList.remove("btn--loading");
+        }
+      }
     }
   }
+
   async deleteFiles() {
     const importFile = $("#import").first();
     const offerFile = $("#offer").first();

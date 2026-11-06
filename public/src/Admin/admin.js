@@ -3,11 +3,11 @@ import "./layout/index.js";
 import "./admin.scss";
 import "@components/date/date.js";
 import "./Category/Category.js";
+import "./layout/bottom-panel/bottom-panel.css";
 
-// import MyQuills from "@components/quill/MyQuills.js";
 import MyCardPanels from "@src/Modules/admin/card_panel/MyCardPanels.js";
 import MyTables from "@components/table/MyTables.js";
-// import MyDnds from "@src/Modules/share/my_dnds/my_dnds.js";
+import BottomPanel from "@src/Admin/layout/bottom-panel/bottom-panel.js";
 
 $(document).ready(async function () {
   document.body.classList.remove("preload");
@@ -17,7 +17,7 @@ $(document).ready(async function () {
 
   new MyCardPanels();
   new MyTables();
-  // new MyDnds();
+  new BottomPanel();
   loadPageScripts();
 
   function loadPageScripts() {
@@ -37,9 +37,4 @@ $(document).ready(async function () {
       console.warn(`Модуль не найден: ${modulePath}`);
     }
   }
-
-  // if (document[qs](".orders-edit")) {
-  // const { default: Order } = await import("@src/Admin/Pages/Order/order.js");
-  // //   new orders();
-  // // }
 });

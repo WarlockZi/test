@@ -1,6 +1,5 @@
 @php
     use app\service\Vite\Vite;
-//        xdebug_break();
 @endphp
         <!DOCTYPE html>
 <html lang="ru">
@@ -22,8 +21,6 @@
 
 <div class="admin-layout">
     @include('layouts.admin.header.sidebar.index')
-{{--    @include('layouts.admin.header.sidebar.admin_menu_accordion')--}}
-{{--    @include('layouts.admin.sidebar.index')--}}
     @include('layouts.admin.header.header')
 
     <div class="admin-layout_content content">
@@ -36,8 +33,9 @@
 
     </div>
 
-
 </div>
+
+@include('layouts.admin.footer.bottom-panel')
 
 </body>
 </html>

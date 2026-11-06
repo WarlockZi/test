@@ -14,7 +14,6 @@ use app\service\Storage\SyncStorage;
 use app\service\Sync\Load\LoadService;
 use app\service\Sync\SyncService;
 use app\service\Zip\ZipService;
-use Exception;
 use JetBrains\PhpStorm\NoReturn;
 use Throwable;
 
@@ -42,11 +41,18 @@ class SyncmanualController extends AdminscController
             ->extract();
     }
 
-    public function actionLoad(LoadService $loadService)
+    public function actionLoad(LoadService $service): void
     {
         try {
-            $loadService->run();
-            response()->withLog(new SyncSuccessLogger)->popup('Синхронизация прошла успешно');
+            $service->checkXMLFuncExist();
+            $service->moveFilesLoaded();
+            $service->logger->write('**************');
+
+            $service->loadCategories();
+            response()->json(['pupup' => 'категории успешно загружены',
+                'loaded' => 'category',
+                'bottom' => date('Y-m-d H:i:s') . ' - Категории загружены']);
+
         } catch (Throwable $exception) {
             response()->popup('Ошибка загрузки ' . $exception->getMessage());
         }
@@ -56,57 +62,75 @@ class SyncmanualController extends AdminscController
     {
         $actions::unploadFile($files->file('file'));
     }
+
     public function actionUploadimport(SyncManualDownloadFileRequest $files, SyncmanualActions $actions): void
     {
         $actions::unploadFile($files->file('file'));
     }
+
     #[NoReturn]
     public function actionIndex(): void
     {
         $loadFiles = SyncStorage::getUnzippedFiles();
-        $logs = StorageLog::getFileContent('sync/success.txt');
-        $logLines = explode("\n", trim($logs));
+        $logs      = StorageLog::getFileContent('sync/success.txt');
+        $logLines  = explode("\n", trim($logs));
         view('admin.sync.sync_manual', compact('loadFiles', 'logLines'));
     }
+
     public function actionCleansuccesslog(StorageLog $storageLogger): void
     {
         $storageLogger->cleanFile('sync/success.txt');
-        $logs = $storageLogger::getFileContent('sync/success.txt');
+        $logs     = $storageLogger::getFileContent('sync/success.txt');
         $logLines = explode("\n", trim($logs));
-        response()->json(['popup'=>'Логи очищены', 'logLines'=>$logLines]);
+        response()->json(['popup' => 'Логи очищены', 'logLines' => $logLines]);
     }
+
     public function actionDeletefiles(SyncmanualActions $actions, SyncStorage $store): void
     {
         $actions::deleteAllFiles($store);
         $loadFiles = SyncStorage::getUnzippedFiles();
         response()->json($loadFiles);
     }
-    public function actionLoadcategories(LoadService $load): void
+
+    public function actionLoadcategories(LoadService $service): void
     {
         try {
-            response()->popup('категории успешно загружены');
+//            $service->loadCategories();
+            response()->json(['popup' => 'категории успешно загружены',
+                'loaded' => 'category',
+                'bottom' => date('Y-m-d H:i:s') . ' - Категории загружены']);
         } catch (Throwable $exception) {
             response()->popup($exception->getMessage());
         }
     }
-    public function actionLoadprices(LoadService $load): void
+
+    public function actionLoadproducts(LoadService $service): void
     {
         try {
-            $load->loadPrices();
-            response()->withLog(new SyncLogger())->popup('цены и остатки успешно загружены');
+            $service->loadProducts();
+            response()->json(['popup' => 'товары успешно загружены',
+                'loaded' => 'product',
+                'bottom' => date('Y-m-d H:i:s') . ' - Товары загружены']);
         } catch (Throwable $exception) {
             response()->popup($exception->getMessage());
         }
     }
-    public function actionLoadproducts(LoadService $load): void
+
+    public function actionLoadprices(LoadService $service): void
     {
         try {
-            $load->loadProducts();
-            response()->withLog(new SyncLogger())->popup('товары успешно загружены');
+            $service->loadPrices();
+            response()->withLog(new SyncSuccessLogger)->json([
+                'popup' => 'цены успешно загружены',
+                'loaded' => 'price',
+                'log' => date('Y-m-d H:i:s') . ' - Синхронизация прошла успешно',
+                'bottom' => date('Y-m-d H:i:s') . ' - Цены загружены'],
+            );
         } catch (Throwable $exception) {
             response()->popup($exception->getMessage());
         }
     }
+
 }
 
 
