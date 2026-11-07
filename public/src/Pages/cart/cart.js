@@ -3,6 +3,7 @@ import { $, formatter, post } from "@src/common.js";
 import { ael, it, qa, qs } from "@src/constants.js";
 import shippableTable from "@components/shippable/shippableTable.js";
 import renderSums from "@src/Pages/cart/renderSums.js";
+import CartBadge from "@components/shippable/CartBadge.js";
 
 export default class Cart {
   constructor() {
@@ -44,7 +45,7 @@ export default class Cart {
     const row = target.closest(".row");
     return {
       // order_id: this.orderId,
-      product_1s_id: row.dataset.product_1s_id,
+      product_1s_id: row.dataset.product_1s_id.trim(),
     };
   }
 
@@ -102,6 +103,8 @@ export default class Cart {
       target.closest(".row").remove();
       if (this.rows.length < 1) this.showEmptyCart();
       this.renderSums();
+      const cartBadge = new CartBadge();
+      cartBadge.decrement();
     }
   }
 

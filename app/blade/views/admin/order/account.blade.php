@@ -12,7 +12,6 @@
 
     @if(!empty($account['users']))
         <h2>Пользователи аккаунта</h2>
-        {{--        @deb--}}
         <div class="users-grid">
             <div class="last-name header">Фамилия</div>
             <div class="name header">Имя</div>
@@ -51,7 +50,6 @@
 
 @if(!empty($account['cart_items']))
     <details>
-                @deb
         <summary>Неоформленный заказ</summary>
         @include('admin.order.cart')
     </details>

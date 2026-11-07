@@ -26,7 +26,10 @@ class Session
     {
         $_SESSION = [];
     }
-
+    public function has(string $key): bool
+    {
+        return (bool)$_SESSION[$key];
+    }
 
 }
 

@@ -40,44 +40,6 @@ class CartRepository
         return $orders;
     }
 
-    public static function incrementGuestToAccountCart($account_id, $product_id, $unit_id, $count): void
-    {
-        $affected = OrderItem::where([
-            'product_1s_id' => $product_id,
-            'unit_id' => $unit_id,
-            'account_id' => $account_id,
-        ])->increment('count', $count);
 
-        if ($affected === 0) {
-            $orderItem = OrderItem::create([
-                'product_1s_id' => $product_id,
-                'unit_id' => $unit_id,
-                'count' => $count,
-                'account_id' => $account_id,
-            ]);
-        }
-    }
-//    public function updateOrCreate(array $body): void
-//    {
-//        $orderId        = OrderRepository::usersOrder(onlyField: 'id');
-//        $orderProductId = OrderProduct::firstOrCreate([
-//            'order_id' => $orderId,
-//            'product_id' => $body['product_1s_id'],
-//        ])->id;
-//        $productUnitId  = ProductUnit::where([
-//            'product_1s_id' => $body['product_1s_id'],
-//            'unit_id' => $body['unit_id'],
-//        ])
-//            ->select('id')
-//            ->first()->id;
-//        $orderItem      = OrderItem::updateOrCreate([
-//            'order_product_id' => $orderProductId,
-//            'product_unit_id' => $productUnitId,
-//        ],
-//            [
-//                'order_product_id' => $orderProductId,
-//                'product_unit_id' => $productUnitId,
-//                'count' => $body['count'],
-//            ]);
-//    }
+
 }

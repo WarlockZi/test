@@ -4,9 +4,7 @@
 namespace app\repository;
 
 
-use app\formRequest\LikeRequest;
 use app\model\Like;
-use app\model\Product;
 use app\service\AuthService\AuthService;
 use app\service\Cart\CartService;
 use Throwable;

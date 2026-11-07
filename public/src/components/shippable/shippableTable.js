@@ -1,5 +1,6 @@
 import { $, debounce, post } from "../../common";
 import { ael, qa, qs } from "../../constants";
+import CartBadge from "@components/shippable/CartBadge.js";
 
 export default class shippableTable {
   constructor(table) {
@@ -80,16 +81,15 @@ export default class shippableTable {
     }
   }
   updateCartBadge(cart_count) {
-    const badge = $(".cart-link .count").first();
-    if (!badge) return false;
-    badge.innerText = cart_count;
+    const badge = new CartBadge();
+    badge.setCount(cart_count);
   }
 
   async toServerRaw(order_item_dto) {
     return new Promise((resolve) => {
       debounce(async (dto) => {
         await post(`/cart/add`, dto).then(resolve);
-      }, 300)(order_item_dto);
+      }, 100)(order_item_dto);
     });
   }
   renderSums() {

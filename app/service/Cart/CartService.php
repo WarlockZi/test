@@ -4,7 +4,6 @@ namespace app\service\Cart;
 
 use app\model\Order;
 use app\model\OrderItem;
-use app\repository\CartRepository;
 use app\service\AuthService\AuthService;
 use app\strategy\CartStrategy\AccountCartStrategy;
 use app\strategy\CartStrategy\GuestCartStrategy;
@@ -14,25 +13,36 @@ use Illuminate\Support\Collection;
 class CartService
 {
     private ICartStrategy $strategy;
-    private CartRepository $repository;
+
 
     public function __construct()
     {
-        $this->strategy   = AuthService::accountId()
+        $this->strategy = AuthService::accountId()
             ? new AccountCartStrategy()
             : new GuestCartStrategy();
-        $this->repository = new CartRepository();
+
     }
 
-    public function getCart(int $account_id = null): Collection
+    public function deleteProduct(array $req)
+    {
+        $this->strategy->deleteProduct($req);
+    }
+
+
+    public
+    function getCart(int $account_id = null)
     {
         return $this->strategy->getCart($account_id);
     }
-    public function getProductsInCart(int $account_id = null): Collection
+
+    public
+    function getProductsInCart(int $account_id = null): Collection
     {
         return $this->strategy->getProductsInCart($account_id);
     }
-    public function submit()
+
+    public
+    function submit()
     {
         $orderId = Order::create()->id;
         $cart    = $this->getCart(AuthService::accountId());
@@ -44,30 +54,52 @@ class CartService
         }
     }
 
-    public function mergeCart($account_id): void
+    public
+    function mergeCart($account_id): void
     {
         $guest_items = $_SESSION['cart_items'] ?? [];
         if (!$guest_items) return;
         foreach ($guest_items as $product_id => $units) {
             foreach ($units as $unit_id => $count) {
-                $this->repository->incrementGuestToAccountCart($account_id, $product_id, $unit_id, $count);
+                $this->incrementGuestToAccountCart($account_id, $product_id, $unit_id, $count);
             }
         }
         session()->forget('cart_items');
     }
 
-    public function updateOrCreate(array $validated): void
+    private function incrementGuestToAccountCart($account_id, $product_id, $unit_id, $count): void
+    {
+        $affected = OrderItem::where([
+            'product_1s_id' => $product_id,
+            'unit_id' => $unit_id,
+            'account_id' => $account_id,
+        ])->increment('count', $count);
+
+        if ($affected === 0) {
+            $orderItem = OrderItem::create([
+                'product_1s_id' => $product_id,
+                'unit_id' => $unit_id,
+                'count' => $count,
+                'account_id' => $account_id,
+            ]);
+        }
+    }
+
+    public
+    function updateOrCreate(array $validated): void
     {
         $this->strategy->updateOrCreate($validated);
     }
 
-    public static function cartCount(): int
+    public
+    static function cartCount(): int
     {
         $self = new self();
         return $self->strategy->cartCount();
     }
 
-    public static function getCartFieldValue(): array
+    public
+    static function getCartFieldValue(): array
     {
         $user  = AuthService::getUser();
         $field = $user ? 'account_id' : 'vitex_guest_id';

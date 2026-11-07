@@ -9,7 +9,6 @@ use app\formRequest\CartDeleteRowRequest;
 use app\formRequest\CartRequest;
 use app\repository\CartRepository;
 use app\repository\OrderitemRepository;
-use app\repository\OrderRepository;
 use app\service\AuthService\AuthService;
 use app\service\Cart\CartService;
 use app\service\Response;
@@ -33,8 +32,9 @@ class CartController extends AppController
     #[NoReturn]
     public function actionIndex(): void
     {
-        $order['products'] = $this->cartService->getCart(AuthService::accountId());
-        view('cart.cart', compact('order'));
+//        $order['products'] = $this->cartService->getCart(AuthService::accountId());
+        $cart = $this->cartService->getCart(AuthService::accountId());
+        view('cart.cart', compact('cart'));
     }
 
     #[NoReturn]
@@ -66,7 +66,7 @@ class CartController extends AppController
     {
         $req = $request->validated();
         try {
-            OrderRepository::deleteProduct($req['order_id'], $req['product_1s_id']);
+            $this->cartService->deleteProduct($req);
             response()->json(['deleted' => true, 'popup' => 'Удален']);
         } catch (Throwable $exception) {
             error_log($exception->getMessage());

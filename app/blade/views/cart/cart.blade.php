@@ -14,24 +14,25 @@
         <a href="/order">Заказы</a>
 
 
-        @if(empty($order['products']) && empty($_SESSION['cart_items']))
-            <div class="empty-cart {!!(empty($order) || !isset($order['products']))?'none':''!!}">
-                Корзина пуста
-            </div>
-        @else
+        @php($emptyCart= empty($cart) && empty($_SESSION['cart_items']))
 
+        @if(!$emptyCart)
             <div class="content">
                 <div class="table">
 
                     @if (\app\service\AuthService\AuthService::accountId())
-                        @include('cart.cartProducts')
+                        @include('cart.cartProductsAccount')
                     @else
-                        @include('cart.guestCartProducts')
+                        @include('cart.cartProductsGuest')
                     @endif
                 </div>
 
             </div>
         @endif
+{{--@deb--}}
+        <div class="empty-cart {!!(empty($order) || !isset($order['products']))?'none':''!!}">
+            Корзина пуста
+        </div>
 
     </div>
 @endsection

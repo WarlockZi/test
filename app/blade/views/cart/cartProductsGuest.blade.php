@@ -3,9 +3,8 @@
     $index = 1;
 @endphp
 
-@foreach ($order['products'] as $i => $product)
-    @deb
-
+@foreach ($cart as $i => $product)
+{{--    @deb--}}
 
     <div class="row cart-item" data-product_1s_id="{!!$product['1s_id']!!} ">
 
@@ -27,7 +26,7 @@
         <div class="cart-shippable-table cell">
             @php
                 $showToCartButton = false;
-                $plus_minus_buttons = false;
+                $plus_minus_buttons = true;
                 $orderitems = $product['cart_items'];
             @endphp
 

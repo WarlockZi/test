@@ -1,5 +1,5 @@
 <div class="products" data-model="product">
-    @if (!empty($category->productsInStore))
+    @if ($category->productsInStore->count())
         <div class="products-header">
             <h2>Товары в наличии</h2>
         </div>
@@ -13,7 +13,7 @@
     @endif
 
 
-    @if (!empty($category->productsNotInStoreInMatrix))
+    @if ($category->productsNotInStoreInMatrix->count())
         <div class="products-header">
             <h2>Товары под заказ</h2>
         </div>
