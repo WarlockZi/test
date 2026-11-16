@@ -2,8 +2,6 @@
 declare(strict_types=1);
 
 use app\blade\Blade;
-use app\blade\IView;
-use app\blade\View;
 use app\model\Category;
 use app\repository\CategoryRepository;
 use app\service\Cache\ICache;
@@ -66,12 +64,14 @@ return [
         return $capsule;
     },
 
-    IView::class => function (ContainerInterface $c) {
-        return new View(
-            new Blade(),
-            $c->get(IRequest::class)
-        );
-    },
+//    IView::class => function (ContainerInterface $c) {
+//        return new View(
+//            new Blade(),
+//            $c->get(IRequest::class)
+//        );
+//    },
+
+//    'request' => \Illuminate\Http\Request::capture(),
 
     Blade::class => create(Blade::class),
 

@@ -4,7 +4,6 @@ namespace app\controller;
 
 use app\repository\CategoryRepository;
 use app\service\Breadcrumbs\BreadcrumbsService;
-use app\service\Cache\Redis\Cache;
 use app\service\Cart\CartService;
 use app\service\Category\CategoryService;
 use app\service\Router\IRequest;
@@ -26,7 +25,6 @@ class CategoryController extends AppController
                                 CartService $cartService,
     ): void
     {
-
         if (!$request->slug) {
             $this->service->notFound();
         }

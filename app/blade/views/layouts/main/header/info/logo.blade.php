@@ -2,10 +2,9 @@
 use app\view\components\Icon\Icon;
 @endphp
 
-@if ( $request->isHome())
+@if($_SERVER['REQUEST_URI']==='/')
 
     <div class="logo">
-
         {!!Icon::logo_square1() . Icon::logo_vitex1()!!}
     </div>
 

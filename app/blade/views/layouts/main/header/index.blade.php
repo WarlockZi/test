@@ -7,7 +7,6 @@
             <p itemprop="name">Витекс</p>
         </div>
 
-
         @include('layouts.main.header.info.logo')
         @include('layouts.main.header.info.phone')
         @include('layouts.main.header.info.location')
@@ -16,7 +15,6 @@
 
     </div>
 
-{{--        @php xdebug_break() @endphp--}}
     @include('layouts.main.header.blueRibbon.index')
 
 

@@ -15,6 +15,9 @@ export default class CartBadge {
     return badge;
   }
   setCount(count) {
+    if (count === undefined) return;
+    if (count === this.count) return;
+
     if (count) {
       this.badge.classList.remove("none");
       this.badge.classList.add("show");

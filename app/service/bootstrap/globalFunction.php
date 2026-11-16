@@ -53,7 +53,12 @@ if (!function_exists('view')) {
         $response->send();
     }
 }
-
+if (!function_exists('app')) {
+    function app(string $key)
+    {
+        return APP->get($key);
+    }
+}
 
 if (!function_exists('generateCsrfToken')) {
 

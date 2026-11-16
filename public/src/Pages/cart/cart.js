@@ -1,27 +1,35 @@
 import "./cart.scss";
-import { $, formatter, post } from "@src/common.js";
-import { ael, it, qa, qs } from "@src/constants.js";
+import { $, post } from "@src/common.js";
+import { ael, qa, qs } from "@src/constants.js";
 import shippableTable from "@components/shippable/shippableTable.js";
 import renderSums from "@src/Pages/cart/renderSums.js";
 import CartBadge from "@components/shippable/CartBadge.js";
 
 export default class Cart {
   constructor() {
-    window.YM("url_cart");
-
     this.container = $(".user-content .cart .content").first();
     if (!this.container) return;
 
+    window.YM("url_cart");
+
     this.container[ael]("click", this.handleClick.bind(this));
     this.container[ael]("keyup", this.handleKeyUp.bind(this));
+    this.container[ael](
+      "shippable.product.empty",
+      this.handleProductEmpty.bind(this),
+    );
 
-    // this.orderId = this.container[qs]("[data-orders-id]").dataset.orderId;
     this.total = this.container[qs](".total span");
-    this.$cartEmptyText = this.container[qs](".empty-cart");
     this.$cartCount = this.container[qs](".cart .count");
+
+    this.$cartEmptyText = this.container[qs](".empty-cart");
     this.rows = this.container[qa](".row");
 
-    this.mapTables();
+    this.initShippableTables();
+    this.renderSums();
+  }
+  async handleProductEmpty({ target }) {
+    await this.deleteCartRow(target);
     this.renderSums();
   }
 
@@ -31,32 +39,14 @@ export default class Cart {
     }
   }
 
-  rowUnits(row) {
-    const rows = {};
-    [...row[qa]("[unit-row]")].map((unitRow) => {
-      const unitid = unitRow.dataset.unitid;
-      const count = +unitRow[qs]("input").value;
-      if (count) rows[unitid] = count;
-    });
-    return rows;
-  }
-
   cartRowDTO(target) {
     const row = target.closest(".row");
     return {
-      // order_id: this.orderId,
       product_1s_id: row.dataset.product_1s_id.trim(),
     };
   }
 
-  renderSums() {
-    renderSums({
-      shippable_tables: this.container[qa](".shippable-table"),
-      total: this.total,
-    });
-  }
-
-  mapTables() {
+  initShippableTables() {
     [...this.container[qa](".shippable-table")].forEach((table) => {
       new shippableTable(table);
     });
@@ -84,33 +74,62 @@ export default class Cart {
     }
   }
 
-  rowTotalCount(table) {
-    return [...table[qa]("input")].reduce((acc, el) => {
-      return acc + +el.value;
-    }, 0);
-  }
-
   async updateOrCreate(target) {
     const count = +target.value;
     const orderItemId = target.dataset.orderItemId;
-    // const unit_id = target.closest("[unit-row]").dataset["unitid"];
     await post(`/cart/updateOrCreate`, { orderItemId, count });
   }
 
   async deleteCartRow(target) {
     const res = await post(`/cart/deleteRow`, this.cartRowDTO(target));
     if (res?.deleted) {
-      target.closest(".row").remove();
+      const product = target.closest(".row");
+      this.removeFromCart(product);
+
+      // target.closest(".row").remove();
+
       if (this.rows.length < 1) this.showEmptyCart();
       this.renderSums();
       const cartBadge = new CartBadge();
       cartBadge.decrement();
     }
   }
+  async removeFromCart(cartItem) {
+    if (!cartItem) return;
+
+    const height = cartItem.offsetHeight;
+    cartItem.style.height = `${height}px`;
+    cartItem.classList.add("removing");
+
+    // Используем Web Animations API для точного контроля
+    const animation = cartItem.animate(
+      [
+        { opacity: 1, transform: "translateY(0)", marginBottom: "0" },
+        {
+          opacity: 0,
+          transform: "translateY(-20px) scale(0.95)",
+          marginBottom: `-${height}px`,
+        },
+      ],
+      {
+        duration: 300,
+        easing: "ease-in-out",
+        fill: "forwards",
+      },
+    );
+    await animation.finished;
+    cartItem.remove();
+  }
 
   showEmptyCart() {
     this.container.innerHTML = "";
     this.$cartEmptyText.classList.remove("none");
     this.$cartCount.classList.add("none");
+  }
+  renderSums() {
+    renderSums({
+      shippable_tables: this.container[qa](".shippable-table"),
+      total: this.total,
+    });
   }
 }

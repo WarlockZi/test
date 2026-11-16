@@ -21,7 +21,7 @@
 
         @include mixin_media.m700 {
           grid-template-columns: 20px 100px 1fr 1fr 50px;
-          grid-template-rows: max-content 1fr 40px;
+          grid-template-rows: max-content 1fr max-content;
           grid-template-areas:
                   'id name name name name'
                   'img img shippable shippable shippable'

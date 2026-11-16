@@ -21,7 +21,9 @@ class AccountCartStrategy implements ICartStrategy
     public function deleteProduct(array $req)
     {
         $orderItems = $this->getProductOrderitems($req);
-
+        foreach ($orderItems as $orderItem) {
+            $orderItem->delete();
+        }
     }
     private function getProductOrderitems(array $req)
     {

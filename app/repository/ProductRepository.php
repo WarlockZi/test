@@ -36,12 +36,9 @@ class ProductRepository
             ->with('category.parentRecursive.ownProperties')
             ->with('category.ownProperties')
             ->with('values.property')
-//            ->with('ownProperties')
             ->with('manufacturer.country')
             ->withActivePromotions()
-            ->first()
-            ->append(['mainImage', 'base_unit', 'shippable_units', 'is_liked', 'cart_items', 'is_compared']);
-//        $p    = $prod->toArray();
+            ->first()?->append(['mainImage', 'base_unit', 'shippable_units', 'is_liked', 'cart_items', 'is_compared']);
 
         return $prod;
     }

@@ -3,12 +3,9 @@ declare(strict_types=1);
 
 namespace app\controller;
 
-use app\repository\MorphRepository;
 use app\repository\UpdateOrCreateRepository;
-use app\service\Response;
 use app\service\Router\IRequest;
 use JetBrains\PhpStorm\NoReturn;
-use Throwable;
 
 class AppController extends Controller
 {
@@ -54,28 +51,5 @@ class AppController extends Controller
             }
         }
     }
-
-    public function actionAttach(): void
-    {
-        $req = $this->ajax;
-
-        if (!$req) $req = $_POST;
-        if ($_FILES) {
-            MorphRepository::attachWithFiles($_FILES, $req);
-        } else {
-            MorphRepository::attach($req);
-        }
-
-        response()->popup('ok');
-    }
-
-    public function actionDetach(): void
-    {
-        $req = $this->ajax;
-        if (!$req) response()->json(['error' => 'Плохой запрос']);
-        MorphRepository::detach($this, $req);
-        response()->popup('ok');
-    }
-
 
 }

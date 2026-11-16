@@ -10,11 +10,11 @@ class View implements IView
 {
     public function __construct(
         private readonly Blade    $blade,
-        private readonly IRequest $request,
+//        private readonly IRequest $request,
     )
     {
-        $this->blade
-            ->share('request', $request);
+//        $this->blade
+//            ->share('request', $request);
         $this->blade->directive('deb', function () {
             return DEV ? "<?php  (xdebug_break()); ?>" : "";
         });

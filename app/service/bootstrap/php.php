@@ -6,7 +6,6 @@ mb_internal_encoding('UTF-8');
 ini_set("short_open_tag", 1);
 ini_set('memory_limit', '256M');
 
-ini_set('xdebug.collect_params', '0');
 ini_set('xdebug.show_local_vars', '0');
 ini_set('xdebug.var_display_max_children', '-1');
 ini_set('xdebug.var_display_max_data', '-1');

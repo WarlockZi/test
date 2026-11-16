@@ -33,12 +33,12 @@ class CategoryAction
             function () use ($slugSegments) {
                 $cats = [];
                 foreach ($slugSegments as $slugSegment) {
-                    $c = Category::whereHas('ownProperties',
+                    $c = Category::withWhereHas('ownProperties',
                         function ($query) use ($slugSegment) {
                             $query->where('path','LIKE', "%{$slugSegment}%");
                         })->get();
                     if ($c) {
-                        $cats[$slugSegment] = $c->toArray();
+                        $cats[$slugSegment] = $c;
                     }
                 }
                 return $cats??[];

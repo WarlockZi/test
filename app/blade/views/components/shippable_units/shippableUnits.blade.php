@@ -24,7 +24,7 @@
                     type="text"
                     class="input"
                     value="{!!$count??"0"!!}"
-                    onclick="this.value??'';"
+{{--                    onclick="this.value??'';"--}}
             >
 
             <div class="unit-name">{!!data_get($shippable,['name'], 'ед.')!!}</div>
