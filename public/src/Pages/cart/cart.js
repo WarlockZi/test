@@ -13,7 +13,7 @@ export default class Cart {
     window.YM("url_cart");
 
     this.container[ael]("click", this.handleClick.bind(this));
-    this.container[ael]("keyup", this.handleKeyUp.bind(this));
+
     this.container[ael](
       "shippable.product.empty",
       this.handleProductEmpty.bind(this),
@@ -28,6 +28,7 @@ export default class Cart {
     this.initShippableTables();
     this.renderSums();
   }
+
   async handleProductEmpty({ target }) {
     await this.deleteCartRow(target);
     this.renderSums();
@@ -64,13 +65,6 @@ export default class Cart {
     } else if (target.id === "cartSubmit") {
       YM("cart_submitted");
       this.submitCart();
-    }
-  }
-
-  async handleKeyUp({ target }) {
-    if (target.classList.contains("input") && target.tagName === "INPUT") {
-      this.renderSums();
-      this.updateOrCreate(target);
     }
   }
 

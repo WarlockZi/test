@@ -1,4 +1,5 @@
 import { ael, qs } from "@src/constants.js";
+import { debounce } from "@src/common.js";
 
 export default class Shippable_row {
   constructor(el) {
@@ -9,6 +10,7 @@ export default class Shippable_row {
 
     this.plus = this.el[qs](".plus");
     this.minus = this.el[qs](".minus");
+    this.boundDebounced = debounce(this._dispatchEvent.bind(this), 300);
 
     this.plus[ael]("click", this.increment.bind(this));
     this.minus[ael]("click", this.decrement.bind(this));
@@ -25,12 +27,12 @@ export default class Shippable_row {
       e.code === "Delete" ||
       this.isDigit(e)
     ) {
-      this._dispatchEvent();
+      this.boundDebounced();
     }
   }
   increment() {
     this.input.value++;
-    this._dispatchEvent();
+    this.boundDebounced();
   }
 
   decrement() {
@@ -39,7 +41,7 @@ export default class Shippable_row {
     } else {
       this.input.value--;
     }
-    this._dispatchEvent();
+    this.boundDebounced();
   }
 
   handleClick(e) {

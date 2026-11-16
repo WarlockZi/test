@@ -17,13 +17,14 @@ export default class shippableTable {
     this.initRows();
     this.toServer = this.toServerRaw;
     this.table[ael]("click", this.handleClick.bind(this));
+    // this.boundCountChange = debounce(this._dispatchEvent.bind(this), 100);
     this.table[ael](
       "shippable.count.changed",
       this.handleCountChange.bind(this),
     );
   }
   handleCountChange(e) {
-    if (!this.getTotalCount()) this._dispatchEvent("shippable.product.empty");
+    if (!this.getTotalCount()) this._dispatchEvent();
 
     const row = {
       value: e.detail.value,
@@ -57,8 +58,8 @@ export default class shippableTable {
     }
   }
 
-  _dispatchEvent(type) {
-    const event = new CustomEvent(type, {
+  _dispatchEvent() {
+    const event = new CustomEvent("shippable.product.empty", {
       bubbles: true,
       detail: this,
     });
