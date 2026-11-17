@@ -36,9 +36,9 @@ export default class Shippable_row {
   }
 
   decrement() {
-    if (this.input.value === 0) return;
+    if (+this.input.value === 0) return;
 
-    if (this.input.value === 1) {
+    if (+this.input.value === 1) {
       this.input.value = "0";
     } else {
       this.input.value--;
