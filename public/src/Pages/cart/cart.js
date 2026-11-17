@@ -80,12 +80,10 @@ export default class Cart {
       const product = target.closest(".row");
       this.removeFromCart(product);
 
-      // target.closest(".row").remove();
-
       if (this.rows.length < 1) this.showEmptyCart();
       this.renderSums();
       const cartBadge = new CartBadge();
-      cartBadge.decrement();
+      cartBadge.setCount(res?.cart_count);
     }
   }
   async removeFromCart(cartItem) {

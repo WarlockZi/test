@@ -60,7 +60,6 @@ class OrderController extends AdminscController
                 'product_1s_id' => $req['product_id'],
                 'unit_id' => (int)$req['unit_id'],
                 'count' => (int)$req['count'],
-//                'ip' => $_SERVER['REMOTE_ADDR'],
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ]
         );

@@ -37,24 +37,26 @@
         </div>
     @endif
 
+    @if(!empty($account['orders']))
+
+        @foreach($account['orders'] as $order)
+            @php($orderitems = $order)
+            @include('admin.order.orderProducts', compact('orderitems'))
+        @endforeach
+    @endif
+{{--@deb--}}
+    @if(!empty($account['cart_items']))
+        <details>
+            <summary>Неоформленная корзина</summary>
+            @include('admin.order.cart')
+        </details>
+        <br>
+        <br>
+    @endif
+
 </details>
 
 
-@if(!empty($account['orders']))
 
-    @foreach($account['orders'] as $order)
-        @php($orderitems = $order)
-        @include('admin.order.orderProducts', compact('orderitems'))
-    @endforeach
-@endif
-
-@if(!empty($account['cart_items']))
-    <details>
-        <summary>Неоформленный заказ</summary>
-        @include('admin.order.cart')
-    </details>
-    <br>
-    <br>
-@endif
 
 

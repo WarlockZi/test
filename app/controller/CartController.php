@@ -32,7 +32,6 @@ class CartController extends AppController
     #[NoReturn]
     public function actionIndex(): void
     {
-//        $order['products'] = $this->cartService->getCart(AuthService::accountId());
         $cart = $this->cartService->getCart(AuthService::accountId());
         view('cart.cart', compact('cart'));
     }
@@ -67,7 +66,10 @@ class CartController extends AppController
         $req = $request->validated();
         try {
             $this->cartService->deleteProduct($req);
-            response()->json(['deleted' => true, 'popup' => 'Удален']);
+            response()->json([
+                'deleted' => true,
+                'popup' => 'Удален',
+                'cart_count' => CartService::cartCount()]);
         } catch (Throwable $exception) {
             error_log($exception->getMessage());
             response()->popup('Не удален');

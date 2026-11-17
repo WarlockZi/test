@@ -16,9 +16,4 @@
         <h1>нет выбранных аккантов</h1>
     @endif
 
-    {{--    @include('admin.components.table.tableStandAlone', ['data'=>$unsubmittedTable])--}}
-    {{--    @include('admin.components.table.tableStandAlone', ['data'=>$submittedTable])--}}
-    {{--    {!!$unsubmittedTable!!}--}}
-    {{--    {!!$submittedTable!!}--}}
-
 @endsection
