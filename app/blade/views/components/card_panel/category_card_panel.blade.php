@@ -13,6 +13,7 @@
     >
         {!!Icon::link()!!}
     </div>
+
     @if ($isAdmin)
         <a href="/adminsc/category/edit/{!!$child['id']!!}"
            class="edit card-panel-item">{!!Icon::edit()!!}</a>

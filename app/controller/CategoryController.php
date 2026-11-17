@@ -21,9 +21,7 @@ class CategoryController extends AppController
     }
 
     #[NoReturn]
-    public function actionIndex(IRequest    $request,
-                                CartService $cartService,
-    ): void
+    public function actionIndex(IRequest $request, CartService $cartService): void
     {
         if (!$request->slug) {
             $this->service->notFound();

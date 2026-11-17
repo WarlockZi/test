@@ -2,6 +2,22 @@
 @use "@src/var";
 @use "@src/mixin_media";
 
+.category-not-found {
+  .actions {
+    margin-bottom: 45px;
+  }
+
+  .similar-categories {
+    .similar-category {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+  }
+
+  @include mixin_media.category-card
+}
+
 .category {
   margin-top: 15px;
   margin-bottom: 100px;

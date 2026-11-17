@@ -4,6 +4,7 @@ namespace app\service\AuthService;
 
 use app\action\AuthActions;
 use app\action\CartAction;
+use app\model\Mock\MockUserService;
 use app\model\User;
 use app\model\UserYandex;
 use app\service\Account\AccountService;
@@ -50,6 +51,7 @@ class AuthService
     public static function login(IUser $user): void
     {
         $self = new self();
+//        $user = $mock;
         $self::setUser($user);
 
         $self::merge($user);
@@ -58,6 +60,7 @@ class AuthService
 
     public static function setUser(?IUser $user = null): ?IUser
     {
+//        $user = MockUserService::mockUser();
         if (!empty($user)) {
             self::$user = $user;
             return self::$user;

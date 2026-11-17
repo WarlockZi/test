@@ -19,7 +19,7 @@
 
 @section('content')
     <h1 class="page-name">Каталог</h1>
-    <div class="category">
+    <div class="category" data-jsmodule="category">
 
 
         @if (!empty($categories))
@@ -37,7 +37,7 @@
                             >
                                 {{$category['name']}}
                             </a>
-                            @include('components.card_panel.category_card_panel', compact('category'))
+                            @include('components.card_panel.category_card_panel', ['child'=>$category])
                         </div>
 
                     @endif

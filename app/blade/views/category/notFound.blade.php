@@ -13,7 +13,7 @@
     @endphp
 
 
-    <div class="category-not-found">
+    <div class="category-not-found" data-jsmodule="category">
 
         <h1 class="not-found_h1">Категория не существует!</h1>
 
@@ -24,19 +24,20 @@
                 <a href="https://vitexopt.ru">перейти на главную страницу сайта</a>
             </div>
 
-
-            <div class="action">похожие категории</div>
         </div>
 
+        <h2 class="action">Похожие категории</h2>
+
         <div class="not-found">
+            {{--            @deb--}}
             @if (!empty($similarCategories) && count($similarCategories))
                 <div class="similar-categories">
                     @foreach ($similarCategories as $groupName=>$group)
                         @if(count($group))
-                            <div>Группа {!!$groupName !!}</div>
+                            <h3>Группа {!!$groupName !!}</h3>
                             <div class="similar-category">
 
-{{--                                @deb--}}
+                                {{--                                @deb--}}
                                 @foreach($group as $child)
                                     @include('category.category_card', compact('child'))
                                 @endforeach
@@ -47,6 +48,5 @@
             @endif
         </div>
     </div>
-
 
 @endsection

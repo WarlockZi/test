@@ -12,14 +12,12 @@ class MockUserService
     {
         $MarinaDemis    = User::where('email', 'p.shishkov@demis.ru')
             ->first();
-        $Olya           = User::where('email', 'vitex018@yandex.ru')
-            ->first();
-        $Oleg           = User::where('email', 'molchinoleg@mail.ru')
-            ->first();
+        $o = env('EMAIL_OLYA');
+        $Olya           = User::where('email', $o)->first();
         $yandexVvoronik = UserYandex::where('default_email', 'vvoronik@yandex.ru')
             ->first();
 
-        AuthService::setUser($MarinaDemis);
+        return $Olya;
     }
 
 }

@@ -40,8 +40,8 @@ export default class Shippable_row {
       this.input.value = "0";
     } else {
       this.input.value--;
+      this.boundDebounced();
     }
-    this.boundDebounced();
   }
 
   handleClick(e) {

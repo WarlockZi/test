@@ -31,9 +31,7 @@ class CategoryService
         $meta              = $this->categoryAction->setMeta();
 
         try {
-            $blade = APP->get(Blade::class);
-            $view  = $blade->run('category.notFound', compact('similarCategories', 'meta'));
-            response($view, 404);
+            view('category.notFound', compact('similarCategories', 'meta'), 404);
         } catch (Throwable $exception) {
             view("exceptions.error", compact('exception'),404);
         }finally {
@@ -52,9 +50,8 @@ class CategoryService
 
     public function notFound()
     {
-        $categories = APP->get('rootCategories');
+        $categories = app('rootCategories');
         $meta       = $this->categoryAction->setCategoriesMeta();
         view('category.categories', compact('meta', 'categories'));
-
     }
 }
