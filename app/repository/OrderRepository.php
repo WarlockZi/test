@@ -85,6 +85,7 @@ class OrderRepository
 
         $query = OrderItem::query()
             ->where('account_id', $account_id)
+            ->where('count', ">", '0')
             ->leftJoin('product_unit', function ($join) {
                 $join->on('orderitems.product_1s_id', '=', 'product_unit.product_1s_id')
                     ->on('orderitems.unit_id', '=', 'product_unit.unit_id');
