@@ -107,7 +107,7 @@ class SyncmanualController extends AdminscController
     public function actionLoadproducts(LoadService $service): void
     {
         try {
-//            $service->loadProducts();
+            $service->loadProducts();
             response()->json(['popup' => 'товары успешно загружены',
                 'loaded' => 'product',
                 'bottom' => date('Y-m-d H:i:s') . ' - Товары загружены']);
