@@ -36,12 +36,6 @@ class SyncService
         $this->offerFile  = $this->unzippedDir . env("SYNC_OFFER_FILE");
     }
 
-
-
-    /**
-     * @throws Exception
-     * @throws Throwable
-     */
     #[NoReturn]
     public function requestFrom1s(): void
     {

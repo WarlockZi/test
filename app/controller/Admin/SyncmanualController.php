@@ -95,7 +95,7 @@ class SyncmanualController extends AdminscController
     public function actionLoadcategories(LoadService $service): void
     {
         try {
-//            $service->loadCategories();
+            $service->loadCategories();
             response()->json(['popup' => 'категории успешно загружены',
                 'loaded' => 'category',
                 'bottom' => date('Y-m-d H:i:s') . ' - Категории загружены']);
@@ -107,7 +107,7 @@ class SyncmanualController extends AdminscController
     public function actionLoadproducts(LoadService $service): void
     {
         try {
-            $service->loadProducts();
+//            $service->loadProducts();
             response()->json(['popup' => 'товары успешно загружены',
                 'loaded' => 'product',
                 'bottom' => date('Y-m-d H:i:s') . ' - Товары загружены']);
@@ -123,7 +123,7 @@ class SyncmanualController extends AdminscController
             response()->withLog(new SyncSuccessLogger)->json([
                 'popup' => 'цены успешно загружены',
                 'loaded' => 'price',
-                'log' => date('Y-m-d H:i:s') . ' - Синхронизация прошла успешно',
+                'message' => date('Y-m-d H:i:s') . ' - Синхронизация прошла успешно',
                 'bottom' => date('Y-m-d H:i:s') . ' - Цены загружены'],
             );
         } catch (Throwable $exception) {

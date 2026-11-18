@@ -2,7 +2,7 @@
 @use "@src/mixin_media";
 
 .cart {
-
+  position: relative;
 
   .orders-link {
     display: block;
@@ -111,12 +111,21 @@
   }
 
   .empty-cart {
-    transition: transform 1s ease;
-    transform: scale(0) rotate(360deg);
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 30vh;
+  }
+
+  .order-in-process {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 24%;
+    left: 40%;
+    transition: transform 1s ease;
+    transform: scale(0) rotate(360deg);
   }
 
   .total {
@@ -150,20 +159,21 @@
   }
 
   @keyframes slide-in {
-    0%{
+    0% {
       transform: rotate(0deg) scale(0);
     }
-    100%{
+    100% {
       transform: rotate(360deg) scale(1);
     }
   }
   @keyframes slide-out {
-    0%{
+    0% {
       transform: rotate(360deg) scale(1);
+      height: 100%;
     }
-    100%{
+    100% {
       transform: rotate(0deg) scale(0);
-      display: none;
+      height: 0;
     }
   }
 

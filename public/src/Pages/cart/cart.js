@@ -15,7 +15,8 @@ export default class Cart {
     this.total = this.container[qs](".total span");
     this.$cartCount = this.container[qs](".cart .count");
 
-    this.$cartEmptyText = document[qs](".empty-cart");
+    this.cartEmptyText = document[qs](".empty-cart");
+    this.orderInProcessText = document[qs](".order-in-process");
     this.rows = this.container[qa](".row");
 
     this.container[ael]("click", this.handleClick.bind(this));
@@ -38,8 +39,8 @@ export default class Cart {
     const res = await post("/cart/submit", {});
     if (res.ok) {
       this.container.classList.add("slide-out");
-      this.$cartEmptyText.classList.remove("none");
-      this.$cartEmptyText.classList.add("slide-in");
+      this.orderInProcessText.classList.remove("none");
+      this.orderInProcessText.classList.add("slide-in");
     }
   }
 
@@ -118,7 +119,7 @@ export default class Cart {
 
   showEmptyCart() {
     this.container.innerHTML = "";
-    this.$cartEmptyText.classList.remove("none");
+    this.cartEmptyText.classList.remove("none");
     this.$cartCount.classList.add("none");
   }
   renderSums() {

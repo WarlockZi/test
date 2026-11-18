@@ -29,8 +29,12 @@
 
             </div>
         @endif
+        <div class="order-in-process none">
+            Ваш заказ взят в обработку
+        </div>
+
 {{--@deb--}}
-        <div class="empty-cart {!!(empty($order) || !isset($order['products']))?'none':''!!}">
+        <div class="empty-cart {{$emptyCart?'':'none'}}">
             Корзина пуста
         </div>
 
