@@ -11,9 +11,9 @@
 
         <h1>Корзина</h1>
 
-        <a href="/order">Заказы</a>
+        <a class="orders-link" href="/order">Заказы</a>
 
-
+{{--        @deb--}}
         @php($emptyCart= empty($cart) && empty($_SESSION['cart_items']))
 
         @if(!$emptyCart)

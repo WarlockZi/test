@@ -17,7 +17,7 @@ export default class shippableTable {
     this.initRows();
     this.toServer = this.toServerRaw;
     this.table[ael]("click", this.handleClick.bind(this));
-    // this.boundCountChange = debounce(this._dispatchEvent.bind(this), 100);
+
     this.table[ael](
       "shippable.count.changed",
       this.handleCountChange.bind(this),
@@ -90,6 +90,7 @@ export default class shippableTable {
       product_1s_id: this.sid,
       count: row.value,
       unit_id: row.unit_id,
+      order_id: null,
     };
   }
 }

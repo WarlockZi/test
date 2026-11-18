@@ -40,13 +40,12 @@ class CartController extends AppController
     public function actionSubmit(): void
     {
         try {
-            $this->cartService->submit();
+//            $this->cartService->submit();
+            response()->json(['ok' => true]);
         } catch (Throwable $exception) {
             error_log($exception->getMessage());
             response()->json(['ok' => false, 'popup' => 'Ошибка']);
         }
-
-        response()->json(['ok' => true]);
     }
 
     public function actionAdd(CartAddRequest $request): Response

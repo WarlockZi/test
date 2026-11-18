@@ -7,7 +7,6 @@ import MyCardPanels from "@src/Modules/admin/card_panel/MyCardPanels.js";
 
 export default class Category {
   constructor() {
-    debugger;
     this.category = document[qs](".category");
     if (!this.category) return false;
 

@@ -54,7 +54,7 @@ class OrderController extends AdminscController
             [
                 'product_1s_id' => $req['product_id'],
                 'unit_id' => (int)$req['unit_id'],
-                'deleted_at' => null,
+//                'deleted_at' => null,
             ],
             [
                 'product_1s_id' => $req['product_id'],

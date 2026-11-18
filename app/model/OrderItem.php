@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrderItem extends Model
 {
-    use SoftDeletes;
+//    use SoftDeletes;
 
     public $table = 'orderitems';
     public $timestamps = true;
@@ -19,9 +19,10 @@ class OrderItem extends Model
         'unit_id',
         'account_id',
         'count',
+        'order_id',
         'created_at',
         'updated_at',
-        'deleted_at'
+//        'deleted_at'
     ];
     public function unit()
     {

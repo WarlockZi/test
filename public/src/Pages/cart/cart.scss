@@ -3,6 +3,12 @@
 
 .cart {
 
+
+  .orders-link {
+    display: block;
+    margin-bottom: 20px;
+  }
+
   .content {
 
     .table {
@@ -10,22 +16,22 @@
       flex-direction: column;
       gap: 5px;
       overflow-x: auto;
-      max-width: clamp(calc(100vw - 35px), 97vw,  970px);
+      max-width: clamp(calc(100vw - 35px), 97vw, 970px);
 
       .cart-item {
         display: grid;
         grid-template-columns: 35px 125px minmax(155px, 400px) minmax(210px, 220px) 110px 40px;
         grid-template-rows: auto;
         grid-template-areas:
-                  'id img name shippable sum del';
+              'id img name shippable sum del';
 
         @include mixin_media.m700 {
           grid-template-columns: 20px 100px 1fr 1fr 50px;
           grid-template-rows: max-content 1fr max-content;
           grid-template-areas:
-                  'id name name name name'
-                  'img img shippable shippable shippable'
-                  'sum sum sum sum del';
+              'id name name name name'
+              'img img shippable shippable shippable'
+              'sum sum sum sum del';
           grid-auto-rows: max-content;
           gap: 0;
 
@@ -51,10 +57,10 @@
           grid-template-columns: 20px 100px 1fr 1fr 50px;
           grid-template-rows: max-content 1fr max-content;
           grid-template-areas:
-                  'id name name name name'
-                  'img img img img img'
-                  'shippable shippable shippable shippable shippable'
-                  'sum sum sum sum del';
+              'id name name name name'
+              'img img img img img'
+              'shippable shippable shippable shippable shippable'
+              'sum sum sum sum del';
           grid-auto-rows: max-content;
           border: 1px solid var.$color-gray7;
           border-radius: 5px;
@@ -105,6 +111,8 @@
   }
 
   .empty-cart {
+    transition: transform 1s ease;
+    transform: scale(0) rotate(360deg);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -132,5 +140,32 @@
     }
 
   }
+
+  .slide-out {
+    animation: slide-out 1s ease forwards;
+  }
+
+  .slide-in {
+    animation: slide-in 1s ease 1s forwards;
+  }
+
+  @keyframes slide-in {
+    0%{
+      transform: rotate(0deg) scale(0);
+    }
+    100%{
+      transform: rotate(360deg) scale(1);
+    }
+  }
+  @keyframes slide-out {
+    0%{
+      transform: rotate(360deg) scale(1);
+    }
+    100%{
+      transform: rotate(0deg) scale(0);
+      display: none;
+    }
+  }
+
 }
 

@@ -18,6 +18,7 @@ class CartAddRequest extends FormRequest1
             'count' => 'required|string',
             'unit_id' => 'required|string',
             'product_1s_id' => 'required|string',
+            'order_id' => 'sometimes|nullable|string',
         ];
     }
 
@@ -32,6 +33,9 @@ class CartAddRequest extends FormRequest1
 
             'product_1s_id.required' => 'product_1s_id is required',
             'product_1s_id.string' => 'product_1s_id is to be string',
+
+            'order_id.sometimes' => 'order_id is sometimes',
+            'order_id.string' => 'order_id is to be string',
         ];
     }
 

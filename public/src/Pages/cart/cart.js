@@ -12,22 +12,22 @@ export default class Cart {
 
     window.YM("url_cart");
 
-    this.container[ael]("click", this.handleClick.bind(this));
+    this.total = this.container[qs](".total span");
+    this.$cartCount = this.container[qs](".cart .count");
 
+    this.$cartEmptyText = document[qs](".empty-cart");
+    this.rows = this.container[qa](".row");
+
+    this.container[ael]("click", this.handleClick.bind(this));
     this.container[ael](
       "shippable.product.empty",
       this.handleProductEmpty.bind(this),
     );
 
-    this.total = this.container[qs](".total span");
-    this.$cartCount = this.container[qs](".cart .count");
-
-    this.$cartEmptyText = this.container[qs](".empty-cart");
-    this.rows = this.container[qa](".row");
-
     this.initShippableTables();
     this.renderSums();
   }
+  async;
 
   async handleProductEmpty({ target }) {
     await this.deleteCartRow(target);
@@ -35,8 +35,11 @@ export default class Cart {
   }
 
   async submitCart() {
-    const res = post("/cart/submit", {});
+    const res = await post("/cart/submit", {});
     if (res.ok) {
+      this.container.classList.add("slide-out");
+      this.$cartEmptyText.classList.remove("none");
+      this.$cartEmptyText.classList.add("slide-in");
     }
   }
 

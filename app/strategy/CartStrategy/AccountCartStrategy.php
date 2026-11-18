@@ -3,7 +3,6 @@
 namespace app\strategy\CartStrategy;
 
 use app\model\OrderItem;
-use app\repository\CartRepository;
 use app\repository\OrderitemRepository;
 use app\repository\OrderRepository;
 use app\service\AuthService\AuthService;
@@ -11,20 +10,20 @@ use app\service\AuthService\AuthService;
 class AccountCartStrategy implements ICartStrategy
 {
     private int $account_id;
-//    private CartRepository $cartRepository;
 
     public function __construct()
     {
         $this->account_id = AuthService::accountId();
-//        $this->cartRepository = new CartRepository();
     }
+
     public function deleteProduct(array $req)
     {
         $orderItems = $this->getProductOrderitems($req);
         foreach ($orderItems as $orderItem) {
-            $orderItem->delete();
+            $orderItem->update(['count' => 0]);
         }
     }
+
     private function getProductOrderitems(array $req)
     {
         return OrderItem::where('account_id', $this->account_id)
@@ -48,27 +47,32 @@ class AccountCartStrategy implements ICartStrategy
 
     public function updateOrCreate($req): void
     {
-        OrderItem::updateOrCreate(
-            [
-                'account_id' => AuthService::accountId(),
-                'unit_id' => $req['unit_id'],
-                'product_1s_id' => $req['product_1s_id'],
-            ],
-            [
-                'count' => $req['count'],
-            ]
-        );
+         OrderItem::updateOrCreate(
+                [
+                    'account_id' => AuthService::accountId(),
+                    'unit_id' => $req['unit_id'],
+                    'product_1s_id' => $req['product_1s_id'],
+                    'order_id' => $req['order_id'],
+                ],
+                [
+                    'count' => $req['count'],
+                ]
+            );
+
     }
 
     public function cartCount(): int
     {
         $account_id = AuthService::accountId();
-        return OrderItem::query()
+        $orderItems = OrderItem::query()
             ->where('account_id', $account_id)
             ->where('count', '>', 0)
             ->whereNull('order_id')
             ->distinct()
-            ->count('product_1s_id');
+            ->count('product_1s_id')//            ->toSql()
+        ;
+
+        return $orderItems;
     }
 
     public function getItems()
