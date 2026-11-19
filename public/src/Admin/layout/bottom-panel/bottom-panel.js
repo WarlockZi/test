@@ -4,8 +4,12 @@ export default class BottomPanel {
     if (!this.wrapper) return;
 
     this.trigger = this.wrapper.querySelector(".hover-trigger");
+    this.pad = this.wrapper.querySelector('.pad');
     this.panel = this.wrapper.querySelector(".bottom-panel");
     this.pin = this.wrapper.querySelector('input.pin');
+
+    this.pad.addEventListener("mouseenter", this.openPanel.bind(this));
+    this.pad.addEventListener("mouseleave", this.closePanel.bind(this));
 
     this.trigger.addEventListener("mouseenter", this.openPanel.bind(this));
     this.trigger.addEventListener("mouseleave", this.closePanel.bind(this));

@@ -11,6 +11,38 @@
     transition: transform 0.3s ease-in-out;
     /*animation: popping ease-in-out 10s infinite;*/
 
+    .pad {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        top: -40px;
+        right: 10px;
+        background: #9e9d9c;
+
+        #pin {
+            display: none;
+            &:checked + label {
+                background: #1a72b8;
+            }
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            background: #2c3e50;
+            border: 1px solid #5d7ca2;
+            border-radius: 5px;
+            color: white;
+            padding: 5px;
+            &:hover{
+                background: #008cba;
+            }
+        }
+
+    }
+
     &.active {
         transform: translateY(0px);
         animation: none;
@@ -22,7 +54,7 @@
         cursor: pointer;
         z-index: 1001;
         background: #2c3e50;
-        animation: blinking ease-in-out 5s infinite;
+        /*animation: blinking ease-in-out 5s infinite;*/
     }
 
     .bottom-panel {
@@ -47,46 +79,10 @@
             }
         }
 
-        #pin {
-            display: none;
 
-            &:checked+label {
-                background: #1a72b8;
-            }
-        }
-        label {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 10px;
-            margin-right: 10px;
-            max-width: 30px;
-            height: 30px;
-            flex: 1;
-            background: #2c3e50;
-            border: 1px solid #5d7ca2;
-            border-radius: 5px;
-        }
     }
 }
 
-@keyframes blinking {
-    0% {
-        background: #f4d38d;
-    }
-    40% {
-        background: #74d8f6;
-        opacity: 0.5;
-    }
-    80% {
-        background: #56ff56;
-        opacity: 0.5;
-    }
-    100% {
-        background: #f4d38d;
-        opacity: 1;
-    }
-}
 
 @keyframes popping {
     0% {

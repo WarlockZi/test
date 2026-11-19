@@ -15,15 +15,16 @@ class SyncmanualActions
 
         try {
             self::moveFile($file, $path, $name);
-            response()->json(['popup' => 'Файл загружен успешно','bottom'=>'файл загружен']);
+            response()->json(['popup' => 'Файл загружен успешно', 'bottom' => 'файл загружен']);
         } catch (Throwable $exception) {
             $exc = $exception->getMessage();
             response()->json(['popup' => $debugString . ' error: ' . $exc]);
         }
     }
+
     public static function deleteAllFiles(SyncStorage $store): void
     {
-        $dir = $store::getUnzippedDir();
+        $dir   = $store::getUnzippedDir();
         $files = $store->getFiles($dir);
         foreach ($files as $file) {
             unlink($file);
@@ -33,6 +34,7 @@ class SyncmanualActions
 
     public static function moveFile(array|UploadedFile $file, string $path, string $name): bool
     {
+        response()->json(['popup' => 'size - '.$file->getSize(). ' pathname: ' . $file->getPathname()]);
         try {
             if (is_array($file)) {
                 move_uploaded_file($file['tmp_name'], ROOT . $path . $name);

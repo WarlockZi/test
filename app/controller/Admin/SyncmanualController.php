@@ -60,13 +60,17 @@ class SyncmanualController extends AdminscController
 
     public function actionUploadoffer(SyncManualDownloadFileRequest $files, SyncmanualActions $actions)
     {
-        $actions::unploadFile($files->file('file'));
+        $file = $files->file('file');
+        $actions::unploadFile($file);
     }
 
     public function actionUploadimport(SyncManualDownloadFileRequest $files, SyncmanualActions $actions): void
     {
-        $actions::unploadFile($files->file('file'));
+        $file = $files->file('file');
+        $actions::unploadFile($file);
     }
+
+
 
     #[NoReturn]
     public function actionIndex(): void
