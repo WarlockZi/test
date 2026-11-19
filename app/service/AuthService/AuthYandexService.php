@@ -10,12 +10,13 @@ class AuthYandexService
     public function __construct()
     {
     }
+
     public function exchangeCode(): array
     {
         [$clientId, $clientSecret, $redirectUri] = $this->getYandexOptions();
 
-        $client = new YandexIdClient($clientId, $clientSecret, $redirectUri);
-        $tokenResponse  = $client->exchangeCode($_GET['code']);
+        $client        = new YandexIdClient($clientId, $clientSecret, $redirectUri);
+        $tokenResponse = $client->exchangeCode($_GET['code']);
 
         return $client->getUserInfo($tokenResponse->accessToken)->raw;
         // 🔄 Обновление токена
@@ -24,6 +25,7 @@ class AuthYandexService
         //        $success = $client->revokeToken($token->accessToken);
         //        echo "Token revoked: " . ($success ? 'Yes' : 'No') . "\n";
     }
+
     public function checkYandexResponseState(): void
     {
         $returnedState = $_GET['state'] ?? '';
@@ -33,6 +35,7 @@ class AuthYandexService
             response()->popup('Invalid OAuth state. Возможна CSRF атака.', 403);
         }
     }
+
     public function getYandexCode(): void
     {
         [$clientId, $clientSecret, $redirectUri] = $this->getYandexOptions();
@@ -56,10 +59,13 @@ class AuthYandexService
             exit;
         }
     }
+
     public function getYandexOptions(): array
     {
-        $clientId = DEV?env('YANDEX_CLIENTID_DEV'):env('YANDEX_CLIENTID_PROD');
-        return [$clientId, env('YANDEX_CLIENT_SECRET_DEV'), env('YANDEX_REDIRECT_URI_DEV')];
+        $clientId     = DEV ? env('YANDEX_CLIENTID_DEV') : env('YANDEX_CLIENTID_PROD');
+        $clientSecret = DEV ? env('YANDEX_CLIENTID_DEV') : env('YANDEX_CLIENT_SECRET_PROD');
+        $uri          = DEV ? env('YANDEX_REDIRECT_URI_DEV') : env('YANDEX_REDIRECT_URI_PROD');
+        return [$clientId, $clientSecret,$uri];
     }
 
 }
