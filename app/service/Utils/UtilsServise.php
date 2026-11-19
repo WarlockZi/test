@@ -52,6 +52,10 @@ class UtilsServise
         }
 //        echo $res;
 //        exit($res);
+//        - name: Install dependencies
+//        uses: php-actions/composer@v6
+//        with:
+//          args: "--ignore-platform-reqs --optimize-autoloader"
     }
 
 }
