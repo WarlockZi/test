@@ -58,7 +58,8 @@ class AuthYandexService
     }
     public function getYandexOptions(): array
     {
-        return [env('YANDEX_CLIENTID_DEV'), env('YANDEX_CLIENT_SECRET_DEV'), env('YANDEX_REDIRECT_URI_DEV')];
+        $clientId = DEV?env('YANDEX_CLIENTID_DEV'):env('YANDEX_CLIENTID_PROD');
+        return [$clientId, env('YANDEX_CLIENT_SECRET_DEV'), env('YANDEX_REDIRECT_URI_DEV')];
     }
 
 }
