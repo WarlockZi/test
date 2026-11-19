@@ -2,7 +2,6 @@
 
 namespace app\service\AuthService;
 
-use app\action\AuthYandexActions;
 use Psr\Log\NullLogger;
 use Tigusigalpa\YandexID\YandexIdClient;
 

@@ -59,6 +59,7 @@ jobs:
           script: |
             cd ${{ secrets.SERVER_PATH }}
             git pull --all
+            composer install --ignore-platform-reqs --optimize-autoloader --no-dev
       - name: Install dependencies
         uses: php-actions/composer@v6
         with:
