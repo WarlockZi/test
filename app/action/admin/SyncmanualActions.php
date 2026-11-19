@@ -34,7 +34,7 @@ class SyncmanualActions
 
     public static function moveFile(array|UploadedFile $file, string $path, string $name): bool
     {
-        response()->json(['popup' => 'size - '.$file->getSize(). ' pathname: ' . $file->getPathname()]);
+//        response()->json(['popup' => 'size - '.$file->getSize(). ' pathname: ' . $file->getPathname()]);
         try {
             if (is_array($file)) {
                 move_uploaded_file($file['tmp_name'], ROOT . $path . $name);
