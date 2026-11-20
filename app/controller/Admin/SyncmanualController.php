@@ -83,7 +83,7 @@ class SyncmanualController extends AdminscController
         $file = $_FILES['file'];
         $size = $file['size'];
         $name = $file['name'];
-        $str  = 'spl - ' . $upl . ' post: ' . $post;
+        $str  = 'size - ' . $size . ' post: ' . $post;
         return $str;
 
     }
