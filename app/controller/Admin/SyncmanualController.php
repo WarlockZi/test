@@ -68,17 +68,30 @@ class SyncmanualController extends AdminscController
         $this->uploadFile($files, $actions);
 
     }
-    private function uploadFile(SyncManualDownloadFileRequest $files, SyncmanualActions $actions){
-//        $file = $_FILES['file'];
-//        $size = $file['size'];
-//        $name = $file['name'];
-        $file = $files->file('file');
-        $size = $file->getSize();
-        $name = $file->getPathname();
-        response()->json(['popup' => 'size - '.$size. ' pathname: ' . $name]);
-        $actions::unploadFile($file);
+
+    private function getString($files=null): string
+    {
+        if ($files) {
+            $file = $files->file('file');
+            $size = $file->getSize();
+            $name = $file->getPathname();
+            $str  = 'size - ' . $size . ' pathname: ' . $name;
+            return $str;
+        }
+        $file = $_FILES['file'];
+        $size = $file['size'];
+        $name = $file['name'];
+        $str  = 'size - ' . $size . ' pathname: ' . $name;
+        return $str;
+
     }
 
+    private function uploadFile(SyncManualDownloadFileRequest $files, SyncmanualActions $actions)
+    {
+        $str = $this->getString();
+        response()->json(['bottom' => $str, 'popup' => $str]);
+        $actions::unploadFile($file);
+    }
 
 
     #[NoReturn]
