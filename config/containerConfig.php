@@ -40,11 +40,13 @@ return [
     ICache::class => function () {
         return Cache::getInstance();
     },
-
+    \Illuminate\Validation\Validator::class => function () {
+        return Cache::getInstance();
+    },
 
     Vite::class => create(Vite::class)
         ->constructor(get(ViteCompiler::class)),
-
+ 
     'db.config' => [
         'driver' => 'mysql',
         'host' => 'localhost',
@@ -64,14 +66,6 @@ return [
         return $capsule;
     },
 
-//    IView::class => function (ContainerInterface $c) {
-//        return new View(
-//            new Blade(),
-//            $c->get(IRequest::class)
-//        );
-//    },
-
-//    'request' => \Illuminate\Http\Request::capture(),
 
     Blade::class => create(Blade::class),
 

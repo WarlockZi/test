@@ -3,7 +3,11 @@
 namespace app\formRequest\baseFormRequests;
 
 
-use app\service\Validator\Validator;
+//use app\service\Validator\Validator;
+use Illuminate\Translation\FileLoader;
+use Illuminate\Translation\Translator;
+use Illuminate\Validation\Factory;
+use Illuminate\Validation\Validator;
 use RuntimeException;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -25,22 +29,6 @@ abstract class FormRequest2 extends Request
             $request->server->all(),
             $request->getContent());
     }
-
-//    protected function getInputFromGlobal(): array
-//    {
-//        $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
-//        $rawInput    = file_get_contents('php://input');
-//
-//        if (str_contains($contentType, 'application/json')) {
-//            return json_decode($rawInput, true) ?? [];
-//        } elseif (str_contains($contentType, 'application/x-www-form-urlencoded')) {
-//            parse_str($rawInput, $input);
-//            return $input;
-//        } elseif (str_contains($contentType, 'multipart/form-data')) {
-//            return $_POST + $_GET + $_FILES;
-//        }
-//        return $_POST + $_GET;
-//    }
 
     abstract public function rules(): array;
 
@@ -66,26 +54,38 @@ abstract class FormRequest2 extends Request
         }
 
         $validator    = $this->getValidator();
-        $this->errors = $validator->validate();
+        if ($validator->fails()) {
+            $this->errors = $validator->errors()->all();
+            return false;
+        }
 
         return empty($this->errors);
     }
 
-    protected function getValidator(): Validator
+    protected function getValidator()
     {
-        return new Validator(
+        $factory = app('validator');
+        $validator = $factory->make(
             $this->all(),
             $this->rules(),
             $this->messages(),
-            $this->attributes()
-        );
+            $this->attributes());
+
+        return $validator;
+//        $validator =  Validator::make(
+//            $this->all(),
+//            $this->rules(),
+//            $this->messages(),
+//            $this->attributes()
+//        );
+//        return $validator;
     }
 
     public function validated(): array
     {
         if (!$this->validate()) {
             $errors       = $this->errors['file'] ?? $this->errors;
-            $errorsString = $this->errorsToString($errors);
+            $errorsString = json_encode($errors);
 
             response()->json(['popup' => $errorsString]);
         }
@@ -100,9 +100,7 @@ abstract class FormRequest2 extends Request
     {
         $errorsString = '';
         foreach ($errors as $name=>$error) {
-            $errorsString .= $name;
-            $errorsString .= '<br>';
-            $errorsString .= implode('<br>', $error);
+            $errorsString .= $error;
         }
         return $errorsString;
     }

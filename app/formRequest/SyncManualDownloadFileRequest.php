@@ -3,17 +3,24 @@
 namespace app\formRequest;
 
 use app\formRequest\baseFormRequests\FormRequest1;
+use app\formRequest\baseFormRequests\FormRequest2;
 
-class SyncManualDownloadFileRequest extends FormRequest1
+class SyncManualDownloadFileRequest extends FormRequest2
 {
     public function rules(): array
     {
         return [
             'file' => [
-            'required',
+                'required',
                 'file',
                 'mimetypes:application/xml,text/xml',
-                'extensions:xml',
+                function ($attribute, $value, $fail) {
+                    $filename = pathinfo($value->getClientOriginalName(), PATHINFO_FILENAME);
+
+                    if (!str_starts_with($filename, 'offer') && !str_starts_with($filename, 'import')) {
+                        $fail('Название должно быть "offer" или "import" .');
+                    }
+                },
             ],
         ];
     }
@@ -22,8 +29,8 @@ class SyncManualDownloadFileRequest extends FormRequest1
     {
         return [
             'file.required' => 'file is required',
-            'file.string' => 'file is to be string',
-            'file.mimes' => 'file is not xml',
+            'file.file' => 'file должен быть файлом',
+            'file.mimetypes' => 'file должен быть xml',
         ];
     }
 

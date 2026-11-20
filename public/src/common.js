@@ -177,14 +177,30 @@ const validate = {
 };
 
 const popup = {
-  show: function (txt) {
+  setContent: async function (txt, popup__item) {
+    if (isJson(txt)) {
+      txt = await this.parseJson(txt);
+      txt.map((s) => {
+        const p = document.createElement("p");
+        p.innerText = s;
+        popup__item.append(p);
+      });
+    } else {
+      popup__item.innerText = txt;
+    }
+  },
+  parseJson: async function (json) {
+    return await JSON.parse(json);
+  },
+  show: async function (txt) {
     const popup = this.el("div", "popup");
 
     const close = this.el("div", "popup__close");
     close.innerText = "X";
 
     const popup__item = this.el("div", "popup__item");
-    popup__item.innerText = txt;
+    await this.setContent(txt, popup__item);
+
     popup__item.append(close);
 
     popup.append(popup__item);

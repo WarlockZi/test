@@ -3,6 +3,8 @@
 namespace app\service\Validator;
 
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 class Validator
 {
     protected array $mimes = [
@@ -29,7 +31,6 @@ class Validator
     {
         foreach ($this->rules as $field => $rules) {
             $rules = is_array($rules) ? $rules : explode('|', $rules);
-//            $field = $this->getFieldName($field);
             $value = $this->data[$field] ?? null;
 
             foreach ($rules as $rule) {
@@ -87,7 +88,29 @@ class Validator
             $this->addError($field, 'required');
         }
     }
+    protected function validateFile(string $field, $value, array $params): void
+    {
+        if (is_null($value)) {
+            $this->addError($field, 'required');
+            return;
+        }
 
+        if (!$value instanceof UploadedFile) {
+            $this->addError($field, 'file');
+            return;
+        }
+
+        if (!$value->isValid()) {
+            $this->addError($field, 'uploaded');
+            return;
+        }
+
+        if (!empty($params['max'])) {
+            if ($value->getSize() > $params['max'] * 1024) {
+                $this->addError($field, 'max.file', ['max' => $params['max']]);
+            }
+        }
+    }
     protected function validateEmail(string $field, $value, array $params): void
     {
         if (!empty($value) && !filter_var($value, FILTER_VALIDATE_EMAIL)) {
@@ -143,6 +166,8 @@ class Validator
                 return "Поле {$attribute} должно быть не менее {$params[0]} символов.";
             case 'max':
                 return "Поле {$attribute} должно быть не более {$params[0]} символов.";
+            case 'file':
+                return "Поле {$attribute} должно быть файлом.";
             default:
                 return "Поле {$attribute} не прошло валидацию.";
         }

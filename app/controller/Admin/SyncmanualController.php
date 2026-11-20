@@ -15,6 +15,7 @@ use app\service\Sync\Load\LoadService;
 use app\service\Sync\SyncService;
 use app\service\Zip\ZipService;
 use JetBrains\PhpStorm\NoReturn;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Throwable;
 
 class SyncmanualController extends AdminscController
@@ -60,20 +61,15 @@ class SyncmanualController extends AdminscController
 
     public function actionUploadoffer(SyncManualDownloadFileRequest $files, SyncmanualActions $actions)
     {
-        $this->uploadFile($files, $actions);
+        $file = $files->validated()['file'];
+        $actions::unploadFile($file);
     }
 
     public function actionUploadimport(SyncManualDownloadFileRequest $files, SyncmanualActions $actions): void
     {
-        $this->uploadFile($files, $actions);
-
-    }
-    private function uploadFile(SyncManualDownloadFileRequest $files, SyncmanualActions $actions){
-        $file = $files->file('file');
+        $file = $files->validated()['file'];
         $actions::unploadFile($file);
     }
-
-
 
     #[NoReturn]
     public function actionIndex(): void
@@ -130,7 +126,7 @@ class SyncmanualController extends AdminscController
             response()->withLog(new SyncSuccessLogger)->json([
                 'popup' => 'цены успешно загружены',
                 'loaded' => 'price',
-                'message' => date('Y-m-d H:i:s') . ' - Синхронизация прошла успешно',
+                'message' => ' - Синхронизация прошла успешно',
                 'bottom' => date('Y-m-d H:i:s') . ' - Цены загружены'],
             );
         } catch (Throwable $exception) {
