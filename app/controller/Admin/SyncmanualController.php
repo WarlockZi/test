@@ -78,7 +78,7 @@ class SyncmanualController extends AdminscController
             $str  = 'size - ' . $size . ' pathname: ' . $name;
             return $str;
         }
-        $upl =  ini_get('upload_max_filesize');
+//        $upl =  ini_get('upload_max_filesize');
         $post =  ini_get('post_max_size');
         $file = $_FILES['file'];
         $size = $file['size'];
