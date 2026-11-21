@@ -4,47 +4,34 @@
     @php
         use app\view\components\Icon\Icon;
 
-        $showImportFile = !empty($loadFiles['import'])?'':'none';
-        $showOfferFile = !empty($loadFiles['offer'])?'':'none';
+        $showDnd = (!empty($loadFiles['offer']) && !empty($loadFiles['import']))?'slide-out':'';
 
-        $showImportDnd = empty($loadFiles['import'])?'':'none';
-        $showOfferDnd = empty($loadFiles['offer'])?'':'none';
-
-        $showNoFiles = empty($loadFiles['import']) && empty($loadFiles['offer'])?'':'none';
+        $showImport = !empty($loadFiles['import'])?'slide-in':'';
+        $showOffer = !empty($loadFiles['offer'])?'slide-in':'';
+        $showNoFiles = (!empty($loadFiles['import']) || !empty($loadFiles['offer']))?'slide-out':'';
 
         $buttonDisabled = empty($loadFiles['import'])||empty($loadFiles['offer'])?'disabled':'';
 
     @endphp
 
-    {{--        @deb--}}
+{{--            @deb--}}
     <div class="sync-manual" data-jsmodule="syncmanual">
 
-        <div class="files-dnds">
-
-            <fieldset id="importDnd" class="{!!$showImportDnd!!}">
-                <legend>Перетащить import file</legend>
-                <div dndfile class='add-file'
-                     data-action="/adminsc/syncmanual/uploadimport"><?= Icon::plus() ?></div>
-            </fieldset>
-
-            <fieldset id="offerDnd" class="{!!$showOfferDnd!!}">
-                <legend>Перетащить offer file</legend>
-                <div dndfile class='add-file'
-                     data-action="/adminsc/syncmanual/uploadoffer"><?= Icon::plus() ?></div>
-            </fieldset>
-
-        </div>
 
         <div class="files-list">
 
-            <div class="no-files {!!$showNoFiles!!}">нет файлов</div>
+            <div class="files-dnds {!!$showDnd!!}">
+                <fieldset id="importDnd">
+                    <legend>Перетащить файлы (можно сразу оба)</legend>
+                    <div dndfile class='add-file'>{!!Icon::plus()!!}</div>
+                </fieldset>
+            </div>
 
-            <p id='offer' class="file {!!$showOfferFile!!}">offers0_1.xml
-            </p>
-            <sub>изменен: {!!$loadFiles['offer']['date']??''!!}</sub>
-            <p id='import' class="file {!!$showImportFile!!}">import0_1.xml
-            </p>
-            <sub>изменен: {!!$loadFiles['import']['date']??''!!}</sub>
+            <div id='no-files' class="no-files {{$showNoFiles}}">нет файлов</div>
+
+            <p id='offer' class="file {{$showOffer}}">offers0_1.xml</p>
+
+            <p id='import' class="file {{$showImport}}">import0_1.xml</p>
 
             <div class="buttons-group">
 

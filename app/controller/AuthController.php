@@ -85,6 +85,7 @@ class AuthController extends AppController
         if (!$user) {
             response()->json([
                 'error' => "Пользователя с таким e-mail нет",
+                //TODO substitute message to log in all resp jsom
                 'message' => "Пользователя с таким e-mail нет",
             ]);
         }

@@ -5,7 +5,7 @@ export default class Callbacks {
     const prev = detail.prev;
     const next = detail.next;
     const cells = table.getRowCells(prev);
-    const url = `/adminsc/${table.model}/changeunit`;
+    const url = `/adminsc/product/changeunit`;
 
     // setSelectId(next);
     setCellsId(cells, next);

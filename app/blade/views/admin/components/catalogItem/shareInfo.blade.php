@@ -1,3 +1,4 @@
+@deb
 @if(isset($catItem['item']['own_properties']['path']))
     <div class="share-info">
         <span>адрес :: </span>

@@ -15,7 +15,6 @@ use app\service\Sync\Load\LoadService;
 use app\service\Sync\SyncService;
 use app\service\Zip\ZipService;
 use JetBrains\PhpStorm\NoReturn;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Throwable;
 
 class SyncmanualController extends AdminscController
@@ -58,43 +57,6 @@ class SyncmanualController extends AdminscController
             response()->popup('Ошибка загрузки ' . $exception->getMessage());
         }
     }
-
-    public function actionUploadoffer(SyncManualDownloadFileRequest $files, SyncmanualActions $actions)
-    {
-        $file = $files->validated()['file'];
-        $actions::unploadFile($file);
-    }
-
-    public function actionUploadimport(SyncManualDownloadFileRequest $files, SyncmanualActions $actions): void
-    {
-        $file = $files->validated()['file'];
-        $actions::unploadFile($file);
-    }
-
-    #[NoReturn]
-    public function actionIndex(): void
-    {
-        $loadFiles = SyncStorage::getUnzippedFiles();
-        $logs      = StorageLog::getFileContent('sync/success.txt');
-        $logLines  = explode("\n", trim($logs));
-        view('admin.sync.sync_manual', compact('loadFiles', 'logLines'));
-    }
-
-    public function actionCleansuccesslog(StorageLog $storageLogger): void
-    {
-        $storageLogger->cleanFile('sync/success.txt');
-        $logs     = $storageLogger::getFileContent('sync/success.txt');
-        $logLines = explode("\n", trim($logs));
-        response()->json(['popup' => 'Логи очищены', 'logLines' => $logLines]);
-    }
-
-    public function actionDeletefiles(SyncmanualActions $actions, SyncStorage $store): void
-    {
-        $actions::deleteAllFiles($store);
-        $loadFiles = SyncStorage::getUnzippedFiles();
-        response()->json($loadFiles);
-    }
-
     public function actionLoadcategories(LoadService $service): void
     {
         try {
@@ -126,12 +88,43 @@ class SyncmanualController extends AdminscController
             response()->withLog(new SyncSuccessLogger)->json([
                 'popup' => 'цены успешно загружены',
                 'loaded' => 'price',
-                'message' => ' - Синхронизация прошла успешно',
+                'message' => date('Y-m-d H:i:s') . ' - Синхронизация прошла успешно',
                 'bottom' => date('Y-m-d H:i:s') . ' - Цены загружены'],
             );
         } catch (Throwable $exception) {
             response()->popup($exception->getMessage());
         }
+    }
+
+    public function actionUploadFiles(SyncManualDownloadFileRequest $files, SyncmanualActions $actions)
+    {
+        $file = $files->validated()['file'];
+        $actions::unploadFile($file);
+    }
+
+
+    #[NoReturn]
+    public function actionIndex(): void
+    {
+        $loadFiles = SyncStorage::getUnzippedFiles();
+        $logs      = StorageLog::getFileContent('sync/success.txt');
+        $logLines  = explode("\n", trim($logs));
+        view('admin.sync.sync_manual', compact('loadFiles', 'logLines'));
+    }
+
+    public function actionCleansuccesslog(StorageLog $storageLogger): void
+    {
+        $storageLogger->cleanFile('sync/success.txt');
+        $logs     = $storageLogger::getFileContent('sync/success.txt');
+        $logLines = explode("\n", trim($logs));
+        response()->json(['popup' => 'Логи очищены', 'logLines' => $logLines]);
+    }
+
+    public function actionDeletefiles(SyncmanualActions $actions, SyncStorage $store): void
+    {
+        $actions::deleteAllFiles($store);
+        $loadFiles = SyncStorage::getUnzippedFiles();
+        response()->json($loadFiles);
     }
 
 }

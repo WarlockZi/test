@@ -23,6 +23,7 @@ class FS
      */
     public static function files(string $dir, string $ext = ''): false|array
     {
+        $dir = self::platformSlashes($dir);
         if (!is_dir($dir)) {
             throw new FSException($dir . 'is not a directory');
         }

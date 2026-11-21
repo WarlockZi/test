@@ -9,13 +9,33 @@ use Throwable;
 
 class SyncmanualActions
 {
+    private static function loadedFiles()
+    {
+        $loadedFiles = [];
+        $path        = ROOT . env("SYNC_PATH") . 'unzipped/';
+        $files       = FS::files($path, 'xml');
+        $loaded = [];
+        foreach ($files as $file) {
+            if (str_ends_with($file, env("SYNC_OFFER_FILE"))) {
+                $loaded[]='offer';
+            }
+            if (str_ends_with($file, env("SYNC_IMPORT_FILE"))) {
+                $loaded[]='import';
+            }
+        }
+        return $loaded;
+    }
+
     public static function unploadFile($files): bool
     {
         [$debugString, $file, $name, $path] = self::vars($files);
 
         try {
             self::moveFile($file, $path, $name);
-            response()->json(['popup' => 'Файл загружен успешно', 'bottom' => 'файл загружен']);
+            $loadedFiles = self::loadedFiles();
+            response()->json(['popup' => 'Файл загружен успешно',
+                'bottom' => 'файл загружен',
+                'loadedFiles' => $loadedFiles,]);
         } catch (Throwable $exception) {
             $exc = $exception->getMessage();
             response()->json(['popup' => $debugString . ' error: ' . $exc]);
